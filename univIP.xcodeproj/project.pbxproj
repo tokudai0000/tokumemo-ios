@@ -103,10 +103,10 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				1AA056E126BD2D2E00343005 /* R.generated.swift */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
-				1AA056E126BD2D2E00343005 /* R.generated.swift */,
 			);
 			path = etc;
 			sourceTree = "<group>";
