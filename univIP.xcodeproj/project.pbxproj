@@ -7,23 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
 		1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CC26BD2AE100343005 /* AppDelegate.swift */; };
 		1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CE26BD2AE100343005 /* SceneDelegate.swift */; };
 		1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056D026BD2AE100343005 /* MainViewController.swift */; };
 		1AA056D426BD2AE100343005 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D226BD2AE100343005 /* Main.storyboard */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */; };
-		1AA056E226BD2D2E00343005 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056E126BD2D2E00343005 /* R.generated.swift */; };
 		1ADE4CEB26BD3D5100C0B62D /* CMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADE4CEA26BD3D5100C0B62D /* CMViewController.swift */; };
 		1ADE4CED26BD3D6200C0B62D /* ManabaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADE4CEC26BD3D6200C0B62D /* ManabaViewController.swift */; };
 		1ADE4CEF26BD3D7100C0B62D /* SyllabusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADE4CEE26BD3D7100C0B62D /* SyllabusViewController.swift */; };
-		1ADE4CF126BD3D8100C0B62D /* CM.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ADE4CF026BD3D8100C0B62D /* CM.storyboard */; };
+		1ADE4CF126BD3D8100C0B62D /* CourseManagement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ADE4CF026BD3D8100C0B62D /* CourseManagement.storyboard */; };
 		1ADE4CF326BD3D8E00C0B62D /* Manaba.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ADE4CF226BD3D8E00C0B62D /* Manaba.storyboard */; };
 		1ADE4CF526BD3D9A00C0B62D /* Syllabus.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ADE4CF426BD3D9A00C0B62D /* Syllabus.storyboard */; };
 		1C42206F8DA32E6251403A15 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC34096843A918E0B133E4 /* Pods_univIP.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA056CC26BD2AE100343005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AA056CE26BD2AE100343005 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,11 +33,10 @@
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056D826BD2AE500343005 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1AA056E126BD2D2E00343005 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		1ADE4CEA26BD3D5100C0B62D /* CMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMViewController.swift; sourceTree = "<group>"; };
 		1ADE4CEC26BD3D6200C0B62D /* ManabaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManabaViewController.swift; sourceTree = "<group>"; };
 		1ADE4CEE26BD3D7100C0B62D /* SyllabusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusViewController.swift; sourceTree = "<group>"; };
-		1ADE4CF026BD3D8100C0B62D /* CM.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CM.storyboard; sourceTree = "<group>"; };
+		1ADE4CF026BD3D8100C0B62D /* CourseManagement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CourseManagement.storyboard; sourceTree = "<group>"; };
 		1ADE4CF226BD3D8E00C0B62D /* Manaba.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Manaba.storyboard; sourceTree = "<group>"; };
 		1ADE4CF426BD3D9A00C0B62D /* Syllabus.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Syllabus.storyboard; sourceTree = "<group>"; };
 		7BCC34096843A918E0B133E4 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +85,7 @@
 		1AA056E326BD2D3700343005 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056E526BD2D4900343005 /* etc */,
 				1AA056E926BD2DCA00343005 /* View */,
 			);
@@ -103,7 +104,6 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
-				1AA056E126BD2D2E00343005 /* R.generated.swift */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
@@ -115,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				1ADE4CEA26BD3D5100C0B62D /* CMViewController.swift */,
-				1ADE4CF026BD3D8100C0B62D /* CM.storyboard */,
+				1ADE4CF026BD3D8100C0B62D /* CourseManagement.storyboard */,
 			);
 			path = CourseManagement;
 			sourceTree = "<group>";
@@ -236,7 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1ADE4CF126BD3D8100C0B62D /* CM.storyboard in Resources */,
+				1ADE4CF126BD3D8100C0B62D /* CourseManagement.storyboard in Resources */,
 				1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1ADE4CF526BD3D9A00C0B62D /* Syllabus.storyboard in Resources */,
@@ -250,7 +250,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		1AA056E026BD2CC300343005 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -261,11 +261,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/$PROJECT_NAME/R.generated.swift,
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/$PROJECT_NAME/R.generated.swift\"\n";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
 		};
 		86B951F30D4A6B00A1363210 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -314,12 +314,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ADE4CED26BD3D6200C0B62D /* ManabaViewController.swift in Sources */,
+				1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */,
 				1ADE4CEF26BD3D7100C0B62D /* SyllabusViewController.swift in Sources */,
 				1ADE4CEB26BD3D5100C0B62D /* CMViewController.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
-				1AA056E226BD2D2E00343005 /* R.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

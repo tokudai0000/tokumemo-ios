@@ -11,23 +11,25 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-//        let vc = R.storyboard.test.tete()!
-//        let vc = R.storyboard
     }
 
     @IBAction func CMButton(_ sender: Any) {
-//        let vc = R.storyboard.CM.CMview()!
-//        self.present(vc, animated: true, completion: nil)
+        let vc = R.storyboard.courseManagement.cmViewController()!
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func ManabaButton(_ sender: Any) {
+        let vc = R.storyboard.manaba.manabaViewController()!
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func SyllabusButton(_ sender: Any) {
+        let vc = R.storyboard.syllabus.syllabusViewController()!
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func SettingsButton(_ sender: Any) {
+        
     }
 }
 
