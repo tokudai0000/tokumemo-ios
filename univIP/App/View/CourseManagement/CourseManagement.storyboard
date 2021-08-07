@@ -11,42 +11,54 @@
         <!--View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="CMViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="CMViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CMViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="CMViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8H-P7-CX5">
-                                <rect key="frame" x="0.0" y="44" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aPu-t5-1eg">
-                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8a-aS-wat">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <navigationItem id="6MH-Tq-b8I">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" id="rqb-v5-AXq"/>
-                                    </navigationItem>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="4rk-ku-CvF">
+                                        <connections>
+                                            <action selector="goBackButton:" destination="Y6W-OH-hqX" id="gZW-Rk-WVL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" width="127" id="3yf-tH-tem">
+                                        <connections>
+                                            <action selector="goForwardButton:" destination="Y6W-OH-hqX" id="kEt-uZ-gw4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="homekit" catalog="system" width="67" id="ugS-SN-9as">
+                                        <connections>
+                                            <action selector="homeButton:" destination="Y6W-OH-hqX" id="YNb-1j-mmA"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
-                            </navigationBar>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="aPu-t5-1eg" secondAttribute="bottom" id="5HB-A9-RKj"/>
-                            <constraint firstItem="aPu-t5-1eg" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="IUp-Xi-LUh"/>
+                            <constraint firstItem="X8a-aS-wat" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="2OD-s7-Yai"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="g8H-P7-CX5" secondAttribute="trailing" id="dc8-vM-Wib"/>
-                            <constraint firstItem="aPu-t5-1eg" firstAttribute="top" secondItem="g8H-P7-CX5" secondAttribute="bottom" id="fhz-V0-nO4"/>
+                            <constraint firstItem="X8a-aS-wat" firstAttribute="top" secondItem="g8H-P7-CX5" secondAttribute="bottom" id="ehw-4D-nSM"/>
                             <constraint firstItem="g8H-P7-CX5" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="nVS-rO-U7i"/>
+                            <constraint firstItem="X8a-aS-wat" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="tSf-g6-th1"/>
                             <constraint firstItem="g8H-P7-CX5" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="tvN-ME-dEZ"/>
-                            <constraint firstItem="aPu-t5-1eg" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="vtl-h3-4fr"/>
+                            <constraint firstItem="X8a-aS-wat" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="xIy-hO-8cd"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="webkit" destination="g8H-P7-CX5" id="wgy-Nh-5PI"/>
+                        <outlet property="webView" destination="g8H-P7-CX5" id="dsB-vp-wjP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -55,6 +67,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
+        <image name="homekit" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
