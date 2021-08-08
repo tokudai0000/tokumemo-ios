@@ -12,38 +12,20 @@ import WebViewJavascriptBridge
 
 // https://qiita.com/beaa/items/cfb80790d333c2da252b
 // javascriptinjection WKNavigationDelegate
-class CMViewController: UIViewController, WKNavigationDelegate{
+// https://qiita.com/amamamaou/items/25e8b4e1b41c8d3211f4
 
+class CMViewController: UIViewController, WKNavigationDelegate{
+    
+    //MARK:- @IBOutlet
     @IBOutlet weak var webView: WKWebView!
-    
-    
-    @IBAction func goBackButton(_ sender: Any) {
-        webView.goBack()
-    }
-    
-    @IBAction func goForwardButton(_ sender: Any) {
-//        webView.goForward()
-//        webView.evaluateJavaScript("document.activeElement.value=\"Hello!\"", completionHandler: nil)
-        webView.evaluateJavaScript("document.getElementById('username').value= '130091'", completionHandler:  nil)
-        webView.evaluateJavaScript("document.getElementById('password').value= '70170061191'", completionHandler:  nil)
-    }
     
     var bridge:WebViewJavascriptBridge?
     
-     @IBAction func homeButton(_ sender: Any) {
-//         let vc = R.storyboard.main.mainViewController()!
-//         self.present(vc, animated: true, completion: nil)
-        webView.evaluateJavaScript("document.getElementById('_eventId_proceed').submit();", completionHandler:  nil)
-     }
-    
-    
     let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal"
-//    let loginURL = "https://google.com"
-//    let loginURL = "https://sistemas.anac.gov.br/consultadelicencas/"
+//    https://manaba.lms.tokushima-u.ac.jp/
     
     let acaunt = "c611821006"
     let pass = "Akidon0326"
-    //id username
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
@@ -60,12 +42,34 @@ class CMViewController: UIViewController, WKNavigationDelegate{
         
     }
     
+    //MARK:- @IBAction
+    @IBAction func goBackButton(_ sender: Any) {
+        webView.goBack()
+    }
+    
+    @IBAction func goForwardButton(_ sender: Any) {
+        webView.goForward()
+    }
+    
+     @IBAction func homeButton(_ sender: Any) {
+         let vc = R.storyboard.main.mainViewController()!
+         self.present(vc, animated: true, completion: nil)
+     }
+    
+    
     // 文字列で指定されたURLをWeb Viewを開く
     func openUrl(urlString: String) {
         let url = URL(string: urlString)
         let request = NSURLRequest(url: url!)
         webView.load(request as URLRequest)
     }
+    
+    
+    
+    
+    
+    
+    
     
     // MARK: - 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
@@ -129,8 +133,9 @@ class CMViewController: UIViewController, WKNavigationDelegate{
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("読み込み完了")
-        webView.evaluateJavaScript("document.getElementById('username').value= '130091'", completionHandler:  nil)
-        webView.evaluateJavaScript("document.getElementById('password').value= '70170061191'", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
     }
     
     // MARK: - 読み込み失敗検知
@@ -147,5 +152,24 @@ class CMViewController: UIViewController, WKNavigationDelegate{
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation:WKNavigation!) {
         print("リダイレクト")
     }
+    
+    // alertを表示する
+    func webView(_ webView: WKWebView,
+                 runJavaScriptAlertPanelWithMessage message: String,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController(title: "title",
+                                                message: "message",
+                                                preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            completionHandler()
+        }
+
+        alertController.addAction(okAction)
+
+        present(alertController ,animated: true ,completion: nil)
+    }
+
     
 }
