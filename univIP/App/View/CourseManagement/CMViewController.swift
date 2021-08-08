@@ -22,19 +22,24 @@ class CMViewController: UIViewController, WKNavigationDelegate{
     }
     
     @IBAction func goForwardButton(_ sender: Any) {
-        webView.goForward()
+//        webView.goForward()
+//        webView.evaluateJavaScript("document.activeElement.value=\"Hello!\"", completionHandler: nil)
+        webView.evaluateJavaScript("document.getElementById('username').value= '130091'", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementById('password').value= '70170061191'", completionHandler:  nil)
     }
     
     var bridge:WebViewJavascriptBridge?
     
      @IBAction func homeButton(_ sender: Any) {
-         let vc = R.storyboard.main.mainViewController()!
-         self.present(vc, animated: true, completion: nil)
+//         let vc = R.storyboard.main.mainViewController()!
+//         self.present(vc, animated: true, completion: nil)
+        webView.evaluateJavaScript("document.getElementById('_eventId_proceed').submit();", completionHandler:  nil)
      }
     
     
     let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal"
 //    let loginURL = "https://google.com"
+//    let loginURL = "https://sistemas.anac.gov.br/consultadelicencas/"
     
     let acaunt = "c611821006"
     let pass = "Akidon0326"
@@ -48,8 +53,8 @@ class CMViewController: UIViewController, WKNavigationDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        webView.evaluateJavaScript("coordinateButton();", completionHandler: nil)
+        openUrl(urlString: loginURL)
+        webView.navigationDelegate = self
         
         
         
@@ -72,13 +77,10 @@ class CMViewController: UIViewController, WKNavigationDelegate{
          * WebView内の特定のリンクをタップした時の処理などが書ける(2019/11/16追記)
          */
         let url = navigationAction.request.url
-//        let url2 = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1"
+//        let url2 = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
         print("読み込もうとしているページのURLが取得できる: ", url ?? "")
         print(type(of: url))
         
-//        if url2 == String(url!) {
-//            //ログイン記入
-//        }
         
         // リンクをタップしてページを読み込む前に呼ばれるので、例えば、urlをチェックして
         // ①AppStoreのリンクだったらストアに飛ばす
@@ -127,6 +129,8 @@ class CMViewController: UIViewController, WKNavigationDelegate{
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("読み込み完了")
+        webView.evaluateJavaScript("document.getElementById('username').value= '130091'", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementById('password').value= '70170061191'", completionHandler:  nil)
     }
     
     // MARK: - 読み込み失敗検知
