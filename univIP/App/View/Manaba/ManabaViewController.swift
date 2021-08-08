@@ -18,8 +18,7 @@ class ManabaViewController: UIViewController, WKNavigationDelegate {
     
     var bridge:WebViewJavascriptBridge?
     
-    let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal"
-//    https://manaba.lms.tokushima-u.ac.jp/
+    let loginURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     
     let acaunt = "c611821006"
     let pass = "Akidon0326"
@@ -172,4 +171,3 @@ class ManabaViewController: UIViewController, WKNavigationDelegate {
 }
 
 
-}

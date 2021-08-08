@@ -29,7 +29,8 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func SettingsButton(_ sender: Any) {
-        
+        let vc = R.storyboard.settings.settingsViewController()!
+        self.present(vc, animated: true, completion: nil)
     }
 }
 

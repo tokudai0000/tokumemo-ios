@@ -22,6 +22,7 @@ class CMViewController: UIViewController, WKNavigationDelegate{
     var bridge:WebViewJavascriptBridge?
     
     let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal"
+//    let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
 //    https://manaba.lms.tokushima-u.ac.jp/
     
     let acaunt = "c611821006"

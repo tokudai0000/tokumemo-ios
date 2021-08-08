@@ -9,22 +9,67 @@
     </dependencies>
     <scenes>
         <!--Manaba View Controller-->
-        <scene sceneID="s0d-6b-0kx">
+        <scene sceneID="ocK-k1-rmI">
             <objects>
-                <viewController storyboardIdentifier="ManabaViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="ManabaViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                <viewController storyboardIdentifier="ManabaViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cIo-kl-Ctq" customClass="ManabaViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rh1-2f-ZDD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sN9-OX-mIp">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LJZ-U5-Vj3">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="Vln-6Y-BTm">
+                                        <connections>
+                                            <action selector="goBackButton:" destination="cIo-kl-Ctq" id="Byb-PY-hbs"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" width="127" id="oyv-mz-Oub">
+                                        <connections>
+                                            <action selector="goForwardButton:" destination="cIo-kl-Ctq" id="Gyo-dw-2jx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="homekit" catalog="system" width="67" id="h0d-8S-paq">
+                                        <connections>
+                                            <action selector="homeButton:" destination="cIo-kl-Ctq" id="3O1-DP-ypY"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ats-Ig-ZAe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="trailing" secondItem="ats-Ig-ZAe" secondAttribute="trailing" id="3L6-cJ-RGa"/>
+                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="top" secondItem="sN9-OX-mIp" secondAttribute="bottom" id="89Z-j9-2D9"/>
+                            <constraint firstItem="ats-Ig-ZAe" firstAttribute="trailing" secondItem="sN9-OX-mIp" secondAttribute="trailing" id="CG3-VX-vEl"/>
+                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="bottom" secondItem="ats-Ig-ZAe" secondAttribute="bottom" id="EnX-8A-ClR"/>
+                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="leading" secondItem="ats-Ig-ZAe" secondAttribute="leading" id="Ie0-g8-Q5f"/>
+                            <constraint firstItem="sN9-OX-mIp" firstAttribute="leading" secondItem="ats-Ig-ZAe" secondAttribute="leading" id="gPb-tP-FSR"/>
+                            <constraint firstItem="sN9-OX-mIp" firstAttribute="top" secondItem="ats-Ig-ZAe" secondAttribute="top" id="lvG-SE-fP1"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="webView" destination="sN9-OX-mIp" id="ddO-SE-IDX"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kLp-qs-IYW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16" y="76"/>
+            <point key="canvasLocation" x="132" y="84"/>
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
+        <image name="homekit" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
