@@ -10,31 +10,54 @@ import WebKit
 
 import WebViewJavascriptBridge
 
-// https://qiita.com/beaa/items/cfb80790d333c2da252b
-// javascriptinjection WKNavigationDelegate
-// https://qiita.com/amamamaou/items/25e8b4e1b41c8d3211f4
-
-class LibraryViewController: UIViewController, WKNavigationDelegate {
-    
+class LibraryViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate {
     //MARK:- @IBOutlet
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var backButton: UIBarButtonItem!{
+        didSet {
+            backButton.isEnabled = false
+            backButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
+        }
+    }
+    @IBOutlet weak var forwardButton: UIBarButtonItem! {
+        didSet {
+            forwardButton.isEnabled = false
+            forwardButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
+        }
+    }
     
-    var bridge:WebViewJavascriptBridge?
     
-    let loginURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+    private let loginURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/top" // 図書館URL
     
-    let acaunt = "c611821006"
-    let pass = "Akidon0326"
+    private var bridge:WebViewJavascriptBridge?
+    private var beginingPoint: CGPoint!
+    private var isViewShowed: Bool!
     
+    private let acaunt = "c611821006"
+    private let pass = "Akidon0326"
+//    let pass_by_value
+    
+    
+    //MARK:- LifeCycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         openUrl(urlString: loginURL)
-        webView.navigationDelegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        beginingPoint = CGPoint(x: 0, y: 0)
+        webView.scrollView.delegate = self
+        webView.navigationDelegate = self
+        isViewShowed = true
+        // 読み込み中のインジケータの表示
+        //        setUpProgressView()
+        // 横ワイプのジェスチャーで戻れるor進めれる
+        //        webView.allowsBackForwardNavigationGestures = true
     }
+    
+    
     
     //MARK:- @IBAction
     @IBAction func goBackButton(_ sender: Any) {
@@ -45,14 +68,19 @@ class LibraryViewController: UIViewController, WKNavigationDelegate {
         webView.goForward()
     }
     
-     @IBAction func homeButton(_ sender: Any) {
-         let vc = R.storyboard.main.mainViewController()!
-         self.present(vc, animated: true, completion: nil)
-     }
+    @IBAction func homeButton(_ sender: Any) {
+        let vc = R.storyboard.main.mainViewController()!
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func itemButton(_ sender: Any) {
+        toolBar.isHidden = true
+    }
     
     
+    // MARK: - Private func
     // 文字列で指定されたURLをWeb Viewを開く
-    func openUrl(urlString: String) {
+    private func openUrl(urlString: String) {
         let url = URL(string: urlString)
         let request = NSURLRequest(url: url!)
         webView.load(request as URLRequest)
@@ -60,108 +88,74 @@ class LibraryViewController: UIViewController, WKNavigationDelegate {
     
     
     
+    // MARK: - Library
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        beginingPoint = scrollView.contentOffset
+    }
     
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentPoint = scrollView.contentOffset
+        let contentSize = scrollView.contentSize
+        let frameSize = scrollView.frame
+        let maxOffset = contentSize.height - frameSize.height
+        
+        if currentPoint.y >= maxOffset {
+            //             print("hit the bottom")
+        } else if beginingPoint.y + 100 < currentPoint.y {
+            toolBar.isHidden = true
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            toolBar.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+    }
     
     
-    
-    // MARK: - 読み込み設定（リクエスト前）
+    // 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print("リクエスト前")
         
-        /*
-         * WebView内の特定のリンクをタップした時の処理などが書ける(2019/11/16追記)
-         */
         let url = navigationAction.request.url
-//        let url2 = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
-        print("読み込もうとしているページのURLが取得できる: ", url ?? "")
-        print(type(of: url))
+        let lostConnectionUrl = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
+        
+        // 接続切れの際、再リロード
+        if (url == lostConnectionUrl){
+            openUrl(urlString: loginURL)
+        }
+        print("URL: ", url ?? "")
         
         
-        // リンクをタップしてページを読み込む前に呼ばれるので、例えば、urlをチェックして
-        // ①AppStoreのリンクだったらストアに飛ばす
-        // ②Deeplinkだったらアプリに戻る
-        // みたいなことができる
-        
-        /*  これを設定しないとアプリがクラッシュする
-         *  .allow  : 読み込み許可
-         *  .cancel : 読み込みキャンセル
-         */
         decisionHandler(.allow)
     }
     
-    // MARK: - 読み込み準備開始
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        print("読み込み準備開始")
-    }
     
-    // MARK: - 読み込み設定（レスポンス取得後）
+    // 読み込み設定（レスポンス取得後）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        print("レスポンス取得後")
-        
-        /*  これを設定しないとアプリがクラッシュする
-         *  .allow  : 読み込み許可
-         *  .cancel : 読み込みキャンセル
-         */
         decisionHandler(.allow)
-        // 注意：受け取るレスポンスはページを読み込みタイミングのみで、Webページでの操作後の値などは受け取れない
     }
     
-    // MARK: - 読み込み開始
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("読み込み開始")
-    }
-    
-    // MARK: - ユーザ認証（このメソッドを呼ばないと認証してくれない）
-    func webView(_ webView: WKWebView,
-                 didReceive challenge: URLAuthenticationChallenge,
-                 completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print("ユーザ認証")
-        completionHandler(.useCredential, nil)
-    }
-    
-    // MARK: - 読み込み完了
+    // 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("読み込み完了")
+        DispatchQueue.main.async {
+            self.backButton.isEnabled = webView.canGoBack
+            self.backButton.tintColor = UIColor.blue.withAlphaComponent(webView.canGoBack ? 1.0 : 0.4)
+            self.forwardButton.isEnabled = webView.canGoForward
+            self.forwardButton.tintColor = UIColor.blue.withAlphaComponent(webView.canGoBack ? 1.0 : 0.4)
+        }
+        
+        // ID,PASS入力後ボタンをクリック
         webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
         webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
         webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-    }
-    
-    // MARK: - 読み込み失敗検知
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError: Error) {
-        print("読み込み失敗検知")
-    }
-    
-    // MARK: - 読み込み失敗
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError: Error) {
-        print("読み込み失敗")
-    }
-    
-    // MARK: - リダイレクト
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation:WKNavigation!) {
-        print("リダイレクト")
-    }
-    
-    // alertを表示する
-    func webView(_ webView: WKWebView,
-                 runJavaScriptAlertPanelWithMessage message: String,
-                 initiatedByFrame frame: WKFrameInfo,
-                 completionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "title",
-                                                message: "message",
-                                                preferredStyle: .alert)
-
-        let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            completionHandler()
-        }
-
-        alertController.addAction(okAction)
-
-        present(alertController ,animated: true ,completion: nil)
     }
 }

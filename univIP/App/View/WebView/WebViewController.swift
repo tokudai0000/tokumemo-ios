@@ -1,8 +1,8 @@
 //
-//  ManabaViewController.swift
+//  WebViewController.swift
 //  univIP
 //
-//  Created by Akihiro Matsuyama on 2021/08/06.
+//  Created by Akihiro Matsuyama on 2021/08/09.
 //
 
 import UIKit
@@ -10,8 +10,11 @@ import WebKit
 
 import WebViewJavascriptBridge
 
+// https://qiita.com/beaa/items/cfb80790d333c2da252b
+// javascriptinjection WKNavigationDelegate
+// https://qiita.com/amamamaou/items/25e8b4e1b41c8d3211f4
 
-class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate {
+class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate {
     //MARK:- @IBOutlet
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var toolBar: UIToolbar!
@@ -29,8 +32,6 @@ class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollView
     }
     
     
-    private let loginURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary" // マナバURL
-    
     private var bridge:WebViewJavascriptBridge?
     private var beginingPoint: CGPoint!
     private var isViewShowed: Bool!
@@ -39,10 +40,36 @@ class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollView
     private let pass = "Akidon0326"
     
     
+    let courceManagementURL = URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal") // 情報ポータルURL
+    let liburaryURL = URL(string: "https://opac.lib.tokushima-u.ac.jp/opac/user/top") // 図書館URL
+    let manabaURL = URL(string: "https://manaba.lms.tokushima-u.ac.jp/s/home_summary") // マナバURL
+    let syllabusURL = URL(string: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx") // シラバスURL
+    let lostConnectionUrl = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1") //  接続切れの際、再リロード
+    
+    var displayURL = URL(string: "")
+    var passByValue = 0
+    
+    
     //MARK:- LifeCycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        openUrl(urlString: loginURL)
+        
+        
+//        currentURL =
+        switch passByValue {
+        case 0:
+            print("error")
+        case 1:
+            displayURL = courceManagementURL
+        case 2:
+            displayURL = manabaURL
+        case 3:
+            displayURL = liburaryURL
+        default:
+            print("error")
+        }
+        
+        openUrl(url: displayURL!)
     }
     
     override func viewDidLoad() {
@@ -70,6 +97,7 @@ class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollView
     
     @IBAction func homeButton(_ sender: Any) {
         let vc = R.storyboard.main.mainViewController()!
+        self.dismiss(animated: true, completion: nil)
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -80,9 +108,9 @@ class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollView
     
     // MARK: - Private func
     // 文字列で指定されたURLをWeb Viewを開く
-    private func openUrl(urlString: String) {
-        let url = URL(string: urlString)
-        let request = NSURLRequest(url: url!)
+    private func openUrl(url: URL) {
+//        let url = URL(string: urlString)
+        let request = NSURLRequest(url: url)
         webView.load(request as URLRequest)
     }
     
@@ -123,14 +151,16 @@ class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollView
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        let url = navigationAction.request.url
-        let lostConnectionUrl = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
-        
-        // 接続切れの際、再リロード
-        if (url == lostConnectionUrl){
-            openUrl(urlString: loginURL)
+        if let url = navigationAction.request.url{
+            displayURL = url
+            if (lostConnectionUrl == url){
+                let vc = R.storyboard.main.mainViewController()!
+                self.dismiss(animated: true, completion: nil)
+                self.present(vc, animated: true, completion: nil)
+            }
         }
-        print("URL: ", url ?? "")
+        
+        print("URL: ", displayURL)
         
         
         decisionHandler(.allow)
@@ -153,9 +183,18 @@ class ManabaViewController: UIViewController, WKNavigationDelegate, UIScrollView
             self.forwardButton.tintColor = UIColor.blue.withAlphaComponent(webView.canGoBack ? 1.0 : 0.4)
         }
         
+        let url1 = URL(string: "")
+        
+        if (displayURL == url1){
+            
+        }
+        
+        
+        
         // ID,PASS入力後ボタンをクリック
         webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
         webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
         webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
     }
 }

@@ -16,6 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gbf-xi-CCU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Mk-Tv-z4A">
                                 <rect key="frame" x="0.0" y="847" width="414" height="49"/>
                                 <items>
@@ -24,40 +32,43 @@
                                             <action selector="goBackButton:" destination="Y6W-OH-hqX" id="QpH-ur-DAT"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" width="127" id="fYa-KI-FUl">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="GJO-uR-fMF"/>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="fYa-KI-FUl">
                                         <connections>
                                             <action selector="goForwardButton:" destination="Y6W-OH-hqX" id="fvA-JR-5mT"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Item" image="homekit" catalog="system" width="67" id="zNK-ub-TVb">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="HG3-F9-zW8"/>
+                                    <barButtonItem title="Item" image="homekit" catalog="system" id="zNK-ub-TVb">
                                         <connections>
                                             <action selector="homeButton:" destination="Y6W-OH-hqX" id="D0v-ki-nYE"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="QL6-9l-hb8"/>
+                                    <barButtonItem title="Item" id="uNW-pX-ZXd">
+                                        <connections>
+                                            <action selector="itemButton:" destination="Y6W-OH-hqX" id="Q9u-m0-Ibm"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gbf-xi-CCU">
-                                <rect key="frame" x="0.0" y="44" width="414" height="803"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Gbf-xi-CCU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="2gu-wv-mGA"/>
-                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="BHr-Jv-1fI"/>
-                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="top" secondItem="Gbf-xi-CCU" secondAttribute="bottom" id="VT3-Zj-mfq"/>
+                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="RWs-XG-IRc"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Gbf-xi-CCU" secondAttribute="bottom" id="cgC-Q8-2pg"/>
+                            <constraint firstAttribute="bottom" secondItem="7Mk-Tv-z4A" secondAttribute="bottom" id="dbI-1w-62j"/>
                             <constraint firstItem="Gbf-xi-CCU" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="dkw-Gq-wi3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Gbf-xi-CCU" secondAttribute="trailing" id="iVU-T5-7U6"/>
-                            <constraint firstAttribute="bottom" secondItem="7Mk-Tv-z4A" secondAttribute="bottom" id="u8n-9V-DXl"/>
-                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="vcX-R1-vvf"/>
+                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="n9F-Gy-mXw"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="NnI-56-DCM" id="Mk4-Bd-iTk"/>
+                        <outlet property="forwardButton" destination="fYa-KI-FUl" id="avb-fX-KEl"/>
+                        <outlet property="toolBar" destination="7Mk-Tv-z4A" id="36G-fF-DoQ"/>
                         <outlet property="webView" destination="Gbf-xi-CCU" id="5Qc-Ym-g62"/>
                     </connections>
                 </viewController>

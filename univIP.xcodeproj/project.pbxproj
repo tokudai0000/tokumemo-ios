@@ -12,6 +12,10 @@
 		1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Settings.storyboard */; };
 		1A81A92326C0D1DC00CC56E2 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A92226C0D1DC00CC56E2 /* LibraryViewController.swift */; };
 		1A81A92526C0D1F900CC56E2 /* Library.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A92426C0D1F900CC56E2 /* Library.storyboard */; };
+		1A81A92826C103D500CC56E2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A92726C103D500CC56E2 /* SearchViewController.swift */; };
+		1A81A92A26C103E300CC56E2 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A92926C103E300CC56E2 /* Search.storyboard */; };
+		1A81A92C26C117A800CC56E2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A92B26C117A800CC56E2 /* WebViewController.swift */; };
+		1A81A92E26C11DDB00CC56E2 /* WebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A92D26C11DDB00CC56E2 /* WebView.storyboard */; };
 		1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CC26BD2AE100343005 /* AppDelegate.swift */; };
 		1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CE26BD2AE100343005 /* SceneDelegate.swift */; };
 		1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056D026BD2AE100343005 /* MainViewController.swift */; };
@@ -33,6 +37,10 @@
 		1A81A91F26C02FF900CC56E2 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A81A92226C0D1DC00CC56E2 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		1A81A92426C0D1F900CC56E2 /* Library.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Library.storyboard; sourceTree = "<group>"; };
+		1A81A92726C103D500CC56E2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		1A81A92926C103E300CC56E2 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		1A81A92B26C117A800CC56E2 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		1A81A92D26C11DDB00CC56E2 /* WebView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebView.storyboard; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA056CC26BD2AE100343005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AA056CE26BD2AE100343005 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +97,15 @@
 			path = Module;
 			sourceTree = "<group>";
 		};
+		1A81A92F26C1240A00CC56E2 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				1A81A92B26C117A800CC56E2 /* WebViewController.swift */,
+				1A81A92D26C11DDB00CC56E2 /* WebView.storyboard */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
 		1AA056C026BD2AE100343005 = {
 			isa = PBXGroup;
 			children = (
@@ -118,7 +135,6 @@
 		1AA056E326BD2D3700343005 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056E526BD2D4900343005 /* etc */,
 				1A81A92626C0D52F00CC56E2 /* Module */,
 				1AA056E926BD2DCA00343005 /* View */,
@@ -138,6 +154,7 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
@@ -166,6 +183,8 @@
 		1AA056E826BD2DA900343005 /* Syllabus */ = {
 			isa = PBXGroup;
 			children = (
+				1A81A92726C103D500CC56E2 /* SearchViewController.swift */,
+				1A81A92926C103E300CC56E2 /* Search.storyboard */,
 				1ADE4CEE26BD3D7100C0B62D /* SyllabusViewController.swift */,
 				1ADE4CF426BD3D9A00C0B62D /* Syllabus.storyboard */,
 			);
@@ -175,6 +194,7 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A81A92F26C1240A00CC56E2 /* WebView */,
 				1A81A92126C0D16D00CC56E2 /* Library */,
 				1AA056EA26BD2DF700343005 /* AppDelegate */,
 				1AA056E426BD2D4100343005 /* Main */,
@@ -272,10 +292,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A81A92E26C11DDB00CC56E2 /* WebView.storyboard in Resources */,
 				1ADE4CF126BD3D8100C0B62D /* CourseManagement.storyboard in Resources */,
 				1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1ADE4CF526BD3D9A00C0B62D /* Syllabus.storyboard in Resources */,
+				1A81A92A26C103E300CC56E2 /* Search.storyboard in Resources */,
 				1ADE4CF326BD3D8E00C0B62D /* Manaba.storyboard in Resources */,
 				1AA056D426BD2AE100343005 /* Main.storyboard in Resources */,
 				1A81A92526C0D1F900CC56E2 /* Library.storyboard in Resources */,
@@ -351,6 +373,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A81A92826C103D500CC56E2 /* SearchViewController.swift in Sources */,
+				1A81A92C26C117A800CC56E2 /* WebViewController.swift in Sources */,
 				1ADE4CED26BD3D6200C0B62D /* ManabaViewController.swift in Sources */,
 				1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */,
 				1ADE4CEF26BD3D7100C0B62D /* SyllabusViewController.swift in Sources */,

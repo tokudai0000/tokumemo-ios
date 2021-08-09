@@ -9,61 +9,72 @@
     </dependencies>
     <scenes>
         <!--Manaba View Controller-->
-        <scene sceneID="ocK-k1-rmI">
+        <scene sceneID="2om-BS-yZ4">
             <objects>
-                <viewController storyboardIdentifier="ManabaViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cIo-kl-Ctq" customClass="ManabaViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rh1-2f-ZDD">
+                <viewController storyboardIdentifier="manabaViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1p8-hi-ctq" customClass="ManabaViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="g92-Qp-qvf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sN9-OX-mIp">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3h-cD-EIp">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LJZ-U5-Vj3">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeX-px-ej1">
+                                <rect key="frame" x="0.0" y="847" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="Vln-6Y-BTm">
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="SH9-Fi-Mxe">
                                         <connections>
-                                            <action selector="goBackButton:" destination="cIo-kl-Ctq" id="Byb-PY-hbs"/>
+                                            <action selector="goBackButton:" destination="1p8-hi-ctq" id="U86-kU-4Y0"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" width="127" id="oyv-mz-Oub">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ou3-OL-vtf"/>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="qH5-Pc-Pn9">
                                         <connections>
-                                            <action selector="goForwardButton:" destination="cIo-kl-Ctq" id="Gyo-dw-2jx"/>
+                                            <action selector="goForwardButton:" destination="1p8-hi-ctq" id="7HG-8q-ezd"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Item" image="homekit" catalog="system" width="67" id="h0d-8S-paq">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bco-Fw-UNI"/>
+                                    <barButtonItem title="Item" image="homekit" catalog="system" id="FRw-2U-kcN">
                                         <connections>
-                                            <action selector="homeButton:" destination="cIo-kl-Ctq" id="3O1-DP-ypY"/>
+                                            <action selector="homeButton:" destination="1p8-hi-ctq" id="NSI-vQ-Zsl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Lqc-NA-5US"/>
+                                    <barButtonItem title="Item" id="4FJ-7U-IAT">
+                                        <connections>
+                                            <action selector="itemButton:" destination="1p8-hi-ctq" id="zeo-eT-gQA"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="ats-Ig-ZAe"/>
+                        <viewLayoutGuide key="safeArea" id="g9z-5r-Km8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="trailing" secondItem="ats-Ig-ZAe" secondAttribute="trailing" id="3L6-cJ-RGa"/>
-                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="top" secondItem="sN9-OX-mIp" secondAttribute="bottom" id="89Z-j9-2D9"/>
-                            <constraint firstItem="ats-Ig-ZAe" firstAttribute="trailing" secondItem="sN9-OX-mIp" secondAttribute="trailing" id="CG3-VX-vEl"/>
-                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="bottom" secondItem="ats-Ig-ZAe" secondAttribute="bottom" id="EnX-8A-ClR"/>
-                            <constraint firstItem="LJZ-U5-Vj3" firstAttribute="leading" secondItem="ats-Ig-ZAe" secondAttribute="leading" id="Ie0-g8-Q5f"/>
-                            <constraint firstItem="sN9-OX-mIp" firstAttribute="leading" secondItem="ats-Ig-ZAe" secondAttribute="leading" id="gPb-tP-FSR"/>
-                            <constraint firstItem="sN9-OX-mIp" firstAttribute="top" secondItem="ats-Ig-ZAe" secondAttribute="top" id="lvG-SE-fP1"/>
+                            <constraint firstItem="g9z-5r-Km8" firstAttribute="trailing" secondItem="C3h-cD-EIp" secondAttribute="trailing" id="55L-D8-yhF"/>
+                            <constraint firstItem="g9z-5r-Km8" firstAttribute="bottom" secondItem="C3h-cD-EIp" secondAttribute="bottom" id="7v4-Db-ZNy"/>
+                            <constraint firstItem="AeX-px-ej1" firstAttribute="trailing" secondItem="g9z-5r-Km8" secondAttribute="trailing" id="IYN-Qm-EFI"/>
+                            <constraint firstItem="C3h-cD-EIp" firstAttribute="top" secondItem="g9z-5r-Km8" secondAttribute="top" id="ROD-G8-kV4"/>
+                            <constraint firstAttribute="bottom" secondItem="AeX-px-ej1" secondAttribute="bottom" id="V5E-Fx-BbN"/>
+                            <constraint firstItem="C3h-cD-EIp" firstAttribute="leading" secondItem="g9z-5r-Km8" secondAttribute="leading" id="pxD-nw-qno"/>
+                            <constraint firstItem="AeX-px-ej1" firstAttribute="leading" secondItem="g9z-5r-Km8" secondAttribute="leading" id="rWB-71-oIO"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="webView" destination="sN9-OX-mIp" id="ddO-SE-IDX"/>
+                        <outlet property="backButton" destination="SH9-Fi-Mxe" id="w4R-F8-T8p"/>
+                        <outlet property="forwardButton" destination="qH5-Pc-Pn9" id="3th-cl-a7G"/>
+                        <outlet property="toolBar" destination="AeX-px-ej1" id="FiL-lV-gk4"/>
+                        <outlet property="webView" destination="C3h-cD-EIp" id="qa0-LB-tRl"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kLp-qs-IYW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qk9-Ab-0Xn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="84"/>
+            <point key="canvasLocation" x="94" y="35"/>
         </scene>
     </scenes>
     <resources>

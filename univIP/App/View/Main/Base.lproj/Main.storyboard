@@ -21,55 +21,51 @@
                                 <rect key="frame" x="50" y="44" width="314" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rpd-9E-DHa">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="103.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="108.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoa-Y5-iIS">
-                                        <rect key="frame" x="0.0" y="103.5" width="314" height="100"/>
+                                        <rect key="frame" x="0.0" y="108.5" width="314" height="75"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="az2-Hj-E8a">
-                                                <rect key="frame" x="0.0" y="0.0" width="55.5" height="100"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="az2-Hj-E8a">
+                                                <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                                 <color key="backgroundColor" name="AccentColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="100" id="bp0-0n-tOp"/>
+                                                    <constraint firstAttribute="width" constant="75" id="4bg-iM-kxh"/>
                                                 </constraints>
-                                                <state key="normal">
-                                                    <attributedString key="attributedTitle">
-                                                        <fragment content="シラバス">
-                                                            <attributes>
-                                                                <font key="NSFont" size="11" name=".HiraKakuInterface-W3"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                </state>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <state key="normal" title="シラバス"/>
                                                 <connections>
-                                                    <action selector="SyllabusButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M9a-m4-LUC"/>
+                                                    <action selector="SyllabusButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bUV-Mq-4Uk"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72M-SL-qOw">
-                                                <rect key="frame" x="55.5" y="0.0" width="79.5" height="100"/>
+                                                <rect key="frame" x="75" y="0.0" width="47.5" height="75"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAc-Sy-ZTB">
-                                                <rect key="frame" x="135" y="0.0" width="34.5" height="100"/>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAc-Sy-ZTB">
+                                                <rect key="frame" x="122.5" y="0.0" width="75" height="75"/>
                                                 <color key="backgroundColor" name="AccentColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="75" id="jiX-yb-nQA"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="図書館">
                                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="LibraryButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aWW-1k-SWE"/>
+                                                    <action selector="toWebButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Mb-Jd-gsm"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V9M-pE-WXG">
-                                                <rect key="frame" x="169.5" y="0.0" width="69.5" height="100"/>
+                                                <rect key="frame" x="197.5" y="0.0" width="41.5" height="75"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isl-J6-0qH">
-                                                <rect key="frame" x="239" y="0.0" width="75" height="100"/>
+                                                <rect key="frame" x="239" y="0.0" width="75" height="75"/>
                                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="75" id="O6K-vV-P1c"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="g0N-Q2-3e4"/>
                                                 </constraints>
                                                 <state key="normal" image="Settings"/>
                                                 <connections>
@@ -78,42 +74,40 @@
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="isl-J6-0qH" firstAttribute="width" secondItem="GAc-Sy-ZTB" secondAttribute="width" multiplier="2.17391" id="F2o-3K-YDM"/>
-                                            <constraint firstAttribute="height" constant="100" id="ZGM-R4-84W"/>
+                                            <constraint firstAttribute="height" constant="75" id="ZGM-R4-84W"/>
                                             <constraint firstItem="V9M-pE-WXG" firstAttribute="width" secondItem="72M-SL-qOw" secondAttribute="width" multiplier="0.88" id="hKy-qJ-jmN"/>
-                                            <constraint firstItem="isl-J6-0qH" firstAttribute="width" secondItem="az2-Hj-E8a" secondAttribute="width" multiplier="1.35135" id="lGq-7o-gZ3"/>
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHW-Wq-nBp">
-                                        <rect key="frame" x="0.0" y="203.5" width="314" height="104"/>
+                                        <rect key="frame" x="0.0" y="183.5" width="314" height="109"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-F5-Svc">
-                                        <rect key="frame" x="0.0" y="307.5" width="314" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="8Io-rA-Ccy"/>
-                                        </constraints>
-                                        <state key="normal" title="教務事務システム" image="CourceManagement"/>
-                                        <connections>
-                                            <action selector="CMButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xXh-0l-Pup"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f77-th-aLX">
-                                        <rect key="frame" x="0.0" y="407.5" width="314" height="103.5"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xt5-hR-rWR">
-                                        <rect key="frame" x="0.0" y="511" width="314" height="100"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xt5-hR-rWR">
+                                        <rect key="frame" x="0.0" y="292.5" width="314" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="v7f-Da-Lpf"/>
                                         </constraints>
                                         <state key="normal" title="マナバ" image="img_manaba"/>
                                         <connections>
-                                            <action selector="ManabaButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1lb-eN-pr1"/>
+                                            <action selector="toWebButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5VA-qS-xK5"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f77-th-aLX">
+                                        <rect key="frame" x="0.0" y="392.5" width="314" height="108.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-F5-Svc">
+                                        <rect key="frame" x="0.0" y="501" width="314" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="8Io-rA-Ccy"/>
+                                        </constraints>
+                                        <state key="normal" title="教務事務システム" image="CourceManagement"/>
+                                        <connections>
+                                            <action selector="toWebButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ijM-9a-Oxn"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bb-ag-Lwr">
-                                        <rect key="frame" x="0.0" y="611" width="314" height="207"/>
+                                        <rect key="frame" x="0.0" y="601" width="314" height="217"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                 </subviews>
