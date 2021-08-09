@@ -40,31 +40,24 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     private let pass = "Akidon0326"
     
     
-    let courceManagementURL = URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal") // 情報ポータルURL
-    let liburaryURL = URL(string: "https://opac.lib.tokushima-u.ac.jp/opac/user/top") // 図書館URL
-    let manabaURL = URL(string: "https://manaba.lms.tokushima-u.ac.jp/s/home_summary") // マナバURL
-    let syllabusURL = URL(string: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx") // シラバスURL
-    let lostConnectionUrl = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1") //  接続切れの際、再リロード
-    
     var displayURL = URL(string: "")
     var passByValue = 0
+    let module = Module()
     
     
     //MARK:- LifeCycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         
-        
-//        currentURL =
         switch passByValue {
         case 0:
             print("error")
         case 1:
-            displayURL = courceManagementURL
+            displayURL = module.courceManagementURL
         case 2:
-            displayURL = manabaURL
+            displayURL = module.manabaURL
         case 3:
-            displayURL = liburaryURL
+            displayURL = module.liburaryURL
         default:
             print("error")
         }
@@ -109,7 +102,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     // MARK: - Private func
     // 文字列で指定されたURLをWeb Viewを開く
     private func openUrl(url: URL) {
-//        let url = URL(string: urlString)
         let request = NSURLRequest(url: url)
         webView.load(request as URLRequest)
     }
@@ -117,7 +109,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     
     
     // MARK: - Library
-    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         beginingPoint = scrollView.contentOffset
     }
@@ -151,12 +142,15 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
+        
         if let url = navigationAction.request.url{
             displayURL = url
-            if (lostConnectionUrl == url){
-                let vc = R.storyboard.main.mainViewController()!
-                self.dismiss(animated: true, completion: nil)
-                self.present(vc, animated: true, completion: nil)
+            if (module.lostConnectionUrl == url){
+                if (module.hasPassdThroughOnce){
+                    let vc = R.storyboard.main.mainViewController()!
+                    self.dismiss(animated: true, completion: nil)
+                    self.present(vc, animated: true, completion: nil)
+                }
             }
         }
         
@@ -183,18 +177,37 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             self.forwardButton.tintColor = UIColor.blue.withAlphaComponent(webView.canGoBack ? 1.0 : 0.4)
         }
         
-        let url1 = URL(string: "")
+        print("hasPassd", module.hasPassdThroughOnce)
+        print("display", displayURL!)
         
-        if (displayURL == url1){
-            
+        
+        if (module.hasPassdThroughOnce){
+            return
         }
         
+        switch passByValue {
+        case 0:
+            print("error")
+        case 1: // 教務事務システム
+            webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+        case 2: // マナバ
+            webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+        case 3: // 図書館
+            webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+        default:
+            print("error")
+        }
         
-        
-        // ID,PASS入力後ボタンをクリック
-        webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
-        webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
-        webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-        webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+        if (displayURL! == module.courceManagementHomeURL || displayURL! == module.liburaryURL || displayURL! == module.manabaURL){
+            module.hasPassdThroughOnce = true
+        }
+        print("終了時hasPassd", module.hasPassdThroughOnce)
     }
 }
