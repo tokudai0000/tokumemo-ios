@@ -59,7 +59,7 @@
                                         <rect key="frame" x="0.0" y="433.5" width="314" height="35.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVV-bZ-QLe">
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVV-bZ-QLe">
                                         <rect key="frame" x="0.0" y="469" width="314" height="50"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
@@ -75,7 +75,7 @@
                                         <rect key="frame" x="0.0" y="519" width="314" height="98"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho9-X1-v6e">
+                                    <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho9-X1-v6e">
                                         <rect key="frame" x="0.0" y="617" width="314" height="50"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
@@ -84,7 +84,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="さらに詳しく"/>
                                         <connections>
-                                            <action selector="detailSearchButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="2Vm-pw-WPy"/>
+                                            <action selector="searchButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="6Iq-XI-TAs"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8V-wi-Rt4">
@@ -103,17 +103,9 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMk-qG-3Ld">
                                 <rect key="frame" x="0.0" y="847" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="aCD-Ee-awe">
-                                        <connections>
-                                            <action selector="goBackButton:" destination="LeW-Iv-QPG" id="ihD-9Y-ppi"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="aCD-Ee-awe"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zrx-IX-p3c"/>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="aR9-69-aGP">
-                                        <connections>
-                                            <action selector="goForwardButton:" destination="LeW-Iv-QPG" id="4z5-L8-HDx"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="aR9-69-aGP"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="pav-0M-LH7"/>
                                     <barButtonItem title="Item" image="homekit" catalog="system" id="Sey-mc-ALn">
                                         <connections>
@@ -144,9 +136,9 @@
                     <connections>
                         <outlet property="backButton" destination="aCD-Ee-awe" id="dir-4T-KOZ"/>
                         <outlet property="forwardButton" destination="aR9-69-aGP" id="ZeJ-Si-g89"/>
-                        <outlet property="keyWord" destination="GJs-19-Q1f" id="fdN-Fj-wtx"/>
-                        <outlet property="subjectName" destination="6uj-pU-RB4" id="z5b-fr-BjF"/>
-                        <outlet property="teacherName" destination="z43-Xt-cP3" id="ufE-0a-5fD"/>
+                        <outlet property="keyWordTextField" destination="GJs-19-Q1f" id="fdN-Fj-wtx"/>
+                        <outlet property="subjectNameTextField" destination="6uj-pU-RB4" id="z5b-fr-BjF"/>
+                        <outlet property="teacherNameTextField" destination="z43-Xt-cP3" id="ufE-0a-5fD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S4l-Sb-0Aj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

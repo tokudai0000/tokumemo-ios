@@ -39,10 +39,12 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     private let acaunt = "c611821006"
     private let pass = "Akidon0326"
     
-    
+    let module = Module()
     var displayURL = URL(string: "")
     var passByValue = 0
-    let module = Module()
+    var subjectName = ""
+    var teacherName = ""
+    var keyWord = ""
     
     
     //MARK:- LifeCycle
@@ -58,6 +60,10 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             displayURL = module.manabaURL
         case 3:
             displayURL = module.liburaryURL
+        case 11:
+            displayURL = module.syllabusURL
+        case 12:
+            displayURL = module.syllabusURL
         default:
             print("error")
         }
@@ -89,9 +95,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     }
     
     @IBAction func homeButton(_ sender: Any) {
-        let vc = R.storyboard.main.mainViewController()!
+//        let vc = R.storyboard.main.mainViewController()!
         self.dismiss(animated: true, completion: nil)
-        self.present(vc, animated: true, completion: nil)
+//        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func itemButton(_ sender: Any) {
@@ -147,15 +153,12 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             displayURL = url
             if (module.lostConnectionUrl == url){
                 if (module.hasPassdThroughOnce){
-                    let vc = R.storyboard.main.mainViewController()!
+//                    let vc = R.storyboard.main.mainViewController()!
                     self.dismiss(animated: true, completion: nil)
-                    self.present(vc, animated: true, completion: nil)
+//                    self.present(vc, animated: true, completion: nil)
                 }
             }
         }
-        
-        print("URL: ", displayURL)
-        
         
         decisionHandler(.allow)
     }
@@ -176,9 +179,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             self.forwardButton.isEnabled = webView.canGoForward
             self.forwardButton.tintColor = UIColor.blue.withAlphaComponent(webView.canGoBack ? 1.0 : 0.4)
         }
-        
-        print("hasPassd", module.hasPassdThroughOnce)
-        print("display", displayURL!)
         
         
         if (module.hasPassdThroughOnce){
@@ -201,6 +201,18 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+        case 11: // シラバス
+            print(subjectName)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(subjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(teacherName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(keyWord)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+            module.hasPassdThroughOnce = true
+        case 12: // シラバス詳細
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(subjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(teacherName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(keyWord)'", completionHandler:  nil)
+            module.hasPassdThroughOnce = true
         default:
             print("error")
         }
@@ -208,6 +220,5 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
         if (displayURL! == module.courceManagementHomeURL || displayURL! == module.liburaryURL || displayURL! == module.manabaURL){
             module.hasPassdThroughOnce = true
         }
-        print("終了時hasPassd", module.hasPassdThroughOnce)
     }
 }
