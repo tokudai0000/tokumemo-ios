@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Library View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="LibraryViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="LibraryViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Mk-Tv-z4A">
+                                <rect key="frame" x="0.0" y="847" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="NnI-56-DCM">
+                                        <connections>
+                                            <action selector="goBackButton:" destination="Y6W-OH-hqX" id="QpH-ur-DAT"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" width="127" id="fYa-KI-FUl">
+                                        <connections>
+                                            <action selector="goForwardButton:" destination="Y6W-OH-hqX" id="fvA-JR-5mT"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" image="homekit" catalog="system" width="67" id="zNK-ub-TVb">
+                                        <connections>
+                                            <action selector="homeButton:" destination="Y6W-OH-hqX" id="D0v-ki-nYE"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gbf-xi-CCU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="803"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Gbf-xi-CCU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="2gu-wv-mGA"/>
+                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="BHr-Jv-1fI"/>
+                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="top" secondItem="Gbf-xi-CCU" secondAttribute="bottom" id="VT3-Zj-mfq"/>
+                            <constraint firstItem="Gbf-xi-CCU" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="dkw-Gq-wi3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Gbf-xi-CCU" secondAttribute="trailing" id="iVU-T5-7U6"/>
+                            <constraint firstAttribute="bottom" secondItem="7Mk-Tv-z4A" secondAttribute="bottom" id="u8n-9V-DXl"/>
+                            <constraint firstItem="7Mk-Tv-z4A" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="vcX-R1-vvf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Gbf-xi-CCU" id="5Qc-Ym-g62"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="94" y="35"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
+        <image name="homekit" catalog="system" width="128" height="106"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

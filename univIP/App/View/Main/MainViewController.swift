@@ -32,5 +32,12 @@ class MainViewController: UIViewController {
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction func LibraryButton(_ sender: Any) {
+        let vc = R.storyboard.library.libraryViewController()!
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    
 }
 
