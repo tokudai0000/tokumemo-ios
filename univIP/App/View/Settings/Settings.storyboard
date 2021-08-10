@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="settingsViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="SettingsViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Ux-RB-lY5">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" editingAccessoryType="disclosureIndicator" id="Eec-UG-1uG">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eec-UG-1uG" id="KSK-Xx-HVl">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="Rdp-Ur-0NT"/>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="5nD-7n-P8F"/>
+                                </connections>
+                            </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="05e-aU-NRI">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="FFM-MC-yxX"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6X5-gn-7kH"/>
+                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="W5m-C8-zVg"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="XPk-De-eXX"/>
+                                    <barButtonItem title="Item" image="homekit" catalog="system" id="FJa-OC-cGN">
+                                        <connections>
+                                            <action selector="homeButton:" destination="Y6W-OH-hqX" id="QdX-LH-sUf"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="1hi-Rr-aPP"/>
+                                    <barButtonItem id="T6s-BA-4Ah"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="3Ux-RB-lY5" secondAttribute="trailing" id="1mI-Xl-Eae"/>
+                            <constraint firstItem="3Ux-RB-lY5" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="8ke-31-P1u"/>
+                            <constraint firstItem="05e-aU-NRI" firstAttribute="top" secondItem="3Ux-RB-lY5" secondAttribute="bottom" id="Asb-Po-YCa"/>
+                            <constraint firstItem="05e-aU-NRI" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="BKB-Ma-mkN"/>
+                            <constraint firstItem="05e-aU-NRI" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="Tbk-qV-Lff"/>
+                            <constraint firstItem="3Ux-RB-lY5" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="wVH-5D-rS1"/>
+                            <constraint firstItem="05e-aU-NRI" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="z81-FW-bTx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="FFM-MC-yxX" id="j6B-FN-efI"/>
+                        <outlet property="forwardButton" destination="W5m-C8-zVg" id="bqr-J1-GJi"/>
+                        <outlet property="tableView" destination="3Ux-RB-lY5" id="jpI-WB-UXX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="38" y="92"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
+        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
+        <image name="homekit" catalog="system" width="128" height="106"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
