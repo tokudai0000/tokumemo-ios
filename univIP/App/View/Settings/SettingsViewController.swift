@@ -68,6 +68,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
             self.present(vc, animated: true, completion: nil)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
 //        //同じstororyboard内であることをここで定義
 //        let storyboard: UIStoryboard = self.storyboard!
 //        //移動先のstoryboardを選択(Identifierを指定する)

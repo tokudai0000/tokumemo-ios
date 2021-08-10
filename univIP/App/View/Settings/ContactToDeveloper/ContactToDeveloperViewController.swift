@@ -12,6 +12,7 @@ import UIKit
 
 class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     
+    var module = Module()
     
     @IBOutlet weak var backButton: UIBarButtonItem!{
         didSet {
@@ -26,7 +27,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         }
     }
     
-    @IBOutlet weak var subjectTextField: UITextField!
+    @IBOutlet weak var label: UILabel!
     
     @IBOutlet weak var bodyTextView: UITextView!
     let master_mail = "universityinformationportalapp@gmail.com"
@@ -37,9 +38,28 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         super.viewDidLoad()
     }
     
+    let text1 = ""
+    let text2 = " "
+    let text3 = "　"
+    let text4 = "送信に失敗しました。失敗が続く場合は[universityinformationportalapp@gmail.com]へ連絡をしてください。"
+//    let text3 = "送信しました。"
     
     @IBAction func sendButton(_ sender: Any) {
-        sendEmail(message: bodyTextView.text)
+        if (module.hasPassdThroughOnce){
+            return
+        }
+        let mailText = bodyTextView.text ?? ""
+        print(mailText)
+        
+        if (mailText == text1 || mailText == text2 || mailText == text3 || mailText == text4){
+            bodyTextView.text = ""
+            label.text = "入力してください"
+            return
+        }
+        label.text = "送信中です・・・・・・・"
+
+        module.hasPassdThroughOnce = true
+        sendEmail(message: mailText)
         
         
     }
@@ -85,10 +105,14 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         sendOperation?.start { (error) -> Void in
             if (error != nil) {
                 NSLog("Error sending email: \(String(describing: error))")
+                self.bodyTextView.text = "送信に失敗しました。失敗が続く場合は[universityinformationportalapp@gmail.com]へ連絡をしてください。"
+                self.label.text = ""
             } else {
                 NSLog("Successfully sent email!")
+                self.label.text = "送信しました。"
             }
         }
+        module.hasPassdThroughOnce = false
         
     }
     
