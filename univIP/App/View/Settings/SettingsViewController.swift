@@ -27,7 +27,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                 ["このアプリについて",
                                  "開発者へ連絡"]]
     //セクションの名前が入る
-    var sectionTitles:[String] = ["a","v","d"]
+    var sectionTitles:[String] = []
     //セクションの数
     var sectionNum = 2
     //セクションの高さ

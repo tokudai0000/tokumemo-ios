@@ -45,7 +45,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="H5N-LQ-tI3"/>
-                                    <barButtonItem title="Item" id="wcw-AO-Jwk">
+                                    <barButtonItem id="wcw-AO-Jwk">
                                         <connections>
                                             <action selector="itemButton:" destination="lmN-ig-2JG" id="YmH-t9-ThP"/>
                                         </connections>

@@ -113,7 +113,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="mr2-LR-S6a"/>
-                                    <barButtonItem title="Item" id="Emg-7Y-Kn5">
+                                    <barButtonItem id="Emg-7Y-Kn5">
                                         <connections>
                                             <action selector="itemButton:" destination="LeW-Iv-QPG" id="uak-hD-jtu"/>
                                         </connections>

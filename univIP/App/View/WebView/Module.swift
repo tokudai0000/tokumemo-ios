@@ -19,4 +19,5 @@ class Module: NSObject {
     var passByValue = 0
     var hasPassdThroughOnce = false
     var hasPassdCounter = 0
+    var confirmationURL = URL(string: "")
 }

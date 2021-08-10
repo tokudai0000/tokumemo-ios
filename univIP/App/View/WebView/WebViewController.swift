@@ -38,7 +38,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
 
     
     let module = Module()
-    var displayURL = URL(string: "")
+//    var module.displayURL = URL(string: "")
     var passByValue = 0
     var subjectName = ""
     var teacherName = ""
@@ -50,24 +50,29 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         
+        if (module.hasPassdCounter == 0){
+            webView.isHidden = true
+        }
+        
         switch passByValue {
         case 0:
             print("error")
         case 1:
-            displayURL = module.courceManagementURL
+            module.displayURL = module.courceManagementURL
         case 2:
-            displayURL = module.manabaURL
+            module.displayURL = module.manabaURL
         case 3:
-            displayURL = module.liburaryURL
+            module.displayURL = module.liburaryURL
         case 11:
-            displayURL = module.syllabusURL
+            module.displayURL = module.syllabusURL
         case 12:
-            displayURL = module.syllabusURL
+            module.displayURL = module.syllabusURL
         default:
             print("error")
         }
         
-        openUrl(url: displayURL!)
+        openUrl(url: module.displayURL!)
+//        webView.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -147,17 +152,22 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        
+        // 接続切れの時、ホームへ戻る
         if let url = navigationAction.request.url{
-            displayURL = url
+            module.displayURL = url
             if (module.lostConnectionUrl == url){
                 if (module.hasPassdThroughOnce){
-//                    let vc = R.storyboard.main.mainViewController()!
                     self.dismiss(animated: true, completion: nil)
-//                    self.present(vc, animated: true, completion: nil)
                 }
             }
+//            print("navURL:", navigationAction.request.url)
+//            print("disURL:", module.displayURL)
+//            print("modURL:", module.confirmationURL)
+//            if (module.displayURL == module.confirmationURL){
+//                webView.isHidden = false
+//            }
         }
+        
         
         decisionHandler(.allow)
     }
@@ -179,16 +189,23 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             self.forwardButton.tintColor = UIColor.blue.withAlphaComponent(webView.canGoBack ? 1.0 : 0.4)
         }
         
-        
+        if (module.displayURL == module.confirmationURL){
+            webView.isHidden = false
+        }
         if (module.hasPassdThroughOnce){
+            webView.isHidden = false
             return
         }
         if (module.hasPassdCounter >= 4){
+            webView.isHidden = false
             return
         }
         
+        // 初回のみ通る
+        
         let acaunt = dataManager.cAccount
         let pass = dataManager.passWord
+        print("passByValue",passByValue)
         
         switch passByValue {
         case 0:
@@ -198,14 +215,17 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             webView.evaluateJavaScript("document.getElementById('password').value= '\(pass)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+            module.confirmationURL = module.courceManagementHomeURL
         case 2: // マナバ
             webView.evaluateJavaScript("document.getElementById('username').value= '\(acaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(pass)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            module.confirmationURL = module.manabaURL
         case 3: // 図書館
             webView.evaluateJavaScript("document.getElementById('username').value= '\(acaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(pass)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            module.confirmationURL = module.liburaryURL
         case 11: // シラバス
             print(subjectName)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(subjectName)'", completionHandler:  nil)
@@ -213,17 +233,20 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(keyWord)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
             module.hasPassdThroughOnce = true
+            module.confirmationURL = module.syllabusURL
         case 12: // シラバス詳細
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(subjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(keyWord)'", completionHandler:  nil)
             module.hasPassdThroughOnce = true
+            module.confirmationURL = module.syllabusURL
+            webView.isHidden = false
         default:
             print("error")
         }
         module.hasPassdCounter += 1
         
-        if (displayURL! == module.courceManagementHomeURL || displayURL! == module.liburaryURL || displayURL! == module.manabaURL){
+        if (module.displayURL! == module.courceManagementHomeURL || module.displayURL! == module.liburaryURL || module.displayURL! == module.manabaURL){
             module.hasPassdThroughOnce = true
         }
     }

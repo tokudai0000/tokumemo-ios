@@ -29,7 +29,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="SO0-hF-KBH"/>
-                                    <barButtonItem title="Item" id="ikw-gN-Ukg"/>
+                                    <barButtonItem id="ikw-gN-Ukg"/>
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9h-79-NBh">

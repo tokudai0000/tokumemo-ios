@@ -47,7 +47,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="1hi-Rr-aPP"/>
-                                    <barButtonItem title="Item" id="T6s-BA-4Ah"/>
+                                    <barButtonItem id="T6s-BA-4Ah"/>
                                 </items>
                             </toolbar>
                         </subviews>

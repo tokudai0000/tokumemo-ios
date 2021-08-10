@@ -9,5 +9,5 @@ target 'univIP' do
   pod 'R.swift' #, '~> 5.1'               #, '5.1.0'
   pod 'WebViewJavascriptBridge'
   pod 'KeychainAccess'
-
+  pod 'mailcore2-ios'
 end

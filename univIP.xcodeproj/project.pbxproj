@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0904E026C271BA00BED109 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */; };
+		1A0904E226C271C700BED109 /* passWord.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A0904E126C271C700BED109 /* passWord.rtf */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
-		1A2B2F6926C2308100414A54 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6826C2308100414A54 /* AboutThisApp.rtf */; };
-		1A2B2F6B26C2316F00414A54 /* passWord.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6A26C2316F00414A54 /* passWord.rtf */; };
 		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
 		1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */; };
 		1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Settings.storyboard */; };
@@ -35,9 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
+		1A0904E126C271C700BED109 /* passWord.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = passWord.rtf; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		1A2B2F6826C2308100414A54 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = AboutThisApp.rtf; path = ../../../../../Desktop/AboutThisApp.rtf; sourceTree = "<group>"; };
-		1A2B2F6A26C2316F00414A54 /* passWord.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = passWord.rtf; path = ../../../../../Desktop/passWord.rtf; sourceTree = "<group>"; };
 		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1A81A91F26C02FF900CC56E2 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -184,8 +184,8 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
-				1A2B2F6826C2308100414A54 /* AboutThisApp.rtf */,
-				1A2B2F6A26C2316F00414A54 /* passWord.rtf */,
+				1A0904E126C271C700BED109 /* passWord.rtf */,
+				1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */,
 				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */,
@@ -304,10 +304,10 @@
 			files = (
 				1A81A92E26C11DDB00CC56E2 /* WebView.storyboard in Resources */,
 				1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */,
-				1A2B2F6B26C2316F00414A54 /* passWord.rtf in Resources */,
+				1A0904E226C271C700BED109 /* passWord.rtf in Resources */,
 				1A81A93C26C1507E00CC56E2 /* AboutThisApp.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
-				1A2B2F6926C2308100414A54 /* AboutThisApp.rtf in Resources */,
+				1A0904E026C271BA00BED109 /* AboutThisApp.rtf in Resources */,
 				1A81A92A26C103E300CC56E2 /* Search.storyboard in Resources */,
 				1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */,
 				1AA056D426BD2AE100343005 /* Main.storyboard in Resources */,
@@ -544,13 +544,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = 5C2UYK6F45;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess/KeychainAccess.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library/Rswift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/WebViewJavascriptBridge/WebViewJavascriptBridge.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
+				);
 				INFOPLIST_FILE = univIP/App/etc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.azukid.akidon.univIP;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azukid.akidon.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -564,13 +573,22 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = 5C2UYK6F45;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess/KeychainAccess.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/R.swift.Library/Rswift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/WebViewJavascriptBridge/WebViewJavascriptBridge.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
+				);
 				INFOPLIST_FILE = univIP/App/etc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.azukid.akidon.univIP;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azukid.akidon.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

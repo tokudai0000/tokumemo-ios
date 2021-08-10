@@ -29,7 +29,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="eM8-6U-8Ub"/>
-                                    <barButtonItem title="Item" id="jjX-Jg-0TM"/>
+                                    <barButtonItem id="jjX-Jg-0TM"/>
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fQF-KZ-gsg">

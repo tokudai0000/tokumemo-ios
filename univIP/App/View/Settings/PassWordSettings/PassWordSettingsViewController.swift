@@ -48,8 +48,10 @@ class PassWordSettingsViewController: UIViewController {
         }
         
         var cAcountText = dataManager.cAccount
+        label.text = "すでに登録済みです(上書き可能)"
         if (cAcountText == ""){
             cAcountText = "cアカウント"
+            label.text = ""
         }
         cAccountTextField.placeholder = cAcountText
         passWordTextField.placeholder = "PassWord"
@@ -68,6 +70,11 @@ class PassWordSettingsViewController: UIViewController {
     
     @IBAction func homeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        outputText.text = inputText.text
+        self.view.endEditing(true)
     }
     
 }
