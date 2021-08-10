@@ -32,8 +32,8 @@
                                     <barButtonItem title="Item" id="ikw-gN-Ukg"/>
                                 </items>
                             </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="z9h-79-NBh">
-                                <rect key="frame" x="50" y="144" width="314" height="603"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9h-79-NBh">
+                                <rect key="frame" x="20" y="64" width="374" height="783"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -43,12 +43,12 @@
                         <viewLayoutGuide key="safeArea" id="qWb-IA-GNX"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="z9h-79-NBh" firstAttribute="leading" secondItem="qWb-IA-GNX" secondAttribute="leading" constant="50" id="0xb-hu-WZF"/>
-                            <constraint firstItem="z9h-79-NBh" firstAttribute="top" secondItem="qWb-IA-GNX" secondAttribute="top" constant="100" id="Bgv-eH-2vg"/>
+                            <constraint firstItem="z9h-79-NBh" firstAttribute="leading" secondItem="qWb-IA-GNX" secondAttribute="leading" constant="20" id="0xb-hu-WZF"/>
+                            <constraint firstItem="z9h-79-NBh" firstAttribute="top" secondItem="qWb-IA-GNX" secondAttribute="top" constant="20" id="Bgv-eH-2vg"/>
                             <constraint firstItem="DKh-5I-aW4" firstAttribute="leading" secondItem="qWb-IA-GNX" secondAttribute="leading" id="GgW-Dr-9B3"/>
                             <constraint firstAttribute="bottom" secondItem="DKh-5I-aW4" secondAttribute="bottom" id="LZE-XA-SIW"/>
-                            <constraint firstItem="DKh-5I-aW4" firstAttribute="top" secondItem="z9h-79-NBh" secondAttribute="bottom" constant="100" id="gvo-w1-2x9"/>
-                            <constraint firstItem="qWb-IA-GNX" firstAttribute="trailing" secondItem="z9h-79-NBh" secondAttribute="trailing" constant="50" id="iPU-dO-bFS"/>
+                            <constraint firstItem="DKh-5I-aW4" firstAttribute="top" secondItem="z9h-79-NBh" secondAttribute="bottom" id="gvo-w1-2x9"/>
+                            <constraint firstItem="qWb-IA-GNX" firstAttribute="trailing" secondItem="z9h-79-NBh" secondAttribute="trailing" constant="20" id="iPU-dO-bFS"/>
                             <constraint firstItem="DKh-5I-aW4" firstAttribute="trailing" secondItem="qWb-IA-GNX" secondAttribute="trailing" id="qaM-W5-nJS"/>
                         </constraints>
                     </view>

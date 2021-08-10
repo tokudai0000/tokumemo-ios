@@ -7,6 +7,7 @@ target 'univIP' do
 
   # Pods for univIP
   pod 'R.swift' #, '~> 5.1'               #, '5.1.0'
-  pod "WebViewJavascriptBridge"
+  pod 'WebViewJavascriptBridge'
+  pod 'KeychainAccess'
 
 end

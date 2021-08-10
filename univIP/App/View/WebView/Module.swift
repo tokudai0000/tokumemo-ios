@@ -18,4 +18,5 @@ class Module: NSObject {
     var displayURL = URL(string: "")
     var passByValue = 0
     var hasPassdThroughOnce = false
+    var hasPassdCounter = 0
 }

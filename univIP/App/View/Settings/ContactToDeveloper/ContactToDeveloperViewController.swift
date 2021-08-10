@@ -25,10 +25,20 @@ class ContactToDeveloperViewController: UIViewController,MFMailComposeViewContro
         }
     }
     
+    @IBOutlet weak var subjectTextField: UITextField!
+    
+    @IBOutlet weak var bodyTextView: UITextView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    
+    @IBAction func sendButton(_ sender: Any) {
         sendMail()
+        
+        
     }
     
     

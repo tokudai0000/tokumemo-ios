@@ -28,6 +28,19 @@ class AboutThisAppViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let url = R.file.aboutThisAppRtf() {
+            do {
+                let terms = try Data(contentsOf: url)
+                let attributeString = try NSAttributedString(data: terms,
+                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
+                                                             documentAttributes: nil)
+                              
+                textView.attributedText = attributeString
+            } catch let error {
+                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
+            }
+        }
 
     }
     

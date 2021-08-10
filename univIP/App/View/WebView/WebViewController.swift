@@ -35,9 +35,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     private var bridge:WebViewJavascriptBridge?
     private var beginingPoint: CGPoint!
     private var isViewShowed: Bool!
-    
-    private let acaunt = "c611821006"
-    private let pass = "Akidon0326"
+
     
     let module = Module()
     var displayURL = URL(string: "")
@@ -45,6 +43,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     var subjectName = ""
     var teacherName = ""
     var keyWord = ""
+    var dataManager = DataManager()
     
     
     //MARK:- LifeCycle
@@ -184,22 +183,28 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
         if (module.hasPassdThroughOnce){
             return
         }
+        if (module.hasPassdCounter >= 4){
+            return
+        }
+        
+        let acaunt = dataManager.cAccount
+        let pass = dataManager.passWord
         
         switch passByValue {
         case 0:
             print("error")
         case 1: // 教務事務システム
-            webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(acaunt)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(pass)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         case 2: // マナバ
-            webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(acaunt)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(pass)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         case 3: // 図書館
-            webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= 'Akidon0326'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(acaunt)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(pass)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         case 11: // シラバス
             print(subjectName)
@@ -216,6 +221,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
         default:
             print("error")
         }
+        module.hasPassdCounter += 1
         
         if (displayURL! == module.courceManagementHomeURL || displayURL! == module.liburaryURL || displayURL! == module.manabaURL){
             module.hasPassdThroughOnce = true

@@ -9,6 +9,7 @@ import UIKit
 
 class PassWordSettingsViewController: UIViewController {
     
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
     
     @IBOutlet weak var cAccountTextField: UITextField!
@@ -28,13 +29,45 @@ class PassWordSettingsViewController: UIViewController {
         }
     }
     
+    var dataManager = DataManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if let url = R.file.passWordRtf() {
+            do {
+                let terms = try Data(contentsOf: url)
+                let attributeString = try NSAttributedString(data: terms,
+                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
+                                                             documentAttributes: nil)
+                
+                textView.attributedText = attributeString
+            } catch let error {
+                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
+            }
+        }
+        
+        var cAcountText = dataManager.cAccount
+        if (cAcountText == ""){
+            cAcountText = "cアカウント"
+        }
+        cAccountTextField.placeholder = cAcountText
+        passWordTextField.placeholder = "PassWord"
+        
     }
+    
+    @IBAction func registrationButton(_ sender: Any) {
+        dataManager.cAccount = cAccountTextField.text ?? ""
+        dataManager.passWord = passWordTextField.text ?? ""
+        //        cAccountTextField.text = ""
+        passWordTextField.text = ""
+        label.text = "登録完了"
+    }
+    
+    
     
     @IBAction func homeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
 }
