@@ -1,17 +1,15 @@
 //
 //  DataManager.swift
-//  univIP
+//  共通データ管理
 //
 //  Created by Akihiro Matsuyama on 2021/08/10.
+//  Copyright © 2021年　akidon0000
 //
 
-import UIKit
+import Foundation
 import KeychainAccess
 
-
 final class DataManager {
-    
-//    static let singleton = DataManager() // シングルトン・インタンス
     
     /// KeychainAccess インスタンス
     var keychain: Keychain {
@@ -41,7 +39,8 @@ final class DataManager {
                 .set(value, key: key)
         } catch {
             // エラー処理
-//            EGLog(level: .ERROR, message: "KeyChain catch!")
+            print("error: Datamanager.setKeyChain")
+            return
         }
     }
     
@@ -51,20 +50,18 @@ final class DataManager {
         get { return getKeyChain(key: KEY_deviceId) }
         set(v) { setKeyChain(key: KEY_deviceId, value: v) }
     }
-
+    
     /// cAccount
     private let KEY_cAccount = "KEY_cAccount"
     var cAccount: String {
         get { return getKeyChain(key: KEY_cAccount) }
         set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
-
+    
     /// passWord
     private let KEY_passWord = "KEY_passWord"
     var passWord: String {
         get { return getKeyChain(key: KEY_passWord) }
         set(v) { setKeyChain(key: KEY_passWord, value: v) }
     }
-    
-    
 }

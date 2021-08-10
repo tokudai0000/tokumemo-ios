@@ -3,19 +3,17 @@
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/09.
+//  Copyright © 2021年　akidon0000
 //
 
 import UIKit
 
 class PassWordSettingsViewController: UIViewController {
-    
+    //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
-    
     @IBOutlet weak var cAccountTextField: UITextField!
-    
     @IBOutlet weak var passWordTextField: UITextField!
-    
     @IBOutlet weak var backButton: UIBarButtonItem!{
         didSet {
             backButton.isEnabled = false
@@ -29,7 +27,8 @@ class PassWordSettingsViewController: UIViewController {
         }
     }
     
-    var dataManager = DataManager()
+    private var dataManager = DataManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +57,7 @@ class PassWordSettingsViewController: UIViewController {
         
     }
     
+    //MARK:- @IBAction
     @IBAction func registrationButton(_ sender: Any) {
         dataManager.cAccount = cAccountTextField.text ?? ""
         dataManager.passWord = passWordTextField.text ?? ""
@@ -66,14 +66,13 @@ class PassWordSettingsViewController: UIViewController {
         label.text = "登録完了"
     }
     
-    
-    
     @IBAction func homeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    //MARK:- Override
+    // キーボード非表示
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        outputText.text = inputText.text
         self.view.endEditing(true)
     }
     

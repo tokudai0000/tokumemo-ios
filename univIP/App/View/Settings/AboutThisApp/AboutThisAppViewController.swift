@@ -3,15 +3,14 @@
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/09.
+//  Copyright © 2021年　akidon0000
 //
 
 import UIKit
 
 class AboutThisAppViewController: UIViewController {
-
-    
+    //MARK:- @IBOutlet
     @IBOutlet weak var textView: UITextView!
-    
     @IBOutlet weak var backButton: UIBarButtonItem!{
         didSet {
             backButton.isEnabled = false
@@ -44,7 +43,7 @@ class AboutThisAppViewController: UIViewController {
 
     }
     
-
+    //MARK:- @IBAction
     @IBAction func homeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

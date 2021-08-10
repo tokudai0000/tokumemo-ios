@@ -3,6 +3,7 @@
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/06.
+//  Copyright © 2021年　akidon0000
 //
 
 import UIKit
