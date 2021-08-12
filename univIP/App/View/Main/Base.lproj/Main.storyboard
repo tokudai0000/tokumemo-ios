@@ -34,7 +34,7 @@
                                                     <constraint firstAttribute="width" constant="75" id="4bg-iM-kxh"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="シラバス"/>
+                                                <state key="normal" title="シラバス" image="Syllabus"/>
                                                 <connections>
                                                     <action selector="SyllabusButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bUV-Mq-4Uk"/>
                                                 </connections>
@@ -43,14 +43,13 @@
                                                 <rect key="frame" x="75" y="0.0" width="47.5" height="75"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAc-Sy-ZTB">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAc-Sy-ZTB">
                                                 <rect key="frame" x="122.5" y="0.0" width="75" height="75"/>
                                                 <color key="backgroundColor" name="AccentColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="75" id="jiX-yb-nQA"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="図書館">
+                                                <state key="normal" title="図書館" image="Liburary">
                                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                                 </state>
                                                 <connections>
@@ -87,7 +86,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="v7f-Da-Lpf"/>
                                         </constraints>
-                                        <state key="normal" title="マナバ" image="img_manaba"/>
+                                        <state key="normal" title="マナバ" image="Manaba"/>
                                         <connections>
                                             <action selector="toWebButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5VA-qS-xK5"/>
                                         </connections>
@@ -134,9 +133,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CourceManagement" width="360" height="100"/>
-        <image name="Settings" width="225" height="225"/>
-        <image name="img_manaba" width="600" height="100"/>
+        <image name="CourceManagement" width="3600" height="1000"/>
+        <image name="Liburary" width="1280" height="1280"/>
+        <image name="Manaba" width="3600" height="1000"/>
+        <image name="Settings" width="1280" height="1280"/>
+        <image name="Syllabus" width="1280" height="1280"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -16,8 +16,6 @@
 import UIKit
 import WebKit
 
-import WebViewJavascriptBridge
-
 
 class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate {
     //MARK:- @IBOutlet
@@ -37,7 +35,6 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
     }
     
     private let module = Module()
-    private var bridge:WebViewJavascriptBridge?
     private var beginingPoint: CGPoint!
     private var isViewShowed: Bool!
 
