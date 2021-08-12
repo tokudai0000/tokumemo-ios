@@ -202,7 +202,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
         }
         
         if (module.displayURL! == module.courceManagementHomeURL || module.displayURL! == module.liburaryURL || module.displayURL! == module.manabaURL){
-            module.hasPassdCounter = 100
+            webView.isHidden = false
+            return
         }
         module.hasPassdCounter += 1
     }

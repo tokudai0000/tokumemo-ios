@@ -34,7 +34,7 @@
                                                     <constraint firstAttribute="width" constant="75" id="4bg-iM-kxh"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="シラバス" image="Syllabus"/>
+                                                <state key="normal" title="シラバス" image="Syllabus "/>
                                                 <connections>
                                                     <action selector="SyllabusButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bUV-Mq-4Uk"/>
                                                 </connections>
@@ -137,7 +137,7 @@
         <image name="Liburary" width="1280" height="1280"/>
         <image name="Manaba" width="3600" height="1000"/>
         <image name="Settings" width="1280" height="1280"/>
-        <image name="Syllabus" width="1280" height="1280"/>
+        <image name="Syllabus " width="1280" height="1280"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

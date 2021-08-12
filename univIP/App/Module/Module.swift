@@ -25,7 +25,7 @@ class Module: NSObject {
     
     /// 現在表示しているURLを保持
     var displayURL = URL(string: "")
-    /// 確認用のURLを保持
+    /// 表示させたいURLを保持（これにより到達したかを判定）
     var confirmationURL = URL(string: "")
     
     /// 回数を保持
