@@ -10,23 +10,28 @@ import UIKit
 
 class Module: NSObject {
     
-    /// 情報ポータルURL
-    let courceManagementURL = URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal")
+    /// ログインURL
+    let loginURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
     /// 情報ポータル、ホーム画面URL
-    let courceManagementHomeURL = URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")
-    /// 図書館URL
-    let liburaryURL = URL(string: "https://opac.lib.tokushima-u.ac.jp/opac/user/top")
+    let courceManagementHomeURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
     /// マナバURL
-    let manabaURL = URL(string: "https://manaba.lms.tokushima-u.ac.jp/s/home_summary")
-    /// シラバスURL
-    let syllabusURL = URL(string: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx")
+    let manabaURL : String = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     /// 接続切れの際、再リロード
-    let lostConnectionUrl = URL(string : "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1")
+    let lostConnectionUrl : String = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1"
     
     /// 現在表示しているURLを保持
-    var displayURL = URL(string: "")
+    var displayURL: String = " "
     /// 表示させたいURLを保持（これにより到達したかを判定）
-    var confirmationURL = URL(string: "")
+    var confirmationURL : String = " "
+    
+    
+    /// 図書館URL
+    let liburaryURL = URL(string: "https://opac.lib.tokushima-u.ac.jp/opac/user/top")
+    /// シラバスURL
+    let syllabusURL = URL(string: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx")
+
+    
+
     
     /// 回数を保持
     var hasPassdThroughOnce = false

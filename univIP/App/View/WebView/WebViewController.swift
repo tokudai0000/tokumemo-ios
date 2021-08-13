@@ -61,20 +61,20 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
         case 0:
             print("error")
         case 1:
-            module.displayURL = module.courceManagementURL
+            module.displayURL = module.loginURL
         case 2:
             module.displayURL = module.manabaURL
-        case 3:
-            module.displayURL = module.liburaryURL
-        case 11:
-            module.displayURL = module.syllabusURL
-        case 12:
-            module.displayURL = module.syllabusURL
+//        case 3:
+////            module.displayURL = module.liburaryURL
+//        case 11:
+////            module.displayURL = module.syllabusURL
+//        case 12:
+//            module.displayURL = module.syllabusURL
         default:
             print("error")
         }
-        
-        openUrl(url: module.displayURL!)
+//
+//        openUrl(url: module.displayURL!)
     }
     
     override func viewDidLoad() {
@@ -134,12 +134,12 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
         
         // 現在表示してるURL
         if let url = navigationAction.request.url{
-            module.displayURL = url
-            if (module.lostConnectionUrl == url){
-                if (module.hasPassdThroughOnce){ // 接続切れの時、ホームへ戻る
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
+//            module.displayURL = url
+//            if (module.lostConnectionUrl == url){
+//                if (module.hasPassdThroughOnce){ // 接続切れの時、ホームへ戻る
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+//            }
         }
         decisionHandler(.allow)
     }
@@ -180,7 +180,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(keyWord)'", completionHandler:  nil)
             module.hasPassdCounter = 100
-            module.confirmationURL = module.syllabusURL
+//            module.confirmationURL = module.syllabusURL
         default:
             print("error: WebView.webView1")
         }
@@ -191,8 +191,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             module.confirmationURL = module.courceManagementHomeURL
         case 2: // マナバ
             module.confirmationURL = module.manabaURL
-        case 3: // 図書館
-            module.confirmationURL = module.liburaryURL
+//        case 3: // 図書館
+//            module.confirmationURL = module.liburaryURL
         case 11: // シラバス
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         case 12: // シラバス詳細
@@ -201,10 +201,10 @@ class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDel
             print("error: WebView.webView1")
         }
         
-        if (module.displayURL! == module.courceManagementHomeURL || module.displayURL! == module.liburaryURL || module.displayURL! == module.manabaURL){
-            webView.isHidden = false
-            return
-        }
+//        if (module.displayURL! == module.courceManagementHomeURL || module.displayURL! == module.liburaryURL || module.displayURL! == module.manabaURL){
+//            webView.isHidden = false
+//            return
+//        }
         module.hasPassdCounter += 1
     }
     
