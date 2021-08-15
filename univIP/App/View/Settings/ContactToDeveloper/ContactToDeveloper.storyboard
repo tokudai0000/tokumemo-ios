@@ -11,36 +11,13 @@
         <!--Contact To Developer View Controller-->
         <scene sceneID="t2Z-3V-21W">
             <objects>
-                <viewController storyboardIdentifier="ContactToDeveloperViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="n6E-KR-FsZ" customClass="ContactToDeveloperViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactToDeveloperViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="n6E-KR-FsZ" customClass="ContactToDeveloperViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mM8-8U-unL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLX-Xf-hVF">
-                                <rect key="frame" x="0.0" y="847" width="414" height="49"/>
-                                <items>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.left" catalog="system" id="TKf-Q3-WwU"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="tRw-Qv-w5p"/>
-                                    <barButtonItem title="Item" image="arrowshape.turn.up.right" catalog="system" id="JfX-sU-pzJ"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3kN-sv-8Pq"/>
-                                    <barButtonItem title="Item" image="homekit" catalog="system" id="Y50-EQ-N7V">
-                                        <connections>
-                                            <action selector="homeButton:" destination="n6E-KR-FsZ" id="6pK-3J-77B"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="eM8-6U-8Ub"/>
-                                    <barButtonItem id="jjX-Jg-0TM"/>
-                                </items>
-                            </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fQF-KZ-gsg">
-                                <rect key="frame" x="20" y="164.5" width="374" height="502.5"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2H-bm-cFF">
-                                <rect key="frame" x="167" y="717" width="80" height="80"/>
+                                <rect key="frame" x="167" y="588.5" width="80" height="80"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Lv6-Cs-KEo"/>
@@ -59,7 +36,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmU-nA-Oq5">
-                                <rect key="frame" x="20" y="675" width="374" height="34"/>
+                                <rect key="frame" x="20" y="546.5" width="374" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="jVJ-jH-C13"/>
                                 </constraints>
@@ -67,20 +44,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fQF-KZ-gsg">
+                                <rect key="frame" x="20" y="172" width="374" height="374"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fQF-KZ-gsg" secondAttribute="height" multiplier="1:1" id="u2R-aq-fal"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IXW-QI-4Je"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="mmU-nA-Oq5" firstAttribute="leading" secondItem="IXW-QI-4Je" secondAttribute="leading" constant="20" id="0y7-Hl-073"/>
-                            <constraint firstAttribute="bottom" secondItem="iLX-Xf-hVF" secondAttribute="bottom" id="1bH-FU-gjd"/>
                             <constraint firstItem="JEA-tY-tVN" firstAttribute="leading" secondItem="IXW-QI-4Je" secondAttribute="leading" constant="20" id="3aJ-zb-Pcw"/>
-                            <constraint firstItem="iLX-Xf-hVF" firstAttribute="leading" secondItem="IXW-QI-4Je" secondAttribute="leading" id="4rZ-H7-RcK"/>
                             <constraint firstItem="IXW-QI-4Je" firstAttribute="trailing" secondItem="mmU-nA-Oq5" secondAttribute="trailing" constant="20" id="Wgl-sn-DxJ"/>
                             <constraint firstItem="R2H-bm-cFF" firstAttribute="centerX" secondItem="mM8-8U-unL" secondAttribute="centerX" id="YGN-gV-wiT"/>
                             <constraint firstItem="JEA-tY-tVN" firstAttribute="top" secondItem="IXW-QI-4Je" secondAttribute="top" constant="100" id="acp-c0-6oy"/>
                             <constraint firstItem="mmU-nA-Oq5" firstAttribute="top" secondItem="fQF-KZ-gsg" secondAttribute="bottom" constant="8" symbolic="YES" id="hKc-Dg-d63"/>
-                            <constraint firstItem="iLX-Xf-hVF" firstAttribute="top" secondItem="R2H-bm-cFF" secondAttribute="bottom" constant="50" id="hb8-cZ-M8v"/>
-                            <constraint firstItem="iLX-Xf-hVF" firstAttribute="trailing" secondItem="IXW-QI-4Je" secondAttribute="trailing" id="iwD-4H-ZbE"/>
                             <constraint firstItem="IXW-QI-4Je" firstAttribute="trailing" secondItem="fQF-KZ-gsg" secondAttribute="trailing" constant="20" id="lJy-h2-ENh"/>
                             <constraint firstItem="fQF-KZ-gsg" firstAttribute="leading" secondItem="IXW-QI-4Je" secondAttribute="leading" constant="20" id="mGS-Pv-0EJ"/>
                             <constraint firstItem="R2H-bm-cFF" firstAttribute="top" secondItem="mmU-nA-Oq5" secondAttribute="bottom" constant="8" symbolic="YES" id="n6c-3S-isf"/>
@@ -89,9 +72,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="TKf-Q3-WwU" id="TnP-kW-3ga"/>
                         <outlet property="bodyTextView" destination="fQF-KZ-gsg" id="pTR-vZ-gKg"/>
-                        <outlet property="forwardButton" destination="JfX-sU-pzJ" id="HdT-Zb-ukq"/>
                         <outlet property="label" destination="mmU-nA-Oq5" id="86b-dR-o3e"/>
                     </connections>
                 </viewController>
@@ -101,9 +82,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
-        <image name="arrowshape.turn.up.right" catalog="system" width="128" height="106"/>
-        <image name="homekit" catalog="system" width="128" height="106"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
