@@ -17,7 +17,7 @@ import UIKit
 import WebKit
 
 
-class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate, UITabBarDelegate {
+class WebViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate, UITabBarDelegate {
     //MARK:- @IBOutlet
     @IBOutlet weak var tabBarUnder: UITabBar!
     @IBOutlet weak var webView: WKWebView!
@@ -25,15 +25,15 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
     @IBOutlet var viewTop: UIView!
     
     private let module = Module()
-    
-    var url : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
+    var url = ""
     
     //MARK:- LifeCycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        webView.isHidden = true
+//        webView.isHidden = true
         
         openUrl(urlString: url)
+        restoreView()
     }
     
     
@@ -58,7 +58,7 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
         })
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
-        vc.delegateMain = self // restoreViewをSettingsVCから呼び出させるため
+//        vc.delegate = self // restoreViewをSettingsVCから呼び出させるため
     }
     
     
@@ -121,38 +121,21 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
     
     // MARK: - Public func
     public func restoreView(){
+        // メニューの位置を取得する
+        let menuPos = self.viewTop.layer.position
+        // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
+        self.viewTop.layer.position.x = self.viewTop.frame.width
         UIView.animate(
             withDuration: 0.5,
             delay: 0,
-            options: .curveEaseIn,
+            options: .curveEaseOut,
             animations: {
-                self.viewTop.layer.position.x -= 250
+                self.viewTop.layer.position.x = menuPos.x
         },
             completion: { bool in
         })
     }
     
-    public func reloadURL(urlString:String){
-        openUrl(urlString: urlString)
-    }
-    public func popupSyllabus(){
-        let vc = R.storyboard.syllabus.syllabusViewController()!
-        self.present(vc, animated: true, completion: nil)
-    }
-    public func popupPassWordView(){
-        let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    public func popupAboutThisApp(){
-        let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    public func popupContactToDeveloper(){
-        let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-        self.present(vc, animated: true, completion: nil)
-    }
     
     // MARK: - Private func
     /// 文字列で指定されたURLをWeb Viewを開く

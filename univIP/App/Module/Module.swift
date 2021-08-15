@@ -26,10 +26,15 @@ class Module: NSObject {
     
     
     /// 図書館URL
-    let liburaryURL = URL(string: "https://opac.lib.tokushima-u.ac.jp/opac/user/top")
+    let liburaryURL : String = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
     /// シラバスURL
-    let syllabusURL = URL(string: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx")
-
+    let syllabusURL : String = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
+    /// 時間割
+    let timeTableURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/Schedule/Day.aspx"
+    /// 今年の成績表
+    let currentTermPerformanceURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=2021"
+    /// 出欠記録
+    let presenceAbsenceRecordURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"
     
 
     

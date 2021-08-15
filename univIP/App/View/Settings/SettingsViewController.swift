@@ -11,57 +11,34 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
     //MARK:- @IBOutlet
     @IBOutlet weak var tableView: UITableView!
-//    @IBOutlet weak var menuView: UIView!
-    
     
     private let module = Module()
-    
-//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        switch item.tag {
-//        case 1:
-//            openUrl(urlString: module.courceManagementHomeURL)
-//        case 2:
-//            openUrl(urlString: module.manabaURL)
-//        case 3:
-//            let vc = R.storyboard.settings.settingsViewController()!
-//            self.present(vc, animated: true, completion: nil)
-//        default:
-//            return
-//        }
-//    }
     // セルの内容が入る
-    private var cellList:[[String]] = [["図書館サイト", "シラバス", "時間割", "今期の成績表", "出欠記録"], ["パスワード設定", "このアプリについて", "開発者へ連絡"]]
+    private var cellList:[[String]] = [["図書館サイト",
+                                        "シラバス",
+                                        "時間割",
+                                        "今年の成績表",
+                                        "出欠記録"],
+                                       ["パスワード設定",
+                                        "このアプリについて",
+                                        "開発者へ連絡"]]
     // セクションの高さ
     private var sectionHight:Int = 50
     // セルの高さ
     private var cellHight:Int = 100
+    
+//    var delegate : MainViewController
+    var delegateMain : MainViewController?
+    var delegatePass : PassWordSettingsViewController?
 
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(false)
-//        // メニューの位置を取得する
-//        let menuPos = self.menuView.layer.position
-//        // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
-//        self.menuView.layer.position.x = -self.menuView.frame.width
-//        // 表示時のアニメーションを作成する
-//        UIView.animate(
-//            withDuration: 0.5,
-//            delay: 0,
-//            options: .curveEaseOut,
-//            animations: {
-//                self.menuView.layer.position.x = menuPos.x
-//            },
-//            completion: { bool in
-//            })
-//    }
+    
+    //MARK:- LifeCycle
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    
-    //MARK:- @IBAction
-    @IBAction func homeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -70,17 +47,55 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /// セルを選択した時のイベントを追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath[0] == 0 && indexPath[1] == 0){ // パスワード設定
-            let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-        }else if (indexPath[0] == 1 && indexPath[1] == 0){ // このアプリについて
-            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-            self.present(vc, animated: true, completion: nil)
-        }else if (indexPath[0] == 1 && indexPath[1] == 1){ // 開発者へ連絡
-            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-            self.present(vc, animated: true, completion: nil)
+        if (indexPath[0] == 0 && indexPath[1] == 0){ // 図書館サイト
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.reloadURL(urlString: module.liburaryURL)
+            self.delegateMain?.restoreView()
+        }else if (indexPath[0] == 0 && indexPath[1] == 1){ // シラバス
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.restoreView()
+            self.delegateMain?.popupSyllabus()
+//            let vc = R.storyboard.syllabus.syllabusViewController()!
+//            self.present(vc, animated: true, completion: nil)
+        }else if (indexPath[0] == 0 && indexPath[1] == 2){ // 時間割
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.reloadURL(urlString: module.timeTableURL)
+            self.delegateMain?.restoreView()
+        }else if (indexPath[0] == 0 && indexPath[1] == 3){ // 今年の成績
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.reloadURL(urlString: module.currentTermPerformanceURL)
+            self.delegateMain?.restoreView()
+        }else if (indexPath[0] == 0 && indexPath[1] == 4){ // 出欠記録
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.reloadURL(urlString: module.presenceAbsenceRecordURL)
+            self.delegateMain?.restoreView()
+            
+            
+        }else if (indexPath[0] == 1 && indexPath[1] == 0){ // パスワード設定
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.restoreView()
+            self.delegateMain?.popupPassWordView()
+        }else if (indexPath[0] == 1 && indexPath[1] == 1){ // このアプリについて
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.restoreView()
+            self.delegateMain?.popupAboutThisApp()
+        }else if (indexPath[0] == 1 && indexPath[1] == 2){ // 開発者へ連絡
+            self.dismiss(animated: false, completion: nil)
+            self.delegateMain?.restoreView()
+            self.delegateMain?.popupContactToDeveloper()
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        
+//        UIView.animate(
+//            withDuration: 0.5,
+//            delay: 0.07,
+//            options: .curveEaseIn,
+//            animations: {
+//                self.tableView.layer.position.x = -self.tableView.frame.width
+//            },
+//            completion: { bool in
+//            }
+//        )
     }
 
     /// セクション内のセル数を決めるメソッド（＊＊必須＊＊）
@@ -112,24 +127,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     
+    //MARK:- Override(Animate)
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // メニューの位置を取得する
         let menuPos = self.tableView.layer.position
-//        let menuPos = self.menuView.layer.position
-        // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする(スタート地)
+        // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
         self.tableView.layer.position.x = -self.tableView.frame.width
-//        self.menuView.layer.position.x = -self.menuView.frame.width
-        // 表示時のアニメーションを作成する
-        print(menuPos.x)
-        print(-self.tableView.frame.width)
         UIView.animate(
             withDuration: 0.5,
             delay: 0,
             options: .curveEaseOut,
             animations: {
-                self.tableView.layer.position.x = 0 //menuPos.x
-//                self.menuView.layer.position.x = menuPos.x
+                self.tableView.layer.position.x = menuPos.x
         },
             completion: { bool in
         })
@@ -142,20 +153,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         for touch in touches {
             if touch.view?.tag == 1 {
                 UIView.animate(
-                    withDuration: 0.2,
-                    delay: 0,
+                    withDuration: 0.5,
+                    delay: 0.07,
                     options: .curveEaseIn,
                     animations: {
                         self.tableView.layer.position.x = -self.tableView.frame.width
-//                        self.menuView.layer.position.x = -self.menuView.frame.width
-                },
+                    },
                     completion: { bool in
                         self.dismiss(animated: false, completion: nil)
-                }
+                    }
                 )
                 
             }
         }
+        self.delegateMain?.restoreView()
+        self.delegatePass?.restoreView()
     }
     
 }

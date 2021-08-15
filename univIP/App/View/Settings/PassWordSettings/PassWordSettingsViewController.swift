@@ -14,24 +14,23 @@ class PassWordSettingsViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
-    @IBOutlet weak var backButton: UIBarButtonItem!{
-        didSet {
-            backButton.isEnabled = false
-            backButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
-        }
-    }
-    @IBOutlet weak var forwardButton: UIBarButtonItem! {
-        didSet {
-            forwardButton.isEnabled = false
-            forwardButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
-        }
-    }
+    @IBOutlet weak var viewTop: UIView!
+    
     
     private var dataManager = DataManager()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            options: .curveEaseIn,
+            animations: {
+                self.viewTop.layer.position.x -= 250
+        },
+            completion: { bool in
+        })
         
         if let url = R.file.passWordRtf() {
             do {
@@ -66,8 +65,20 @@ class PassWordSettingsViewController: UIViewController {
         label.text = "登録完了"
     }
     
-    @IBAction func homeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func settingsButton(_ sender: Any) {
+        // 表示時のアニメーションを作成する
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.08,
+            options: .curveEaseOut,
+            animations: {
+                self.viewTop.layer.position.x += 250
+        },
+            completion: { bool in
+        })
+        let vc = R.storyboard.settings.settingsViewController()!
+        self.present(vc, animated: false, completion: nil)
+        vc.delegatePass = self // restoreViewをSettingsVCから呼び出させるため
     }
     
     //MARK:- Override
@@ -75,5 +86,20 @@ class PassWordSettingsViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+
+    // MARK: - Public func
+    public func restoreView(){
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            options: .curveEaseIn,
+            animations: {
+                self.viewTop.layer.position.x -= 250
+        },
+            completion: { bool in
+        })
+    }
+    
     
 }
+
