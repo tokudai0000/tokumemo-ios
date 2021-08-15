@@ -16,51 +16,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-rU-w43">
-                                <rect key="frame" x="50" y="44" width="314" height="803"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-rU-w43">
+                                <rect key="frame" x="50" y="94" width="314" height="718"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PH4-ch-fdM">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="98"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="科目名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6uj-pU-RB4">
-                                        <rect key="frame" x="0.0" y="98" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="mVP-Xd-u6C"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="30"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rw9-TP-870">
-                                        <rect key="frame" x="0.0" y="148" width="314" height="92.5"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="教員名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z43-Xt-cP3">
-                                        <rect key="frame" x="0.0" y="240.5" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="167" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="T4y-Xo-ykU"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MA5-AM-lBW">
-                                        <rect key="frame" x="0.0" y="290.5" width="314" height="93"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="キーワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GJs-19-Q1f">
-                                        <rect key="frame" x="0.0" y="383.5" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="334" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="vVA-Up-Fux"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="23n-KB-9tB">
-                                        <rect key="frame" x="0.0" y="433.5" width="314" height="35.5"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVV-bZ-QLe">
-                                        <rect key="frame" x="0.0" y="469" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="501" width="314" height="50"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Ogg-fL-S2w"/>
@@ -71,12 +55,8 @@
                                             <action selector="searchButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="DQD-dq-wL9"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mc9-lI-KVT">
-                                        <rect key="frame" x="0.0" y="519" width="314" height="98"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                     <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho9-X1-v6e">
-                                        <rect key="frame" x="0.0" y="617" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="668" width="314" height="50"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="mib-PB-5Bv"/>
@@ -87,27 +67,16 @@
                                             <action selector="searchButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="6Iq-XI-TAs"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8V-wi-Rt4">
-                                        <rect key="frame" x="0.0" y="667" width="314" height="136"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="803" id="8sk-4F-UCf"/>
-                                    <constraint firstItem="PH4-ch-fdM" firstAttribute="height" secondItem="mc9-lI-KVT" secondAttribute="height" id="9oM-Pr-n8r"/>
-                                    <constraint firstItem="PH4-ch-fdM" firstAttribute="height" secondItem="MA5-AM-lBW" secondAttribute="height" multiplier="1.05469" id="REF-BZ-WAQ"/>
-                                    <constraint firstItem="PH4-ch-fdM" firstAttribute="height" secondItem="Rw9-TP-870" secondAttribute="height" multiplier="1.05469" id="lHp-lu-oS0"/>
-                                    <constraint firstItem="PH4-ch-fdM" firstAttribute="height" secondItem="M8V-wi-Rt4" secondAttribute="height" multiplier="0.71875" id="ofc-8N-zul"/>
-                                    <constraint firstItem="PH4-ch-fdM" firstAttribute="height" secondItem="23n-KB-9tB" secondAttribute="height" multiplier="2.7551" id="xVp-Rv-pA3"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="455-8j-VFc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YOK-rU-w43" firstAttribute="leading" secondItem="455-8j-VFc" secondAttribute="leading" constant="50" id="2bh-R7-TSs"/>
+                            <constraint firstItem="455-8j-VFc" firstAttribute="bottom" secondItem="YOK-rU-w43" secondAttribute="bottom" constant="50" id="JAm-v5-pHt"/>
+                            <constraint firstItem="YOK-rU-w43" firstAttribute="top" secondItem="455-8j-VFc" secondAttribute="top" constant="50" id="VND-A0-fEN"/>
                             <constraint firstItem="455-8j-VFc" firstAttribute="trailing" secondItem="YOK-rU-w43" secondAttribute="trailing" constant="50" id="gFX-8J-IdX"/>
-                            <constraint firstItem="YOK-rU-w43" firstAttribute="top" secondItem="455-8j-VFc" secondAttribute="top" id="usk-KX-fDk"/>
                         </constraints>
                     </view>
                     <connections>

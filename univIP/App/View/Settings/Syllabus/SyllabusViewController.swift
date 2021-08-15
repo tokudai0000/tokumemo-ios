@@ -14,11 +14,16 @@ class SyllabusViewController: UIViewController {
     @IBOutlet weak var teacherNameTextField: UITextField!
     @IBOutlet weak var keyWordTextField: UITextField!
     
+    var delegateMain : MainViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    var buttonTagValue = ""
+    var subjectName = ""
+    var teacherName = ""
+    var keyWord = ""
     
     //MARK:- @IBAction
     @IBAction func searchButton(_ sender: Any) {
@@ -26,26 +31,23 @@ class SyllabusViewController: UIViewController {
          11.検索
          12.詳細に検索
          */
-        let vc = R.storyboard.webView.webViewController()!
+//        let vc = R.storyboard.webView.webViewController()!
         
         if let button = sender as? UIButton {
-//            vc.buttonTagValue = button.tag
+            buttonTagValue = String(button.tag)
         }
-        if let subjectName = subjectNameTextField.text{
-//            vc.subjectName = subjectName
+        if let subjectName1 = subjectNameTextField.text{
+            subjectName = subjectName1
         }
-        if let teacherName = teacherNameTextField.text{
-//            vc.teacherName = teacherName
+        if let teacherName1 = teacherNameTextField.text{
+            teacherName = teacherName1
         }
-        if let keyWord = keyWordTextField.text{
-//            vc.keyWord = keyWord
+        if let keyWord1 = keyWordTextField.text{
+            keyWord = keyWord1
         }
-        
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    
-    @IBAction func homeButton(_ sender: Any) {
+        delegateMain?.reloadSyllabus(subN: subjectName, teaN: teacherName, keW: keyWord)
         self.dismiss(animated: true, completion: nil)
+        
+//        self.present(vc, animated: true, completion: nil)
     }
 }

@@ -40,5 +40,8 @@ class Module: NSObject {
     
     /// 回数を保持
     var hasPassdThroughOnce = false
+    var once = false
+    var once1 = false
     var hasPassdCounter = 0
+    var images = "line.horizontal.3"
 }
