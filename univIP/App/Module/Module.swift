@@ -18,6 +18,8 @@ class Module: NSObject {
     let manabaURL : String = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     /// 接続切れの際、再リロード
     let lostConnectionUrl : String = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1"
+    /// タイムアウト
+    let timeOutURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"
     
     /// 現在表示しているURLを保持
     var displayURL: String = " "

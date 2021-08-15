@@ -18,7 +18,8 @@ class PassWordSettingsViewController: UIViewController {
     
     
     private var dataManager = DataManager()
-    
+    var delegateMain : MainViewController?
+    private let module = Module()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,7 @@ class PassWordSettingsViewController: UIViewController {
         //        cAccountTextField.text = ""
         passWordTextField.text = ""
         label.text = "登録完了"
+        self.delegateMain?.reloadURL(urlString: module.loginURL)
     }
     
     @IBAction func settingsButton(_ sender: Any) {

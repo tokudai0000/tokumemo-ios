@@ -30,6 +30,8 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
     var subjectName = ""
     var teacherName = ""
     var keyWord = ""
+    var dataManager = DataManager()
+    
     @IBOutlet weak var backButton: UIButton!{
         didSet {
             backButton.isEnabled = false
@@ -61,17 +63,18 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
         if (module.displayURL == module.courceManagementHomeURL ||
                 module.displayURL == module.manabaURL ||
                 module.displayURL == module.syllabusURL ||
-                module.displayURL == module.liburaryURL){
+                module.displayURL == module.liburaryURL ||
+                module.displayURL.prefix(82) == "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution"){
             // 表示時のアニメーションを作成する
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.08,
-                options: .curveEaseOut,
-                animations: {
-                    self.viewTop.layer.position.x += 250
-                },
-                completion: { bool in
-                })
+//            UIView.animate(
+//                withDuration: 0.5,
+//                delay: 0.08,
+//                options: .curveEaseOut,
+//                animations: {
+//                    self.viewTop.layer.position.x += 250
+//                },
+//                completion: { bool in
+//                })
             let vc = R.storyboard.settings.settingsViewController()!
             self.present(vc, animated: false, completion: nil)
             vc.delegateMain = self // restoreViewをSettingsVCから呼び出させるため
@@ -190,8 +193,10 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
 
           }
 
-        let cAcaunt = "c611821006" //dataManager.cAccount
-        let passWord = "Akidon0326" //dataManager.passWord
+        let cAcaunt = dataManager.cAccount
+        let passWord = dataManager.passWord
+//        let cAcaunt = "c611821006"
+//        let passWord = "Akidon0326"
 
         if (module.hasPassdThroughOnce){
             webView.isHidden = false
@@ -199,9 +204,11 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
 
         if (module.displayURL.prefix(82) == "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution"){
             module.hasPassdThroughOnce = true
-            webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            if (module.displayURL.suffix(2)=="s1"){ //2回目は"=e1s2"
+                webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            }
         }
 
         if (module.displayURL == "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"){
@@ -221,29 +228,34 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
             webView.isHidden = false
         }
         
+        if (module.displayURL == module.timeOutURL){
+            openUrl(urlString: module.loginURL)
+        }
+        
       
         
 //        let image = UIImage(systemName: "line.horizontal.3")
 //        backButton.setImage(image, for: .normal)
         
-//        if (module.displayURL == module.courceManagementHomeURL ||
-//                module.displayURL == module.manabaURL ||
-//                module.displayURL == module.syllabusURL ||
-//                module.displayURL == module.liburaryURL){
-//
-//            if (module.images != "line.horizontal.3"){
-//                let image = UIImage(systemName: "line.horizontal.3")
-//                backButton.setImage(image, for: .normal)
-//                module.images = "line.horizontal.3"
-//            }
-//
-//        }else{
-//            if (module.images != "arrowshape.turn.up.left"){
-//                let image = UIImage(systemName: "arrowshape.turn.up.left")
-//                backButton.setImage(image, for: .normal)
-//                module.images = "arrowshape.turn.up.left"
-//            }
-//        }
+        if (module.displayURL == module.courceManagementHomeURL ||
+                module.displayURL == module.manabaURL ||
+                module.displayURL == module.syllabusURL ||
+                module.displayURL == module.liburaryURL ||
+                module.displayURL.prefix(82) == "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution"){
+
+            if (module.images != "line.horizontal.3"){
+                let image = UIImage(systemName: "line.horizontal.3")
+                backButton.setImage(image, for: .normal)
+                module.images = "line.horizontal.3"
+            }
+
+        }else{
+            if (module.images != "arrowshape.turn.up.left"){
+                let image = UIImage(systemName: "arrowshape.turn.up.left")
+                backButton.setImage(image, for: .normal)
+                module.images = "arrowshape.turn.up.left"
+            }
+        }
         
         
         
@@ -252,15 +264,15 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
 
     // MARK: - Public func
     public func restoreView(){
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                self.viewTop.layer.position.x -= 250
-        },
-            completion: { bool in
-        })
+//        UIView.animate(
+//            withDuration: 0.5,
+//            delay: 0,
+//            options: .curveEaseIn,
+//            animations: {
+//                self.viewTop.layer.position.x -= 250
+//        },
+//            completion: { bool in
+//        })
     }
 
     public func reloadURL(urlString:String){
@@ -283,6 +295,7 @@ class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDe
     public func popupPassWordView(){
         let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
         self.present(vc, animated: true, completion: nil)
+        vc.delegateMain = self
     }
 
     public func popupAboutThisApp(){

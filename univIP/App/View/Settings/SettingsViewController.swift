@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         },
             completion: { bool in
         })
-        
+
     }
 
     // メニューエリア以外タップ時の処理
