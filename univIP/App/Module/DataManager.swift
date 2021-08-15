@@ -9,6 +9,7 @@
 import Foundation
 import KeychainAccess
 
+
 final class DataManager {
     
     /// KeychainAccess インスタンス

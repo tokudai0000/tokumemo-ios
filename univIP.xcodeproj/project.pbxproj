@@ -16,7 +16,6 @@
 		1A81A92826C103D500CC56E2 /* SyllabusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A92726C103D500CC56E2 /* SyllabusViewController.swift */; };
 		1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A92926C103E300CC56E2 /* Syllabus.storyboard */; };
 		1A81A92C26C117A800CC56E2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A92B26C117A800CC56E2 /* WebViewController.swift */; };
-		1A81A92E26C11DDB00CC56E2 /* WebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A92D26C11DDB00CC56E2 /* WebView.storyboard */; };
 		1A81A93126C12C8200CC56E2 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* Module.swift */; };
 		1A81A93626C1503300CC56E2 /* PassWordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93526C1503300CC56E2 /* PassWordSettingsViewController.swift */; };
 		1A81A93826C1504500CC56E2 /* PassWordSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A93726C1504500CC56E2 /* PassWordSettings.storyboard */; };
@@ -45,7 +44,6 @@
 		1A81A92726C103D500CC56E2 /* SyllabusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusViewController.swift; sourceTree = "<group>"; };
 		1A81A92926C103E300CC56E2 /* Syllabus.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Syllabus.storyboard; sourceTree = "<group>"; };
 		1A81A92B26C117A800CC56E2 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		1A81A92D26C11DDB00CC56E2 /* WebView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebView.storyboard; sourceTree = "<group>"; };
 		1A81A93026C12C8200CC56E2 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		1A81A93526C1503300CC56E2 /* PassWordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassWordSettingsViewController.swift; sourceTree = "<group>"; };
 		1A81A93726C1504500CC56E2 /* PassWordSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PassWordSettings.storyboard; sourceTree = "<group>"; };
@@ -85,9 +83,11 @@
 			children = (
 				1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */,
 				1A81A91F26C02FF900CC56E2 /* Settings.storyboard */,
+				1AA056E826BD2DA900343005 /* Syllabus */,
 				1A81A93226C14FBA00CC56E2 /* PassWordSettings */,
 				1A81A93326C14FCC00CC56E2 /* AboutThisApp */,
 				1A81A93426C14FF400CC56E2 /* ContactToDeveloper */,
+				1A81A92F26C1240A00CC56E2 /* WebView */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -105,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				1A81A92B26C117A800CC56E2 /* WebViewController.swift */,
-				1A81A92D26C11DDB00CC56E2 /* WebView.storyboard */,
 			);
 			path = WebView;
 			sourceTree = "<group>";
@@ -210,8 +209,6 @@
 			children = (
 				1AA056EA26BD2DF700343005 /* AppDelegate */,
 				1AA056E426BD2D4100343005 /* Main */,
-				1A81A92F26C1240A00CC56E2 /* WebView */,
-				1AA056E826BD2DA900343005 /* Syllabus */,
 				1A81A91C26C02FB700CC56E2 /* Settings */,
 			);
 			path = View;
@@ -304,7 +301,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A81A92E26C11DDB00CC56E2 /* WebView.storyboard in Resources */,
 				1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */,
 				1A0904E226C271C700BED109 /* passWord.rtf in Resources */,
 				1A81A93C26C1507E00CC56E2 /* AboutThisApp.storyboard in Resources */,
