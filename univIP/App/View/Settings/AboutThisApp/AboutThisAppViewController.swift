@@ -11,23 +11,24 @@ import UIKit
 class AboutThisAppViewController: UIViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var backButton: UIBarButtonItem!{
-        didSet {
-            backButton.isEnabled = false
-            backButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
-        }
-    }
-    @IBOutlet weak var forwardButton: UIBarButtonItem! {
-        didSet {
-            forwardButton.isEnabled = false
-            forwardButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
-        }
-    }
     
     
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        rtfFileOpen()
+    }
+    
+    
+    //MARK:- @IBAction
+    @IBAction func homeButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private func
+    private func rtfFileOpen(){
         if let url = R.file.aboutThisAppRtf() {
             do {
                 let terms = try Data(contentsOf: url)
@@ -40,12 +41,5 @@ class AboutThisAppViewController: UIViewController {
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }
         }
-
     }
-    
-    //MARK:- @IBAction
-    @IBAction func homeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
 }

@@ -11,84 +11,69 @@ import UIKit
 class PassWordSettingsViewController: UIViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
-    @IBOutlet weak var viewTop: UIView!
     
-    
-    private var dataManager = DataManager()
     var delegateMain : MainViewController?
-    private let module = Module()
     
+    private let module = Module()
+    private var dataManager = DataManager()
+    
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                self.viewTop.layer.position.x -= 250
-        },
-            completion: { bool in
-        })
         
-        if let url = R.file.passWordRtf() {
-            do {
-                let terms = try Data(contentsOf: url)
-                let attributeString = try NSAttributedString(data: terms,
-                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
-                                                             documentAttributes: nil)
-                
-                textView.attributedText = attributeString
-            } catch let error {
-                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
-            }
-        }
+        rtfFileOpen()
         
-        var cAcountText = dataManager.cAccount
-        label.text = "すでに登録済みです(上書き可能)"
-        if (cAcountText == ""){
-            cAcountText = "cアカウント"
-            label.text = ""
+        var labelText : String
+        if (dataManager.cAccount == ""){
+            cAccountTextField.placeholder = "cアカウント"
+            labelText = "cアカウントとPassWordを入力してください"
+        }else{
+            cAccountTextField.text = dataManager.cAccount
+            labelText = "すでに登録済みです(上書き可能)"
         }
-        cAccountTextField.placeholder = cAcountText
+        label.text = labelText
         passWordTextField.placeholder = "PassWord"
-        
     }
+    
     
     //MARK:- @IBAction
     @IBAction func registrationButton(_ sender: Any) {
-        dataManager.cAccount = cAccountTextField.text ?? ""
-        dataManager.passWord = passWordTextField.text ?? ""
-        //        cAccountTextField.text = ""
+        var registrationTrigger1 = false
+        var registrationTrigger2 = false
+        var text1 : String = ""
+        var text2 : String = ""
+        if let cAccountText = cAccountTextField.text{
+            if (textFieldEmputyConfirmation(text: cAccountText)){
+                registrationTrigger1 = true
+                text1 = cAccountText
+            }
+        }
+        if let passWordText = passWordTextField.text{
+            if (textFieldEmputyConfirmation(text: passWordText)){
+                registrationTrigger2 = true
+                text2 = passWordText
+            }
+        }
+        
+        var labelText : String
+        if (registrationTrigger1 && registrationTrigger2){
+            dataManager.cAccount = text1
+            dataManager.passWord = text2
+            labelText = "登録完了"
+        }else{
+            labelText = "登録失敗"
+        }
+        
+        label.text = labelText
         passWordTextField.text = ""
-        label.text = "登録完了"
         self.delegateMain?.reloadURL(urlString: module.loginURL)
     }
     
-    @IBAction func settingsButton(_ sender: Any) {
-        // 表示時のアニメーションを作成する
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0.08,
-            options: .curveEaseOut,
-            animations: {
-                self.viewTop.layer.position.x += 250
-        },
-            completion: { bool in
-        })
-        let vc = R.storyboard.settings.settingsViewController()!
-        self.present(vc, animated: false, completion: nil)
-        vc.delegatePass = self // restoreViewをSettingsVCから呼び出させるため
-    }
     
-    //MARK:- Override
-    // キーボード非表示
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-
     // MARK: - Public func
     public func restoreView(){
         UIView.animate(
@@ -103,5 +88,50 @@ class PassWordSettingsViewController: UIViewController {
     }
     
     
+    // MARK: - Private func
+    private func rtfFileOpen(){
+        if let url = R.file.passWordRtf() {
+            do {
+                let terms = try Data(contentsOf: url)
+                let attributeString = try NSAttributedString(data: terms,
+                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
+                                                             documentAttributes: nil)
+                textView.attributedText = attributeString // 情報の保存方法について
+            } catch let error {
+                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func textFieldEmputyConfirmation(text : String) -> Bool{
+        switch text {
+        case "":
+            return false
+        case " ":
+            return false
+        case "  ":
+            return false
+        case "   ":
+            return false
+        case "　":
+            return false
+        case "　　":
+            return false
+        case "　　　":
+            return false
+        case " 　":
+            return false
+        case "　 ":
+            return false
+        default:
+            return true
+        }
+    }
+    
+    //MARK:- Override
+    // キーボード非表示
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
