@@ -24,6 +24,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tabBarUnder: UITabBar!
     @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var tabBarLeft: UITabBarItem!
     
     private let module = Module()
 
@@ -34,11 +35,13 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     private var dataManager = DataManager()
 
 
-    //MARK:- LifeCycle
+ 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        
+        // 初期時選択状態
+        tabBarUnder.selectedItem = tabBarLeft
         webView.isHidden = true
+        
         openUrl(urlString: url)
     }
 
@@ -91,11 +94,35 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             return
         }
     }
+    
 
     /// 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        // <a href="..." target="_blank"> 対策
+        switch navigationAction.navigationType {
+        case .linkActivated:
+            if navigationAction.targetFrame == nil
+                || !navigationAction.targetFrame!.isMainFrame {
+                // <a href="..." target="_blank"> が押されたとき
+                webView.load(URLRequest(url: URL(string: module.displayURL)!))
+                decisionHandler(.cancel)
+                return
+            }
+        case .backForward:
+            break
+        case .formResubmitted:
+            break
+        case .formSubmitted:
+            break
+        case .other:
+            break
+        case .reload:
+            break
+        } // 全要素列挙した場合はdefault不要 (足りない要素が追加されたときにエラーを吐かせる目的)
+        
         
         print(navigationAction.request.url!)
 
@@ -103,7 +130,19 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         if let url = navigationAction.request.url{
             module.displayURL = url.absoluteString
         }
-        decisionHandler(.allow)
+        
+        // 許可するドメインを指定
+        if let host = navigationAction.request.url?.host {
+            for url in module.allowDomeins{
+                if host.contains(url) {
+                    decisionHandler(.allow)
+                    return
+                }else{
+                    continue
+                }
+            }
+        }
+        decisionHandler(.cancel)
     }
 
     /// 読み込み設定（レスポンス取得後）

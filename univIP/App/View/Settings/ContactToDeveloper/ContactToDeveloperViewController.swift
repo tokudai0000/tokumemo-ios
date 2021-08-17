@@ -14,8 +14,8 @@ import UIKit
 class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bodyTextView: UITextView!
-    
     
     private var module = Module()
     private let master_mail = "universityinformationportalapp@gmail.com"
@@ -35,6 +35,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     
     //MARK:- @IBAction
     @IBAction func sendButton(_ sender: Any) {
+        sendButton.isEnabled = false // 無効
         if (module.hasPassdThroughOnce){
             return
         }
@@ -50,7 +51,6 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
 
         module.hasPassdThroughOnce = true
         sendEmail(message: mailText)
-        
     }
     
     
@@ -91,7 +91,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
             }
         }
         module.hasPassdThroughOnce = false
-        
+        sendButton.isEnabled = true // 有効
     }
     
     //MARK:- Override

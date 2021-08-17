@@ -35,6 +35,12 @@ class Module: NSObject {
     /// 出欠記録
     let presenceAbsenceRecordURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"
     
+    let allowDomeins = ["eweb.stud.tokushima-u.ac.jp",
+                        "localidp.ait230.tokushima-u.ac.jp",
+                        "eweb.stud.tokushima-u.ac.jp",
+                        "manaba.lms.tokushima-u.ac.jp",
+                        "opac.lib.tokushima-u.ac.jp"]
+    
     /// 現在表示しているURLを保持
     var displayURL: String = " "
     /// 表示させたいURLを保持（これにより到達したかを判定）
