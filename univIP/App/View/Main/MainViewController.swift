@@ -28,6 +28,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     
     private let module = Module()
 
+    var alertController: UIAlertController!
     private var url : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
     private var subjectName = ""
     private var teacherName = ""
@@ -42,13 +43,20 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         tabBarUnder.selectedItem = tabBarLeft
         webView.isHidden = true
         
-        openUrl(urlString: url)
+        if (registrantDecision()){
+            openUrl(urlString: url)
+        }else{
+            openUrl(urlString: module.systemServiceList)
+        }
+
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarUnder.delegate = self
         webView.navigationDelegate = self
+        
+        openUrl(urlString: module.systemServiceList)
     }
 
 
@@ -85,51 +93,52 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
 
     //MARK:- Library
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        switch item.tag {
-        case 1:
-            openUrl(urlString: module.courceManagementHomeURL)
-        case 2:
-            openUrl(urlString: module.manabaURL)
-        default:
-            return
+        if (registrantDecision()){
+            switch item.tag {
+            case 1:
+                openUrl(urlString: module.courceManagementHomeURL)
+            case 2:
+                openUrl(urlString: module.manabaURL)
+            default:
+                return
+            }
+        }else{
+            switch item.tag {
+            case 1:
+                openUrl(urlString: module.systemServiceList)
+            case 2:
+                openUrl(urlString: module.eLearningList)
+            default:
+                return
+            }
         }
     }
     
-
+    
     /// 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        // <a href="..." target="_blank"> 対策
-        switch navigationAction.navigationType {
-        case .linkActivated:
-            if navigationAction.targetFrame == nil
-                || !navigationAction.targetFrame!.isMainFrame {
-                // <a href="..." target="_blank"> が押されたとき
-                webView.load(URLRequest(url: URL(string: module.displayURL)!))
-                decisionHandler(.cancel)
-                return
+        // 現在表示してるURL
+        if let url = navigationAction.request.url{
+            module.displayURL = url.absoluteString
+            
+            // <a href="..." target="_blank"> が押されたとき
+            if (navigationAction.navigationType == .linkActivated){
+                if navigationAction.targetFrame == nil
+                    || !navigationAction.targetFrame!.isMainFrame {
+                    openUrl(urlString: url.absoluteString)
+                    decisionHandler(.cancel)
+                    return
+                }
             }
-        case .backForward:
-            break
-        case .formResubmitted:
-            break
-        case .formSubmitted:
-            break
-        case .other:
-            break
-        case .reload:
-            break
-        } // 全要素列挙した場合はdefault不要 (足りない要素が追加されたときにエラーを吐かせる目的)
+        }
         
         
         print(navigationAction.request.url!)
 
-        // 現在表示してるURL
-        if let url = navigationAction.request.url{
-            module.displayURL = url.absoluteString
-        }
+
         
         // 許可するドメインを指定
         if let host = navigationAction.request.url?.host {
@@ -190,6 +199,11 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             }
         }
         
+        if (viewTopConfirmation()){
+            webView.isHidden = false
+        }
+        
+        
         // ハンバーガーメニューのボタン画像変更
         var imageName = ""
         if (viewTopConfirmation()){
@@ -209,7 +223,15 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     }
 
     public func reloadURL(urlString:String){
-        openUrl(urlString: urlString)
+        if (registrantDecision()){
+            openUrl(urlString: urlString)
+        }else{
+            if (urlString == module.liburaryURL){
+                openUrl(urlString: module.libraryHomeURL)
+            }else{
+                alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
+            }
+        }
     }
     
     public func reloadSyllabus(subN:String, teaN:String, keyW:String, buttonTV:String){
@@ -247,11 +269,35 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         webView.load(request as URLRequest)
     }
     
+    /// アカウント登録者ならtrue
+    private func registrantDecision() -> Bool{
+        if (dataManager.cAccount != "" &&
+                dataManager.passWord != ""){
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func alert(title:String, message:String) {
+            alertController = UIAlertController(title: title,
+                                       message: message,
+                                       preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK",
+                                           style: .default,
+                                           handler: nil))
+            present(alertController, animated: true)
+        }
+    
+    /// tabBar左ボタンの画像を入れ替える際の判定
     private func viewTopConfirmation() -> Bool {
         if (module.displayURL == module.courceManagementHomeURL ||
                 module.displayURL == module.manabaURL ||
                 module.displayURL == module.syllabusURL ||
                 module.displayURL == module.liburaryURL ||
+                module.displayURL == module.systemServiceList ||
+                module.displayURL == module.eLearningList ||
+                module.displayURL == module.libraryHomeURL ||
                 module.displayURL.prefix(83) == module.lostConnectionUrl){
             return true
         }else{
@@ -259,6 +305,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }
     }
     
+    /// アニメーション
     private func viewAnimated(scene:String){
         switch scene {
         case "rightButtonUp":

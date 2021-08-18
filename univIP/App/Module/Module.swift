@@ -12,8 +12,8 @@ class Module: NSObject {
     
     /// ログインURL
     let loginURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
-    /// 接続切れの際、再リロード
-    let lostConnectionUrl : String = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="//83桁 =の後ろに付く(e1s1)は可変
+    /// 接続切れの際、再リロード 83桁 =の後ろに付く(e1s1)は可変
+    let lostConnectionUrl : String = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="
     /// タイムアウト
     let timeOutURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"
     /// アンケート催促
@@ -35,11 +35,20 @@ class Module: NSObject {
     /// 出欠記録
     let presenceAbsenceRecordURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"
     
+    /// 非登録者に対して表示するURL
+    let systemServiceList : String = "https://www.ait.tokushima-u.ac.jp/service/list_out/"
+    let eLearningList : String = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
+    let libraryHomeURL : String = "https://www.lib.tokushima-u.ac.jp/"
+    
+    /// 許可するドメイン
     let allowDomeins = ["eweb.stud.tokushima-u.ac.jp",
                         "localidp.ait230.tokushima-u.ac.jp",
                         "eweb.stud.tokushima-u.ac.jp",
                         "manaba.lms.tokushima-u.ac.jp",
-                        "opac.lib.tokushima-u.ac.jp"]
+                        "opac.lib.tokushima-u.ac.jp",
+                        "www.ait.tokushima-u.ac.jp",
+                        "uls01.ulc.tokushima-u.ac.jp",
+                        "www.lib.tokushima-u.ac.jp"]
     
     /// 現在表示しているURLを保持
     var displayURL: String = " "
