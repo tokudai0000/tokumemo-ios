@@ -14,20 +14,8 @@ import UIKit
 class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bodyTextView: UITextView!
-    @IBOutlet weak var backButton: UIBarButtonItem!{
-        didSet {
-            backButton.isEnabled = false
-            backButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
-        }
-    }
-    @IBOutlet weak var forwardButton: UIBarButtonItem! {
-        didSet {
-            forwardButton.isEnabled = false
-            forwardButton.tintColor = UIColor.blue.withAlphaComponent(0.4)
-        }
-    }
-    
     
     private var module = Module()
     private let master_mail = "universityinformationportalapp@gmail.com"
@@ -47,6 +35,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     
     //MARK:- @IBAction
     @IBAction func sendButton(_ sender: Any) {
+        sendButton.isEnabled = false // 無効
         if (module.hasPassdThroughOnce){
             return
         }
@@ -62,22 +51,15 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
 
         module.hasPassdThroughOnce = true
         sendEmail(message: mailText)
-        
-        
     }
-    
-    @IBAction func homeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     
     
     //MARK:- Private func
     private func sendEmail(message:String) {
         let smtpSession = MCOSMTPSession()
         smtpSession.hostname = "smtp.gmail.com"
-        smtpSession.username = master_mail
-        smtpSession.password = master_pass
+        smtpSession.username = module.masterMail
+        smtpSession.password = module.masterPass
         smtpSession.port = 465
         smtpSession.isCheckCertificateEnabled = false
         smtpSession.authType = MCOAuthType.saslPlain
@@ -93,7 +75,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         let builder = MCOMessageBuilder()
         builder.header.to = [MCOAddress(displayName: display_name, mailbox: master_mail)!]
         builder.header.from = MCOAddress(displayName: display_name, mailbox: master_mail)
-        builder.header.subject = "トクメモ開発者へ"
+        builder.header.subject = module.mailTitle
         builder.htmlBody = message
         
         let rfc822Data = builder.data()
@@ -109,7 +91,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
             }
         }
         module.hasPassdThroughOnce = false
-        
+        sendButton.isEnabled = true // 有効
     }
     
     //MARK:- Override

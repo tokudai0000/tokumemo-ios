@@ -74,6 +74,7 @@
                     <connections>
                         <outlet property="bodyTextView" destination="fQF-KZ-gsg" id="pTR-vZ-gKg"/>
                         <outlet property="label" destination="mmU-nA-Oq5" id="86b-dR-o3e"/>
+                        <outlet property="sendButton" destination="R2H-bm-cFF" id="TSV-Qi-YvU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jBh-PN-C5N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

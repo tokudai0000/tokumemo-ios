@@ -16,14 +16,15 @@ class SyllabusViewController: UIViewController {
     
     var delegateMain : MainViewController?
     
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    var buttonTagValue = ""
-    var subjectName = ""
-    var teacherName = ""
-    var keyWord = ""
+    private var buttonTagValue = ""
+    private var subjectName = ""
+    private var teacherName = ""
+    private var keyWord = ""
     
     //MARK:- @IBAction
     @IBAction func searchButton(_ sender: Any) {
@@ -31,24 +32,22 @@ class SyllabusViewController: UIViewController {
          11.検索
          12.詳細に検索
          */
-//        let vc = R.storyboard.webView.webViewController()!
         
         if let button = sender as? UIButton {
             buttonTagValue = String(button.tag)
         }
-        if let subjectName1 = subjectNameTextField.text{
-            subjectName = subjectName1
+        if let subN = subjectNameTextField.text{
+            subjectName = subN
         }
-        if let teacherName1 = teacherNameTextField.text{
-            teacherName = teacherName1
+        if let teaN = teacherNameTextField.text{
+            teacherName = teaN
         }
-        if let keyWord1 = keyWordTextField.text{
-            keyWord = keyWord1
+        if let keyW = keyWordTextField.text{
+            keyWord = keyW
         }
-        delegateMain?.reloadSyllabus(subN: subjectName, teaN: teacherName, keW: keyWord)
-        self.dismiss(animated: true, completion: nil)
         
-//        self.present(vc, animated: true, completion: nil)
+        delegateMain?.reloadSyllabus(subN: subjectName, teaN: teacherName, keyW: keyWord, buttonTV: buttonTagValue)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK:- Override
