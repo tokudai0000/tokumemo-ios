@@ -48,7 +48,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
             return
         }
         label.text = "送信中です・・・・・・・"
-
+        
         module.hasPassdThroughOnce = true
         sendEmail(message: mailText)
     }

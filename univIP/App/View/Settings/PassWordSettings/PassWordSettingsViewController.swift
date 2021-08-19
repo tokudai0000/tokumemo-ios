@@ -82,9 +82,9 @@ class PassWordSettingsViewController: UIViewController {
             options: .curveEaseIn,
             animations: {
                 self.viewTop.layer.position.x -= 250
-        },
+            },
             completion: { bool in
-        })
+            })
     }
     
     
@@ -103,6 +103,7 @@ class PassWordSettingsViewController: UIViewController {
         }
     }
     
+    // 空白の検知
     private func textFieldEmputyConfirmation(text : String) -> Bool{
         switch text {
         case "":
