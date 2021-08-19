@@ -26,6 +26,8 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     @IBOutlet weak var tabBarUnder: UITabBar!
     @IBOutlet weak var tabBarLeft: UITabBarItem!
     
+    var launchScreenView: UIView!
+    var launchScreenImage: UIImage!
     private let module = Module()
     private var alertController: UIAlertController!
     private var url : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
@@ -34,10 +36,16 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     private var keyWord = ""
     private var dataManager = DataManager()
 
-
+    override func loadView() {
+        super.loadView()
+//        print("loadView")
+        viewAnimated(scene: "launchScreen")
+    }
  
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
+        
+//        viewAnimated(scene: "launchScreen")
         // 初期時選択状態
         tabBarUnder.selectedItem = tabBarLeft
         webView.isHidden = true
@@ -66,6 +74,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         if (viewTopConfirmation()){
             let vc = R.storyboard.settings.settingsViewController()!
             self.present(vc, animated: false, completion: nil)
+//            viewAnimated(scene: "mainToSettings")
             vc.delegateMain = self // restoreViewをSettingsVCから呼び出させるため
         }else{
             webView.goBack()
@@ -386,9 +395,97 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
                 options: .curveEaseOut,
                 animations: {
                     self.webView.layer.position.y -= 60
-            },
+                },
                 completion: { bool in
+                })
+            
+        case "launchScreen":
+            launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+            launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
+            launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
+            
+            let imageView = UIImageView(image:UIImage(named:"tokumemoIcon1")!)
+            imageView.frame = CGRect(x:0, y:0, width:50, height:50);
+            imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2 + 10)
+            
+            self.view.addSubview(launchScreenView)
+            self.view.addSubview(imageView)
+            
+            //少し縮小するアニメーション
+            UIView.animate(withDuration: 0.3,
+                delay: 2.0,
+                options: UIView.AnimationOptions.curveEaseOut,
+                animations: { () in
+                    imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                }, completion: { (Bool) in
+
             })
+
+            //拡大させて、消えるアニメーション
+            UIView.animate(withDuration: 0.5,
+                delay: 2.3,
+                options: UIView.AnimationOptions.curveEaseOut,
+                animations: { () in
+                    imageView.transform = CGAffineTransform(scaleX: 50, y: 50)
+                    imageView.alpha = 0.1
+                }, completion: { (Bool) in
+                    imageView.removeFromSuperview()
+                    self.launchScreenView.removeFromSuperview()
+            })
+//            UIView.animate(
+//                withDuration: 5,
+//                delay: 0,
+//                options: .curveEaseIn,
+//                animations: {
+//                    imageView.layer.position.x = +200
+//                },
+//                completion: { bool in
+//                    //                    self.dismiss(animated: false, completion: nil)
+//                }
+//            )
+            
+//        case "mainToSettings":
+//            UIView.animate(
+//                withDuration: 5,
+//                delay: 0,
+//                options: .curveEaseIn,
+//                animations: {
+//                    self.viewTop.layer.position.x = +200
+////                    self.viewTop.layer.position.x = -self.viewTop.frame.width
+//                },
+//                completion: { bool in
+////                    self.dismiss(animated: false, completion: nil)
+//                }
+//            )
+            
+//            let menuPos = self.viewTop.layer.position
+//            print(menuPos)
+//            self.viewTop.center = self.view.center
+////            self.viewTop.layer.position.x = 1000
+//            UIView.animate(
+//                withDuration: 10,
+//                delay: 0,
+//                options: .curveEaseIn,
+//                animations: {
+////                    self.viewTop.layer.position.x += 100
+//                },
+//                completion: { _ in
+//                    self.viewTop.layer.position.x += 100
+//                })
+//        case "settingsViewAppear":
+//            // メニューの位置を取得する
+//            let menuPos = self.tableView.layer.position
+//            // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
+//            self.tableView.layer.position.x = -self.tableView.frame.width
+//            UIView.animate(
+//                withDuration: 10,
+//                delay: 0,
+//                options: .curveEaseOut,
+//                animations: {
+//                    self.tableView.layer.position.x = menuPos.x
+//            },
+//                completion: { bool in
+//            })
 //        case "restorView":
 //                // 表示時のアニメーションを作成する
 //                UIView.animate(
