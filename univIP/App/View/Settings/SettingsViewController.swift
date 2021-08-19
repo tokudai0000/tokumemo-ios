@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-                self.delegateMain?.reloadURL(urlString: module.liburaryURL)
+                self.delegateMain?.reloadURL(urlString: module.liburaryLoginURL)
             case 1: // シラバス
                 self.delegateMain?.popupSyllabus()
             case 2: // 時間割
