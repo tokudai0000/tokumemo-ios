@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-                self.delegateMain?.reloadURL(urlString: module.liburaryURL)
+                self.delegateMain?.reloadURL(urlString: module.liburaryLoginURL)
             case 1: // シラバス
                 self.delegateMain?.popupSyllabus()
             case 2: // 時間割
@@ -129,15 +129,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             })
         case "settingsViewDisappear":
             UIView.animate(
-                withDuration: 0.5,
-                delay: 0.07,
+                withDuration: 0.2,
+                delay: 0,
                 options: .curveEaseIn,
                 animations: {
                     self.tableView.layer.position.x = -self.tableView.frame.width
                 },
-                completion: { bool in
+                completion: { _ in
+                    self.dismiss(animated: false, completion: nil)
                 }
             )
+//            self.dismiss(animated: false, completion: nil)
         default:
             return
         }
@@ -153,7 +155,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         for touch in touches {
             if touch.view?.tag == 1 {
                 viewAnimated(scene: "settingsViewDisappear")
-                self.dismiss(animated: false, completion: nil)
+
 //                self.delegateMain?.restoreView()
 //                self.delegatePass?.restoreView()
             }
