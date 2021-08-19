@@ -13,7 +13,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     
     private let module = Module()
-    
+    // セルの内容が入る
     private var cellList:[[String]] = [["図書館サイト",
                                         "シラバス",
                                         "時間割",
@@ -29,7 +29,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     var delegateMain : MainViewController?
     var delegatePass : PassWordSettingsViewController?
-    
+
     
     //MARK:- LifeCycle
     override func viewDidAppear(_ animated: Bool) {
@@ -40,6 +40,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
     
     
     // MARK: - Library
@@ -53,7 +54,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             case 0: // 図書館サイト
                 self.delegateMain?.reloadURL(urlString: module.liburaryLoginURL)
             case 1: // シラバス
-                self.delegateMain?.popupView(scene: "syllabus")
+                self.delegateMain?.popupSyllabus()
             case 2: // 時間割
                 self.delegateMain?.reloadURL(urlString: module.timeTableURL)
             case 3: // 今年の成績
@@ -66,21 +67,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }else if(indexPath[0] == 1){
             switch indexPath[1] {
             case 0: // パスワード設定
-                self.delegateMain?.popupView(scene: "password")
+                self.delegateMain?.popupPassWordView()
             case 1: // このアプリについて
-                self.delegateMain?.popupView(scene: "aboutThisApp")
+                self.delegateMain?.popupAboutThisApp()
             case 2: // 開発者へ連絡
-                self.delegateMain?.popupView(scene: "contactToDeveloper")
+                self.delegateMain?.popupContactToDeveloper()
             default:
                 return
             }
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
+    
         viewAnimated(scene: "settingsViewDisappear")
     }
-    
+
     /// セクション内のセル数を決めるメソッド（＊＊必須＊＊）
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellList[Int(section)].count
@@ -93,17 +94,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // ここで「>」ボタンを設定
         return TableCell
     }
-    
+
     /// テーブル内のセクション数を決めるメソッド
     func numberOfSections(in tableView: UITableView) -> Int {
         return cellList.count
     }
-    
+
     /// セクションの高さを設定
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(sectionHight)
     }
-    
+
     /// セルの高さを決めるメソッド
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(cellHight)
@@ -123,9 +124,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 options: .curveEaseOut,
                 animations: {
                     self.tableView.layer.position.x = menuPos.x
-                },
+            },
                 completion: { bool in
-                })
+            })
         case "settingsViewDisappear":
             UIView.animate(
                 withDuration: 0.2,
@@ -138,19 +139,25 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.dismiss(animated: false, completion: nil)
                 }
             )
+//            self.dismiss(animated: false, completion: nil)
         default:
             return
         }
     }
     
-    //MARK:- Override(Animate)
+
     
+    //MARK:- Override(Animate)
+
     // メニューエリア以外タップ時の処理
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         for touch in touches {
             if touch.view?.tag == 1 {
                 viewAnimated(scene: "settingsViewDisappear")
+
+//                self.delegateMain?.restoreView()
+//                self.delegatePass?.restoreView()
             }
         }
     }

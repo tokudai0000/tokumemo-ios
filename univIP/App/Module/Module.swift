@@ -11,7 +11,7 @@ import UIKit
 class Module: NSObject {
     /// ログインURL
     let loginURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
-    //    https://eweb.stud.tokushima-u.ac.jp/Portal/shibboleth_login.aspx
+//    https://eweb.stud.tokushima-u.ac.jp/Portal/shibboleth_login.aspx
     /// 情報ポータル、ホーム画面URL
     let courceManagementHomeURL : String = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
     /// マナバURL
@@ -62,7 +62,7 @@ class Module: NSObject {
     var displayURL: String = " "
     /// 表示させたいURLを保持（これにより到達したかを判定）
     var confirmationURL : String = " "
-    
+
     /// メール設定
     let mailTitle = "トクメモ開発者へ"
     let masterMail = "universityinformationportalapp@gmail.com"
@@ -72,5 +72,5 @@ class Module: NSObject {
     var hasPassdThroughOnce = false
     var onlySearchOnce = false
     var mainViewRightButtonOnOff : Bool = false
-    
+
 }
