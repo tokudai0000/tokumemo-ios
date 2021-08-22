@@ -38,24 +38,18 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
 
     override func loadView() {
         super.loadView()
-//        print("loadView")
         viewAnimated(scene: "launchScreen")
     }
  
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        
-//        viewAnimated(scene: "launchScreen")
+        if (!registrantDecision()){
+            alert(title: "このアプリの使い方", message: "左上のボタンからパスワード設定を行うことで、自動でログインできる様になります。")
+        }
         // 初期時選択状態
         tabBarUnder.selectedItem = tabBarLeft
         webView.isHidden = true
-//        webView.frame = view.frame
         
-//        if (registrantDecision()){
-//            openUrl(urlString: url)
-//        }else{
-//            openUrl(urlString: module.systemServiceListURL)
-//        }
         openUrl(urlForRegistrant: url, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
     }
 
@@ -64,8 +58,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         tabBarUnder.delegate = self
         webView.navigationDelegate = self
         webView.isUserInteractionEnabled = true
-        
-//        openUrl(urlString: module.systemServiceListURL)
     }
 
 
@@ -74,7 +66,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         if (viewTopConfirmation()){
             let vc = R.storyboard.settings.settingsViewController()!
             self.present(vc, animated: false, completion: nil)
-//            viewAnimated(scene: "mainToSettings")
+            
             vc.delegateMain = self // restoreViewをSettingsVCから呼び出させるため
         }else{
             webView.goBack()
@@ -84,11 +76,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     @IBAction func centerButton(_ sender: Any) {
         tabBarUnder.selectedItem = tabBarLeft
         openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
-//        if (registrantDecision()){
-//            openUrl(urlString: module.loginURL)
-//        }else{
-//            openUrl(urlString: module.systemServiceListURL)
-//        }
     }
     
 
@@ -122,26 +109,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         default:
             return
         }
-
-//        if (registrantDecision()){
-//            switch item.tag {
-//            case 1:
-//                openUrl(urlString: module.courceManagementHomeURL)
-//            case 2:
-//                openUrl(urlString: module.manabaURL)
-//            default:
-//                return
-//            }
-//        }else{
-//            switch item.tag {
-//            case 1:
-//                openUrl(urlString: module.systemServiceListURL)
-//            case 2:
-//                openUrl(urlString: module.eLearningListURL)
-//            default:
-//                return
-//            }
-//        }
     }
     
     
@@ -155,28 +122,23 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             decisionHandler(.cancel)
             return
         }
-//        if let url = navigationAction.request.url{
         module.displayURL = url.absoluteString
         
         // <a href="..." target="_blank"> が押されたとき
         if (navigationAction.navigationType == .linkActivated){
             if navigationAction.targetFrame == nil
                 || !navigationAction.targetFrame!.isMainFrame {
-//                    openUrl(urlString: url.absoluteString)
                 openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: nil, alertTrigger: false)
                 decisionHandler(.cancel)
                 return
             }
         }
-//        }
         
         if (url == URL(string: module.popupToYoutubeURL)){
             webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
                 print(html!)
                 if let htmlYoutube = html{
-//                    print(type(of: htmlYoutube))
-                    UIApplication.shared.openURL(URL(string: String(describing: htmlYoutube))!)
-//                    self.openUrl(urlForRegistrant: String(describing: htmlYoutube), urlForNotRegistrant: nil, alertTrigger: false)
+                    UIApplication.shared.open(URL(string: String(describing: htmlYoutube))!)
                 }
             })
         }
@@ -188,26 +150,15 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         guard let host = navigationAction.request.url?.host else {
             return
         }
-//        if let host = navigationAction.request.url?.host{
+        
         if host.contains(module.allowDomain){
             decisionHandler(.allow)
             return
         }
-//        }
-//        if UIApplication.shared.responds(to: #selector(UIApplication.open(_:options:completionHandler:))) {
-//            UIApplication.shared.open(url, options: [UIApplication.OpenExternalURLOptionsKey.universalLinksOnly:false], completionHandler: { (finished: Bool) in
-//            })
-//        }
-//        else {
-//            // iOS 10 で deprecated 必要なら以降のopenURLも振り分ける
-//            // iOS 10以降は UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            UIApplication.shared.openURL(url)
-//        }
-        UIApplication.shared.openURL(url)
+        
+        UIApplication.shared.open(url)
         decisionHandler(.cancel)
         return
-//        UIApplication.shared.open(navigationAction.request.url!)
-//        decisionHandler(.cancel)
     }
 
     /// 読み込み設定（レスポンス取得後）
@@ -225,7 +176,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         let passWord = dataManager.passWord
 
         if (module.displayURL == module.timeOutURL){
-//            openUrl(urlString: module.loginURL)
             openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
         }
         
@@ -280,16 +230,32 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     }
 
     public func reloadURL(urlString:String){
-        openUrl(urlForRegistrant: urlString, urlForNotRegistrant: module.libraryHomeURL, alertTrigger: true)
-//        if (registrantDecision()){
-//            openUrl(urlString: urlString)
-//        }else{
-//            if (urlString == module.liburaryLoginURL){
-//                openUrl(urlString: module.libraryHomeURL)
-//            }else{
-//                alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
-//            }
-//        }
+        openUrl(urlForRegistrant: urlString, urlForNotRegistrant: nil, alertTrigger: true)
+//        openUrl(urlForRegistrant: urlString, urlForNotRegistrant: module.libraryHomeURL, alertTrigger: true)
+    }
+    
+    public func popupView(scene: String){
+        switch scene {
+        case "firstView":
+            let vc = R.storyboard.syllabus.syllabusViewController()!
+            self.present(vc, animated: true, completion: nil)
+        case "syllabus":
+            let vc = R.storyboard.syllabus.syllabusViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegateMain = self
+        case "password":
+            let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegateMain = self
+        case "aboutThisApp":
+            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+            self.present(vc, animated: true, completion: nil)
+        case "contactToDeveloper":
+            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
+            self.present(vc, animated: true, completion: nil)
+        default:
+            return
+        }
     }
     
     public func reloadSyllabus(subN:String, teaN:String, keyW:String, buttonTV:String){
@@ -297,53 +263,55 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         subjectName=subN
         teacherName=teaN
         module.onlySearchOnce = false
-//        openUrl(urlString: module.syllabusURL)
         openUrl(urlForRegistrant: module.syllabusURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
 
-    public func popupSyllabus(){
-        let vc = R.storyboard.syllabus.syllabusViewController()!
-        self.present(vc, animated: true, completion: nil)
-        vc.delegateMain = self
-    }
-    public func popupPassWordView(){
-        let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
-        self.present(vc, animated: true, completion: nil)
-        vc.delegateMain = self
-    }
-    public func popupAboutThisApp(){
-        let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-        self.present(vc, animated: true, completion: nil)
-    }
-    public func popupContactToDeveloper(){
-        let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-        self.present(vc, animated: true, completion: nil)
-    }
+//    public func popupSyllabus(){
+//        let vc = R.storyboard.syllabus.syllabusViewController()!
+//        self.present(vc, animated: true, completion: nil)
+//        vc.delegateMain = self
+//    }
+//    public func popupPassWordView(){
+//        let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
+//        self.present(vc, animated: true, completion: nil)
+//        vc.delegateMain = self
+//    }
+//    public func popupAboutThisApp(){
+//        let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+//        self.present(vc, animated: true, completion: nil)
+//    }
+//    public func popupContactToDeveloper(){
+//        let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
+//        self.present(vc, animated: true, completion: nil)
+//    }
 
     
     // MARK: - Private func
     /// 文字列で指定されたURLをWeb Viewを開く
     private func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
         var url : String
+        var trigger = alertTrigger
         url = urlForRegistrant
         if (!registrantDecision()){
+            if (url == module.liburaryLoginURL){
+                url = module.libraryHomeURL
+                trigger = false
+            }
             if let url1 = urlForNotRegistrant{
                 url = url1
             }
-            if (alertTrigger) {
-                if (urlForNotRegistrant == module.displayURL){
+            
+            if (trigger) {
+//                if (urlForNotRegistrant == module.displayURL){
                     alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
-                }
+                    return
+//                }
             }
         }
         let request = NSURLRequest(url: URL(string:url)!)
         
         webView.load(request as URLRequest)
     }
-//    private func openUrl(urlString: String) {
-//        let request = NSURLRequest(url: URL(string:urlString)!)
-//        webView.load(request as URLRequest)
-//    }
     
     /// アカウント登録者ならtrue
     private func registrantDecision() -> Bool{
@@ -353,6 +321,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }else{
             return false
         }
+//        return false
     }
     
     func alert(title:String, message:String) {
@@ -413,7 +382,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             
             //少し縮小するアニメーション
             UIView.animate(withDuration: 0.3,
-                delay: 2.0,
+                delay: 0,
                 options: UIView.AnimationOptions.curveEaseOut,
                 animations: { () in
                     imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -423,7 +392,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
 
             //拡大させて、消えるアニメーション
             UIView.animate(withDuration: 0.5,
-                delay: 2.3,
+                delay: 0.3,
                 options: UIView.AnimationOptions.curveEaseOut,
                 animations: { () in
                     imageView.transform = CGAffineTransform(scaleX: 50, y: 50)
