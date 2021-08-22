@@ -17,7 +17,7 @@ class Module: NSObject {
     /// マナバURL
     let manabaURL : String = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     /// 図書館URL
-    let liburaryLoginURL : String = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+    let libraryLoginURL : String = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
     /// シラバスURL
     let syllabusURL : String = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
     /// 時間割
@@ -46,7 +46,7 @@ class Module: NSObject {
     
     
     /// 許可するドメイン
-    let allowDomain = "u"//"tokushima-u.ac.jp"
+    let allowDomain = "tokushima-u.ac.jp"
     
     /// トップ画面
     let topMenuURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx",

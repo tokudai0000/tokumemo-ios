@@ -44,7 +44,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         if (!registrantDecision()){
-            alert(title: "このアプリの使い方", message: "左上のボタンからパスワード設定を行うことで、自動でログインできる様になります。")
+            popupView(scene: "password")
         }
         // 初期時選択状態
         tabBarUnder.selectedItem = tabBarLeft
@@ -231,7 +231,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
 
     public func reloadURL(urlString:String){
         openUrl(urlForRegistrant: urlString, urlForNotRegistrant: nil, alertTrigger: true)
-//        openUrl(urlForRegistrant: urlString, urlForNotRegistrant: module.libraryHomeURL, alertTrigger: true)
     }
     
     public func popupView(scene: String){
@@ -266,25 +265,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         openUrl(urlForRegistrant: module.syllabusURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
 
-//    public func popupSyllabus(){
-//        let vc = R.storyboard.syllabus.syllabusViewController()!
-//        self.present(vc, animated: true, completion: nil)
-//        vc.delegateMain = self
-//    }
-//    public func popupPassWordView(){
-//        let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
-//        self.present(vc, animated: true, completion: nil)
-//        vc.delegateMain = self
-//    }
-//    public func popupAboutThisApp(){
-//        let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-//        self.present(vc, animated: true, completion: nil)
-//    }
-//    public func popupContactToDeveloper(){
-//        let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-//        self.present(vc, animated: true, completion: nil)
-//    }
-
     
     // MARK: - Private func
     /// 文字列で指定されたURLをWeb Viewを開く
@@ -293,7 +273,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         var trigger = alertTrigger
         url = urlForRegistrant
         if (!registrantDecision()){
-            if (url == module.liburaryLoginURL){
+            if (url == module.libraryLoginURL){
                 url = module.libraryHomeURL
                 trigger = false
             }
@@ -302,10 +282,8 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             }
             
             if (trigger) {
-//                if (urlForNotRegistrant == module.displayURL){
-                    alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
-                    return
-//                }
+                alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
+                return
             }
         }
         let request = NSURLRequest(url: URL(string:url)!)
@@ -401,74 +379,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
                     imageView.removeFromSuperview()
                     self.launchScreenView.removeFromSuperview()
             })
-//            UIView.animate(
-//                withDuration: 5,
-//                delay: 0,
-//                options: .curveEaseIn,
-//                animations: {
-//                    imageView.layer.position.x = +200
-//                },
-//                completion: { bool in
-//                    //                    self.dismiss(animated: false, completion: nil)
-//                }
-//            )
-            
-//        case "mainToSettings":
-//            UIView.animate(
-//                withDuration: 5,
-//                delay: 0,
-//                options: .curveEaseIn,
-//                animations: {
-//                    self.viewTop.layer.position.x = +200
-////                    self.viewTop.layer.position.x = -self.viewTop.frame.width
-//                },
-//                completion: { bool in
-////                    self.dismiss(animated: false, completion: nil)
-//                }
-//            )
-            
-//            let menuPos = self.viewTop.layer.position
-//            print(menuPos)
-//            self.viewTop.center = self.view.center
-////            self.viewTop.layer.position.x = 1000
-//            UIView.animate(
-//                withDuration: 10,
-//                delay: 0,
-//                options: .curveEaseIn,
-//                animations: {
-////                    self.viewTop.layer.position.x += 100
-//                },
-//                completion: { _ in
-//                    self.viewTop.layer.position.x += 100
-//                })
-//        case "settingsViewAppear":
-//            // メニューの位置を取得する
-//            let menuPos = self.tableView.layer.position
-//            // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
-//            self.tableView.layer.position.x = -self.tableView.frame.width
-//            UIView.animate(
-//                withDuration: 10,
-//                delay: 0,
-//                options: .curveEaseOut,
-//                animations: {
-//                    self.tableView.layer.position.x = menuPos.x
-//            },
-//                completion: { bool in
-//            })
-//        case "restorView":
-//                // 表示時のアニメーションを作成する
-//                UIView.animate(
-//                    withDuration: 0.5,
-//                    delay: 0.08,
-//                    options: .curveEaseOut,
-//                    animations: {
-//                        self.viewTop.layer.position.x += 250
-//                },
-//                    completion: { bool in
-//                })
-//                let vc = R.storyboard.settings.settingsViewController()!
-//                self.present(vc, animated: false, completion: nil)
-//                vc.delegateMain = self // restoreViewをSettingsVCから呼び出させるため
         default:
             return
         }

@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-                self.delegateMain?.reloadURL(urlString: module.liburaryLoginURL)
+                self.delegateMain?.reloadURL(urlString: module.libraryLoginURL)
             case 1: // シラバス
 //                self.delegateMain?.popupSyllabus()
                 self.delegateMain?.popupView(scene: "syllabus")
@@ -68,13 +68,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }else if(indexPath[0] == 1){
             switch indexPath[1] {
             case 0: // パスワード設定
-//                self.delegateMain?.popupPassWordView()
                 self.delegateMain?.popupView(scene: "password")
             case 1: // このアプリについて
-//                self.delegateMain?.popupAboutThisApp()
                 self.delegateMain?.popupView(scene: "aboutThisApp")
             case 2: // 開発者へ連絡
-//                self.delegateMain?.popupContactToDeveloper()
                 self.delegateMain?.popupView(scene: "contactToDeveloper")
             default:
                 return
@@ -143,7 +140,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.dismiss(animated: false, completion: nil)
                 }
             )
-//            self.dismiss(animated: false, completion: nil)
         default:
             return
         }
@@ -159,9 +155,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         for touch in touches {
             if touch.view?.tag == 1 {
                 viewAnimated(scene: "settingsViewDisappear")
-
-//                self.delegateMain?.restoreView()
-//                self.delegatePass?.restoreView()
             }
         }
     }

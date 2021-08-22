@@ -59,7 +59,19 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         let smtpSession = MCOSMTPSession()
         smtpSession.hostname = "smtp.gmail.com"
         smtpSession.username = module.masterMail
-        smtpSession.password = module.masterPass
+        
+        //パスワードをenvTxtから取得
+        if let url = R.file.envTxt() {
+            do {
+                let textData = try String(contentsOf: url, encoding: String.Encoding.utf8)
+                smtpSession.password = textData
+                print("成功")
+            } catch let error as NSError{
+                //　tryが失敗した時に実行される
+                print("読み込み失敗: \(error)" )
+            }
+        }
+        
         smtpSession.port = 465
         smtpSession.isCheckCertificateEnabled = false
         smtpSession.authType = MCOAuthType.saslPlain
