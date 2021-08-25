@@ -35,6 +35,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     private var teacherName = ""
     private var keyWord = ""
     private var dataManager = DataManager()
+    private var timeSleep = false
 
     override func loadView() {
         super.loadView()
@@ -74,6 +75,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     }
     
     @IBAction func centerButton(_ sender: Any) {
+        webView.isHidden = true
         tabBarUnder.selectedItem = tabBarLeft
         openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
     }
@@ -136,13 +138,12 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         
         if (url == URL(string: module.popupToYoutubeURL)){
             webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
-                print(html!)
                 if let htmlYoutube = html{
                     UIApplication.shared.open(URL(string: String(describing: htmlYoutube))!)
                 }
             })
         }
-        print(navigationAction.request.url!)
+        print(url)
 
 
         
@@ -176,6 +177,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         let passWord = dataManager.passWord
 
         if (module.displayURL == module.timeOutURL){
+            webView.isHidden = true
             openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
         }
         
@@ -185,18 +187,14 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
                 webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-            }else{ // ログインできなかった時
-                webView.isHidden = false
             }
         }
 
         if (module.displayURL == module.enqueteReminderURL){
-            webView.isHidden = false
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
         if (module.displayURL == module.syllabusURL){
-            webView.isHidden = false
             if (module.onlySearchOnce == false){
                 module.onlySearchOnce = true
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(subjectName)'", completionHandler:  nil)
@@ -206,10 +204,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             }
         }
         
-        if (viewTopConfirmation()){
-            webView.isHidden = false
-        }
-        
+
         
         // ハンバーガーメニューのボタン画像変更
         var imageName = ""
@@ -221,6 +216,46 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         let image = UIImage(systemName: imageName)
         leftButton.setImage(image, for: .normal)
         
+ 
+        isHiddenDecision()
+        
+    }
+    private func isHiddenDecision(){
+        // シラバス
+        if (module.displayURL == module.syllabusSearchMainURL){
+            webView.isHidden = false
+            return
+        }
+        // 登録者用　教務事務システム
+        if (module.displayURL == module.courceManagementHomeURL){
+            webView.isHidden = false
+            return
+        }
+        
+        // 非登録者用　教務事務システム
+        if (module.displayURL == module.systemServiceListURL){
+            webView.isHidden = false
+            return
+        }
+        
+        if (module.displayURL == module.syllabusURL){
+            if (timeSleep && module.hasPassdThroughOnce){
+                sleep(3)
+                webView.isHidden = false
+                timeSleep = false
+                module.hasPassdThroughOnce = false
+                return
+            }
+            module.hasPassdThroughOnce = true
+        }
+        
+        // ログイン
+        if (module.displayURL.prefix(83) == module.lostConnectionURL){
+            if (module.displayURL.suffix(2) != "s1"){ // ログインできなかった時
+                webView.isHidden = false
+                return
+            }
+        }
     }
 
 
@@ -258,10 +293,12 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     }
     
     public func reloadSyllabus(subN:String, teaN:String, keyW:String, buttonTV:String){
+        webView.isHidden = true
         keyWord=keyW
         subjectName=subN
         teacherName=teaN
         module.onlySearchOnce = false
+        timeSleep = true
         openUrl(urlForRegistrant: module.syllabusURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
 
@@ -299,7 +336,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }else{
             return false
         }
-//        return false
     }
     
     func alert(title:String, message:String) {

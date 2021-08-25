@@ -59,7 +59,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             case 2: // 時間割
                 self.delegateMain?.reloadURL(urlString: module.timeTableURL)
             case 3: // 今年の成績
-                self.delegateMain?.reloadURL(urlString: module.currentTermPerformanceURL)
+                let current = Calendar.current
+                var year = current.component(.year, from: Date())
+                let month = current.component(.month, from: Date())
+                
+                if (month <= 3){ // 1月から3月までは前年の成績であるから
+                    year -= 1
+                }
+                
+                let termPerformanceYearURL = module.currentTermPerformanceURL + String(year)
+                self.delegateMain?.reloadURL(urlString: termPerformanceYearURL)
             case 4: // 出欠記録
                 self.delegateMain?.reloadURL(urlString: module.presenceAbsenceRecordURL)
             default:

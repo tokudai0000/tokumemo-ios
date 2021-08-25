@@ -25,6 +25,7 @@ class PassWordSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         rtfFileOpen()
         
         var labelText : String
@@ -134,7 +135,6 @@ class PassWordSettingsViewController: UIViewController {
 //    }
     
     //MARK:- Override
-    // キーボード非表示
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
