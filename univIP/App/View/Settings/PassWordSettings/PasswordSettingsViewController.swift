@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PassWordSettingsViewController: UIViewController {
+class PasswordSettingsViewController: UIViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var viewTop: UIView!
@@ -96,7 +96,7 @@ class PassWordSettingsViewController: UIViewController {
     
     // MARK: - Private func
     private func rtfFileOpen(){
-        if let url = R.file.passWordRtf() {
+        if let url = R.file.passwordRtf() {
             do {
                 let terms = try Data(contentsOf: url)
                 let attributeString = try NSAttributedString(data: terms,

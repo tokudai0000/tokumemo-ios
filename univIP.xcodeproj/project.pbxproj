@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		1A0904E026C271BA00BED109 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */; };
-		1A0904E226C271C700BED109 /* passWord.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A0904E126C271C700BED109 /* passWord.rtf */; };
+		1A0904E226C271C700BED109 /* Password.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A0904E126C271C700BED109 /* Password.rtf */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
 		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
-		1A72E30926D62DA700DB3179 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A72E30826D62DA700DB3179 /* MainViewModel.swift */; };
+		1A72E30B26D65A6B00DB3179 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A72E30A26D65A6B00DB3179 /* PDFKit.framework */; };
 		1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */; };
 		1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Settings.storyboard */; };
 		1A81A92826C103D500CC56E2 /* SyllabusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A92726C103D500CC56E2 /* SyllabusViewController.swift */; };
 		1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A92926C103E300CC56E2 /* Syllabus.storyboard */; };
 		1A81A93126C12C8200CC56E2 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* Module.swift */; };
-		1A81A93626C1503300CC56E2 /* PassWordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93526C1503300CC56E2 /* PassWordSettingsViewController.swift */; };
-		1A81A93826C1504500CC56E2 /* PassWordSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A93726C1504500CC56E2 /* PassWordSettings.storyboard */; };
+		1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93526C1503300CC56E2 /* PasswordSettingsViewController.swift */; };
+		1A81A93826C1504500CC56E2 /* PasswordSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A93726C1504500CC56E2 /* PasswordSettings.storyboard */; };
 		1A81A93A26C1507000CC56E2 /* AboutThisAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93926C1507000CC56E2 /* AboutThisAppViewController.swift */; };
 		1A81A93C26C1507E00CC56E2 /* AboutThisApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A93B26C1507E00CC56E2 /* AboutThisApp.storyboard */; };
 		1A81A93E26C150A100CC56E2 /* ContactToDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93D26C150A100CC56E2 /* ContactToDeveloperViewController.swift */; };
@@ -36,18 +36,18 @@
 
 /* Begin PBXFileReference section */
 		1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
-		1A0904E126C271C700BED109 /* passWord.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = passWord.rtf; sourceTree = "<group>"; };
+		1A0904E126C271C700BED109 /* Password.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Password.rtf; sourceTree = "<group>"; };
 		1A0904E326C2828700BED109 /* sendEmail_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sendEmail_bridge.h; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
-		1A72E30826D62DA700DB3179 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1A81A91F26C02FF900CC56E2 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A81A92726C103D500CC56E2 /* SyllabusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusViewController.swift; sourceTree = "<group>"; };
 		1A81A92926C103E300CC56E2 /* Syllabus.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Syllabus.storyboard; sourceTree = "<group>"; };
 		1A81A93026C12C8200CC56E2 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
-		1A81A93526C1503300CC56E2 /* PassWordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassWordSettingsViewController.swift; sourceTree = "<group>"; };
-		1A81A93726C1504500CC56E2 /* PassWordSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PassWordSettings.storyboard; sourceTree = "<group>"; };
+		1A81A93526C1503300CC56E2 /* PasswordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSettingsViewController.swift; sourceTree = "<group>"; };
+		1A81A93726C1504500CC56E2 /* PasswordSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordSettings.storyboard; sourceTree = "<group>"; };
 		1A81A93926C1507000CC56E2 /* AboutThisAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutThisAppViewController.swift; sourceTree = "<group>"; };
 		1A81A93B26C1507E00CC56E2 /* AboutThisApp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AboutThisApp.storyboard; sourceTree = "<group>"; };
 		1A81A93D26C150A100CC56E2 /* ContactToDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactToDeveloperViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A81A94226C15EAC00CC56E2 /* MessageUI.framework in Frameworks */,
+				1A72E30B26D65A6B00DB3179 /* PDFKit.framework in Frameworks */,
 				1C42206F8DA32E6251403A15 /* Pods_univIP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,8 +106,8 @@
 		1A81A93226C14FBA00CC56E2 /* PassWordSettings */ = {
 			isa = PBXGroup;
 			children = (
-				1A81A93526C1503300CC56E2 /* PassWordSettingsViewController.swift */,
-				1A81A93726C1504500CC56E2 /* PassWordSettings.storyboard */,
+				1A81A93526C1503300CC56E2 /* PasswordSettingsViewController.swift */,
+				1A81A93726C1504500CC56E2 /* PasswordSettings.storyboard */,
 			);
 			path = PassWordSettings;
 			sourceTree = "<group>";
@@ -169,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				1AA056D026BD2AE100343005 /* MainViewController.swift */,
-				1A72E30826D62DA700DB3179 /* MainViewModel.swift */,
 				1AA056D226BD2AE100343005 /* Main.storyboard */,
 			);
 			path = Main;
@@ -178,7 +178,7 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
-				1A0904E126C271C700BED109 /* passWord.rtf */,
+				1A0904E126C271C700BED109 /* Password.rtf */,
 				1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */,
 				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
@@ -221,6 +221,7 @@
 		1C91199C2DFA8E4D8B3EBE6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A72E30A26D65A6B00DB3179 /* PDFKit.framework */,
 				1A81A94126C15EAC00CC56E2 /* MessageUI.framework */,
 				7BCC34096843A918E0B133E4 /* Pods_univIP.framework */,
 			);
@@ -297,14 +298,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */,
-				1A0904E226C271C700BED109 /* passWord.rtf in Resources */,
+				1A0904E226C271C700BED109 /* Password.rtf in Resources */,
 				1A81A93C26C1507E00CC56E2 /* AboutThisApp.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A0904E026C271BA00BED109 /* AboutThisApp.rtf in Resources */,
 				1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */,
 				1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */,
 				1AA056D426BD2AE100343005 /* Main.storyboard in Resources */,
-				1A81A93826C1504500CC56E2 /* PassWordSettings.storyboard in Resources */,
+				1A81A93826C1504500CC56E2 /* PasswordSettings.storyboard in Resources */,
 				1A9F7D5026D24AA6000051E0 /* env.txt in Resources */,
 				1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */,
 			);
@@ -385,11 +386,10 @@
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
-				1A81A93626C1503300CC56E2 /* PassWordSettingsViewController.swift in Sources */,
+				1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* Module.swift in Sources */,
 				1A81A93A26C1507000CC56E2 /* AboutThisAppViewController.swift in Sources */,
 				1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */,
-				1A72E30926D62DA700DB3179 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,7 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XSC9AJPSP3;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
@@ -572,7 +572,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XSC9AJPSP3;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
