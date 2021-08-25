@@ -28,7 +28,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     private var cellHight:Int = 100
     
     var delegateMain : MainViewController?
-    var delegatePass : PassWordSettingsViewController?
+    var delegatePass : PasswordSettingsViewController?
 
     
     //MARK:- LifeCycle
@@ -52,26 +52,40 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-                self.delegateMain?.reloadURL(urlString: module.liburaryLoginURL)
+//                self.delegateMain?.reloadURL(urlString: module.libraryLoginURL)
+                self.delegateMain?.openUrl(urlForRegistrant: module.libraryLoginURL, urlForNotRegistrant: nil, alertTrigger: false)
             case 1: // シラバス
-                self.delegateMain?.popupSyllabus()
+//                self.delegateMain?.popupSyllabus()
+                self.delegateMain?.popupView(scene: "syllabus")
             case 2: // 時間割
-                self.delegateMain?.reloadURL(urlString: module.timeTableURL)
+//                self.delegateMain?.reloadURL(urlString: module.timeTableURL)
+                self.delegateMain?.openUrl(urlForRegistrant: module.timeTableURL, urlForNotRegistrant: nil, alertTrigger: false)
             case 3: // 今年の成績
-                self.delegateMain?.reloadURL(urlString: module.currentTermPerformanceURL)
+                let current = Calendar.current
+                var year = current.component(.year, from: Date())
+                let month = current.component(.month, from: Date())
+                
+                if (month <= 3){ // 1月から3月までは前年の成績であるから
+                    year -= 1
+                }
+                
+                let termPerformanceYearURL = module.currentTermPerformanceURL + String(year)
+//                self.delegateMain?.reloadURL(urlString: termPerformanceYearURL)
+                self.delegateMain?.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: false)
             case 4: // 出欠記録
-                self.delegateMain?.reloadURL(urlString: module.presenceAbsenceRecordURL)
+//                self.delegateMain?.reloadURL(urlString: module.presenceAbsenceRecordURL)
+                self.delegateMain?.openUrl(urlForRegistrant: module.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: false)
             default:
                 return
             }
         }else if(indexPath[0] == 1){
             switch indexPath[1] {
             case 0: // パスワード設定
-                self.delegateMain?.popupPassWordView()
+                self.delegateMain?.popupView(scene: "password")
             case 1: // このアプリについて
-                self.delegateMain?.popupAboutThisApp()
+                self.delegateMain?.popupView(scene: "aboutThisApp")
             case 2: // 開発者へ連絡
-                self.delegateMain?.popupContactToDeveloper()
+                self.delegateMain?.popupView(scene: "contactToDeveloper")
             default:
                 return
             }
@@ -139,7 +153,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.dismiss(animated: false, completion: nil)
                 }
             )
-//            self.dismiss(animated: false, completion: nil)
         default:
             return
         }
@@ -155,9 +168,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         for touch in touches {
             if touch.view?.tag == 1 {
                 viewAnimated(scene: "settingsViewDisappear")
-
-//                self.delegateMain?.restoreView()
-//                self.delegatePass?.restoreView()
             }
         }
     }

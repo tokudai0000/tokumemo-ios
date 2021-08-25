@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PassWordSettingsViewController: UIViewController {
+class PasswordSettingsViewController: UIViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var viewTop: UIView!
@@ -25,12 +25,13 @@ class PassWordSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         rtfFileOpen()
         
         var labelText : String
         if (dataManager.cAccount == ""){
             cAccountTextField.placeholder = "cアカウント"
-            labelText = "cアカウントとPassWordを入力してください"
+            labelText = "入力してください"
         }else{
             cAccountTextField.text = dataManager.cAccount
             labelText = "すでに登録済みです(上書き可能)"
@@ -42,35 +43,41 @@ class PassWordSettingsViewController: UIViewController {
     
     //MARK:- @IBAction
     @IBAction func registrationButton(_ sender: Any) {
-        var registrationTrigger1 = false
-        var registrationTrigger2 = false
+//        var registrationTrigger1 = false
+//        var registrationTrigger2 = false
         var text1 : String = ""
         var text2 : String = ""
+        
         if let cAccountText = cAccountTextField.text{
-            if (textFieldEmputyConfirmation(text: cAccountText)){
-                registrationTrigger1 = true
+//            if (textFieldEmputyConfirmation(text: cAccountText)){
+//                registrationTrigger1 = true
                 text1 = cAccountText
-            }
+//            }
         }
         if let passWordText = passWordTextField.text{
-            if (textFieldEmputyConfirmation(text: passWordText)){
-                registrationTrigger2 = true
+//            if (textFieldEmputyConfirmation(text: passWordText)){
+//                registrationTrigger2 = true
                 text2 = passWordText
-            }
+//            }
         }
         
         var labelText : String
-        if (registrationTrigger1 && registrationTrigger2){
-            dataManager.cAccount = text1
-            dataManager.passWord = text2
-            labelText = "登録完了"
-        }else{
-            labelText = "登録失敗"
-        }
+        dataManager.cAccount = text1
+        dataManager.passWord = text2
+        labelText = "登録完了"
+        
+//        if (registrationTrigger1 && registrationTrigger2){
+//            dataManager.cAccount = text1
+//            dataManager.passWord = text2
+//            labelText = "登録完了"
+//        }else{
+//            labelText = "登録失敗"
+//        }
         
         label.text = labelText
         passWordTextField.text = ""
-        self.delegateMain?.reloadURL(urlString: module.loginURL)
+//        self.delegateMain?.reloadURL(urlString: module.loginURL)
+        self.delegateMain?.openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
     
     
@@ -90,7 +97,7 @@ class PassWordSettingsViewController: UIViewController {
     
     // MARK: - Private func
     private func rtfFileOpen(){
-        if let url = R.file.passWordRtf() {
+        if let url = R.file.passwordRtf() {
             do {
                 let terms = try Data(contentsOf: url)
                 let attributeString = try NSAttributedString(data: terms,
@@ -103,33 +110,32 @@ class PassWordSettingsViewController: UIViewController {
         }
     }
     
-    private func textFieldEmputyConfirmation(text : String) -> Bool{
-        switch text {
-        case "":
-            return false
-        case " ":
-            return false
-        case "  ":
-            return false
-        case "   ":
-            return false
-        case "　":
-            return false
-        case "　　":
-            return false
-        case "　　　":
-            return false
-        case " 　":
-            return false
-        case "　 ":
-            return false
-        default:
-            return true
-        }
-    }
+//    private func textFieldEmputyConfirmation(text : String) -> Bool{
+//        switch text {
+//        case "":
+//            return false
+//        case " ":
+//            return false
+//        case "  ":
+//            return false
+//        case "   ":
+//            return false
+//        case "　":
+//            return false
+//        case "　　":
+//            return false
+//        case "　　　":
+//            return false
+//        case " 　":
+//            return false
+//        case "　 ":
+//            return false
+//        default:
+//            return true
+//        }
+//    }
     
     //MARK:- Override
-    // キーボード非表示
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

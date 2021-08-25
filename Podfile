@@ -7,7 +7,6 @@ target 'univIP' do
 
   # Pods for univIP
   pod 'R.swift' #, '~> 5.1'               #, '5.1.0'
-#  pod 'WebViewJavascriptBridge'
   pod 'KeychainAccess'
   pod 'mailcore2-ios'
   
@@ -15,6 +14,10 @@ target 'univIP' do
     installer.pods_project.build_configurations.each do |config|
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
     end
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      end
+    end
   end
-  
 end
