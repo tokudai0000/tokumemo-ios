@@ -76,7 +76,7 @@ class Module: NSObject {
     let masterMail = "universityinformationportalapp@gmail.com"
     
     /// 回数を保持
-    var hasPassdThroughOnce = false
-    var onlySearchOnce = false
-    var mainViewRightButtonOnOff : Bool = false
+//    var hasPassdThroughOnce = false
+//    var onlySearchOnce = false
+//    var mainViewRightButtonOnOff : Bool = false
 }

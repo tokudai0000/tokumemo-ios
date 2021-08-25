@@ -46,7 +46,7 @@ class SyllabusViewController: UIViewController {
             keyWord = keyW
         }
         
-        delegateMain?.reloadSyllabus(subN: subjectName, teaN: teacherName, keyW: keyWord, buttonTV: buttonTagValue)
+        delegateMain?.refreshSyllabus(subjectName: subjectName, teacherName: teacherName, keyword: keyWord)
         self.dismiss(animated: true, completion: nil)
     }
     

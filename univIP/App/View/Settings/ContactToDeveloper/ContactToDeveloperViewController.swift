@@ -31,12 +31,15 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+    private var hasPassdThroughOnce = false
     
     //MARK:- @IBAction
     @IBAction func sendButton(_ sender: Any) {
         sendButton.isEnabled = false // 無効
-        if (module.hasPassdThroughOnce){
+//        if (module.hasPassdThroughOnce){
+//            return
+//        }
+        if (hasPassdThroughOnce){
             return
         }
         let mailText = bodyTextView.text ?? ""
@@ -49,7 +52,8 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         }
         label.text = "送信中です・・・・・・・"
 
-        module.hasPassdThroughOnce = true
+//        module.hasPassdThroughOnce = true
+        hasPassdThroughOnce = true
         sendEmail(message: mailText)
     }
     
@@ -102,7 +106,8 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
                 self.label.text = "送信しました。"
             }
         }
-        module.hasPassdThroughOnce = false
+//        module.hasPassdThroughOnce = false
+        hasPassdThroughOnce = false
         sendButton.isEnabled = true // 有効
     }
     

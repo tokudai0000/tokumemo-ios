@@ -76,7 +76,8 @@ class PasswordSettingsViewController: UIViewController {
         
         label.text = labelText
         passWordTextField.text = ""
-        self.delegateMain?.reloadURL(urlString: module.loginURL)
+//        self.delegateMain?.reloadURL(urlString: module.loginURL)
+        self.delegateMain?.openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
     
     
