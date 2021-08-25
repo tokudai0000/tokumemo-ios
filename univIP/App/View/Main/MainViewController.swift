@@ -15,7 +15,7 @@
 
 import UIKit
 import WebKit
-
+import PDFKit
 
 final class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate, UITabBarDelegate {
     //MARK:- @IBOutlet
@@ -145,7 +145,13 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }
         print(url)
 
-
+        
+        for it in module.transitionURLs{
+            if (module.displayURL.contains(it)){
+                alert(title: "", message: "PDF")
+                return
+            }
+        }
         
         // 許可するドメインを指定
         guard let host = navigationAction.request.url?.host else {
@@ -278,7 +284,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             self.present(vc, animated: true, completion: nil)
             vc.delegateMain = self
         case "password":
-            let vc = R.storyboard.passWordSettings.passWordSettingsViewController()!
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
             vc.delegateMain = self
         case "aboutThisApp":

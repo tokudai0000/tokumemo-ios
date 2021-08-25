@@ -28,7 +28,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     private var cellHight:Int = 100
     
     var delegateMain : MainViewController?
-    var delegatePass : PassWordSettingsViewController?
+    var delegatePass : PasswordSettingsViewController?
 
     
     //MARK:- LifeCycle
