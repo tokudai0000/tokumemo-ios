@@ -29,6 +29,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     private var launchScreenView: UIView!
     private var launchScreenImage: UIImage!
     private var alertController: UIAlertController!
+    var ActivityIndicator: UIActivityIndicatorView!
     
     private let module = Module()
     private var dataManager = DataManager()
@@ -50,39 +51,36 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         viewAnimated(scene: "launchScreen")
     }
  
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(false)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(false)
 //        if (!registrantDecision()){
 //            popupView(scene: "password")
 //        }
-
-//        // 初期時選択状態
-//        tabBarUnder.selectedItem = tabBarLeft
-//        webView.isHidden = true
-//        openUrl(urlForRegistrant: url, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
-//    }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 非登録者の場合、パスワード入力を催促
-        if (!registrantDecision()){
-            popupView(scene: "password")
-        }
-
-//        webView.isHidden = true
-        
-//        url = module.loginURL
-//        openUrl(urlForRegistrant: url, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
-//        openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
-
-        // 初期時選択状態
-//        tabBarUnder.selectedItem = tabBarLeft
-        
-        refresh()
         
         tabBarUnder.delegate = self
         webView.navigationDelegate = self
         webView.isUserInteractionEnabled = true
+        
+        
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+
+        //Viewに追加
+        self.view.addSubview(ActivityIndicator)
+        
+        refresh()
     }
 
 
@@ -99,28 +97,14 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             webView.goBack()
             
         }
-//        if (viewTopConfirmation()){
-//            let vc = R.storyboard.settings.settingsViewController()!
-//            self.present(vc, animated: false, completion: nil)
-//
-//            vc.delegateMain = self // restoreViewをSettingsVCから呼び出させるため
-//        }else{
-//            webView.goBack()
-//        }
     }
     
     @IBAction func centerButton(_ sender: Any) {
-//        webView.isHidden = true
-//        tabBarUnder.selectedItem = tabBarLeft
-//        openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
         refresh()
     }
     
 
     @IBAction func rightButton(_ sender: Any) {
-//        var imageName : String
-//        var animationName : String
-        
         switch onOffForRightButton {
         case true:
             let image = UIImage(systemName: "chevron.down")
@@ -133,19 +117,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             viewAnimated(scene: "rightButtonUp")
 
         }
-//        if (onOffForRightButton){
-//            imageName = "chevron.down"
-//            animationName = "rightButtonDown"
-//        }else{
-//            imageName = "chevron.up"
-//            animationName = "rightButtonUp"
-//        }
-//
-//        let image = UIImage(systemName: imageName)
-//        rightButton.setImage(image, for: .normal)
-//        viewAnimated(scene: animationName)
-        
-//        module.mainViewRightButtonOnOff = !module.mainViewRightButtonOnOff
         onOffForRightButton = !onOffForRightButton
     }
 
@@ -155,8 +126,10 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 1: // 左
+            webViewDisplay(bool: true)
             openUrl(urlForRegistrant: module.courceManagementHomeURL, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
         case 2: // 右
+            webViewDisplay(bool: true)
             openUrl(urlForRegistrant: module.manabaURL, urlForNotRegistrant: module.eLearningListURL, alertTrigger: false)
         default:
             return
@@ -182,7 +155,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             return
         }
         if !host.contains(module.allowDomain){ // [tokushima-u.ac.jp] 以外はSafariで開く
-//            decisionHandler(.allow)
             UIApplication.shared.open(URL(string: String(describing: module.displayURL))!)
             return
         }
@@ -199,13 +171,11 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }
         
         // Manabaの授業Youtubeリンクのタップ判定
-//        if (url == URL(string: module.popupToYoutubeURL)){
         if (module.displayURL.contains(module.popupToYoutubeURL)){
             // Youtubeリンクを取得
             webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
                 if let htmlYoutube = html{ // type(of: htmlYoutube) >>> __NSCFString
                     UIApplication.shared.open(URL(string: String(describing: htmlYoutube))!)
-//                    decisionHandler(.cancel)
                     return
                 }else{
                     webView.goBack()
@@ -217,43 +187,13 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         
         // タイムアウト判定
         if (module.displayURL == module.timeOutURL){
-//            webView.isHidden = true
             openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
         }
-
-
-        
-//        for it in module.transitionURLs{
-//            if (module.displayURL.contains(it)){
-//                alert(title: "", message: "PDF")
-//                return
-//            }
-//        }
-        
-//        // 許可するドメインを指定
-//        guard let host = navigationAction.request.url?.host else {
-//            return
-//        }
-//
-//        if !host.contains(module.allowDomain){
-////            decisionHandler(.allow)
-//            UIApplication.shared.open(URL(string: String(describing: module.displayURL))!)
-//            return
-//        }
         
         decisionHandler(.allow)
-//        UIApplication.shared.open(url)
-//        decisionHandler(.cancel)
         return
     }
 
-//    /// 読み込み設定（レスポンス取得後）
-//    func webView(_ webView: WKWebView,
-//                 decidePolicyFor navigationResponse: WKNavigationResponse,
-//                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-//
-//        decisionHandler(.allow) // **必要**
-//    }
 
     /// 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -262,15 +202,14 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         let cAcaunt = dataManager.cAccount
         let passWord = dataManager.passWord
 
-//        if (module.displayURL.prefix(83) == module.lostConnectionURL){
         // Login画面
         if (module.displayURL.contains(module.lostConnectionURL) && module.displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
-//            if (module.displayURL.suffix(2)=="s1"){ //2回目は"=e1s2"
-            webView.isHidden = true
+//            webView.isHidden = true
+//            ActivityIndicator.startAnimating()
+            webViewDisplay(bool: true)
             webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-//            }
         }
 
         // 教務事務システム、アンケート催促スキップ
@@ -279,20 +218,13 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }
 
         // シラバス
-        if (module.displayURL == module.syllabusURL){
-//            if (module.onlySearchOnce == false){
-//                module.onlySearchOnce = true
-//            if (onlyOnceForSyllabusSearch == false){
-            if (!onlyOnceForSyllabusSearch){
-                onlyOnceForSyllabusSearch = true
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(syllabusSubjectName)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(syllabusTeacherName)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(syllabusKeyword)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-            }
+        if (module.displayURL.contains(module.syllabusURL) && !onlyOnceForSyllabusSearch){
+            onlyOnceForSyllabusSearch = true
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(syllabusSubjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(syllabusTeacherName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(syllabusKeyword)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
-        
-
         
         // ハンバーガーメニューのボタン画像変更
         switch viewTopConfirmation() {
@@ -306,17 +238,8 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             
         }
         
-//        var imageName = ""
-//        if (viewTopConfirmation()){
-//            imageName = "line.horizontal.3"
-//        }else{
-//            imageName = "arrowshape.turn.up.left"
-//        }
-//        let image = UIImage(systemName: imageName)
-//        leftButton.setImage(image, for: .normal)
-        
         // WebView表示、非表示　判定
-        isHiddenDecision()
+        webViewIsHidden()
         
     }
 
@@ -325,15 +248,15 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     public func restoreView(){
         viewAnimated(scene: "restoreView")
     }
-
-//    public func reloadURL(urlString:String){
-//        openUrl(urlForRegistrant: urlString, urlForNotRegistrant: nil, alertTrigger: true)
-//    }
+    
     /// 文字列で指定されたURLをWeb Viewを開く
     public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
         var url : String
         var trigger = alertTrigger
         url = urlForRegistrant
+        if (urlForRegistrant.contains(module.libraryLoginURL)){
+            webViewDisplay(bool: true)
+        }
         
         // 登録者判定
         if (!registrantDecision()){
@@ -347,6 +270,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             
             if (trigger) {
                 alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
+                webViewDisplay(bool: false)
                 return
             }
         }
@@ -388,55 +312,81 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         onlyOnceForSyllabusSearch = false
         openUrl(urlForRegistrant: module.syllabusURL, urlForNotRegistrant: nil, alertTrigger: false)
         
-        webView.isHidden = true
+//        webView.isHidden = true
+//        ActivityIndicator.startAnimating()
+        webViewDisplay(bool: true)
     }
 
-    func refresh(){
-        webView.isHidden = true
+    public func refresh(){
+//        webView.isHidden = true
+//        ActivityIndicator.startAnimating()
+        webViewDisplay(bool: true)
         tabBarUnder.selectedItem = tabBarLeft
         openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: module.systemServiceListURL, alertTrigger: false)
     }
     
     // MARK: - Private func
     
-    private func isHiddenDecision(){
+    private func webViewIsHidden(){
         // シラバス
-        if (module.displayURL == module.syllabusSearchMainURL){
-            webView.isHidden = false
+        if (module.displayURL.contains(module.syllabusSearchMainURL)){
+//            webView.isHidden = false
+//            ActivityIndicator.stopAnimating()
+            webViewDisplay(bool: false)
             return
         }
         // 登録者用　教務事務システム
-        if (module.displayURL == module.courceManagementHomeURL){
-            webView.isHidden = false
+        if (module.displayURL.contains(module.courceManagementHomeURL)){
+//            webView.isHidden = false
+//            ActivityIndicator.stopAnimating()
+            webViewDisplay(bool: false)
             return
         }
         
         // 非登録者用　教務事務システム
-        if (module.displayURL == module.systemServiceListURL){
-            webView.isHidden = false
+        if (module.displayURL.contains(module.systemServiceListURL)){
+//            webView.isHidden = false
+//            ActivityIndicator.stopAnimating()
+            webViewDisplay(bool: false)
             return
         }
         
-        if (module.displayURL == module.syllabusURL){
-//            if (timeSleep && module.hasPassdThroughOnce){
+        // マナバ
+        if (module.displayURL.contains(module.manabaURL)){
+//            webView.isHidden = false
+//            ActivityIndicator.stopAnimating()
+            webViewDisplay(bool: false)
+            return
+        }
+        
+        // 図書館
+        if (module.displayURL.contains(module.libraryLoginURL)){
+//            webView.isHidden = false
+//            ActivityIndicator.stopAnimating()
+            webViewDisplay(bool: false)
+            return
+        }
+        
+        if (module.displayURL.contains(module.syllabusURL)){
             if (onlyOnceForTimeSleep && onlyOnceForSyllabusPassdThrough){
                 sleep(3)
-                webView.isHidden = false
+//                webView.isHidden = false
+//                ActivityIndicator.stopAnimating()
+                webViewDisplay(bool: false)
                 onlyOnceForTimeSleep = false
-//                module.hasPassdThroughOnce = false
                 onlyOnceForSyllabusPassdThrough = false
                 return
             }else{
                 onlyOnceForSyllabusPassdThrough = true
             }
-//            module.hasPassdThroughOnce = true
-            
         }
         
         // ログイン
-        if (module.displayURL.prefix(83) == module.lostConnectionURL){
+        if (module.displayURL.contains(module.lostConnectionURL)){
             if (module.displayURL.suffix(2) != "s1"){ // ログインできなかった時
-                webView.isHidden = false
+//                webView.isHidden = false
+//                ActivityIndicator.stopAnimating()
+                webViewDisplay(bool: false)
                 return
             }
         }
@@ -452,7 +402,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }
     }
     
-    func alert(title:String, message:String) {
+    private func alert(title:String, message:String) {
             alertController = UIAlertController(title: title,
                                        message: message,
                                        preferredStyle: .alert)
@@ -465,11 +415,25 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     /// tabBar左ボタンの画像を入れ替える際の判定
     private func viewTopConfirmation() -> Bool {
         for url in module.topMenuURLs{
-            if (module.displayURL == url || module.displayURL.prefix(83) == url){
+            if (module.displayURL.contains(url)){
                 return true
             }
         }
         return false
+    }
+    
+    func webViewDisplay(bool: Bool){
+        switch bool {
+        case true:
+            webView.isHidden = true
+            ActivityIndicator.startAnimating()
+            
+        case false:
+            webView.isHidden = false
+            ActivityIndicator.stopAnimating()
+            
+        }
+        
     }
     
     /// アニメーション

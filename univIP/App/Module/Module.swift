@@ -61,6 +61,17 @@ class Module: NSObject {
                        "https://www.lib.tokushima-u.ac.jp/",
                        "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=",
                        "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"]
+    
+    
+    let webViewIsHiddonTrueURLs = ["http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx",
+    "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx",
+    "https://www.ait.tokushima-u.ac.jp/service/list_out/",
+    "https://manaba.lms.tokushima-u.ac.jp/s/home_summary",
+    "https://opac.lib.tokushima-u.ac.jp/opac/user/top"]
+    
+    let webViewIsHiddonFalseURLs = ["http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/",
+                                    "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="]
+        
     /// safari用
     let transitionURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/CommonControls/Message/MesFileDownload.aspx?param="] // メッセージ内PDF
     

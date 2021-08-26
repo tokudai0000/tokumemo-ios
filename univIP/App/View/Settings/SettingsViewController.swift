@@ -52,14 +52,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-//                self.delegateMain?.reloadURL(urlString: module.libraryLoginURL)
                 self.delegateMain?.openUrl(urlForRegistrant: module.libraryLoginURL, urlForNotRegistrant: nil, alertTrigger: false)
             case 1: // シラバス
-//                self.delegateMain?.popupSyllabus()
                 self.delegateMain?.popupView(scene: "syllabus")
             case 2: // 時間割
-//                self.delegateMain?.reloadURL(urlString: module.timeTableURL)
-                self.delegateMain?.openUrl(urlForRegistrant: module.timeTableURL, urlForNotRegistrant: nil, alertTrigger: false)
+                self.delegateMain?.openUrl(urlForRegistrant: module.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
             case 3: // 今年の成績
                 let current = Calendar.current
                 var year = current.component(.year, from: Date())
@@ -70,11 +67,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
                 let termPerformanceYearURL = module.currentTermPerformanceURL + String(year)
-//                self.delegateMain?.reloadURL(urlString: termPerformanceYearURL)
-                self.delegateMain?.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: false)
+                self.delegateMain?.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             case 4: // 出欠記録
-//                self.delegateMain?.reloadURL(urlString: module.presenceAbsenceRecordURL)
-                self.delegateMain?.openUrl(urlForRegistrant: module.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: false)
+                self.delegateMain?.openUrl(urlForRegistrant: module.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
             default:
                 return
             }
