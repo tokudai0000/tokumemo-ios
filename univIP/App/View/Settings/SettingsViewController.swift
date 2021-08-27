@@ -23,9 +23,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                         "このアプリについて",
                                         "開発者へ連絡"]]
     // セクションの高さ
-    private var sectionHight:Int = 50
+    private var sectionHight:Int = 30
     // セルの高さ
-    private var cellHight:Int = 100
+    private var cellHight:Int = 80
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
@@ -39,6 +39,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        viewAnimated(scene: "settingsViewAppear")
+        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
     }
     
     
@@ -108,10 +110,22 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // ここで「>」ボタンを設定
         return TableCell
     }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cell.contentView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.1)
+    }
 
     /// テーブル内のセクション数を決めるメソッド
     func numberOfSections(in tableView: UITableView) -> Int {
         return cellList.count
+    }
+    // セクションの背景とテキストの色を決定するメソッド
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        view.tintColor = .red
+        view.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.6)
+//        let header = view as! UITableViewHeaderFooterView
+//        header.textLabel?.textColor = .white
     }
 
     /// セクションの高さを設定
