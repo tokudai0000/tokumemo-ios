@@ -18,7 +18,7 @@ class PasswordSettingsViewController: UIViewController {
     
     var delegateMain : MainViewController?
     
-    private let module = Module()
+    private let model = Model()
     private var dataManager = DataManager()
     
     //MARK:- LifeCycle
@@ -77,7 +77,7 @@ class PasswordSettingsViewController: UIViewController {
         label.text = labelText
         passWordTextField.text = ""
 //        self.delegateMain?.reloadURL(urlString: module.loginURL)
-        self.delegateMain?.openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
+        self.delegateMain?.openUrl(urlForRegistrant: model.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
     
     

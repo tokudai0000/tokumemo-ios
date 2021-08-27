@@ -17,7 +17,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bodyTextView: UITextView!
     
-    private var module = Module()
+    private var model = Model()
     private let master_mail = "universityinformationportalapp@gmail.com"
     private let master_pass = "5hy7wt66qwwfftxpkoas"
     private let display_name = ""
@@ -62,7 +62,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
     private func sendEmail(message:String) {
         let smtpSession = MCOSMTPSession()
         smtpSession.hostname = "smtp.gmail.com"
-        smtpSession.username = module.masterMail
+        smtpSession.username = model.masterMail
         
         //パスワードをenvTxtから取得
         if let url = R.file.envTxt() {
@@ -91,7 +91,7 @@ class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
         let builder = MCOMessageBuilder()
         builder.header.to = [MCOAddress(displayName: display_name, mailbox: master_mail)!]
         builder.header.from = MCOAddress(displayName: display_name, mailbox: master_mail)
-        builder.header.subject = module.mailTitle
+        builder.header.subject = model.mailTitle
         builder.htmlBody = message
         
         let rfc822Data = builder.data()

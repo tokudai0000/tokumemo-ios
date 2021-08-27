@@ -12,7 +12,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK:- @IBOutlet
     @IBOutlet weak var tableView: UITableView!
     
-    private let module = Module()
+    private let model = Model()
     // セルの内容が入る
     private var cellList:[[String]] = [["図書館サイト",
                                         "シラバス",
@@ -43,20 +43,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    // MARK: - Library
+    // MARK: - TableView
+    
     /// セルを選択した時のイベントを追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dismiss(animated: false, completion: nil)
-        self.delegateMain?.restoreView()
+        
+        guard let delegate = delegateMain else {
+            return
+        }
+//        delegate.restoreView()
+
         
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-                self.delegateMain?.openUrl(urlForRegistrant: module.libraryLoginURL, urlForNotRegistrant: nil, alertTrigger: false)
+                delegate.openUrl(urlForRegistrant: model.libraryLoginURL, urlForNotRegistrant: nil, alertTrigger: false)
             case 1: // シラバス
-                self.delegateMain?.popupView(scene: "syllabus")
+                delegate.popupView(scene: "syllabus")
             case 2: // 時間割
-                self.delegateMain?.openUrl(urlForRegistrant: module.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
+                delegate.openUrl(urlForRegistrant: model.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
             case 3: // 今年の成績
                 let current = Calendar.current
                 var year = current.component(.year, from: Date())
@@ -66,21 +72,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     year -= 1
                 }
                 
-                let termPerformanceYearURL = module.currentTermPerformanceURL + String(year)
-                self.delegateMain?.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
+                let termPerformanceYearURL = model.currentTermPerformanceURL + String(year)
+                delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             case 4: // 出欠記録
-                self.delegateMain?.openUrl(urlForRegistrant: module.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
+                delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
             default:
                 return
             }
         }else if(indexPath[0] == 1){
             switch indexPath[1] {
             case 0: // パスワード設定
-                self.delegateMain?.popupView(scene: "password")
+                delegate.popupView(scene: "password")
             case 1: // このアプリについて
-                self.delegateMain?.popupView(scene: "aboutThisApp")
+                delegate.popupView(scene: "aboutThisApp")
             case 2: // 開発者へ連絡
-                self.delegateMain?.popupView(scene: "contactToDeveloper")
+                delegate.popupView(scene: "contactToDeveloper")
             default:
                 return
             }
@@ -89,6 +95,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     
         viewAnimated(scene: "settingsViewDisappear")
+//        delegate.animationView(scene: "restoreView")
     }
 
     /// セクション内のセル数を決めるメソッド（＊＊必須＊＊）
