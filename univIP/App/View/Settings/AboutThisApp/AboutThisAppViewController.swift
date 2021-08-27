@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutThisAppViewController: UIViewController {
+class AboutThisAppViewController: BaseViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var textView: UITextView!
     

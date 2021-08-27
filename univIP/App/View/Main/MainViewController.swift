@@ -17,7 +17,7 @@ import UIKit
 import WebKit
 import PDFKit
 
-final class MainViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate, UITabBarDelegate {
+final class MainViewController: BaseViewController, WKNavigationDelegate, UIScrollViewDelegate, UITabBarDelegate {
     //MARK:- @IBOutlet
     @IBOutlet var viewTop: UIView!
     @IBOutlet weak var webView: WKWebView!
@@ -61,7 +61,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tabBarUnder.delegate = self
         webView.navigationDelegate = self
         webView.isUserInteractionEnabled = true
@@ -71,10 +71,14 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         activityIndicator.center = self.view.center
         activityIndicator.style = UIActivityIndicatorView.Style.medium
+        activityIndicator.color = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
         activityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
         self.view.addSubview(activityIndicator)
         
         refresh()
+        
+//        toast(message: "aa", type: "bottom")
+//        alertOk(title: "a", message: "bb")
     }
 
 
@@ -97,8 +101,7 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
     }
 
     @IBAction func navigationRightButton(_ sender: Any) {
-//        navigationRightButtonOnOff()
-//        switch onOffForRightButton {
+        
         switch navigationRightButtonOnOff(){
         case true:
             let image = UIImage(systemName: "chevron.up")
@@ -149,11 +152,9 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         guard let host = navigationAction.request.url?.host else {
             return
         }
-        if !host.contains(model.allowDomain){ // [tokushima-u.ac.jp] 以外はSafariで開く
+        // [tokushima-u.ac.jp] 以外はSafariで開く
+        if (host.contains(model.allowDomain) == false){
             UIApplication.shared.open(URL(string: String(describing: model.displayURL))!)
-//            openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: nil, alertTrigger: false)
-//            decisionHandler(.cancel)
-//            return
             decisionHandler(.allow)
             return
         }
@@ -178,7 +179,8 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
                     return
                 }else{
                     webView.goBack()
-                    self.alert(title: "エラー", message: "表示できませんでした")
+//                    self.alert(title: "エラー", message: "表示できませんでした")
+//                    alertOk(title: "e", message: <#T##String#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
                     return
                 }
             })
@@ -241,21 +243,21 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
 
 
     // MARK: - Public func
-    public func restoreView(){
-        animationView(scene: "restoreView")
-    }
+//    public func restoreView(){
+//        animationView(scene: "restoreView")
+//    }
     
     /// 文字列で指定されたURLをWeb Viewを開く
     public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
-        var url : String
+        var url = urlForRegistrant
         var trigger = alertTrigger
-        url = urlForRegistrant
-        if (urlForRegistrant.contains(model.libraryLoginURL)){
+//        url = urlForRegistrant
+        if (urlForRegistrant == model.libraryLoginURL){
             webViewDisplay(bool: true)
         }
         
         // 登録者判定
-        if (!registrantDecision()){
+        if (registrantDecision() == false){
             if (url.contains(model.libraryLoginURL)){
                 url = model.libraryHomeURL
                 trigger = false
@@ -265,7 +267,8 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
             }
             
             if (trigger) {
-                alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
+//                alert(title: "利用できません", message: "設定からcアカウントとパスワードを登録してください")
+                toast(message: "パスワード設定をすることで利用できます", type: "bottom")
                 webViewDisplay(bool: false)
                 return
             }
@@ -324,6 +327,8 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
                                         model.courceManagementHomeURL,
                                         model.systemServiceListURL,
                                         model.manabaURL,
+                                        model.eLearningListURL,
+                                        model.libraryHomeURL,
                                         model.libraryLoginURL]
         for i in webViewIsHiddonFalseURLs{ // 上記のURLの場合、画面を表示
             if (model.displayURL.contains(i)){
@@ -334,7 +339,6 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         
         if (model.displayURL == model.syllabusURL){
             if (onlyOnceForTimeSleep && onlyOnceForSyllabusPassdThrough){
-                sleep(3) // 検索に時間がかかるので3秒待機
                 webViewDisplay(bool: false)
                 onlyOnceForTimeSleep = false
                 onlyOnceForSyllabusPassdThrough = false
@@ -376,15 +380,15 @@ final class MainViewController: UIViewController, WKNavigationDelegate, UIScroll
         }
     }
     
-    private func alert(title:String, message:String) {
-            alertController = UIAlertController(title: title,
-                                       message: message,
-                                       preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK",
-                                           style: .default,
-                                           handler: nil))
-            present(alertController, animated: true)
-        }
+//    private func alert(title:String, message:String) {
+//        alertController = UIAlertController(title: title,
+//                                            message: message,
+//                                            preferredStyle: .alert)
+//        alertController.addAction(UIAlertAction(title: "OK",
+//                                                style: .default,
+//                                                handler: nil))
+//        present(alertController, animated: true)
+//    }
     
     /// tabBar左ボタンの画像を入れ替える際の判定
     private func webViewJudgeForTopURL() -> Bool {

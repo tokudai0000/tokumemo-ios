@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SyllabusViewController: UIViewController {
+class SyllabusViewController: BaseViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var subjectNameTextField: UITextField!
     @IBOutlet weak var teacherNameTextField: UITextField!

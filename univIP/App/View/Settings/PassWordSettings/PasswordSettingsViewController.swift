@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PasswordSettingsViewController: UIViewController {
+class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var viewTop: UIView!
@@ -25,7 +25,6 @@ class PasswordSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         rtfFileOpen()
         
         var labelText : String
@@ -38,6 +37,26 @@ class PasswordSettingsViewController: UIViewController {
         }
         label.text = labelText
         passWordTextField.placeholder = "PassWord"
+        cAccountTextField.delegate = self
+        passWordTextField.delegate = self
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
+        var frame = textField.frame
+        // super.viewからの絶対座標に変換する
+        if var pv = textField.superview {
+            while pv != super.view {
+                if let gv = pv.superview {
+                    frame = pv.convert(frame, to: gv)
+                    pv = gv
+                }else{
+                    break
+                }
+            }
+        }
+        super.keyboardSafeArea = frame // super.viewからの絶対座標
+        return true //true=キーボードを表示する
     }
     
     
@@ -136,8 +155,9 @@ class PasswordSettingsViewController: UIViewController {
 //    }
     
     //MARK:- Override
+    // textField以外をタップで、キーボードを下げる
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        self.view.endEditing(true) // キーボードを閉じる
     }
 }
 

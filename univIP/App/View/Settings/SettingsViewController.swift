@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
+class SettingsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
     //MARK:- @IBOutlet
     @IBOutlet weak var tableView: UITableView!
     

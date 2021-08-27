@@ -11,7 +11,7 @@ import UIKit
 //import MessageUI
 
 
-class ContactToDeveloperViewController: UIViewController,UITextViewDelegate  {
+class ContactToDeveloperViewController: BaseViewController,UITextViewDelegate  {
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sendButton: UIButton!

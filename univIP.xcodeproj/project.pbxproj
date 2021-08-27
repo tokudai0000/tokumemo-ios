@@ -11,6 +11,7 @@
 		1A0904E226C271C700BED109 /* Password.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A0904E126C271C700BED109 /* Password.rtf */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
 		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
+		1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */; };
 		1A72E30B26D65A6B00DB3179 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A72E30A26D65A6B00DB3179 /* PDFKit.framework */; };
 		1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */; };
 		1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Settings.storyboard */; };
@@ -40,6 +41,7 @@
 		1A0904E326C2828700BED109 /* sendEmail_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sendEmail_bridge.h; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1A81A91F26C02FF900CC56E2 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -81,6 +83,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A5F98A526D8E1B000BCCF59 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		1A81A91C26C02FB700CC56E2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				1AA056E526BD2D4900343005 /* etc */,
+				1A5F98A526D8E1B000BCCF59 /* Base */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* View */,
 			);
@@ -384,6 +395,7 @@
 				1A81A93E26C150A100CC56E2 /* ContactToDeveloperViewController.swift in Sources */,
 				1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
+				1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */,
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
 				1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */,
