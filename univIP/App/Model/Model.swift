@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Module: NSObject {
+class Model: NSObject {
     /// ログインURL
     let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
     
@@ -24,7 +24,7 @@ class Module: NSObject {
     /// シラバス検索URL
     let syllabusSearchMainURL = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
     /// 時間割
-    let timeTableURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/Schedule/Day.aspx"
+    let timeTableURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
     /// 今年の成績表
     let currentTermPerformanceURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
     /// 出欠記録
@@ -61,8 +61,10 @@ class Module: NSObject {
                        "https://www.lib.tokushima-u.ac.jp/",
                        "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=",
                        "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"]
-    /// safari用
-    let transitionURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/CommonControls/Message/MesFileDownload.aspx?param="] // メッセージ内PDF
+    
+        
+    // 教務事務システム -> 個人向けメッセージ -> PDF開く際、 safariで
+    let transitionURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/CommonControls/Message/MesFileDownload.aspx?param="]
     
     
     
@@ -71,12 +73,9 @@ class Module: NSObject {
     /// 表示させたいURLを保持（これにより到達したかを判定）
     var confirmationURL : String = " "
 
-    /// メール設定
-    let mailTitle = "トクメモ開発者へ"
-    let masterMail = "universityinformationportalapp@gmail.com"
     
-    /// 回数を保持
-//    var hasPassdThroughOnce = false
-//    var onlySearchOnce = false
-//    var mainViewRightButtonOnOff : Bool = false
+    /// メール設定
+    let mailMasterAddress = "tokumemo1@gmail.com"
+    let mailSendTitle = "トクメモ開発者へ"
+    let mailSendFailureText = "送信に失敗しました。失敗が続く場合は[tokumemo1@gmail.com]へ連絡をしてください。"
 }

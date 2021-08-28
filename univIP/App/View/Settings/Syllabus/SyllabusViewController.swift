@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SyllabusViewController: UIViewController {
+class SyllabusViewController: BaseViewController {
     //MARK:- @IBOutlet
+    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var subjectNameTextField: UITextField!
     @IBOutlet weak var teacherNameTextField: UITextField!
     @IBOutlet weak var keyWordTextField: UITextField!
@@ -19,6 +20,7 @@ class SyllabusViewController: UIViewController {
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchButton.layer.cornerRadius = 20.0
     }
     
     private var buttonTagValue = ""

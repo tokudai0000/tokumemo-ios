@@ -8,23 +8,24 @@
 
 import UIKit
 
-class PasswordSettingsViewController: UIViewController {
+class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
     //MARK:- @IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     
     var delegateMain : MainViewController?
     
-    private let module = Module()
+    private let model = Model()
     private var dataManager = DataManager()
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        registerButton.layer.cornerRadius = 20.0
         
         rtfFileOpen()
         
@@ -38,27 +39,39 @@ class PasswordSettingsViewController: UIViewController {
         }
         label.text = labelText
         passWordTextField.placeholder = "PassWord"
+        cAccountTextField.delegate = self
+        passWordTextField.delegate = self
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
+        var frame = textField.frame
+        // super.viewからの絶対座標に変換する
+        if var pv = textField.superview {
+            while pv != super.view {
+                if let gv = pv.superview {
+                    frame = pv.convert(frame, to: gv)
+                    pv = gv
+                }else{
+                    break
+                }
+            }
+        }
+        super.keyboardSafeArea = frame // super.viewからの絶対座標
+        return true //true=キーボードを表示する
     }
     
     
     //MARK:- @IBAction
     @IBAction func registrationButton(_ sender: Any) {
-//        var registrationTrigger1 = false
-//        var registrationTrigger2 = false
         var text1 : String = ""
         var text2 : String = ""
         
         if let cAccountText = cAccountTextField.text{
-//            if (textFieldEmputyConfirmation(text: cAccountText)){
-//                registrationTrigger1 = true
-                text1 = cAccountText
-//            }
+            text1 = cAccountText
         }
         if let passWordText = passWordTextField.text{
-//            if (textFieldEmputyConfirmation(text: passWordText)){
-//                registrationTrigger2 = true
-                text2 = passWordText
-//            }
+            text2 = passWordText
         }
         
         var labelText : String
@@ -66,18 +79,10 @@ class PasswordSettingsViewController: UIViewController {
         dataManager.passWord = text2
         labelText = "登録完了"
         
-//        if (registrationTrigger1 && registrationTrigger2){
-//            dataManager.cAccount = text1
-//            dataManager.passWord = text2
-//            labelText = "登録完了"
-//        }else{
-//            labelText = "登録失敗"
-//        }
         
         label.text = labelText
         passWordTextField.text = ""
-//        self.delegateMain?.reloadURL(urlString: module.loginURL)
-        self.delegateMain?.openUrl(urlForRegistrant: module.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
+        self.delegateMain?.openUrl(urlForRegistrant: model.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
     
     
@@ -108,36 +113,6 @@ class PasswordSettingsViewController: UIViewController {
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }
         }
-    }
-    
-//    private func textFieldEmputyConfirmation(text : String) -> Bool{
-//        switch text {
-//        case "":
-//            return false
-//        case " ":
-//            return false
-//        case "  ":
-//            return false
-//        case "   ":
-//            return false
-//        case "　":
-//            return false
-//        case "　　":
-//            return false
-//        case "　　　":
-//            return false
-//        case " 　":
-//            return false
-//        case "　 ":
-//            return false
-//        default:
-//            return true
-//        }
-//    }
-    
-    //MARK:- Override
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
 }
 

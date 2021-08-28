@@ -8,11 +8,11 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
+class SettingsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITabBarDelegate {
     //MARK:- @IBOutlet
     @IBOutlet weak var tableView: UITableView!
     
-    private let module = Module()
+    private let model = Model()
     // セルの内容が入る
     private var cellList:[[String]] = [["図書館サイト",
                                         "シラバス",
@@ -23,9 +23,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                                         "このアプリについて",
                                         "開発者へ連絡"]]
     // セクションの高さ
-    private var sectionHight:Int = 50
+    private var sectionHight:Int = 30
     // セルの高さ
-    private var cellHight:Int = 100
+    private var cellHight:Int = 80
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
@@ -39,27 +39,32 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        viewAnimated(scene: "settingsViewAppear")
+        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
     }
     
     
     
-    // MARK: - Library
+    // MARK: - TableView
+    
     /// セルを選択した時のイベントを追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dismiss(animated: false, completion: nil)
-        self.delegateMain?.restoreView()
+        
+        guard let delegate = delegateMain else {
+            return
+        }
+//        delegate.restoreView()
+
         
         if (indexPath[0] == 0){
             switch indexPath[1] {
             case 0: // 図書館サイト
-//                self.delegateMain?.reloadURL(urlString: module.libraryLoginURL)
-                self.delegateMain?.openUrl(urlForRegistrant: module.libraryLoginURL, urlForNotRegistrant: nil, alertTrigger: false)
+                delegate.openUrl(urlForRegistrant: model.libraryLoginURL, urlForNotRegistrant: nil, alertTrigger: false)
             case 1: // シラバス
-//                self.delegateMain?.popupSyllabus()
-                self.delegateMain?.popupView(scene: "syllabus")
+                delegate.popupView(scene: "syllabus")
             case 2: // 時間割
-//                self.delegateMain?.reloadURL(urlString: module.timeTableURL)
-                self.delegateMain?.openUrl(urlForRegistrant: module.timeTableURL, urlForNotRegistrant: nil, alertTrigger: false)
+                delegate.openUrl(urlForRegistrant: model.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
             case 3: // 今年の成績
                 let current = Calendar.current
                 var year = current.component(.year, from: Date())
@@ -69,23 +74,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     year -= 1
                 }
                 
-                let termPerformanceYearURL = module.currentTermPerformanceURL + String(year)
-//                self.delegateMain?.reloadURL(urlString: termPerformanceYearURL)
-                self.delegateMain?.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: false)
+                let termPerformanceYearURL = model.currentTermPerformanceURL + String(year)
+                delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             case 4: // 出欠記録
-//                self.delegateMain?.reloadURL(urlString: module.presenceAbsenceRecordURL)
-                self.delegateMain?.openUrl(urlForRegistrant: module.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: false)
+                delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
             default:
                 return
             }
         }else if(indexPath[0] == 1){
             switch indexPath[1] {
             case 0: // パスワード設定
-                self.delegateMain?.popupView(scene: "password")
+                delegate.popupView(scene: "password")
             case 1: // このアプリについて
-                self.delegateMain?.popupView(scene: "aboutThisApp")
+                delegate.popupView(scene: "aboutThisApp")
             case 2: // 開発者へ連絡
-                self.delegateMain?.popupView(scene: "contactToDeveloper")
+                delegate.popupView(scene: "contactToDeveloper")
             default:
                 return
             }
@@ -94,6 +97,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRow(at: indexPath, animated: true)
     
         viewAnimated(scene: "settingsViewDisappear")
+//        delegate.animationView(scene: "restoreView")
     }
 
     /// セクション内のセル数を決めるメソッド（＊＊必須＊＊）
@@ -108,10 +112,22 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // ここで「>」ボタンを設定
         return TableCell
     }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cell.contentView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.1)
+    }
 
     /// テーブル内のセクション数を決めるメソッド
     func numberOfSections(in tableView: UITableView) -> Int {
         return cellList.count
+    }
+    // セクションの背景とテキストの色を決定するメソッド
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        view.tintColor = .red
+        view.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.6)
+//        let header = view as! UITableViewHeaderFooterView
+//        header.textLabel?.textColor = .white
     }
 
     /// セクションの高さを設定

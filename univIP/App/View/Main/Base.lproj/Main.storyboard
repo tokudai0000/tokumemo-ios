@@ -40,7 +40,7 @@
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" image="chevron.down" catalog="system"/>
                                                 <connections>
-                                                    <action selector="rightButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DZ6-3w-Bxz"/>
+                                                    <action selector="navigationRightButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DZ6-3w-Bxz"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7E-8X-iXM">
@@ -53,7 +53,7 @@
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" image="line.horizontal.3" catalog="system"/>
                                                 <connections>
-                                                    <action selector="leftButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Inc-Me-5ZZ"/>
+                                                    <action selector="navigationLeftButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Inc-Me-5ZZ"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeH-O1-qTx">
@@ -65,7 +65,7 @@
                                                 </constraints>
                                                 <state key="normal" image="tokumemoIcon2"/>
                                                 <connections>
-                                                    <action selector="centerButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C25-cY-59M"/>
+                                                    <action selector="navigationCenterButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C25-cY-59M"/>
                                                 </connections>
                                             </button>
                                         </subviews>

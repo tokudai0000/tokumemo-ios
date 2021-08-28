@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutThisAppViewController: UIViewController {
+class AboutThisAppViewController: UIViewController{//BaseViewController {
     //MARK:- @IBOutlet
     @IBOutlet weak var textView: UITextView!
     
@@ -18,12 +18,6 @@ class AboutThisAppViewController: UIViewController {
         super.viewDidLoad()
         
         rtfFileOpen()
-    }
-    
-    
-    //MARK:- @IBAction
-    @IBAction func homeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     
