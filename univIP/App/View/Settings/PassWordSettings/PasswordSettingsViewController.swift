@@ -62,22 +62,14 @@ class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
     
     //MARK:- @IBAction
     @IBAction func registrationButton(_ sender: Any) {
-//        var registrationTrigger1 = false
-//        var registrationTrigger2 = false
         var text1 : String = ""
         var text2 : String = ""
         
         if let cAccountText = cAccountTextField.text{
-//            if (textFieldEmputyConfirmation(text: cAccountText)){
-//                registrationTrigger1 = true
-                text1 = cAccountText
-//            }
+            text1 = cAccountText
         }
         if let passWordText = passWordTextField.text{
-//            if (textFieldEmputyConfirmation(text: passWordText)){
-//                registrationTrigger2 = true
-                text2 = passWordText
-//            }
+            text2 = passWordText
         }
         
         var labelText : String
@@ -85,17 +77,9 @@ class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
         dataManager.passWord = text2
         labelText = "登録完了"
         
-//        if (registrationTrigger1 && registrationTrigger2){
-//            dataManager.cAccount = text1
-//            dataManager.passWord = text2
-//            labelText = "登録完了"
-//        }else{
-//            labelText = "登録失敗"
-//        }
         
         label.text = labelText
         passWordTextField.text = ""
-//        self.delegateMain?.reloadURL(urlString: module.loginURL)
         self.delegateMain?.openUrl(urlForRegistrant: model.loginURL, urlForNotRegistrant: nil, alertTrigger: false)
     }
     
@@ -127,37 +111,6 @@ class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }
         }
-    }
-    
-//    private func textFieldEmputyConfirmation(text : String) -> Bool{
-//        switch text {
-//        case "":
-//            return false
-//        case " ":
-//            return false
-//        case "  ":
-//            return false
-//        case "   ":
-//            return false
-//        case "　":
-//            return false
-//        case "　　":
-//            return false
-//        case "　　　":
-//            return false
-//        case " 　":
-//            return false
-//        case "　 ":
-//            return false
-//        default:
-//            return true
-//        }
-//    }
-    
-    //MARK:- Override
-    // textField以外をタップで、キーボードを下げる
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true) // キーボードを閉じる
     }
 }
 

@@ -74,8 +74,10 @@ class Model: NSObject {
     var confirmationURL : String = " "
 
     /// メール設定
-    let mailTitle = "トクメモ開発者へ"
-    let masterMail = "universityinformationportalapp@gmail.com"
+    let mailMasterAddress = "universityinformationportalapp@gmail.com"
+    
+    let mailSendTitle = "トクメモ開発者へ"
+    let mailSendFailureText = "送信に失敗しました。失敗が続く場合は[universityinformationportalapp@gmail.com]へ連絡をしてください。"
     
     /// 回数を保持
 //    var hasPassdThroughOnce = false

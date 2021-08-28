@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-rU-w43">
-                                <rect key="frame" x="50" y="94" width="314" height="468"/>
+                                <rect key="frame" x="50" y="94" width="314" height="718"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="科目名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6uj-pU-RB4">
                                         <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
@@ -28,7 +28,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="教員名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z43-Xt-cP3">
-                                        <rect key="frame" x="0.0" y="139.5" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="222.5" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="T4y-Xo-ykU"/>
                                         </constraints>
@@ -36,7 +36,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="キーワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GJs-19-Q1f">
-                                        <rect key="frame" x="0.0" y="278.5" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="445.5" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="vVA-Up-Fux"/>
                                         </constraints>
@@ -44,25 +44,31 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVV-bZ-QLe">
-                                        <rect key="frame" x="0.0" y="418" width="314" height="50"/>
-                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                        <rect key="frame" x="0.0" y="668" width="314" height="50"/>
+                                        <color key="backgroundColor" red="0.61663721189999998" green="0.74858423939999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Ogg-fL-S2w"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="検索"/>
+                                        <state key="normal" title="検索">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="searchButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="DQD-dq-wL9"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="6uj-pU-RB4" secondAttribute="trailing" id="aug-VW-csA"/>
+                                    <constraint firstItem="6uj-pU-RB4" firstAttribute="leading" secondItem="YOK-rU-w43" secondAttribute="leading" id="kOe-X3-vU4"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="455-8j-VFc"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.85992267119999999" green="0.95990640319999998" blue="0.9825405478" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="YOK-rU-w43" firstAttribute="leading" secondItem="455-8j-VFc" secondAttribute="leading" constant="50" id="2bh-R7-TSs"/>
-                            <constraint firstItem="455-8j-VFc" firstAttribute="bottom" secondItem="YOK-rU-w43" secondAttribute="bottom" constant="300" id="JAm-v5-pHt"/>
+                            <constraint firstItem="455-8j-VFc" firstAttribute="bottom" secondItem="YOK-rU-w43" secondAttribute="bottom" constant="50" id="Gf9-9T-T6w"/>
                             <constraint firstItem="YOK-rU-w43" firstAttribute="top" secondItem="455-8j-VFc" secondAttribute="top" constant="50" id="VND-A0-fEN"/>
                             <constraint firstItem="455-8j-VFc" firstAttribute="trailing" secondItem="YOK-rU-w43" secondAttribute="trailing" constant="50" id="gFX-8J-IdX"/>
                         </constraints>
@@ -79,11 +85,8 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

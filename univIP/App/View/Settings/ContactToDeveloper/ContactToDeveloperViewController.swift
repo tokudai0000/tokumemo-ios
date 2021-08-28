@@ -16,45 +16,52 @@ class ContactToDeveloperViewController: BaseViewController,UITextViewDelegate  {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bodyTextView: UITextView!
+    @IBOutlet weak var coverLabel: UILabel!
     
     private var model = Model()
-    private let master_mail = "universityinformationportalapp@gmail.com"
-    private let master_pass = "5hy7wt66qwwfftxpkoas"
-    private let display_name = ""
     
-    private let text1 = ""
-    private let text2 = " "
-    private let text3 = "　"
-    private let text4 = "送信に失敗しました。失敗が続く場合は[universityinformationportalapp@gmail.com]へ連絡をしてください。"
+    private var processingDecision = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        coverLabel.isHidden = false
+//        if bodyTextView.text.count != 0{
+//            coverLabel.isHidden = true
+//        }
     }
-    private var hasPassdThroughOnce = false
     
     //MARK:- @IBAction
+    @IBAction func CoverLabelTop(_ sender: Any) {
+        coverLabel.isHidden = true              // CoverLabelを非表示
+        bodyTextView.becomeFirstResponder()     // LinesTxtView入力キーボードを表示させる
+    }
+    
     @IBAction func sendButton(_ sender: Any) {
         sendButton.isEnabled = false // 無効
-//        if (module.hasPassdThroughOnce){
-//            return
-//        }
-        if (hasPassdThroughOnce){
+        
+        if (processingDecision){
             return
         }
-        let mailText = bodyTextView.text ?? ""
-        print(mailText)
         
-        if (mailText == text1 || mailText == text2 || mailText == text3 || mailText == text4){
+        guard let mailBodyText = bodyTextView.text else {
             bodyTextView.text = ""
             label.text = "入力してください"
+            sendButton.isEnabled = true // 無効
             return
         }
+        
+        if (textFieldEmputyConfirmation(text: mailBodyText)){
+            bodyTextView.text = ""
+            label.text = "入力してください"
+            sendButton.isEnabled = true // 無効
+            return
+        }
+        
         label.text = "送信中です・・・・・・・"
 
-//        module.hasPassdThroughOnce = true
-        hasPassdThroughOnce = true
-        sendEmail(message: mailText)
+        processingDecision = true
+        sendEmail(message: mailBodyText)
     }
     
     
@@ -62,7 +69,7 @@ class ContactToDeveloperViewController: BaseViewController,UITextViewDelegate  {
     private func sendEmail(message:String) {
         let smtpSession = MCOSMTPSession()
         smtpSession.hostname = "smtp.gmail.com"
-        smtpSession.username = model.masterMail
+        smtpSession.username = model.mailMasterAddress
         
         //パスワードをenvTxtから取得
         if let url = R.file.envTxt() {
@@ -89,9 +96,9 @@ class ContactToDeveloperViewController: BaseViewController,UITextViewDelegate  {
         }
         
         let builder = MCOMessageBuilder()
-        builder.header.to = [MCOAddress(displayName: display_name, mailbox: master_mail)!]
-        builder.header.from = MCOAddress(displayName: display_name, mailbox: master_mail)
-        builder.header.subject = model.mailTitle
+        builder.header.to = [MCOAddress(displayName: "Developer", mailbox: model.mailMasterAddress)!]
+        builder.header.from = MCOAddress(displayName: "Customer", mailbox: "")
+        builder.header.subject = model.mailSendTitle
         builder.htmlBody = message
         
         let rfc822Data = builder.data()
@@ -99,22 +106,14 @@ class ContactToDeveloperViewController: BaseViewController,UITextViewDelegate  {
         sendOperation?.start { (error) -> Void in
             if (error != nil) {
                 NSLog("Error sending email: \(String(describing: error))")
-                self.bodyTextView.text = "送信に失敗しました。失敗が続く場合は[universityinformationportalapp@gmail.com]へ連絡をしてください。"
+                self.toast(message: "送信に失敗しました。失敗が続く場合は[universityinformationportalapp@gmail.com]へ直接連絡をしてください。", type: "bottom", interval: 10.0)
                 self.label.text = ""
             } else {
                 NSLog("Successfully sent email!")
                 self.label.text = "送信しました。"
             }
         }
-//        module.hasPassdThroughOnce = false
-        hasPassdThroughOnce = false
+        processingDecision = false
         sendButton.isEnabled = true // 有効
     }
-    
-    //MARK:- Override
-    // キーボード非表示
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
 }

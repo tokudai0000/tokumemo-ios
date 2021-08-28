@@ -229,5 +229,36 @@ class BaseViewController: UIViewController {
             }
         }
     }
+    
+    open func textFieldEmputyConfirmation(text : String) -> Bool{
+        switch text {
+        case "":
+            return true
+        case " ":
+            return true
+        case "  ":
+            return true
+        case "   ":
+            return true
+        case "　":
+            return true
+        case "　　":
+            return true
+        case "　　　":
+            return true
+        case " 　":
+            return true
+        case "　 ":
+            return true
+        default:
+            return false
+        }
+    }
+    //MARK:- Override
+    // キーボード非表示
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
 }
 
