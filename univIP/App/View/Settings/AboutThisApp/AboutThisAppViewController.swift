@@ -21,12 +21,6 @@ class AboutThisAppViewController: BaseViewController {
     }
     
     
-    //MARK:- @IBAction
-    @IBAction func homeButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
     // MARK: - Private func
     private func rtfFileOpen(){
         if let url = R.file.aboutThisAppRtf() {

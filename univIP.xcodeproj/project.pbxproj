@@ -13,6 +13,7 @@
 		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
 		1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */; };
 		1A5F98A926DA0BFC00BCCF59 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A826DA0BFC00BCCF59 /* PlaceHolderTextView.swift */; };
+		1A5F98B126DA6B6600BCCF59 /* mailAccountPassword.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1A5F98B026DA6B6600BCCF59 /* mailAccountPassword.txt */; };
 		1A72E30B26D65A6B00DB3179 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A72E30A26D65A6B00DB3179 /* PDFKit.framework */; };
 		1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */; };
 		1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Settings.storyboard */; };
@@ -26,7 +27,6 @@
 		1A81A93E26C150A100CC56E2 /* ContactToDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93D26C150A100CC56E2 /* ContactToDeveloperViewController.swift */; };
 		1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A93F26C150AC00CC56E2 /* ContactToDeveloper.storyboard */; };
 		1A81A94226C15EAC00CC56E2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A81A94126C15EAC00CC56E2 /* MessageUI.framework */; };
-		1A9F7D5026D24AA6000051E0 /* env.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1A9F7D4F26D24AA6000051E0 /* env.txt */; };
 		1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CC26BD2AE100343005 /* AppDelegate.swift */; };
 		1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CE26BD2AE100343005 /* SceneDelegate.swift */; };
 		1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056D026BD2AE100343005 /* MainViewController.swift */; };
@@ -44,6 +44,7 @@
 		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1A5F98A826DA0BFC00BCCF59 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
+		1A5F98B026DA6B6600BCCF59 /* mailAccountPassword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mailAccountPassword.txt; path = ../../../../../../Desktop/mailAccountPassword.txt; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1A81A91F26C02FF900CC56E2 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -57,7 +58,6 @@
 		1A81A93D26C150A100CC56E2 /* ContactToDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactToDeveloperViewController.swift; sourceTree = "<group>"; };
 		1A81A93F26C150AC00CC56E2 /* ContactToDeveloper.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactToDeveloper.storyboard; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		1A9F7D4F26D24AA6000051E0 /* env.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = env.txt; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA056CC26BD2AE100343005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AA056CE26BD2AE100343005 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +91,14 @@
 				1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		1A5F98AF26DA6B1900BCCF59 /* password */ = {
+			isa = PBXGroup;
+			children = (
+				1A5F98B026DA6B6600BCCF59 /* mailAccountPassword.txt */,
+			);
+			path = password;
 			sourceTree = "<group>";
 		};
 		1A81A91C26C02FB700CC56E2 /* Settings */ = {
@@ -191,6 +199,7 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				1A5F98AF26DA6B1900BCCF59 /* password */,
 				1A5F98A826DA0BFC00BCCF59 /* PlaceHolderTextView.swift */,
 				1A0904E126C271C700BED109 /* Password.rtf */,
 				1A0904DF26C271BA00BED109 /* AboutThisApp.rtf */,
@@ -199,7 +208,6 @@
 				1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
 				1A0904E326C2828700BED109 /* sendEmail_bridge.h */,
-				1A9F7D4F26D24AA6000051E0 /* env.txt */,
 			);
 			path = etc;
 			sourceTree = "<group>";
@@ -319,8 +327,8 @@
 				1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */,
 				1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */,
 				1AA056D426BD2AE100343005 /* Main.storyboard in Resources */,
+				1A5F98B126DA6B6600BCCF59 /* mailAccountPassword.txt in Resources */,
 				1A81A93826C1504500CC56E2 /* PasswordSettings.storyboard in Resources */,
-				1A9F7D5026D24AA6000051E0 /* env.txt in Resources */,
 				1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

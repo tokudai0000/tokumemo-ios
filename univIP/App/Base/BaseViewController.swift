@@ -34,11 +34,19 @@ class BaseViewController: UIViewController {
             }
     **/
 
-
+    var activityIndicator: UIActivityIndicatorView!
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // ActivityIndicatorを作成＆中央に配置
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.center = self.view.center
+        activityIndicator.style = UIActivityIndicatorView.Style.medium
+        activityIndicator.color = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
+        activityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
+        self.view.addSubview(activityIndicator)
     }
 
     

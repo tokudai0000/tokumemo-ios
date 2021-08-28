@@ -43,24 +43,24 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="HjJ-23-7ke" appends="YES" id="uLC-Ot-ZpG"/>
+                                                    <outletCollection property="gestureRecognizers" destination="R6K-Yw-Jts" appends="YES" id="h8x-go-edQ"/>
                                                 </connections>
                                             </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="返信はできませんのでご了承ください。" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahh-9f-7wi" userLabel="CoverLabel">
-                                                <rect key="frame" x="28.5" y="30" width="257.5" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="返信はできませんのでご了承ください。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDm-hg-Ddz">
+                                                <rect key="frame" x="28.5" y="40" width="257.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.49632413809894821" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.71761685610000003" green="0.71766799690000005" blue="0.72147101160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="XW6-SZ-5cX" firstAttribute="leading" secondItem="YOs-nK-bq6" secondAttribute="leading" id="1J3-Bq-8jX"/>
-                                            <constraint firstItem="ahh-9f-7wi" firstAttribute="centerX" secondItem="YOs-nK-bq6" secondAttribute="centerX" id="1um-cU-fvK"/>
-                                            <constraint firstItem="ahh-9f-7wi" firstAttribute="top" secondItem="XW6-SZ-5cX" secondAttribute="bottom" constant="10" id="PLd-iK-xbQ"/>
                                             <constraint firstItem="oNg-LY-QuB" firstAttribute="leading" secondItem="YOs-nK-bq6" secondAttribute="leading" id="Pal-Un-NL0"/>
                                             <constraint firstAttribute="bottom" secondItem="oNg-LY-QuB" secondAttribute="bottom" id="WLi-a0-Cl2"/>
                                             <constraint firstItem="XW6-SZ-5cX" firstAttribute="top" secondItem="YOs-nK-bq6" secondAttribute="top" id="YVj-LL-eAm"/>
+                                            <constraint firstItem="GDm-hg-Ddz" firstAttribute="top" secondItem="XW6-SZ-5cX" secondAttribute="bottom" constant="20" id="YsU-SR-94U"/>
+                                            <constraint firstItem="GDm-hg-Ddz" firstAttribute="centerX" secondItem="YOs-nK-bq6" secondAttribute="centerX" id="avW-ch-Tfa"/>
                                             <constraint firstAttribute="width" constant="314" id="btc-Pr-dnh"/>
                                             <constraint firstItem="oNg-LY-QuB" firstAttribute="top" secondItem="XW6-SZ-5cX" secondAttribute="bottom" id="ffN-5E-dPX"/>
                                             <constraint firstAttribute="trailing" secondItem="oNg-LY-QuB" secondAttribute="trailing" id="k8K-tD-df5"/>
@@ -112,15 +112,15 @@
                     </view>
                     <connections>
                         <outlet property="bodyTextView" destination="oNg-LY-QuB" id="3pL-Ag-9yE"/>
-                        <outlet property="coverLabel" destination="ahh-9f-7wi" id="yDj-3N-5no"/>
+                        <outlet property="coverLabel" destination="GDm-hg-Ddz" id="vKH-Pd-NuH"/>
                         <outlet property="label" destination="M1L-ZK-Mtr" id="uTW-gQ-yre"/>
                         <outlet property="sendButton" destination="L0b-PM-AUl" id="yLU-eE-v8A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xq2-Ur-mE0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="HjJ-23-7ke">
+                <tapGestureRecognizer id="R6K-Yw-Jts">
                     <connections>
-                        <action selector="CoverLabelTop:" destination="MQo-aN-Ovd" id="ess-YF-rP6"/>
+                        <action selector="CoverLabelTop:" destination="MQo-aN-Ovd" id="zs1-63-qXe"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

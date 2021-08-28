@@ -29,7 +29,7 @@ final class MainViewController: BaseViewController, WKNavigationDelegate, UIScro
     private var launchScreenView: UIView!
     private var launchScreenImage: UIImage!
     private var alertController: UIAlertController!
-    private var activityIndicator: UIActivityIndicatorView!
+//    private var activityIndicator: UIActivityIndicatorView!
     
     private let model = Model()
     private let dataManager = DataManager()
@@ -66,14 +66,14 @@ final class MainViewController: BaseViewController, WKNavigationDelegate, UIScro
         webView.navigationDelegate = self
         webView.isUserInteractionEnabled = true
         
-        // ActivityIndicatorを作成＆中央に配置
-        activityIndicator = UIActivityIndicatorView()
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        activityIndicator.center = self.view.center
-        activityIndicator.style = UIActivityIndicatorView.Style.medium
-        activityIndicator.color = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
-        activityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
-        self.view.addSubview(activityIndicator)
+//        // ActivityIndicatorを作成＆中央に配置
+//        activityIndicator = UIActivityIndicatorView()
+//        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//        activityIndicator.center = self.view.center
+//        activityIndicator.style = UIActivityIndicatorView.Style.medium
+//        activityIndicator.color = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
+//        activityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
+//        self.view.addSubview(activityIndicator)
         
         refresh()
         
