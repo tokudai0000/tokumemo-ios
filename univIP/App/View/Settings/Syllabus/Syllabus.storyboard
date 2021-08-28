@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-rU-w43">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-rU-w43">
                                 <rect key="frame" x="50" y="94" width="314" height="718"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="科目名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6uj-pU-RB4">
@@ -28,7 +28,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="教員名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z43-Xt-cP3">
-                                        <rect key="frame" x="0.0" y="222.5" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="214.5" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="T4y-Xo-ykU"/>
                                         </constraints>
@@ -36,7 +36,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="キーワード" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GJs-19-Q1f">
-                                        <rect key="frame" x="0.0" y="445.5" width="314" height="50"/>
+                                        <rect key="frame" x="0.0" y="428.5" width="314" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="vVA-Up-Fux"/>
                                         </constraints>
@@ -44,10 +44,11 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVV-bZ-QLe">
-                                        <rect key="frame" x="0.0" y="668" width="314" height="50"/>
+                                        <rect key="frame" x="119.5" y="643" width="75" height="75"/>
                                         <color key="backgroundColor" red="0.61663721189999998" green="0.74858423939999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="Ogg-fL-S2w"/>
+                                            <constraint firstAttribute="height" constant="75" id="Ogg-fL-S2w"/>
+                                            <constraint firstAttribute="width" constant="75" id="qE7-xD-fdX"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="検索">
@@ -59,8 +60,12 @@
                                     </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="GJs-19-Q1f" firstAttribute="leading" secondItem="YOK-rU-w43" secondAttribute="leading" id="0Yl-L2-RgK"/>
+                                    <constraint firstItem="z43-Xt-cP3" firstAttribute="leading" secondItem="YOK-rU-w43" secondAttribute="leading" id="22O-VF-gjn"/>
+                                    <constraint firstAttribute="trailing" secondItem="GJs-19-Q1f" secondAttribute="trailing" id="Tq4-db-WPP"/>
                                     <constraint firstAttribute="trailing" secondItem="6uj-pU-RB4" secondAttribute="trailing" id="aug-VW-csA"/>
                                     <constraint firstItem="6uj-pU-RB4" firstAttribute="leading" secondItem="YOK-rU-w43" secondAttribute="leading" id="kOe-X3-vU4"/>
+                                    <constraint firstAttribute="trailing" secondItem="z43-Xt-cP3" secondAttribute="trailing" id="z1p-Ua-ijy"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -75,6 +80,7 @@
                     </view>
                     <connections>
                         <outlet property="keyWordTextField" destination="GJs-19-Q1f" id="fdN-Fj-wtx"/>
+                        <outlet property="searchButton" destination="GVV-bZ-QLe" id="WS7-ih-BF9"/>
                         <outlet property="subjectNameTextField" destination="6uj-pU-RB4" id="z5b-fr-BjF"/>
                         <outlet property="teacherNameTextField" destination="z43-Xt-cP3" id="ufE-0a-5fD"/>
                     </connections>

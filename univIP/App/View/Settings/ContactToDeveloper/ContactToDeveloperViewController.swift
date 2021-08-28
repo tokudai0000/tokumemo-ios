@@ -14,6 +14,7 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var coverLabel: UILabel!
     @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var contentsView: UIView!
     @IBOutlet weak var bodyTextView: UITextView!
     
     private var model = Model()
@@ -22,6 +23,11 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        contentsView.layer.cornerRadius = 20.0
+        bodyTextView.layer.cornerRadius = 20.0
+        
+        sendButton.layer.cornerRadius  = 20.0
     }
 
     
@@ -43,15 +49,19 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
         
         guard let mailBodyText = bodyTextView.text else {
             bodyTextView.text = ""
-            label.text = "入力してください"
+//            label.text = "入力してください"
             sendButton.isEnabled = true // 無効
+            self.toast(message: "入力してください。", type: "top", interval: 3)
+            self.activityIndicator.stopAnimating()
             return
         }
 
         if (textFieldEmputyConfirmation(text: mailBodyText)){
             bodyTextView.text = ""
-            label.text = "入力してください"
+//            label.text = "入力してください"
             sendButton.isEnabled = true // 無効
+            self.toast(message: "入力してください。", type: "top", interval: 3)
+            self.activityIndicator.stopAnimating()
             return
         }
 

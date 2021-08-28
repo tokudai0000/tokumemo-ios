@@ -13,6 +13,7 @@ class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     
@@ -24,6 +25,7 @@ class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerButton.layer.cornerRadius = 20.0
         
         rtfFileOpen()
         

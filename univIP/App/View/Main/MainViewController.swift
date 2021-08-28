@@ -315,6 +315,7 @@ final class MainViewController: BaseViewController, WKNavigationDelegate, UIScro
     }
 
     public func refresh(){
+//        leftButton.isEnabled = true
         webViewDisplay(bool: true)
         tabBarUnder.selectedItem = tabBarLeft
         openUrl(urlForRegistrant: model.loginURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
@@ -360,10 +361,12 @@ final class MainViewController: BaseViewController, WKNavigationDelegate, UIScro
     func webViewDisplay(bool: Bool){
         switch bool {
         case true:
+            leftButton.isEnabled = false
             webView.isHidden = true
             activityIndicator.startAnimating()
             
         case false:
+            leftButton.isEnabled = true
             webView.isHidden = false
             activityIndicator.stopAnimating()
             
