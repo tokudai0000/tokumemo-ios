@@ -203,6 +203,10 @@ final class MainViewController: BaseViewController, WKNavigationDelegate, UIScro
         // KeyChain
         let cAcaunt = dataManager.cAccount
         let passWord = dataManager.passWord
+        
+        if (model.displayURL == "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"){
+            openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: nil, alertTrigger: false)
+        }
 
         // Login画面
         if (model.displayURL.contains(model.lostConnectionURL) && model.displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"

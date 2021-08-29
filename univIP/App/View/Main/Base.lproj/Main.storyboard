@@ -89,7 +89,7 @@
                                     </view>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vOC-hs-bC3">
                                         <rect key="frame" x="0.0" y="769" width="414" height="49"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <items>
                                             <tabBarItem tag="1" systemItem="mostViewed" id="ccm-vt-1FV">
                                                 <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="100"/>
@@ -119,7 +119,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P6G-LK-c80" secondAttribute="trailing" id="5QF-ff-Eco"/>
                             <constraint firstItem="P6G-LK-c80" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7r1-Oz-tlw"/>

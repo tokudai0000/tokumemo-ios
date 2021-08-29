@@ -13,7 +13,6 @@
 		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
 		1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */; };
 		1A5F98A926DA0BFC00BCCF59 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A826DA0BFC00BCCF59 /* PlaceHolderTextView.swift */; };
-		1A5F98B126DA6B6600BCCF59 /* mailAccountPassword.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1A5F98B026DA6B6600BCCF59 /* mailAccountPassword.txt */; };
 		1A72E30B26D65A6B00DB3179 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A72E30A26D65A6B00DB3179 /* PDFKit.framework */; };
 		1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */; };
 		1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Settings.storyboard */; };
@@ -33,6 +32,7 @@
 		1AA056D426BD2AE100343005 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D226BD2AE100343005 /* Main.storyboard */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */; };
+		1ABDE75226DB15F000D4B04E /* mailAccountPassword.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75126DB15F000D4B04E /* mailAccountPassword.txt */; };
 		1C42206F8DA32E6251403A15 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC34096843A918E0B133E4 /* Pods_univIP.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +44,6 @@
 		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1A5F98A826DA0BFC00BCCF59 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
-		1A5F98B026DA6B6600BCCF59 /* mailAccountPassword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mailAccountPassword.txt; path = ../../../../../../Desktop/mailAccountPassword.txt; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1A81A91F26C02FF900CC56E2 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056D826BD2AE500343005 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ABDE75126DB15F000D4B04E /* mailAccountPassword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mailAccountPassword.txt; sourceTree = "<group>"; };
 		7BCC34096843A918E0B133E4 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		903169DDC35238D972144509 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
 		F4A75FCC77CEBF23D9942A5C /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		1A5F98AF26DA6B1900BCCF59 /* password */ = {
 			isa = PBXGroup;
 			children = (
-				1A5F98B026DA6B6600BCCF59 /* mailAccountPassword.txt */,
+				1ABDE75126DB15F000D4B04E /* mailAccountPassword.txt */,
 			);
 			path = password;
 			sourceTree = "<group>";
@@ -324,10 +324,10 @@
 				1A81A93C26C1507E00CC56E2 /* AboutThisApp.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A0904E026C271BA00BED109 /* AboutThisApp.rtf in Resources */,
+				1ABDE75226DB15F000D4B04E /* mailAccountPassword.txt in Resources */,
 				1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */,
 				1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */,
 				1AA056D426BD2AE100343005 /* Main.storyboard in Resources */,
-				1A5F98B126DA6B6600BCCF59 /* mailAccountPassword.txt in Resources */,
 				1A81A93826C1504500CC56E2 /* PasswordSettings.storyboard in Resources */,
 				1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */,
 			);
