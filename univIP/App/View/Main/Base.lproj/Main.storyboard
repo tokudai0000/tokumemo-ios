@@ -56,8 +56,8 @@
                                                     <action selector="navigationLeftButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Inc-Me-5ZZ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeH-O1-qTx">
-                                                <rect key="frame" x="182" y="5" width="50" height="50"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeH-O1-qTx">
+                                                <rect key="frame" x="182" y="4" width="50" height="50"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="boM-NZ-cnd"/>
@@ -68,6 +68,19 @@
                                                     <action selector="navigationCenterButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C25-cY-59M"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IUH-6M-2c4">
+                                                <rect key="frame" x="80" y="5" width="50" height="50"/>
+                                                <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="s9Y-OS-wyw"/>
+                                                    <constraint firstAttribute="width" constant="50" id="wbQ-JY-fTC"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
+                                                <connections>
+                                                    <action selector="navigationLeftButton2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BGZ-w4-mJG"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <constraints>
@@ -75,9 +88,11 @@
                                             <constraint firstItem="MGQ-CS-G7C" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="GAE-iG-kTK"/>
                                             <constraint firstItem="GeH-O1-qTx" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="S2j-Js-0IQ"/>
                                             <constraint firstItem="v7E-8X-iXM" firstAttribute="leading" secondItem="8DI-Ir-GH5" secondAttribute="leading" constant="10" id="T9e-yQ-Xth"/>
+                                            <constraint firstItem="IUH-6M-2c4" firstAttribute="leading" secondItem="v7E-8X-iXM" secondAttribute="trailing" constant="20" id="ZVO-aS-yD4"/>
                                             <constraint firstItem="v7E-8X-iXM" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="fXM-3h-pdt"/>
                                             <constraint firstAttribute="trailing" secondItem="MGQ-CS-G7C" secondAttribute="trailing" constant="10" id="mLK-pZ-Unw"/>
                                             <constraint firstItem="GeH-O1-qTx" firstAttribute="centerX" secondItem="8DI-Ir-GH5" secondAttribute="centerX" id="p0W-a4-XVz"/>
+                                            <constraint firstItem="IUH-6M-2c4" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="vxo-1x-Lfk"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-Hs-zL9">
@@ -128,6 +143,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="IUH-6M-2c4" id="6zw-44-bSv"/>
                         <outlet property="leftButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
                         <outlet property="rightButton" destination="MGQ-CS-G7C" id="2HP-cf-zhM"/>
                         <outlet property="tabBarLeft" destination="ccm-vt-1FV" id="lPD-QR-Fb5"/>
@@ -142,6 +158,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="tokumemoIcon2" width="1280" height="1280"/>

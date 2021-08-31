@@ -33,6 +33,9 @@
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */; };
 		1ABDE75226DB15F000D4B04E /* mailAccountPassword.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75126DB15F000D4B04E /* mailAccountPassword.txt */; };
+		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
+		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
+		1ABDE75926DE585300D4B04E /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75826DE585300D4B04E /* Agreement.rtf */; };
 		1C42206F8DA32E6251403A15 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC34096843A918E0B133E4 /* Pods_univIP.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +69,9 @@
 		1AA056D826BD2AE500343005 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1ABDE75126DB15F000D4B04E /* mailAccountPassword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mailAccountPassword.txt; sourceTree = "<group>"; };
+		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
+		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
+		1ABDE75826DE585300D4B04E /* Agreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		7BCC34096843A918E0B133E4 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		903169DDC35238D972144509 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
 		F4A75FCC77CEBF23D9942A5C /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
@@ -199,6 +205,7 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				1ABDE75826DE585300D4B04E /* Agreement.rtf */,
 				1A5F98AF26DA6B1900BCCF59 /* password */,
 				1A5F98A826DA0BFC00BCCF59 /* PlaceHolderTextView.swift */,
 				1A0904E126C271C700BED109 /* Password.rtf */,
@@ -224,6 +231,7 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1ABDE75326DE530300D4B04E /* Agreement */,
 				1AA056EA26BD2DF700343005 /* AppDelegate */,
 				1AA056E426BD2D4100343005 /* Main */,
 				1A81A91C26C02FB700CC56E2 /* Settings */,
@@ -238,6 +246,15 @@
 				1AA056CE26BD2AE100343005 /* SceneDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		1ABDE75326DE530300D4B04E /* Agreement */ = {
+			isa = PBXGroup;
+			children = (
+				1ABDE75426DE534300D4B04E /* AgreementViewController.swift */,
+				1ABDE75626DE535500D4B04E /* Agreement.storyboard */,
+			);
+			path = Agreement;
 			sourceTree = "<group>";
 		};
 		1C91199C2DFA8E4D8B3EBE6D /* Frameworks */ = {
@@ -326,10 +343,12 @@
 				1A0904E026C271BA00BED109 /* AboutThisApp.rtf in Resources */,
 				1ABDE75226DB15F000D4B04E /* mailAccountPassword.txt in Resources */,
 				1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */,
+				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */,
 				1AA056D426BD2AE100343005 /* Main.storyboard in Resources */,
 				1A81A93826C1504500CC56E2 /* PasswordSettings.storyboard in Resources */,
 				1A81A92026C02FF900CC56E2 /* Settings.storyboard in Resources */,
+				1ABDE75926DE585300D4B04E /* Agreement.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +425,7 @@
 				1A81A93E26C150A100CC56E2 /* ContactToDeveloperViewController.swift in Sources */,
 				1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
+				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1A5F98A926DA0BFC00BCCF59 /* PlaceHolderTextView.swift in Sources */,
 				1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */,
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
