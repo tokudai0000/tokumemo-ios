@@ -26,6 +26,8 @@ class PasswordSettingsViewController: BaseViewController ,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         registerButton.layer.cornerRadius = 20.0
+//        textView.isUserInteractionEnabled = false
+        
         
         rtfFileOpen()
         
