@@ -146,7 +146,7 @@ class BaseViewController: UIViewController {
     /// - Parameters:
     ///   - message: メッセージ
     ///   - interval: 表示時間（秒）デフォルト3秒
-    open func toast( message: String, type: String, interval:TimeInterval = 3.0 ) {
+    open func toast( message: String, type: String = "bottom", interval:TimeInterval = 3.0 ) {
         guard self.toastView == nil else {
             return // 既に表示準備中
         }

@@ -8,8 +8,8 @@
 
 import UIKit
 
-class AboutThisAppViewController: UIViewController{//BaseViewController {
-    //MARK:- @IBOutlet
+class AboutThisAppViewController: BaseViewController {
+    //MARK:- IBOutlet
     @IBOutlet weak var textView: UITextView!
     
     
@@ -21,7 +21,7 @@ class AboutThisAppViewController: UIViewController{//BaseViewController {
     }
     
     
-    // MARK: - Private func
+    // MARK:- Private func
     private func rtfFileOpen(){
         if let url = R.file.aboutThisAppRtf() {
             do {

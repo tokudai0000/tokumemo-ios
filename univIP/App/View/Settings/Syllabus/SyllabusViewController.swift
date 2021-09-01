@@ -9,7 +9,8 @@
 import UIKit
 
 class SyllabusViewController: BaseViewController {
-    //MARK:- @IBOutlet
+    
+    //MARK:- IBOutlet
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var subjectNameTextField: UITextField!
     @IBOutlet weak var teacherNameTextField: UITextField!
@@ -17,27 +18,20 @@ class SyllabusViewController: BaseViewController {
     
     var delegateMain : MainViewController?
     
+    
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         searchButton.layer.cornerRadius = 20.0
     }
     
-    private var buttonTagValue = ""
-    private var subjectName = ""
-    private var teacherName = ""
-    private var keyWord = ""
     
-    //MARK:- @IBAction
+    //MARK:- IBAction
     @IBAction func searchButton(_ sender: Any) {
-        /*  button.Tag
-         11.検索
-         12.詳細に検索
-         */
+        var subjectName = ""
+        var teacherName = ""
+        var keyWord = ""
         
-        if let button = sender as? UIButton {
-            buttonTagValue = String(button.tag)
-        }
         if let subN = subjectNameTextField.text{
             subjectName = subN
         }
@@ -50,11 +44,5 @@ class SyllabusViewController: BaseViewController {
         
         delegateMain?.refreshSyllabus(subjectName: subjectName, teacherName: teacherName, keyword: keyWord)
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK:- Override
-    // キーボード非表示
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
 }
