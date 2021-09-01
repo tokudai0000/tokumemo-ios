@@ -9,10 +9,13 @@ import UIKit
 
 class AgreementViewController: BaseViewController {
     
+    //MARK:- IBOutlet
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var buttonTextureYes: UIButton!
     @IBOutlet weak var buttonTextureNo: UIButton!
     
+    
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         buttonTextureYes.layer.cornerRadius = 20.0
@@ -21,7 +24,8 @@ class AgreementViewController: BaseViewController {
         rtfFileOpen()
     }
     
-
+    
+    //MARK:- IBAction
     @IBAction func buttonAction(_ sender: Any) {
         // tag 0:Yes  1:No
         if let button = sender as? UIButton {
@@ -38,6 +42,8 @@ class AgreementViewController: BaseViewController {
             }
         }
     }
+    
+    
     // MARK: - Private func
     private func rtfFileOpen(){
         if let url = R.file.agreementRtf() {
