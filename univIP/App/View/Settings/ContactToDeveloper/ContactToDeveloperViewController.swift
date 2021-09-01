@@ -9,12 +9,13 @@
 import UIKit
 
 
-class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  {
-    //MARK:- @IBOutlet
+class ContactToDeveloperViewController: BaseViewController {
+    
+    //MARK:- IBOutlet
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var coverLabel: UILabel!
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var contentsView: UIView!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bodyTextView: UITextView!
     
     private var model = Model()
@@ -26,7 +27,6 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
         
         contentsView.layer.cornerRadius = 20.0
         bodyTextView.layer.cornerRadius = 20.0
-        
         sendButton.layer.cornerRadius  = 20.0
     }
 
@@ -47,9 +47,9 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
             return
         }
         
+        
         guard let mailBodyText = bodyTextView.text else {
             bodyTextView.text = ""
-//            label.text = "入力してください"
             sendButton.isEnabled = true // 無効
             self.toast(message: "入力してください。", type: "top", interval: 3)
             self.activityIndicator.stopAnimating()
@@ -58,7 +58,6 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
 
         if (textFieldEmputyConfirmation(text: mailBodyText)){
             bodyTextView.text = ""
-//            label.text = "入力してください"
             sendButton.isEnabled = true // 無効
             self.toast(message: "入力してください。", type: "top", interval: 3)
             self.activityIndicator.stopAnimating()
@@ -125,5 +124,25 @@ class ContactToDeveloperViewController: BaseViewController, UITextViewDelegate  
                 self.sendButton.isEnabled = true // 有効
             }
         }
+    }
+}
+
+extension ContactToDeveloperViewController: UITextViewDelegate{
+    private func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
+        var frame = textField.frame
+        // super.viewからの絶対座標に変換する
+        if var pv = textField.superview {
+            while pv != super.view {
+                if let gv = pv.superview {
+                    frame = pv.convert(frame, to: gv)
+                    pv = gv
+                }else{
+                    break
+                }
+            }
+        }
+        super.keyboardSafeArea = frame // super.viewからの絶対座標
+        return true //true=キーボードを表示する
     }
 }

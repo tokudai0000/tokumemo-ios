@@ -14,6 +14,7 @@ class Model: NSObject {
     
     /// 情報ポータル、ホーム画面URL
     let courceManagementHomeURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
+    let courceManagementHomePCURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
     /// マナバURL
     let manabaURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     /// 図書館URL
@@ -52,27 +53,20 @@ class Model: NSObject {
     let allowDomain = "tokushima-u.ac.jp"
     
     /// トップ画面
-    let topMenuURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx",
-                       "https://manaba.lms.tokushima-u.ac.jp/s/home_summary",
-                       "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx",
-                       "https://opac.lib.tokushima-u.ac.jp/opac/user/top",
-                       "https://www.ait.tokushima-u.ac.jp/service/list_out/",
-                       "https://uls01.ulc.tokushima-u.ac.jp/info/index.html",
-                       "https://www.lib.tokushima-u.ac.jp/",
-                       "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=",
-                       "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"]
+//    let topMenuURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx",
+//                       "https://manaba.lms.tokushima-u.ac.jp/s/home_summary",
+//                       "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx",
+//                       "https://opac.lib.tokushima-u.ac.jp/opac/user/top",
+//                       "https://www.ait.tokushima-u.ac.jp/service/list_out/",
+//                       "https://uls01.ulc.tokushima-u.ac.jp/info/index.html",
+//                       "https://www.lib.tokushima-u.ac.jp/",
+//                       "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=",
+//                       "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"]
     
         
     // 教務事務システム -> 個人向けメッセージ -> PDF開く際、 safariで
     let transitionURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/CommonControls/Message/MesFileDownload.aspx?param="]
     
-    
-    
-    /// 現在表示しているURLを保持
-    var displayURL: String = " "
-    /// 表示させたいURLを保持（これにより到達したかを判定）
-    var confirmationURL : String = " "
-
     
     /// メール設定
     let mailMasterAddress = "tokumemo1@gmail.com"
