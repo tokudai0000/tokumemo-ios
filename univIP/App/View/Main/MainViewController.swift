@@ -358,7 +358,7 @@ extension MainViewController: WKNavigationDelegate{
         if (navigationAction.navigationType == .linkActivated){
             if navigationAction.targetFrame == nil
                 || !navigationAction.targetFrame!.isMainFrame { // 新しく開かれるタブを新しいURLとして読み込む
-                openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: nil, alertTrigger: false)
+                openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
                 decisionHandler(.cancel)
                 return
             }
@@ -406,7 +406,7 @@ extension MainViewController: WKNavigationDelegate{
         
         // PCサイトへ飛ばされた場合
         if (displayURL == model.courceManagementHomePCURL){
-            openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: nil, alertTrigger: false)
+            openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
         }
 
         // Login画面
