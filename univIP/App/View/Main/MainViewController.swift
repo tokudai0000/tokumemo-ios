@@ -95,6 +95,7 @@ final class MainViewController: BaseViewController{
             let image = UIImage(systemName: "chevron.down")
             rightButton.setImage(image, for: .normal)
             animationView(scene: "rightButtonDown")
+
         }
     }
 
@@ -105,7 +106,7 @@ final class MainViewController: BaseViewController{
     public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
         
         webViewDisplay(bool: true)
-        
+        onlyOnceForLogin = false
         // 登録者判定
         if registrantDecision(){
             let request = NSURLRequest(url: URL(string:urlForRegistrant)!)
@@ -205,7 +206,7 @@ final class MainViewController: BaseViewController{
         
         // ログインできなかった時
         if displayURL.contains(model.lostConnectionURL) &&
-            displayURL.suffix(2) != "s1"{
+            displayURL.suffix(4) != "e1s1"{
             webViewDisplay(bool: false)
             return
         }
@@ -359,6 +360,7 @@ extension MainViewController: WKNavigationDelegate{
             if navigationAction.targetFrame == nil
                 || !navigationAction.targetFrame!.isMainFrame { // 新しく開かれるタブを新しいURLとして読み込む
                 openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
+                webViewDisplay(bool: false)
                 decisionHandler(.cancel)
                 return
             }
