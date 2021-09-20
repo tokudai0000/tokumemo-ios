@@ -6,6 +6,7 @@
   <img src="/univIP/App/etc/Assets.xcassets/AppIcon.appiconset/TOKUMEMO_icon (1).png" width=300px>
 </p>
 
+# 概要
 TokumemoはSwiftで開発された徳島大学生の学修を支援するアプリケーションです。
 
 普段利用する大学Webサービスのログインを自動化、本日の授業や成績など知りたい情報をボタン1つで利用できます。
@@ -27,10 +28,15 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 
 しかし、頻繁に利用するからこそ、さらに便利になれるアプリを制作してみようと思いました。
 
+# OS
+・ iOS 14.4
 
+# 仕様
 
-## 使用技術
+## 設計
+・ MVVM
 
+## ライブラリ
 - Swift
 - CocoaPods(R.swift, KeychainAccess, mailcore2-ios)
 
@@ -56,6 +62,11 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 プロジェクトの分割、コメントによる可読性、実装するか定かではない機能にはブランチを作成し柔軟に開発を行った。
 
 
+## デザイン
+
+## 自己評価
+
+## 今後追加したい機能
 
 ## セキュリティー
 
