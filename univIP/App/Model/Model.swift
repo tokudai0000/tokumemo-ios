@@ -19,6 +19,10 @@ class Model: NSObject {
     let manabaURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     /// 図書館URL
     let libraryLoginURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+    /// 図書館本貸出し期間延長URL
+    let libraryBookLendingExtensionURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
+    /// 図書館本購入リクエスト
+    let libraryBookPurchaseRequestURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new"
     /// シラバスURL
     let syllabusURL = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
     
@@ -28,8 +32,12 @@ class Model: NSObject {
     let timeTableURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
     /// 今年の成績表
     let currentTermPerformanceURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
+    /// 成績参照
+    let termPerformanceURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"
     /// 出欠記録
     let presenceAbsenceRecordURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"
+    /// 授業アンケート
+    let classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"
     
     /// システムサービス一覧(非登録者に対して表示するURL)
     let systemServiceListURL = "https://www.ait.tokushima-u.ac.jp/service/list_out/"

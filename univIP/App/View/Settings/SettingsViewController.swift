@@ -18,11 +18,15 @@ class SettingsViewController: BaseViewController {
     private var sectionHight:Int = 30
     private var cellHight:Int = 80
     private var cellList:[[String]] = [["図書館サイト",
+                                        "図書館貸し出し期間延長",
+                                        "図書館本購入リクエスト",
+                                        "図書館開館カレンダー",
                                         "シラバス",
                                         "時間割",
                                         "今年の成績表",
-                                        "全学期の成績表",
-                                        "出欠記録"],
+                                        "成績参照",
+                                        "出欠記録",
+                                        "授業アンケート"],
                                        ["パスワード設定",
                                         "このアプリについて",
                                         "開発者へ連絡"]]
@@ -108,7 +112,14 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         switch cellName {
         case "図書館サイト":
             delegate.openUrl(urlForRegistrant: model.libraryLoginURL, urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
-            
+        case "図書館貸し出し期間延長":
+            delegate.openUrl(urlForRegistrant: model.libraryBookLendingExtensionURL, urlForNotRegistrant: nil, alertTrigger: true)
+        case "図書館本購入リクエスト":
+            delegate.openUrl(urlForRegistrant: model.libraryBookPurchaseRequestURL, urlForNotRegistrant: nil, alertTrigger: true)
+        case "図書館開館カレンダー":
+            delegate.openUrl(urlForRegistrant: model.libraryHomeURL, urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
+        case "授業アンケート":
+            delegate.openUrl(urlForRegistrant: model.classQuestionnaire, urlForNotRegistrant: nil, alertTrigger: true)
         case "シラバス":
             delegate.popupView(scene: "syllabus")
             
@@ -126,8 +137,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             let termPerformanceYearURL = model.currentTermPerformanceURL + String(year)
             delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             
-        case "全学期の成績表":
-            
+        case "成績参照":
+            delegate.openUrl(urlForRegistrant: model.termPerformanceURL, urlForNotRegistrant: nil, alertTrigger: true)
             
         case "出欠記録":
             delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)

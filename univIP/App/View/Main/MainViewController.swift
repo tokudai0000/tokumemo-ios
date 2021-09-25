@@ -187,6 +187,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // WebViewの表示、非表示を判定
     private func webViewHiddenJudge(){
+        // ＊＊改修必須（バグの元）＊＊
         let webViewIsHiddonFalseURLs = [model.syllabusSearchMainURL,
                                         model.courceManagementHomeURL,
                                         model.systemServiceListURL,
@@ -196,7 +197,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                                         model.libraryLoginURL,
                                         model.timeTableURL,
                                         model.currentTermPerformanceURL,
-                                        model.presenceAbsenceRecordURL]
+                                        model.termPerformanceURL,
+                                        model.presenceAbsenceRecordURL,
+                                        model.libraryBookLendingExtensionURL,
+                                        model.libraryBookPurchaseRequestURL,
+                                        model.classQuestionnaire]
         // 上記のURLの場合、画面を表示
         for url in webViewIsHiddonFalseURLs{
             if (displayURL.contains(url)){
