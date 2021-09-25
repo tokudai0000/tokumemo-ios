@@ -21,6 +21,7 @@ class SettingsViewController: BaseViewController {
                                         "シラバス",
                                         "時間割",
                                         "今年の成績表",
+                                        "全学期の成績表",
                                         "出欠記録"],
                                        ["パスワード設定",
                                         "このアプリについて",
@@ -103,49 +104,43 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         guard let delegate = delegateMain else {
             return
         }
-        if (indexPath[0] == 0){
-            switch indexPath[1] {
-            case 0: // 図書館サイト
-                delegate.openUrl(urlForRegistrant: model.libraryLoginURL, urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
-                
-            case 1: // シラバス
-                delegate.popupView(scene: "syllabus")
-                
-            case 2: // 時間割
-                delegate.openUrl(urlForRegistrant: model.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
-                
-            case 3: // 今年の成績
-                let current = Calendar.current
-                var year = current.component(.year, from: Date())
-                let month = current.component(.month, from: Date())
-                
-                if (month <= 3){ // 1月から3月までは前年の成績であるから
-                    year -= 1
-                }
-                let termPerformanceYearURL = model.currentTermPerformanceURL + String(year)
-                delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
-                
-            case 4: // 出欠記録
-                delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
-                
-            default:
-                return
-            }
+        let cellName = cellList[indexPath[0]][indexPath[1]]
+        switch cellName {
+        case "図書館サイト":
+            delegate.openUrl(urlForRegistrant: model.libraryLoginURL, urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
             
-        }else if(indexPath[0] == 1){
-            switch indexPath[1] {
-            case 0: // パスワード設定
-                delegate.popupView(scene: "password")
-                
-            case 1: // このアプリについて
-                delegate.popupView(scene: "aboutThisApp")
-                
-            case 2: // 開発者へ連絡
-                delegate.popupView(scene: "contactToDeveloper")
-                
-            default:
-                return
+        case "シラバス":
+            delegate.popupView(scene: "syllabus")
+            
+        case "時間割":
+            delegate.openUrl(urlForRegistrant: model.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
+            
+        case "今年の成績表":
+            let current = Calendar.current
+            var year = current.component(.year, from: Date())
+            let month = current.component(.month, from: Date())
+            
+            if (month <= 3){ // 1月から3月までは前年の成績であるから
+                year -= 1
             }
+            let termPerformanceYearURL = model.currentTermPerformanceURL + String(year)
+            delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
+            
+        case "全学期の成績表":
+            
+            
+        case "出欠記録":
+            delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
+        case "パスワード設定":
+            delegate.popupView(scene: "password")
+            
+        case "このアプリについて":
+            delegate.popupView(scene: "aboutThisApp")
+            
+        case "開発者へ連絡":
+            delegate.popupView(scene: "contactToDeveloper")
+        default:
+            return
         }
         
         viewAnimated(scene: "settingsViewDisappear")
