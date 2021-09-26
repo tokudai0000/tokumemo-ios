@@ -23,6 +23,8 @@ class Model: NSObject {
     let libraryBookLendingExtensionURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
     /// 図書館本購入リクエスト
     let libraryBookPurchaseRequestURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new"
+    /// 図書館カレンダー
+    let libraryCalendar = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"
     /// シラバスURL
     let syllabusURL = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
     

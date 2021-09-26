@@ -16,11 +16,11 @@ class SettingsViewController: BaseViewController {
     private let model = Model()
     
     private var sectionHight:Int = 30
-    private var cellHight:Int = 80
+    private var cellHight:Int = 44
     private var cellList:[[String]] = [["図書館サイト",
                                         "図書館貸し出し期間延長",
                                         "図書館本購入リクエスト",
-                                        "図書館開館カレンダー",
+                                        "図書館開館カレンダー(β版)",
                                         "シラバス",
                                         "時間割",
                                         "今年の成績表",
@@ -116,8 +116,18 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.openUrl(urlForRegistrant: model.libraryBookLendingExtensionURL, urlForNotRegistrant: nil, alertTrigger: true)
         case "図書館本購入リクエスト":
             delegate.openUrl(urlForRegistrant: model.libraryBookPurchaseRequestURL, urlForNotRegistrant: nil, alertTrigger: true)
-        case "図書館開館カレンダー":
-            delegate.openUrl(urlForRegistrant: model.libraryHomeURL, urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
+        case "図書館開館カレンダー(β版)":
+            let current = Calendar.current
+            var year = current.component(.year, from: Date())
+            let month = current.component(.month, from: Date())
+            
+            if (month <= 3){ // 1月から3月までは前年のカレンダーにあるから
+                year -= 1
+            }
+            let libraryCalendarURL = model.libraryCalendar + String(year) + ".pdf"
+            delegate.openUrl(urlForRegistrant: libraryCalendarURL, urlForNotRegistrant: libraryCalendarURL, alertTrigger: false)
+            
+//            delegate.openUrl(urlForRegistrant: "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_8.pdf", urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
         case "授業アンケート":
             delegate.openUrl(urlForRegistrant: model.classQuestionnaire, urlForNotRegistrant: nil, alertTrigger: true)
         case "シラバス":
