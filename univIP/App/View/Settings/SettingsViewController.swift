@@ -271,19 +271,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                 toast(message: "失敗しました")
             }
             
-            
-            
-//            let current = Calendar.current
-//            var year = current.component(.year, from: Date())
-//            let month = current.component(.month, from: Date())
-//
-//            if (month <= 3){ // 1月から3月までは前年のカレンダーにあるから
-//                year -= 1
-//            }
-//            let libraryCalendarURL = model.libraryCalendar + String(year) + ".pdf"
-//            delegate.openUrl(urlForRegistrant: libraryCalendarURL, urlForNotRegistrant: libraryCalendarURL, alertTrigger: false)
-            
-//            delegate.openUrl(urlForRegistrant: "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_8.pdf", urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
         case "授業アンケート":
             delegate.openUrl(urlForRegistrant: model.classQuestionnaire, urlForNotRegistrant: nil, alertTrigger: true)
         case "シラバス":
@@ -322,18 +309,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         viewAnimated(scene: "settingsViewDisappear")
     }
-
-
-    
-
-
-
-    
-
-
-    
-
-
     
     /// 編集できるセクションを限定
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
