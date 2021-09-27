@@ -9,6 +9,7 @@ target 'univIP' do
   pod 'R.swift' #, '~> 5.1'               #, '5.1.0'
   pod 'KeychainAccess'
   pod 'mailcore2-ios'
+  pod 'Kanna'
   
   post_install do |installer|
     installer.pods_project.build_configurations.each do |config|

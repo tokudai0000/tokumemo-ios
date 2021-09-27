@@ -86,7 +86,7 @@ class Model: NSObject {
     var cellList:[CellList] = [CellList(name: "Webサイト", category: "図書館", display: true),
                                   CellList(name: "貸し出し期間延長", category: "図書館", display: true),
                                   CellList(name: "本購入リクエスト", category: "図書館", display: true),
-                                  CellList(name: "開館カレンダー(β版)", category: "図書館", display: true),
+                                  CellList(name: "開館カレンダー", category: "図書館", display: true),
                                   CellList(name: "シラバス", category: "シラバス", display: true),
                                   CellList(name: "時間割", category: "教務事務システム", display: true),
                                   CellList(name: "今年の成績表", category: "教務事務システム", display: true),

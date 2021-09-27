@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kanna
 
 class SettingsViewController: BaseViewController {
     
@@ -51,10 +52,8 @@ class SettingsViewController: BaseViewController {
         tableView.isEditing = editSituation
         if editSituation {
             editButton.titleLabel?.text = "編集"
-//            TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         }else{
             editButton.titleLabel?.text = "終了"
-//            TableCell.accessoryType = .none
         }
         editSituation = !editSituation
         self.tableView.reloadData()
@@ -68,6 +67,8 @@ class SettingsViewController: BaseViewController {
             cellList = model.cellList
             saveCellList(lists: cellList)
         }
+        // 更新か判定
+//        if 
         
     }
     private func saveCellList(lists:[CellList]){
@@ -243,16 +244,44 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.openUrl(urlForRegistrant: model.libraryBookLendingExtensionURL, urlForNotRegistrant: nil, alertTrigger: true)
         case "本購入リクエスト":
             delegate.openUrl(urlForRegistrant: model.libraryBookPurchaseRequestURL, urlForNotRegistrant: nil, alertTrigger: true)
-        case "開館カレンダー(β版)":
-            let current = Calendar.current
-            var year = current.component(.year, from: Date())
-            let month = current.component(.month, from: Date())
+        case "開館カレンダー":
+            let url = NSURL(string: model.libraryHomeURL)
+            let data = NSData(contentsOf: url! as URL)
             
-            if (month <= 3){ // 1月から3月までは前年のカレンダーにあるから
-                year -= 1
+            var calenderURL = ""
+            
+            do {
+                let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
+                for node in doc.xpath("//a") {
+                    guard let str = node["href"] else {
+                        return
+                    }
+                    if str.contains("pub/pdf/calender/calender_main_"){
+                        calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
+                    }
+                }
+                
+            } catch {
+               return
             }
-            let libraryCalendarURL = model.libraryCalendar + String(year) + ".pdf"
-            delegate.openUrl(urlForRegistrant: libraryCalendarURL, urlForNotRegistrant: libraryCalendarURL, alertTrigger: false)
+            
+            if calenderURL != ""{
+                delegate.openUrl(urlForRegistrant: calenderURL, urlForNotRegistrant: calenderURL, alertTrigger: false)
+            }else{
+                toast(message: "失敗しました")
+            }
+            
+            
+            
+//            let current = Calendar.current
+//            var year = current.component(.year, from: Date())
+//            let month = current.component(.month, from: Date())
+//
+//            if (month <= 3){ // 1月から3月までは前年のカレンダーにあるから
+//                year -= 1
+//            }
+//            let libraryCalendarURL = model.libraryCalendar + String(year) + ".pdf"
+//            delegate.openUrl(urlForRegistrant: libraryCalendarURL, urlForNotRegistrant: libraryCalendarURL, alertTrigger: false)
             
 //            delegate.openUrl(urlForRegistrant: "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_8.pdf", urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
         case "授業アンケート":
