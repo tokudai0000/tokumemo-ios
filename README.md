@@ -30,6 +30,7 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 
 ## ライブラリ
 - R.swift
+- Kanna
 - KeychainAccess
 - mailcore2-ios
 
