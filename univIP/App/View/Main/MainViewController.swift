@@ -182,6 +182,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         }else{
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
+            
+            
         }
     }
     

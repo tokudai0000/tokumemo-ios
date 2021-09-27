@@ -82,4 +82,28 @@ class Model: NSObject {
     let mailMasterAddress = "tokumemo1@gmail.com"
     let mailSendTitle = "トクメモ開発者へ"
     let mailSendFailureText = "送信に失敗しました。失敗が続く場合は[tokumemo1@gmail.com]へ連絡をしてください。"
+    
+    var cellList:[CellList] = [CellList(name: "Webサイト", category: "図書館", display: true),
+                                  CellList(name: "貸し出し期間延長", category: "図書館", display: true),
+                                  CellList(name: "本購入リクエスト", category: "図書館", display: true),
+                                  CellList(name: "開館カレンダー(β版)", category: "図書館", display: true),
+                                  CellList(name: "シラバス", category: "シラバス", display: true),
+                                  CellList(name: "時間割", category: "教務事務システム", display: true),
+                                  CellList(name: "今年の成績表", category: "教務事務システム", display: true),
+                                  CellList(name: "成績参照", category: "教務事務システム", display: true),
+                                  CellList(name: "出欠記録", category: "教務事務システム", display: true),
+                                  CellList(name: "授業アンケート", category: "教務事務システム", display: true),]
 }
+
+struct CellList: Codable {
+    let name: String
+    let category: String
+    var display: Bool
+    
+//    init() {
+//        name = ""
+//        category   = ""
+//        display = true
+//    }
+}
+
