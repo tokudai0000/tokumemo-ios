@@ -19,6 +19,12 @@ class Model: NSObject {
     let manabaURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     /// 図書館URL
     let libraryLoginURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+    /// 図書館本貸出し期間延長URL
+    let libraryBookLendingExtensionURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
+    /// 図書館本購入リクエスト
+    let libraryBookPurchaseRequestURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new"
+    /// 図書館カレンダー
+    let libraryCalendar = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"
     /// シラバスURL
     let syllabusURL = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
     
@@ -28,8 +34,12 @@ class Model: NSObject {
     let timeTableURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
     /// 今年の成績表
     let currentTermPerformanceURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
+    /// 成績参照
+    let termPerformanceURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"
     /// 出欠記録
     let presenceAbsenceRecordURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"
+    /// 授業アンケート
+    let classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"
     
     /// システムサービス一覧(非登録者に対して表示するURL)
     let systemServiceListURL = "https://www.ait.tokushima-u.ac.jp/service/list_out/"
@@ -72,4 +82,28 @@ class Model: NSObject {
     let mailMasterAddress = "tokumemo1@gmail.com"
     let mailSendTitle = "トクメモ開発者へ"
     let mailSendFailureText = "送信に失敗しました。失敗が続く場合は[tokumemo1@gmail.com]へ連絡をしてください。"
+    
+    var cellList:[CellList] = [CellList(name: "Webサイト", category: "図書館", display: true),
+                                  CellList(name: "貸し出し期間延長", category: "図書館", display: true),
+                                  CellList(name: "本購入リクエスト", category: "図書館", display: true),
+                                  CellList(name: "開館カレンダー", category: "図書館", display: true),
+                                  CellList(name: "シラバス", category: "シラバス", display: true),
+                                  CellList(name: "時間割", category: "教務事務システム", display: true),
+                                  CellList(name: "今年の成績表", category: "教務事務システム", display: true),
+                                  CellList(name: "成績参照", category: "教務事務システム", display: true),
+                                  CellList(name: "出欠記録", category: "教務事務システム", display: true),
+                                  CellList(name: "授業アンケート", category: "教務事務システム", display: true),]
 }
+
+struct CellList: Codable {
+    let name: String
+    let category: String
+    var display: Bool
+    
+//    init() {
+//        name = ""
+//        category   = ""
+//        display = true
+//    }
+}
+

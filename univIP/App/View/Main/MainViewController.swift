@@ -16,7 +16,7 @@
 import UIKit
 import WebKit
 
-final class MainViewController: BaseViewController{
+final class MainViewController: BaseViewController, WKUIDelegate{
     
     //MARK:- IBOutlet
     @IBOutlet weak var viewTop: UIView!
@@ -52,6 +52,7 @@ final class MainViewController: BaseViewController{
         
         tabBar.delegate = self
         webView.navigationDelegate = self
+        webView.uiDelegate = self
         
         refresh()
     }
@@ -181,11 +182,13 @@ final class MainViewController: BaseViewController{
         }else{
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
+            
         }
     }
     
     // WebViewの表示、非表示を判定
     private func webViewHiddenJudge(){
+        // ＊＊改修必須（バグの元）＊＊
         let webViewIsHiddonFalseURLs = [model.syllabusSearchMainURL,
                                         model.courceManagementHomeURL,
                                         model.systemServiceListURL,
@@ -195,7 +198,11 @@ final class MainViewController: BaseViewController{
                                         model.libraryLoginURL,
                                         model.timeTableURL,
                                         model.currentTermPerformanceURL,
-                                        model.presenceAbsenceRecordURL]
+                                        model.termPerformanceURL,
+                                        model.presenceAbsenceRecordURL,
+                                        model.libraryBookLendingExtensionURL,
+                                        model.libraryBookPurchaseRequestURL,
+                                        model.classQuestionnaire]
         // 上記のURLの場合、画面を表示
         for url in webViewIsHiddonFalseURLs{
             if (displayURL.contains(url)){
@@ -330,6 +337,18 @@ final class MainViewController: BaseViewController{
 
 //MARK:- WebView
 extension MainViewController: WKNavigationDelegate{
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+        // 変数 url にはリンク先のURLが入る
+        if let url = navigationAction.request.url {
+            openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: nil, alertTrigger: false)
+            webViewDisplay(bool: false)
+        }
+         
+        return nil
+    }
     // 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
@@ -356,15 +375,15 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // <a href="..." target="_blank"> (新しいタブで開く)判定
-        if (navigationAction.navigationType == .linkActivated){
-            if navigationAction.targetFrame == nil
-                || !navigationAction.targetFrame!.isMainFrame { // 新しく開かれるタブを新しいURLとして読み込む
-                openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
-                webViewDisplay(bool: false)
-                decisionHandler(.cancel)
-                return
-            }
-        }
+//        if (navigationAction.navigationType == .linkActivated){
+//            if navigationAction.targetFrame == nil
+//                || !navigationAction.targetFrame!.isMainFrame { // 新しく開かれるタブを新しいURLとして読み込む
+//                openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
+//                webViewDisplay(bool: false)
+//                decisionHandler(.cancel)
+//                return
+//            }
+//        }
         
         // Manabaの授業Youtubeリンクのタップ判定
         if (displayURL.contains(model.popupToYoutubeURL)){
@@ -456,3 +475,5 @@ extension MainViewController: UITabBarDelegate{
         }
     }
 }
+
+
