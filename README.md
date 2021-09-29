@@ -15,7 +15,7 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 
 ## スクリーンショット
 
-<img src="https://user-images.githubusercontent.com/53287375/131691222-db0288ec-28a1-438c-b46c-549cfedcd985.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691249-0b38e0a7-d75f-4530-9778-be991fa0ef25.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691278-3853efe1-9487-4c60-ae3f-7ff196566c54.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691291-6d31ef82-547e-48d0-ba71-0f5252b88ce1.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691304-19214b9a-e921-4719-bf22-65aeb9c59948.png" width="320px">
+<img src="https://user-images.githubusercontent.com/53287375/131691222-db0288ec-28a1-438c-b46c-549cfedcd985.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691249-0b38e0a7-d75f-4530-9778-be991fa0ef25.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691278-3853efe1-9487-4c60-ae3f-7ff196566c54.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/134928169-5e26628a-cc6b-474d-8822-cd56bfd3be3f.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691304-19214b9a-e921-4719-bf22-65aeb9c59948.png" width="320px">
 
 
 
@@ -30,6 +30,7 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 
 ## ライブラリ
 - R.swift
+- Kanna
 - KeychainAccess
 - mailcore2-ios
 
