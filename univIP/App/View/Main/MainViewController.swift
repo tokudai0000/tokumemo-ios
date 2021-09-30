@@ -82,22 +82,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     @IBAction func navigationCenterButton(_ sender: Any) {
         refresh()
+        navigationRightButtonOnOff(operation: "UP")
     }
 
     @IBAction func navigationRightButton(_ sender: Any) {
-        
-        switch navigationRightButtonOnOff(){
-        case true:
-            let image = UIImage(systemName: "chevron.up")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonUp")
-
-        case false:
-            let image = UIImage(systemName: "chevron.down")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonDown")
-
-        }
+        navigationRightButtonOnOff(operation: "REVERSE")
     }
 
 
@@ -193,6 +182,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                                         model.courceManagementHomeURL,
                                         model.systemServiceListURL,
                                         model.manabaURL,
+                                        model.manabaPCURL,
                                         model.eLearningListURL,
                                         model.libraryHomeURL,
                                         model.libraryLoginURL,
@@ -202,7 +192,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                                         model.presenceAbsenceRecordURL,
                                         model.libraryBookLendingExtensionURL,
                                         model.libraryBookPurchaseRequestURL,
-                                        model.classQuestionnaire]
+                                        model.classQuestionnaire,
+                                        model.outlookHomeURL]
         // 上記のURLの場合、画面を表示
         for url in webViewIsHiddonFalseURLs{
             if (displayURL.contains(url)){
@@ -238,7 +229,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             leftButton.isEnabled = false
             webView.isHidden = true
             activityIndicator.startAnimating()
-            
+
         case false:
             leftButton.isEnabled = true
             webView.isHidden = false
@@ -258,13 +249,44 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         }
     }
     
-    // webViewの位置によってボタンの機能を判定
-    private func navigationRightButtonOnOff() -> Bool{
+    // webViewを上げ下げする
+    public func navigationRightButtonOnOff(operation: String){
+        
         let webViewPositionY = webView.frame.origin.y
-        if (webViewPositionY == 0.0){
-            return true
-        }else{
-            return false
+        var ope = ""
+        switch operation {
+        case "UP":
+            if (webViewPositionY != 0.0){
+                ope = "UP"
+            }
+            
+        case "DOWN":
+            if (webViewPositionY == 0.0){
+                ope = "DOWN"
+            }
+            
+        case "REVERSE":
+            if (webViewPositionY == 0.0){
+                ope = "DOWN"
+            }else{
+                ope = "UP"
+            }
+        default:
+            return
+        }
+        
+        switch ope {
+        case "UP":
+            let image = UIImage(systemName: "chevron.down")
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: "rightButtonDown")
+            return
+        case "DOWN":
+            let image = UIImage(systemName: "chevron.up")
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: "rightButtonUp")
+        default:
+            return
         }
     }
     
@@ -367,10 +389,18 @@ extension MainViewController: WKNavigationDelegate{
         guard let host = url.host else{
             return
         }
-        // [tokushima-u.ac.jp] 以外はSafariで開く
-        if host.contains(model.allowDomain) == false{
+        // [model.allowDomains] 以外はSafariで開く
+        var trigger = false
+        for allow in model.allowDomains {
+            if host.contains(allow){
+                trigger = true
+            }
+        }
+        if trigger == false{
+            print(displayURL)
+            print("a")
             UIApplication.shared.open(URL(string: String(describing: displayURL))!)
-            decisionHandler(.allow)
+            decisionHandler(.cancel)
             return
         }
         
@@ -454,6 +484,22 @@ extension MainViewController: WKNavigationDelegate{
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
+        // outlookログイン
+        if displayURL.contains(model.outlookLoginURL){
+            let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
+            webViewDisplay(bool: false)
+        }
+        
+        // キャリア支援室ログイン
+        if displayURL == model.tokudaiCareerCenterURL{
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
+            webViewDisplay(bool: false)
+        }
+        
         // WebView表示、非表示　判定
         webViewHiddenJudge()
     }
@@ -467,9 +513,10 @@ extension MainViewController: UITabBarDelegate{
         switch item.tag {
         case 1: // 左
             openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
-            
+            navigationRightButtonOnOff(operation: "UP")
         case 2: // 右
             openUrl(urlForRegistrant: model.manabaURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
+            navigationRightButtonOnOff(operation: "UP")
         default:
             return
         }

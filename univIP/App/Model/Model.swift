@@ -17,6 +17,7 @@ class Model: NSObject {
     let courceManagementHomePCURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
     /// マナバURL
     let manabaURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
+    let manabaPCURL = "https://manaba.lms.tokushima-u.ac.jp/ct/home"
     /// 図書館URL
     let libraryLoginURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
     /// 図書館本貸出し期間延長URL
@@ -58,9 +59,22 @@ class Model: NSObject {
     /// ポップアップ(Youtubeに遷移)
     let popupToYoutubeURL : String = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
     
+    /// MicroSoftのoutlookへ遷移
+    let mailService = "https://outlook.office365.com/tokushima-u.ac.jp"
+    
+    /// outolookログインURLの一部
+    let outlookLoginURL = "https://wa.tokushima-u.ac.jp/adfs/ls"
+    
+    let outlookHomeURL = "https://outlook.office.com/mail/"
+    
+    let tokudaiCareerCenterURL = "https://www.tokudai-syusyoku.com/index.php"
     
     /// 許可するドメイン
-    let allowDomain = "tokushima-u.ac.jp"
+    let allowDomains = ["tokushima-u.ac.jp",
+                        "microsoftonline.com",
+                        "office365.com",
+                        "office.com",
+                        "tokudai-syusyoku.com"]
     
     /// トップ画面
 //    let topMenuURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx",
@@ -84,15 +98,18 @@ class Model: NSObject {
     let mailSendFailureText = "送信に失敗しました。失敗が続く場合は[tokumemo1@gmail.com]へ連絡をしてください。"
     
     var cellList:[CellList] = [CellList(name: "Webサイト", category: "図書館", display: true),
-                                  CellList(name: "貸し出し期間延長", category: "図書館", display: true),
-                                  CellList(name: "本購入リクエスト", category: "図書館", display: true),
-                                  CellList(name: "開館カレンダー", category: "図書館", display: true),
-                                  CellList(name: "シラバス", category: "シラバス", display: true),
-                                  CellList(name: "時間割", category: "教務事務システム", display: true),
-                                  CellList(name: "今年の成績表", category: "教務事務システム", display: true),
-                                  CellList(name: "成績参照", category: "教務事務システム", display: true),
-                                  CellList(name: "出欠記録", category: "教務事務システム", display: true),
-                                  CellList(name: "授業アンケート", category: "教務事務システム", display: true),]
+                               CellList(name: "貸し出し期間延長", category: "図書館", display: true),
+                               CellList(name: "本購入リクエスト", category: "図書館", display: true),
+                               CellList(name: "開館カレンダー", category: "図書館", display: true),
+                               CellList(name: "シラバス", category: "シラバス", display: true),
+                               CellList(name: "時間割", category: "教務事務システム", display: true),
+                               CellList(name: "今年の成績表", category: "教務事務システム", display: true),
+                               CellList(name: "成績参照", category: "教務事務システム", display: true),
+                               CellList(name: "出欠記録", category: "教務事務システム", display: true),
+                               CellList(name: "授業アンケート", category: "教務事務システム", display: true),
+                               CellList(name: "メール", category: "Outlook", display: true),
+                               CellList(name: "マナバPC版", category: "manaba", display: true),
+                               CellList(name: "キャリア支援室", category: "就職活動", display: true),]
 }
 
 struct CellList: Codable {
