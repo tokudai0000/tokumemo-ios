@@ -63,7 +63,7 @@ class SettingsViewController: BaseViewController {
     // 初回起動時判定
     private func firstBootDecision() {
         // 初回か判定
-        if UserDefaults.standard.object(forKey: "SettingCellList") == nil{
+        if UserDefaults.standard.object(forKey: "SettingCellList_1") == nil{
             cellList = model.cellList
             saveCellList(lists: cellList)
         }
@@ -295,6 +295,17 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
         case "出欠記録":
             delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
+        
+        case "メール":
+            delegate.openUrl(urlForRegistrant: model.mailService, urlForNotRegistrant: nil, alertTrigger: true)
+        
+        case "マナバPC版":
+            delegate.openUrl(urlForRegistrant: model.manabaPCURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
+            
+        case "キャリア支援室":
+            delegate.openUrl(urlForRegistrant: model.tokudaiCareerCenterURL, urlForNotRegistrant: model.tokudaiCareerCenterURL, alertTrigger: false)
+            
+            
         case "パスワード設定":
             delegate.popupView(scene: "password")
             

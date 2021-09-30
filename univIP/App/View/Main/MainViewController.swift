@@ -193,6 +193,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                                         model.courceManagementHomeURL,
                                         model.systemServiceListURL,
                                         model.manabaURL,
+                                        model.manabaPCURL,
                                         model.eLearningListURL,
                                         model.libraryHomeURL,
                                         model.libraryLoginURL,
@@ -202,7 +203,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                                         model.presenceAbsenceRecordURL,
                                         model.libraryBookLendingExtensionURL,
                                         model.libraryBookPurchaseRequestURL,
-                                        model.classQuestionnaire]
+                                        model.classQuestionnaire,
+                                        model.outlookHomeURL]
         // 上記のURLの場合、画面を表示
         for url in webViewIsHiddonFalseURLs{
             if (displayURL.contains(url)){
@@ -238,7 +240,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             leftButton.isEnabled = false
             webView.isHidden = true
             activityIndicator.startAnimating()
-            
+
         case false:
             leftButton.isEnabled = true
             webView.isHidden = false
@@ -367,10 +369,18 @@ extension MainViewController: WKNavigationDelegate{
         guard let host = url.host else{
             return
         }
-        // [tokushima-u.ac.jp] 以外はSafariで開く
-        if host.contains(model.allowDomain) == false{
+        // [model.allowDomains] 以外はSafariで開く
+        var trigger = false
+        for allow in model.allowDomains {
+            if host.contains(allow){
+                trigger = true
+            }
+        }
+        if trigger == false{
+            print(displayURL)
+            print("a")
             UIApplication.shared.open(URL(string: String(describing: displayURL))!)
-            decisionHandler(.allow)
+            decisionHandler(.cancel)
             return
         }
         
@@ -452,6 +462,22 @@ extension MainViewController: WKNavigationDelegate{
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(syllabusTeacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(syllabusKeyword)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+        }
+        
+        // outlookログイン
+        if displayURL.contains(model.outlookLoginURL){
+            let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
+            webViewDisplay(bool: false)
+        }
+        
+        // キャリア支援室ログイン
+        if displayURL == model.tokudaiCareerCenterURL{
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
+            webViewDisplay(bool: false)
         }
         
         // WebView表示、非表示　判定
