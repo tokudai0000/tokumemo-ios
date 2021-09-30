@@ -25,7 +25,7 @@ class SettingsViewController: BaseViewController {
                                               CellList(name: "このアプリについて", category: "", display: true),
                                               CellList(name: "開発者へ連絡", category: "", display: true)]]
     private var cellList:[CellList] = []
-
+    private let cellListKey = "SettingCellList_1"
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
@@ -63,7 +63,7 @@ class SettingsViewController: BaseViewController {
     // 初回起動時判定
     private func firstBootDecision() {
         // 初回か判定
-        if UserDefaults.standard.object(forKey: "SettingCellList_1") == nil{
+        if UserDefaults.standard.object(forKey: cellListKey) == nil{
             cellList = model.cellList
             saveCellList(lists: cellList)
         }
@@ -76,12 +76,12 @@ class SettingsViewController: BaseViewController {
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        UserDefaults.standard.set(data, forKey: "SettingCellList")
+        UserDefaults.standard.set(data, forKey: cellListKey)
     }
     
     func loadCellList() -> [CellList]? {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: "SettingCellList"),
+        guard let data = UserDefaults.standard.data(forKey: cellListKey),
               let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
             return nil
         }
