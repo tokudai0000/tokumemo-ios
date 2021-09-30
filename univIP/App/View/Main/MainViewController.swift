@@ -82,22 +82,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     @IBAction func navigationCenterButton(_ sender: Any) {
         refresh()
+        navigationRightButtonOnOff(operation: "UP")
     }
 
     @IBAction func navigationRightButton(_ sender: Any) {
-        
-        switch navigationRightButtonOnOff(){
-        case true:
-            let image = UIImage(systemName: "chevron.up")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonUp")
-
-        case false:
-            let image = UIImage(systemName: "chevron.down")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonDown")
-
-        }
+        navigationRightButtonOnOff(operation: "REVERSE")
     }
 
 
@@ -260,13 +249,44 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         }
     }
     
-    // webViewの位置によってボタンの機能を判定
-    private func navigationRightButtonOnOff() -> Bool{
+    // webViewを上げ下げする
+    public func navigationRightButtonOnOff(operation: String){
+        
         let webViewPositionY = webView.frame.origin.y
-        if (webViewPositionY == 0.0){
-            return true
-        }else{
-            return false
+        var ope = ""
+        switch operation {
+        case "UP":
+            if (webViewPositionY != 0.0){
+                ope = "UP"
+            }
+            
+        case "DOWN":
+            if (webViewPositionY == 0.0){
+                ope = "DOWN"
+            }
+            
+        case "REVERSE":
+            if (webViewPositionY == 0.0){
+                ope = "DOWN"
+            }else{
+                ope = "UP"
+            }
+        default:
+            return
+        }
+        
+        switch ope {
+        case "UP":
+            let image = UIImage(systemName: "chevron.down")
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: "rightButtonDown")
+            return
+        case "DOWN":
+            let image = UIImage(systemName: "chevron.up")
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: "rightButtonUp")
+        default:
+            return
         }
     }
     
@@ -493,9 +513,10 @@ extension MainViewController: UITabBarDelegate{
         switch item.tag {
         case 1: // 左
             openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
-            
+            navigationRightButtonOnOff(operation: "UP")
         case 2: // 右
             openUrl(urlForRegistrant: model.manabaURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
+            navigationRightButtonOnOff(operation: "UP")
         default:
             return
         }
