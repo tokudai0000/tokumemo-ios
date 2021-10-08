@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,14 +13,14 @@
             <objects>
                 <viewController storyboardIdentifier="MainViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6G-LK-c80">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcY-Bk-hxx">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="769"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <wkWebViewConfiguration key="configuration">
                                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -27,10 +28,10 @@
                                         </wkWebViewConfiguration>
                                     </wkWebView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8DI-Ir-GH5">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="headTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGQ-CS-G7C">
-                                                <rect key="frame" x="540" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="354" y="5" width="50" height="50"/>
                                                 <color key="backgroundColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="CfH-3Y-Q7L"/>
@@ -56,7 +57,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeH-O1-qTx">
-                                                <rect key="frame" x="275" y="5" width="50" height="50"/>
+                                                <rect key="frame" x="182" y="5" width="50" height="50"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="boM-NZ-cnd"/>
@@ -95,14 +96,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-Hs-zL9">
-                                        <rect key="frame" x="0.0" y="59" width="600" height="1"/>
+                                        <rect key="frame" x="0.0" y="59" width="414" height="1"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="D0t-4f-d2u"/>
                                         </constraints>
                                     </view>
                                     <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vOC-hs-bC3">
-                                        <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                        <rect key="frame" x="0.0" y="769" width="414" height="49"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <items>
                                             <tabBarItem tag="1" systemItem="mostViewed" id="ccm-vt-1FV">
@@ -113,16 +114,24 @@
                                             </tabBarItem>
                                         </items>
                                     </tabBar>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="id6-fu-2ZM">
+                                        <rect key="frame" x="0.0" y="60" width="414" height="709"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.4956798427152318" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="QXx-Hs-zL9" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="bottom" id="2zu-Ca-KT2"/>
                                     <constraint firstAttribute="trailing" secondItem="gcY-Bk-hxx" secondAttribute="trailing" id="6o0-xc-dMQ"/>
                                     <constraint firstItem="vOC-hs-bC3" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="Cky-77-pzK"/>
+                                    <constraint firstAttribute="trailing" secondItem="id6-fu-2ZM" secondAttribute="trailing" id="FF4-BV-dJ7"/>
                                     <constraint firstAttribute="trailing" secondItem="8DI-Ir-GH5" secondAttribute="trailing" id="Kx8-yW-h3n"/>
                                     <constraint firstItem="8DI-Ir-GH5" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="LYa-rv-xGh"/>
+                                    <constraint firstItem="id6-fu-2ZM" firstAttribute="top" secondItem="QXx-Hs-zL9" secondAttribute="bottom" id="Qel-M7-Iqf"/>
                                     <constraint firstItem="QXx-Hs-zL9" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="U5U-fi-uXy"/>
                                     <constraint firstItem="gcY-Bk-hxx" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="top" id="XBv-Mg-I33"/>
+                                    <constraint firstItem="vOC-hs-bC3" firstAttribute="top" secondItem="id6-fu-2ZM" secondAttribute="bottom" id="Y2C-dB-T3M"/>
+                                    <constraint firstItem="id6-fu-2ZM" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="cD5-93-DiV"/>
                                     <constraint firstAttribute="trailing" secondItem="vOC-hs-bC3" secondAttribute="trailing" id="dZP-JI-1Es"/>
                                     <constraint firstItem="gcY-Bk-hxx" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="ekM-e5-aMp"/>
                                     <constraint firstAttribute="trailing" secondItem="QXx-Hs-zL9" secondAttribute="trailing" id="jUS-kE-sZG"/>
@@ -142,6 +151,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="id6-fu-2ZM" id="kOa-6p-jaj"/>
                         <outlet property="backButton" destination="IUH-6M-2c4" id="6zw-44-bSv"/>
                         <outlet property="leftButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
                         <outlet property="rightButton" destination="MGQ-CS-G7C" id="2HP-cf-zhM"/>

@@ -26,6 +26,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var tabBarLeft: UITabBarItem!
+    @IBOutlet weak var activityIndicatorView: UIView!
+    
+//    private var activityIndicatorView: UIView!
     
     private let model = Model()
     private let dataManager = DataManager()
@@ -44,16 +47,20 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private var syllabusSearchOnce = false
     private var syllabusPassdThroughOnce = false
 
-    
+
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         animationView(scene: "launchScreen")
-        
         tabBar.delegate = self
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        
+//        activityIndicatorView = UIView.init(frame: CGRect.init(x: 0, y: 60, width: self.view.frame.width, height: self.viewTop.frame.size.height-280))
+//        print(self.viewTop.frame.size.height)
+//        let bgColor = UIColor.black
+//        activityIndicatorView.alpha = 0.5
+//        activityIndicatorView.backgroundColor = bgColor
+//        self.viewTop.addSubview(activityIndicatorView)
         refresh()
     }
 
@@ -110,9 +117,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             }
             
             guard let url = urlForNotRegistrant else {
+//                url = urlForRegistrant
                 toast(message: "エラーが起こりました", type: "bottom")
                 return
             }
+//            let url = urlForRegistrant
             
             let request = NSURLRequest(url: URL(string:url)!)
             webView.load(request as URLRequest)
@@ -158,6 +167,48 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             return
         }
     }
+    
+    // webViewを上げ下げする
+    public func navigationRightButtonOnOff(operation: String){
+        
+        let webViewPositionY = webView.frame.origin.y
+        var ope = ""
+        switch operation {
+        case "UP":
+            if (webViewPositionY != 0.0){
+                ope = "UP"
+            }
+            
+        case "DOWN":
+            if (webViewPositionY == 0.0){
+                ope = "DOWN"
+            }
+            
+        case "REVERSE":
+            if (webViewPositionY == 0.0){
+                ope = "DOWN"
+            }else{
+                ope = "UP"
+            }
+        default:
+            return
+        }
+        
+        switch ope {
+        case "UP":
+            let image = UIImage(systemName: "chevron.down")
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: "rightButtonDown")
+            return
+        case "DOWN":
+            let image = UIImage(systemName: "chevron.up")
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: "rightButtonUp")
+        default:
+            return
+        }
+    }
+    
     
     
     // MARK: - Private func
@@ -224,15 +275,28 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // 表示:false  非表示：true
     private func webViewDisplay(bool: Bool){
+//        myView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 500))
+//        myView.alpha = 0.5
+//        myView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
+//        self.view.addSubview(myView)
+//        self.view.bringSubviewToFront(myView)
+//        let activityIndicatorView = UIView.init(frame: CGRect.init(x: 0, y: 80, width: self.view.frame.width, height: self.view.frame.height - 89))
+//        let bgColor = UIColor.black
+//        activityIndicatorView.alpha = 0.5
+//        activityIndicatorView.backgroundColor = bgColor
+//        self.view.addSubview(activityIndicatorView)
+        
         switch bool {
         case true:
             leftButton.isEnabled = false
-            webView.isHidden = true
+//            webView.isHidden = true
+            self.activityIndicatorView.isHidden = false
             activityIndicator.startAnimating()
 
         case false:
             leftButton.isEnabled = true
-            webView.isHidden = false
+//            webView.isHidden = false
+            self.activityIndicatorView.isHidden = true
             activityIndicator.stopAnimating()
             
         }
@@ -249,47 +313,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         }
     }
     
-    // webViewを上げ下げする
-    public func navigationRightButtonOnOff(operation: String){
-        
-        let webViewPositionY = webView.frame.origin.y
-        var ope = ""
-        switch operation {
-        case "UP":
-            if (webViewPositionY != 0.0){
-                ope = "UP"
-            }
-            
-        case "DOWN":
-            if (webViewPositionY == 0.0){
-                ope = "DOWN"
-            }
-            
-        case "REVERSE":
-            if (webViewPositionY == 0.0){
-                ope = "DOWN"
-            }else{
-                ope = "UP"
-            }
-        default:
-            return
-        }
-        
-        switch ope {
-        case "UP":
-            let image = UIImage(systemName: "chevron.down")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonDown")
-            return
-        case "DOWN":
-            let image = UIImage(systemName: "chevron.up")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonUp")
-        default:
-            return
-        }
-    }
-    
+
     // アニメーション
     private func animationView(scene:String){
         switch scene {
@@ -365,7 +389,7 @@ extension MainViewController: WKNavigationDelegate{
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
         // 変数 url にはリンク先のURLが入る
         if let url = navigationAction.request.url {
-            openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: nil, alertTrigger: false)
+            openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
             webViewDisplay(bool: false)
         }
          
