@@ -275,27 +275,15 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // 表示:false  非表示：true
     private func webViewDisplay(bool: Bool){
-//        myView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 500))
-//        myView.alpha = 0.5
-//        myView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
-//        self.view.addSubview(myView)
-//        self.view.bringSubviewToFront(myView)
-//        let activityIndicatorView = UIView.init(frame: CGRect.init(x: 0, y: 80, width: self.view.frame.width, height: self.view.frame.height - 89))
-//        let bgColor = UIColor.black
-//        activityIndicatorView.alpha = 0.5
-//        activityIndicatorView.backgroundColor = bgColor
-//        self.view.addSubview(activityIndicatorView)
         
         switch bool {
         case true:
             leftButton.isEnabled = false
-//            webView.isHidden = true
             self.activityIndicatorView.isHidden = false
             activityIndicator.startAnimating()
 
         case false:
             leftButton.isEnabled = true
-//            webView.isHidden = false
             self.activityIndicatorView.isHidden = true
             activityIndicator.stopAnimating()
             
