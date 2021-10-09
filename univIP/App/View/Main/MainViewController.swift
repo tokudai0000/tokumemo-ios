@@ -28,8 +28,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var tabBarLeft: UITabBarItem!
     @IBOutlet weak var activityIndicatorView: UIView!
     
-//    private var activityIndicatorView: UIView!
-    
     private let model = Model()
     private let dataManager = DataManager()
     
@@ -37,15 +35,14 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private var syllabusSubjectName = ""
     private var syllabusTeacherName = ""
     private var syllabusKeyword = ""
+    private var syllabusSearchOnce = false
+    private var syllabusPassdThroughOnce = false
     
     // 現在表示しているURL
     private var displayURL = ""
     
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
     private var onlyOnceForLogin = false
-    
-    private var syllabusSearchOnce = false
-    private var syllabusPassdThroughOnce = false
 
 
     //MARK:- LifeCycle
@@ -55,12 +52,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         tabBar.delegate = self
         webView.navigationDelegate = self
         webView.uiDelegate = self
-//        activityIndicatorView = UIView.init(frame: CGRect.init(x: 0, y: 60, width: self.view.frame.width, height: self.viewTop.frame.size.height-280))
-//        print(self.viewTop.frame.size.height)
-//        let bgColor = UIColor.black
-//        activityIndicatorView.alpha = 0.5
-//        activityIndicatorView.backgroundColor = bgColor
-//        self.viewTop.addSubview(activityIndicatorView)
+        
         refresh()
     }
 
@@ -117,11 +109,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             }
             
             guard let url = urlForNotRegistrant else {
-//                url = urlForRegistrant
                 toast(message: "エラーが起こりました", type: "bottom")
                 return
             }
-//            let url = urlForRegistrant
             
             let request = NSURLRequest(url: URL(string:url)!)
             webView.load(request as URLRequest)
@@ -222,7 +212,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         }else{
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
-            
         }
     }
     
@@ -463,7 +452,7 @@ extension MainViewController: WKNavigationDelegate{
         let passWord = dataManager.passWord
         if !registrantDecision(){
             if displayURL.contains(model.lostConnectionURL){
-                toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 5)
+                toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
             }
         }
         
@@ -475,6 +464,9 @@ extension MainViewController: WKNavigationDelegate{
         // Login画面
         if !onlyOnceForLogin{ // ddosにならない様に対策
             if (displayURL.contains(model.lostConnectionURL) && displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
+                if !registrantDecision(){ // 非登録者
+                    return
+                }
                 webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
