@@ -13,10 +13,10 @@ class Model: NSObject {
     let loginURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
     
     /// 情報ポータル、ホーム画面URL
-    let courceManagementHomeURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
+    let courceManagementHomeSPURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
     let courceManagementHomePCURL = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
     /// マナバURL
-    let manabaURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
+    let manabaSPURL = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     let manabaPCURL = "https://manaba.lms.tokushima-u.ac.jp/ct/home"
     /// 図書館URL
     let libraryLoginURL = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"

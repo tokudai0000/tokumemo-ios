@@ -219,9 +219,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private func webViewHiddenJudge(){
         // ＊＊改修必須（バグの元）＊＊
         let webViewIsHiddonFalseURLs = [model.syllabusSearchMainURL,
-                                        model.courceManagementHomeURL,
+                                        model.courceManagementHomeSPURL,
                                         model.systemServiceListURL,
-                                        model.manabaURL,
+                                        model.manabaSPURL,
                                         model.manabaPCURL,
                                         model.eLearningListURL,
                                         model.libraryHomeURL,
@@ -458,7 +458,7 @@ extension MainViewController: WKNavigationDelegate{
         
         // PCサイトへ飛ばされた場合
         if (displayURL == model.courceManagementHomePCURL){
-            openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
+            openUrl(urlForRegistrant: model.courceManagementHomeSPURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
         }
 
         // Login画面
@@ -564,10 +564,10 @@ extension MainViewController: UITabBarDelegate{
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 1: // 左
-            openUrl(urlForRegistrant: model.courceManagementHomeURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
+            openUrl(urlForRegistrant: model.courceManagementHomeSPURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
             navigationRightButtonOnOff(operation: "UP")
         case 2: // 右
-            openUrl(urlForRegistrant: model.manabaURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
+            openUrl(urlForRegistrant: model.manabaSPURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
             navigationRightButtonOnOff(operation: "UP")
         default:
             return
