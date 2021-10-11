@@ -48,6 +48,8 @@ class Model: NSObject {
                     structURL(url: "https://www.tokudai-syusyoku.com/index.php", topView: true),
                 "libraryHome" : // 図書館ホームページ(非登録者に対して表示するURL)
                     structURL(url: "https://www.lib.tokushima-u.ac.jp/", topView: true),
+                "courseRegistration" : // 履修登録URL
+                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx", topView: true),
                 "lostConnection" : // 接続切れの際、再リロード 83桁 =の後ろに付く(e1s1)は可変
                     structURL(url: "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=", topView: false),
                 "libraryCalendar" : // 図書館カレンダー
@@ -94,7 +96,8 @@ class Model: NSObject {
                                CellList(id:9, name: "授業アンケート", category: "教務事務システム", display: true),
                                CellList(id:10, name: "メール", category: "Outlook", display: true),
                                CellList(id:11, name: "マナバPC版", category: "manaba", display: true),
-                               CellList(id:12, name: "キャリア支援室", category: "就職活動", display: true),]
+                               CellList(id:12, name: "キャリア支援室", category: "就職活動", display: true),
+                               CellList(id:13, name: "履修登録", category: "教務事務システム", display: true)]
 }
 
 struct structURL: Codable {

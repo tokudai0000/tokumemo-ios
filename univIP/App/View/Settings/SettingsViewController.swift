@@ -330,6 +330,9 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.openUrl(urlForRegistrant: model.urls["tokudaiCareerCenter"]!.url, urlForNotRegistrant: model.urls["tokudaiCareerCenter"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
+        case 13:
+            delegate.openUrl(urlForRegistrant: model.urls["courseRegistration"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.navigationRightButtonOnOff(operation: "UP")
             
         case 100: // "パスワード設定":
             delegate.popupView(scene: "password")
