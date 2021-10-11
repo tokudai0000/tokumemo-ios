@@ -25,6 +25,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var reversePCtoSP: UIButton!
     @IBOutlet weak var tabBarLeft: UITabBarItem!
     @IBOutlet weak var activityIndicatorView: UIView!
     
@@ -87,7 +88,46 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBAction func navigationRightButton(_ sender: Any) {
         navigationRightButtonOnOff(operation: "REVERSE")
     }
-
+    
+    @IBAction func revercePCtoSP(_ sender: Any) {
+        if displayURL == model.urls["courceManagementHomeSP"]!.url{
+            openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            let image = UIImage(named: "spIcon")//UIImage(systemName: "spIcon")
+            reversePCtoSP.setImage(image, for: .normal)
+            
+        }else if displayURL ==  model.urls["courceManagementHomePC"]!.url{
+            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            let image = UIImage(named: "pcIcon")
+            reversePCtoSP.setImage(image, for: .normal)
+            
+        }else if displayURL == model.urls["manabaSP"]!.url{
+            openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            let image = UIImage(named: "spIcon")
+            reversePCtoSP.setImage(image, for: .normal)
+            
+        }else if displayURL == model.urls["manabaPC"]!.url{
+            openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            let image = UIImage(named: "pcIcon")
+            reversePCtoSP.setImage(image, for: .normal)
+            
+        }
+        
+        
+//        switch ope {
+//        case "UP":
+//            let image = UIImage(systemName: "chevron.down")
+//            rightButton.setImage(image, for: .normal)
+//            animationView(scene: "rightButtonDown")
+//            return
+//        case "DOWN":
+//            let image = UIImage(systemName: "chevron.up")
+//            rightButton.setImage(image, for: .normal)
+//            animationView(scene: "rightButtonUp")
+//        default:
+//            return
+//        }
+    }
+    
 
     // MARK: - Public func
     
@@ -217,30 +257,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // WebViewの表示、非表示を判定
     private func webViewHiddenJudge(){
-//        // ＊＊改修必須（バグの元）＊＊
-//        let webViewIsHiddonFalseURLs = [model.syllabusSearchMainURL,
-//                                        model.courceManagementHomeSPURL,
-//                                        model.systemServiceListURL,
-//                                        model.manabaSPURL,
-//                                        model.manabaPCURL,
-//                                        model.eLearningListURL,
-//                                        model.libraryHomeURL,
-//                                        model.libraryLoginURL,
-//                                        model.timeTableURL,
-//                                        model.currentTermPerformanceURL,
-//                                        model.termPerformanceURL,
-//                                        model.presenceAbsenceRecordURL,
-//                                        model.libraryBookLendingExtensionURL,
-//                                        model.libraryBookPurchaseRequestURL,
-//                                        model.classQuestionnaire,
-//                                        model.outlookHomeURL]
-//        // 上記のURLの場合、画面を表示
-//        for url in webViewIsHiddonFalseURLs{
-//            if (displayURL.contains(url)){
-//                webViewDisplay(bool: false)
-//                return
-//            }
-//        }
         
         // 上記のURLの場合、画面を表示
         for (_, value) in model.urls{
@@ -465,9 +481,9 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // PCサイトへ飛ばされた場合
-        if (displayURL == model.urls["courceManagementHomePC"]!.url){
-            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
-        }
+//        if (displayURL == model.urls["courceManagementHomePC"]!.url){
+//            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+//        }
 
         // Login画面
         if !onlyOnceForLogin{ // ddosにならない様に対策
@@ -514,6 +530,24 @@ extension MainViewController: WKNavigationDelegate{
         
         // WebView表示、非表示　判定
         webViewHiddenJudge()
+        
+        // モバイル版かPC版か検知
+        if displayURL == model.urls["courceManagementHomeSP"]!.url ||
+            displayURL == model.urls["manabaSP"]!.url{
+            let image = UIImage(named: "pcIcon")
+            reversePCtoSP.setImage(image, for: .normal)
+            reversePCtoSP.isEnabled = true
+            
+        }else if displayURL ==  model.urls["courceManagementHomePC"]!.url ||
+                    displayURL == model.urls["manabaPC"]!.url{
+            let image = UIImage(named: "spIcon")
+            reversePCtoSP.setImage(image, for: .normal)
+            reversePCtoSP.isEnabled = true
+
+        }else{
+            reversePCtoSP.isEnabled = false
+        }
+        
     }
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {

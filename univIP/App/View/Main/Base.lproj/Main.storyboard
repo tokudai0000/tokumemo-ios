@@ -81,14 +81,28 @@
                                                     <action selector="navigationLeftButton2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BGZ-w4-mJG"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajZ-3e-GEs">
+                                                <rect key="frame" x="245" y="5" width="50" height="50"/>
+                                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="1QE-eI-dTd"/>
+                                                    <constraint firstAttribute="width" constant="50" id="fba-xs-D7z"/>
+                                                </constraints>
+                                                <state key="normal" image="pcIcon"/>
+                                                <connections>
+                                                    <action selector="revercePCtoSP:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cSx-7B-3DR"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="GeH-O1-qTx" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="8v1-fe-B8c"/>
                                             <constraint firstAttribute="height" constant="59" id="Bha-oO-fLz"/>
+                                            <constraint firstItem="MGQ-CS-G7C" firstAttribute="leading" secondItem="ajZ-3e-GEs" secondAttribute="trailing" constant="20" id="E6W-E2-P6P"/>
                                             <constraint firstItem="MGQ-CS-G7C" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="GAE-iG-kTK"/>
                                             <constraint firstItem="v7E-8X-iXM" firstAttribute="leading" secondItem="8DI-Ir-GH5" secondAttribute="leading" constant="10" id="T9e-yQ-Xth"/>
                                             <constraint firstItem="IUH-6M-2c4" firstAttribute="leading" secondItem="v7E-8X-iXM" secondAttribute="trailing" constant="20" id="ZVO-aS-yD4"/>
+                                            <constraint firstItem="ajZ-3e-GEs" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="cEA-yp-htU"/>
                                             <constraint firstItem="v7E-8X-iXM" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="top" constant="5" id="fXM-3h-pdt"/>
                                             <constraint firstAttribute="trailing" secondItem="MGQ-CS-G7C" secondAttribute="trailing" constant="10" id="mLK-pZ-Unw"/>
                                             <constraint firstItem="GeH-O1-qTx" firstAttribute="centerX" secondItem="8DI-Ir-GH5" secondAttribute="centerX" id="p0W-a4-XVz"/>
@@ -154,6 +168,7 @@
                         <outlet property="activityIndicatorView" destination="id6-fu-2ZM" id="kOa-6p-jaj"/>
                         <outlet property="backButton" destination="IUH-6M-2c4" id="6zw-44-bSv"/>
                         <outlet property="leftButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
+                        <outlet property="reversePCtoSP" destination="ajZ-3e-GEs" id="TZO-OT-9LA"/>
                         <outlet property="rightButton" destination="MGQ-CS-G7C" id="2HP-cf-zhM"/>
                         <outlet property="tabBar" destination="vOC-hs-bC3" id="TIw-Uj-CMz"/>
                         <outlet property="tabBarLeft" destination="ccm-vt-1FV" id="lPD-QR-Fb5"/>
@@ -163,13 +178,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1275.3623188405797" y="12.723214285714285"/>
+            <point key="canvasLocation" x="-1273" y="232"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
+        <image name="pcIcon" width="500" height="500"/>
         <image name="tokumemoIcon2" width="1280" height="1280"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
