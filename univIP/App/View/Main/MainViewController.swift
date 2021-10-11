@@ -122,7 +122,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         onlyOnceForLogin = false
         tabBar.selectedItem = tabBarLeft
         
-        openUrl(urlForRegistrant: model.loginURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
+        openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
     }
     
     public func refreshSyllabus(subjectName: String, teacherName: String, keyword:String){
@@ -131,7 +131,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         syllabusKeyword = keyword
         syllabusSearchOnce = true
         
-        openUrl(urlForRegistrant: model.syllabusURL, urlForNotRegistrant: model.syllabusURL, alertTrigger: false)
+        openUrl(urlForRegistrant: model.urls["syllabus"]!.url, urlForNotRegistrant: model.urls["syllabus"]!.url, alertTrigger: false)
     }
 
     public func popupView(scene: String){
@@ -217,40 +217,48 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // WebViewの表示、非表示を判定
     private func webViewHiddenJudge(){
-        // ＊＊改修必須（バグの元）＊＊
-        let webViewIsHiddonFalseURLs = [model.syllabusSearchMainURL,
-                                        model.courceManagementHomeSPURL,
-                                        model.systemServiceListURL,
-                                        model.manabaSPURL,
-                                        model.manabaPCURL,
-                                        model.eLearningListURL,
-                                        model.libraryHomeURL,
-                                        model.libraryLoginURL,
-                                        model.timeTableURL,
-                                        model.currentTermPerformanceURL,
-                                        model.termPerformanceURL,
-                                        model.presenceAbsenceRecordURL,
-                                        model.libraryBookLendingExtensionURL,
-                                        model.libraryBookPurchaseRequestURL,
-                                        model.classQuestionnaire,
-                                        model.outlookHomeURL]
+//        // ＊＊改修必須（バグの元）＊＊
+//        let webViewIsHiddonFalseURLs = [model.syllabusSearchMainURL,
+//                                        model.courceManagementHomeSPURL,
+//                                        model.systemServiceListURL,
+//                                        model.manabaSPURL,
+//                                        model.manabaPCURL,
+//                                        model.eLearningListURL,
+//                                        model.libraryHomeURL,
+//                                        model.libraryLoginURL,
+//                                        model.timeTableURL,
+//                                        model.currentTermPerformanceURL,
+//                                        model.termPerformanceURL,
+//                                        model.presenceAbsenceRecordURL,
+//                                        model.libraryBookLendingExtensionURL,
+//                                        model.libraryBookPurchaseRequestURL,
+//                                        model.classQuestionnaire,
+//                                        model.outlookHomeURL]
+//        // 上記のURLの場合、画面を表示
+//        for url in webViewIsHiddonFalseURLs{
+//            if (displayURL.contains(url)){
+//                webViewDisplay(bool: false)
+//                return
+//            }
+//        }
+        
         // 上記のURLの場合、画面を表示
-        for url in webViewIsHiddonFalseURLs{
-            if (displayURL.contains(url)){
+        for (_, value) in model.urls{
+            if displayURL.contains(value.url) && value.topView == true{
                 webViewDisplay(bool: false)
                 return
             }
         }
         
         // ログインできなかった時
-        if displayURL.contains(model.lostConnectionURL) &&
+        if displayURL.contains(model.urls["lostConnection"]!.url) &&
             displayURL.suffix(4) != "e1s1"{
             webViewDisplay(bool: false)
             return
         }
         
         // シラバス
-        if displayURL == model.syllabusURL{
+        if displayURL == model.urls["syllabus"]!.url{
             // 2回目に通った時
             if syllabusPassdThroughOnce{
                 webViewDisplay(bool: false)
@@ -417,7 +425,7 @@ extension MainViewController: WKNavigationDelegate{
 //        }
         
         // Manabaの授業Youtubeリンクのタップ判定
-        if (displayURL.contains(model.popupToYoutubeURL)){
+        if (displayURL.contains(model.urls["popupToYoutube"]!.url)){
             // Youtubeリンクを取得
             webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
                 if let htmlYoutube = html{ // type(of: htmlYoutube) >>> __NSCFString
@@ -432,8 +440,8 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // タイムアウト判定
-        if (displayURL == model.timeOutURL){
-            openUrl(urlForRegistrant: model.loginURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
+        if (displayURL == model.urls["timeOut"]!.url){
+            openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
         }
         
         decisionHandler(.allow)
@@ -451,19 +459,19 @@ extension MainViewController: WKNavigationDelegate{
         let cAcaunt = dataManager.cAccount
         let passWord = dataManager.passWord
         if !registrantDecision(){
-            if displayURL.contains(model.lostConnectionURL){
+            if displayURL.contains(model.urls["lostConnection"]!.url){
                 toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
             }
         }
         
         // PCサイトへ飛ばされた場合
-        if (displayURL == model.courceManagementHomePCURL){
-            openUrl(urlForRegistrant: model.courceManagementHomeSPURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
+        if (displayURL == model.urls["courceManagementHomePC"]!.url){
+            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
         }
 
         // Login画面
         if !onlyOnceForLogin{ // ddosにならない様に対策
-            if (displayURL.contains(model.lostConnectionURL) && displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
+            if (displayURL.contains(model.urls["lostConnection"]!.url) && displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
                 if !registrantDecision(){ // 非登録者
                     return
                 }
@@ -475,12 +483,12 @@ extension MainViewController: WKNavigationDelegate{
         }
 
         // 教務事務システム、アンケート催促スキップ
-        if (displayURL == model.enqueteReminderURL){
+        if (displayURL == model.urls["enqueteReminder"]!.url){
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
         // シラバス
-        if (displayURL.contains(model.syllabusURL) && syllabusSearchOnce){
+        if (displayURL.contains(model.urls["syllabus"]!.url) && syllabusSearchOnce){
             syllabusSearchOnce = false
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(syllabusSubjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(syllabusTeacherName)'", completionHandler:  nil)
@@ -489,7 +497,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // outlookログイン
-        if displayURL.contains(model.outlookLoginURL){
+        if displayURL.contains(model.urls["outlookLogin"]!.url){
             let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
@@ -498,7 +506,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // キャリア支援室ログイン
-        if displayURL == model.tokudaiCareerCenterURL{
+        if displayURL == model.urls["tokudaiCareerCenter"]!.url{
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
             webViewDisplay(bool: false)
@@ -564,10 +572,10 @@ extension MainViewController: UITabBarDelegate{
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 1: // 左
-            openUrl(urlForRegistrant: model.courceManagementHomeSPURL, urlForNotRegistrant: model.systemServiceListURL, alertTrigger: false)
+            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
             navigationRightButtonOnOff(operation: "UP")
         case 2: // 右
-            openUrl(urlForRegistrant: model.manabaSPURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
+            openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
             navigationRightButtonOnOff(operation: "UP")
         default:
             return

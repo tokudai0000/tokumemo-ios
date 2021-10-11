@@ -239,16 +239,16 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let cellName = allCellList[indexPath[0]][indexPath[1]].name
         switch cellName {
         case "Webサイト":
-            delegate.openUrl(urlForRegistrant: model.libraryLoginURL, urlForNotRegistrant: model.libraryHomeURL, alertTrigger: false)
+            delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
         case "貸し出し期間延長":
-            delegate.openUrl(urlForRegistrant: model.libraryBookLendingExtensionURL, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
         case "本購入リクエスト":
-            delegate.openUrl(urlForRegistrant: model.libraryBookPurchaseRequestURL, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["libraryBookPurchaseRequest"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
         case "開館カレンダー":
-            let url = NSURL(string: model.libraryHomeURL)
+            let url = NSURL(string: model.urls["libraryHome"]!.url)
             let data = NSData(contentsOf: url! as URL)
             
             var calenderURL = ""
@@ -275,13 +275,13 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
         case "授業アンケート":
-            delegate.openUrl(urlForRegistrant: model.classQuestionnaire, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["classQuestionnaire"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
         case "シラバス":
             delegate.popupView(scene: "syllabus")
             
         case "時間割":
-            delegate.openUrl(urlForRegistrant: model.timeTableURL, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["timeTable"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
             
         case "今年の成績表":
@@ -292,23 +292,23 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             if (month <= 3){ // 1月から3月までは前年の成績であるから
                 year -= 1
             }
-            let termPerformanceYearURL = model.currentTermPerformanceURL + String(year)
+            let termPerformanceYearURL = model.urls["currentTermPerformance"]!.url + String(year)
             delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             
         case "成績参照":
-            delegate.openUrl(urlForRegistrant: model.termPerformanceURL, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["termPerformance"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
         case "出欠記録":
-            delegate.openUrl(urlForRegistrant: model.presenceAbsenceRecordURL, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["presenceAbsenceRecord"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
         case "メール":
-            delegate.openUrl(urlForRegistrant: model.mailService, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.openUrl(urlForRegistrant: model.urls["mailService"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
         case "マナバPC版":
-            delegate.openUrl(urlForRegistrant: model.manabaPCURL, urlForNotRegistrant: model.eLearningListURL, alertTrigger: false)
+            delegate.openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
         case "キャリア支援室":
-            delegate.openUrl(urlForRegistrant: model.tokudaiCareerCenterURL, urlForNotRegistrant: model.tokudaiCareerCenterURL, alertTrigger: false)
+            delegate.openUrl(urlForRegistrant: model.urls["tokudaiCareerCenter"]!.url, urlForNotRegistrant: model.urls["tokudaiCareerCenter"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
         case "パスワード設定":
