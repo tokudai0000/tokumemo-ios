@@ -21,11 +21,11 @@ class SettingsViewController: BaseViewController {
     private var sectionHight:Int = 2
     private var cellHight:Int = 44
     private var allCellList:[[CellList]] =  [[],
-                                             [CellList(name: "パスワード設定", category: "", display: true),
-                                              CellList(name: "このアプリについて", category: "", display: true),
-                                              CellList(name: "開発者へ連絡", category: "", display: true)]]
+                                             [CellList(id:100, name: "パスワード設定", category: "", display: true),
+                                              CellList(id:101, name: "このアプリについて", category: "", display: true),
+                                              CellList(id:102, name: "開発者へ連絡", category: "", display: true)]]
     private var cellList:[CellList] = []
-    private let cellListKey = "SettingCellList_1"
+    private let cellKey = "CellKey"
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
@@ -39,7 +39,7 @@ class SettingsViewController: BaseViewController {
         tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
         
         firstBootDecision()
-        allCellList[0] = loadCellList()!
+        allCellList[0] = loadCellList()
         self.tableView.reloadData()
     }
     
@@ -62,28 +62,41 @@ class SettingsViewController: BaseViewController {
     //MARK:- Private func
     // 初回起動時判定
     private func firstBootDecision() {
-        // 初回か判定
-        if UserDefaults.standard.object(forKey: cellListKey) == nil{
-            cellList = model.cellList
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let versionKey = "ver_" + version
+        // 保存されたデータがversionいつの物か判定
+        print(UserDefaults.standard.string(forKey: versionKey))
+        if UserDefaults.standard.string(forKey: versionKey) != versionKey{
+            UserDefaults.standard.set(versionKey, forKey: versionKey) // 更新
+            
+            let legacyCellLists = loadCellList()
+            var newCellLists = model.cellList
+            
+            for i in 0 ..< newCellLists.count{
+                if legacyCellLists.count <= i{
+                    cellList.append(newCellLists[i])
+                }else{
+                    newCellLists[legacyCellLists[i].id].display = legacyCellLists[i].display
+                    cellList.append(newCellLists[legacyCellLists[i].id])
+                }
+            }
+            print(cellList)
             saveCellList(lists: cellList)
         }
-        // 更新か判定
-//        if 
-        
     }
     private func saveCellList(lists:[CellList]){
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        UserDefaults.standard.set(data, forKey: cellListKey)
+        UserDefaults.standard.set(data, forKey: cellKey)
     }
     
-    func loadCellList() -> [CellList]? {
+    func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: cellListKey),
+        guard let data = UserDefaults.standard.data(forKey: cellKey),
               let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
-            return nil
+            return model.cellList
         }
             
         return bookmarks
@@ -236,18 +249,18 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         guard let delegate = delegateMain else {
             return
         }
-        let cellName = allCellList[indexPath[0]][indexPath[1]].name
-        switch cellName {
-        case "Webサイト":
+        let cellId = allCellList[indexPath[0]][indexPath[1]].id
+        switch cellId {
+        case 0: // "Webサイト":
             delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case "貸し出し期間延長":
+        case 1: // "貸し出し期間延長":
             delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case "本購入リクエスト":
+        case 2: // "本購入リクエスト":
             delegate.openUrl(urlForRegistrant: model.urls["libraryBookPurchaseRequest"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case "開館カレンダー":
+        case 3: // "開館カレンダー":
             let url = NSURL(string: model.urls["libraryHome"]!.url)
             let data = NSData(contentsOf: url! as URL)
             
@@ -274,17 +287,15 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                 toast(message: "失敗しました")
             }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case "授業アンケート":
-            delegate.openUrl(urlForRegistrant: model.urls["classQuestionnaire"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-            delegate.navigationRightButtonOnOff(operation: "UP")
-        case "シラバス":
+
+        case 4: // "シラバス":
             delegate.popupView(scene: "syllabus")
             
-        case "時間割":
+        case 5: // "時間割":
             delegate.openUrl(urlForRegistrant: model.urls["timeTable"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-        case "今年の成績表":
+        case 6: // "今年の成績表":
             let current = Calendar.current
             var year = current.component(.year, from: Date())
             let month = current.component(.month, from: Date())
@@ -295,29 +306,38 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             let termPerformanceYearURL = model.urls["currentTermPerformance"]!.url + String(year)
             delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             
-        case "成績参照":
+        case 7: // "成績参照":
             delegate.openUrl(urlForRegistrant: model.urls["termPerformance"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
-        case "出欠記録":
+            
+        case 8: // "出欠記録":
             delegate.openUrl(urlForRegistrant: model.urls["presenceAbsenceRecord"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
-        case "メール":
+            
+        case 9: // "授業アンケート":
+            delegate.openUrl(urlForRegistrant: model.urls["classQuestionnaire"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            delegate.navigationRightButtonOnOff(operation: "UP")
+            
+        case 10: // "メール":
             delegate.openUrl(urlForRegistrant: model.urls["mailService"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case "マナバPC版":
+            
+        case 11: // "マナバPC版":
             delegate.openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case "キャリア支援室":
+            
+        case 12: // "キャリア支援室":
             delegate.openUrl(urlForRegistrant: model.urls["tokudaiCareerCenter"]!.url, urlForNotRegistrant: model.urls["tokudaiCareerCenter"]!.url, alertTrigger: false)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
-        case "パスワード設定":
+            
+        case 100: // "パスワード設定":
             delegate.popupView(scene: "password")
             
-        case "このアプリについて":
+        case 101: // "このアプリについて":
             delegate.popupView(scene: "aboutThisApp")
             
-        case "開発者へ連絡":
+        case 102: // "開発者へ連絡":
             delegate.popupView(scene: "contactToDeveloper")
         default:
             return
