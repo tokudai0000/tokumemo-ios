@@ -39,8 +39,10 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // ダークモード回避
         self.overrideUserInterfaceStyle = .light
+//        self.overrideUserInterfaceStyle = .dark
         
         // ActivityIndicatorを作成＆中央に配置
         activityIndicator = UIActivityIndicatorView()
