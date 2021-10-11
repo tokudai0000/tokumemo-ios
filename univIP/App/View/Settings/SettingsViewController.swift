@@ -65,9 +65,9 @@ class SettingsViewController: BaseViewController {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let versionKey = "ver_" + version
         // 保存されたデータがversionいつの物か判定
-        print(UserDefaults.standard.string(forKey: versionKey))
-        if UserDefaults.standard.string(forKey: versionKey) != versionKey{
-            UserDefaults.standard.set(versionKey, forKey: versionKey) // 更新
+        print(UserDefaults.standard.string(forKey: "VersionKey"))
+        if UserDefaults.standard.string(forKey: "VersionKey") != versionKey{
+            UserDefaults.standard.set(versionKey, forKey: "VersionKey") // 更新
             
             let legacyCellLists = loadCellList()
             var newCellLists = model.cellList
