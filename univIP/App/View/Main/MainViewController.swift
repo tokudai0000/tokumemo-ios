@@ -92,23 +92,27 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBAction func revercePCtoSP(_ sender: Any) {
         if displayURL == model.urls["courceManagementHomeSP"]!.url{
             openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "spIcon")//UIImage(systemName: "spIcon")
+            let image = UIImage(named: "spIcon")
             reversePCtoSP.setImage(image, for: .normal)
+            UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
             
         }else if displayURL ==  model.urls["courceManagementHomePC"]!.url{
             openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
             let image = UIImage(named: "pcIcon")
             reversePCtoSP.setImage(image, for: .normal)
+            UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
             
         }else if displayURL == model.urls["manabaSP"]!.url{
             openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
             let image = UIImage(named: "spIcon")
             reversePCtoSP.setImage(image, for: .normal)
+            UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
             
         }else if displayURL == model.urls["manabaPC"]!.url{
             openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
             let image = UIImage(named: "pcIcon")
             reversePCtoSP.setImage(image, for: .normal)
+            UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
             
         }
         
@@ -531,6 +535,8 @@ extension MainViewController: WKNavigationDelegate{
         // WebView表示、非表示　判定
         webViewHiddenJudge()
         
+        
+        // 以下修正必要あり
         // モバイル版かPC版か検知
         if displayURL == model.urls["courceManagementHomeSP"]!.url ||
             displayURL == model.urls["manabaSP"]!.url{
@@ -548,6 +554,25 @@ extension MainViewController: WKNavigationDelegate{
             reversePCtoSP.isEnabled = false
         }
         
+        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
+            if displayURL == model.urls["courceManagementHomeSP"]!.url{
+                openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            }
+        }else{
+            if displayURL == model.urls["courceManagementHomePC"]!.url{
+                openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            }
+        }
+        
+        if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+            if displayURL == model.urls["manabaSP"]!.url{
+                openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            }
+        }else{
+            if displayURL == model.urls["manabaPC"]!.url{
+                openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+            }
+        }
     }
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
@@ -606,10 +631,20 @@ extension MainViewController: UITabBarDelegate{
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 1: // 左
-            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
+                openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+                
+            }else{
+                openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+            }
             navigationRightButtonOnOff(operation: "UP")
         case 2: // 右
-            openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+            if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+                openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+                
+            }else{
+                openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+            }
             navigationRightButtonOnOff(operation: "UP")
         default:
             return
