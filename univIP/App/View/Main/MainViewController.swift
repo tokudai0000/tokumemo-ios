@@ -250,7 +250,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     // 初回起動時判定
     private func firstBootDecision() {
         // 利用規約同意者か判定
-        let value = UserDefaults.standard.bool(forKey: "FirstBootDecision")
+        let value = UserDefaults.standard.bool(forKey: model.agreementVersion)
         if value{
             return
         }else{

@@ -22,6 +22,7 @@ class AgreementViewController: BaseViewController {
         buttonTextureNo.layer.cornerRadius = 20.0
         
         rtfFileOpen()
+
     }
     
     
@@ -49,11 +50,16 @@ class AgreementViewController: BaseViewController {
         if let url = R.file.agreementRtf() {
             do {
                 let terms = try Data(contentsOf: url)
-                let attributeString = try NSAttributedString(data: terms,
+                let attributedString = try NSAttributedString(data: terms,
                                                              options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
                                                              documentAttributes: nil)
+                
+                let linkSourceCode = (attributedString.string as NSString).range(of: "@shiba1014")
+                let attributedText = NSMutableAttributedString(string: attributedString.string)
+                attributedText.addAttribute(.link, value: "https://medium.com/@shiba1014", range: linkRange)
+                textView.attributedText = attributedText
                               
-                textView.attributedText = attributeString
+                textView.attributedText = attributedString
             } catch let error {
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }

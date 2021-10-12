@@ -10,6 +10,7 @@ target 'univIP' do
   pod 'KeychainAccess'
   pod 'mailcore2-ios'
   pod 'Kanna'
+  pod 'Firebase/Analytics'
   
   post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
