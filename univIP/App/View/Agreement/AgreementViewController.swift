@@ -14,6 +14,7 @@ class AgreementViewController: BaseViewController {
     @IBOutlet weak var buttonTextureYes: UIButton!
     @IBOutlet weak var buttonTextureNo: UIButton!
     
+    private let model = Model()
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
@@ -22,7 +23,7 @@ class AgreementViewController: BaseViewController {
         buttonTextureNo.layer.cornerRadius = 20.0
         
         rtfFileOpen()
-
+        textView.isEditable = false
     }
     
     
@@ -33,7 +34,7 @@ class AgreementViewController: BaseViewController {
             switch button.tag {
             case 0:
                 // 利用規約に同意した
-                UserDefaults.standard.set(true, forKey: "FirstBootDecision")
+                UserDefaults.standard.set(true, forKey: model.agreementVersion)
                 dismiss(animated: false, completion: nil)
             case 1:
                 toast(message: "申し訳ありません。同意をしない限り、このアプリを利用することはできません", type: "bottom")
@@ -54,15 +55,17 @@ class AgreementViewController: BaseViewController {
                                                              options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
                                                              documentAttributes: nil)
                 
-                let linkSourceCode = (attributedString.string as NSString).range(of: "@shiba1014")
+                let linkSourceCode = (attributedString.string as NSString).range(of: "https://github.com/akidon0000/univIP")
+                let linkPrivacyPolicy = (attributedString.string as NSString).range(of: "https://firebase.google.com/support/privacy?hl=ja")
                 let attributedText = NSMutableAttributedString(string: attributedString.string)
-                attributedText.addAttribute(.link, value: "https://medium.com/@shiba1014", range: linkRange)
+                attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP", range: linkSourceCode)
+                attributedText.addAttribute(.link, value: "https://firebase.google.com/support/privacy?hl=ja", range: linkPrivacyPolicy)
                 textView.attributedText = attributedText
-                              
-                textView.attributedText = attributedString
+                        
             } catch let error {
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }
         }
     }
+    
 }

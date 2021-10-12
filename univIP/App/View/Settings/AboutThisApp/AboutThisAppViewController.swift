@@ -16,7 +16,8 @@ class AboutThisAppViewController: BaseViewController {
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        textView.isEditable = false
+        textView.isSelectable = true
         rtfFileOpen()
     }
     
@@ -26,11 +27,18 @@ class AboutThisAppViewController: BaseViewController {
         if let url = R.file.aboutThisAppRtf() {
             do {
                 let terms = try Data(contentsOf: url)
-                let attributeString = try NSAttributedString(data: terms,
+                let attributedString = try NSAttributedString(data: terms,
                                                              options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
                                                              documentAttributes: nil)
-                              
-                textView.attributedText = attributeString
+                let linkLicense = (attributedString.string as NSString).range(of: " akidon0000")
+                let linkSourceCode = (attributedString.string as NSString).range(of: "https://github.com/akidon0000/univIP")
+                let linkPrivacyPolicy = (attributedString.string as NSString).range(of: "https://github.com/akidon0000/univIP/blob/main/userPolicy.txt")
+                
+                let attributedText = NSMutableAttributedString(string: attributedString.string)
+                attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP/blob/main/LICENSE", range: linkLicense)
+                attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP", range: linkSourceCode)
+                attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP/blob/main/userPolicy.txt", range: linkPrivacyPolicy)
+                textView.attributedText = attributedText
             } catch let error {
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }
