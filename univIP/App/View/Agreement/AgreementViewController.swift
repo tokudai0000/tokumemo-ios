@@ -56,10 +56,10 @@ class AgreementViewController: BaseViewController {
                                                              documentAttributes: nil)
                 
                 let linkSourceCode = (attributedString.string as NSString).range(of: "https://github.com/akidon0000/univIP")
-                let linkPrivacyPolicy = (attributedString.string as NSString).range(of: "https://firebase.google.com/support/privacy?hl=ja")
+                let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "https://firebase.google.com/support/privacy?hl=ja")
                 let attributedText = NSMutableAttributedString(string: attributedString.string)
                 attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP", range: linkSourceCode)
-                attributedText.addAttribute(.link, value: "https://firebase.google.com/support/privacy?hl=ja", range: linkPrivacyPolicy)
+                attributedText.addAttribute(.link, value: "https://firebase.google.com/support/privacy?hl=ja", range: linkFireBasePrivacy)
                 textView.attributedText = attributedText
                         
             } catch let error {
