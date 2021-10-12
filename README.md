@@ -33,6 +33,7 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 - Kanna
 - KeychainAccess
 - mailcore2-ios
+- Firebase/Analytics
 
 ## 機能一覧
 - 自動ログイン機能（時間制限による強制ログアウトにも対応）
