@@ -20,7 +20,7 @@ https://github.com/akidon0000/univIP
 こちらもソースコードを公開することで透明性を確保しています。
 
 2.4)アナリティクス
-本アプリは更なるサービス向上を目的とした、Googleが提供している分析サービス「FireBase」を使用しています。
+本アプリは更なるサービス向上を目指す為、Googleが提供している分析サービス「FireBase」を使用しています。
 詳しい内容はこちらをご覧ください
 https://firebase.google.com/support/privacy?hl=ja
 
