@@ -576,14 +576,18 @@ extension MainViewController: WKNavigationDelegate{
     }
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        var messageText = message
+        if displayURL == model.urls["courseRegistration"]!.url{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+            messageText = "OKを押してください"
+        }
+        let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)
         let otherAction = UIAlertAction(title: "OK", style: .default) {
             action in completionHandler()
         }
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
     }
-    
+
     // confirm対応
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
@@ -597,13 +601,13 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    
+
     // prompt対応
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-        
+
         // variable to keep a reference to UIAlertController
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
-        
+
         let okHandler: () -> Void = {
             if let textField = alertController.textFields?.first {
                 completionHandler(textField.text)
