@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/github/license/akidon0000/univIP)](https://github.com/akidon0000/univIP/blob/main/LICENSE)
    
 <p align="center" >
-  <img src="/univIP/App/etc/Assets.xcassets/AppIcon.appiconset/TOKUMEMO_icon (1).png" width=300px>
+  <img src="/univIP/App/etc/Assets.xcassets/AppIcon.appiconset/1024.png" width=300px>
 </p>
 
 # 概要
