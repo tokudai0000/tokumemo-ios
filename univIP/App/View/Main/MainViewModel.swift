@@ -15,12 +15,12 @@ class MainViewModel: NSObject {
         case error          // エラー発生
     }
     public var state: ((State) -> Void)?
+    private let dataManager = DataManager()
     
     var displayURL = ""
     let model = Model()
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
     private var onlyOnceForLogin = false
-    private let dataManager = DataManager()
     
     var requestUrl: NSURLRequest?
     
@@ -118,6 +118,16 @@ class MainViewModel: NSObject {
             animationView = "rightButtonDown"
         }
         
+    }
+    
+    func registrantDecision() -> Bool{
+        if (dataManager.cAccount == "" &&
+                dataManager.passWord == ""){
+            return false
+            
+        }else{
+            return true
+        }
     }
     
 }

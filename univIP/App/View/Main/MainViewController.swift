@@ -62,7 +62,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         firstBootDecision()
         
         // "cアカウント"、"パスワード"の設定催促
-        if (!registrantDecision()){
+        if (!viewModel.registrantDecision()){
             popupView(scene: "password")
         }
     }
@@ -130,7 +130,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         webViewDisplay(bool: true)
         onlyOnceForLogin = false
         // 登録者判定
-        if registrantDecision(){
+        if viewModel.registrantDecision(){
             let request = NSURLRequest(url: URL(string:urlForRegistrant)!)
             webView.load(request as URLRequest)
             
@@ -281,15 +281,15 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     // アカウント登録者判定　登録者：true　　非登録者：false
-    private func registrantDecision() -> Bool{
-        if (dataManager.cAccount == "" &&
-                dataManager.passWord == ""){
-            return false
-            
-        }else{
-            return true
-        }
-    }
+//    private func registrantDecision() -> Bool{
+//        if (dataManager.cAccount == "" &&
+//                dataManager.passWord == ""){
+//            return false
+//            
+//        }else{
+//            return true
+//        }
+//    }
     
 
     // アニメーション
@@ -451,7 +451,7 @@ extension MainViewController: WKNavigationDelegate{
         // KeyChain
         let cAcaunt = dataManager.cAccount
         let passWord = dataManager.passWord
-        if !registrantDecision(){
+        if !viewModel.registrantDecision(){
             if displayURL.contains(model.urls["lostConnection"]!.url){
                 toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
             }
@@ -465,7 +465,7 @@ extension MainViewController: WKNavigationDelegate{
         // Login画面
         if !onlyOnceForLogin{ // ddosにならない様に対策
             if (displayURL.contains(model.urls["lostConnection"]!.url) && displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
-                if !registrantDecision(){ // 非登録者
+                if !viewModel.registrantDecision(){ // 非登録者
                     return
                 }
                 webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
