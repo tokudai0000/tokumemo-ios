@@ -176,6 +176,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 
 
     public func popupView(scene: String){
+        
         switch scene {
         case "firstView":
             let vc = R.storyboard.syllabus.syllabusViewController()!
@@ -197,47 +198,32 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         default:
             return
         }
+        
     }
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: String){
         
-        let webViewPositionY = webView.frame.origin.y
-        var ope = ""
-        switch operation {
-        case "UP":
-            if (webViewPositionY != 0.0){
-                ope = "UP"
-            }
-            
-        case "DOWN":
-            if (webViewPositionY == 0.0){
-                ope = "DOWN"
-            }
-            
-        case "REVERSE":
-            if (webViewPositionY == 0.0){
-                ope = "DOWN"
-            }else{
-                ope = "UP"
-            }
-        default:
-            return
-        }
+        let webViewPositionY: CGFloat = webView.frame.origin.y
+        viewModel.viewPosisionType(posisionY: webViewPositionY)
         
-        switch ope {
-        case "UP":
-            let image = UIImage(systemName: "chevron.down")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonDown")
-            return
-        case "DOWN":
-            let image = UIImage(systemName: "chevron.up")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonUp")
-        default:
-            return
-        }
+        let image = UIImage(systemName: viewModel.imageSystemName)
+        rightButton.setImage(image, for: .normal)
+        animationView(scene: viewModel.animationView)
+        
+//        switch ope {
+//        case "UP":
+//            let image = UIImage(systemName: "chevron.down")
+//            rightButton.setImage(image, for: .normal)
+//            animationView(scene: "rightButtonDown")
+//            return
+//        case "DOWN":
+//            let image = UIImage(systemName: "chevron.up")
+//            rightButton.setImage(image, for: .normal)
+//            animationView(scene: "rightButtonUp")
+//        default:
+//            return
+//        }
     }
     
     

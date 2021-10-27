@@ -102,5 +102,23 @@ class MainViewModel: NSObject {
             return true
         }
     }
+    var imageSystemName = ""
+    var animationView = ""
+    
+    func viewPosisionType(posisionY: Double) {
+        print(posisionY)
+        
+        switch posisionY {
+        case 0.0:
+            imageSystemName = "chevron.down"
+            animationView = "rightButtonDown"
+
+            
+        default:
+            imageSystemName = "chevron.up"
+            animationView = "rightButtonUp"
+        }
+        
+    }
     
 }
