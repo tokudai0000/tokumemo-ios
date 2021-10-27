@@ -106,17 +106,17 @@ class MainViewModel: NSObject {
     var animationView = ""
     
     func viewPosisionType(posisionY: Double) {
-        print(posisionY)
+//        print(posisionY)
         
         switch posisionY {
         case 0.0:
-            imageSystemName = "chevron.down"
-            animationView = "rightButtonDown"
+            imageSystemName = "chevron.up"
+            animationView = "rightButtonUp"
 
             
         default:
-            imageSystemName = "chevron.up"
-            animationView = "rightButtonUp"
+            imageSystemName = "chevron.down"
+            animationView = "rightButtonDown"
         }
         
     }
