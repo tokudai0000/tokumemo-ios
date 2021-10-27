@@ -8,7 +8,7 @@
 
 //import UIKit
 
-class Model: NSObject {
+class Model {
     
     let urls = ["login" : // ログインURL
                     structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/", topView: false),
