@@ -104,6 +104,12 @@ class MainViewModel: NSObject {
     }
     var imageSystemName = ""
     var animationView = ""
+    //  SyllabusViewの内容を渡され保存し、Webに入力する
+    var syllabusSubjectName = ""
+    var syllabusTeacherName = ""
+    var syllabusKeyword = ""
+    var syllabusSearchOnce = true
+    var syllabusPassdThroughOnce = false
     
     func viewPosisionType(posisionY: Double) {
         

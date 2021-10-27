@@ -33,13 +33,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let viewModel = MainViewModel()
     private let dataManager = DataManager()
     
-    // SyllabusViewの内容を渡され保存し、Webに入力する
-    private var syllabusSubjectName = ""
-    private var syllabusTeacherName = ""
-    private var syllabusKeyword = ""
-    private var syllabusSearchOnce = false
-    private var syllabusPassdThroughOnce = false
-    
     // 現在表示しているURL
     private var displayURL = ""
     
@@ -58,42 +51,16 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        // 利用規約同意画面
+        // 利用規約同意判定
         firstBootDecision()
         
-        // "cアカウント"、"パスワード"の設定催促
-        if (!viewModel.registrantDecision()){
-            popupView(scene: "password")
+        // 登録者判定
+        if (!viewModel.registrantDecision()) {
+            popupView(scene: "password") // "cアカウント"、"パスワード"の設定催促
         }
+        
     }
-    /// ViewModel初期化
-    private func initViewModel() {
-        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
-        self.viewModel.state = { [weak self] (state) in
-            guard let self = self else {
-                fatalError()
-            }
-            DispatchQueue.main.async {
-                switch state {
-                case .busy: // 通信中
-//                    self.activityIndicator.startAnimating()
-                    break
-                    
-                case .ready: // 通信完了
-//                    self.activityIndicator.stopAnimating()
-                    // View更新
-//                    self.tableView.reloadData()
-//                    self.refreshControl.endRefreshing()
-                    break
-                    
-                    
-                case .error:
-                    break
-                    
-                }//end switch
-            }
-        }
-    }
+
 
     //MARK:- IBAction
     @IBAction func navigationLeftButton(_ sender: Any) {
@@ -163,10 +130,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     public func refreshSyllabus(subjectName: String, teacherName: String, keyword:String){
-        syllabusSubjectName = subjectName
-        syllabusTeacherName = teacherName
-        syllabusKeyword = keyword
-        syllabusSearchOnce = true
         
         if let url = viewModel.openUrl(model.urls["syllabus"]!.url) {
             webView.load(url as URLRequest)
@@ -224,12 +187,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private func firstBootDecision() {
         // 利用規約同意者か判定
         let value = UserDefaults.standard.bool(forKey: model.agreementVersion)
-        if value{
-            return
-        }else{
+        if !value {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
+        
     }
     
     // WebViewの表示、非表示を判定
@@ -253,12 +215,12 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         // シラバス
         if displayURL == model.urls["syllabus"]!.url{
             // 2回目に通った時
-            if syllabusPassdThroughOnce{
+            if viewModel.syllabusPassdThroughOnce{
                 webViewDisplay(bool: false)
-                syllabusPassdThroughOnce = false
+                viewModel.syllabusPassdThroughOnce = false
                 return
             }else{
-                syllabusPassdThroughOnce = true
+                viewModel.syllabusPassdThroughOnce = true
             }
         }
     }
@@ -354,6 +316,34 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 
         default:
             return
+        }
+    }
+    /// ViewModel初期化
+    private func initViewModel() {
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else {
+                fatalError()
+            }
+            DispatchQueue.main.async {
+                switch state {
+                case .busy: // 通信中
+//                    self.activityIndicator.startAnimating()
+                    break
+                    
+                case .ready: // 通信完了
+//                    self.activityIndicator.stopAnimating()
+                    // View更新
+//                    self.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
+                    break
+                    
+                    
+                case .error:
+                    break
+                    
+                }//end switch
+            }
         }
     }
 }
@@ -481,11 +471,11 @@ extension MainViewController: WKNavigationDelegate{
         }
 
         // シラバス
-        if (displayURL.contains(model.urls["syllabus"]!.url) && syllabusSearchOnce){
-            syllabusSearchOnce = false
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(syllabusSubjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(syllabusTeacherName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(syllabusKeyword)'", completionHandler:  nil)
+        if (displayURL.contains(model.urls["syllabus"]!.url) && viewModel.syllabusSearchOnce){
+            viewModel.syllabusSearchOnce = false
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(viewModel.syllabusKeyword)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
