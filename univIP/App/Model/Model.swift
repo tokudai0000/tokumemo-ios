@@ -7,6 +7,19 @@
 //
 
 //import UIKit
+enum Url: String {
+    case login
+    case maneg
+    
+    func string() -> String {
+        switch self {
+        case .login:
+            return "https://eweb.stud.tokushima-u.ac.jp/Portal/"
+        case .maneg:
+            return "https://www.ait.tokushima-u.ac.jp/service/list_out/"
+        }
+    }
+}
 
 class Model {
     

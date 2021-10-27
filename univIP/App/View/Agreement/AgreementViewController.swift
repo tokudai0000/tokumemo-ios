@@ -10,60 +10,49 @@ import UIKit
 class AgreementViewController: BaseViewController {
     
     //MARK:- IBOutlet
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var buttonTextureYes: UIButton!
-    @IBOutlet weak var buttonTextureNo: UIButton!
+    @IBOutlet weak var termsOfServiceView: UITextView!
+    @IBOutlet weak var agreementButtonYes: UIButton!
+    @IBOutlet weak var agreementButtonNo: UIButton!
     
     private let model = Model()
+    private let viewModel = AgreementViewModel()
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttonTextureYes.layer.cornerRadius = 20.0
-        buttonTextureNo.layer.cornerRadius = 20.0
+        setup()
+    }
+    
+    private func setup() {
+        agreementButtonYes.layer.cornerRadius = 20.0
+        agreementButtonNo.layer.cornerRadius = 20.0
         
-        rtfFileOpen()
-        textView.isEditable = false
+        termsOfServiceView.isEditable = false
+        
+        termsOfServiceView.attributedText = viewModel.rtfFileOpen()
+        
     }
     
     
     //MARK:- IBAction
-    @IBAction func buttonAction(_ sender: Any) {
-        // tag 0:Yes  1:No
-        if let button = sender as? UIButton {
-            switch button.tag {
-            case 0:
-                // 利用規約に同意した
-                UserDefaults.standard.set(true, forKey: model.agreementVersion)
-                dismiss(animated: false, completion: nil)
-            case 1:
-                toast(message: "申し訳ありません。同意をしない限り、このアプリを利用することはできません", type: "bottom")
-                
-            default:
-                return
-            }
-        }
+    private enum buttonTag: Int {
+        case agree = 1
+        case dissAgree = 2
     }
     
-    
-    // MARK: - Private func
-    private func rtfFileOpen(){
-        if let url = R.file.agreementRtf() {
-            do {
-                let terms = try Data(contentsOf: url)
-                let attributedString = try NSAttributedString(data: terms,
-                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
-                                                             documentAttributes: nil)
+    @IBAction func buttonAction(_ sender: Any) {
+        if let button = sender as? UIButton,
+           let tag = buttonTag(rawValue: button.tag){
+            
+            switch tag {
+            case .agree:
+                UserDefaults.standard.set(true, forKey: model.agreementVersion)
+                dismiss(animated: false, completion: nil)
                 
-                let linkSourceCode = (attributedString.string as NSString).range(of: "https://github.com/akidon0000/univIP")
-                let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "https://firebase.google.com/support/privacy?hl=ja")
-                let attributedText = NSMutableAttributedString(string: attributedString.string)
-                attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP", range: linkSourceCode)
-                attributedText.addAttribute(.link, value: "https://firebase.google.com/support/privacy?hl=ja", range: linkFireBasePrivacy)
-                textView.attributedText = attributedText
-                        
-            } catch let error {
-                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
+                
+            case .dissAgree:
+                toast(message: "同意をしない限り、このアプリを利用することはできません", type: "bottom")
+                
             }
         }
     }
