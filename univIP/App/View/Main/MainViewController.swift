@@ -203,27 +203,12 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: String){
-        
-        let webViewPositionY: CGFloat = webView.frame.origin.y
-        viewModel.viewPosisionType(posisionY: webViewPositionY)
+        viewModel.viewPosisionType(posisionY: webView.frame.origin.y)
         
         let image = UIImage(systemName: viewModel.imageSystemName)
         rightButton.setImage(image, for: .normal)
         animationView(scene: viewModel.animationView)
         
-//        switch ope {
-//        case "UP":
-//            let image = UIImage(systemName: "chevron.down")
-//            rightButton.setImage(image, for: .normal)
-//            animationView(scene: "rightButtonDown")
-//            return
-//        case "DOWN":
-//            let image = UIImage(systemName: "chevron.up")
-//            rightButton.setImage(image, for: .normal)
-//            animationView(scene: "rightButtonUp")
-//        default:
-//            return
-//        }
     }
     
     

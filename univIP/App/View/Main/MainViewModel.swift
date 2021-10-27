@@ -106,7 +106,6 @@ class MainViewModel: NSObject {
     var animationView = ""
     
     func viewPosisionType(posisionY: Double) {
-//        print(posisionY)
         
         switch posisionY {
         case 0.0:
