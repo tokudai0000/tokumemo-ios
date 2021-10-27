@@ -56,7 +56,10 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         // 登録者判定
         if (!viewModel.registrantDecision()) {
-            popupView(scene: "password") // "cアカウント"、"パスワード"の設定催促
+            // "cアカウント"、"パスワード"の設定催促
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegateMain = self
         }
         
     }
@@ -67,6 +70,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
         vc.delegateMain = self
+        vc.mainViewModel = self.viewModel
     }
     
     @IBAction func navigationLeftButton2(_ sender: Any) {
@@ -138,31 +142,33 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
 
 
-    public func popupView(scene: String){
+//    public func popupView(scene: String){
+//        let vc = viewModel.popupView(scene)
+//        vc.mainViewModel = self.viewModel
+//        self.present(vc, animated: true, completion: nil)
+//        switch scene {
+////        case "firstView":
+////            let vc = R.storyboard.syllabus.syllabusViewController()!
+////            self.present(vc, animated: true, completion: nil)
+//        case "syllabus":
+//            let vc = R.storyboard.syllabus.syllabusViewController()!
+//            self.present(vc, animated: true, completion: nil)
+//            vc.delegateMain = self
+//        case "password":
+//            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+//            self.present(vc, animated: true, completion: nil)
+//            vc.delegateMain = self
+//        case "aboutThisApp":
+//            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+//            self.present(vc, animated: true, completion: nil)
+//        case "contactToDeveloper":
+//            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
+//            self.present(vc, animated: true, completion: nil)
+//        default:
+//            return
+//        }
         
-        switch scene {
-        case "firstView":
-            let vc = R.storyboard.syllabus.syllabusViewController()!
-            self.present(vc, animated: true, completion: nil)
-        case "syllabus":
-            let vc = R.storyboard.syllabus.syllabusViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
-        case "password":
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
-        case "aboutThisApp":
-            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-            self.present(vc, animated: true, completion: nil)
-        case "contactToDeveloper":
-            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-            self.present(vc, animated: true, completion: nil)
-        default:
-            return
-        }
-        
-    }
+//    }
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: String){
@@ -329,6 +335,34 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                 switch state {
                 case .busy: // 通信中
 //                    self.activityIndicator.startAnimating()
+                    let vc = R.storyboard.syllabus.syllabusViewController()!
+                    self.present(vc, animated: true, completion: nil)
+                    break
+                    
+                case .ready: // 通信完了
+//                    self.activityIndicator.stopAnimating()
+                    // View更新
+//                    self.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
+                    break
+                    
+                    
+                case .error:
+                    break
+                    
+                }//end switch
+            }
+        }
+        
+        self.viewModel.next = { [weak self] (next) in
+            guard let self = self else {
+                fatalError()
+            }
+            DispatchQueue.main.async {
+                switch next {
+                case .syllabus:
+                    let vc = R.storyboard.syllabus.syllabusViewController()!
+                    self.present(vc, animated: true, completion: nil)
                     break
                     
                 case .ready: // 通信完了

@@ -8,7 +8,7 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
+    public var mainViewModel: MainViewModel!
     // MARK: - Public property
     
     // キーボードで隠されたくない範囲（UITextField.frameなどをセットする）

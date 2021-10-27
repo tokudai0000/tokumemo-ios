@@ -30,7 +30,7 @@ class SettingsViewController: BaseViewController {
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
     var userDefaults = UserDefaults.standard
-    
+//    public var mainViewModel: MainViewModel!
     private var editSituation = true
     
     //MARK:- LifeCycle
@@ -244,7 +244,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     // セルを選択した時のイベントを追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.dismiss(animated: false, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
         
         guard let delegate = delegateMain else {
             return
@@ -252,8 +252,12 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let cellId = allCellList[indexPath[0]][indexPath[1]].id
         switch cellId {
         case 0: // "Webサイト":
-            delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
-            delegate.navigationRightButtonOnOff(operation: "DOWN")
+//            delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
+//            delegate.navigationRightButtonOnOff(operation: "DOWN")
+            if let url =  mainViewModel.openUrl(model.urls["libraryHome"]!.url) {
+                delegate.webView.load(url as URLRequest)
+            }
+            self.dismiss(animated: false, completion: nil)
         case 1: // "貸し出し期間延長":
             delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
@@ -289,11 +293,17 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: "DOWN")
 
         case 4: // "シラバス":
-            delegate.popupView(scene: "syllabus")
-            
+            self.mainViewModel.next?(.syllabus)
+            self.dismiss(animated: false, completion: nil)
+
         case 5: // "時間割":
-            delegate.openUrl(urlForRegistrant: model.urls["timeTable"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-            delegate.navigationRightButtonOnOff(operation: "UP")
+            if let url =  mainViewModel.openUrl(model.urls["timeTable"]!.url, isAlert: false) {
+                delegate.webView.load(url as URLRequest)
+            }
+            self.dismiss(animated: false, completion: nil)
+//            mainViewModel.openUrl(model.urls["timeTable"]!.url, isAlert: true)
+//            delegate.openUrl(urlForRegistrant: model.urls["timeTable"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+//            delegate.navigationRightButtonOnOff(operation: "UP")
             
         case 6: // "今年の成績表":
             let current = Calendar.current
@@ -334,19 +344,19 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.openUrl(urlForRegistrant: model.urls["courseRegistration"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-        case 100: // "パスワード設定":
-            delegate.popupView(scene: "password")
+//        case 100: // "パスワード設定":
+//            delegate.popupView(scene: "password")
             
-        case 101: // "このアプリについて":
-            delegate.popupView(scene: "aboutThisApp")
+//        case 101: // "このアプリについて":
+//            delegate.popupView(scene: "aboutThisApp")
             
-        case 102: // "開発者へ連絡":
-            delegate.popupView(scene: "contactToDeveloper")
+//        case 102: // "開発者へ連絡":
+//            delegate.popupView(scene: "contactToDeveloper")
         default:
             return
         }
         
-        viewAnimated(scene: "settingsViewDisappear")
+//        viewAnimated(scene: "settingsViewDisappear")
     }
     
     /// 編集できるセクションを限定
