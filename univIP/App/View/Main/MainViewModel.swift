@@ -57,7 +57,11 @@ class MainViewModel: NSObject {
         }
     }
     
-    func openUrl(registrant: String, notRegistrant: String?, isAlert:Bool) -> NSURLRequest? {
+    func openUrl(_ registrant: String, notRegistrant: String = "nil", isAlert: Bool = false) -> NSURLRequest? {
+        var notRegi = notRegistrant
+        if notRegistrant == "nil" {
+            notRegi = registrant
+        }
 
 //        webViewDisplay(bool: true)
 //        onlyOnceForLogin = false
@@ -79,11 +83,9 @@ class MainViewModel: NSObject {
                 return nil
             }
 
-            if let notRegistrant = notRegistrant {
-                if let url = URL(string: notRegistrant){
-                    return NSURLRequest(url: url)
-                    
-                }
+            if let url = URL(string: notRegi){
+                return NSURLRequest(url: url)
+                
             }
         }
         return nil

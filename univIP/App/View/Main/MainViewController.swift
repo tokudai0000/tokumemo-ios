@@ -153,9 +153,13 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     public func refresh(){
         onlyOnceForLogin = false
+        
         tabBar.selectedItem = tabBarLeft
         
-        openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+        if let url = viewModel.openUrl(Url.login.string(), notRegistrant: Url.maneg.string()) {
+            webView.load(url as URLRequest)
+        }
+        
     }
     
     public func refreshSyllabus(subjectName: String, teacherName: String, keyword:String){
@@ -164,8 +168,12 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         syllabusKeyword = keyword
         syllabusSearchOnce = true
         
-        openUrl(urlForRegistrant: model.urls["syllabus"]!.url, urlForNotRegistrant: model.urls["syllabus"]!.url, alertTrigger: false)
+        if let url = viewModel.openUrl(model.urls["syllabus"]!.url) {
+            webView.load(url as URLRequest)
+        }
+        
     }
+
 
     public func popupView(scene: String){
         switch scene {
