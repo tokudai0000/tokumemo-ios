@@ -30,6 +30,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var activityIndicatorView: UIView!
     
     private let model = Model()
+    private let viewModel = MainViewModel()
     private let dataManager = DataManager()
     
     // SyllabusViewの内容を渡され保存し、Webに入力する
@@ -49,12 +50,10 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        animationView(scene: "launchScreen")
-        tabBar.delegate = self
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-        
+
+        setup()
         refresh()
+        initViewModel()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -67,7 +66,34 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             popupView(scene: "password")
         }
     }
-    
+    /// ViewModel初期化
+    private func initViewModel() {
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else {
+                fatalError()
+            }
+            DispatchQueue.main.async {
+                switch state {
+                case .busy: // 通信中
+//                    self.activityIndicator.startAnimating()
+                    break
+                    
+                case .ready: // 通信完了
+//                    self.activityIndicator.stopAnimating()
+                    // View更新
+//                    self.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
+                    break
+                    
+                    
+                case .error:
+                    break
+                    
+                }//end switch
+            }
+        }
+    }
 
     //MARK:- IBAction
     @IBAction func navigationLeftButton(_ sender: Any) {
@@ -90,46 +116,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     @IBAction func revercePCtoSP(_ sender: Any) {
-        if displayURL == model.urls["courceManagementHomeSP"]!.url{
-            openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "spIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
-            
-        }else if displayURL ==  model.urls["courceManagementHomePC"]!.url{
-            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "pcIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
-            
-        }else if displayURL == model.urls["manabaSP"]!.url{
-            openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "spIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
-            
-        }else if displayURL == model.urls["manabaPC"]!.url{
-            openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "pcIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
-            
-        }
-        
-        
-//        switch ope {
-//        case "UP":
-//            let image = UIImage(systemName: "chevron.down")
-//            rightButton.setImage(image, for: .normal)
-//            animationView(scene: "rightButtonDown")
-//            return
-//        case "DOWN":
-//            let image = UIImage(systemName: "chevron.up")
-//            rightButton.setImage(image, for: .normal)
-//            animationView(scene: "rightButtonUp")
-//        default:
-//            return
-//        }
+        let image = UIImage(named: viewModel.reversePCandSP())
+        reversePCtoSP.setImage(image, for: .normal)
+
     }
     
 
@@ -246,7 +235,12 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     
     // MARK: - Private func
-    
+    private func setup() {
+        animationView(scene: "launchScreen")
+        tabBar.delegate = self
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+    }
     // 初回起動時判定
     private func firstBootDecision() {
         // 利用規約同意者か判定
