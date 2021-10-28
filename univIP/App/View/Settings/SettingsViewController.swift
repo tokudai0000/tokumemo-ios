@@ -246,13 +246,16 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     // セルを選択した時のイベントを追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        self.dismiss(animated: false, completion: nil)
+        
         guard let delegate = delegateMain else {
             return
         }
+        
         let cellId = allCellList[indexPath[0]][indexPath[1]].id
-        self.dismiss(animated: false, completion: nil)
+        
         switch cellId {
-        case 0: // "Webサイト":
+        case 0: // Webサイト
             let response = urlModel.url(.libraryLogin)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
@@ -261,7 +264,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             }
             
             
-        case 1: // "貸し出し期間延長":
+        case 1: // 貸し出し期間延長
             let response = urlModel.url(.libraryBookLendingExtension)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
@@ -271,7 +274,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
-        case 2: // "本購入リクエスト":
+        case 2: // 本購入リクエスト
             let response = urlModel.url(.libraryBookPurchaseRequest)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
@@ -281,7 +284,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
-        case 3: // "開館カレンダー":
+        case 3: // 開館カレンダー
             let response = urlModel.url(.libraryCalendar)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
@@ -291,80 +294,80 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: "DOWN")
 
             
-        case 4: // "シラバス":
+        case 4: // シラバス
             delegate.popupView(scene: .syllabus)
 
             
-        case 5: // "時間割":
+        case 5: // 時間割
             let response = urlModel.url(.timeTable)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
             
-        case 6: // "今年の成績表":
+        case 6: // 今年の成績表
             let response = urlModel.url(.currentTermPerformance)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             
             
-        case 7: // "成績参照":
+        case 7: // 成績参照
             let response = urlModel.url(.termPerformance)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
             
-        case 8: // "出欠記録":
+        case 8: // 出欠記録
             let response = urlModel.url(.presenceAbsenceRecord)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
             
-        case 9: // "授業アンケート":
+        case 9: // 授業アンケート
             let response = urlModel.url(.classQuestionnaire)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
             
-        case 10: // "メール":
+        case 10: // メール
             let response = urlModel.url(.mailService)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
-        case 11: // "マナバPC版":
+        case 11: // マナバPC版
             let response = urlModel.url(.manabaPC)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
-        case 12: // "キャリア支援室":
+        case 12: // キャリア支援室
             let response = urlModel.url(.tokudaiCareerCenter)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
@@ -374,12 +377,12 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
-        case 13:
+        case 13: // 履修登録
             let response = urlModel.url(.courseRegistration)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
-                delegate.toast(message: "失敗しました")
+                delegate.toast(message: "登録者のみ")
             }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
@@ -399,9 +402,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         default:
             return
         }
-//        self.dismiss(animated: false, completion: nil)
-        
-//        viewAnimated(scene: "settingsViewDisappear")
     }
     
     /// 編集できるセクションを限定
