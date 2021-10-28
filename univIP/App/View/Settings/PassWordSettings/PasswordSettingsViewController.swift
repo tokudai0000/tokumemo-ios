@@ -57,7 +57,7 @@ class PasswordSettingsViewController: BaseViewController {
         label.text = "登録完了"
         passWordTextField.text = ""
         
-        self.delegateMain?.openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+//        self.delegateMain?.openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
     }
     
     

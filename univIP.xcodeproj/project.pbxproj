@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A09314A27298CF000B7BAED /* urls.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A09314C27298CF000B7BAED /* urls.strings */; };
+		1A09314E272A7DAC00B7BAED /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */; };
 		1A2AFC262704209D00423AD1 /* sample in Resources */ = {isa = PBXBuildFile; fileRef = 1A2AFC252704209D00423AD1 /* sample */; };
 		1A2AFC28270420E200423AD1 /* mailAccountPassword.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1A2AFC27270420E200423AD1 /* mailAccountPassword.txt */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
@@ -67,6 +68,7 @@
 /* Begin PBXFileReference section */
 		1A0904E326C2828700BED109 /* sendEmail_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sendEmail_bridge.h; sourceTree = "<group>"; };
 		1A09314B27298CF000B7BAED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/urls.strings; sourceTree = "<group>"; };
+		1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		1A2AFC252704209D00423AD1 /* sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample; sourceTree = "<group>"; };
 		1A2AFC27270420E200423AD1 /* mailAccountPassword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mailAccountPassword.txt; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		1A81A91C26C02FB700CC56E2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */,
 				1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */,
 				1A81A91F26C02FF900CC56E2 /* Settings.storyboard */,
 				1AA056E826BD2DA900343005 /* Syllabus */,
@@ -594,6 +597,7 @@
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
 				1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
+				1A09314E272A7DAC00B7BAED /* SettingViewModel.swift in Sources */,
 				1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */,
 				1A41EAE3272914CC0064CDB7 /* UIImageView.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,

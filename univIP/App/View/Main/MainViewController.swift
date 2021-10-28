@@ -32,6 +32,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let model = Model()
     private let viewModel = MainViewModel()
     private let dataManager = DataManager()
+    private let urlModel = UrlModel()
     
     // 現在表示しているURL
     private var displayURL = ""
@@ -96,7 +97,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     // MARK: - Public func
     
     // 文字列で指定されたURLを開く
-    public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
+//    public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
         
 //        webViewDisplay(bool: true)
 //        onlyOnceForLogin = false
@@ -120,7 +121,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 //            let request = NSURLRequest(url: URL(string:url)!)
 //            webView.load(request as URLRequest)
 //        }
-    }
+//    }
     
     public func refresh(){
         onlyOnceForLogin = false
@@ -393,7 +394,10 @@ extension MainViewController: WKNavigationDelegate{
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
         // 変数 url にはリンク先のURLが入る
         if let url = navigationAction.request.url {
-            openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
+//            openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
+//            let response = urlModel.url(.timeTable)
+//            if let url = response.1 as URLRequest? {
+            webView.load(URLRequest(url: url))
             webViewDisplay(bool: false)
         }
          
@@ -460,7 +464,12 @@ extension MainViewController: WKNavigationDelegate{
         
         // タイムアウト判定
         if (displayURL == model.urls["timeOut"]!.url){
-            openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+            let response = urlModel.url(.login)
+            if let url = response.1 as URLRequest? {
+                webView.load(url)
+            } else {
+                toast(message: "失敗")
+            }
         }
         
         decisionHandler(.allow)
@@ -555,21 +564,41 @@ extension MainViewController: WKNavigationDelegate{
         
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
             if displayURL == model.urls["courceManagementHomeSP"]!.url{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+                let response = urlModel.url(.courseRegistration)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
             }
         }else{
             if displayURL == model.urls["courceManagementHomePC"]!.url{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+                let response = urlModel.url(.courceManagementHomeSP)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
             }
         }
         
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
             if displayURL == model.urls["manabaSP"]!.url{
-                openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+                let response = urlModel.url(.manabaPC)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
             }
         }else{
             if displayURL == model.urls["manabaPC"]!.url{
-                openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+                let response = urlModel.url(.manabaSP)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
             }
         }
     }
@@ -635,18 +664,38 @@ extension MainViewController: UITabBarDelegate{
         switch item.tag {
         case 1: // 左
             if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+                let response = urlModel.url(.courceManagementHomePC)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
                 
             }else{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+                let response = urlModel.url(.courceManagementHomeSP)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
             }
             navigationRightButtonOnOff(operation: "UP")
         case 2: // 右
             if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-                openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+                let response = urlModel.url(.manabaPC)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
                 
             }else{
-                openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+                let response = urlModel.url(.manabaSP)
+                if let url = response.1 as URLRequest? {
+                    webView.load(url)
+                } else {
+                    toast(message: "登録者のみ")
+                }
             }
             navigationRightButtonOnOff(operation: "UP")
         default:

@@ -18,21 +18,11 @@ class SettingsViewController: BaseViewController {
     
     private let model = Model()
     private let urlModel = UrlModel()
-    
-    private var sectionHight:Int = 2
-    private var cellHight:Int = 44
-    private var allCellList:[[CellList]] =  [[],
-                                             [CellList(id:100, name: "パスワード設定", category: "", display: true),
-                                              CellList(id:101, name: "このアプリについて", category: "", display: true),
-                                              CellList(id:102, name: "開発者へ連絡", category: "", display: true)]]
-    private var cellList:[CellList] = []
-    private let cellKey = "CellKey"
+    private let viewModel = SettingViewModel()
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
     var userDefaults = UserDefaults.standard
-//    public var mainViewModel: MainViewModel!
-    private var editSituation = true
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
@@ -40,7 +30,7 @@ class SettingsViewController: BaseViewController {
         tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
         
         firstBootDecision()
-        allCellList[0] = loadCellList()
+        viewModel.allCellList[0] = loadCellList()
         self.tableView.reloadData()
     }
     
@@ -50,13 +40,13 @@ class SettingsViewController: BaseViewController {
     }
     
     @IBAction func editAction(_ sender: Any) {
-        tableView.isEditing = editSituation
-        if editSituation {
+        tableView.isEditing = viewModel.editSituation
+        if viewModel.editSituation {
             editButton.titleLabel?.text = "編集"
         }else{
             editButton.titleLabel?.text = "終了"
         }
-        editSituation = !editSituation
+        viewModel.editSituation = !viewModel.editSituation
         self.tableView.reloadData()
     }
     
@@ -75,14 +65,14 @@ class SettingsViewController: BaseViewController {
             
             for i in 0 ..< newCellLists.count{
                 if legacyCellLists.count <= i{
-                    cellList.append(newCellLists[i])
+                    viewModel.cellList.append(newCellLists[i])
                 }else{
                     newCellLists[legacyCellLists[i].id].display = legacyCellLists[i].display
-                    cellList.append(newCellLists[legacyCellLists[i].id])
+                    viewModel.cellList.append(newCellLists[legacyCellLists[i].id])
                 }
             }
-            print(cellList)
-            saveCellList(lists: cellList)
+            print(viewModel.cellList)
+            saveCellList(lists: viewModel.cellList)
         }
     }
     private func saveCellList(lists:[CellList]){
@@ -90,12 +80,12 @@ class SettingsViewController: BaseViewController {
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        UserDefaults.standard.set(data, forKey: cellKey)
+        UserDefaults.standard.set(data, forKey: viewModel.cellKey)
     }
     
     func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: cellKey),
+        guard let data = UserDefaults.standard.data(forKey: viewModel.cellKey),
               let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
             return model.cellList
         }
@@ -155,25 +145,25 @@ class SettingsViewController: BaseViewController {
 extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     // テーブル内のセクション数を決めるメソッド
     func numberOfSections(in tableView: UITableView) -> Int {
-        return allCellList.count // 2
+        return viewModel.allCellList.count // 2
     }
     
     /// セクションの高さを設定
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(sectionHight)
+        return CGFloat(viewModel.sectionHight)
     }
     
     // （＊＊必須＊＊）セクション内のセル数を決めるメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCellList[Int(section)].count
+        return viewModel.allCellList[Int(section)].count
     }
     
     // （＊＊必須＊＊）セルのインスタンスを生成するメソッド「表示するcellの中身を決める」
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let TableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
 
-        TableCell.textLabel!.text = allCellList[indexPath.section][Int(indexPath.item)].name
-        TableCell.detailTextLabel?.text = allCellList[indexPath.section][Int(indexPath.item)].category
+        TableCell.textLabel!.text = viewModel.allCellList[indexPath.section][Int(indexPath.item)].name
+        TableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][Int(indexPath.item)].category
         TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // ここで「>」ボタンを設定
 
         TableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
@@ -192,33 +182,33 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let todo = allCellList[sourceIndexPath.section][sourceIndexPath.row]
-        allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        saveCellList(lists: allCellList[0])
+        let todo = viewModel.allCellList[sourceIndexPath.section][sourceIndexPath.row]
+        viewModel.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        viewModel.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
+        saveCellList(lists: viewModel.allCellList[0])
     }
     
     /// 「編集モード」追加、削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            allCellList[indexPath.section][indexPath.row].display = false
+            viewModel.allCellList[indexPath.section][indexPath.row].display = false
         }else{
-            allCellList[indexPath.section][indexPath.row].display = true
+            viewModel.allCellList[indexPath.section][indexPath.row].display = true
         }
         
-        saveCellList(lists: allCellList[0])
+        saveCellList(lists: viewModel.allCellList[0])
         self.tableView.reloadData()
     }
     
     /// セルの高さを決めるメソッド
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if !editSituation {
-            return CGFloat(cellHight)
+        if !viewModel.editSituation {
+            return CGFloat(viewModel.cellHight)
         }else{
-            if !allCellList[indexPath.section][indexPath.row].display {
+            if !viewModel.allCellList[indexPath.section][indexPath.row].display {
                 return 0
             }else{
-                return CGFloat(cellHight)
+                return CGFloat(viewModel.cellHight)
             }
         }
     }
@@ -233,7 +223,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
         if tableView.isEditing{
-            if allCellList[indexPath.section][indexPath.row].display {
+            if viewModel.allCellList[indexPath.section][indexPath.row].display {
                 return .delete
             }else{
                 return .insert
@@ -252,7 +242,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             return
         }
         
-        let cellId = allCellList[indexPath[0]][indexPath[1]].id
+        let cellId = viewModel.allCellList[indexPath[0]][indexPath[1]].id
         
         switch cellId {
         case 0: // Webサイト
