@@ -443,7 +443,7 @@ extension MainViewController: WKNavigationDelegate{
         
 
         // 教務事務システム、アンケート催促スキップ
-        if (viewModel.displayUrl == urlModel.enqueteReminder){
+        if viewModel.judgeEnqueteReminder() {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 

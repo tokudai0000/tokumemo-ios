@@ -202,4 +202,13 @@ class MainViewModel: NSObject {
         return false
     }
     
+    func judgeEnqueteReminder() -> Bool {
+        let one = forwardDisplayUrl.contains(urlModel.lostConnection)
+        let second = displayUrl == urlModel.enqueteReminder
+        if one && second {
+            return true
+        }
+        return false
+    }
+    
 }
