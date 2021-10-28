@@ -27,10 +27,10 @@ class SettingsViewController: BaseViewController {
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
-        
+
         firstBootDecision()
-        viewModel.allCellList[0] = loadCellList()
+        setup()
+
         self.tableView.reloadData()
     }
     
@@ -51,6 +51,11 @@ class SettingsViewController: BaseViewController {
     }
     
     //MARK:- Private func
+    private func setup() {
+        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
+        viewModel.allCellList[0] = viewModel.loadCellList()
+    }
+    
     // 初回起動時判定
     private func firstBootDecision() {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
@@ -60,7 +65,7 @@ class SettingsViewController: BaseViewController {
         if UserDefaults.standard.string(forKey: "VersionKey") != versionKey{
             UserDefaults.standard.set(versionKey, forKey: "VersionKey") // 更新
             
-            let legacyCellLists = loadCellList()
+            let legacyCellLists = viewModel.loadCellList()
             var newCellLists = model.cellList
             
             for i in 0 ..< newCellLists.count{
@@ -72,26 +77,10 @@ class SettingsViewController: BaseViewController {
                 }
             }
             print(viewModel.cellList)
-            saveCellList(lists: viewModel.cellList)
+            viewModel.saveCellList(lists: viewModel.cellList)
         }
     }
-    private func saveCellList(lists:[CellList]){
-        let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(lists) else {
-            return
-        }
-        UserDefaults.standard.set(data, forKey: viewModel.cellKey)
-    }
-    
-    func loadCellList() -> [CellList] {
-        let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: viewModel.cellKey),
-              let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
-            return model.cellList
-        }
-            
-        return bookmarks
-    }
+
     
     private func viewAnimated(scene:String){
         switch scene {
@@ -143,22 +132,26 @@ class SettingsViewController: BaseViewController {
 
 // MARK: - TableView
 extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
-    // テーブル内のセクション数を決めるメソッド
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.allCellList.count // 2
-    }
-    
-    /// セクションの高さを設定
+
+    /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(viewModel.sectionHight)
     }
     
-    // （＊＊必須＊＊）セクション内のセル数を決めるメソッド
+    
+    /// セクション数
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.allCellList.count
+    }
+    
+    
+    /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.allCellList[Int(section)].count
     }
     
-    // （＊＊必須＊＊）セルのインスタンスを生成するメソッド「表示するcellの中身を決める」
+    
+    /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let TableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
 
@@ -185,7 +178,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let todo = viewModel.allCellList[sourceIndexPath.section][sourceIndexPath.row]
         viewModel.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
         viewModel.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        saveCellList(lists: viewModel.allCellList[0])
+        viewModel.saveCellList(lists: viewModel.allCellList[0])
     }
     
     /// 「編集モード」追加、削除
@@ -196,7 +189,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             viewModel.allCellList[indexPath.section][indexPath.row].display = true
         }
         
-        saveCellList(lists: viewModel.allCellList[0])
+        viewModel.saveCellList(lists: viewModel.allCellList[0])
         self.tableView.reloadData()
     }
     
