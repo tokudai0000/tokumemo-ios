@@ -72,6 +72,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         self.present(vc, animated: false, completion: nil)
         vc.delegateMain = self
         vc.mainViewModel = self.viewModel
+        vc.urlModel = self.urlModel
     }
     
     @IBAction func navigationLeftButton2(_ sender: Any) {

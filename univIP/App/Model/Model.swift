@@ -248,63 +248,6 @@ class UrlModel {
 
 class Model {
     
-//    let urls = ["login" : // ログインURL
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/", topView: false),
-//                "courceManagementHomeSP" : // 情報ポータル、ホーム画面URL
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx", topView: true),
-//                "courceManagementHomePC" : // 情報ポータル、ホーム画面URL
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx", topView: true),
-//                "manabaSP" : // マナバURL
-//                    structURL(url: "https://manaba.lms.tokushima-u.ac.jp/s/home_summary", topView: true),
-//                "manabaPC" : // マナバURL
-//                    structURL(url: "https://manaba.lms.tokushima-u.ac.jp/ct/home", topView: true),
-//                "libraryLogin" : // 図書館URL
-//                    structURL(url: "https://opac.lib.tokushima-u.ac.jp/opac/user/top", topView: true),
-//                "libraryBookLendingExtension" : // 図書館本貸出し期間延長URL
-//                    structURL(url: "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings", topView: true),
-//                "libraryBookPurchaseRequest" : // 図書館本購入リクエスト
-//                    structURL(url: "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new", topView: true),
-//                "syllabusSearchMain" : // シラバス検索URL
-//                    structURL(url: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx", topView: true),
-//                "timeTable" : // 時間割
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx", topView: true),
-//                "currentTermPerformance" : // 今年の成績表
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year=", topView: true),
-//                "termPerformance" : // 成績参照
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx", topView: true),
-//                "presenceAbsenceRecord" : // 出欠記録
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx", topView: true),
-//                "classQuestionnaire" : // 授業アンケート
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx", topView: true),
-//                "systemServiceList" : // システムサービス一覧(非登録者に対して表示するURL)
-//                    structURL(url: "https://www.ait.tokushima-u.ac.jp/service/list_out/", topView: true),
-//                "eLearningList" : // Eラーニング一覧(非登録者に対して表示するURL)
-//                    structURL(url: "https://uls01.ulc.tokushima-u.ac.jp/info/index.html", topView: true),
-//                "outlookHome" : // outolookログインURLの一部
-//                    structURL(url: "https://outlook.office.com/mail/", topView: true),
-//                "tokudaiCareerCenter" : // キャリアセンター
-//                    structURL(url: "https://www.tokudai-syusyoku.com/index.php", topView: true),
-//                "libraryHome" : // 図書館ホームページ(非登録者に対して表示するURL)
-//                    structURL(url: "https://www.lib.tokushima-u.ac.jp/", topView: true),
-//                "courseRegistration" : // 履修登録URL
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx", topView: true),
-//                "lostConnection" : // 接続切れの際、再リロード 83桁 =の後ろに付く(e1s1)は可変
-//                    structURL(url: "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=", topView: false),
-//                "libraryCalendar" : // 図書館カレンダー
-//                    structURL(url: "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_", topView: false),
-//                "syllabus" : // シラバスURL
-//                    structURL(url: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/", topView: false),
-//                "timeOut" : // タイムアウト
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx", topView: false),
-//                "enqueteReminder" : // アンケート催促
-//                    structURL(url: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx", topView: false),
-//                "popupToYoutube" : // ポップアップ(Youtubeに遷移)
-//                    structURL(url: "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon", topView: false),
-//                "mailService" : // MicroSoftのoutlookへ遷移
-//                    structURL(url: "https://outlook.office365.com/tokushima-u.ac.jp", topView: false),
-//                "outlookLogin" : // outolookログインURLの一部
-//                    structURL(url: "https://wa.tokushima-u.ac.jp/adfs/ls", topView: false),]
-    
     /// 許可するドメイン
     let allowDomains = ["tokushima-u.ac.jp",
                         "microsoftonline.com",

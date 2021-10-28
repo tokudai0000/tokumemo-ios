@@ -17,8 +17,9 @@ class SettingsViewController: BaseViewController {
     @IBOutlet weak var editButton: UIButton!
     
     private let model = Model()
-    private let urlModel = UrlModel()
+//    private let urlModel = UrlModel()
     private let viewModel = SettingViewModel()
+    public var urlModel: UrlModel!
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
@@ -50,11 +51,13 @@ class SettingsViewController: BaseViewController {
         self.tableView.reloadData()
     }
     
+    
     //MARK:- Private func
     private func setup() {
         tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
         viewModel.allCellList[0] = viewModel.loadCellList()
     }
+    
     
     // 初回起動時判定
     private func firstBootDecision() {
