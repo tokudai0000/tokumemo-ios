@@ -98,28 +98,28 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     // 文字列で指定されたURLを開く
     public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
         
-        webViewDisplay(bool: true)
-        onlyOnceForLogin = false
-        // 登録者判定
-        if viewModel.registrantDecision(){
-            let request = NSURLRequest(url: URL(string:urlForRegistrant)!)
-            webView.load(request as URLRequest)
-            
-        }else{
-            if alertTrigger {
-                toast(message: "パスワード設定をすることで利用できます", type: "bottom")
-                webViewDisplay(bool: false)
-                return
-            }
-            
-            guard let url = urlForNotRegistrant else {
-                toast(message: "エラーが起こりました", type: "bottom")
-                return
-            }
-            
-            let request = NSURLRequest(url: URL(string:url)!)
-            webView.load(request as URLRequest)
-        }
+//        webViewDisplay(bool: true)
+//        onlyOnceForLogin = false
+//        // 登録者判定
+//        if viewModel.registrantDecision(){
+//            let request = NSURLRequest(url: URL(string:urlForRegistrant)!)
+//            webView.load(request as URLRequest)
+//
+//        }else{
+//            if alertTrigger {
+//                toast(message: "パスワード設定をすることで利用できます", type: "bottom")
+//                webViewDisplay(bool: false)
+//                return
+//            }
+//
+//            guard let url = urlForNotRegistrant else {
+//                toast(message: "エラーが起こりました", type: "bottom")
+//                return
+//            }
+//
+//            let request = NSURLRequest(url: URL(string:url)!)
+//            webView.load(request as URLRequest)
+//        }
     }
     
     public func refresh(){

@@ -9,63 +9,67 @@
 import Foundation
 
 class UrlModel {
+//    public var isLogedin = false
+    
     private let login = "https://eweb.stud.tokushima-u.ac.jp/Portal/"   //topView: false),
     private let courceManagementHomeSP = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx" // topView: true),
     private let courceManagementHomePC = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx" // topView: true),
-//    private let manabaSP = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary" //topView: true),
-//    private let manabaPC = "https://manaba.lms.tokushima-u.ac.jp/ct/home" //topView: true),
-//    private let libraryLogin = "https://opac.lib.tokushima-u.ac.jp/opac/user/top" // topView: true),
-//    private let libraryBookLendingExtension = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings" // topView: true),
-//    private let libraryBookPurchaseRequest = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new" // topView: true),
-//    private let syllabusSearchMain = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"//, topView: true),
-//    private let timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"//, topView: true),
-//    private let currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="//, topView: true),
-//    private let termPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"//, topView: true),
-//    private let presenceAbsenceRecord = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"//, topView: true),
-//    private let classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"//, topView: true),
-//    private let systemServiceList = "https://www.ait.tokushima-u.ac.jp/service/list_out/"//, topView: true),
-//    private let eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"//, topView: true),
-//    private let outlookHome = "https://outlook.office.com/mail/"//, topView: true),
-//    private let tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"//, topView: true),
-//    private let libraryHome = "https://www.lib.tokushima-u.ac.jp/"//, topView: true),
-//    private let courseRegistration = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx"//, topView: true),
-//    private let lostConnection = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="//, topView: false),
-//    private let libraryCalendar = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"//, topView: false),
-//    private let syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"//, topView: false),
-//    private let timeOut = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"//, topView: false),
-//    private let enqueteReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"//, topView: false),
-//    private let popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"//, topView: false),
-//    private let mailService = "https://outlook.office365.com/tokushima-u.ac.jp"//, topView: false),
-//    private let outlookLogin = "https://wa.tokushima-u.ac.jp/adfs/ls"//, topView: false),
+    private let manabaSP = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary" //topView: true),
+    private let manabaPC = "https://manaba.lms.tokushima-u.ac.jp/ct/home" //topView: true),
+    private let libraryLogin = "https://opac.lib.tokushima-u.ac.jp/opac/user/top" // topView: true),
+    private let libraryBookLendingExtension = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings" // topView: true),
+    private let libraryBookPurchaseRequest = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new" // topView: true),
+    private let syllabusSearchMain = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"//, topView: true),
+    private let timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"//, topView: true),
+    private let currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="//, topView: true),
+    private let termPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"//, topView: true),
+    private let presenceAbsenceRecord = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"//, topView: true),
+    private let classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"//, topView: true),
+    private let systemServiceList = "https://www.ait.tokushima-u.ac.jp/service/list_out/"//, topView: true),
+    private let eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"//, topView: true),
+    private let outlookHome = "https://outlook.office.com/mail/"//, topView: true),
+    private let tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"//, topView: true),
+    private let libraryHome = "https://www.lib.tokushima-u.ac.jp/"//, topView: true),
+    private let courseRegistration = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx"//, topView: true),
+    private let lostConnection = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="//, topView: false),
+    private let libraryCalendar = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"//, topView: false),
+    private let syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"//, topView: false),
+    private let timeOut = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"//, topView: false),
+    private let enqueteReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"//, topView: false),
+    private let popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"//, topView: false),
+    private let mailService = "https://outlook.office365.com/tokushima-u.ac.jp"//, topView: false),
+    private let outlookLogin = "https://wa.tokushima-u.ac.jp/adfs/ls"//, topView: false),
     
     enum MenuTitle: String {
         case login
         case courceManagementHomeSP
-        case courceManagementHomePC  // 情報ポータル、ホーム画面URL
+        case courceManagementHomePC         // 情報ポータル、ホーム画面URL
+        case manabaSP                       // マナバURL
+        case manabaPC                       // マナバURL
+        case libraryLogin                   // 図書館URL
+        case libraryBookLendingExtension    // 図書館本貸出し期間延長URL
+        case libraryBookPurchaseRequest     // 図書館本購入リクエスト
+        case libraryCalendar                // 図書館カレンダー
+        case syllabus                       // シラバスURL
+        case timeTable                      // 時間割
+        case currentTermPerformance         // 今年の成績表
+        case termPerformance                // 成績参照
+        case presenceAbsenceRecord          // 出欠記録
+        case classQuestionnaire             // 授業アンケート
+        case mailService                    // MicroSoftのoutlookへ遷移
+        case tokudaiCareerCenter            // キャリアセンター
+        case courseRegistration             // 履修登録URL
+//        case libraryHome // 図書館ホームページ(非登録者に対して表示するURL)
 //        case manabaSP // マナバURL
 //        case manabaPC // マナバURL
-//        case libraryLogin // 図書館URL
-//        case libraryBookLendingExtension // 図書館本貸出し期間延長URL
-//        case libraryBookPurchaseRequest // 図書館本購入リクエスト
 //        case syllabusSearchMain // シラバス検索URL
-//        case timeTable // 時間割
-//        case currentTermPerformance // 今年の成績表
-//        case termPerformance // 成績参照
-//        case presenceAbsenceRecord // 出欠記録
-//        case classQuestionnaire // 授業アンケート
 //        case systemServiceList // システムサービス一覧(非登録者に対して表示するURL)
 //        case eLearningList // Eラーニング一覧(非登録者に対して表示するURL)
 //        case outlookHome // outolookログインURLの一部
-//        case tokudaiCareerCenter // キャリアセンター
-//        case libraryHome // 図書館ホームページ(非登録者に対して表示するURL)
-//        case courseRegistration // 履修登録URL
 //        case lostConnection // 接続切れの際、再リロード 83桁 =の後ろに付く(e1s1)は可変
-//        case libraryCalendar // 図書館カレンダー
-//        case syllabus // シラバスURL
 //        case timeOut // タイムアウト
 //        case enqueteReminder // アンケート催促
 //        case popupToYoutube // ポップアップ(Youtubeに遷移)
-//        case mailService // MicroSoftのoutlookへ遷移
 //        case outlookLogin // outolookログインURLの一部
     }
     
@@ -75,9 +79,9 @@ class UrlModel {
 //    var topView
     
     // 何のURLか、登録者か否か　出力はURL
-    public func url(_ menuTitle: MenuTitle, isLogedin: Bool) -> (Bool, NSURLRequest?) {
+    public func url(_ menuTitle: MenuTitle) -> (Bool, NSURLRequest?) {
         
-        let response = selectUrl(menuTitle, isLogedin: isLogedin)
+        let response = selectUrl(menuTitle, isLogedin: false)
         
         if let urlString = response.1 {
             if let url = URL(string: urlString) {
@@ -94,65 +98,53 @@ class UrlModel {
             case .login:                        return (true, login)
             case .courceManagementHomeSP:       return (true, courceManagementHomeSP)
             case .courceManagementHomePC:       return (true, courceManagementHomePC)
-//            case .manabaSP:                     return (true, manabaSP)
-//            case .manabaPC:                     return (true, manabaPC)
-//            case .libraryLogin:                 return (true, libraryLogin)
-//            case .libraryBookLendingExtension:  return (true, libraryBookLendingExtension)
-//            case .libraryBookPurchaseRequest:   return (true, libraryBookPurchaseRequest)
+            case .manabaSP:                     return (true, manabaSP)
+            case .manabaPC:                     return (true, manabaPC)
+            case .libraryLogin:                 return (true, libraryLogin)
+            case .libraryBookLendingExtension:  return (true, libraryBookLendingExtension)
+            case .libraryBookPurchaseRequest:   return (true, libraryBookPurchaseRequest)
+            case .timeTable:                    return (true, timeTable)
+            case .currentTermPerformance:       return (true, currentTermPerformance)
+            case .termPerformance:              return (true, termPerformance)
+            case .presenceAbsenceRecord:        return (true, presenceAbsenceRecord)
+            case .classQuestionnaire:           return (true, classQuestionnaire)
+            case .tokudaiCareerCenter:          return (true, tokudaiCareerCenter)
+            case .courseRegistration:           return (true, courseRegistration)
+            case .libraryCalendar:              return (true, libraryCalendar)
+            case .syllabus:                     return (true, syllabus)
+            case .mailService:                  return (true, mailService)
 //            case .syllabusSearchMain:           return (true, syllabusSearchMain)
-//            case .timeTable:                    return (true, timeTable)
-//            case .currentTermPerformance:       return (true, currentTermPerformance)
-//            case .termPerformance:              return (true, termPerformance)
-//            case .presenceAbsenceRecord:        return (true, presenceAbsenceRecord)
-//            case .classQuestionnaire:           return (true, classQuestionnaire)
 //            case .systemServiceList:            return (true, systemServiceList)
 //            case .eLearningList:                return (true, eLearningList)
 //            case .outlookHome:                  return (true, outlookHome)
-//            case .tokudaiCareerCenter:          return (true, tokudaiCareerCenter)
 //            case .libraryHome:                  return (true, libraryHome)
-//            case .courseRegistration:           return (true, courseRegistration)
 //            case .lostConnection:               return (true, lostConnection)
-//            case .libraryCalendar:              return (true, libraryCalendar)
-//            case .syllabus:                     return (true, syllabus)
 //            case .timeOut:                      return (true, timeOut)
 //            case .enqueteReminder:              return (true, enqueteReminder)
 //            case .popupToYoutube:               return (true, popupToYoutube)
-//            case .mailService:                  return (true, mailService)
 //            case .outlookLogin:                 return (true, outlookLogin)
-                
             }
         } else {
             
             switch menuTitle {
             case .login:                        return (true, login)
-            case .courceManagementHomeSP:       return (true, login)
-            case .courceManagementHomePC:       return (true, login)
-//            case .manabaSP:                     return (true, manabaSP)
-//            case .manabaPC:                     return (true, manabaPC)
-//            case .libraryLogin:                 return (true, libraryLogin)
-//            case .libraryBookLendingExtension:  return (true, libraryBookLendingExtension)
-//            case .libraryBookPurchaseRequest:   return (true, libraryBookPurchaseRequest)
-//            case .syllabusSearchMain:           return (true, syllabusSearchMain)
-//            case .timeTable:                    return (true, )
-//            case .currentTermPerformance:       return (true, )
-//            case .termPerformance:              return (true, )
-//            case .presenceAbsenceRecord:        return (true, )
-//            case .classQuestionnaire:           return (true, )
-//            case .systemServiceList:            return (true, )
-//            case .eLearningList:                return (true, )
-//            case .outlookHome:                  return (true, )
-//            case .tokudaiCareerCenter:          return (true, )
-//            case .libraryHome:                  return (true, )
-//            case .courseRegistration:           return (true, )
-//            case .lostConnection:               return (true, )
-//            case .libraryCalendar:              return (true, )
-//            case .syllabus:                     return (true, )
-//            case .timeOut:                      return (true, )
-//            case .enqueteReminder:              return (true, )
-//            case .popupToYoutube:               return (true, )
-//            case .mailService:                  return (true, )
-//            case .outlookLogin:                 return (true, )
-                
+            case .courceManagementHomeSP:       return (true, nil)
+            case .courceManagementHomePC:       return (true, nil)
+            case .manabaSP:                     return (true, nil)
+            case .manabaPC:                     return (true, nil)
+            case .libraryLogin:                 return (true, libraryHome)
+            case .libraryBookLendingExtension:  return (true, nil)
+            case .libraryBookPurchaseRequest:   return (true, nil)
+            case .timeTable:                    return (true, nil)
+            case .currentTermPerformance:       return (true, nil)
+            case .termPerformance:              return (true, nil)
+            case .presenceAbsenceRecord:        return (true, nil)
+            case .classQuestionnaire:           return (true, nil)
+            case .tokudaiCareerCenter:          return (true, tokudaiCareerCenter)
+            case .courseRegistration:           return (true, nil)
+            case .libraryCalendar:              return (true, libraryCalendar)
+            case .syllabus:                     return (true, syllabus)
+            case .mailService:                  return (true, mailService)
             }
         }
     }

@@ -17,6 +17,7 @@ class SettingsViewController: BaseViewController {
     @IBOutlet weak var editButton: UIButton!
     
     private let model = Model()
+    private let urlModel = UrlModel()
     
     private var sectionHight:Int = 2
     private var cellHight:Int = 44
@@ -252,21 +253,40 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let cellId = allCellList[indexPath[0]][indexPath[1]].id
         switch cellId {
         case 0: // "Webサイト":
-//            webView.load(UrlModel.openUrl(tosyokann))
-
-            
-//            delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
-//            delegate.navigationRightButtonOnOff(operation: "DOWN")
-            if let url =  mainViewModel.openUrl(model.urls["libraryHome"]!.url) {
-                delegate.webView.load(url as URLRequest)
+            let response = urlModel.url(.libraryLogin)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "ERROR")
             }
             self.dismiss(animated: false, completion: nil)
+            
+            
         case 1: // "貸し出し期間延長":
-            delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-            delegate.navigationRightButtonOnOff(operation: "DOWN")
+            let response = urlModel.url(.libraryBookLendingExtension)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
+            self.dismiss(animated: false, completion: nil)
+            
+//            delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+//            delegate.navigationRightButtonOnOff(operation: "DOWN")
+            
+            
         case 2: // "本購入リクエスト":
-            delegate.openUrl(urlForRegistrant: model.urls["libraryBookPurchaseRequest"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            let response = urlModel.url(.libraryBookLendingExtension)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
+            self.dismiss(animated: false, completion: nil)
+//            delegate.openUrl(urlForRegistrant: model.urls["libraryBookPurchaseRequest"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
+            
+            
         case 3: // "開館カレンダー":
             let url = NSURL(string: model.urls["libraryHome"]!.url)
             let data = NSData(contentsOf: url! as URL)
@@ -320,8 +340,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             
         case 7: // "成績参照":
-            if
-            delegate.webView.reload(datamanager.openUrl(""))
+//            delegate.webView.reload(datamanager.openUrl(""))
             delegate.openUrl(urlForRegistrant: model.urls["termPerformance"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
             

@@ -11,6 +11,7 @@ import KeychainAccess
 
 
 final class DataManager {
+//    var isLogdin = false
     
     /// KeychainAccess インスタンス
     var keychain: Keychain {
