@@ -225,19 +225,19 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // 表示:false  非表示：true
     private func webViewDisplay(bool: Bool){
-        
-        switch bool {
-        case true:
-            leftButton.isEnabled = false
-            self.activityIndicatorView.isHidden = false
-            activityIndicator.startAnimating()
 
-        case false:
-            leftButton.isEnabled = true
-            self.activityIndicatorView.isHidden = true
-            activityIndicator.stopAnimating()
-        }
-        
+//        switch bool {
+//        case true:
+//            leftButton.isEnabled = false
+//            self.activityIndicatorView.isHidden = false
+//            activityIndicator.startAnimating()
+//
+//        case false:
+//            leftButton.isEnabled = true
+//            self.activityIndicatorView.isHidden = true
+//            activityIndicator.stopAnimating()
+//        }
+
     }
     
     
@@ -449,7 +449,7 @@ extension MainViewController: WKNavigationDelegate{
 
         
         // シラバス
-        if (viewModel.displayUrl.contains(urlModel.syllabus) && viewModel.syllabusSearchOnce){
+        if viewModel.judgeSyllabus() {
             viewModel.syllabusSearchOnce = false
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
@@ -459,7 +459,7 @@ extension MainViewController: WKNavigationDelegate{
         
         
         // outlookログイン
-        if viewModel.displayUrl.contains(urlModel.outlookLogin) {
+        if viewModel.judgeOutlook() {
             let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
@@ -469,7 +469,7 @@ extension MainViewController: WKNavigationDelegate{
         
         
         // キャリア支援室ログイン
-        if viewModel.displayUrl == urlModel.tokudaiCareerCenter{
+        if viewModel.judgeTokudaiCareerCenter() {
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
             webViewDisplay(bool: false)
@@ -479,25 +479,26 @@ extension MainViewController: WKNavigationDelegate{
 //        webViewHiddenJudge()
         
         
-        // 以下修正必要あり
-        // モバイル版かPC版か検知
-        if viewModel.displayUrl == urlModel.courceManagementHomeSP ||
-            viewModel.displayUrl == urlModel.manabaSP{
+        // 現在の画面がモバイル版かPC版か検知
+        switch viewModel.judgeMobileOrPC() {
+        case .pcIcon:
             let image = UIImage(named: "pcIcon")
             reversePCtoSP.setImage(image, for: .normal)
             reversePCtoSP.isEnabled = true
             
-        }else if viewModel.displayUrl ==  urlModel.courceManagementHomePC ||
-                    viewModel.displayUrl == urlModel.manabaPC{
+            
+        case .spIcon:
             let image = UIImage(named: "spIcon")
             reversePCtoSP.setImage(image, for: .normal)
             reversePCtoSP.isEnabled = true
-
-        }else{
+            
+            
+        case .other:
             reversePCtoSP.isEnabled = false
         }
         
-        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
+        
+        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
             if viewModel.displayUrl == urlModel.courceManagementHomeSP{
                 let response = urlModel.url(.courseRegistration)
                 if let url = response.1 as URLRequest? {
@@ -506,8 +507,9 @@ extension MainViewController: WKNavigationDelegate{
                     toast(message: "登録者のみ")
                 }
             }
-        }else{
-            if viewModel.displayUrl == urlModel.courceManagementHomePC{
+            
+        } else {
+            if viewModel.displayUrl == urlModel.courceManagementHomePC {
                 let response = urlModel.url(.courceManagementHomeSP)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
@@ -526,7 +528,8 @@ extension MainViewController: WKNavigationDelegate{
                     toast(message: "登録者のみ")
                 }
             }
-        }else{
+            
+        } else {
             if viewModel.displayUrl == urlModel.manabaPC{
                 let response = urlModel.url(.manabaSP)
                 if let url = response.1 as URLRequest? {
@@ -537,6 +540,7 @@ extension MainViewController: WKNavigationDelegate{
             }
         }
     }
+    
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message

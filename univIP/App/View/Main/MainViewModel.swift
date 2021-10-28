@@ -38,9 +38,10 @@ class MainViewModel: NSObject {
     
     var requestUrl: NSURLRequest?
     
-    private enum iconEnum: String {
+    enum IconEnum: String {
         case spIcon = "spIcon"
         case pcIcon = "pcIcon"
+        case other = "other"
     }
     
     func reversePCandSP() -> String {
@@ -209,6 +210,54 @@ class MainViewModel: NSObject {
             return true
         }
         return false
+    }
+    
+    func judgeSyllabus() -> Bool {
+        let one = displayUrl.contains(urlModel.syllabus)
+        let second = syllabusSearchOnce
+        if one && second {
+            return true
+        }
+        return false
+    }
+    
+    func judgeOutlook() -> Bool {
+        let one = !forwardDisplayUrl.contains(urlModel.outlookLogin)
+        let second = displayUrl.contains(urlModel.outlookLogin)
+        if one && second {
+            return true
+        }
+        return false
+    }
+    
+    func judgeTokudaiCareerCenter() -> Bool {
+        let one = !forwardDisplayUrl.contains(urlModel.tokudaiCareerCenter)
+        let second = displayUrl == urlModel.tokudaiCareerCenter
+        if one && second {
+            return true
+        }
+        return false
+    }
+    
+    func judgeMobileOrPC() -> IconEnum {
+        if displayUrl == urlModel.courceManagementHomeSP ||
+            displayUrl == urlModel.manabaSP {
+            return .pcIcon
+//            let image = UIImage(named: "pcIcon")
+//            reversePCtoSP.setImage(image, for: .normal)
+//            reversePCtoSP.isEnabled = true
+            
+        }else if displayUrl ==  urlModel.courceManagementHomePC ||
+                    displayUrl == urlModel.manabaPC{
+            return .spIcon
+//            let image = UIImage(named: "spIcon")
+//            reversePCtoSP.setImage(image, for: .normal)
+//            reversePCtoSP.isEnabled = true
+
+        }else{
+            return .other
+//            reversePCtoSP.isEnabled = false
+        }
     }
     
 }
