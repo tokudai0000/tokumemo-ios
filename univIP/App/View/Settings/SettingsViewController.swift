@@ -147,7 +147,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.allCellList[Int(section)].count
+        return viewModel.allCellList[section].count
     }
     
     
@@ -155,23 +155,24 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let TableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
 
-        TableCell.textLabel!.text = viewModel.allCellList[indexPath.section][Int(indexPath.item)].name
-        TableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][Int(indexPath.item)].category
-        TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // ここで「>」ボタンを設定
-
+        TableCell.textLabel!.text = viewModel.allCellList[indexPath.section][indexPath.item].name
+        TableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][indexPath.item].category
+        TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         TableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         TableCell.detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
         
         return TableCell
     }
     
-    ///
+    
+    /// 並び替え
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if sourceIndexPath.section == proposedDestinationIndexPath.section {
             return proposedDestinationIndexPath
         }
         return sourceIndexPath
     }
+    
     
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -180,6 +181,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         viewModel.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
         viewModel.saveCellList(lists: viewModel.allCellList[0])
     }
+    
     
     /// 「編集モード」追加、削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -193,7 +195,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         self.tableView.reloadData()
     }
     
-    /// セルの高さを決めるメソッド
+    
+    /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if !viewModel.editSituation {
             return CGFloat(viewModel.cellHight)
@@ -226,7 +229,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     }
 
     
-    // セルを選択した時のイベントを追加
+    // セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         self.dismiss(animated: false, completion: nil)
@@ -392,4 +395,5 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         if indexPath.section == 1 { return false }
         return true
     }
+    
 }
