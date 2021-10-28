@@ -35,7 +35,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let urlModel = UrlModel()
     
     // 現在表示しているURL
-    private var displayURL = ""
+//    private var displayURL = ""
     
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
     private var onlyOnceForLogin = false
@@ -343,19 +343,26 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 
 //MARK:- WebView
 extension MainViewController: WKNavigationDelegate{
+    
+    /// 新しいウィンドウで開く「target="_blank"」
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction,
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
         // 変数 url にはリンク先のURLが入る
         if let url = navigationAction.request.url {
             webView.load(URLRequest(url: url))
             webViewDisplay(bool: false)
+            return webView
         }
-         
+        AKLog(level: .ERROR, message: "リクエストエラー")
         return nil
+        
     }
-    // 読み込み設定（リクエスト前）
+    
+    
+    /// 読み込み設定
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -363,16 +370,19 @@ extension MainViewController: WKNavigationDelegate{
         // 現在表示してるURL
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
+            AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
-        displayURL = url.absoluteString
-        print("displayURL : " + displayURL)
+        viewModel.displayURL = url.absoluteString
         
+        AKLog(level: .DEBUG, message: "displayURL : \(viewModel.displayURL)")
         
-        // 許可するドメインを指定
+        // ドメイン取得
         guard let host = url.host else{
+            AKLog(level: .ERROR, message: "ドメイン取得エラー")
             return
         }
+        
         // [model.allowDomains] 以外はSafariで開く
         var trigger = false
         for allow in model.allowDomains {
@@ -381,9 +391,9 @@ extension MainViewController: WKNavigationDelegate{
             }
         }
         if trigger == false{
-            print(displayURL)
+            print(viewModel.displayURL)
             print("a")
-            UIApplication.shared.open(URL(string: String(describing: displayURL))!)
+            UIApplication.shared.open(URL(string: String(describing: viewModel.displayURL))!)
             decisionHandler(.cancel)
             return
         }
@@ -400,7 +410,7 @@ extension MainViewController: WKNavigationDelegate{
 //        }
         
         // Manabaの授業Youtubeリンクのタップ判定
-        if (displayURL.contains(urlModel.popupToYoutube)){
+        if (viewModel.displayURL.contains(urlModel.popupToYoutube)){
             // Youtubeリンクを取得
             webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
                 if let htmlYoutube = html{ // type(of: htmlYoutube) >>> __NSCFString
@@ -415,7 +425,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // タイムアウト判定
-        if (displayURL == urlModel.timeOut){
+        if (viewModel.displayURL == urlModel.timeOut){
             let response = urlModel.url(.login)
             if let url = response.1 as URLRequest? {
                 webView.load(url)
@@ -439,7 +449,7 @@ extension MainViewController: WKNavigationDelegate{
         let cAcaunt = dataManager.cAccount
         let passWord = dataManager.passWord
         if !viewModel.registrantDecision(){
-            if displayURL.contains(urlModel.lostConnection){
+            if viewModel.displayURL.contains(urlModel.lostConnection){
                 toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
             }
         }
@@ -451,7 +461,7 @@ extension MainViewController: WKNavigationDelegate{
 
         // Login画面
         if !onlyOnceForLogin{ // ddosにならない様に対策
-            if (displayURL.contains(urlModel.lostConnection ) && displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
+            if (viewModel.displayURL.contains(urlModel.lostConnection ) && viewModel.displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
                 if !viewModel.registrantDecision(){ // 非登録者
                     return
                 }
@@ -463,12 +473,12 @@ extension MainViewController: WKNavigationDelegate{
         }
 
         // 教務事務システム、アンケート催促スキップ
-        if (displayURL == urlModel.enqueteReminder){
+        if (viewModel.displayURL == urlModel.enqueteReminder){
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
         // シラバス
-        if (displayURL.contains(urlModel.syllabus) && viewModel.syllabusSearchOnce){
+        if (viewModel.displayURL.contains(urlModel.syllabus) && viewModel.syllabusSearchOnce){
             viewModel.syllabusSearchOnce = false
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
@@ -477,7 +487,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // outlookログイン
-            if displayURL.contains(urlModel.outlookLogin) {
+        if viewModel.displayURL.contains(urlModel.outlookLogin) {
             let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
@@ -486,7 +496,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // キャリア支援室ログイン
-            if displayURL == urlModel.tokudaiCareerCenter{
+        if viewModel.displayURL == urlModel.tokudaiCareerCenter{
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
             webViewDisplay(bool: false)
@@ -498,14 +508,14 @@ extension MainViewController: WKNavigationDelegate{
         
         // 以下修正必要あり
         // モバイル版かPC版か検知
-            if displayURL == urlModel.courceManagementHomeSP ||
-            displayURL == urlModel.manabaSP{
+        if viewModel.displayURL == urlModel.courceManagementHomeSP ||
+            viewModel.displayURL == urlModel.manabaSP{
             let image = UIImage(named: "pcIcon")
             reversePCtoSP.setImage(image, for: .normal)
             reversePCtoSP.isEnabled = true
             
-        }else if displayURL ==  urlModel.courceManagementHomePC ||
-            displayURL == urlModel.manabaPC{
+        }else if viewModel.displayURL ==  urlModel.courceManagementHomePC ||
+                    viewModel.displayURL == urlModel.manabaPC{
             let image = UIImage(named: "spIcon")
             reversePCtoSP.setImage(image, for: .normal)
             reversePCtoSP.isEnabled = true
@@ -515,7 +525,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-            if displayURL == urlModel.courceManagementHomeSP{
+            if viewModel.displayURL == urlModel.courceManagementHomeSP{
                 let response = urlModel.url(.courseRegistration)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
@@ -524,7 +534,7 @@ extension MainViewController: WKNavigationDelegate{
                 }
             }
         }else{
-            if displayURL == urlModel.courceManagementHomePC{
+            if viewModel.displayURL == urlModel.courceManagementHomePC{
                 let response = urlModel.url(.courceManagementHomeSP)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
@@ -535,7 +545,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            if displayURL == urlModel.manabaSP{
+            if viewModel.displayURL == urlModel.manabaSP{
                 let response = urlModel.url(.manabaPC)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
@@ -544,7 +554,7 @@ extension MainViewController: WKNavigationDelegate{
                 }
             }
         }else{
-            if displayURL == urlModel.manabaPC{
+            if viewModel.displayURL == urlModel.manabaPC{
                 let response = urlModel.url(.manabaSP)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
@@ -557,7 +567,7 @@ extension MainViewController: WKNavigationDelegate{
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-            if displayURL == urlModel.courseRegistration{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if viewModel.displayURL == urlModel.courseRegistration{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)

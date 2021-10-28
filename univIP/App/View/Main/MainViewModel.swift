@@ -30,6 +30,8 @@ class MainViewModel: NSObject {
     var displayURL = ""
     let model = Model()
     let urlModel = UrlModel()
+    var host = ""
+    var displayUrl = ""
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
     private var onlyOnceForLogin = false
     
@@ -173,5 +175,13 @@ class MainViewModel: NSObject {
 //        }
 //
 //    }
-    
+    func domeinInspection() -> Bool {
+        var trigger = false
+        for allow in model.allowDomains {
+            if host.contains(allow){
+                trigger = true
+            }
+        }
+        return trigger
+    }
 }
