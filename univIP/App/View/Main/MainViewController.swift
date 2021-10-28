@@ -127,9 +127,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         tabBar.selectedItem = tabBarLeft
         
-        if let url = viewModel.openUrl(Url.login.string(), notRegistrant: Url.maneg.string()) {
-            webView.load(url as URLRequest)
-        }
+//        if let url = viewModel.openUrl(Url.login.string(), notRegistrant: Url.maneg.string()) {
+//            webView.load(url)
+//        }
         
     }
     
@@ -205,7 +205,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         // 上記のURLの場合、画面を表示
         for (_, value) in model.urls{
-            if displayURL.contains(value.url) && value.topView == true{
+            if displayURL.contains(value.url) && value.topView {
                 webViewDisplay(bool: false)
                 return
             }

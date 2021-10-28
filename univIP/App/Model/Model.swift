@@ -7,18 +7,143 @@
 //
 
 //import UIKit
-enum Url: String {
-    case login
-    case maneg
+//enum Url: String {
+//    case login
+//    case courceManagementHomeSP
+//    case courceManagementHomePC
+//    case manabaSP
+//    case manabaPC
+//    case libraryLogin
+//    case libraryBookLendingExtension
+//
+//    func string() -> String {
+//        switch self {
+//        case .login:
+//            return "https://eweb.stud.tokushima-u.ac.jp/Portal/"
+//        case .courceManagementHomeSP:
+//            return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
+//        case .courceManagementHomePC:
+//            return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
+//        case .manabaSP:
+//            return "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
+//        case .manabaPC:
+//            return "https://manaba.lms.tokushima-u.ac.jp/ct/home"
+//        case .libraryLogin:
+//            return "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+//        case .libraryBookLendingExtension:
+//            return "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
+//        }
+//    }
+//}
+
+enum Url {
+    case login(url: String, topView: Bool)
+    case courceManagementHomeSP(url: String, topView: Bool)
+    case courceManagementHomePC(url: String, topView: Bool)
+    case manabaSP(url: String, topView: Bool)
+    case manabaPC(url: String, topView: Bool)
+    case libraryLogin(url: String, topView: Bool)
+    case libraryBookLendingExtension(url: String, topView: Bool)
     
     func string() -> String {
         switch self {
         case .login:
             return "https://eweb.stud.tokushima-u.ac.jp/Portal/"
-        case .maneg:
-            return "https://www.ait.tokushima-u.ac.jp/service/list_out/"
+        case .courceManagementHomeSP:
+            return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
+        case .courceManagementHomePC:
+            return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
+        case .manabaSP:
+            return "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
+        case .manabaPC:
+            return "https://manaba.lms.tokushima-u.ac.jp/ct/home"
+        case .libraryLogin:
+            return "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
+        case .libraryBookLendingExtension:
+            return "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
         }
     }
+}
+class UrlModel {
+    private let login = "https://eweb.stud.tokushima-u.ac.jp/Portal/" //topView: false),
+    private let courceManagementHomeSP = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx" // topView: true),
+    private let courceManagementHomePC = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx" // topView: true),
+    private let manabaSP = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary" //topView: true),
+    private let manabaPC = "https://manaba.lms.tokushima-u.ac.jp/ct/home" //topView: true),
+    private let libraryLogin = "https://opac.lib.tokushima-u.ac.jp/opac/user/top" // topView: true),
+    private let libraryBookLendingExtension = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings" // topView: true),
+    private let libraryBookPurchaseRequest = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new" // topView: true),
+    private let syllabusSearchMain = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"//, topView: true),
+    private let timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"//, topView: true),
+    private let currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="//, topView: true),
+    private let termPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"//, topView: true),
+    private let presenceAbsenceRecord = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"//, topView: true),
+    private let classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"//, topView: true),
+    private let systemServiceList = "https://www.ait.tokushima-u.ac.jp/service/list_out/"//, topView: true),
+    private let eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"//, topView: true),
+    private let outlookHome = "https://outlook.office.com/mail/"//, topView: true),
+    private let tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"//, topView: true),
+    private let libraryHome = "https://www.lib.tokushima-u.ac.jp/"//, topView: true),
+    private let courseRegistration = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx"//, topView: true),
+    private let lostConnection = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="//, topView: false),
+    private let libraryCalendar = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"//, topView: false),
+    private let syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"//, topView: false),
+    private let timeOut = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"//, topView: false),
+    private let enqueteReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"//, topView: false),
+    private let popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"//, topView: false),
+    private let mailService = "https://outlook.office365.com/tokushima-u.ac.jp"//, topView: false),
+    private let outlookLogin = "https://wa.tokushima-u.ac.jp/adfs/ls"//, topView: false),
+    
+    enum MenuTitle: String {
+        case login
+        case courceManagementHomeSP
+        case courceManagementHomePC  // 情報ポータル、ホーム画面URL
+        case manabaSP // マナバURL
+        case manabaPC // マナバURL
+        case libraryLogin // 図書館URL
+        case libraryBookLendingExtension // 図書館本貸出し期間延長URL
+        case libraryBookPurchaseRequest // 図書館本購入リクエスト
+        case syllabusSearchMain // シラバス検索URL
+        case timeTable // 時間割
+        case currentTermPerformance // 今年の成績表
+        case termPerformance // 成績参照
+        case presenceAbsenceRecord // 出欠記録
+        case classQuestionnaire // 授業アンケート
+        case systemServiceList // システムサービス一覧(非登録者に対して表示するURL)
+        case eLearningList // Eラーニング一覧(非登録者に対して表示するURL)
+        case outlookHome // outolookログインURLの一部
+        case tokudaiCareerCenter // キャリアセンター
+        case libraryHome // 図書館ホームページ(非登録者に対して表示するURL)
+        case courseRegistration // 履修登録URL
+        case lostConnection // 接続切れの際、再リロード 83桁 =の後ろに付く(e1s1)は可変
+        case libraryCalendar // 図書館カレンダー
+        case syllabus // シラバスURL
+        case timeOut // タイムアウト
+        case enqueteReminder // アンケート催促
+        case popupToYoutube // ポップアップ(Youtubeに遷移)
+        case mailService // MicroSoftのoutlookへ遷移
+        case outlookLogin // outolookログインURLの一部
+    }
+    
+    
+    
+    
+//    var topView
+    
+    // 何のURLか、登録者か否か　出力はURL
+    public func url(_ menuTitle: MenuTitle, isLogedin: Bool) -> (Bool, NSURLRequest?) {
+        switch menuTitle {
+        case .login:
+            if isLogedin {
+                return (true, R.)
+            } else {
+                
+            }
+        case .courceManagementHomeSP:
+            <#code#>
+        }
+    }
+    
 }
 
 class Model {

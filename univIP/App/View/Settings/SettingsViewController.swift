@@ -252,6 +252,9 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let cellId = allCellList[indexPath[0]][indexPath[1]].id
         switch cellId {
         case 0: // "Webサイト":
+//            webView.load(UrlModel.openUrl(tosyokann))
+
+            
 //            delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
 //            delegate.navigationRightButtonOnOff(operation: "DOWN")
             if let url =  mainViewModel.openUrl(model.urls["libraryHome"]!.url) {
@@ -317,6 +320,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
             
         case 7: // "成績参照":
+            if
+            delegate.webView.reload(datamanager.openUrl(""))
             delegate.openUrl(urlForRegistrant: model.urls["termPerformance"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
             

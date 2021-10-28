@@ -66,9 +66,9 @@ class MainViewModel: NSObject {
         }
     }
     
-    func openUrl(_ registrant: String, notRegistrant: String = "nil", isAlert: Bool = false) -> NSURLRequest? {
+    func openUrl(_ registrant: String, notRegistrant: String = "", isAlert: Bool = false) -> NSURLRequest? {
         var notRegi = notRegistrant
-        if notRegistrant == "nil" {
+        if notRegistrant == "" {
             notRegi = registrant
         }
 
