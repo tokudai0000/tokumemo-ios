@@ -27,11 +27,12 @@ class MainViewModel: NSObject {
     
     private let dataManager = DataManager()
     var test = ""
-    var displayURL = ""
+//    var displayUrl = ""
     let model = Model()
     let urlModel = UrlModel()
     var host = ""
     var displayUrl = ""
+    var forwardDisplayUrl = ""
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
     private var onlyOnceForLogin = false
     
@@ -44,7 +45,7 @@ class MainViewModel: NSObject {
     
     func reversePCandSP() -> String {
         
-        switch displayURL {
+        switch displayUrl {
         case urlModel.courceManagementHomeSP:
             UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
             return R.image.spIcon.name
@@ -175,7 +176,11 @@ class MainViewModel: NSObject {
 //        }
 //
 //    }
-    func domeinInspection() -> Bool {
+    func domeinInspection(_ url: URL) -> Bool {
+        guard let host = url.host else{
+            AKLog(level: .ERROR, message: "ドメイン取得エラー")
+            return false
+        }
         var trigger = false
         for allow in model.allowDomains {
             if host.contains(allow){
@@ -184,4 +189,17 @@ class MainViewModel: NSObject {
         }
         return trigger
     }
+    
+    var test1 = 0
+    func judgeLogin() -> Bool {
+        let zero = !forwardDisplayUrl.contains(urlModel.lostConnection) // 前回のURLがログインURLではない = 初回
+        let one = displayUrl.contains(urlModel.lostConnection)          // 今表示されているURLがログインURLか
+        let second = displayUrl.suffix(2)=="s1"                         // 2回目は"=e1s2"　（zero があるが、安全策）
+        let therd = !registrantDecision()
+        if zero && one && second && therd {
+            return true
+        }
+        return false
+    }
+    
 }
