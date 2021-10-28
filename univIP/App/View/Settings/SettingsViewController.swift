@@ -17,29 +17,20 @@ class SettingsViewController: BaseViewController {
     @IBOutlet weak var editButton: UIButton!
     
     private let model = Model()
-    
-    private var sectionHight:Int = 2
-    private var cellHight:Int = 44
-    private var allCellList:[[CellList]] =  [[],
-                                             [CellList(id:100, name: "パスワード設定", category: "", display: true),
-                                              CellList(id:101, name: "このアプリについて", category: "", display: true),
-                                              CellList(id:102, name: "開発者へ連絡", category: "", display: true)]]
-    private var cellList:[CellList] = []
-    private let cellKey = "CellKey"
+    private let urlModel = UrlModel()
+    private let viewModel = SettingViewModel()
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
     var userDefaults = UserDefaults.standard
     
-    private var editSituation = true
-    
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
-        
+
         firstBootDecision()
-        allCellList[0] = loadCellList()
+        setup()
+
         self.tableView.reloadData()
     }
     
@@ -49,17 +40,22 @@ class SettingsViewController: BaseViewController {
     }
     
     @IBAction func editAction(_ sender: Any) {
-        tableView.isEditing = editSituation
-        if editSituation {
+        tableView.isEditing = viewModel.editSituation
+        if viewModel.editSituation {
             editButton.titleLabel?.text = "編集"
         }else{
             editButton.titleLabel?.text = "終了"
         }
-        editSituation = !editSituation
+        viewModel.editSituation = !viewModel.editSituation
         self.tableView.reloadData()
     }
     
     //MARK:- Private func
+    private func setup() {
+        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
+        viewModel.allCellList[0] = viewModel.loadCellList()
+    }
+    
     // 初回起動時判定
     private func firstBootDecision() {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
@@ -69,38 +65,22 @@ class SettingsViewController: BaseViewController {
         if UserDefaults.standard.string(forKey: "VersionKey") != versionKey{
             UserDefaults.standard.set(versionKey, forKey: "VersionKey") // 更新
             
-            let legacyCellLists = loadCellList()
+            let legacyCellLists = viewModel.loadCellList()
             var newCellLists = model.cellList
             
             for i in 0 ..< newCellLists.count{
                 if legacyCellLists.count <= i{
-                    cellList.append(newCellLists[i])
+                    viewModel.cellList.append(newCellLists[i])
                 }else{
                     newCellLists[legacyCellLists[i].id].display = legacyCellLists[i].display
-                    cellList.append(newCellLists[legacyCellLists[i].id])
+                    viewModel.cellList.append(newCellLists[legacyCellLists[i].id])
                 }
             }
-            print(cellList)
-            saveCellList(lists: cellList)
+            print(viewModel.cellList)
+            viewModel.saveCellList(lists: viewModel.cellList)
         }
     }
-    private func saveCellList(lists:[CellList]){
-        let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(lists) else {
-            return
-        }
-        UserDefaults.standard.set(data, forKey: cellKey)
-    }
-    
-    func loadCellList() -> [CellList] {
-        let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: cellKey),
-              let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
-            return model.cellList
-        }
-            
-        return bookmarks
-    }
+
     
     private func viewAnimated(scene:String){
         switch scene {
@@ -152,36 +132,40 @@ class SettingsViewController: BaseViewController {
 
 // MARK: - TableView
 extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
-    // テーブル内のセクション数を決めるメソッド
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return allCellList.count // 2
-    }
-    
-    /// セクションの高さを設定
+
+    /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(sectionHight)
+        return CGFloat(viewModel.sectionHight)
     }
     
-    // （＊＊必須＊＊）セクション内のセル数を決めるメソッド
+    
+    /// セクション数
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.allCellList.count
+    }
+    
+    
+    /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCellList[Int(section)].count
+        return viewModel.allCellList[section].count
     }
     
-    // （＊＊必須＊＊）セルのインスタンスを生成するメソッド「表示するcellの中身を決める」
+    
+    /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let TableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
 
-        TableCell.textLabel!.text = allCellList[indexPath.section][Int(indexPath.item)].name
-        TableCell.detailTextLabel?.text = allCellList[indexPath.section][Int(indexPath.item)].category
-        TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // ここで「>」ボタンを設定
-
+        TableCell.textLabel!.text = viewModel.allCellList[indexPath.section][indexPath.item].name
+        TableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][indexPath.item].category
+        TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         TableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         TableCell.detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
         
         return TableCell
     }
     
-    ///
+    
+    /// 並び替え
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         if sourceIndexPath.section == proposedDestinationIndexPath.section {
             return proposedDestinationIndexPath
@@ -189,35 +173,38 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return sourceIndexPath
     }
     
+    
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let todo = allCellList[sourceIndexPath.section][sourceIndexPath.row]
-        allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        saveCellList(lists: allCellList[0])
+        let todo = viewModel.allCellList[sourceIndexPath.section][sourceIndexPath.row]
+        viewModel.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        viewModel.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
+        viewModel.saveCellList(lists: viewModel.allCellList[0])
     }
+    
     
     /// 「編集モード」追加、削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            allCellList[indexPath.section][indexPath.row].display = false
+            viewModel.allCellList[indexPath.section][indexPath.row].display = false
         }else{
-            allCellList[indexPath.section][indexPath.row].display = true
+            viewModel.allCellList[indexPath.section][indexPath.row].display = true
         }
         
-        saveCellList(lists: allCellList[0])
+        viewModel.saveCellList(lists: viewModel.allCellList[0])
         self.tableView.reloadData()
     }
     
-    /// セルの高さを決めるメソッド
+    
+    /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if !editSituation {
-            return CGFloat(cellHight)
+        if !viewModel.editSituation {
+            return CGFloat(viewModel.cellHight)
         }else{
-            if !allCellList[indexPath.section][indexPath.row].display {
+            if !viewModel.allCellList[indexPath.section][indexPath.row].display {
                 return 0
             }else{
-                return CGFloat(cellHight)
+                return CGFloat(viewModel.cellHight)
             }
         }
     }
@@ -232,7 +219,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
         if tableView.isEditing{
-            if allCellList[indexPath.section][indexPath.row].display {
+            if viewModel.allCellList[indexPath.section][indexPath.row].display {
                 return .delete
             }else{
                 return .insert
@@ -242,111 +229,165 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     }
 
     
-    // セルを選択した時のイベントを追加
+    // セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         self.dismiss(animated: false, completion: nil)
         
         guard let delegate = delegateMain else {
             return
         }
-        let cellId = allCellList[indexPath[0]][indexPath[1]].id
+        
+        let cellId = viewModel.allCellList[indexPath[0]][indexPath[1]].id
+        
         switch cellId {
-        case 0: // "Webサイト":
-            delegate.openUrl(urlForRegistrant: model.urls["libraryLogin"]!.url, urlForNotRegistrant: model.urls["libraryHome"]!.url, alertTrigger: false)
-            delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case 1: // "貸し出し期間延長":
-            delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-            delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case 2: // "本購入リクエスト":
-            delegate.openUrl(urlForRegistrant: model.urls["libraryBookPurchaseRequest"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-            delegate.navigationRightButtonOnOff(operation: "DOWN")
-        case 3: // "開館カレンダー":
-            let url = NSURL(string: model.urls["libraryHome"]!.url)
-            let data = NSData(contentsOf: url! as URL)
-            
-            var calenderURL = ""
-            
-            do {
-                let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
-                for node in doc.xpath("//a") {
-                    guard let str = node["href"] else {
-                        return
-                    }
-                    if str.contains("pub/pdf/calender/calender_main_"){
-                        calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
-                    }
-                }
-                
-            } catch {
-               return
+        case 0: // Webサイト
+            let response = urlModel.url(.libraryLogin)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "ERROR")
             }
             
-            if calenderURL != ""{
-                delegate.openUrl(urlForRegistrant: calenderURL, urlForNotRegistrant: calenderURL, alertTrigger: false)
-            }else{
-                toast(message: "失敗しました")
+            
+        case 1: // 貸し出し期間延長
+            let response = urlModel.url(.libraryBookLendingExtension)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
+            delegate.navigationRightButtonOnOff(operation: "DOWN")
+            
+            
+        case 2: // 本購入リクエスト
+            let response = urlModel.url(.libraryBookPurchaseRequest)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
+            delegate.navigationRightButtonOnOff(operation: "DOWN")
+            
+            
+        case 3: // 開館カレンダー
+            let response = urlModel.url(.libraryCalendar)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
             }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
 
-        case 4: // "シラバス":
-            delegate.popupView(scene: "syllabus")
             
-        case 5: // "時間割":
-            delegate.openUrl(urlForRegistrant: model.urls["timeTable"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-            delegate.navigationRightButtonOnOff(operation: "UP")
+        case 4: // シラバス
+            delegate.popupView(scene: .syllabus)
+
             
-        case 6: // "今年の成績表":
-            let current = Calendar.current
-            var year = current.component(.year, from: Date())
-            let month = current.component(.month, from: Date())
-            
-            if (month <= 3){ // 1月から3月までは前年の成績であるから
-                year -= 1
+        case 5: // 時間割
+            let response = urlModel.url(.timeTable)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
             }
-            let termPerformanceYearURL = model.urls["currentTermPerformance"]!.url + String(year)
-            delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
-            
-        case 7: // "成績参照":
-            delegate.openUrl(urlForRegistrant: model.urls["termPerformance"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-        case 8: // "出欠記録":
-            delegate.openUrl(urlForRegistrant: model.urls["presenceAbsenceRecord"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            
+        case 6: // 今年の成績表
+            let response = urlModel.url(.currentTermPerformance)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
+            
+            
+        case 7: // 成績参照
+            let response = urlModel.url(.termPerformance)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-        case 9: // "授業アンケート":
-            delegate.openUrl(urlForRegistrant: model.urls["classQuestionnaire"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            
+        case 8: // 出欠記録
+            let response = urlModel.url(.presenceAbsenceRecord)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-        case 10: // "メール":
-            delegate.openUrl(urlForRegistrant: model.urls["mailService"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            
+        case 9: // 授業アンケート
+            let response = urlModel.url(.classQuestionnaire)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
+            delegate.navigationRightButtonOnOff(operation: "UP")
+            
+            
+        case 10: // メール
+            let response = urlModel.url(.mailService)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
-        case 11: // "マナバPC版":
-            delegate.openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+            
+        case 11: // マナバPC版
+            let response = urlModel.url(.manabaPC)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
-        case 12: // "キャリア支援室":
-            delegate.openUrl(urlForRegistrant: model.urls["tokudaiCareerCenter"]!.url, urlForNotRegistrant: model.urls["tokudaiCareerCenter"]!.url, alertTrigger: false)
+            
+        case 12: // キャリア支援室
+            let response = urlModel.url(.tokudaiCareerCenter)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
-        case 13:
-            delegate.openUrl(urlForRegistrant: model.urls["courseRegistration"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            
+        case 13: // 履修登録
+            let response = urlModel.url(.courseRegistration)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "登録者のみ")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-        case 100: // "パスワード設定":
-            delegate.popupView(scene: "password")
             
-        case 101: // "このアプリについて":
-            delegate.popupView(scene: "aboutThisApp")
+        case 100: // パスワード設定
+            delegate.popupView(scene: .password)
             
-        case 102: // "開発者へ連絡":
-            delegate.popupView(scene: "contactToDeveloper")
+            
+        case 101: // このアプリについて
+            delegate.popupView(scene: .aboutThisApp)
+
+            
+        case 102: // 開発者へ連絡
+            delegate.popupView(scene: .contactToDeveloper)
+            
+            
         default:
             return
         }
-        
-        viewAnimated(scene: "settingsViewDisappear")
     }
     
     /// 編集できるセクションを限定
@@ -354,4 +395,5 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         if indexPath.section == 1 { return false }
         return true
     }
+    
 }

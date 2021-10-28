@@ -3,13 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A09314A27298CF000B7BAED /* urls.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A09314C27298CF000B7BAED /* urls.strings */; };
+		1A09314E272A7DAC00B7BAED /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */; };
 		1A2AFC262704209D00423AD1 /* sample in Resources */ = {isa = PBXBuildFile; fileRef = 1A2AFC252704209D00423AD1 /* sample */; };
 		1A2AFC28270420E200423AD1 /* mailAccountPassword.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1A2AFC27270420E200423AD1 /* mailAccountPassword.txt */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
+		1A41EADC27290C950064CDB7 /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EADB27290C950064CDB7 /* AgreementViewModel.swift */; };
+		1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EADD27290D150064CDB7 /* MainViewModel.swift */; };
+		1A41EAE3272914CC0064CDB7 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE1272914CC0064CDB7 /* UIImageView.swift */; };
+		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AAE26BE41E900C21A90 /* R.generated.swift */; };
 		1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */; };
 		1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A5FD6832715305D0081F952 /* GoogleService-Info.plist */; };
@@ -39,7 +45,6 @@
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABDE75926DE585300D4B04E /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75826DE585300D4B04E /* Agreement.rtf */; };
-		1AEEEF162712EB5600C2C250 /* urls.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AEEEF152712EB5600C2C250 /* urls.strings */; };
 		1C42206F8DA32E6251403A15 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC34096843A918E0B133E4 /* Pods_univIP.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,10 +67,16 @@
 
 /* Begin PBXFileReference section */
 		1A0904E326C2828700BED109 /* sendEmail_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sendEmail_bridge.h; sourceTree = "<group>"; };
+		1A09314B27298CF000B7BAED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/urls.strings; sourceTree = "<group>"; };
+		1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		1A2AFC252704209D00423AD1 /* sample */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample; sourceTree = "<group>"; };
 		1A2AFC27270420E200423AD1 /* mailAccountPassword.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mailAccountPassword.txt; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		1A41EADB27290C950064CDB7 /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
+		1A41EADD27290D150064CDB7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		1A41EAE1272914CC0064CDB7 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
+		1A564AAE26BE41E900C21A90 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = univIP/R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1A5FD6832715305D0081F952 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
@@ -100,7 +111,6 @@
 		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABDE75826DE585300D4B04E /* Agreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
-		1AEEEF152712EB5600C2C250 /* urls.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = urls.strings; sourceTree = "<group>"; };
 		7BCC34096843A918E0B133E4 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		903169DDC35238D972144509 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
 		F4A75FCC77CEBF23D9942A5C /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,6 +153,24 @@
 			path = password;
 			sourceTree = "<group>";
 		};
+		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				1A41EAE0272914CC0064CDB7 /* Extension */,
+				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
+			);
+			name = AKLibrary;
+			path = univIP/App/AKLibrary;
+			sourceTree = SOURCE_ROOT;
+		};
+		1A41EAE0272914CC0064CDB7 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1A41EAE1272914CC0064CDB7 /* UIImageView.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		1A5F98A526D8E1B000BCCF59 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +182,7 @@
 		1A81A91C26C02FB700CC56E2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */,
 				1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */,
 				1A81A91F26C02FF900CC56E2 /* Settings.storyboard */,
 				1AA056E826BD2DA900343005 /* Syllabus */,
@@ -167,6 +196,7 @@
 		1A81A92626C0D52F00CC56E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1A09314C27298CF000B7BAED /* urls.strings */,
 				1A81A93026C12C8200CC56E2 /* Model.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
 			);
@@ -225,6 +255,7 @@
 		1AA056CB26BD2AE100343005 /* univIP */ = {
 			isa = PBXGroup;
 			children = (
+				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056E326BD2D3700343005 /* App */,
 			);
 			path = univIP;
@@ -233,6 +264,7 @@
 		1AA056E326BD2D3700343005 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1A41EADF272914CC0064CDB7 /* AKLibrary */,
 				1AA056E526BD2D4900343005 /* etc */,
 				1A5F98A526D8E1B000BCCF59 /* Base */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
@@ -244,6 +276,7 @@
 		1AA056E426BD2D4100343005 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1A41EADD27290D150064CDB7 /* MainViewModel.swift */,
 				1AA056D026BD2AE100343005 /* MainViewController.swift */,
 				1AA056D226BD2AE100343005 /* Main.storyboard */,
 			);
@@ -256,12 +289,10 @@
 				1A5FD6832715305D0081F952 /* GoogleService-Info.plist */,
 				1A2AFC242704206200423AD1 /* password */,
 				1ABDE75A26DEF7A100D4B04E /* RTFfile */,
-				1A564AAE26BE41E900C21A90 /* R.generated.swift */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
 				1A0904E326C2828700BED109 /* sendEmail_bridge.h */,
-				1AEEEF152712EB5600C2C250 /* urls.strings */,
 			);
 			path = etc;
 			sourceTree = "<group>";
@@ -316,6 +347,7 @@
 		1ABDE75326DE530300D4B04E /* Agreement */ = {
 			isa = PBXGroup;
 			children = (
+				1A41EADB27290C950064CDB7 /* AgreementViewModel.swift */,
 				1ABDE75426DE534300D4B04E /* AgreementViewController.swift */,
 				1ABDE75626DE535500D4B04E /* Agreement.storyboard */,
 			);
@@ -433,7 +465,7 @@
 				};
 			};
 			buildConfigurationList = 1AA056C426BD2AE100343005 /* Build configuration list for PBXProject "univIP" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -464,7 +496,7 @@
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1AB37B6726FDFC99008A2D2F /* Password.rtf in Resources */,
 				1A81A92A26C103E300CC56E2 /* Syllabus.storyboard in Resources */,
-				1AEEEF162712EB5600C2C250 /* urls.strings in Resources */,
+				1A09314A27298CF000B7BAED /* urls.strings in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
 				1A81A94026C150AC00CC56E2 /* ContactToDeveloper.storyboard in Resources */,
@@ -563,14 +595,19 @@
 				1A81A93E26C150A100CC56E2 /* ContactToDeveloperViewController.swift in Sources */,
 				1A564AAF26BE41E900C21A90 /* R.generated.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
+				1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
+				1A09314E272A7DAC00B7BAED /* SettingViewModel.swift in Sources */,
 				1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */,
+				1A41EAE3272914CC0064CDB7 /* UIImageView.swift in Sources */,
+				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
 				1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* Model.swift in Sources */,
 				1A81A93A26C1507000CC56E2 /* AboutThisAppViewController.swift in Sources */,
 				1A81A91E26C02FEC00CC56E2 /* SettingsViewController.swift in Sources */,
+				1A41EADC27290C950064CDB7 /* AgreementViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +643,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1A09314C27298CF000B7BAED /* urls.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A09314B27298CF000B7BAED /* en */,
+			);
+			name = urls.strings;
+			sourceTree = "<group>";
+		};
 		1AA056D226BD2AE100343005 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -761,7 +806,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
 				INFOPLIST_FILE = univIP/App/etc/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -796,7 +841,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
 				INFOPLIST_FILE = univIP/App/etc/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
