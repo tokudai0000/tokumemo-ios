@@ -202,10 +202,10 @@ class UrlModel {
             
             switch menuTitle {
             case .login:                        return (true, login)
-            case .courceManagementHomeSP:       return (true, nil)
-            case .courceManagementHomePC:       return (true, nil)
-            case .manabaSP:                     return (true, nil)
-            case .manabaPC:                     return (true, nil)
+            case .courceManagementHomeSP:       return (true, systemServiceList)
+            case .courceManagementHomePC:       return (true, systemServiceList)
+            case .manabaSP:                     return (true, eLearningList)
+            case .manabaPC:                     return (true, eLearningList)
             case .libraryLogin:                 return (true, libraryHome)
             case .libraryBookLendingExtension:  return (true, nil)
             case .libraryBookPurchaseRequest:   return (true, nil)

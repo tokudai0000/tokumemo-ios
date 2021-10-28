@@ -97,8 +97,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     // MARK: - Public func
     
     public func refresh(){
-        webViewDisplay(bool: false)
-        onlyOnceForLogin = false
+//        webViewDisplay(bool: false)
+        self.activityIndicatorView.isHidden = true
         
         tabBar.selectedItem = tabBarLeft
         
@@ -353,7 +353,7 @@ extension MainViewController: WKNavigationDelegate{
         // 変数 url にはリンク先のURLが入る
         if let url = navigationAction.request.url {
             webView.load(URLRequest(url: url))
-            webViewDisplay(bool: false)
+//            webViewDisplay(bool: false)
             return webView
         }
         AKLog(level: .ERROR, message: "リクエストエラー")
@@ -464,7 +464,7 @@ extension MainViewController: WKNavigationDelegate{
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-            webViewDisplay(bool: false)
+//            webViewDisplay(bool: false)
         }
         
         
@@ -472,7 +472,7 @@ extension MainViewController: WKNavigationDelegate{
         if viewModel.judgeTokudaiCareerCenter() {
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
-            webViewDisplay(bool: false)
+//            webViewDisplay(bool: false)
         }
         
         // WebView表示、非表示　判定
@@ -497,12 +497,13 @@ extension MainViewController: WKNavigationDelegate{
             reversePCtoSP.isEnabled = false
         }
         
-        
+
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
             if viewModel.displayUrl == urlModel.courceManagementHomeSP{
                 let response = urlModel.url(.courseRegistration)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
+                    
                 } else {
                     toast(message: "登録者のみ")
                 }
@@ -513,17 +514,20 @@ extension MainViewController: WKNavigationDelegate{
                 let response = urlModel.url(.courceManagementHomeSP)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
+                    
                 } else {
                     toast(message: "登録者のみ")
                 }
             }
         }
         
+        
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
             if viewModel.displayUrl == urlModel.manabaSP{
                 let response = urlModel.url(.manabaPC)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
+                    
                 } else {
                     toast(message: "登録者のみ")
                 }
@@ -534,12 +538,21 @@ extension MainViewController: WKNavigationDelegate{
                 let response = urlModel.url(.manabaSP)
                 if let url = response.1 as URLRequest? {
                     webView.load(url)
+                    
                 } else {
                     toast(message: "登録者のみ")
                 }
             }
         }
+//        if let url = response.1 as URLRequest? {
+//            webView.load(url)
+//
+//        } else {
+//            toast(message: "登録者のみ")
+//        }
+        
     }
+    
     
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
@@ -600,47 +613,41 @@ extension MainViewController: WKNavigationDelegate{
 extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+        var response: (Bool, NSURLRequest?)
+        
         switch item.tag {
         case 1: // 左
             if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-                let response = urlModel.url(.courceManagementHomePC)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                } else {
-                    toast(message: "登録者のみ")
-                }
+                response = urlModel.url(.courceManagementHomePC)
                 
             }else{
-                let response = urlModel.url(.courceManagementHomeSP)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                } else {
-                    toast(message: "登録者のみ")
-                }
+                response = urlModel.url(.courceManagementHomeSP)
+                
             }
-            navigationRightButtonOnOff(operation: "UP")
+            
+            
         case 2: // 右
             if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-                let response = urlModel.url(.manabaPC)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                } else {
-                    toast(message: "登録者のみ")
-                }
+                response = urlModel.url(.manabaPC)
                 
             }else{
-                let response = urlModel.url(.manabaSP)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                } else {
-                    toast(message: "登録者のみ")
-                }
+                response = urlModel.url(.manabaSP)
+
             }
-            navigationRightButtonOnOff(operation: "UP")
+            
         default:
             return
         }
+        
+        if let url = response.1 as URLRequest? {
+            webView.load(url)
+        } else {
+            toast(message: "登録者のみ")
+        }
+        navigationRightButtonOnOff(operation: "UP")
     }
+    
 }
 
 
