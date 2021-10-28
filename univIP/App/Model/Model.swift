@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Kanna
 
 class UrlModel {
 //    public var isLogedin = false
@@ -104,15 +105,45 @@ class UrlModel {
             case .libraryBookLendingExtension:  return (true, libraryBookLendingExtension)
             case .libraryBookPurchaseRequest:   return (true, libraryBookPurchaseRequest)
             case .timeTable:                    return (true, timeTable)
-            case .currentTermPerformance:       return (true, currentTermPerformance)
+            case .currentTermPerformance:
+                let current = Calendar.current
+                var year = current.component(.year, from: Date())
+                let month = current.component(.month, from: Date())
+                
+                if (month <= 3){ // 1月から3月までは前年の成績であるから
+                    year -= 1
+                }
+                let termPerformanceYearURL = currentTermPerformance + String(year)
+                return (true, termPerformanceYearURL)
             case .termPerformance:              return (true, termPerformance)
             case .presenceAbsenceRecord:        return (true, presenceAbsenceRecord)
             case .classQuestionnaire:           return (true, classQuestionnaire)
             case .tokudaiCareerCenter:          return (true, tokudaiCareerCenter)
             case .courseRegistration:           return (true, courseRegistration)
-            case .libraryCalendar:              return (true, libraryCalendar)
             case .syllabus:                     return (true, syllabus)
             case .mailService:                  return (true, mailService)
+            case .libraryCalendar:
+                let url = NSURL(string: libraryHome)
+                let data = NSData(contentsOf: url! as URL)
+                
+                var calenderURL = ""
+                
+                do {
+                    let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
+                    for node in doc.xpath("//a") {
+                        guard let str = node["href"] else {
+                            return (true, nil)
+                        }
+                        if str.contains("pub/pdf/calender/calender_main_"){
+                            calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
+                            return (true, calenderURL)
+                        }
+                    }
+                    
+                } catch {
+                   return (true, nil)
+                }
+                return (true, libraryCalendar)
 //            case .syllabusSearchMain:           return (true, syllabusSearchMain)
 //            case .systemServiceList:            return (true, systemServiceList)
 //            case .eLearningList:                return (true, eLearningList)
@@ -142,9 +173,30 @@ class UrlModel {
             case .classQuestionnaire:           return (true, nil)
             case .tokudaiCareerCenter:          return (true, tokudaiCareerCenter)
             case .courseRegistration:           return (true, nil)
-            case .libraryCalendar:              return (true, libraryCalendar)
             case .syllabus:                     return (true, syllabus)
             case .mailService:                  return (true, mailService)
+            case .libraryCalendar:              
+                let url = NSURL(string: libraryHome)
+                let data = NSData(contentsOf: url! as URL)
+                
+                var calenderURL = ""
+                
+                do {
+                    let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
+                    for node in doc.xpath("//a") {
+                        guard let str = node["href"] else {
+                            return (true, nil)
+                        }
+                        if str.contains("pub/pdf/calender/calender_main_"){
+                            calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
+                            return (true, calenderURL)
+                        }
+                    }
+                    
+                } catch {
+                   return (true, nil)
+                }
+                return (true, libraryCalendar)
             }
         }
     }

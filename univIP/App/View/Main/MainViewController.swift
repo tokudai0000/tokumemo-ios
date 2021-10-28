@@ -142,31 +142,33 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
 
 
-//    public func popupView(scene: String){
-//        let vc = viewModel.popupView(scene)
-//        vc.mainViewModel = self.viewModel
-//        self.present(vc, animated: true, completion: nil)
-//        switch scene {
-////        case "firstView":
-////            let vc = R.storyboard.syllabus.syllabusViewController()!
-////            self.present(vc, animated: true, completion: nil)
-//        case "syllabus":
-//            let vc = R.storyboard.syllabus.syllabusViewController()!
-//            self.present(vc, animated: true, completion: nil)
-//            vc.delegateMain = self
-//        case "password":
-//            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-//            self.present(vc, animated: true, completion: nil)
-//            vc.delegateMain = self
-//        case "aboutThisApp":
-//            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-//            self.present(vc, animated: true, completion: nil)
-//        case "contactToDeveloper":
-//            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-//            self.present(vc, animated: true, completion: nil)
-//        default:
-//            return
-//        }
+    public func popupView(scene: MainViewModel.NextView){
+        
+        switch scene {
+            
+        case .syllabus:
+            let vc = R.storyboard.syllabus.syllabusViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegateMain = self
+            
+            
+        case .password:
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegateMain = self
+            
+            
+        case .aboutThisApp:
+            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+            self.present(vc, animated: true, completion: nil)
+            
+            
+        case .contactToDeveloper:
+            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
+            self.present(vc, animated: true, completion: nil)
+        }
+        
+    }
         
 //    }
     
@@ -354,31 +356,31 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             }
         }
         
-        self.viewModel.next = { [weak self] (next) in
-            guard let self = self else {
-                fatalError()
-            }
-            DispatchQueue.main.async {
-                switch next {
-                case .syllabus:
-                    let vc = R.storyboard.syllabus.syllabusViewController()!
-                    self.present(vc, animated: true, completion: nil)
-                    break
-                    
-                case .ready: // 通信完了
-//                    self.activityIndicator.stopAnimating()
-                    // View更新
-//                    self.tableView.reloadData()
-//                    self.refreshControl.endRefreshing()
-                    break
-                    
-                    
-                case .error:
-                    break
-                    
-                }//end switch
-            }
-        }
+//        self.viewModel.next = { [weak self] (next) in
+//            guard let self = self else {
+//                fatalError()
+//            }
+//            DispatchQueue.main.async {
+//                switch next {
+//                case .syllabus:
+//                    let vc = R.storyboard.syllabus.syllabusViewController()!
+//                    self.present(vc, animated: true, completion: nil)
+//                    break
+//
+//                case .ready: // 通信完了
+////                    self.activityIndicator.stopAnimating()
+//                    // View更新
+////                    self.tableView.reloadData()
+////                    self.refreshControl.endRefreshing()
+//                    break
+//
+//
+//                case .error:
+//                    break
+//
+//                }//end switch
+//            }
+//        }
     }
 }
 

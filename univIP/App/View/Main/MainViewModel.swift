@@ -19,8 +19,9 @@ class MainViewModel: NSObject {
     //MARK: - STATE ステータス
     enum NextView {
         case syllabus           // 準備中
-        case ready          // 準備完了
-        case error          // エラー発生
+        case password
+        case aboutThisApp
+        case contactToDeveloper
     }
     public var next: ((NextView) -> Void)?
     

@@ -245,12 +245,12 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     // セルを選択した時のイベントを追加
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.dismiss(animated: false, completion: nil)
         
         guard let delegate = delegateMain else {
             return
         }
         let cellId = allCellList[indexPath[0]][indexPath[1]].id
+        self.dismiss(animated: false, completion: nil)
         switch cellId {
         case 0: // "Webサイト":
             let response = urlModel.url(.libraryLogin)
@@ -259,7 +259,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "ERROR")
             }
-            self.dismiss(animated: false, completion: nil)
             
             
         case 1: // "貸し出し期間延長":
@@ -269,116 +268,138 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            self.dismiss(animated: false, completion: nil)
-            
-//            delegate.openUrl(urlForRegistrant: model.urls["libraryBookLendingExtension"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-//            delegate.navigationRightButtonOnOff(operation: "DOWN")
+            delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
         case 2: // "本購入リクエスト":
-            let response = urlModel.url(.libraryBookLendingExtension)
+            let response = urlModel.url(.libraryBookPurchaseRequest)
             if let url = response.1 as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            self.dismiss(animated: false, completion: nil)
-//            delegate.openUrl(urlForRegistrant: model.urls["libraryBookPurchaseRequest"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
             
         case 3: // "開館カレンダー":
-            let url = NSURL(string: model.urls["libraryHome"]!.url)
-            let data = NSData(contentsOf: url! as URL)
-            
-            var calenderURL = ""
-            
-            do {
-                let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
-                for node in doc.xpath("//a") {
-                    guard let str = node["href"] else {
-                        return
-                    }
-                    if str.contains("pub/pdf/calender/calender_main_"){
-                        calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
-                    }
-                }
-                
-            } catch {
-               return
-            }
-            
-            if calenderURL != ""{
-                delegate.openUrl(urlForRegistrant: calenderURL, urlForNotRegistrant: calenderURL, alertTrigger: false)
-            }else{
-                toast(message: "失敗しました")
+            let response = urlModel.url(.libraryCalendar)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
             }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
 
+            
         case 4: // "シラバス":
-            self.mainViewModel.next?(.syllabus)
-            self.dismiss(animated: false, completion: nil)
+            delegate.popupView(scene: .syllabus)
 
+            
         case 5: // "時間割":
-            if let url =  mainViewModel.openUrl(model.urls["timeTable"]!.url, isAlert: false) {
-                delegate.webView.load(url as URLRequest)
+            let response = urlModel.url(.timeTable)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
             }
-            self.dismiss(animated: false, completion: nil)
-//            mainViewModel.openUrl(model.urls["timeTable"]!.url, isAlert: true)
-//            delegate.openUrl(urlForRegistrant: model.urls["timeTable"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
-//            delegate.navigationRightButtonOnOff(operation: "UP")
+            delegate.navigationRightButtonOnOff(operation: "UP")
+            
             
         case 6: // "今年の成績表":
-            let current = Calendar.current
-            var year = current.component(.year, from: Date())
-            let month = current.component(.month, from: Date())
-            
-            if (month <= 3){ // 1月から3月までは前年の成績であるから
-                year -= 1
+            let response = urlModel.url(.currentTermPerformance)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
             }
-            let termPerformanceYearURL = model.urls["currentTermPerformance"]!.url + String(year)
-            delegate.openUrl(urlForRegistrant: termPerformanceYearURL, urlForNotRegistrant: nil, alertTrigger: true)
+            
             
         case 7: // "成績参照":
-//            delegate.webView.reload(datamanager.openUrl(""))
-            delegate.openUrl(urlForRegistrant: model.urls["termPerformance"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            let response = urlModel.url(.termPerformance)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
+            
             
         case 8: // "出欠記録":
-            delegate.openUrl(urlForRegistrant: model.urls["presenceAbsenceRecord"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            let response = urlModel.url(.presenceAbsenceRecord)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
+            
             
         case 9: // "授業アンケート":
-            delegate.openUrl(urlForRegistrant: model.urls["classQuestionnaire"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            let response = urlModel.url(.classQuestionnaire)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
+            
             
         case 10: // "メール":
-            delegate.openUrl(urlForRegistrant: model.urls["mailService"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            let response = urlModel.url(.mailService)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
+            
             
         case 11: // "マナバPC版":
-            delegate.openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
+            let response = urlModel.url(.manabaPC)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
+            
             
         case 12: // "キャリア支援室":
-            delegate.openUrl(urlForRegistrant: model.urls["tokudaiCareerCenter"]!.url, urlForNotRegistrant: model.urls["tokudaiCareerCenter"]!.url, alertTrigger: false)
+            let response = urlModel.url(.tokudaiCareerCenter)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "DOWN")
             
+            
         case 13:
-            delegate.openUrl(urlForRegistrant: model.urls["courseRegistration"]!.url, urlForNotRegistrant: nil, alertTrigger: true)
+            let response = urlModel.url(.courseRegistration)
+            if let url = response.1 as URLRequest? {
+                delegate.webView.load(url)
+            } else {
+                delegate.toast(message: "失敗しました")
+            }
             delegate.navigationRightButtonOnOff(operation: "UP")
             
-//        case 100: // "パスワード設定":
-//            delegate.popupView(scene: "password")
             
-//        case 101: // "このアプリについて":
-//            delegate.popupView(scene: "aboutThisApp")
+        case 100: // パスワード設定
+            delegate.popupView(scene: .password)
             
-//        case 102: // "開発者へ連絡":
-//            delegate.popupView(scene: "contactToDeveloper")
+            
+        case 101: // このアプリについて
+            delegate.popupView(scene: .aboutThisApp)
+
+            
+        case 102: // 開発者へ連絡
+            delegate.popupView(scene: .contactToDeveloper)
+            
+            
         default:
             return
         }
+//        self.dismiss(animated: false, completion: nil)
         
 //        viewAnimated(scene: "settingsViewDisappear")
     }
