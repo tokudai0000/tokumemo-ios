@@ -29,6 +29,7 @@ class MainViewModel: NSObject {
     var test = ""
     var displayURL = ""
     let model = Model()
+    let urlModel = UrlModel()
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
     private var onlyOnceForLogin = false
     
@@ -42,22 +43,22 @@ class MainViewModel: NSObject {
     func reversePCandSP() -> String {
         
         switch displayURL {
-        case model.urls["courceManagementHomeSP"]!.url:
+        case urlModel.courceManagementHomeSP:
             UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
             return R.image.spIcon.name
             
             
-        case model.urls["courceManagementHomePC"]!.url:
+        case urlModel.courceManagementHomePC:
             UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
             return R.image.pcIcon.name
             
             
-        case model.urls["manabaSP"]!.url:
+        case urlModel.manabaSP:
             UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
             return R.image.spIcon.name
             
             
-        case model.urls["manabaPC"]!.url:
+        case urlModel.manabaPC:
             UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
             return R.image.pcIcon.name
             
