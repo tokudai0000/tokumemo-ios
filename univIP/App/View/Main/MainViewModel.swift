@@ -25,26 +25,35 @@ class MainViewModel: NSObject {
     }
     public var next: ((NextView) -> Void)?
     
-    private let dataManager = DataManager()
-    var test = ""
-//    var displayUrl = ""
-    let model = Model()
-    let urlModel = UrlModel()
-    var host = ""
-    var displayUrl = ""
-    var forwardDisplayUrl = ""
-    // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
-    private var onlyOnceForLogin = false
-    
-    var requestUrl: NSURLRequest?
-    
     enum IconEnum: String {
         case spIcon = "spIcon"
         case pcIcon = "pcIcon"
         case other = "other"
     }
     
-    func reversePCandSP() -> String {
+    private let dataManager = DataManager()
+    private let model = Model()
+    private let urlModel = UrlModel()
+    private var requestUrl: NSURLRequest?
+    
+    public var host = ""
+    public var displayUrl = ""
+    public var forwardDisplayUrl = ""
+    
+    public var imageSystemName = ""
+    public var animationView = ""
+    //  SyllabusViewの内容を渡され保存し、Webに入力する
+    public var syllabusSubjectName = ""
+    public var syllabusTeacherName = ""
+    public var syllabusKeyword = ""
+    public var syllabusSearchOnce = true
+    
+    enum Menu {
+        case courceManagement
+        case manaba
+    }
+    
+    public func isDisplayUrlForPC() -> String { // boolにしたい
         
         switch displayUrl {
         case urlModel.courceManagementHomeSP:
@@ -72,36 +81,58 @@ class MainViewModel: NSObject {
         }
     }
     
-    func openUrl(_ registrant: String, notRegistrant: String = "", isAlert: Bool = false) -> NSURLRequest? {
+    public func tabBarDetection(num: Int) -> NSURLRequest? {
+        
+        switch num {
+        case 1: // 左
+            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
+                return urlModel.url(.courceManagementHomePC).1
+                
+            }else{
+                return urlModel.url(.courceManagementHomeSP).1
+                
+            }
+            
+            
+        case 2: // 右
+            if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+                return urlModel.url(.manabaPC).1
+                
+            }else{
+                return urlModel.url(.manabaSP).1
+
+            }
+            
+        default:
+            return nil
+        }
+    }
+    
+    
+    public func openUrl(_ registrant: String, notRegistrant: String = "", isAlert: Bool = false) -> NSURLRequest? {
+        //        webViewDisplay(bool: true)
+        
         var notRegi = notRegistrant
         if notRegistrant == "" {
             notRegi = registrant
         }
-
-//        webViewDisplay(bool: true)
-//        onlyOnceForLogin = false
-        print(isAlert)
+        
         // 登録者判定
         if isRegistrant(){
             if let url = URL(string:registrant){
                 return NSURLRequest(url: url)
                 
             }
-//            AKLog()
-//            webView.load(request as URLRequest)
-            
             
         }else{
-            if isAlert {
-//                toast(message: "パスワード設定をすることで利用できます", type: "bottom")
-//                webViewDisplay(bool: false)
-                return nil
-            }
-
             if let url = URL(string: notRegi){
                 return NSURLRequest(url: url)
                 
             }
+            
+//            if isAlert {
+//                return nil
+//            }
         }
         return nil
         
@@ -117,14 +148,7 @@ class MainViewModel: NSObject {
             return true
         }
     }
-    var imageSystemName = ""
-    var animationView = ""
-    //  SyllabusViewの内容を渡され保存し、Webに入力する
-    var syllabusSubjectName = ""
-    var syllabusTeacherName = ""
-    var syllabusKeyword = ""
-    var syllabusSearchOnce = true
-    var syllabusPassdThroughOnce = false
+    
     
     func viewPosisionType(posisionY: Double) {
         
@@ -151,32 +175,7 @@ class MainViewModel: NSObject {
         }
     }
     
-//    func popupView(_ scene: String) -> BaseViewController {
-//
-//        switch scene {
-//        case "firstView":
-//            return R.storyboard.syllabus.syllabusViewController()!
-//
-//        case "syllabus":
-//            return R.storyboard.syllabus.syllabusViewController()!
-//
-////            self.present(vc, animated: true, completion: nil)
-////            vc.delegateMain = self
-//        case "password":
-//            return R.storyboard.passwordSettings.passwordSettingsViewController()!
-////            self.present(vc, animated: true, completion: nil)
-////            vc.delegateMain = self
-//        case "aboutThisApp":
-//            return R.storyboard.aboutThisApp.aboutThisAppViewController()!
-////            self.present(vc, animated: true, completion: nil)
-//        case "contactToDeveloper":
-//            return R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-////            self.present(vc, animated: true, completion: nil)
-//        default:
-//            return
-//        }
-//
-//    }
+    
     func domeinInspection(_ url: URL) -> Bool {
         guard let host = url.host else{
             AKLog(level: .ERROR, message: "ドメイン取得エラー")
@@ -191,7 +190,10 @@ class MainViewModel: NSObject {
         return trigger
     }
     
-    var test1 = 0
+    ///
+    /// 以下URL判定関数
+    ///
+    
     func judgeLogin() -> Bool {
         let zero = !forwardDisplayUrl.contains(urlModel.lostConnection) // 前回のURLがログインURLではない = 初回
         let one = displayUrl.contains(urlModel.lostConnection)          // 今表示されているURLがログインURLか
@@ -240,24 +242,24 @@ class MainViewModel: NSObject {
     }
     
     func judgeMobileOrPC() -> IconEnum {
+        
         if displayUrl == urlModel.courceManagementHomeSP ||
             displayUrl == urlModel.manabaSP {
             return .pcIcon
-//            let image = UIImage(named: "pcIcon")
-//            reversePCtoSP.setImage(image, for: .normal)
-//            reversePCtoSP.isEnabled = true
-            
+                        
         }else if displayUrl ==  urlModel.courceManagementHomePC ||
                     displayUrl == urlModel.manabaPC{
             return .spIcon
-//            let image = UIImage(named: "spIcon")
-//            reversePCtoSP.setImage(image, for: .normal)
-//            reversePCtoSP.isEnabled = true
 
         }else{
             return .other
-//            reversePCtoSP.isEnabled = false
         }
     }
+    
+    
+//    func searchRepository(_ text: String,
+//                          success: (_ response: Repositories) -> (),
+//                          failure: (_ error: ApiError) -> ()) {
+//    }
     
 }

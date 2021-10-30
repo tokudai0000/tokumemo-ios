@@ -16,6 +16,16 @@
 import UIKit
 import WebKit
 
+
+class car {
+    var color
+    init(<#parameters#>) {
+        color = 
+    }
+}
+
+let passo = car(color: red, )
+
 final class MainViewController: BaseViewController, WKUIDelegate{
     
     //MARK:- IBOutlet
@@ -89,7 +99,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     @IBAction func revercePCtoSP(_ sender: Any) {
-        let image = UIImage(named: viewModel.reversePCandSP())
+        let image = UIImage(named: viewModel.isDisplayUrlForPC())
         reversePCtoSP.setImage(image, for: .normal)
 
     }
@@ -615,36 +625,11 @@ extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        var response: (Bool, NSURLRequest?)
-        
-        switch item.tag {
-        case 1: // 左
-            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-                response = urlModel.url(.courceManagementHomePC)
-                
-            }else{
-                response = urlModel.url(.courceManagementHomeSP)
-                
-            }
-            
-            
-        case 2: // 右
-            if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-                response = urlModel.url(.manabaPC)
-                
-            }else{
-                response = urlModel.url(.manabaSP)
-
-            }
-            
-        default:
-            return
-        }
-        
-        if let url = response.1 as URLRequest? {
+        if let url = viewModel.tabBarDetection(num: item.tag) as URLRequest? {
             webView.load(url)
         } else {
-            toast(message: "登録者のみ")
+            AKLog(level: .ERROR, message: "error")
+            toast(message: "error")
         }
         navigationRightButtonOnOff(operation: "UP")
     }
