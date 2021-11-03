@@ -8,6 +8,22 @@
 import Foundation
 
 class MainViewModel: NSObject {
+    class WebViewOperation {
+        var cAcount: String = ""
+        var password: String = ""
+        
+        func login() {
+            
+        }
+        
+//        init(<#parameters#>) {
+//            color =
+//        }
+    }
+    
+    //let passo = car(color: red, )
+    
+    
     //MARK: - STATE ステータス
     enum State {
         case busy           // 準備中
@@ -47,6 +63,12 @@ class MainViewModel: NSObject {
     public var syllabusTeacherName = ""
     public var syllabusKeyword = ""
     public var syllabusSearchOnce = true
+    
+//    var cAcount: String
+//    var password: String
+//    var url: String
+//    var isTopView: Bool
+//    var isAllowTwoTimesView: Bool
     
     enum Menu {
         case courceManagement
@@ -203,6 +225,8 @@ class MainViewModel: NSObject {
             return true
         }
         return false
+//        let url1 = Url1()
+//        url1.cAcount = "a"
     }
     
     func judgeEnqueteReminder() -> Bool {

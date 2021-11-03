@@ -9,7 +9,7 @@
 /// Akidon0000Library
 
 import UIKit
-import Foundation
+//import Foundation
 
 enum AKLogLevel: Int {
     case FATAL  = 0     // プログラムの異常終了を伴うようなもの。

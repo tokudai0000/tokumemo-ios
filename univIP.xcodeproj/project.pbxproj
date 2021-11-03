@@ -156,8 +156,8 @@
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				1A41EAE0272914CC0064CDB7 /* Extension */,
 				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
+				1A41EAE0272914CC0064CDB7 /* Extension */,
 			);
 			name = AKLibrary;
 			path = univIP/App/AKLibrary;

@@ -17,14 +17,14 @@ import UIKit
 import WebKit
 
 
-class car {
-    var color
-    init(<#parameters#>) {
-        color = 
-    }
-}
-
-let passo = car(color: red, )
+//class car {
+//    var color
+//    init(<#parameters#>) {
+//        color =
+//    }
+//}
+//
+//let passo = car(color: red, )
 
 final class MainViewController: BaseViewController, WKUIDelegate{
     
@@ -40,15 +40,16 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var activityIndicatorView: UIView!
     
     private let model = Model()
+    private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
     private let dataManager = DataManager()
-    private let urlModel = UrlModel()
+
     
     // 現在表示しているURL
 //    private var displayURL = ""
     
     // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
-    private var onlyOnceForLogin = false
+//    private var onlyOnceForLogin = false
 
 
     //MARK:- LifeCycle
@@ -421,7 +422,7 @@ extension MainViewController: WKNavigationDelegate{
                 toast(message: "失敗")
             }
         }
-        
+        // urlをもう指定しておく viewModel.url
         decisionHandler(.allow)
         return
     }
@@ -445,11 +446,12 @@ extension MainViewController: WKNavigationDelegate{
 //            if !viewModel.registrantDecision(){ // 非登録者
 //                return
 //            }
+        // isLogedin
         if viewModel.judgeLogin() {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-            onlyOnceForLogin = true
+//            onlyOnceForLogin = true
         }
         
 
