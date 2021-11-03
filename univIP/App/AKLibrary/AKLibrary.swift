@@ -1,21 +1,19 @@
 //
 //  AKLibrary.swift
-//  iOSEngineerCodeCheck
+//  univIP
 //
-//  Created by Akihiro Matsuyama on 2021/10/23.
-//  Copyright © 2021 YUMEMI Inc. All rights reserved.
+//  Created by Akihiro Matsuyama on 2021/08/27.
 //
 
 /// Akidon0000Library
 
-import UIKit
-//import Foundation
+import Foundation
 
-enum AKLogLevel: Int {
-    case FATAL  = 0     // プログラムの異常終了を伴うようなもの。
-    case ERROR  = 1     // 予期しないその他の実行時エラー。
-    case WARN   = 2     // 異常とは言い切れないが正常とも異なる何らかの問題。
-    case DEBUG  = 3     // システムの動作状況に関する詳細な情報。
+enum AKLogLevel {
+    case FATAL     // プログラムの異常終了を伴うようなもの。
+    case ERROR     // 予期しないその他の実行時エラー。
+    case WARN      // 異常とは言い切れないが正常とも異なる何らかの問題。
+    case DEBUG     // システムの動作状況に関する詳細な情報。
 }
 
 /// ログ出力
