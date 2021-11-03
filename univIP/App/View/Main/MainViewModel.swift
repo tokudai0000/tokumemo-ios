@@ -244,7 +244,10 @@ final class MainViewModel: NSObject {
         case syllabus
         case outlook
         case tokudaiCareerCenter
+        case timeOut
+        case registrantAndLostConnectionDecision
     }
+    
     public func isJudgeUrl(_ scene: Scene) -> Bool {
         switch scene {
         case .login:
@@ -294,16 +297,17 @@ final class MainViewModel: NSObject {
             }
             return false
             
+        
+        case .timeOut:
+            return displayUrl == urlModel.timeOut
+        
+        
+        case .registrantAndLostConnectionDecision:
+            return !registrantDecision() && displayUrl.contains(urlModel.lostConnection)
+            
         }
     }
     
-    public func isJudgeTimeOut() -> Bool{
-        return displayUrl == urlModel.timeOut
-    }
-    
-    public func isRegistrantAndLostConnectionDecision() -> Bool{
-        return !registrantDecision() && displayUrl.contains(urlModel.lostConnection)
-    }
     
     public func registUrl(_ url: URL) {
         
@@ -312,6 +316,7 @@ final class MainViewModel: NSObject {
         
         AKLog(level: .DEBUG, message: "displayURL : \(displayUrl)")
     }
+    
     
     public func CMAndManabaPCtoMB() -> URLRequest? {
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
@@ -355,10 +360,5 @@ final class MainViewModel: NSObject {
         return nil
         
     }
-    
-//    func searchRepository(_ text: String,
-//                          success: (_ response: Repositories) -> (),
-//                          failure: (_ error: ApiError) -> ()) {
-//    }
     
 }

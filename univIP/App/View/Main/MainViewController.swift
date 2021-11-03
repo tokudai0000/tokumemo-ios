@@ -333,7 +333,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // タイムアウト判定
-        if viewModel.isJudgeTimeOut() {
+        if viewModel.isJudgeUrl(.timeOut) {
             let response = urlModel.url(.login)
             if let url = response.1 as URLRequest? {
                 webView.load(url)
@@ -355,7 +355,7 @@ extension MainViewController: WKNavigationDelegate{
         self.backButton.alpha = webView.canGoBack ? 1.0 : 0.4
         
         // 非登録者がログイン画面を開いた時
-        if viewModel.isRegistrantAndLostConnectionDecision() {
+        if viewModel.isJudgeUrl(.registrantAndLostConnectionDecision) {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
         }
         
@@ -397,7 +397,7 @@ extension MainViewController: WKNavigationDelegate{
             webView.load(url)
         }
         
-        // 現在の画面がモバイル版かPC版か検知
+        // 現在の画面がモバイル版かPC版かViewModelに登録
         viewModel.judgeMobileOrPC()
         
         // モバイル版かPC版のアイコンを設定
