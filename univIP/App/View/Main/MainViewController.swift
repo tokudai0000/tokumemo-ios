@@ -428,67 +428,18 @@ extension MainViewController: WKNavigationDelegate{
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(viewModel.password)'", completionHandler:  nil)
         }
         
+        // 教務事務システム or マナバ のPC版かMB版かの判定
+        if let url = viewModel.CMAndManabaPCtoMB() {
+            webView.load(url)
+        }
         
         // 現在の画面がモバイル版かPC版か検知
         viewModel.judgeMobileOrPC()
         
+        // モバイル版かPC版のアイコンを設定
         let image = UIImage(named: viewModel.reversePCtoSPIconName)
         reversePCtoSP.setImage(image, for: .normal)
         reversePCtoSP.isEnabled = viewModel.reversePCtoSPIsEnabled
-        
-
-        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-            if viewModel.displayUrl == urlModel.courceManagementHomeSP{
-                let response = urlModel.url(.courseRegistration)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                    
-                } else {
-                    toast(message: "登録者のみ")
-                }
-            }
-            
-        } else {
-            if viewModel.displayUrl == urlModel.courceManagementHomePC {
-                let response = urlModel.url(.courceManagementHomeSP)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                    
-                } else {
-                    toast(message: "登録者のみ")
-                }
-            }
-        }
-        
-        
-        if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            if viewModel.displayUrl == urlModel.manabaSP{
-                let response = urlModel.url(.manabaPC)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                    
-                } else {
-                    toast(message: "登録者のみ")
-                }
-            }
-            
-        } else {
-            if viewModel.displayUrl == urlModel.manabaPC{
-                let response = urlModel.url(.manabaSP)
-                if let url = response.1 as URLRequest? {
-                    webView.load(url)
-                    
-                } else {
-                    toast(message: "登録者のみ")
-                }
-            }
-        }
-//        if let url = response.1 as URLRequest? {
-//            webView.load(url)
-//
-//        } else {
-//            toast(message: "登録者のみ")
-//        }
         
     }
     

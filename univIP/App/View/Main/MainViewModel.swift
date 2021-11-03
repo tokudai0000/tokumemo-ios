@@ -68,7 +68,7 @@ final class MainViewModel: NSObject {
     public var password = ""
     public var mailAdress = ""
     
-    public var reversePCtoSPIconName = ""
+    public var reversePCtoSPIconName = "pcIcon"
     public var reversePCtoSPIsEnabled = false
 //    var url: String
 //    var isTopView: Bool
@@ -280,7 +280,7 @@ final class MainViewModel: NSObject {
                         
         }else if displayUrl ==  urlModel.courceManagementHomePC ||
                     displayUrl == urlModel.manabaPC{
-            reversePCtoSPIconName = "pcIcon"
+            reversePCtoSPIconName = "spIcon"
             reversePCtoSPIsEnabled = true
 
         }else{
@@ -303,6 +303,49 @@ final class MainViewModel: NSObject {
         displayUrl = url.absoluteString
         
         AKLog(level: .DEBUG, message: "displayURL : \(displayUrl)")
+    }
+    
+    public func CMAndManabaPCtoMB() -> URLRequest? {
+        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
+            if displayUrl == urlModel.courceManagementHomeSP{
+                let response = urlModel.url(.courseRegistration)
+                if let url = response.1 as URLRequest? {
+                    return url
+                    
+                }
+            }
+            
+        } else {
+            if displayUrl == urlModel.courceManagementHomePC {
+                let response = urlModel.url(.courceManagementHomeSP)
+                if let url = response.1 as URLRequest? {
+                    return url
+    
+                }
+            }
+        }
+        
+        
+        if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+            if displayUrl == urlModel.manabaSP{
+                let response = urlModel.url(.manabaPC)
+                if let url = response.1 as URLRequest? {
+                    return url
+                    
+                }
+            }
+            
+        } else {
+            if displayUrl == urlModel.manabaPC{
+                let response = urlModel.url(.manabaSP)
+                if let url = response.1 as URLRequest? {
+                    return url
+                    
+                }
+            }
+        }
+        return nil
+        
     }
     
 //    func searchRepository(_ text: String,
