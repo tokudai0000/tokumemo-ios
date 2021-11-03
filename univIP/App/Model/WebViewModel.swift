@@ -59,7 +59,7 @@ final class WebViewModel: NSObject {
     
     public func url(_ menuTitle: MenuTitle) -> NSURLRequest? {
         
-        if let urlString = selectUrl(menuTitle, isLogedin: false) {
+        if let urlString = selectUrl(menuTitle, isLogedin: passedCertification) {
             if let url = URL(string: urlString) {
                 return NSURLRequest(url: url)
             }
