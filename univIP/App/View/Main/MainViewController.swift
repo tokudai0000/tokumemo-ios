@@ -25,8 +25,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let model = Model()
     private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
-//    private let dataManager = DataManager()
-    private var webViewModel = WebViewModel()
+    private let webViewModel = WebViewModel()
 
 
     //MARK:- LifeCycle
@@ -88,7 +87,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     // MARK: - Public func
     
     public func refresh(){
-//        webViewDisplay(bool: false)
         self.activityIndicatorView.isHidden = true
         
         tabBar.selectedItem = tabBarLeft
@@ -279,16 +277,12 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             DispatchQueue.main.async {
                 switch state {
                 case .busy: // 通信中
-//                    self.activityIndicator.startAnimating()
                     let vc = R.storyboard.syllabus.syllabusViewController()!
                     self.present(vc, animated: true, completion: nil)
                     break
                     
                 case .ready: // 通信完了
-//                    self.activityIndicator.stopAnimating()
-                    // View更新
-//                    self.tableView.reloadData()
-//                    self.refreshControl.endRefreshing()
+                    
                     break
                     
                     
@@ -323,7 +317,7 @@ extension MainViewController: WKNavigationDelegate{
         
         // 許可されたドメインか判定
         if !webViewModel.isDomeinInspection(url) {
-            if let url = URL(string: viewModel.displayUrl) {
+            if let url = URL(string: webViewModel.displayUrl) {
                 AKLog(level: .DEBUG, message: "Safariで開く")
                 UIApplication.shared.open(url)
                 
@@ -376,15 +370,15 @@ extension MainViewController: WKNavigationDelegate{
 
         // シラバス自動入力
         if webViewModel.isJudgeUrl(.syllabus) {
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(viewModel.syllabusKeyword)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.syllabusSubjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.syllabusTeacherName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(webViewModel.syllabusKeyword)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
         // outlookログイン
         if webViewModel.isJudgeUrl(.outlook) {
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(DataManager.singleton.mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(webViewModel.mailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
@@ -404,9 +398,9 @@ extension MainViewController: WKNavigationDelegate{
         webViewModel.judgeMobileOrPC()
         
         // モバイル版かPC版のアイコンを設定
-        let image = UIImage(named: DataManager.singleton.reversePCtoSPIconName)
+        let image = UIImage(named: webViewModel.reversePCtoSPIconName)
         reversePCtoSP.setImage(image, for: .normal)
-        reversePCtoSP.isEnabled = DataManager.singleton.reversePCtoSPIsEnabled
+        reversePCtoSP.isEnabled = webViewModel.reversePCtoSPIsEnabled
         
     }
     
@@ -414,7 +408,7 @@ extension MainViewController: WKNavigationDelegate{
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-        if viewModel.displayUrl == urlModel.courseRegistration{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if webViewModel.displayUrl == urlModel.courseRegistration{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)
@@ -442,7 +436,6 @@ extension MainViewController: WKNavigationDelegate{
     // prompt対応
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
 
-        // variable to keep a reference to UIAlertController
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
 
         let okHandler: () -> Void = {
@@ -473,7 +466,6 @@ extension MainViewController: WKNavigationDelegate{
         // 変数 url にはリンク先のURLが入る
         if let url = navigationAction.request.url {
             webView.load(URLRequest(url: url))
-//            webViewDisplay(bool: false)
             return webView
         }
         AKLog(level: .ERROR, message: "リクエストエラー")

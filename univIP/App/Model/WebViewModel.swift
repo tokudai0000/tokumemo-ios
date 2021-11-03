@@ -10,7 +10,6 @@ import Kanna
 
 final class WebViewModel: NSObject {
     
-//    private let dataManager = DataManager()
     private let model = Model()
     private let urlModel = UrlModel()
     private var requestUrl: NSURLRequest?
@@ -18,22 +17,17 @@ final class WebViewModel: NSObject {
     public var host = ""
     public var displayUrl = ""
     public var forwardDisplayUrl = ""
-    
     public var imageSystemName = ""
     public var animationView = ""
-//    //  SyllabusViewの内容を渡され保存し、Webに入力する
-//    public var syllabusSubjectName = ""
-//    public var syllabusTeacherName = ""
-//    public var syllabusKeyword = ""
-//    public var syllabusSearchOnce = true
-//
-//    public var cAccount = "c611821006"
-//    public var password = "q2KF2ZaxPtkL7Uu"
-//    public var mailAdress = ""
-//    public var passedCertification = false // ログインできていることを保証
-//
-//    public var reversePCtoSPIconName = "pcIcon"
-//    public var reversePCtoSPIsEnabled = false
+    public var mailAdress = ""
+    public var reversePCtoSPIconName = "pcIcon"
+    public var reversePCtoSPIsEnabled = false
+    
+    //  SyllabusViewの内容を渡され保存し、Webに入力する
+    public var syllabusSubjectName = ""
+    public var syllabusTeacherName = ""
+    public var syllabusKeyword = ""
+    public var syllabusSearchOnce = true
     
     
     enum MenuTitle: String {
@@ -177,7 +171,6 @@ final class WebViewModel: NSObject {
     }
     
     public func openUrl(_ registrant: String, notRegistrant: String = "", isAlert: Bool = false) -> NSURLRequest? {
-        //        webViewDisplay(bool: true)
         
         var notRegi = notRegistrant
         if notRegistrant == "" {
@@ -197,9 +190,6 @@ final class WebViewModel: NSObject {
                 
             }
             
-//            if isAlert {
-//                return nil
-//            }
         }
         return nil
         
@@ -225,16 +215,16 @@ final class WebViewModel: NSObject {
         
         if displayUrl == urlModel.courceManagementHomeSP ||
             displayUrl == urlModel.manabaSP {
-            DataManager.singleton.reversePCtoSPIconName = "pcIcon"
-            DataManager.singleton.reversePCtoSPIsEnabled = true
+            reversePCtoSPIconName = "pcIcon"
+            reversePCtoSPIsEnabled = true
                         
         }else if displayUrl ==  urlModel.courceManagementHomePC ||
                     displayUrl == urlModel.manabaPC{
-            DataManager.singleton.reversePCtoSPIconName = "spIcon"
-            DataManager.singleton.reversePCtoSPIsEnabled = true
+            reversePCtoSPIconName = "spIcon"
+            reversePCtoSPIsEnabled = true
 
         }else{
-            DataManager.singleton.reversePCtoSPIsEnabled = false
+            reversePCtoSPIsEnabled = false
             
         }
     }
@@ -274,9 +264,9 @@ final class WebViewModel: NSObject {
             
             
         case .syllabus:
-            DataManager.singleton.syllabusSearchOnce = false
+            syllabusSearchOnce = false
             let one = displayUrl.contains(urlModel.syllabus)
-            let second = DataManager.singleton.syllabusSearchOnce
+            let second = syllabusSearchOnce
             if one && second {
                 return true
             }

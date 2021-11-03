@@ -8,21 +8,14 @@
 import Foundation
 
 final class MainViewModel: NSObject {
-    class WebViewOperation {
-        var cAcount: String = ""
-        var password: String = ""
-        
-        func login() {
-            
-        }
-        
-//        init(<#parameters#>) {
-//            color =
-//        }
-    }
     
-    //let passo = car(color: red, )
+    private let model = Model()
+    private let urlModel = UrlModel()
+    private let webViewModel = WebViewModel()
+    private var requestUrl: NSURLRequest?
     
+    public var imageSystemName = ""
+    public var animationView = ""
     
     //MARK: - STATE ステータス
     enum State {
@@ -32,7 +25,7 @@ final class MainViewModel: NSObject {
     }
     public var state: ((State) -> Void)?
     
-    //MARK: - STATE ステータス
+    
     enum NextView {
         case syllabus           // 準備中
         case password
@@ -40,48 +33,11 @@ final class MainViewModel: NSObject {
         case contactToDeveloper
     }
     public var next: ((NextView) -> Void)?
-    
-    enum IconEnum: String {
-        case spIcon = "spIcon"
-        case pcIcon = "pcIcon"
-        case other = "other"
-    }
-    
-//    private let dataManager = DataManager()
-    private let model = Model()
-    private let urlModel = UrlModel()
-    private let webViewModel = WebViewModel()
-    private var requestUrl: NSURLRequest?
-    
-    public var host = ""
-    public var displayUrl = ""
-    public var forwardDisplayUrl = ""
-    
-    public var imageSystemName = ""
-    public var animationView = ""
-    //  SyllabusViewの内容を渡され保存し、Webに入力する
-    public var syllabusSubjectName = ""
-    public var syllabusTeacherName = ""
-    public var syllabusKeyword = ""
-    public var syllabusSearchOnce = true
-    
-//    public var cAccount = "c611821006"
-//    public var password = "q2KF2ZaxPtkL7Uu"
-//    public var mailAdress = ""
-//    public var passedCertification = false // ログインできていることを保証
-//
-//    public var reversePCtoSPIconName = "pcIcon"
-//    public var reversePCtoSPIsEnabled = false
-    
-    enum Menu {
-        case courceManagement
-        case manaba
-    }
-    
+
     
     public func isDisplayUrlForPC() -> String { // boolにしたい
         
-        switch displayUrl {
+        switch webViewModel.displayUrl {
         case urlModel.courceManagementHomeSP:
             UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
             return R.image.spIcon.name
@@ -116,7 +72,6 @@ final class MainViewModel: NSObject {
         switch num {
         case 1: // 左
             if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-                print(webViewModel.url(.courceManagementHomePC))
                 return webViewModel.url(.courceManagementHomePC)
                 
             }else{
@@ -152,7 +107,6 @@ final class MainViewModel: NSObject {
             imageSystemName = "chevron.down"
             animationView = "rightButtonDown"
         }
-        
     }
     
 }

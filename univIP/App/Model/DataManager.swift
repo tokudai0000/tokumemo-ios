@@ -14,19 +14,10 @@ final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
     
-    //  SyllabusViewの内容を渡され保存し、Webに入力する
-    public var syllabusSubjectName = ""
-    public var syllabusTeacherName = ""
-    public var syllabusKeyword = ""
-    public var syllabusSearchOnce = true
-    
     public var cAccount = "c611821006"
     public var password = "q2KF2ZaxPtkL7Uu"
-    public var mailAdress = ""
     public var passedCertification = false // ログインできていることを保証
     
-    public var reversePCtoSPIconName = "pcIcon"
-    public var reversePCtoSPIsEnabled = false
     
     /// KeychainAccess インスタンス
     var keychain: Keychain {
