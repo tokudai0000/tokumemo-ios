@@ -15,7 +15,8 @@ final class AgreementViewController: BaseViewController {
     @IBOutlet weak var agreementButtonNo: UIButton!
     
     private let model = Model()
-    private let viewModel = AgreementViewModel()
+    private let rtfFileModel = RtfFileModel()
+    
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
@@ -23,14 +24,13 @@ final class AgreementViewController: BaseViewController {
         setup()
     }
     
+    
     private func setup() {
         agreementButtonYes.layer.cornerRadius = 20.0
         agreementButtonNo.layer.cornerRadius = 20.0
         
         termsOfServiceView.isEditable = false
-        
-        termsOfServiceView.attributedText = viewModel.rtfFileOpen()
-        
+        termsOfServiceView.attributedText = rtfFileModel.load(url: R.file.agreementRtf())
     }
     
     
@@ -39,6 +39,7 @@ final class AgreementViewController: BaseViewController {
         case agree = 1
         case dissAgree = 2
     }
+    
     
     @IBAction func buttonAction(_ sender: Any) {
         if let button = sender as? UIButton,
