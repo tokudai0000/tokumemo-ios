@@ -34,6 +34,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         super.viewDidLoad()
 
         setup()
+        setupWKWebView()
+        
         refresh()
         initViewModel()
     }
@@ -159,9 +161,13 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         animationView(scene: "launchScreen")
         tabBar.delegate = self
+    }
+    
+    
+    private func setupWKWebView() {
+        
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        
     }
     
     
@@ -358,12 +364,14 @@ extension MainViewController: WKNavigationDelegate{
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        // 現在表示してるURL
+        // 現在の表示URL
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
             AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
+        
+        
         viewModel.forwardDisplayUrl = viewModel.displayUrl
         viewModel.displayUrl = url.absoluteString
         
