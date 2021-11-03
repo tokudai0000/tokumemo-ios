@@ -6,25 +6,9 @@
 //  Copyright © 2021年　akidon0000
 //
 
-
-/*
- JavaScript 要素取得方法
- https://qiita.com/amamamaou/items/25e8b4e1b41c8d3211f4
- */
-
-
 import UIKit
 import WebKit
 
-
-//class car {
-//    var color
-//    init(<#parameters#>) {
-//        color =
-//    }
-//}
-//
-//let passo = car(color: red, )
 
 final class MainViewController: BaseViewController, WKUIDelegate{
     
@@ -44,13 +28,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let viewModel = MainViewModel()
     private let dataManager = DataManager()
 
-    
-    // 現在表示しているURL
-//    private var displayURL = ""
-    
-    // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
-//    private var onlyOnceForLogin = false
-
 
     //MARK:- LifeCycle
     override func viewDidLoad() {
@@ -64,7 +41,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         // 利用規約同意判定
-        firstBootDecision()
+        firstBootSetup()
         
         // 登録者判定
         if (!viewModel.registrantDecision()) {
@@ -188,16 +165,19 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     
-    // 初回起動時判定
-    private func firstBootDecision() {
+    // 初回起動時
+    private func firstBootSetup() {
         
-        // 利用規約同意者か判定
-        let value = UserDefaults.standard.bool(forKey: model.agreementVersion)
-        if !value {
+        if !agreementPersonDecision() {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
         
+    }
+    
+    // 利用規約同意者か判定
+    private func agreementPersonDecision() -> Bool{
+        return UserDefaults.standard.bool(forKey: model.agreementVersion)
     }
     
     
@@ -251,7 +231,6 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 //        }
 
     }
-    
     
     // アニメーション
     private func animationView(scene:String){
