@@ -198,7 +198,7 @@ final class MainViewModel: NSObject {
     }
     
     
-    func domeinInspection(_ url: URL) -> Bool {
+    func isDomeinInspection(_ url: URL) -> Bool {
         guard let host = url.host else{
             AKLog(level: .ERROR, message: "ドメイン取得エラー")
             return false
@@ -209,6 +209,7 @@ final class MainViewModel: NSObject {
                 trigger = true
             }
         }
+        AKLog(level: .DEBUG, message: "Safariで開く")
         return trigger
     }
     
@@ -280,6 +281,13 @@ final class MainViewModel: NSObject {
         }
     }
     
+    public func registUrl(_ url: URL) {
+        
+        forwardDisplayUrl = displayUrl
+        displayUrl = url.absoluteString
+        
+        AKLog(level: .DEBUG, message: "displayURL : \(displayUrl)")
+    }
     
 //    func searchRepository(_ text: String,
 //                          success: (_ response: Repositories) -> (),

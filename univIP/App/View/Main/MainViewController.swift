@@ -370,17 +370,19 @@ extension MainViewController: WKNavigationDelegate{
             AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
+        viewModel.registUrl(url)
         
+//        viewModel.forwardDisplayUrl = viewModel.displayUrl
+//        viewModel.displayUrl = url.absoluteString
         
-        viewModel.forwardDisplayUrl = viewModel.displayUrl
-        viewModel.displayUrl = url.absoluteString
-        
-        AKLog(level: .DEBUG, message: "displayURL : \(viewModel.displayUrl)")
         
         // 許可されたドメインか判定
-        if !viewModel.domeinInspection(url) { // Safariで開く
-            AKLog(level: .DEBUG, message: "Safariで開く")
-            UIApplication.shared.open(URL(string: String(describing: viewModel.displayUrl))!)
+        if !viewModel.isDomeinInspection(url) {
+            if let url = URL(string: viewModel.displayUrl) {
+                UIApplication.shared.open(url)
+            } else {
+                AKLog(level: .ERROR, message: "URL変換エラー")
+            }
             decisionHandler(.cancel)
             return
         }
