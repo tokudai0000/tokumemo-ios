@@ -341,25 +341,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 //MARK:- WebView
 extension MainViewController: WKNavigationDelegate{
     
-    /// 新しいウィンドウで開く「target="_blank"」
-    func webView(_ webView: WKWebView,
-                 createWebViewWith configuration: WKWebViewConfiguration,
-                 for navigationAction: WKNavigationAction,
-                 windowFeatures: WKWindowFeatures) -> WKWebView? {
-        
-        // 変数 url にはリンク先のURLが入る
-        if let url = navigationAction.request.url {
-            webView.load(URLRequest(url: url))
-//            webViewDisplay(bool: false)
-            return webView
-        }
-        AKLog(level: .ERROR, message: "リクエストエラー")
-        return nil
-        
-    }
-    
-    
-    /// 読み込み設定
+    // MARK: - 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -401,87 +383,58 @@ extension MainViewController: WKNavigationDelegate{
     }
 
 
-    /// 読み込み完了
+    // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        // 戻るボタンの有効判定
         self.backButton.isEnabled = webView.canGoBack
         self.backButton.alpha = webView.canGoBack ? 1.0 : 0.4
         
-        // KeyChain
-        let cAcaunt = dataManager.cAccount
-        let passWord = dataManager.passWord
-        if !viewModel.registrantDecision() && viewModel.displayUrl.contains(urlModel.lostConnection){
+        // 非登録者がログイン画面を開いた時
+        if viewModel.isRegistrantAndLostConnectionDecision() {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
         }
         
-        
-        // Login画面
-//        if (viewModel.displayUrl.contains(urlModel.lostConnection) && viewModel.displayUrl.suffix(2)=="s1"){ // 2回目は"=e1s2"
-//            if !viewModel.registrantDecision(){ // 非登録者
-//                return
-//            }
-        // isLogedin
+        // 自動ログイン
         if viewModel.judgeLogin() {
-            webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(viewModel.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(viewModel.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-//            onlyOnceForLogin = true
         }
         
-
         // 教務事務システム、アンケート催促スキップ
         if viewModel.judgeEnqueteReminder() {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
-        
-        // シラバス
+        // シラバス自動入力
         if viewModel.judgeSyllabus() {
-            viewModel.syllabusSearchOnce = false
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(viewModel.syllabusKeyword)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
-        
         // outlookログイン
         if viewModel.judgeOutlook() {
-            let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(viewModel.mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(viewModel.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-//            webViewDisplay(bool: false)
         }
-        
         
         // キャリア支援室ログイン
         if viewModel.judgeTokudaiCareerCenter() {
-            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
-//            webViewDisplay(bool: false)
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(viewModel.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(viewModel.password)'", completionHandler:  nil)
         }
-        
-        // WebView表示、非表示　判定
-//        webViewHiddenJudge()
         
         
         // 現在の画面がモバイル版かPC版か検知
-        switch viewModel.judgeMobileOrPC() {
-        case .pcIcon:
-            let image = UIImage(named: "pcIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            reversePCtoSP.isEnabled = true
-            
-            
-        case .spIcon:
-            let image = UIImage(named: "spIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            reversePCtoSP.isEnabled = true
-            
-            
-        case .other:
-            reversePCtoSP.isEnabled = false
-        }
+        viewModel.judgeMobileOrPC()
+        
+        let image = UIImage(named: viewModel.reversePCtoSPIconName)
+        reversePCtoSP.setImage(image, for: .normal)
+        reversePCtoSP.isEnabled = viewModel.reversePCtoSPIsEnabled
         
 
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
@@ -591,6 +544,23 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 新しいウィンドウで開く「target="_blank"」
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        // 変数 url にはリンク先のURLが入る
+        if let url = navigationAction.request.url {
+            webView.load(URLRequest(url: url))
+//            webViewDisplay(bool: false)
+            return webView
+        }
+        AKLog(level: .ERROR, message: "リクエストエラー")
+        return nil
+        
     }
 }
 

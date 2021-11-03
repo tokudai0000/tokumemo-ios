@@ -64,8 +64,12 @@ final class MainViewModel: NSObject {
     public var syllabusKeyword = ""
     public var syllabusSearchOnce = true
     
-//    var cAcount: String
-//    var password: String
+    public var cAccount = ""
+    public var password = ""
+    public var mailAdress = ""
+    
+    public var reversePCtoSPIconName = ""
+    public var reversePCtoSPIsEnabled = false
 //    var url: String
 //    var isTopView: Bool
 //    var isAllowTwoTimesView: Bool
@@ -240,6 +244,7 @@ final class MainViewModel: NSObject {
     }
     
     func judgeSyllabus() -> Bool {
+        syllabusSearchOnce = false
         let one = displayUrl.contains(urlModel.syllabus)
         let second = syllabusSearchOnce
         if one && second {
@@ -266,23 +271,30 @@ final class MainViewModel: NSObject {
         return false
     }
     
-    func judgeMobileOrPC() -> IconEnum {
+    func judgeMobileOrPC() {
         
         if displayUrl == urlModel.courceManagementHomeSP ||
             displayUrl == urlModel.manabaSP {
-            return .pcIcon
+            reversePCtoSPIconName = "pcIcon"
+            reversePCtoSPIsEnabled = true
                         
         }else if displayUrl ==  urlModel.courceManagementHomePC ||
                     displayUrl == urlModel.manabaPC{
-            return .spIcon
+            reversePCtoSPIconName = "pcIcon"
+            reversePCtoSPIsEnabled = true
 
         }else{
-            return .other
+            reversePCtoSPIsEnabled = false
+            
         }
     }
     
     public func isJudgeTimeOut() -> Bool{
         return displayUrl == urlModel.timeOut
+    }
+    
+    public func isRegistrantAndLostConnectionDecision() -> Bool{
+        return !registrantDecision() && displayUrl.contains(urlModel.lostConnection)
     }
     
     public func registUrl(_ url: URL) {
