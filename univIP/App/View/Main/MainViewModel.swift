@@ -67,6 +67,7 @@ final class MainViewModel: NSObject {
     public var cAccount = "c611821006"
     public var password = "q2KF2ZaxPtkL7Uu"
     public var mailAdress = ""
+    public var passedCertification = false // ログインできていることを保証
     
     public var reversePCtoSPIconName = "pcIcon"
     public var reversePCtoSPIsEnabled = false
@@ -108,6 +109,9 @@ final class MainViewModel: NSObject {
     }
     
     public func tabBarDetection(num: Int) -> NSURLRequest? {
+        if passedCertification {
+            
+        }
         
         switch num {
         case 1: // 左
@@ -144,13 +148,13 @@ final class MainViewModel: NSObject {
         }
         
         // 登録者判定
-        if isRegistrant(){
+        if passedCertification {
             if let url = URL(string:registrant){
                 return NSURLRequest(url: url)
                 
             }
             
-        }else{
+        } else {
             if let url = URL(string: notRegi){
                 return NSURLRequest(url: url)
                 
@@ -163,19 +167,7 @@ final class MainViewModel: NSObject {
         return nil
         
     }
-    
-    // アカウント登録者判定　登録者：true　　非登録者：false
-    private func isRegistrant() -> Bool{
-        if (dataManager.cAccount == "" &&
-                dataManager.passWord == ""){
-            return false
-            
-        }else{
-            return true
-        }
-    }
-    
-    
+        
     func viewPosisionType(posisionY: Double) {
         
         switch posisionY {
@@ -264,6 +256,7 @@ final class MainViewModel: NSObject {
             let one = !forwardDisplayUrl.contains(urlModel.enqueteReminder)
             let second = displayUrl.contains(urlModel.enqueteReminder)
             if one && second {
+                passedCertification = true  // ログインできていることを保証
                 return true
             }
             return false
@@ -360,4 +353,15 @@ final class MainViewModel: NSObject {
         
     }
     
+    
+    // アカウント登録者判定　登録者：true　　非登録者：false
+//    private func isRegistrant() -> Bool{
+//        if (dataManager.cAccount == "" &&
+//                dataManager.passWord == ""){
+//            return false
+//
+//        }else{
+//            return true
+//        }
+//    }
 }

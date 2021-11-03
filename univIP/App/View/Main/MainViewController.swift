@@ -489,13 +489,14 @@ extension MainViewController: UITabBarDelegate{
         
         if let url = viewModel.tabBarDetection(num: item.tag) as URLRequest? {
             webView.load(url)
+            
         } else {
             AKLog(level: .ERROR, message: "error")
             toast(message: "error")
+            
         }
         navigationRightButtonOnOff(operation: "UP")
     }
-    
 }
 
 
