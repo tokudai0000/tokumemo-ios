@@ -370,11 +370,9 @@ extension MainViewController: WKNavigationDelegate{
             AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
+        
+        // URLをViewModelに保存
         viewModel.registUrl(url)
-        
-//        viewModel.forwardDisplayUrl = viewModel.displayUrl
-//        viewModel.displayUrl = url.absoluteString
-        
         
         // 許可されたドメインか判定
         if !viewModel.isDomeinInspection(url) {
@@ -382,28 +380,14 @@ extension MainViewController: WKNavigationDelegate{
                 UIApplication.shared.open(url)
             } else {
                 AKLog(level: .ERROR, message: "URL変換エラー")
+                toast(message: "失敗")
             }
             decisionHandler(.cancel)
             return
         }
         
-        // Manabaの授業Youtubeリンクのタップ判定
-//        if (viewModel.displayURL.contains(urlModel.popupToYoutube)){
-//            // Youtubeリンクを取得
-//            webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
-//                if let htmlYoutube = html{ // type(of: htmlYoutube) >>> __NSCFString
-//                    UIApplication.shared.open(URL(string: String(describing: htmlYoutube))!)
-//                    return
-//                }else{
-//                    webView.goBack()
-//                    self.toast(message: "エラー")
-//                    return
-//                }
-//            })
-//        }
-        
         // タイムアウト判定
-        if (viewModel.displayUrl == urlModel.timeOut){
+        if viewModel.isJudgeTimeOut() {
             let response = urlModel.url(.login)
             if let url = response.1 as URLRequest? {
                 webView.load(url)
@@ -411,7 +395,7 @@ extension MainViewController: WKNavigationDelegate{
                 toast(message: "失敗")
             }
         }
-        // urlをもう指定しておく viewModel.url
+        
         decisionHandler(.allow)
         return
     }

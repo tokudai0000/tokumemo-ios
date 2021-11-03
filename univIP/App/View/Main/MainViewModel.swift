@@ -281,6 +281,10 @@ final class MainViewModel: NSObject {
         }
     }
     
+    public func isJudgeTimeOut() -> Bool{
+        return displayUrl == urlModel.timeOut
+    }
+    
     public func registUrl(_ url: URL) {
         
         forwardDisplayUrl = displayUrl
