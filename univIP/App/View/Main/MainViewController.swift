@@ -46,7 +46,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         firstBootSetup()
         
         // 登録者判定
-        if (!viewModel.registrantDecision()) {
+        if (!webViewModel.registrantDecision()) {
             // "cアカウント"、"パスワード"の設定催促
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
@@ -319,10 +319,10 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // URLをViewModelに保存
-        viewModel.registUrl(url)
+        webViewModel.registUrl(url)
         
         // 許可されたドメインか判定
-        if !viewModel.isDomeinInspection(url) {
+        if !webViewModel.isDomeinInspection(url) {
             if let url = URL(string: viewModel.displayUrl) {
                 AKLog(level: .DEBUG, message: "Safariで開く")
                 UIApplication.shared.open(url)
@@ -336,7 +336,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // タイムアウト判定
-        if viewModel.isJudgeUrl(.timeOut) {
+        if webViewModel.isJudgeUrl(.timeOut) {
             let response = webViewModel.url(.login)
             if let url = response as URLRequest? {
                 webView.load(url)
@@ -358,24 +358,24 @@ extension MainViewController: WKNavigationDelegate{
         self.backButton.alpha = webView.canGoBack ? 1.0 : 0.4
         
         // 非登録者がログイン画面を開いた時
-        if viewModel.isJudgeUrl(.registrantAndLostConnectionDecision) {
+        if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision) {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
         }
         
         // 自動ログイン
-        if viewModel.isJudgeUrl(.login) {
-            webView.evaluateJavaScript("document.getElementById('username').value= '\(viewModel.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= '\(viewModel.password)'", completionHandler:  nil)
+        if webViewModel.isJudgeUrl(.login) {
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(webViewModel.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(webViewModel.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         }
         
         // 教務事務システム、アンケート催促スキップ
-        if viewModel.isJudgeUrl(.enqueteReminder) {
+        if webViewModel.isJudgeUrl(.enqueteReminder) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
         // シラバス自動入力
-        if viewModel.isJudgeUrl(.syllabus) {
+        if webViewModel.isJudgeUrl(.syllabus) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(viewModel.syllabusKeyword)'", completionHandler:  nil)
@@ -383,30 +383,30 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // outlookログイン
-        if viewModel.isJudgeUrl(.outlook) {
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(viewModel.mailAdress)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(viewModel.password)'", completionHandler:  nil)
+        if webViewModel.isJudgeUrl(.outlook) {
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(webViewModel.mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(webViewModel.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
         
         // キャリア支援室ログイン
-        if viewModel.isJudgeUrl(.tokudaiCareerCenter) {
-            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(viewModel.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(viewModel.password)'", completionHandler:  nil)
+        if webViewModel.isJudgeUrl(.tokudaiCareerCenter) {
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(webViewModel.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(webViewModel.password)'", completionHandler:  nil)
         }
         
         // 教務事務システム or マナバ のPC版かMB版かの判定
-        if let url = viewModel.CMAndManabaPCtoMB() {
+        if let url = webViewModel.CMAndManabaPCtoMB() {
             webView.load(url)
         }
         
         // 現在の画面がモバイル版かPC版かViewModelに登録
-        viewModel.judgeMobileOrPC()
+        webViewModel.judgeMobileOrPC()
         
         // モバイル版かPC版のアイコンを設定
-        let image = UIImage(named: viewModel.reversePCtoSPIconName)
+        let image = UIImage(named: webViewModel.reversePCtoSPIconName)
         reversePCtoSP.setImage(image, for: .normal)
-        reversePCtoSP.isEnabled = viewModel.reversePCtoSPIsEnabled
+        reversePCtoSP.isEnabled = webViewModel.reversePCtoSPIsEnabled
         
     }
     

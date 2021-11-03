@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class Model {
+final class Model: NSObject {
     
     /// 許可するドメイン
     let allowDomains = ["tokushima-u.ac.jp",
