@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ContactToDeveloperViewController: BaseViewController {
+final class ContactToDeveloperViewController: BaseViewController {
     
     //MARK:- IBOutlet
     @IBOutlet weak var label: UILabel!

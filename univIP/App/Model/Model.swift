@@ -9,7 +9,7 @@
 import Foundation
 import Kanna
 
-class UrlModel {
+final class UrlModel {
 //    public var isLogedin = false
     
     let login = "https://eweb.stud.tokushima-u.ac.jp/Portal/"   //topView: false),
@@ -246,7 +246,7 @@ class UrlModel {
     
 }
 
-class Model {
+final class Model {
     
     /// 許可するドメイン
     let allowDomains = ["tokushima-u.ac.jp",

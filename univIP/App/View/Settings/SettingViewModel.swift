@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingViewModel: NSObject {
+final class SettingViewModel: NSObject {
     
     var sectionHight:Int = 2
     var cellHight:Int = 44

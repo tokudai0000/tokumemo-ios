@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MainViewModel: NSObject {
+final class MainViewModel: NSObject {
     class WebViewOperation {
         var cAcount: String = ""
         var password: String = ""

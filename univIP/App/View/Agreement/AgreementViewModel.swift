@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AgreementViewModel: NSObject {
+final class AgreementViewModel: NSObject {
     
     func rtfFileOpen() -> NSMutableAttributedString{
         if let url = R.file.agreementRtf() {

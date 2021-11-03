@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SyllabusViewController: BaseViewController {
+final class SyllabusViewController: BaseViewController {
     
     //MARK:- IBOutlet
     @IBOutlet weak var searchButton: UIButton!

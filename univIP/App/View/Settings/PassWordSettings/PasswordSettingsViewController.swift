@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PasswordSettingsViewController: BaseViewController {
+final class PasswordSettingsViewController: BaseViewController {
     
     //MARK:- IBOutlet
     @IBOutlet weak var label: UILabel!

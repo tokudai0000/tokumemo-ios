@@ -9,7 +9,7 @@
 import UIKit
 import Kanna
 
-class SettingsViewController: BaseViewController {
+final class SettingsViewController: BaseViewController {
     
     //MARK:- IBOutlet
     @IBOutlet weak var tableView: UITableView!

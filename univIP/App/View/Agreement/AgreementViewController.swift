@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AgreementViewController: BaseViewController {
+final class AgreementViewController: BaseViewController {
     
     //MARK:- IBOutlet
     @IBOutlet weak var termsOfServiceView: UITextView!
