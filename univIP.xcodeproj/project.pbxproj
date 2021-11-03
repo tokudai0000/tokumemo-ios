@@ -312,21 +312,13 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1AA056CC26BD2AE100343005 /* AppDelegate.swift */,
+				1AA056CE26BD2AE100343005 /* SceneDelegate.swift */,
 				1ABDE75326DE530300D4B04E /* Agreement */,
-				1AA056EA26BD2DF700343005 /* AppDelegate */,
 				1AA056E426BD2D4100343005 /* Main */,
 				1A81A91C26C02FB700CC56E2 /* Settings */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		1AA056EA26BD2DF700343005 /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				1AA056CC26BD2AE100343005 /* AppDelegate.swift */,
-				1AA056CE26BD2AE100343005 /* SceneDelegate.swift */,
-			);
-			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 		1AB37B6D26FDFCEA008A2D2F /* univIPTests */ = {
