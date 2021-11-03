@@ -213,7 +213,6 @@ final class MainViewModel: NSObject {
                 trigger = true
             }
         }
-        AKLog(level: .DEBUG, message: "Safariで開く")
         return trigger
     }
     
@@ -314,7 +313,7 @@ final class MainViewModel: NSObject {
         forwardDisplayUrl = displayUrl
         displayUrl = url.absoluteString
         
-        AKLog(level: .DEBUG, message: "displayURL : \(displayUrl)")
+        print("displayURL : \(displayUrl)")
     }
     
     

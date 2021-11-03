@@ -323,7 +323,9 @@ extension MainViewController: WKNavigationDelegate{
         // 許可されたドメインか判定
         if !viewModel.isDomeinInspection(url) {
             if let url = URL(string: viewModel.displayUrl) {
+                AKLog(level: .DEBUG, message: "Safariで開く")
                 UIApplication.shared.open(url)
+                
             } else {
                 AKLog(level: .ERROR, message: "URL変換エラー")
                 toast(message: "失敗")
