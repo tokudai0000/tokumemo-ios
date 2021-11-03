@@ -64,8 +64,8 @@ final class MainViewModel: NSObject {
     public var syllabusKeyword = ""
     public var syllabusSearchOnce = true
     
-    public var cAccount = ""
-    public var password = ""
+    public var cAccount = "c611821006"
+    public var password = "q2KF2ZaxPtkL7Uu"
     public var mailAdress = ""
     
     public var reversePCtoSPIconName = "pcIcon"
@@ -217,59 +217,7 @@ final class MainViewModel: NSObject {
         return trigger
     }
     
-    ///
-    /// 以下URL判定関数
-    ///
-    
-    func judgeLogin() -> Bool {
-        let zero = !forwardDisplayUrl.contains(urlModel.lostConnection) // 前回のURLがログインURLではない = 初回
-        let one = displayUrl.contains(urlModel.lostConnection)          // 今表示されているURLがログインURLか
-        let second = displayUrl.suffix(2)=="s1"                         // 2回目は"=e1s2"　（zero があるが、安全策）
-        let therd = !registrantDecision()
-        if zero && one && second && therd {
-            return true
-        }
-        return false
-//        let url1 = Url1()
-//        url1.cAcount = "a"
-    }
-    
-    func judgeEnqueteReminder() -> Bool {
-        let one = forwardDisplayUrl.contains(urlModel.lostConnection)
-        let second = displayUrl == urlModel.enqueteReminder
-        if one && second {
-            return true
-        }
-        return false
-    }
-    
-    func judgeSyllabus() -> Bool {
-        syllabusSearchOnce = false
-        let one = displayUrl.contains(urlModel.syllabus)
-        let second = syllabusSearchOnce
-        if one && second {
-            return true
-        }
-        return false
-    }
-    
-    func judgeOutlook() -> Bool {
-        let one = !forwardDisplayUrl.contains(urlModel.outlookLogin)
-        let second = displayUrl.contains(urlModel.outlookLogin)
-        if one && second {
-            return true
-        }
-        return false
-    }
-    
-    func judgeTokudaiCareerCenter() -> Bool {
-        let one = !forwardDisplayUrl.contains(urlModel.tokudaiCareerCenter)
-        let second = displayUrl == urlModel.tokudaiCareerCenter
-        if one && second {
-            return true
-        }
-        return false
-    }
+
     
     func judgeMobileOrPC() {
         
@@ -285,6 +233,66 @@ final class MainViewModel: NSObject {
 
         }else{
             reversePCtoSPIsEnabled = false
+            
+        }
+    }
+    
+    
+    enum Scene {
+        case login
+        case enqueteReminder
+        case syllabus
+        case outlook
+        case tokudaiCareerCenter
+    }
+    public func isJudgeUrl(_ scene: Scene) -> Bool {
+        switch scene {
+        case .login:
+            let zero = !forwardDisplayUrl.contains(urlModel.lostConnection) // 前回のURLがログインURLではない = 初回
+            let one = displayUrl.contains(urlModel.lostConnection)          // 今表示されているURLがログインURLか
+            let second = displayUrl.suffix(2)=="s1"                         // 2回目は"=e1s2"　（zero があるが、安全策）
+            let therd = registrantDecision()                                // 登録者判定
+            if zero && one && second && therd {
+                return true
+            }
+            return false
+            
+            
+        case .enqueteReminder:
+            let one = !forwardDisplayUrl.contains(urlModel.enqueteReminder)
+            let second = displayUrl.contains(urlModel.enqueteReminder)
+            if one && second {
+                return true
+            }
+            return false
+            
+            
+        case .syllabus:
+            syllabusSearchOnce = false
+            let one = displayUrl.contains(urlModel.syllabus)
+            let second = syllabusSearchOnce
+            if one && second {
+                return true
+            }
+            return false
+            
+            
+        case .outlook:
+            let one = !forwardDisplayUrl.contains(urlModel.outlookLogin)
+            let second = displayUrl.contains(urlModel.outlookLogin)
+            if one && second {
+                return true
+            }
+            return false
+            
+            
+        case .tokudaiCareerCenter:
+            let one = !forwardDisplayUrl.contains(urlModel.tokudaiCareerCenter)
+            let second = displayUrl == urlModel.tokudaiCareerCenter
+            if one && second {
+                return true
+            }
+            return false
             
         }
     }

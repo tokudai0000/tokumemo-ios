@@ -9,7 +9,6 @@
 import UIKit
 import WebKit
 
-
 final class MainViewController: BaseViewController, WKUIDelegate{
     
     //MARK:- IBOutlet
@@ -178,8 +177,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
-        
     }
+    
     
     // 利用規約同意者か判定
     private func agreementPersonDecision() -> Bool{
@@ -187,55 +186,20 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     
-    // WebViewの表示、非表示を判定
-//    private func webViewHiddenJudge(){
-//        webViewDisplay(bool: false)
-//        return
-        // 上記のURLの場合、画面を表示
-//        for (_, value) in model.urls{
-//            if displayURL.contains(value.url) && value.topView {
-//                webViewDisplay(bool: false)
-//                return
-//            }
-//        }
-        
-        // ログインできなかった時
-//        if displayURL.contains(model.urls["lostConnection"]!.url) &&
-//            displayURL.suffix(4) != "e1s1"{
-//            webViewDisplay(bool: false)
-//            return
-//        }
-        
-        // シラバス
-//        if displayURL == model.urls["syllabus"]!.url{
-//            // 2回目に通った時
-//            if viewModel.syllabusPassdThroughOnce{
-//                webViewDisplay(bool: false)
-//                viewModel.syllabusPassdThroughOnce = false
-//                return
-//            }else{
-//                viewModel.syllabusPassdThroughOnce = true
-//            }
-//        }
-        
-//    }
-    
-    
-    // 表示:false  非表示：true
+    // 表示:true  非表示：false
     private func webViewDisplay(bool: Bool){
 
-//        switch bool {
-//        case true:
-//            leftButton.isEnabled = false
-//            self.activityIndicatorView.isHidden = false
-//            activityIndicator.startAnimating()
-//
-//        case false:
-//            leftButton.isEnabled = true
-//            self.activityIndicatorView.isHidden = true
-//            activityIndicator.stopAnimating()
-//        }
+        switch bool {
+        case true:
+            leftButton.isEnabled = true
+            self.activityIndicatorView.isHidden = true
+            activityIndicator.stopAnimating()
 
+        case false:
+            leftButton.isEnabled = false
+            self.activityIndicatorView.isHidden = false
+            activityIndicator.startAnimating()
+        }
     }
     
     // アニメーション
@@ -396,19 +360,19 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // 自動ログイン
-        if viewModel.judgeLogin() {
+        if viewModel.isJudgeUrl(.login) {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(viewModel.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(viewModel.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         }
         
         // 教務事務システム、アンケート催促スキップ
-        if viewModel.judgeEnqueteReminder() {
+        if viewModel.isJudgeUrl(.enqueteReminder) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
         // シラバス自動入力
-        if viewModel.judgeSyllabus() {
+        if viewModel.isJudgeUrl(.syllabus) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(viewModel.syllabusKeyword)'", completionHandler:  nil)
@@ -416,14 +380,14 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // outlookログイン
-        if viewModel.judgeOutlook() {
+        if viewModel.isJudgeUrl(.outlook) {
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(viewModel.mailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(viewModel.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
         
         // キャリア支援室ログイン
-        if viewModel.judgeTokudaiCareerCenter() {
+        if viewModel.isJudgeUrl(.tokudaiCareerCenter) {
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(viewModel.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(viewModel.password)'", completionHandler:  nil)
         }
