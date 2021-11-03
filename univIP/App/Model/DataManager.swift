@@ -11,7 +11,22 @@ import KeychainAccess
 
 
 final class DataManager {
-//    var isLogdin = false
+    
+    static let singleton = DataManager() // シングルトン・インタンス
+    
+    //  SyllabusViewの内容を渡され保存し、Webに入力する
+    public var syllabusSubjectName = ""
+    public var syllabusTeacherName = ""
+    public var syllabusKeyword = ""
+    public var syllabusSearchOnce = true
+    
+    public var cAccount = "c611821006"
+    public var password = "q2KF2ZaxPtkL7Uu"
+    public var mailAdress = ""
+    public var passedCertification = false // ログインできていることを保証
+    
+    public var reversePCtoSPIconName = "pcIcon"
+    public var reversePCtoSPIsEnabled = false
     
     /// KeychainAccess インスタンス
     var keychain: Keychain {
@@ -53,17 +68,22 @@ final class DataManager {
         set(v) { setKeyChain(key: KEY_deviceId, value: v) }
     }
     
-    /// cAccount
-    private let KEY_cAccount = "KEY_cAccount"
-    var cAccount: String {
-        get { return getKeyChain(key: KEY_cAccount) }
-        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
-    }
+//    /// cAccount
+//    private let KEY_cAccount = "KEY_cAccount"
+//    var cAccount: String {
+//        get { return getKeyChain(key: KEY_cAccount) }
+//        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
+//    }
+//
+//    /// passWord
+//    private let KEY_passWord = "KEY_passWord"
+//    var password: String {
+//        get { return getKeyChain(key: KEY_passWord) }
+//        set(v) { setKeyChain(key: KEY_passWord, value: v) }
+//    }
     
-    /// passWord
-    private let KEY_passWord = "KEY_passWord"
-    var passWord: String {
-        get { return getKeyChain(key: KEY_passWord) }
-        set(v) { setKeyChain(key: KEY_passWord, value: v) }
+    // シングルトン・インスタンスの初期処理
+    private init() {  //シングルトン保証// privateにすることにより他から初期化させない
+        
     }
 }

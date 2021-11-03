@@ -25,7 +25,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let model = Model()
     private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
-    private let dataManager = DataManager()
+//    private let dataManager = DataManager()
     private var webViewModel = WebViewModel()
 
 
@@ -364,8 +364,8 @@ extension MainViewController: WKNavigationDelegate{
         
         // 自動ログイン
         if webViewModel.isJudgeUrl(.login) {
-            webView.evaluateJavaScript("document.getElementById('username').value= '\(webViewModel.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= '\(webViewModel.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         }
         
@@ -384,15 +384,15 @@ extension MainViewController: WKNavigationDelegate{
         
         // outlookログイン
         if webViewModel.isJudgeUrl(.outlook) {
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(webViewModel.mailAdress)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(webViewModel.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(DataManager.singleton.mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
         
         // キャリア支援室ログイン
         if webViewModel.isJudgeUrl(.tokudaiCareerCenter) {
-            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(webViewModel.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(webViewModel.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(DataManager.singleton.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(DataManager.singleton.password)'", completionHandler:  nil)
         }
         
         // 教務事務システム or マナバ のPC版かMB版かの判定
@@ -404,9 +404,9 @@ extension MainViewController: WKNavigationDelegate{
         webViewModel.judgeMobileOrPC()
         
         // モバイル版かPC版のアイコンを設定
-        let image = UIImage(named: webViewModel.reversePCtoSPIconName)
+        let image = UIImage(named: DataManager.singleton.reversePCtoSPIconName)
         reversePCtoSP.setImage(image, for: .normal)
-        reversePCtoSP.isEnabled = webViewModel.reversePCtoSPIsEnabled
+        reversePCtoSP.isEnabled = DataManager.singleton.reversePCtoSPIsEnabled
         
     }
     
@@ -490,7 +490,6 @@ extension MainViewController: UITabBarDelegate{
         
         if let url = viewModel.tabBarDetection(num: item.tag) as URLRequest? {
             webView.load(url)
-//            webView.load(URLRequest(url: URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")!))
             
         } else {
             AKLog(level: .ERROR, message: "error")

@@ -47,7 +47,7 @@ final class MainViewModel: NSObject {
         case other = "other"
     }
     
-    private let dataManager = DataManager()
+//    private let dataManager = DataManager()
     private let model = Model()
     private let urlModel = UrlModel()
     private let webViewModel = WebViewModel()

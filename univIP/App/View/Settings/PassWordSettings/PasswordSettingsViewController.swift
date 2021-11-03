@@ -21,7 +21,7 @@ final class PasswordSettingsViewController: BaseViewController {
     var delegateMain : MainViewController?
     
     private let model = Model()
-    private var dataManager = DataManager()
+//    private var dataManager = DataManager()
     
     
     //MARK:- LifeCycle
@@ -34,11 +34,11 @@ final class PasswordSettingsViewController: BaseViewController {
         
         rtfFileOpen()
         
-        if dataManager.cAccount == ""{
+        if DataManager.singleton.cAccount == ""{
             cAccountTextField.placeholder = "cアカウント"
             label.text = "入力してください"
         }else{
-            cAccountTextField.text = dataManager.cAccount
+            cAccountTextField.text = DataManager.singleton.cAccount
             label.text = "すでに登録済みです(上書き可能)"
         }
     }
@@ -48,10 +48,10 @@ final class PasswordSettingsViewController: BaseViewController {
     @IBAction func registrationButton(_ sender: Any) {
         
         if let cAccountText = cAccountTextField.text{
-            dataManager.cAccount = cAccountText
+            DataManager.singleton.cAccount = cAccountText
         }
         if let passWordText = passWordTextField.text{
-            dataManager.passWord = passWordText
+            DataManager.singleton.password = passWordText
         }
         
         label.text = "登録完了"

@@ -10,7 +10,7 @@ import Kanna
 
 final class WebViewModel: NSObject {
     
-    private let dataManager = DataManager()
+//    private let dataManager = DataManager()
     private let model = Model()
     private let urlModel = UrlModel()
     private var requestUrl: NSURLRequest?
@@ -21,19 +21,19 @@ final class WebViewModel: NSObject {
     
     public var imageSystemName = ""
     public var animationView = ""
-    //  SyllabusViewの内容を渡され保存し、Webに入力する
-    public var syllabusSubjectName = ""
-    public var syllabusTeacherName = ""
-    public var syllabusKeyword = ""
-    public var syllabusSearchOnce = true
-    
-    public var cAccount = "c611821006"
-    public var password = "q2KF2ZaxPtkL7Uu"
-    public var mailAdress = ""
-    public var passedCertification = false // ログインできていることを保証
-    
-    public var reversePCtoSPIconName = "pcIcon"
-    public var reversePCtoSPIsEnabled = false
+//    //  SyllabusViewの内容を渡され保存し、Webに入力する
+//    public var syllabusSubjectName = ""
+//    public var syllabusTeacherName = ""
+//    public var syllabusKeyword = ""
+//    public var syllabusSearchOnce = true
+//
+//    public var cAccount = "c611821006"
+//    public var password = "q2KF2ZaxPtkL7Uu"
+//    public var mailAdress = ""
+//    public var passedCertification = false // ログインできていることを保証
+//
+//    public var reversePCtoSPIconName = "pcIcon"
+//    public var reversePCtoSPIsEnabled = false
     
     
     enum MenuTitle: String {
@@ -59,7 +59,7 @@ final class WebViewModel: NSObject {
     
     public func url(_ menuTitle: MenuTitle) -> NSURLRequest? {
         
-        if let urlString = selectUrl(menuTitle, isLogedin: passedCertification) {
+        if let urlString = selectUrl(menuTitle, isLogedin: DataManager.singleton.passedCertification) {
             if let url = URL(string: urlString) {
                 return NSURLRequest(url: url)
             }
@@ -167,8 +167,8 @@ final class WebViewModel: NSObject {
     }
     
     func registrantDecision() -> Bool{
-        if (dataManager.cAccount == "" &&
-                dataManager.passWord == ""){
+        if (DataManager.singleton.cAccount == "" &&
+            DataManager.singleton.password == ""){
             return false
             
         }else{
@@ -185,7 +185,7 @@ final class WebViewModel: NSObject {
         }
         
         // 登録者判定
-        if passedCertification {
+        if DataManager.singleton.passedCertification {
             if let url = URL(string:registrant){
                 return NSURLRequest(url: url)
                 
@@ -225,16 +225,16 @@ final class WebViewModel: NSObject {
         
         if displayUrl == urlModel.courceManagementHomeSP ||
             displayUrl == urlModel.manabaSP {
-            reversePCtoSPIconName = "pcIcon"
-            reversePCtoSPIsEnabled = true
+            DataManager.singleton.reversePCtoSPIconName = "pcIcon"
+            DataManager.singleton.reversePCtoSPIsEnabled = true
                         
         }else if displayUrl ==  urlModel.courceManagementHomePC ||
                     displayUrl == urlModel.manabaPC{
-            reversePCtoSPIconName = "spIcon"
-            reversePCtoSPIsEnabled = true
+            DataManager.singleton.reversePCtoSPIconName = "spIcon"
+            DataManager.singleton.reversePCtoSPIsEnabled = true
 
         }else{
-            reversePCtoSPIsEnabled = false
+            DataManager.singleton.reversePCtoSPIsEnabled = false
             
         }
     }
@@ -267,16 +267,16 @@ final class WebViewModel: NSObject {
             let one = !forwardDisplayUrl.contains(urlModel.enqueteReminder)
             let second = displayUrl.contains(urlModel.enqueteReminder)
             if one && second {
-                passedCertification = true  // ログインできていることを保証
+                DataManager.singleton.passedCertification = true  // ログインできていることを保証
                 return true
             }
             return false
             
             
         case .syllabus:
-            syllabusSearchOnce = false
+            DataManager.singleton.syllabusSearchOnce = false
             let one = displayUrl.contains(urlModel.syllabus)
-            let second = syllabusSearchOnce
+            let second = DataManager.singleton.syllabusSearchOnce
             if one && second {
                 return true
             }
