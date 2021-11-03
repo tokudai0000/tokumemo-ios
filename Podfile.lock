@@ -94,10 +94,10 @@ PODS:
   - R.swift.Library (5.3.0)
 
 DEPENDENCIES:
-  - Firebase/Analytics (~> 8.8)
-  - Kanna (~> 5.2)
-  - KeychainAccess (~> 4.2)
-  - R.swift (~> 5.4)
+  - Firebase/Analytics (~> 8)
+  - Kanna (~> 5)
+  - KeychainAccess (~> 4)
+  - R.swift (~> 5)
 
 SPEC REPOS:
   trunk:
@@ -132,6 +132,6 @@ SPEC CHECKSUMS:
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: 18ba03cb1467c26d44074de2139b229386a0c4c8
+PODFILE CHECKSUM: 9fcaa9429d795ca164e431f7ec2a850f1e19f088
 
 COCOAPODS: 1.11.2
