@@ -26,6 +26,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
     private let dataManager = DataManager()
+    private var webViewModel = WebViewModel()
 
 
     //MARK:- LifeCycle
@@ -92,8 +93,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         tabBar.selectedItem = tabBarLeft
         
-        let response = urlModel.url(.login)
-        if let url = response.1 as URLRequest? {
+        let response = webViewModel.url(.login)
+        if let url = response as URLRequest? {
             webView.load(url)
         } else {
             toast(message: "登録者のみ")
@@ -104,8 +105,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     public func refreshSyllabus(subjectName: String, teacherName: String, keyword:String){
         
-        let response = urlModel.url(.syllabus)
-        if let url = response.1 as URLRequest? {
+        let response = webViewModel.url(.syllabus)
+        if let url = response as URLRequest? {
             webView.load(url)
         } else {
             toast(message: "登録者のみ")
@@ -336,8 +337,8 @@ extension MainViewController: WKNavigationDelegate{
         
         // タイムアウト判定
         if viewModel.isJudgeUrl(.timeOut) {
-            let response = urlModel.url(.login)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.login)
+            if let url = response as URLRequest? {
                 webView.load(url)
             } else {
                 toast(message: "失敗")
@@ -489,6 +490,7 @@ extension MainViewController: UITabBarDelegate{
         
         if let url = viewModel.tabBarDetection(num: item.tag) as URLRequest? {
             webView.load(url)
+//            webView.load(URLRequest(url: URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx")!))
             
         } else {
             AKLog(level: .ERROR, message: "error")

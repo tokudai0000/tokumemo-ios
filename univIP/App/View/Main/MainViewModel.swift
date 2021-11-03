@@ -50,6 +50,7 @@ final class MainViewModel: NSObject {
     private let dataManager = DataManager()
     private let model = Model()
     private let urlModel = UrlModel()
+    private let webViewModel = WebViewModel()
     private var requestUrl: NSURLRequest?
     
     public var host = ""
@@ -115,21 +116,22 @@ final class MainViewModel: NSObject {
         
         switch num {
         case 1: // 左
-            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-                return urlModel.url(.courceManagementHomePC).1
+            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
+                print(webViewModel.url(.courceManagementHomePC))
+                return webViewModel.url(.courceManagementHomePC)
                 
             }else{
-                return urlModel.url(.courceManagementHomeSP).1
+                return webViewModel.url(.courceManagementHomeSP)
                 
             }
             
             
         case 2: // 右
             if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-                return urlModel.url(.manabaPC).1
+                return webViewModel.url(.manabaPC)
                 
             }else{
-                return urlModel.url(.manabaSP).1
+                return webViewModel.url(.manabaSP)
 
             }
             
@@ -313,8 +315,8 @@ final class MainViewModel: NSObject {
     public func CMAndManabaPCtoMB() -> URLRequest? {
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
             if displayUrl == urlModel.courceManagementHomeSP{
-                let response = urlModel.url(.courseRegistration)
-                if let url = response.1 as URLRequest? {
+                let response = webViewModel.url(.courseRegistration)
+                if let url = response as URLRequest? {
                     return url
                     
                 }
@@ -322,8 +324,8 @@ final class MainViewModel: NSObject {
             
         } else {
             if displayUrl == urlModel.courceManagementHomePC {
-                let response = urlModel.url(.courceManagementHomeSP)
-                if let url = response.1 as URLRequest? {
+                let response = webViewModel.url(.courceManagementHomeSP)
+                if let url = response as URLRequest? {
                     return url
     
                 }
@@ -333,8 +335,8 @@ final class MainViewModel: NSObject {
         
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
             if displayUrl == urlModel.manabaSP{
-                let response = urlModel.url(.manabaPC)
-                if let url = response.1 as URLRequest? {
+                let response = webViewModel.url(.manabaPC)
+                if let url = response as URLRequest? {
                     return url
                     
                 }
@@ -342,8 +344,8 @@ final class MainViewModel: NSObject {
             
         } else {
             if displayUrl == urlModel.manabaPC{
-                let response = urlModel.url(.manabaSP)
-                if let url = response.1 as URLRequest? {
+                let response = webViewModel.url(.manabaSP)
+                if let url = response as URLRequest? {
                     return url
                     
                 }

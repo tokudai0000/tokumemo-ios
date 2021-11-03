@@ -19,7 +19,8 @@ final class SettingsViewController: BaseViewController {
     private let model = Model()
 //    private let urlModel = UrlModel()
     private let viewModel = SettingViewModel()
-    public var urlModel: UrlModel!
+    public var urlModel = UrlModel()
+    public let webViewModel = WebViewModel()
     
     var delegateMain : MainViewController?
     var delegatePass : PasswordSettingsViewController?
@@ -245,8 +246,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         switch cellId {
         case 0: // Webサイト
-            let response = urlModel.url(.libraryLogin)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.libraryLogin)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "ERROR")
@@ -254,8 +255,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 1: // 貸し出し期間延長
-            let response = urlModel.url(.libraryBookLendingExtension)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.libraryBookLendingExtension)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -264,8 +265,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 2: // 本購入リクエスト
-            let response = urlModel.url(.libraryBookPurchaseRequest)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.libraryBookPurchaseRequest)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -274,8 +275,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 3: // 開館カレンダー
-            let response = urlModel.url(.libraryCalendar)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.libraryCalendar)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "失敗しました")
@@ -288,8 +289,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
 
             
         case 5: // 時間割
-            let response = urlModel.url(.timeTable)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.timeTable)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -298,8 +299,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 6: // 今年の成績表
-            let response = urlModel.url(.currentTermPerformance)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.currentTermPerformance)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -307,8 +308,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 7: // 成績参照
-            let response = urlModel.url(.termPerformance)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.termPerformance)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -317,8 +318,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 8: // 出欠記録
-            let response = urlModel.url(.presenceAbsenceRecord)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.presenceAbsenceRecord)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -327,8 +328,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 9: // 授業アンケート
-            let response = urlModel.url(.classQuestionnaire)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.classQuestionnaire)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -337,8 +338,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 10: // メール
-            let response = urlModel.url(.mailService)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.mailService)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -347,8 +348,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 11: // マナバPC版
-            let response = urlModel.url(.manabaPC)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.manabaPC)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
@@ -357,8 +358,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 12: // キャリア支援室
-            let response = urlModel.url(.tokudaiCareerCenter)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.tokudaiCareerCenter)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "失敗しました")
@@ -367,8 +368,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
             
         case 13: // 履修登録
-            let response = urlModel.url(.courseRegistration)
-            if let url = response.1 as URLRequest? {
+            let response = webViewModel.url(.courseRegistration)
+            if let url = response as URLRequest? {
                 delegate.webView.load(url)
             } else {
                 delegate.toast(message: "登録者のみ")
