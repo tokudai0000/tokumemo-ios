@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RtfFileModel {
+final class RtfFileModel {
     
     func load(url: URL? ) -> NSMutableAttributedString{
         if let url = url {

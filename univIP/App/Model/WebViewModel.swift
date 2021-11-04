@@ -8,7 +8,9 @@
 import Foundation
 import Kanna
 
-final class WebViewModel: NSObject {
+final class WebViewModel {
+    
+    static let singleton = WebViewModel() // シングルトン・インタンス
     
     private let model = Model()
     private let urlModel = UrlModel()
@@ -49,6 +51,8 @@ final class WebViewModel: NSObject {
         case mailService                    // MicroSoftのoutlookへ遷移
         case tokudaiCareerCenter            // キャリアセンター
         case courseRegistration             // 履修登録URL
+        case systemServiceList
+        case eLearningList
     }
     
     public func url(_ menuTitle: MenuTitle) -> NSURLRequest? {
@@ -113,6 +117,8 @@ final class WebViewModel: NSObject {
                    return nil
                 }
                 return urlModel.libraryCalendar
+            case .systemServiceList:            return urlModel.systemServiceList
+            case .eLearningList:                return urlModel.eLearningList
             }
         } else {
             
@@ -156,6 +162,8 @@ final class WebViewModel: NSObject {
                    return nil
                 }
                 return urlModel.libraryCalendar
+            case .systemServiceList:            return urlModel.systemServiceList
+            case .eLearningList:                return urlModel.eLearningList
             }
         }
     }
@@ -353,4 +361,10 @@ final class WebViewModel: NSObject {
         return nil
         
     }
+    
+    // シングルトン・インスタンスの初期処理
+//    private init() {  //シングルトン保証// privateにすることにより他から初期化させない
+//
+//    }
+    
 }

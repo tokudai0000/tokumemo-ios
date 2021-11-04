@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,7 +41,7 @@
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" image="chevron.down" catalog="system"/>
                                                 <connections>
-                                                    <action selector="navigationRightButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DZ6-3w-Bxz"/>
+                                                    <action selector="webViewMoveToUpDownButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fz6-4d-jKH"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7E-8X-iXM">
@@ -53,7 +54,7 @@
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" image="line.horizontal.3" catalog="system"/>
                                                 <connections>
-                                                    <action selector="navigationLeftButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Inc-Me-5ZZ"/>
+                                                    <action selector="settingMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2V7-ge-fUf"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeH-O1-qTx">
@@ -65,7 +66,7 @@
                                                 </constraints>
                                                 <state key="normal" image="tokumemoIcon2"/>
                                                 <connections>
-                                                    <action selector="navigationCenterButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C25-cY-59M"/>
+                                                    <action selector="refreshButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cym-mA-rVe"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IUH-6M-2c4">
@@ -78,7 +79,7 @@
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
                                                 <connections>
-                                                    <action selector="navigationLeftButton2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BGZ-w4-mJG"/>
+                                                    <action selector="backButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K3G-GU-XUR"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajZ-3e-GEs">
@@ -90,7 +91,7 @@
                                                 </constraints>
                                                 <state key="normal" image="pcIcon"/>
                                                 <connections>
-                                                    <action selector="revercePCtoSP:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cSx-7B-3DR"/>
+                                                    <action selector="webViewChangePCorMB:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lCD-IR-UDl"/>
                                                 </connections>
                                             </button>
                                         </subviews>

@@ -11,7 +11,7 @@ import WebKit
 
 final class MainViewController: BaseViewController, WKUIDelegate{
     
-    //MARK:- IBOutlet
+    // MARK: - IBOutlet
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var tabBar: UITabBar!
     @IBOutlet weak var webView: WKWebView!
@@ -25,16 +25,14 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     private let model = Model()
     private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
-    private let webViewModel = WebViewModel()
+    private let webViewModel = WebViewModel.singleton //WebViewModel()
 
 
-    //MARK:- LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setup()
-        setupWKWebView()
-        
         refresh()
         initViewModel()
     }
@@ -55,32 +53,32 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
 
 
-    //MARK:- IBAction
-    @IBAction func navigationLeftButton(_ sender: Any) {
+    // MARK: - IBAction
+    
+    @IBAction func settingMenuButton(_ sender: Any) {
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
         vc.delegateMain = self
         vc.mainViewModel = self.viewModel
-        vc.urlModel = self.urlModel
     }
     
-    @IBAction func navigationLeftButton2(_ sender: Any) {
+    @IBAction func backButton(_ sender: Any) {
         webView.goBack()
     }
     
-    @IBAction func navigationCenterButton(_ sender: Any) {
+    @IBAction func refreshButton(_ sender: Any) {
         refresh()
         navigationRightButtonOnOff(operation: "UP")
     }
 
-    @IBAction func navigationRightButton(_ sender: Any) {
+    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
         navigationRightButtonOnOff(operation: "REVERSE")
     }
     
-    @IBAction func revercePCtoSP(_ sender: Any) {
+    @IBAction func webViewChangePCorMB(_ sender: Any) {
         let image = UIImage(named: viewModel.isDisplayUrlForPC())
         reversePCtoSP.setImage(image, for: .normal)
-
+        webView.load()
     }
     
 
@@ -155,15 +153,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     
     // MARK: - Private func
+    
     private func setup() {
         
         animationView(scene: "launchScreen")
         tabBar.delegate = self
-    }
-    
-    
-    private func setupWKWebView() {
-        
         webView.navigationDelegate = self
         webView.uiDelegate = self
     }
@@ -186,7 +180,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     
     // 表示:true  非表示：false
-    private func webViewDisplay(bool: Bool){
+    private func webViewDisplay(_ bool: Bool){
 
         switch bool {
         case true:
@@ -488,7 +482,7 @@ extension MainViewController: UITabBarDelegate{
             toast(message: "error")
             
         }
-        navigationRightButtonOnOff(operation: "UP")
+//        navigationRightButtonOnOff(operation: "UP")
     }
 }
 

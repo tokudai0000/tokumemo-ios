@@ -11,7 +11,7 @@ final class MainViewModel: NSObject {
     
     private let model = Model()
     private let urlModel = UrlModel()
-    private let webViewModel = WebViewModel()
+    private let webViewModel = WebViewModel.singleton //WebViewModel()
     private var requestUrl: NSURLRequest?
     
     public var imageSystemName = ""
@@ -35,27 +35,27 @@ final class MainViewModel: NSObject {
     public var next: ((NextView) -> Void)?
 
     
-    public func isDisplayUrlForPC() -> String { // boolにしたい
+    public func isDisplayUrlForPC() -> (String, URLRequest) { // boolにしたい
         
         switch webViewModel.displayUrl {
         case urlModel.courceManagementHomeSP:
             UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
-            return R.image.spIcon.name
+            return R.image.spIcon.name, urlModel.courceManagementHomePC
             
             
         case urlModel.courceManagementHomePC:
             UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
-            return R.image.pcIcon.name
+            return R.image.pcIcon.name, urlModel.courceManagementHomeSP
             
             
         case urlModel.manabaSP:
             UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
-            return R.image.spIcon.name
+            return R.image.spIcon.name, urlModel.manabaPC
             
             
         case urlModel.manabaPC:
             UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
-            return R.image.pcIcon.name
+            return R.image.pcIcon.name, , urlModel.manabaSP
             
             
         default:
@@ -65,33 +65,45 @@ final class MainViewModel: NSObject {
     
     
     public func tabBarDetection(num: Int) -> NSURLRequest? {
-//        if passedCertification {
-//            
-//        }
-        
-        switch num {
-        case 1: // 左
-            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-                return webViewModel.url(.courceManagementHomePC)
+        if DataManager.singleton.passedCertification {
+            switch num {
+            case 1: // 左
+                if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
+                    return webViewModel.url(.courceManagementHomePC)
+                    
+                }else{
+                    return webViewModel.url(.courceManagementHomeSP)
+                    
+                }
                 
-            }else{
-                return webViewModel.url(.courceManagementHomeSP)
                 
-            }
-            
-            
-        case 2: // 右
-            if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-                return webViewModel.url(.manabaPC)
-                
-            }else{
-                return webViewModel.url(.manabaSP)
+            case 2: // 右
+                if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+                    return webViewModel.url(.manabaPC)
+                    
+                }else{
+                    return webViewModel.url(.manabaSP)
 
+                }
+                
+            default:
+                return nil
             }
-            
-        default:
-            return nil
+        } else {
+            switch num {
+            case 1: // 左
+                return webViewModel.url(.systemServiceList)
+                
+                
+            case 2: // 右
+                return webViewModel.url(.eLearningList)
+                
+                
+            default:
+                return nil
+            }
         }
+        
     }
     
         
