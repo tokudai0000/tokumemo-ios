@@ -23,7 +23,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var activityIndicatorView: UIView!
     
     private let model = Model()
-    private let urlModel = UrlModel()
+//    private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
     private let webViewModel = WebViewModel.singleton //WebViewModel()
 

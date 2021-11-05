@@ -13,7 +13,6 @@ final class WebViewModel {
     static let singleton = WebViewModel() // シングルトン・インタンス
     
     private let model = Model()
-    private let urlModel = UrlModel()
     private var requestUrl: NSURLRequest?
     
     public var host = ""
@@ -69,15 +68,15 @@ final class WebViewModel {
         if isLogedin {
             
             switch menuTitle {
-            case .login:                        return urlModel.login
-            case .courceManagementHomeSP:       return urlModel.courceManagementHomeSP
-            case .courceManagementHomePC:       return urlModel.courceManagementHomePC
-            case .manabaSP:                     return urlModel.manabaSP
-            case .manabaPC:                     return urlModel.manabaPC
-            case .libraryLogin:                 return urlModel.libraryLogin
-            case .libraryBookLendingExtension:  return urlModel.libraryBookLendingExtension
-            case .libraryBookPurchaseRequest:   return urlModel.libraryBookPurchaseRequest
-            case .timeTable:                    return urlModel.timeTable
+            case .login:                        return UrlModel.login.string()
+            case .courceManagementHomeSP:       return UrlModel.courceManagementHomeSP.string()
+            case .courceManagementHomePC:       return UrlModel.courceManagementHomePC.string()
+            case .manabaSP:                     return UrlModel.manabaSP.string()
+            case .manabaPC:                     return UrlModel.manabaPC.string()
+            case .libraryLogin:                 return UrlModel.libraryLogin.string()
+            case .libraryBookLendingExtension:  return UrlModel.libraryBookLendingExtension.string()
+            case .libraryBookPurchaseRequest:   return UrlModel.libraryBookPurchaseRequest.string()
+            case .timeTable:                    return UrlModel.timeTable.string()
             case .currentTermPerformance:
                 let current = Calendar.current
                 var year = current.component(.year, from: Date())
@@ -86,17 +85,17 @@ final class WebViewModel {
                 if (month <= 3){ // 1月から3月までは前年の成績であるから
                     year -= 1
                 }
-                let termPerformanceYearURL = urlModel.currentTermPerformance + String(year)
+                let termPerformanceYearURL = UrlModel.currentTermPerformance.string() + String(year)
                 return termPerformanceYearURL
-            case .termPerformance:              return urlModel.termPerformance
-            case .presenceAbsenceRecord:        return urlModel.presenceAbsenceRecord
-            case .classQuestionnaire:           return urlModel.classQuestionnaire
-            case .tokudaiCareerCenter:          return urlModel.tokudaiCareerCenter
-            case .courseRegistration:           return urlModel.courseRegistration
-            case .syllabus:                     return urlModel.syllabus
-            case .mailService:                  return urlModel.mailService
+            case .termPerformance:              return UrlModel.termPerformance.string()
+            case .presenceAbsenceRecord:        return UrlModel.presenceAbsenceRecord.string()
+            case .classQuestionnaire:           return UrlModel.classQuestionnaire.string()
+            case .tokudaiCareerCenter:          return UrlModel.tokudaiCareerCenter.string()
+            case .courseRegistration:           return UrlModel.courseRegistration.string()
+            case .syllabus:                     return UrlModel.syllabus.string()
+            case .mailService:                  return UrlModel.mailService.string()
             case .libraryCalendar:
-                let url = NSURL(string: urlModel.libraryHome)
+                let url = NSURL(string: UrlModel.libraryHome.string())
                 let data = NSData(contentsOf: url! as URL)
                 
                 var calenderURL = ""
@@ -116,19 +115,19 @@ final class WebViewModel {
                 } catch {
                    return nil
                 }
-                return urlModel.libraryCalendar
-            case .systemServiceList:            return urlModel.systemServiceList
-            case .eLearningList:                return urlModel.eLearningList
+                return UrlModel.libraryCalendar.string()
+            case .systemServiceList:            return UrlModel.systemServiceList.string()
+            case .eLearningList:                return UrlModel.eLearningList.string()
             }
         } else {
             
             switch menuTitle {
-            case .login:                        return urlModel.login
-            case .courceManagementHomeSP:       return urlModel.systemServiceList
-            case .courceManagementHomePC:       return urlModel.systemServiceList
-            case .manabaSP:                     return urlModel.eLearningList
-            case .manabaPC:                     return urlModel.eLearningList
-            case .libraryLogin:                 return urlModel.libraryHome
+            case .login:                        return UrlModel.login.string()
+            case .courceManagementHomeSP:       return UrlModel.systemServiceList.string()
+            case .courceManagementHomePC:       return UrlModel.systemServiceList.string()
+            case .manabaSP:                     return UrlModel.eLearningList.string()
+            case .manabaPC:                     return UrlModel.eLearningList.string()
+            case .libraryLogin:                 return UrlModel.libraryHome.string()
             case .libraryBookLendingExtension:  return nil
             case .libraryBookPurchaseRequest:   return nil
             case .timeTable:                    return nil
@@ -136,12 +135,12 @@ final class WebViewModel {
             case .termPerformance:              return nil
             case .presenceAbsenceRecord:        return nil
             case .classQuestionnaire:           return nil
-            case .tokudaiCareerCenter:          return urlModel.tokudaiCareerCenter
+            case .tokudaiCareerCenter:          return UrlModel.tokudaiCareerCenter.string()
             case .courseRegistration:           return nil
-            case .syllabus:                     return urlModel.syllabus
-            case .mailService:                  return urlModel.mailService
+            case .syllabus:                     return UrlModel.syllabus.string()
+            case .mailService:                  return UrlModel.mailService.string()
             case .libraryCalendar:
-                let url = NSURL(string: urlModel.libraryHome)
+                let url = NSURL(string: UrlModel.libraryHome.string())
                 let data = NSData(contentsOf: url! as URL)
                 
                 var calenderURL = ""
@@ -161,9 +160,9 @@ final class WebViewModel {
                 } catch {
                    return nil
                 }
-                return urlModel.libraryCalendar
-            case .systemServiceList:            return urlModel.systemServiceList
-            case .eLearningList:                return urlModel.eLearningList
+                return UrlModel.libraryCalendar.string()
+            case .systemServiceList:            return UrlModel.systemServiceList.string()
+            case .eLearningList:                return UrlModel.eLearningList.string()
             }
         }
     }
@@ -221,13 +220,13 @@ final class WebViewModel {
     
     func judgeMobileOrPC() {
         
-        if displayUrl == urlModel.courceManagementHomeSP ||
-            displayUrl == urlModel.manabaSP {
+        if displayUrl == UrlModel.courceManagementHomeSP.string() ||
+            displayUrl == UrlModel.manabaSP.string() {
             reversePCtoSPIconName = "pcIcon"
             reversePCtoSPIsEnabled = true
                         
-        }else if displayUrl ==  urlModel.courceManagementHomePC ||
-                    displayUrl == urlModel.manabaPC{
+        }else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
+                    displayUrl == UrlModel.manabaPC.string() {
             reversePCtoSPIconName = "spIcon"
             reversePCtoSPIsEnabled = true
 
@@ -251,8 +250,8 @@ final class WebViewModel {
     public func isJudgeUrl(_ scene: Scene) -> Bool {
         switch scene {
         case .login:
-            let zero = !forwardDisplayUrl.contains(urlModel.lostConnection) // 前回のURLがログインURLではない = 初回
-            let one = displayUrl.contains(urlModel.lostConnection)          // 今表示されているURLがログインURLか
+            let zero = !forwardDisplayUrl.contains(UrlModel.lostConnection.string()) // 前回のURLがログインURLではない = 初回
+            let one = displayUrl.contains(UrlModel.lostConnection.string())          // 今表示されているURLがログインURLか
             let second = displayUrl.suffix(2)=="s1"                         // 2回目は"=e1s2"　（zero があるが、安全策）
             let therd = registrantDecision()                                // 登録者判定
             if zero && one && second && therd {
@@ -262,8 +261,8 @@ final class WebViewModel {
             
             
         case .enqueteReminder:
-            let one = !forwardDisplayUrl.contains(urlModel.enqueteReminder)
-            let second = displayUrl.contains(urlModel.enqueteReminder)
+            let one = !forwardDisplayUrl.contains(UrlModel.enqueteReminder.string())
+            let second = displayUrl.contains(UrlModel.enqueteReminder.string())
             if one && second {
                 DataManager.singleton.passedCertification = true  // ログインできていることを保証
                 return true
@@ -273,7 +272,7 @@ final class WebViewModel {
             
         case .syllabus:
             syllabusSearchOnce = false
-            let one = displayUrl.contains(urlModel.syllabus)
+            let one = displayUrl.contains(UrlModel.syllabus.string())
             let second = syllabusSearchOnce
             if one && second {
                 return true
@@ -282,8 +281,8 @@ final class WebViewModel {
             
             
         case .outlook:
-            let one = !forwardDisplayUrl.contains(urlModel.outlookLogin)
-            let second = displayUrl.contains(urlModel.outlookLogin)
+            let one = !forwardDisplayUrl.contains(UrlModel.outlookLogin.string())
+            let second = displayUrl.contains(UrlModel.outlookLogin.string())
             if one && second {
                 return true
             }
@@ -291,8 +290,8 @@ final class WebViewModel {
             
             
         case .tokudaiCareerCenter:
-            let one = !forwardDisplayUrl.contains(urlModel.tokudaiCareerCenter)
-            let second = displayUrl == urlModel.tokudaiCareerCenter
+            let one = !forwardDisplayUrl.contains(UrlModel.tokudaiCareerCenter.string())
+            let second = displayUrl == UrlModel.tokudaiCareerCenter.string()
             if one && second {
                 return true
             }
@@ -300,11 +299,11 @@ final class WebViewModel {
             
         
         case .timeOut:
-            return displayUrl == urlModel.timeOut
+            return displayUrl == UrlModel.timeOut.string()
         
         
         case .registrantAndLostConnectionDecision:
-            return !registrantDecision() && displayUrl.contains(urlModel.lostConnection)
+            return !registrantDecision() && displayUrl.contains(UrlModel.lostConnection.string())
             
         }
     }
@@ -321,7 +320,7 @@ final class WebViewModel {
     
     public func CMAndManabaPCtoMB() -> URLRequest? {
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-            if displayUrl == urlModel.courceManagementHomeSP{
+            if displayUrl == UrlModel.courceManagementHomeSP.string() {
                 let response = url(.courseRegistration)
                 if let url = response as URLRequest? {
                     return url
@@ -330,7 +329,7 @@ final class WebViewModel {
             }
             
         } else {
-            if displayUrl == urlModel.courceManagementHomePC {
+            if displayUrl == UrlModel.courceManagementHomePC.string() {
                 let response = url(.courceManagementHomeSP)
                 if let url = response as URLRequest? {
                     return url
@@ -341,7 +340,7 @@ final class WebViewModel {
         
         
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            if displayUrl == urlModel.manabaSP{
+            if displayUrl == UrlModel.manabaSP.string() {
                 let response = url(.manabaPC)
                 if let url = response as URLRequest? {
                     return url
@@ -350,7 +349,7 @@ final class WebViewModel {
             }
             
         } else {
-            if displayUrl == urlModel.manabaPC{
+            if displayUrl == UrlModel.manabaPC.string() {
                 let response = url(.manabaSP)
                 if let url = response as URLRequest? {
                     return url

@@ -10,7 +10,7 @@ import Foundation
 final class MainViewModel: NSObject {
     
     private let model = Model()
-    private let urlModel = UrlModel()
+//    private let urlModel = UrlModel()
     private let webViewModel = WebViewModel.singleton //WebViewModel()
     private var requestUrl: NSURLRequest?
     
@@ -38,28 +38,29 @@ final class MainViewModel: NSObject {
     public func isDisplayUrlForPC() -> (String, URLRequest) { // boolにしたい
         
         switch webViewModel.displayUrl {
-        case urlModel.courceManagementHomeSP:
+        case UrlModel.courceManagementHomeSP.string():
             UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
-            return R.image.spIcon.name, urlModel.courceManagementHomePC
+            
+            return (R.image.spIcon.name, UrlModel.courceManagementHomeSP.urlRequest())
             
             
-        case urlModel.courceManagementHomePC:
+        case UrlModel.courceManagementHomePC.string():
             UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
-            return R.image.pcIcon.name, urlModel.courceManagementHomeSP
+            return (R.image.pcIcon.name, UrlModel.courceManagementHomeSP.urlRequest())
             
             
-        case urlModel.manabaSP:
+        case UrlModel.manabaSP.string():
             UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
-            return R.image.spIcon.name, urlModel.manabaPC
+            return (R.image.spIcon.name, UrlModel.manabaPC.urlRequest())
             
             
-        case urlModel.manabaPC:
+        case UrlModel.manabaPC.string():
             UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
-            return R.image.pcIcon.name, , urlModel.manabaSP
+            return (R.image.pcIcon.name, UrlModel.manabaSP.urlRequest())
             
             
         default:
-            return "No Image"
+            return ("No Image", )
         }
     }
     

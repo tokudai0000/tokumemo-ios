@@ -9,36 +9,37 @@ import Foundation
 // URLStringsとURLRequestの2つを返す必要ある
 
 
-enum UrlModel: String {
+enum UrlModel {
     
-    case login = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
-    case courceManagementHomeSP = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
-    case courceManagementHomePC = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
-    case manabaSP = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
-    case manabaPC = "https://manaba.lms.tokushima-u.ac.jp/ct/home"
-    case libraryLogin = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
-    case libraryBookLendingExtension = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
-    case libraryBookPurchaseRequest = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new"
-    case syllabusSearchMain = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
-    case timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
-    case currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
-    case termPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"
-    case presenceAbsenceRecord = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Attendance/AttendList.aspx"
-    case classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"
-    case systemServiceList = "https://www.ait.tokushima-u.ac.jp/service/list_out/"
-    case eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
-    case outlookHome = "https://outlook.office.com/mail/"
-    case tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
-    case libraryHome = "https://www.lib.tokushima-u.ac.jp/"
-    case courseRegistration = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx"
-    case lostConnection = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="
-    case libraryCalendar = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"
-    case syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
-    case timeOut = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"
-    case enqueteReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
-    case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
-    case mailService = "https://outlook.office365.com/tokushima-u.ac.jp"
-    case outlookLogin = "https://wa.tokushima-u.ac.jp/adfs/ls"
+    case login
+    case courceManagementHomeSP
+    case courceManagementHomePC
+    case manabaSP
+    case manabaPC
+    case libraryLogin
+    case libraryBookLendingExtension
+    case libraryBookPurchaseRequest
+    case syllabusSearchMain
+    case timeTable
+    case currentTermPerformance
+    case termPerformance
+    case presenceAbsenceRecord
+    case classQuestionnaire
+    case systemServiceList
+    case eLearningList
+    case outlookHome
+    case tokudaiCareerCenter
+    case libraryHome
+    case courseRegistration
+    case lostConnection
+    case libraryCalendar
+    case syllabus
+    case timeOut
+    case enqueteReminder
+    case popupToYoutube
+    case mailService
+    case outlookLogin
+    
     
     func string() -> String {
         switch self {
