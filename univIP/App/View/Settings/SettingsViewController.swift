@@ -11,78 +11,59 @@ import Kanna
 
 final class SettingsViewController: BaseViewController {
     
-    //MARK:- IBOutlet
+    // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var editButton: UIButton!
     
     private let model = Model()
-//    private let urlModel = UrlModel()
     private let viewModel = SettingViewModel()
-//    public var urlModel = UrlModel()
-    public let webViewModel = WebViewModel()
     
-    var delegateMain : MainViewController?
-    var delegatePass : PasswordSettingsViewController?
-    var userDefaults = UserDefaults.standard
+    private let dataManager = DataManager.singleton
+    private let webViewModel = WebViewModel.singleton
+
+    public var delegate : MainViewController?
+    private var delegatePass : PasswordSettingsViewController?
+    private var userDefaults = UserDefaults.standard
     
-    //MARK:- LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        firstBootDecision()
         setup()
-
-        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
+        
         viewAnimated(scene: "settingsViewAppear")
     }
     
-    @IBAction func editAction(_ sender: Any) {
-        tableView.isEditing = viewModel.editSituation
+    
+    // MARK: - IBAction
+    @IBAction func editButton(_ sender: Any) {
+        
+        tableView.isEditing = viewModel.editSituation // 編集モード
         if viewModel.editSituation {
             editButton.titleLabel?.text = "編集"
+            
         }else{
             editButton.titleLabel?.text = "終了"
+        
         }
-        viewModel.editSituation = !viewModel.editSituation
+        
+        viewModel.editSituation = !viewModel.editSituation // 編集モード, 使用モード反転
         self.tableView.reloadData()
     }
     
     
-    //MARK:- Private func
+    // MARK: - Private func
     private func setup() {
+        
+        viewModel.firstBootDecision() // 初回起動時処理
         tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
         viewModel.allCellList[0] = viewModel.loadCellList()
-    }
-    
-    
-    // 初回起動時判定
-    private func firstBootDecision() {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        let versionKey = "ver_" + version
-        // 保存されたデータがversionいつの物か判定
-        print(UserDefaults.standard.string(forKey: "VersionKey"))
-        if UserDefaults.standard.string(forKey: "VersionKey") != versionKey{
-            UserDefaults.standard.set(versionKey, forKey: "VersionKey") // 更新
-            
-            let legacyCellLists = viewModel.loadCellList()
-            var newCellLists = model.cellList
-            
-            for i in 0 ..< newCellLists.count{
-                if legacyCellLists.count <= i{
-                    viewModel.cellList.append(newCellLists[i])
-                }else{
-                    newCellLists[legacyCellLists[i].id].display = legacyCellLists[i].display
-                    viewModel.cellList.append(newCellLists[legacyCellLists[i].id])
-                }
-            }
-            print(viewModel.cellList)
-            viewModel.saveCellList(lists: viewModel.cellList)
-        }
+        self.tableView.reloadData()
     }
 
     
@@ -120,7 +101,7 @@ final class SettingsViewController: BaseViewController {
         }
     }
     
-    //MARK:- Override(Animate)
+    // MARK: - Override(Animate)
 
     // メニューエリア以外タップ時の処理
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -238,7 +219,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         self.dismiss(animated: false, completion: nil)
         
-        guard let delegate = delegateMain else {
+        guard let delegate = delegate else {
             return
         }
         

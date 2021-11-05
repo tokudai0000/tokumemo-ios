@@ -9,6 +9,8 @@ import UIKit
 
 final class SettingViewModel: NSObject {
     
+    private let model = Model()
+    
     var sectionHight:Int = 2
     var cellHight:Int = 44
     var allCellList:[[CellList]] =  [[],
@@ -35,5 +37,29 @@ final class SettingViewModel: NSObject {
         }
             
         return bookmarks
+    }
+    
+    func firstBootDecision() {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let versionKey = "ver_" + version
+        // 保存されたデータがversionいつの物か判定
+        print(UserDefaults.standard.string(forKey: "VersionKey"))
+        if UserDefaults.standard.string(forKey: "VersionKey") != versionKey{
+            UserDefaults.standard.set(versionKey, forKey: "VersionKey") // 更新
+            
+            let legacyCellLists = loadCellList()
+            var newCellLists = model.cellList
+            
+            for i in 0 ..< newCellLists.count{
+                if legacyCellLists.count <= i{
+                    cellList.append(newCellLists[i])
+                }else{
+                    newCellLists[legacyCellLists[i].id].display = legacyCellLists[i].display
+                    cellList.append(newCellLists[legacyCellLists[i].id])
+                }
+            }
+            print(cellList)
+            saveCellList(lists: cellList)
+        }
     }
 }

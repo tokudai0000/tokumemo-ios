@@ -50,8 +50,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
-        vc.delegateMain = self
-        vc.mainViewModel = self.viewModel
+        vc.delegate = self
+//        vc.mainViewModel = self.viewModel
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -66,30 +66,30 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
+        
 //        let image = UIImage(named: viewModel.isDisplayUrlForPC())
 //        reversePCtoSP.setImage(image, for: .normal)
 //        webView.load()
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
+        
         navigationRightButtonOnOff(operation: "REVERSE")
     }
     
 
     // MARK: - Public func
-    
-    public func refresh(){
-        self.activityIndicatorView.isHidden = true
+    public func refresh() { // 教務事務システムに再度ログイン
         
         tabBar.selectedItem = tabBarLeft
+        self.activityIndicatorView.isHidden = true
         
-        let response = webViewModel.url(.login)
-        if let url = response as URLRequest? {
-            webView.load(url)
+        if let url = webViewModel.url(.login) {
+            webView.load(url as URLRequest)
+            
         } else {
             toast(message: "登録者のみ")
         }
-        
     }
     
     
@@ -112,7 +112,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         case .syllabus:
             let vc = R.storyboard.syllabus.syllabusViewController()!
             self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
+            vc.delegate = self
             
             
         case .password:
@@ -478,15 +478,15 @@ extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        if let url = viewModel.tabBarDetection(num: item.tag) as URLRequest? {
-            webView.load(url)
+        if let url = viewModel.tabBarDetection(num: item.tag) {
+            webView.load(url as URLRequest)
             
         } else {
             AKLog(level: .ERROR, message: "error")
             toast(message: "error")
             
         }
-//        navigationRightButtonOnOff(operation: "UP")
+//        navigationRightButtonOnOff(operation: "DOWN")
     }
 }
 
