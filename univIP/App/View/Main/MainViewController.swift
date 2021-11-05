@@ -118,17 +118,14 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         case .password:
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
+            vc.delegate = self
             
             
         case .aboutThisApp:
             let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
             self.present(vc, animated: true, completion: nil)
             
-            
-        case .contactToDeveloper:
-            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-            self.present(vc, animated: true, completion: nil)
+
         }
         
     }
@@ -172,7 +169,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             // "cアカウント"、"パスワード"の設定催促
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
+            vc.delegate = self
         }
     }
     

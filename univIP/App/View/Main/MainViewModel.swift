@@ -30,7 +30,6 @@ final class MainViewModel: NSObject {
         case syllabus           // 準備中
         case password
         case aboutThisApp
-        case contactToDeveloper
     }
     public var next: ((NextView) -> Void)?
 

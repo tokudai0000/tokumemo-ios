@@ -364,10 +364,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             
         case 101: // このアプリについて
             delegate.popupView(scene: .aboutThisApp)
-
-            
-        case 102: // 開発者へ連絡
-            delegate.popupView(scene: .contactToDeveloper)
             
             
         default:

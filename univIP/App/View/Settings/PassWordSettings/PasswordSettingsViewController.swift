@@ -18,29 +18,19 @@ final class PasswordSettingsViewController: BaseViewController {
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passWordTextField: UITextField!
     
-    var delegateMain : MainViewController?
+    public var delegate : MainViewController?
     
+    private let dataManager = DataManager.singleton
     private let model = Model()
-//    private var dataManager = DataManager()
+    private let webViewModel = WebViewModel()
     
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerButton.layer.cornerRadius = 20.0
-        passWordTextField.placeholder = "PassWord"
-        cAccountTextField.delegate = self
-        passWordTextField.delegate = self
         
+        setup()
         rtfFileOpen()
-        
-        if DataManager.singleton.cAccount == ""{
-            cAccountTextField.placeholder = "cアカウント"
-            label.text = "入力してください"
-        }else{
-            cAccountTextField.text = DataManager.singleton.cAccount
-            label.text = "すでに登録済みです(上書き可能)"
-        }
     }
     
     
@@ -57,7 +47,7 @@ final class PasswordSettingsViewController: BaseViewController {
         label.text = "登録完了"
         passWordTextField.text = ""
         
-//        self.delegateMain?.openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+        delegate?.webView.load(webViewModel.url(.login)! as URLRequest)
     }
     
     
@@ -85,6 +75,21 @@ final class PasswordSettingsViewController: BaseViewController {
             } catch let error {
                 print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func setup() {
+        registerButton.layer.cornerRadius = 20.0
+        passWordTextField.placeholder = "PassWord"
+        cAccountTextField.delegate = self
+        passWordTextField.delegate = self
+        
+        if dataManager.cAccount == ""{
+            cAccountTextField.placeholder = "cアカウント"
+            label.text = "入力してください"
+        }else{
+            cAccountTextField.text = dataManager.cAccount
+            label.text = "すでに登録済みです(上書き可能)"
         }
     }
 }
