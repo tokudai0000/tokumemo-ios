@@ -15,12 +15,14 @@ final class WebViewModel {
     private let model = Model()
     private var requestUrl: NSURLRequest?
     
-    public var host = ""
-    public var displayUrl = ""
-    public var forwardDisplayUrl = ""
+//    public var host = ""
+    public var forwardDisplayUrl = ""    // 1つ前のURL
+    public var displayUrl = ""           // 現在表示しているURL
+
+    
     public var imageSystemName = ""
     public var animationView = ""
-    public var mailAdress = ""
+    public var userCAccountMailAdress = ""
     public var reversePCtoSPIconName = "pcIcon"
     public var reversePCtoSPIsEnabled = false
     
@@ -31,9 +33,9 @@ final class WebViewModel {
     public var syllabusSearchOnce = true
     
     
-    enum MenuTitle: String {
-        case login
-        case courceManagementHomeSP
+    enum SettingMenuTitle: String {
+        case login                          // ログイン画面
+        case courceManagementHomeSP         // 情報ポータル、ホーム画面URL
         case courceManagementHomePC         // 情報ポータル、ホーム画面URL
         case manabaSP                       // マナバURL
         case manabaPC                       // マナバURL
@@ -50,12 +52,13 @@ final class WebViewModel {
         case mailService                    // MicroSoftのoutlookへ遷移
         case tokudaiCareerCenter            // キャリアセンター
         case courseRegistration             // 履修登録URL
-        case systemServiceList
-        case eLearningList
+        case systemServiceList              // システムサービス一覧
+        case eLearningList                  // Eラーニング一覧
     }
     
-    public func url(_ menuTitle: MenuTitle) -> NSURLRequest? {
-        
+    
+    public func url(_ menuTitle: SettingMenuTitle) -> NSURLRequest? {
+
         if let urlString = selectUrl(menuTitle, isLogedin: DataManager.singleton.passedCertification) {
             if let url = URL(string: urlString) {
                 return NSURLRequest(url: url)
@@ -64,7 +67,7 @@ final class WebViewModel {
         return nil
     }
     
-    private func selectUrl(_ menuTitle: MenuTitle, isLogedin: Bool) -> String?  {
+    private func selectUrl(_ menuTitle: SettingMenuTitle, isLogedin: Bool) -> String?  {
         if isLogedin {
             
             switch menuTitle {
@@ -320,42 +323,46 @@ final class WebViewModel {
     
     public func CMAndManabaPCtoMB() -> URLRequest? {
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-            if displayUrl == UrlModel.courceManagementHomeSP.string() {
-                let response = url(.courseRegistration)
-                if let url = response as URLRequest? {
-                    return url
-                    
-                }
-            }
+            return UrlModel.courceManagementHomeSP.urlRequest()
+//            if displayUrl == UrlModel.courceManagementHomeSP.string() {
+//                let response = url(.courseRegistration)
+//                if let url = response as URLRequest? {
+//                    return url
+//
+//                }
+//            }
             
         } else {
-            if displayUrl == UrlModel.courceManagementHomePC.string() {
-                let response = url(.courceManagementHomeSP)
-                if let url = response as URLRequest? {
-                    return url
-    
-                }
-            }
+            return UrlModel.courceManagementHomePC.urlRequest()
+//            if displayUrl == UrlModel.courceManagementHomePC.string() {
+//                let response = url(.courceManagementHomeSP)
+//                if let url = response as URLRequest? {
+//                    return url
+//
+//                }
+//            }
         }
         
         
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            if displayUrl == UrlModel.manabaSP.string() {
-                let response = url(.manabaPC)
-                if let url = response as URLRequest? {
-                    return url
-                    
-                }
-            }
+            return UrlModel.manabaSP.urlRequest()
+//            if displayUrl == UrlModel.manabaSP.string() {
+//                let response = url(.manabaPC)
+//                if let url = response as URLRequest? {
+//                    return url
+//
+//                }
+//            }
             
         } else {
-            if displayUrl == UrlModel.manabaPC.string() {
-                let response = url(.manabaSP)
-                if let url = response as URLRequest? {
-                    return url
-                    
-                }
-            }
+            return UrlModel.manabaPC.urlRequest()
+//            if displayUrl == UrlModel.manabaPC.string() {
+//                let response = url(.manabaSP)
+//                if let url = response as URLRequest? {
+//                    return url
+//
+//                }
+//            }
         }
         return nil
         

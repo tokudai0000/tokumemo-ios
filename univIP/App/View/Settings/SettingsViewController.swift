@@ -19,7 +19,7 @@ final class SettingsViewController: BaseViewController {
     private let model = Model()
 //    private let urlModel = UrlModel()
     private let viewModel = SettingViewModel()
-    public var urlModel = UrlModel()
+//    public var urlModel = UrlModel()
     public let webViewModel = WebViewModel()
     
     var delegateMain : MainViewController?

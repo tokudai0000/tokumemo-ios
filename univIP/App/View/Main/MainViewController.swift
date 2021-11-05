@@ -76,9 +76,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
-        let image = UIImage(named: viewModel.isDisplayUrlForPC())
-        reversePCtoSP.setImage(image, for: .normal)
-        webView.load()
+//        let image = UIImage(named: viewModel.isDisplayUrlForPC())
+//        reversePCtoSP.setImage(image, for: .normal)
+//        webView.load()
     }
     
 
@@ -372,7 +372,7 @@ extension MainViewController: WKNavigationDelegate{
         
         // outlookログイン
         if webViewModel.isJudgeUrl(.outlook) {
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(webViewModel.mailAdress)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(webViewModel.userCAccountMailAdress)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
@@ -384,9 +384,9 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // 教務事務システム or マナバ のPC版かMB版かの判定
-        if let url = webViewModel.CMAndManabaPCtoMB() {
-            webView.load(url)
-        }
+//        if let url = webViewModel.CMAndManabaPCtoMB() {
+//            webView.load(url)
+//        }
         
         // 現在の画面がモバイル版かPC版かViewModelに登録
         webViewModel.judgeMobileOrPC()
@@ -402,7 +402,7 @@ extension MainViewController: WKNavigationDelegate{
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-        if webViewModel.displayUrl == urlModel.courseRegistration{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if webViewModel.displayUrl == UrlModel.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)

@@ -60,7 +60,7 @@ final class MainViewModel: NSObject {
             
             
         default:
-            return ("No Image", )
+            return ("No Image", UrlModel.manabaSP.urlRequest())
         }
     }
     
