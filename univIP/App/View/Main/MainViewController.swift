@@ -23,9 +23,9 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var activityIndicatorView: UIView!
     
     private let model = Model()
-//    private let urlModel = UrlModel()
     private let viewModel = MainViewModel()
-    private let webViewModel = WebViewModel.singleton //WebViewModel()
+    private let dataManager = DataManager.singleton
+    private let webViewModel = WebViewModel.singleton
 
 
     // MARK: - LifeCycle
@@ -39,23 +39,15 @@ final class MainViewController: BaseViewController, WKUIDelegate{
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        // 利用規約同意判定
-        firstBootSetup()
-        
-        // 登録者判定
-        if (!webViewModel.registrantDecision()) {
-            // "cアカウント"、"パスワード"の設定催促
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
-        }
-        
+
+        firstBootSetup()       // 利用規約同意判定
+        registrantDecision()   // 登録者判定
     }
 
 
     // MARK: - IBAction
-    
     @IBAction func settingMenuButton(_ sender: Any) {
+        
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
         vc.delegateMain = self
@@ -63,22 +55,24 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     }
     
     @IBAction func backButton(_ sender: Any) {
+        
         webView.goBack()
     }
     
     @IBAction func refreshButton(_ sender: Any) {
+        
         refresh()
-        navigationRightButtonOnOff(operation: "UP")
-    }
-
-    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        navigationRightButtonOnOff(operation: "REVERSE")
+        navigationRightButtonOnOff(operation: "DOWN")
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
 //        let image = UIImage(named: viewModel.isDisplayUrlForPC())
 //        reversePCtoSP.setImage(image, for: .normal)
 //        webView.load()
+    }
+    
+    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
+        navigationRightButtonOnOff(operation: "REVERSE")
     }
     
 
@@ -169,6 +163,16 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         if !agreementPersonDecision() {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
+        }
+    }
+    
+    private func registrantDecision() {
+        
+        if (!webViewModel.registrantDecision()) {
+            // "cアカウント"、"パスワード"の設定催促
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegateMain = self
         }
     }
     
