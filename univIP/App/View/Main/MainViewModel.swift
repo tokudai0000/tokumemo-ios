@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class MainViewModel: NSObject {
     
@@ -16,6 +17,9 @@ final class MainViewModel: NSObject {
     
     public var imageSystemName = "chevron.down"
     public var animationView = ""
+    
+    private let KEY_corceManagementId = "KEY_deviceId"
+    private let KEY_manabaId = "KEY_deviceId"
     
     //MARK: - STATE ステータス
     enum State {
@@ -34,32 +38,31 @@ final class MainViewModel: NSObject {
     public var next: ((NextView) -> Void)?
 
     
-    public func isDisplayUrlForPC() -> (String, URLRequest) { // boolにしたい
+    public func isDisplayUrlForPC() -> (UIImage?, URLRequest) {
         
         switch webViewModel.displayUrl {
         case UrlModel.courceManagementHomeSP.string():
-            UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
-            
-            return (R.image.spIcon.name, UrlModel.courceManagementHomeSP.urlRequest())
+            UserDefaults.standard.set("pc", forKey: KEY_corceManagementId)
+            return (UIImage(named: R.image.spIcon.name), UrlModel.courceManagementHomePC.urlRequest())
             
             
         case UrlModel.courceManagementHomePC.string():
-            UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
-            return (R.image.pcIcon.name, UrlModel.courceManagementHomeSP.urlRequest())
+            UserDefaults.standard.set("mobile", forKey: KEY_corceManagementId)
+            return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomeSP.urlRequest())
             
             
         case UrlModel.manabaSP.string():
-            UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
-            return (R.image.spIcon.name, UrlModel.manabaPC.urlRequest())
+            UserDefaults.standard.set("pc", forKey: KEY_manabaId)
+            return (UIImage(named: R.image.spIcon.name), UrlModel.manabaPC.urlRequest())
             
             
         case UrlModel.manabaPC.string():
-            UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
-            return (R.image.pcIcon.name, UrlModel.manabaSP.urlRequest())
+            UserDefaults.standard.set("mobile", forKey: KEY_manabaId)
+            return (UIImage(named: R.image.pcIcon.name), UrlModel.manabaSP.urlRequest())
             
             
         default:
-            return ("No Image", UrlModel.manabaSP.urlRequest())
+            return (UIImage(named: "No Image"), UrlModel.systemServiceList.urlRequest())
         }
     }
     
@@ -68,20 +71,20 @@ final class MainViewModel: NSObject {
         if DataManager.singleton.passedCertification {
             switch num {
             case 1: // 左
-                if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
+                if UserDefaults.standard.string(forKey: KEY_corceManagementId) == "pc" {
                     return webViewModel.url(.courceManagementHomePC)
                     
-                }else{
+                } else {
                     return webViewModel.url(.courceManagementHomeSP)
                     
                 }
                 
                 
             case 2: // 右
-                if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+                if UserDefaults.standard.string(forKey: KEY_manabaId) == "pc"{
                     return webViewModel.url(.manabaPC)
                     
-                }else{
+                } else {
                     return webViewModel.url(.manabaSP)
 
                 }
@@ -107,7 +110,7 @@ final class MainViewModel: NSObject {
     }
     
         
-    func viewPosisionType(operation: String, posisionY: Double) {
+    public func viewPosisionType(operation: String, posisionY: Double) {
         
         var ope = ""
         switch operation {
@@ -124,7 +127,7 @@ final class MainViewModel: NSObject {
         case "REVERSE":
             if (posisionY == 0.0){
                 ope = "DOWN"
-            }else{
+            } else {
                 ope = "UP"
             }
         default:

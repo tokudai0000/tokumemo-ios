@@ -67,9 +67,11 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
         
-//        let image = UIImage(named: viewModel.isDisplayUrlForPC())
-//        reversePCtoSP.setImage(image, for: .normal)
-//        webView.load()
+        let response = viewModel.isDisplayUrlForPC()
+        if let image = response.0 {
+            reversePCtoSP.setImage(image, for: .normal)
+            self.webView.load(response.1)
+        }
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
