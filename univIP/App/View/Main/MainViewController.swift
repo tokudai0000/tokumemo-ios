@@ -62,7 +62,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBAction func refreshButton(_ sender: Any) {
         
         refresh()
-        navigationRightButtonOnOff(operation: "DOWN")
+        navigationRightButtonOnOff(operation: "UP")
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
@@ -133,8 +133,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: String){
-        
-        viewModel.viewPosisionType(posisionY: webView.frame.origin.y)
+
+        viewModel.viewPosisionType(operation: operation, posisionY: webView.frame.origin.y)
         
         let image = UIImage(systemName: viewModel.imageSystemName)
         rightButton.setImage(image, for: .normal)

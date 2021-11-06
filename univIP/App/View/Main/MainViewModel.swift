@@ -14,7 +14,7 @@ final class MainViewModel: NSObject {
     private let webViewModel = WebViewModel.singleton //WebViewModel()
     private var requestUrl: NSURLRequest?
     
-    public var imageSystemName = ""
+    public var imageSystemName = "chevron.down"
     public var animationView = ""
     
     //MARK: - STATE ステータス
@@ -107,18 +107,44 @@ final class MainViewModel: NSObject {
     }
     
         
-    func viewPosisionType(posisionY: Double) {
+    func viewPosisionType(operation: String, posisionY: Double) {
         
-        switch posisionY {
-        case 0.0:
-            imageSystemName = "chevron.up"
-            animationView = "rightButtonUp"
-
+        var ope = ""
+        switch operation {
+        case "UP":
+            if (posisionY != 0.0){
+                ope = "UP"
+            }
             
+        case "DOWN":
+            if (posisionY == 0.0){
+                ope = "DOWN"
+            }
+            
+        case "REVERSE":
+            if (posisionY == 0.0){
+                ope = "DOWN"
+            }else{
+                ope = "UP"
+            }
         default:
+            return
+        }
+        
+        switch ope {
+        case "UP":
             imageSystemName = "chevron.down"
             animationView = "rightButtonDown"
+            return
+        case "DOWN":
+            imageSystemName = "chevron.up"
+            animationView = "rightButtonUp"
+            return
+        default:
+            animationView = ""
+            return
         }
+
     }
     
 }
