@@ -104,7 +104,11 @@
                                             <constraint firstAttribute="trailing" secondItem="RlI-hd-QIn" secondAttribute="trailing" constant="10" id="zNd-65-ycb"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-Hs-zL9">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="id6-fu-2ZM">
+                                        <rect key="frame" x="0.0" y="60" width="375" height="558"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.4956798427152318" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-Hs-zL9" userLabel="GrayLineTexture">
                                         <rect key="frame" x="0.0" y="59" width="375" height="1"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
@@ -123,10 +127,6 @@
                                             </tabBarItem>
                                         </items>
                                     </tabBar>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="id6-fu-2ZM">
-                                        <rect key="frame" x="0.0" y="60" width="375" height="558"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.4956798427152318" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
