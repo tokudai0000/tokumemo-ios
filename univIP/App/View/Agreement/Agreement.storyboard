@@ -19,7 +19,7 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edu-sd-MsI">
                                 <rect key="frame" x="25" y="54" width="364" height="611.5"/>
-                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.6788123310374149" green="0.94778938889999997" blue="0.9825405478" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -96,7 +96,7 @@
                     <connections>
                         <outlet property="agreementButtonNo" destination="UCF-8a-pF4" id="Rgt-oa-tsz"/>
                         <outlet property="agreementButtonYes" destination="All-6b-Aq6" id="adU-nq-K5Y"/>
-                        <outlet property="termsOfServiceView" destination="edu-sd-MsI" id="e8u-yh-xcV"/>
+                        <outlet property="termsTextView" destination="edu-sd-MsI" id="e8u-yh-xcV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

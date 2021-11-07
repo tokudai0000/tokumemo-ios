@@ -209,7 +209,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             
             let imageView = UIImageView(image:UIImage(named:"tokumemoIcon1")!)
             imageView.frame = CGRect(x:0, y:0, width:50, height:50);
-            imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2 + 10)
+            imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
             self.view.addSubview(launchScreenView)
             self.view.addSubview(imageView)

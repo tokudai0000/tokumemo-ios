@@ -10,7 +10,7 @@ import UIKit
 final class AgreementViewController: BaseViewController {
     
     //MARK:- IBOutlet
-    @IBOutlet weak var termsOfServiceView: UITextView!
+    @IBOutlet weak var termsTextView: UITextView!
     @IBOutlet weak var agreementButtonYes: UIButton!
     @IBOutlet weak var agreementButtonNo: UIButton!
     
@@ -29,8 +29,8 @@ final class AgreementViewController: BaseViewController {
         agreementButtonYes.layer.cornerRadius = 20.0
         agreementButtonNo.layer.cornerRadius = 20.0
         
-        termsOfServiceView.isEditable = false
-        termsOfServiceView.attributedText = rtfFileModel.load(url: R.file.agreementRtf())
+        termsTextView.isEditable = false
+        termsTextView.attributedText = rtfFileModel.load(url: R.file.agreementRtf())
     }
     
     
