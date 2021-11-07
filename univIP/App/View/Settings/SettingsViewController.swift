@@ -29,7 +29,7 @@ final class SettingsViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        self.contentView.frame.size.width = self.view.frame.width/2
         setup()
     }
     
@@ -70,19 +70,23 @@ final class SettingsViewController: BaseViewController {
     private func viewAnimated(scene:String){
         switch scene {
         case "settingsViewAppear":
+            //制約を追加　width:self.view.frame.width/2
+            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.width/2)
+            widthConstraint.isActive = true
             // メニューの位置を取得する
-            let menuPos = self.contentView.layer.position
+            let menuPos = self.view.frame.width/2
             // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
-            self.contentView.layer.position.x = -self.contentView.frame.width
+            self.contentView.layer.position.x = -self.view.frame.width/2
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0,
                 options: .curveEaseOut,
                 animations: {
-                    self.contentView.layer.position.x = menuPos.x
+                    self.contentView.layer.position.x = menuPos
             },
                 completion: { bool in
             })
+            
             
         case "settingsViewDisappear":
             UIView.animate(
@@ -94,8 +98,9 @@ final class SettingsViewController: BaseViewController {
                 },
                 completion: { _ in
                     self.dismiss(animated: false, completion: nil)
-                }
-            )
+                })
+            
+            
         default:
             return
         }
