@@ -200,9 +200,9 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     }
     
     // セクションの背景とテキストの色を決定するメソッド
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.6)
-    }
+//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        view.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.6)
+//    }
 
 
     /// 編集スタイル
