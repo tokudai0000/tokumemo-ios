@@ -16,7 +16,8 @@ final class PasswordSettingsViewController: BaseViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var cAccountTextField: UITextField!
-    @IBOutlet weak var passWordTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var dissmissButton: UIButton!
     
     public var delegate : MainViewController?
     
@@ -40,15 +41,26 @@ final class PasswordSettingsViewController: BaseViewController {
         if let cAccountText = cAccountTextField.text{
             DataManager.singleton.cAccount = cAccountText
         }
-        if let passWordText = passWordTextField.text{
+        if let passWordText = passwordTextField.text{
             DataManager.singleton.password = passWordText
         }
         
         label.text = "登録完了"
-        passWordTextField.text = ""
+        passwordTextField.text = ""
         
         delegate?.webView.load(webViewModel.url(.login)! as URLRequest)
     }
+    
+    @IBAction func passwordViewChangeButton(_ sender: Any) {
+        self.passwordTextField.isSecureTextEntry = !self.passwordTextField.isSecureTextEntry
+    }
+    
+    @IBAction func dissmissButton(_ sender: Any) {
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     
     
     // MARK:- Public func
@@ -79,16 +91,18 @@ final class PasswordSettingsViewController: BaseViewController {
     }
     
     private func setup() {
+        dissmissButton.layer.cornerRadius = 20.0
         registerButton.layer.cornerRadius = 20.0
-        passWordTextField.placeholder = "PassWord"
+        passwordTextField.placeholder = "PassWord"
         cAccountTextField.delegate = self
-        passWordTextField.delegate = self
+        passwordTextField.delegate = self
         
         if dataManager.cAccount == ""{
             cAccountTextField.placeholder = "cアカウント"
             label.text = "入力してください"
         }else{
             cAccountTextField.text = dataManager.cAccount
+            passwordTextField.text = dataManager.password
             label.text = "すでに登録済みです(上書き可能)"
         }
     }

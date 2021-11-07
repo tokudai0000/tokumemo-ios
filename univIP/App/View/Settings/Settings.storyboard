@@ -33,7 +33,7 @@
                                                 </constraints>
                                                 <state key="normal" title="編集"/>
                                                 <connections>
-                                                    <action selector="editAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qeH-U9-3jg"/>
+                                                    <action selector="editButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kJs-AH-3w4"/>
                                                 </connections>
                                             </button>
                                         </subviews>
