@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,7 +41,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="4Vz-e3-bUx"/>
                                                         </constraints>
-                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <color key="tintColor" systemColor="systemGrayColor"/>
                                                         <state key="normal" image="line.horizontal.3" catalog="system"/>
                                                         <connections>
                                                             <action selector="settingMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2V7-ge-fUf"/>
@@ -52,8 +53,10 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="fvS-HZ-UeL"/>
                                                         </constraints>
-                                                        <color key="tintColor" systemColor="labelColor"/>
-                                                        <state key="normal" image="arrowshape.turn.up.left" catalog="system"/>
+                                                        <color key="tintColor" systemColor="systemGrayColor"/>
+                                                        <state key="normal">
+                                                            <imageReference key="image" image="arrowshape.turn.up.left" catalog="system" symbolScale="default"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="backButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K3G-GU-XUR"/>
                                                         </connections>
@@ -86,7 +89,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="g8g-Kv-MHr"/>
                                                         </constraints>
-                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" image="chevron.down" catalog="system"/>
                                                         <connections>
                                                             <action selector="webViewMoveToUpDownButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fz6-4d-jKH"/>
@@ -182,14 +185,14 @@
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="pcIcon" width="500" height="500"/>
         <image name="tokumemoIcon2" width="1280" height="1280"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
