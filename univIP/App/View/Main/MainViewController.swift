@@ -207,8 +207,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
             launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
             launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
-            let imageView = UIImageView(image:UIImage(named:"tokumemoIcon1")!)
-            imageView.frame = CGRect(x:0, y:0, width:50, height:50);
+            let imageView = UIImageView(image: UIImage(named:"tokumemoIcon1")!)
+            imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
             imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
             self.view.addSubview(launchScreenView)
@@ -229,8 +229,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                 delay: 0.3,
                 options: UIView.AnimationOptions.curveEaseOut,
                 animations: { () in
-                    imageView.transform = CGAffineTransform(scaleX: 50, y: 50)
-                    imageView.alpha = 0.1
+                    imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
+                    imageView.alpha = 1
                 }, completion: { (Bool) in
                     imageView.removeFromSuperview()
                     launchScreenView.removeFromSuperview()
