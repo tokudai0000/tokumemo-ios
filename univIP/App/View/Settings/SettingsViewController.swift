@@ -29,7 +29,7 @@ final class SettingsViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.contentView.frame.size.width = self.view.frame.width/2
+        
         setup()
     }
     
