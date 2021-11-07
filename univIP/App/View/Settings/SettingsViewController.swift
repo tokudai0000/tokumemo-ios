@@ -71,12 +71,12 @@ final class SettingsViewController: BaseViewController {
         switch scene {
         case "settingsViewAppear":
             //制約を追加　width:self.view.frame.width/2
-            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.width/2)
+            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.width * (3 / 4) )
             widthConstraint.isActive = true
             // メニューの位置を取得する
-            let menuPos = self.view.frame.width/2
+            let menuPos = self.view.frame.width * (3 / 4)
             // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
-            self.contentView.layer.position.x = -self.view.frame.width/2
+            self.contentView.layer.position.x = -self.view.frame.width * (3 / 4)
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0,
