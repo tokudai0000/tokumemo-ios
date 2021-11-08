@@ -11,13 +11,13 @@ import UIKit
 final class PasswordSettingsViewController: BaseViewController {
     
     //MARK:- IBOutlet
-    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var viewTop: UIView!
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var registerButton: UIButton!
+    
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var dissmissButton: UIButton!
+    @IBOutlet weak var cAccountTextSizeLabel: UILabel!
+    @IBOutlet weak var passwordTextSizeLabel: UILabel!
     
     public var delegate : MainViewController?
     
@@ -31,7 +31,6 @@ final class PasswordSettingsViewController: BaseViewController {
         super.viewDidLoad()
         
         setup()
-        rtfFileOpen()
     }
     
     
@@ -45,9 +44,6 @@ final class PasswordSettingsViewController: BaseViewController {
             DataManager.singleton.password = passWordText
         }
         
-        label.text = "登録完了"
-        passwordTextField.text = ""
-        
         delegate?.webView.load(webViewModel.url(.login)! as URLRequest)
     }
     
@@ -60,7 +56,11 @@ final class PasswordSettingsViewController: BaseViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count)/10"
+        passwordTextSizeLabel.text = "\(passwordTextField.text?.count)/100"
+        return true
+    }
     
     
     // MARK:- Public func
@@ -76,35 +76,23 @@ final class PasswordSettingsViewController: BaseViewController {
         })
     }
     
-    private func rtfFileOpen(){
-        if let url = R.file.passwordRtf() {
-            do {
-                let terms = try Data(contentsOf: url)
-                let attributeString = try NSAttributedString(data: terms,
-                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
-                                                             documentAttributes: nil)
-                textView.attributedText = attributeString // 情報の保存方法について
-            } catch let error {
-                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
-            }
-        }
-    }
     
     private func setup() {
-        dissmissButton.layer.cornerRadius = 20.0
-        registerButton.layer.cornerRadius = 20.0
-        passwordTextField.placeholder = "PassWord"
+        
+        passwordTextField.isSecureTextEntry = true
+        registerButton.layer.cornerRadius = 5.0
+        cAccountTextField.setUnderLine()
+        passwordTextField.setUnderLine()
+        
         cAccountTextField.delegate = self
         passwordTextField.delegate = self
         
-        if dataManager.cAccount == ""{
-            cAccountTextField.placeholder = "cアカウント"
-            label.text = "入力してください"
-        }else{
-            cAccountTextField.text = dataManager.cAccount
-            passwordTextField.text = dataManager.password
-            label.text = "すでに登録済みです(上書き可能)"
-        }
+
+        cAccountTextField.text = dataManager.cAccount
+        passwordTextField.text = dataManager.password
+        cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count ?? 0)/10"
+        passwordTextSizeLabel.text = "\(passwordTextField.text?.count ?? 0)/100"
+        
     }
 }
 
@@ -129,3 +117,17 @@ extension PasswordSettingsViewController:UITextFieldDelegate{
     }
 }
 
+extension UITextField {
+    func setUnderLine() {
+        // 枠線を非表示にする
+        borderStyle = .none
+        let underline = UIView()
+        // heightにはアンダーラインの高さを入れる
+        underline.frame = CGRect(x: 0, y: frame.height, width: frame.width, height: 0.5)
+        // 枠線の色
+        underline.backgroundColor = .white
+        addSubview(underline)
+        // 枠線を最前面に
+        bringSubviewToFront(underline)
+    }
+}
