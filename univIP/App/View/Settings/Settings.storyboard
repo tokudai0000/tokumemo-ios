@@ -71,6 +71,7 @@
                                                         </label>
                                                     </subviews>
                                                 </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.82076598749999996" green="0.94778938889999997" blue="0.9825405478" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>

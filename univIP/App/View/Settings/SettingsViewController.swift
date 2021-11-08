@@ -29,7 +29,12 @@ final class SettingsViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        self.tableView.allowsMultipleSelection = true
+          
+          // Edit状態のときに複数選択を許可する
+          // これを設定すると左側に自動でチェックマークが表示される
+//          self.tableView.allowsMultipleSelectionDuringEditing = true
+      
         setup()
     }
     
@@ -42,18 +47,38 @@ final class SettingsViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
-        
-        tableView.isEditing = viewModel.editSituation // 編集モード
+//        tableView.setEditing(viewModel.editSituation, animated: true)
+//        tableView.isEditing = viewModel.editSituation // 編集モード
         if viewModel.editSituation {
             editButton.setTitle("終了", for: .normal)
-//            tableView.
+            self.tableView.allowsMultipleSelectionDuringEditing = true
+//            if tableView.isEditing {
+//                for i in 0 ..< viewModel.allCellList.count {
+//                    if viewModel.allCellList[0][i].display {
+//                        self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
+//                    }
+//                }
+//            }
+
         }else{
             editButton.setTitle("編集", for: .normal)
-        
+            self.tableView.allowsMultipleSelectionDuringEditing = false
+
         }
-        
+        tableView.setEditing(viewModel.editSituation, animated: true)
         viewModel.editSituation = !viewModel.editSituation // 編集モード, 使用モード反転
+        
         self.tableView.reloadData()
+        
+        if !viewModel.editSituation {
+            for i in 0 ..< viewModel.allCellList[0].count {
+                print(viewModel.allCellList[0][i].display)
+                if viewModel.allCellList[0][i].display {
+                    self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
+                }
+            }
+            
+        }
     }
     
     
@@ -125,6 +150,9 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
 
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
         return CGFloat(viewModel.sectionHight)
     }
     
@@ -140,18 +168,31 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return viewModel.allCellList[section].count
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if tableView.isEditing{
+//            if viewModel.allCellList[indexPath.section][indexPath.row].display {
+//                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+//            }
+//        }
+    }
+    
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let TableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-
-        TableCell.textLabel!.text = viewModel.allCellList[indexPath.section][indexPath.item].name
-        TableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][indexPath.item].category
-        TableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
-        TableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        TableCell.detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
         
-        return TableCell
+        let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
+
+        tableCell.textLabel!.text = viewModel.allCellList[indexPath.section][indexPath.item].name
+        tableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][indexPath.item].category
+        tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
+        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
+        tableCell.detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
+        
+        // ここ
+//        TableCell.accessoryType = tableView.indexPathsForSelectedRows?.contains(indexPath) == true ?  .checkmark : .none
+//        TableCell.selectionStyle = .none // 選択時に背景色を変えないため
+        
+        return tableCell
     }
     
     
@@ -175,14 +216,21 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// 「編集モード」追加、削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-            viewModel.allCellList[indexPath.section][indexPath.row].display = false
-        }else{
-            viewModel.allCellList[indexPath.section][indexPath.row].display = true
+        if tableView.isEditing {
+            for i in 0 ..< viewModel.allCellList.count {
+                if viewModel.allCellList[0][i].display {
+                    self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
+                }
+            }
         }
-        
-        viewModel.saveCellList(lists: viewModel.allCellList[0])
-        self.tableView.reloadData()
+//        if editingStyle == .delete{
+//            viewModel.allCellList[indexPath.section][indexPath.row].display = false
+//        }else{
+//            viewModel.allCellList[indexPath.section][indexPath.row].display = true
+//        }
+//
+//        viewModel.saveCellList(lists: viewModel.allCellList[0])
+//        self.tableView.reloadData()
     }
     
     
@@ -203,24 +251,37 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
 //    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 //        view.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.6)
 //    }
-
+    // UITableViewDelegate
 
     /// 編集スタイル
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        
-        if tableView.isEditing{
-            if viewModel.allCellList[indexPath.section][indexPath.row].display {
-                return .delete
-            }else{
-                return .insert
-            }
-        }
-        return .none
-    }
+//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+//
+//
+//        if tableView.isEditing{
+//            if viewModel.allCellList[indexPath.section][indexPath.row].display {
+//                return .delete
+//            }else{
+//                return .insert
+//            }
+//        }
+//        return .none
+//    }
 
     
     // セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // 編集モードでの選択時処理無効
+        if !viewModel.editSituation {
+            // チェックボックスTrueの場合
+            if indexPath.section == 0 {
+                viewModel.allCellList[indexPath.section][indexPath.row].display = true
+
+            }
+
+            viewModel.saveCellList(lists: viewModel.allCellList[0])
+            return
+        }
         
         self.dismiss(animated: false, completion: nil)
         
@@ -374,6 +435,16 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         default:
             return
         }
+    }
+    
+    // 編集モード時、チェックが外された時
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            viewModel.allCellList[indexPath.section][indexPath.row].display = false
+
+        }
+        viewModel.saveCellList(lists: viewModel.allCellList[0])
     }
     
     /// 編集できるセクションを限定
