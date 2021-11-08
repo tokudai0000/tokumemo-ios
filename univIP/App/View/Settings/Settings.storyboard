@@ -26,7 +26,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3A-kR-AIE">
                                                 <rect key="frame" x="218" y="0.0" width="32" height="32"/>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="8tC-IN-Sgc"/>
                                                     <constraint firstAttribute="width" constant="32" id="HuT-3V-ReQ"/>
@@ -37,7 +37,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.052072979509999999" green="0.66362327340000005" blue="0.9825405478" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="QCp-bT-PVG"/>
                                             <constraint firstAttribute="trailing" secondItem="Z3A-kR-AIE" secondAttribute="trailing" id="lbi-rV-CTP"/>
@@ -48,7 +48,7 @@
                                         <rect key="frame" x="0.0" y="30" width="250" height="822"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" editingAccessoryType="disclosureIndicator" textLabel="99T-8u-d42" detailTextLabel="F1m-Tx-WuF" style="IBUITableViewCellStyleSubtitle" id="Eec-UG-1uG">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" textLabel="99T-8u-d42" detailTextLabel="F1m-Tx-WuF" style="IBUITableViewCellStyleSubtitle" id="Eec-UG-1uG">
                                                 <rect key="frame" x="0.0" y="50" width="250" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eec-UG-1uG" id="KSK-Xx-HVl">

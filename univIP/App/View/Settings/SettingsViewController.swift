@@ -45,10 +45,10 @@ final class SettingsViewController: BaseViewController {
         
         tableView.isEditing = viewModel.editSituation // 編集モード
         if viewModel.editSituation {
-            editButton.titleLabel?.text = "編集"
-            
+            editButton.setTitle("終了", for: .normal)
+//            tableView.
         }else{
-            editButton.titleLabel?.text = "終了"
+            editButton.setTitle("編集", for: .normal)
         
         }
         
