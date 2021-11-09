@@ -55,18 +55,18 @@ class BaseViewController: UIViewController {
     }
 
     
-    /// 画面が現れる直前
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // 通知セット
-        let notification = NotificationCenter.default
-        // キーボードが現れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
-                                 name: UIResponder.keyboardWillShowNotification, object: nil)
-        // キーボードが隠れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
-                                 name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+//    /// 画面が現れる直前
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        // 通知セット
+//        let notification = NotificationCenter.default
+//        // キーボードが現れる直前
+//        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
+//                                 name: UIResponder.keyboardWillShowNotification, object: nil)
+//        // キーボードが隠れる直前
+//        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
+//                                 name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
     
     // ステータスバーを表示(true),非表示(false)
     override var prefersStatusBarHidden: Bool {
@@ -74,63 +74,63 @@ class BaseViewController: UIViewController {
     }
     
     /// キーボードが現れる直前、画面全体を上げる
-    @objc func keyboardWillShow(notification: Notification?) {
-        guard keyboardSafeArea != nil,
-            notification != nil else {
-            return
-        }
-        guard let userInfo = notification!.userInfo as? [String: Any] else {
-            return
-        }
-        guard let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-        guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
-            return
-        }
-        let keyboardSize = keyboardInfo.cgRectValue.size
-        // キーボドに隠れるか判定する
-//        print("self.view.frame: \(self.view.frame)")
-        let safeAreaTop:CGFloat = 5.0
-//        print("keyboardSize.height: \(keyboardSize.height)")
-//        print("keyboardSafeArea!.maxY: \(keyboardSafeArea!.maxY)")
-        let hide = (self.view.frame.height - safeAreaTop - keyboardSize.height) - keyboardSafeArea!.maxY
-        if hide < 0.0 {
-            // キーボドに隠れる。隠れる分(hide)だけ上げる
-            if UIApplication.shared.applicationState == .background {
-                // フォアグランドに戻ったとき画面が上がらない不具合対応
-                // DispatchQueue.mainThread では改善しなかった。（メイン判定に問題があるのかも知れない）
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: duration + 0.2, animations: { () in
-                        let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
-                        self.view.transform = transform
-                    })
-                }
-            } else {
-                UIView.animate(withDuration: duration + 0.2, animations: { () in
-                    let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
-                    self.view.transform = transform
-                })
-            }
-        }
-    }
+//    @objc func keyboardWillShow(notification: Notification?) {
+//        guard keyboardSafeArea != nil,
+//            notification != nil else {
+//            return
+//        }
+//        guard let userInfo = notification!.userInfo as? [String: Any] else {
+//            return
+//        }
+//        guard let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+//            return
+//        }
+//        guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+//            return
+//        }
+//        let keyboardSize = keyboardInfo.cgRectValue.size
+//        // キーボドに隠れるか判定する
+////        print("self.view.frame: \(self.view.frame)")
+//        let safeAreaTop:CGFloat = 5.0
+////        print("keyboardSize.height: \(keyboardSize.height)")
+////        print("keyboardSafeArea!.maxY: \(keyboardSafeArea!.maxY)")
+//        let hide = (self.view.frame.height - safeAreaTop - keyboardSize.height) - keyboardSafeArea!.maxY
+//        if hide < 0.0 {
+//            // キーボドに隠れる。隠れる分(hide)だけ上げる
+//            if UIApplication.shared.applicationState == .background {
+//                // フォアグランドに戻ったとき画面が上がらない不具合対応
+//                // DispatchQueue.mainThread では改善しなかった。（メイン判定に問題があるのかも知れない）
+//                DispatchQueue.main.async {
+//                    UIView.animate(withDuration: duration + 0.2, animations: { () in
+//                        let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
+//                        self.view.transform = transform
+//                    })
+//                }
+//            } else {
+//                UIView.animate(withDuration: duration + 0.2, animations: { () in
+//                    let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
+//                    self.view.transform = transform
+//                })
+//            }
+//        }
+//    }
     
-    /// キーボードが隠れる直前、画面全体を元に戻す
-    @objc func keyboardWillHide(notification: Notification?) {
-        guard keyboardSafeArea != nil,
-            notification != nil else {
-                return
-        }
-        guard let userInfo = notification!.userInfo as? [String: Any] else {
-            return
-        }
-        guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
-            return
-        }
-        UIView.animate(withDuration: duration + 0.2, animations: { () in
-            self.view.transform = CGAffineTransform.identity
-        })
-    }
+//    /// キーボードが隠れる直前、画面全体を元に戻す
+//    @objc func keyboardWillHide(notification: Notification?) {
+//        guard keyboardSafeArea != nil,
+//            notification != nil else {
+//                return
+//        }
+//        guard let userInfo = notification!.userInfo as? [String: Any] else {
+//            return
+//        }
+//        guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+//            return
+//        }
+//        UIView.animate(withDuration: duration + 0.2, animations: { () in
+//            self.view.transform = CGAffineTransform.identity
+//        })
+//    }
     
     
     // MARK: - Public func
