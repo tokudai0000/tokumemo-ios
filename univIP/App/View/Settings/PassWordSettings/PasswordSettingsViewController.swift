@@ -69,10 +69,10 @@ final class PasswordSettingsViewController: BaseViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count)/10"
-        passwordTextSizeLabel.text = "\(passwordTextField.text?.count)/100"
-        return true
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count ?? 1)/10"
+        passwordTextSizeLabel.text = "\(passwordTextField.text?.count ?? 1)/100"
     }
     
     
