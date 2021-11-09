@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PasswordSettingsViewController: BaseViewController {
+final class PasswordSettingsViewController: BaseViewController, UITextFieldDelegate {
     
     //MARK:- IBOutlet
     @IBOutlet weak var viewTop: UIView!
@@ -18,6 +18,8 @@ final class PasswordSettingsViewController: BaseViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var cAccountTextSizeLabel: UILabel!
     @IBOutlet weak var passwordTextSizeLabel: UILabel!
+    @IBOutlet weak var cAccountUnderLine: UIView!
+    @IBOutlet weak var passwordUnderLine: UIView!
     
     public var delegate : MainViewController?
     
@@ -91,6 +93,8 @@ final class PasswordSettingsViewController: BaseViewController {
     
     
     private func setup() {
+        cAccountTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+        passwordTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         
         passwordTextField.isSecureTextEntry = true
         registerButton.layer.cornerRadius = 5.0
@@ -163,10 +167,7 @@ final class PasswordSettingsViewController: BaseViewController {
             self.registerButton.transform = CGAffineTransform.identity
         })
     }
-}
-
-// MARK:- TextField
-extension PasswordSettingsViewController:UITextFieldDelegate{
+    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
         var frame = registerButton.frame
@@ -185,7 +186,71 @@ extension PasswordSettingsViewController:UITextFieldDelegate{
         super.keyboardSafeArea = frame // super.viewからの絶対座標
         return true //true=キーボードを表示する
     }
+    
+    // 入力開始
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        switch textField.tag {
+        case 0:
+            cAccountUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+        case 1:
+            passwordUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+        default:
+            return
+        }
+    }
+
+    // フォーカスが外れた
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch textField.tag {
+        case 0:
+            cAccountUnderLine.backgroundColor = .lightGray
+        case 1:
+            passwordUnderLine.backgroundColor = .lightGray
+        default:
+            return
+        }
+    }
 }
+
+//// MARK:- TextField
+//extension PasswordSettingsViewController:UITextFieldDelegate {
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
+//        var frame = registerButton.frame
+//        // super.viewからの絶対座標に変換する
+//        if var pv = registerButton.superview {
+//            while pv != super.view {
+//                if let gv = pv.superview {
+//                    frame = pv.convert(frame, to: gv)
+//                    pv = gv
+//                }else{
+//                    break
+//                }
+//            }
+//        }
+//
+//        super.keyboardSafeArea = frame // super.viewからの絶対座標
+//        return true //true=キーボードを表示する
+//    }
+//
+//    // 入力開始
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        switch textField.tag {
+//        case 0;
+//            cAccountUnderLine.
+//        case 1;
+//            c
+//        default;
+//            return
+//        }
+////        self.keyboardCloseGesture?.enabled = true
+//    }
+//
+//    // フォーカスが外れた
+//    func textFieldDidEndEditing(textField: UITextField) {
+////        self.keyboardCloseGesture?.enabled = false
+//    }
+//}
 
 extension UITextField {
     func setUnderLine() {
@@ -200,4 +265,6 @@ extension UITextField {
         // 枠線を最前面に
         bringSubviewToFront(underline)
     }
+    
+    
 }
