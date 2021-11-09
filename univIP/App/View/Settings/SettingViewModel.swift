@@ -11,10 +11,10 @@ final class SettingViewModel: NSObject {
     
     private let model = Model()
     
-    var sectionHight:Int = 2
+    var sectionHight:Int = 15
     var cellHight:Int = 44
     var allCellList:[[CellList]] =  [[],
-                                     [CellList(id:100, name: "パスワード設定", category: "", display: true),
+                                     [CellList(id:100, name: "パスワード", category: "", display: true),
                                       CellList(id:101, name: "このアプリについて", category: "", display: true)]]
     var cellList:[CellList] = []
     let cellKey = "CellKey"

@@ -31,7 +31,9 @@
                                                     <constraint firstAttribute="height" constant="32" id="8tC-IN-Sgc"/>
                                                     <constraint firstAttribute="width" constant="32" id="HuT-3V-ReQ"/>
                                                 </constraints>
-                                                <state key="normal" title="編集"/>
+                                                <state key="normal" title="編集">
+                                                    <color key="titleColor" red="0.052072979509999999" green="0.66362327340000005" blue="0.9825405478" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="editButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kJs-AH-3w4"/>
                                                 </connections>

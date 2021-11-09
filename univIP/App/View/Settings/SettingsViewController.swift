@@ -78,7 +78,9 @@ final class SettingsViewController: BaseViewController {
     private func setup() {
         
         viewModel.firstBootDecision() // 初回起動時処理
-        tableView.separatorColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 0.5)
+        tableView.separatorColor = UIColor(white: 0, alpha: 0)
+//        tableView.separatorEffect = nil
+//        tableView.isPagingEnabled = true
         viewModel.allCellList[0] = viewModel.loadCellList()
         self.tableView.reloadData()
     }
@@ -142,9 +144,9 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        }
+//        if section == 0 {
+//            return 0
+//        }
         return CGFloat(viewModel.sectionHight)
     }
     
@@ -154,6 +156,11 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return viewModel.allCellList.count
     }
     
+    // セクションのタイトル
+    func tableView(_ tableView: UITableView,
+                   titleForHeaderInSection section: Int) -> String? {
+        return model.sectionList[section] as? String
+    }
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

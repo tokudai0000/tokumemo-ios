@@ -60,6 +60,7 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
         }
         
         delegate?.webView.load(webViewModel.url(.login)! as URLRequest)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func passwordViewChangeButton(_ sender: Any) {

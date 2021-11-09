@@ -41,6 +41,10 @@ final class Model: NSObject {
                                CellList(id:11, name: "マナバPC版", category: "manaba", display: true),
                                CellList(id:12, name: "キャリア支援室", category: "就職活動", display: true),
                                CellList(id:13, name: "履修登録", category: "教務事務システム", display: true)]
+    // Sectionのタイトル
+    let sectionList: NSArray = [
+        "サービス",
+        "設定"]
     
     let agreementVersion = "aV_1"
 }
