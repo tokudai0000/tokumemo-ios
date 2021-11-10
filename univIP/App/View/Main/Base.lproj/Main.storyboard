@@ -131,7 +131,7 @@
                                         </items>
                                     </tabBar>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="QXx-Hs-zL9" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="bottom" id="2zu-Ca-KT2"/>
                                     <constraint firstAttribute="trailing" secondItem="gcY-Bk-hxx" secondAttribute="trailing" id="6o0-xc-dMQ"/>
@@ -154,7 +154,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P6G-LK-c80" secondAttribute="trailing" id="5QF-ff-Eco"/>
                             <constraint firstItem="P6G-LK-c80" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7r1-Oz-tlw"/>
