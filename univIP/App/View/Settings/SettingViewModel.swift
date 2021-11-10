@@ -5,34 +5,32 @@
 //  Created by Akihiro Matsuyama on 2021/10/28.
 //
 
-import UIKit
+import Foundation
 
 final class SettingViewModel: NSObject {
     
+    public let sectionHight:Int = 15
+    public let cellHight:Int = 44
+    public var editSituation = true
+    
     private let model = Model()
+    private var dataManager = DataManager.singleton
     
-    var sectionHight:Int = 15
-    var cellHight:Int = 44
-    var dataManager = DataManager.singleton
-//    var allCellList:[[CellList]] =  [[], []]
-    var cellList:[CellList] = []
-    
-    let cellKey = "CellKey"
-    var editSituation = true
-    
+    /// セルID
+    private let KEY_settingCellListId = "KEY_settingCellListId"
     func saveCellList(lists:[CellList]){
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        UserDefaults.standard.set(data, forKey: cellKey)
+        UserDefaults.standard.set(data, forKey: KEY_settingCellListId)
     }
     
     func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: cellKey),
+        guard let data = UserDefaults.standard.data(forKey: KEY_settingCellListId),
               let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
-            return cellList
+            return []
         }
             
         return bookmarks

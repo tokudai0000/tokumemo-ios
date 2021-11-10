@@ -29,11 +29,6 @@ final class SettingsViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        self.tableView.allowsMultipleSelection = true
-        
-        // Edit状態のときに複数選択を許可する
-        // これを設定すると左側に自動でチェックマークが表示される
-        //          self.tableView.allowsMultipleSelectionDuringEditing = true
         
         setup()
     }
@@ -79,9 +74,6 @@ final class SettingsViewController: BaseViewController {
         
         viewModel.firstBootDecision() // 初回起動時処理
         tableView.separatorColor = UIColor(white: 0, alpha: 0)
-//        tableView.separatorEffect = nil
-//        tableView.isPagingEnabled = true
-//        viewModel.allCellList[0] = viewModel.loadCellList()
         self.tableView.reloadData()
     }
     
@@ -144,9 +136,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        if section == 0 {
-//            return 0
-//        }
         return CGFloat(viewModel.sectionHight)
     }
     
