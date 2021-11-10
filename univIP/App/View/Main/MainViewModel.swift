@@ -43,7 +43,7 @@ final class MainViewModel: NSObject {
         switch webViewModel.displayUrl {
         case UrlModel.courceManagementHomeSP.string():
             UserDefaults.standard.set("pc", forKey: KEY_corceManagementId)
-            return (UIImage(named: R.image.spIcon.name), UrlModel.courceManagementHomePC.urlRequest())
+            return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomePC.urlRequest())
             
             
         case UrlModel.courceManagementHomePC.string():
