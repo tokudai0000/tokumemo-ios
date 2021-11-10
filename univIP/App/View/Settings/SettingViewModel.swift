@@ -13,8 +13,8 @@ final class SettingViewModel: NSObject {
     
     var sectionHight:Int = 15
     var cellHight:Int = 44
-    
-    var allCellList:[[CellList]] =  [[], []]
+    var dataManager = DataManager.singleton
+//    var allCellList:[[CellList]] =  [[], []]
     var cellList:[CellList] = []
     
     let cellKey = "CellKey"
@@ -42,44 +42,51 @@ final class SettingViewModel: NSObject {
     private let KEY_versionId = "KEY_versionId"
     func firstBootDecision() {
     
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        let lastTimeVersion = UserDefaults.standard.string(forKey: KEY_versionId)
-        
-        // アップデート直後か判定する
-        if lastTimeVersion != version {
-            var serviceL:[CellList] = []      // 並び順などを反映するリスト
+        var serviceL:[CellList] = []      // 並び順などを反映するcell
+                
+        // アプリ起動後、初回の表示か判定
+        if dataManager.allCellList[0].isEmpty {
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String // 今のバージョン
+            let lastTimeVersion = UserDefaults.standard.string(forKey: KEY_versionId)                       // 前回ログイン時のバージョン
+            UserDefaults.standard.set(version, forKey: KEY_versionId)                                       // 更新
             
-            if lastTimeVersion == nil { // 初回
-                allCellList[0].append(contentsOf: model.serviceCellLists)
-                allCellList[1].append(contentsOf: model.settingCellLists)
-                
-            } else {
-                let lastL = loadCellList()        // 前回のリスト
-                var newL = model.serviceCellLists // 新しいリスト
-                
-                for item in lastL {
-                    serviceL.append(contentsOf: newL[item.id])
-                }
-                for i in 0 ..< lastL.count {
-                    
-                    if //lastL.count <= i {         // 新しい機能は新規追加
-                        serviceL.append(newL[i])
-                        
-                    }else{
-                        newL[lastL[i].id].display = lastL[i].display
-                        serviceL.append(newL[lastL[i].id])
-                    }
-                }
-                allCellList[0].append(contentsOf: serviceL)
-                allCellList[1].append(contentsOf: model.settingCellLists)
+            // 初回の利用者か判定
+            if lastTimeVersion == nil {
+                dataManager.allCellList[0].append(contentsOf: model.serviceCellLists)
+                dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
+                saveCellList(lists: dataManager.allCellList[0])
+                return
             }
             
+            // アップデート後、初回の表示か判定
+            if lastTimeVersion != version {
+                // cellの内容を更新する
+                let lastL = loadCellList()        // 前回のcell
+                var newL = model.serviceCellLists // 新しいcell
+                
+                for item in lastL {
+                    // 前回のcellのidで新しいcellのidを検索（ユーザーが指定した並び順を更新しても保持できる）
+                    // 前回のcellのdisplayを検索した新しいcellへ引き継ぎ
+                    // 引き継ぎした内容をserviceLに追加後、newLから削除することで新規機能をまとめて追加できる
+                    if let userIndex = newL.firstIndex(where: {$0.id == item.id}) {
+                        var edit = newL[userIndex]
+                        edit.display = item.display
+                        serviceL.append(edit)
+                        newL.remove(at: userIndex)
+                    }
+                    // elseには前回にはあったが、今回削除された機能の場合追加しないように通る
+                }
+                serviceL.append(contentsOf: newL)
             
-            UserDefaults.standard.set(version, forKey: KEY_versionId) // 更新
-            
+                dataManager.allCellList[0].append(contentsOf: serviceL)
+                
+            } else {
+                dataManager.allCellList[0].append(contentsOf: loadCellList())
 
-            print(cellList)
-            saveCellList(lists: cellList)
+            }
+            saveCellList(lists: dataManager.allCellList[0])
+            dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
         }
+        
     }
 }

@@ -18,6 +18,7 @@ final class DataManager {
     public var password = "q2KF2ZaxPtkL7Uu"
     public var passedCertification = false // ログインできていることを保証
     
+    public var allCellList:[[CellList]] =  [[], []]
     
     /// KeychainAccess インスタンス
     var keychain: Keychain {

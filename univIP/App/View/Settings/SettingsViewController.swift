@@ -63,9 +63,9 @@ final class SettingsViewController: BaseViewController {
         self.tableView.reloadData()
         
         if !viewModel.editSituation {
-            for i in 0 ..< viewModel.allCellList[0].count {
-                print(viewModel.allCellList[0][i].display)
-                if viewModel.allCellList[0][i].display {
+            for i in 0 ..< dataManager.allCellList[0].count {
+                print(dataManager.allCellList[0][i].display)
+                if dataManager.allCellList[0][i].display {
                     self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
             }
@@ -81,7 +81,7 @@ final class SettingsViewController: BaseViewController {
         tableView.separatorColor = UIColor(white: 0, alpha: 0)
 //        tableView.separatorEffect = nil
 //        tableView.isPagingEnabled = true
-        viewModel.allCellList[0] = viewModel.loadCellList()
+//        viewModel.allCellList[0] = viewModel.loadCellList()
         self.tableView.reloadData()
     }
     
@@ -153,7 +153,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セクション数
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.allCellList.count
+        return dataManager.allCellList.count
     }
     
     // セクションのタイトル
@@ -164,7 +164,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.allCellList[section].count
+        return dataManager.allCellList[section].count
     }
     
     
@@ -173,8 +173,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
         
-        tableCell.textLabel!.text = viewModel.allCellList[indexPath.section][indexPath.item].name
-        tableCell.detailTextLabel?.text = viewModel.allCellList[indexPath.section][indexPath.item].category
+        tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].name
+        tableCell.detailTextLabel?.text = dataManager.allCellList[indexPath.section][indexPath.item].category
         tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         tableCell.detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
@@ -194,10 +194,10 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let todo = viewModel.allCellList[sourceIndexPath.section][sourceIndexPath.row]
-        viewModel.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        viewModel.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        viewModel.saveCellList(lists: viewModel.allCellList[0])
+        let todo = dataManager.allCellList[sourceIndexPath.section][sourceIndexPath.row]
+        dataManager.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        dataManager.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
+        viewModel.saveCellList(lists: dataManager.allCellList[0])
     }
     
     
@@ -206,7 +206,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         if !viewModel.editSituation {
             return CGFloat(viewModel.cellHight)
         }else{
-            if !viewModel.allCellList[indexPath.section][indexPath.row].display {
+            if !dataManager.allCellList[indexPath.section][indexPath.row].display {
                 return 0
             }else{
                 return CGFloat(viewModel.cellHight)
@@ -222,11 +222,11 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         if !viewModel.editSituation {
             // チェックボックスTrueの場合
             if indexPath.section == 0 {
-                viewModel.allCellList[indexPath.section][indexPath.row].display = true
+                dataManager.allCellList[indexPath.section][indexPath.row].display = true
                 
             }
             
-            viewModel.saveCellList(lists: viewModel.allCellList[0])
+            viewModel.saveCellList(lists: dataManager.allCellList[0])
             return
         }
         
@@ -236,7 +236,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             return
         }
         
-        let cellId = viewModel.allCellList[indexPath[0]][indexPath[1]].id
+        let cellId = dataManager.allCellList[indexPath[0]][indexPath[1]].id
         
         switch cellId {
         case 0: // Webサイト
@@ -388,10 +388,10 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
-            viewModel.allCellList[indexPath.section][indexPath.row].display = false
+            dataManager.allCellList[indexPath.section][indexPath.row].display = false
             
         }
-        viewModel.saveCellList(lists: viewModel.allCellList[0])
+        viewModel.saveCellList(lists: dataManager.allCellList[0])
     }
     
     /// 編集できるセクションを限定
