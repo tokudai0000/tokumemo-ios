@@ -13,10 +13,10 @@ final class SettingViewModel: NSObject {
     
     var sectionHight:Int = 15
     var cellHight:Int = 44
-    var allCellList:[[CellList]] =  [[],
-                                     [CellList(id:100, name: "パスワード", category: "", display: true),
-                                      CellList(id:101, name: "このアプリについて", category: "", display: true)]]
+    
+    var allCellList:[[CellList]] =  [[], []]
     var cellList:[CellList] = []
+    
     let cellKey = "CellKey"
     var editSituation = true
     
@@ -38,25 +38,46 @@ final class SettingViewModel: NSObject {
         return bookmarks
     }
     
+    /// バージョンID
+    private let KEY_versionId = "KEY_versionId"
     func firstBootDecision() {
+    
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        let versionKey = "ver_" + version
-        // 保存されたデータがversionいつの物か判定
-        print(UserDefaults.standard.string(forKey: "VersionKey"))
-        if UserDefaults.standard.string(forKey: "VersionKey") != versionKey{
-            UserDefaults.standard.set(versionKey, forKey: "VersionKey") // 更新
+        let lastTimeVersion = UserDefaults.standard.string(forKey: KEY_versionId)
+        
+        // アップデート直後か判定する
+        if lastTimeVersion != version {
+            var serviceL:[CellList] = []      // 並び順などを反映するリスト
             
-            let legacyCellLists = loadCellList()
-            var newCellLists = model.cellList
-            
-            for i in 0 ..< newCellLists.count{
-                if legacyCellLists.count <= i{
-                    cellList.append(newCellLists[i])
-                }else{
-                    newCellLists[legacyCellLists[i].id].display = legacyCellLists[i].display
-                    cellList.append(newCellLists[legacyCellLists[i].id])
+            if lastTimeVersion == nil { // 初回
+                allCellList[0].append(contentsOf: model.serviceCellLists)
+                allCellList[1].append(contentsOf: model.settingCellLists)
+                
+            } else {
+                let lastL = loadCellList()        // 前回のリスト
+                var newL = model.serviceCellLists // 新しいリスト
+                
+                for item in lastL {
+                    serviceL.append(contentsOf: newL[item.id])
                 }
+                for i in 0 ..< lastL.count {
+                    
+                    if //lastL.count <= i {         // 新しい機能は新規追加
+                        serviceL.append(newL[i])
+                        
+                    }else{
+                        newL[lastL[i].id].display = lastL[i].display
+                        serviceL.append(newL[lastL[i].id])
+                    }
+                }
+                allCellList[0].append(contentsOf: serviceL)
+                allCellList[1].append(contentsOf: model.settingCellLists)
             }
+            
+            
+            UserDefaults.standard.set(version, forKey: KEY_versionId) // 更新
+            
+
             print(cellList)
             saveCellList(lists: cellList)
         }
