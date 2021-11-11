@@ -9,8 +9,8 @@
 import Foundation
 
 struct Model {
-    /// 利用規約の更新したらバージョンあげること
-    let agreementVersion = "1.0.0"
+    /// 利用規約、ユーザーポリシーの更新したらバージョンあげること
+    let agreementVersion = "1.0.0."
     /// 更新日時記録
     /// 1.0.0: 2021/11/11
     
