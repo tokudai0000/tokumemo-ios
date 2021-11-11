@@ -72,10 +72,10 @@ final class WebViewModel {
             
             switch menuTitle {
             case .login:                        return UrlModel.login.string()
-            case .courceManagementHomeSP:       return UrlModel.courceManagementHomeSP.string()
+            case .courceManagementHomeSP:       return UrlModel.courceManagementHomeMobile.string()
             case .courceManagementHomePC:       return UrlModel.courceManagementHomePC.string()
-            case .manabaSP:                     return UrlModel.manabaSP.string()
-            case .manabaPC:                     return UrlModel.manabaPC.string()
+            case .manabaSP:                     return UrlModel.manabaHomeMobile.string()
+            case .manabaPC:                     return UrlModel.manabaHomePC.string()
             case .libraryLogin:                 return UrlModel.libraryLogin.string()
             case .libraryBookLendingExtension:  return UrlModel.libraryBookLendingExtension.string()
             case .libraryBookPurchaseRequest:   return UrlModel.libraryBookPurchaseRequest.string()
@@ -223,13 +223,13 @@ final class WebViewModel {
     
     func judgeMobileOrPC() {
         
-        if displayUrl == UrlModel.courceManagementHomeSP.string() ||
-            displayUrl == UrlModel.manabaSP.string() {
+        if displayUrl == UrlModel.courceManagementHomeMobile.string() ||
+            displayUrl == UrlModel.manabaHomeMobile.string() {
             reversePCtoSPIconName = "pcIcon"
             reversePCtoSPIsEnabled = true
                         
         }else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
-                    displayUrl == UrlModel.manabaPC.string() {
+                    displayUrl == UrlModel.manabaHomePC.string() {
             reversePCtoSPIconName = "spIcon"
             reversePCtoSPIsEnabled = true
 
@@ -323,7 +323,7 @@ final class WebViewModel {
     
     public func CMAndManabaPCtoMB() -> URLRequest? {
         if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-            return UrlModel.courceManagementHomeSP.urlRequest()
+            return UrlModel.courceManagementHomeMobile.urlRequest()
 //            if displayUrl == UrlModel.courceManagementHomeSP.string() {
 //                let response = url(.courseRegistration)
 //                if let url = response as URLRequest? {
@@ -345,7 +345,7 @@ final class WebViewModel {
         
         
         if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            return UrlModel.manabaSP.urlRequest()
+            return UrlModel.manabaHomeMobile.urlRequest()
 //            if displayUrl == UrlModel.manabaSP.string() {
 //                let response = url(.manabaPC)
 //                if let url = response as URLRequest? {
@@ -355,7 +355,7 @@ final class WebViewModel {
 //            }
             
         } else {
-            return UrlModel.manabaPC.urlRequest()
+            return UrlModel.manabaHomePC.urlRequest()
 //            if displayUrl == UrlModel.manabaPC.string() {
 //                let response = url(.manabaSP)
 //                if let url = response as URLRequest? {

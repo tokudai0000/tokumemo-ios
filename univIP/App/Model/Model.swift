@@ -8,7 +8,14 @@
 
 import Foundation
 
-final class Model: NSObject {
+struct Model {
+    /// 利用規約の更新したらバージョンあげること
+    let agreementVersion = "1.0.0"
+    /// 更新日時記録
+    /// 1.0.0: 2021/11/11
+    
+    
+    // MARK: - MainView
     
     /// 許可するドメイン
     let allowDomains = ["tokushima-u.ac.jp",
@@ -17,53 +24,57 @@ final class Model: NSObject {
                         "office.com",
                         "tokudai-syusyoku.com"]
     
-        
-    // 教務事務システム -> 個人向けメッセージ -> PDF開く際、 safariで
-//    let transitionURLs = ["https://eweb.stud.tokushima-u.ac.jp/Portal/CommonControls/Message/MesFileDownload.aspx?param="]
     
+    // MARK: -  SettingView
     
-    /// メール設定
-    let mailMasterAddress = "tokumemo1@gmail.com"
-    let mailSendTitle = "トクメモ開発者へ"
-    let mailSendFailureText = "送信に失敗しました。失敗が続く場合は[tokumemo1@gmail.com]へ連絡をしてください。"
+    /// Sectionのタイトル
+    let sectionLists = ["サービス",
+                        "設定"]
     
-    var serviceCellLists: [CellList] = [CellList(id:0,  name: "Webサイト",      category: "図書館",        display: true),
-                                        CellList(id:1,  name: "貸し出し期間延長", category: "図書館",        display: true),
-                                        CellList(id:2,  name: "本購入リクエスト", category: "図書館",        display: true),
-                                        CellList(id:3,  name: "開館カレンダー",   category: "図書館",        display: true),
-                                        CellList(id:4,  name: "シラバス",        category: "シラバス",      display: true),
-                                        CellList(id:5,  name: "時間割",         category: "教務事務システム", display: true),
-                                        CellList(id:6,  name: "今年の成績表",    category: "教務事務システム", display: true),
-                                        CellList(id:7,  name: "成績参照",       category: "教務事務システム", display: true),
-                                        CellList(id:8,  name: "出欠記録",       category: "教務事務システム", display: true),
-                                        CellList(id:9,  name: "授業アンケート",  category: "教務事務システム", display: true),
-                                        CellList(id:10, name: "メール",         category: "Outlook",      display: true),
-                                        CellList(id:11, name: "マナバPC版",     category: "manaba",        display: true),
-                                        CellList(id:12, name: "キャリア支援室",  category: "就職活動",       display: true),
-                                        CellList(id:13, name: "履修登録",       category: "教務事務システム", display: true)]
+    /// サービスCell初期状態（ユーザーの並び替え等によって変化する）
+    var serviceCellLists = [CellList(id:0,  title: "Webサイト",      category: "図書館",        isDisplay: true),
+                            CellList(id:1,  title: "貸し出し期間延長", category: "図書館",        isDisplay: true),
+                            CellList(id:2,  title: "本購入リクエスト", category: "図書館",        isDisplay: true),
+                            CellList(id:3,  title: "開館カレンダー",   category: "図書館",        isDisplay: true),
+                            CellList(id:4,  title: "シラバス",        category: "シラバス",      isDisplay: true),
+                            CellList(id:5,  title: "時間割",         category: "教務事務システム", isDisplay: true),
+                            CellList(id:6,  title: "今年の成績表",    category: "教務事務システム", isDisplay: true),
+                            CellList(id:7,  title: "成績参照",       category: "教務事務システム", isDisplay: true),
+                            CellList(id:8,  title: "出欠記録",       category: "教務事務システム", isDisplay: true),
+                            CellList(id:9,  title: "授業アンケート",  category: "教務事務システム", isDisplay: true),
+                            CellList(id:10, title: "メール",         category: "Outlook",      isDisplay: true),
+                            CellList(id:11, title: "マナバPC版",     category: "manaba",        isDisplay: true),
+                            CellList(id:12, title: "キャリア支援室",  category: "就職活動",       isDisplay: true),
+                            CellList(id:13, title: "履修登録",       category: "教務事務システム", isDisplay: true)]
     
-    var settingCellLists: [CellList] = [CellList(id:100, name: "パスワード", category: "", display: true),
-                                        CellList(id:101, name: "このアプリについて", category: "", display: true)]
+    /// 設定Cell（固定）
+    var settingCellLists = [CellList(id:100, title: "パスワード", category: "", isDisplay: true),
+                            CellList(id:101, title: "このアプリについて", category: "", isDisplay: true)]
     
-    
-    // Sectionのタイトル
-    let sectionList: NSArray = [
-        "サービス",
-        "設定"]
-    
-    let agreementVersion = "aV_1"
 }
 
-struct structURL: Codable {
-    let url: String
-    let topView: Bool
-}
 
 struct CellList: Codable {
     let id: Int
-    let name: String
+    let title: String
     let category: String
-    var display: Bool
+    var isDisplay: Bool
 }
 
 
+//enum CellLists: Int {
+//    case libraryWebSite = 0              // 図書館ウェブサイト
+//    case libraryBookLendingExtension = 1 // 図書館本貸出し期間延長URL
+//    case libraryBookPurchaseRequest = 2  // 図書館本購入リクエスト
+//    case libraryCalendar = 3             // 図書館カレンダー
+//    case syllabus = 4                    // シラバスURL
+//    case timeTable = 5                   // 時間割
+//    case currentTermPerformance = 6      // 今年の成績表
+//    case termPerformance = 7             // 成績参照
+//    case presenceAbsenceRecord = 8       // 出欠記録
+//    case classQuestionnaire = 9          // 授業アンケート
+//    case mailService = 10                // MicroSoftのoutlookへ遷移
+//    case manabaPC = 11
+//    case tokudaiCareerCenter = 12        // キャリアセンター
+//    case courseRegistration = 13         // 履修登録URL
+//}

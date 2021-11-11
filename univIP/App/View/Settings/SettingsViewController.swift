@@ -59,8 +59,8 @@ final class SettingsViewController: BaseViewController {
         
         if !viewModel.editSituation {
             for i in 0 ..< dataManager.allCellList[0].count {
-                print(dataManager.allCellList[0][i].display)
-                if dataManager.allCellList[0][i].display {
+                print(dataManager.allCellList[0][i].isDisplay)
+                if dataManager.allCellList[0][i].isDisplay {
                     self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
             }
@@ -148,7 +148,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     // セクションのタイトル
     func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
-        return model.sectionList[section] as? String
+        return model.sectionLists[section] as? String
     }
     
     /// セクション内のセル数
@@ -162,7 +162,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
         
-        tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].name
+        tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
         tableCell.detailTextLabel?.text = dataManager.allCellList[indexPath.section][indexPath.item].category
         tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
@@ -195,7 +195,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         if !viewModel.editSituation {
             return CGFloat(viewModel.cellHight)
         }else{
-            if !dataManager.allCellList[indexPath.section][indexPath.row].display {
+            if !dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
                 return 0
             }else{
                 return CGFloat(viewModel.cellHight)
@@ -211,7 +211,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         if !viewModel.editSituation {
             // チェックボックスTrueの場合
             if indexPath.section == 0 {
-                dataManager.allCellList[indexPath.section][indexPath.row].display = true
+                dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = true
                 
             }
             
@@ -377,7 +377,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
-            dataManager.allCellList[indexPath.section][indexPath.row].display = false
+            dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = false
             
         }
         viewModel.saveCellList(lists: dataManager.allCellList[0])

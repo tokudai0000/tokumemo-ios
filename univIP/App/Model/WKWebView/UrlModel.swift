@@ -6,48 +6,49 @@
 //
 
 import Foundation
-// URLStringsとURLRequestの2つを返す必要ある
 
-
+/// 全てのURLはここに保存
+/// UrlModel.login.string()でloginの文字列URLが
+/// UrlModel.login.urlRequest()でloginのurlRequestフォーマットされたURLが取得可能
 enum UrlModel {
-    
-    case login
-    case courceManagementHomeSP
-    case courceManagementHomePC
-    case manabaSP
-    case manabaPC
-    case libraryLogin
-    case libraryBookLendingExtension
-    case libraryBookPurchaseRequest
+
+    case login                       // ログイン画面
+    case courceManagementHomeMobile  // 情報ポータル、ホーム画面URL
+    case courceManagementHomePC      // 情報ポータル、ホーム画面URL
+    case manabaHomeMobile            // マナバURL
+    case manabaHomePC                // マナバURL
+    case libraryLogin                // 図書館URL
+    case libraryBookLendingExtension // 図書館本貸出し期間延長URL
+    case libraryBookPurchaseRequest  // 図書館本購入リクエスト
     case syllabusSearchMain
-    case timeTable
-    case currentTermPerformance
-    case termPerformance
-    case presenceAbsenceRecord
-    case classQuestionnaire
-    case systemServiceList
-    case eLearningList
+    case timeTable                   // 時間割
+    case currentTermPerformance      // 今年の成績表
+    case termPerformance             // 成績参照
+    case presenceAbsenceRecord       // 出欠記録
+    case classQuestionnaire          // 授業アンケート
+    case systemServiceList           // システムサービス一覧
+    case eLearningList               // Eラーニング一覧
     case outlookHome
-    case tokudaiCareerCenter
+    case tokudaiCareerCenter         // キャリアセンター
     case libraryHome
-    case courseRegistration
+    case courseRegistration          // 履修登録URL
     case lostConnection
-    case libraryCalendar
+    case libraryCalendar             // 図書館カレンダー
     case syllabus
     case timeOut
     case enqueteReminder
     case popupToYoutube
-    case mailService
+    case mailService                 // MicroSoftのoutlookへ遷移
     case outlookLogin
     
     
     func string() -> String {
         switch self {
         case .login:                       return "https://eweb.stud.tokushima-u.ac.jp/Portal/"
-        case .courceManagementHomeSP:      return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
+        case .courceManagementHomeMobile:  return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
         case .courceManagementHomePC:      return "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
-        case .manabaSP:                    return "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
-        case .manabaPC:                    return "https://manaba.lms.tokushima-u.ac.jp/ct/home"
+        case .manabaHomeMobile:            return "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
+        case .manabaHomePC:                return "https://manaba.lms.tokushima-u.ac.jp/ct/home"
         case .libraryLogin:                return "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
         case .libraryBookLendingExtension: return "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
         case .libraryBookPurchaseRequest:  return "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new"
@@ -78,10 +79,10 @@ enum UrlModel {
     func urlRequest() -> URLRequest {
         switch self {
         case .login:                       return format(UrlModel.login.string())
-        case .courceManagementHomeSP:      return format(UrlModel.courceManagementHomeSP.string())
+        case .courceManagementHomeMobile:  return format(UrlModel.courceManagementHomeMobile.string())
         case .courceManagementHomePC:      return format(UrlModel.courceManagementHomePC.string())
-        case .manabaSP:                    return format(UrlModel.manabaSP.string())
-        case .manabaPC:                    return format(UrlModel.manabaPC.string())
+        case .manabaHomeMobile:            return format(UrlModel.manabaHomeMobile.string())
+        case .manabaHomePC:                return format(UrlModel.manabaHomePC.string())
         case .libraryLogin:                return format(UrlModel.libraryLogin.string())
         case .libraryBookLendingExtension: return format(UrlModel.libraryBookLendingExtension.string())
         case .libraryBookPurchaseRequest:  return format(UrlModel.libraryBookPurchaseRequest.string())
@@ -108,15 +109,15 @@ enum UrlModel {
         }
     }
 
-    
+    // 文字列URLをURLRequestへフォーマット
     public func format(_ urlString: String) -> URLRequest {
 
         if let url = URL(string: urlString) {
             return URLRequest(url: url)
         
         } else {
-            AKLog(level: .FATAL, message: "")
-            fatalError()
+            AKLog(level: .FATAL, message: "URLフォーマットエラー")
+            fatalError() // 予期しないため、強制的にアプリを落とす
     
         }
     }

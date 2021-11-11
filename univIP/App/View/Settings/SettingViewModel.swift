@@ -68,7 +68,7 @@ final class SettingViewModel: NSObject {
                     // 引き継ぎした内容をserviceLに追加後、newLから削除することで新規機能をまとめて追加できる
                     if let userIndex = newL.firstIndex(where: {$0.id == item.id}) {
                         var edit = newL[userIndex]
-                        edit.display = item.display
+                        edit.isDisplay = item.isDisplay
                         serviceL.append(edit)
                         newL.remove(at: userIndex)
                     }

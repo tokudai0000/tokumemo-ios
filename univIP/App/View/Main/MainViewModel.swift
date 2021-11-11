@@ -41,24 +41,24 @@ final class MainViewModel: NSObject {
     public func isDisplayUrlForPC() -> (UIImage?, URLRequest) {
         
         switch webViewModel.displayUrl {
-        case UrlModel.courceManagementHomeSP.string():
+        case UrlModel.courceManagementHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_corceManagementId)
             return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomePC.urlRequest())
             
             
         case UrlModel.courceManagementHomePC.string():
             UserDefaults.standard.set("mobile", forKey: KEY_corceManagementId)
-            return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomeSP.urlRequest())
+            return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomeMobile.urlRequest())
             
             
-        case UrlModel.manabaSP.string():
+        case UrlModel.manabaHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_manabaId)
-            return (UIImage(named: R.image.spIcon.name), UrlModel.manabaPC.urlRequest())
+            return (UIImage(named: R.image.spIcon.name), UrlModel.manabaHomeMobile.urlRequest())
             
             
-        case UrlModel.manabaPC.string():
+        case UrlModel.manabaHomePC.string():
             UserDefaults.standard.set("mobile", forKey: KEY_manabaId)
-            return (UIImage(named: R.image.pcIcon.name), UrlModel.manabaSP.urlRequest())
+            return (UIImage(named: R.image.pcIcon.name), UrlModel.manabaHomeMobile.urlRequest())
             
             
         default:
