@@ -96,7 +96,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="agreementButtonYes" destination="All-6b-Aq6" id="adU-nq-K5Y"/>
+                        <outlet property="agreementButton" destination="All-6b-Aq6" id="adU-nq-K5Y"/>
                         <outlet property="termsTextView" destination="edu-sd-MsI" id="e8u-yh-xcV"/>
                     </connections>
                 </viewController>

@@ -13,7 +13,7 @@ final class AboutThisAppViewController: BaseViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
-    private let rtfFileModel = RtfFileModel()
+    private let rtfFileModel = FileModel()
     
     
     // MARK: - LifeCycle
@@ -22,7 +22,7 @@ final class AboutThisAppViewController: BaseViewController {
         
         textView.isEditable = false
         textView.isSelectable = true
-        textView.attributedText = rtfFileModel.load(url: R.file.aboutThisAppRtf())
+        textView.attributedText = rtfFileModel.rtfFileLoad(url: R.file.privacyPolicyRtf())
     }
     
 }

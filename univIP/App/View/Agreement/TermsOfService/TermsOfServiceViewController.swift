@@ -11,16 +11,14 @@ class TermsOfServiceViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     
-    private let rtfFileModel = RtfFileModel()
+    private let rtfFileModel = FileModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.isEditable = false
-//        textView.isScrollEnabled = false
         textView.isSelectable = true
-//        textView.delegate = self
         
-        textView.attributedText = rtfFileModel.load(url: R.file.agreementRtf())
+        textView.attributedText = rtfFileModel.rtfFileLoad(url: R.file.termsOfServiceRtf())
     }
     
     @IBAction func backButton(_ sender: Any) {

@@ -11,11 +11,11 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - IBOutlet
     @IBOutlet weak var termsTextView: UITextView!
-    @IBOutlet weak var agreementButtonYes: UIButton!
+    @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
-    private let rtfFileModel = RtfFileModel()
-    let text = "トクメモのご利用規約またはプライバシーポリシーが更新されています。 \n サービスを継続してご利用するには、新しいご利用規約とプライバシーポリシーに同意する必要があります。"
+    private let rtfFileModel = FileModel()
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -36,6 +36,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     // MARK: - Public
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let urlString = URL.absoluteString
+        
         if urlString == "TermsOfService" {
             let vc = R.storyboard.termsOfService.termsOfService()!
             self.present(vc, animated: true, completion: nil)
@@ -48,12 +49,13 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
             
         }
         return true // 通常のURL遷移を行う
+        
     }
     
     
     // MARK: - Private
     private func setup() {
-        agreementButtonYes.layer.cornerRadius = 20.0
+        agreementButton.layer.cornerRadius = 20.0
         
         termsTextView.isEditable = false
         termsTextView.isScrollEnabled = false
@@ -63,7 +65,9 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     }
     
     private func textViewSetup() {
-        let attributedString = NSMutableAttributedString(string: text)
+
+        let attributed = rtfFileModel.rtfFileLoad(url: R.file.agreementRtf())
+        let attributedString = NSMutableAttributedString(string: attributed.string)
         
         let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
         let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")

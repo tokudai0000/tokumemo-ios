@@ -1,5 +1,5 @@
 //
-//  RtfFileModel.swift
+//  FileModel.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/11/03.
@@ -7,10 +7,9 @@
 
 import Foundation
 
-final class RtfFileModel {
-    
-//    func load(url: URL? ) -> NSMutableAttributedString {
-    func load(url: URL? ) -> NSAttributedString {
+final class FileModel {
+        
+    func rtfFileLoad(url: URL? ) -> NSAttributedString {
         if let url = url {
             do {
                 let terms = try Data(contentsOf: url)
