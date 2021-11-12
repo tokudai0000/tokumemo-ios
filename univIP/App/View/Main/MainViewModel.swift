@@ -68,7 +68,7 @@ final class MainViewModel: NSObject {
     
     
     public func tabBarDetection(num: Int) -> NSURLRequest? {
-        if DataManager.singleton.passedCertification {
+        if DataManager.singleton.isLoggedIn {
             switch num {
             case 1: // 左
                 if UserDefaults.standard.string(forKey: KEY_corceManagementId) == "pc" {

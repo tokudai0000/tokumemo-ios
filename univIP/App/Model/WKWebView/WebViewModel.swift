@@ -59,7 +59,7 @@ final class WebViewModel {
     
     public func url(_ menuTitle: SettingMenuTitle) -> NSURLRequest? {
 
-        if let urlString = selectUrl(menuTitle, isLogedin: DataManager.singleton.passedCertification) {
+        if let urlString = selectUrl(menuTitle, isLogedin: DataManager.singleton.isLoggedIn) {
             if let url = URL(string: urlString) {
                 return NSURLRequest(url: url)
             }
@@ -188,7 +188,7 @@ final class WebViewModel {
         }
         
         // 登録者判定
-        if DataManager.singleton.passedCertification {
+        if DataManager.singleton.isLoggedIn {
             if let url = URL(string:registrant){
                 return NSURLRequest(url: url)
                 
@@ -267,7 +267,7 @@ final class WebViewModel {
             let one = !forwardDisplayUrl.contains(UrlModel.enqueteReminder.string())
             let second = displayUrl.contains(UrlModel.enqueteReminder.string())
             if one && second {
-                DataManager.singleton.passedCertification = true  // ログインできていることを保証
+                DataManager.singleton.isLoggedIn = true  // ログインできていることを保証
                 return true
             }
             return false
