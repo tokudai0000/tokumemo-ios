@@ -21,7 +21,7 @@ final class WebViewModel {
 
     public var imageSystemName = ""
     public var animationView = ""
-    public var userCAccountMailAdress = ""
+//    public var userCAccountMailAdress = ""
     public var reversePCtoSPIconName = "pcIcon"
     public var reversePCtoSPIsEnabled = false
     

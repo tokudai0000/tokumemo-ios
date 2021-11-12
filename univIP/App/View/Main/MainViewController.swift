@@ -375,8 +375,8 @@ extension MainViewController: WKNavigationDelegate{
         
         // outlookログイン
         if webViewModel.isJudgeUrl(.outlook) {
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(webViewModel.userCAccountMailAdress)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(DataManager.singleton.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
         

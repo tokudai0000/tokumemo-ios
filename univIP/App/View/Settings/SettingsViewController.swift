@@ -219,6 +219,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             return
         }
         
+        // シラバスに不具合
+//        viewAnimated(scene: "settingsViewDisappear")
         self.dismiss(animated: false, completion: nil)
         
         guard let delegate = delegate else {
