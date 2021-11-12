@@ -14,6 +14,8 @@ final class DataManager {
     ///
     /// アプリの共通データ（シングルトンのため、必ず同じインスタンスを参照している）
     ///
+    public var forwardDisplayUrl = ""               // 1つ前のURL
+    public var displayUrl = ""                      // 現在表示しているURL
     public var isLoggedIn = false                   // ログインしているか
     public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
     

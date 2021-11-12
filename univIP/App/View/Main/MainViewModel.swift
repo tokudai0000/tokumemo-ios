@@ -10,17 +10,6 @@ import UIKit
 
 final class MainViewModel: NSObject {
     
-    private let model = Model()
-//    private let urlModel = UrlModel()
-    private let webViewModel = WebViewModel.singleton //WebViewModel()
-    private var requestUrl: NSURLRequest?
-    
-    public var imageSystemName = "chevron.down"
-    public var animationView = ""
-    
-    private let KEY_corceManagementId = "KEY_deviceId"
-    private let KEY_manabaId = "KEY_deviceId"
-    
     //MARK: - STATE ステータス
     enum State {
         case busy           // 準備中
@@ -36,39 +25,56 @@ final class MainViewModel: NSObject {
         case aboutThisApp
     }
     public var next: ((NextView) -> Void)?
-
     
+    
+    private let model = Model()
+    private let dataManager = DataManager.singleton
+    private let webViewModel = WebViewModel.singleton // WebViewModel()
+    
+    private var requestUrl: NSURLRequest?
+    private let KEY_corceManagementId = "KEY_corceManagementId"
+    private let KEY_manabaId = "KEY_manabaId"
+    
+    public var imageSystemName = "chevron.down"
+    public var animationView = ""
+    
+
+    // MARK: - Public
+    
+    /// 教務事務システム、マナバのMobileかPCか判定
     public func isDisplayUrlForPC() -> (UIImage?, URLRequest) {
-        
-        switch webViewModel.displayUrl {
+                
+        switch dataManager.displayUrl {
+        // 教務事務システムMobile版
         case UrlModel.courceManagementHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_corceManagementId)
             return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomePC.urlRequest())
-            
-            
+
+        // 教務事務システムPC版
         case UrlModel.courceManagementHomePC.string():
             UserDefaults.standard.set("mobile", forKey: KEY_corceManagementId)
             return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomeMobile.urlRequest())
-            
-            
+
+        // Manaba Mobile版
         case UrlModel.manabaHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_manabaId)
-            return (UIImage(named: R.image.spIcon.name), UrlModel.manabaHomeMobile.urlRequest())
-            
-            
+            return (UIImage(named: R.image.spIcon.name), UrlModel.manabaHomePC.urlRequest())
+
+        // Manaba PC版
         case UrlModel.manabaHomePC.string():
             UserDefaults.standard.set("mobile", forKey: KEY_manabaId)
             return (UIImage(named: R.image.pcIcon.name), UrlModel.manabaHomeMobile.urlRequest())
-            
-            
+
+
         default:
             return (UIImage(named: "No Image"), UrlModel.systemServiceList.urlRequest())
         }
     }
     
-    
+    /// タブバーの判定
     public func tabBarDetection(num: Int) -> NSURLRequest? {
-        if DataManager.singleton.isLoggedIn {
+        
+        if webViewModel.isRegistrantCheck() {
             switch num {
             case 1: // 左
                 if UserDefaults.standard.string(forKey: KEY_corceManagementId) == "pc" {
@@ -109,7 +115,7 @@ final class MainViewModel: NSObject {
         
     }
     
-        
+    /// WebViewの上げ下げを判定
     public func viewPosisionType(operation: String, posisionY: Double) {
         
         var ope = ""
@@ -149,5 +155,8 @@ final class MainViewModel: NSObject {
         }
 
     }
+    
+    // MARK: - Private
+    
     
 }

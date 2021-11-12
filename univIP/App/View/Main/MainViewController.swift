@@ -167,7 +167,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     private func registrantDecision() {
         
-        if (!webViewModel.registrantDecision()) {
+        if (!webViewModel.isRegistrantCheck()) {
             // "cアカウント"、"パスワード"の設定催促
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
@@ -313,8 +313,8 @@ extension MainViewController: WKNavigationDelegate{
         webViewModel.registUrl(url)
         
         // 許可されたドメインか判定
-        if !webViewModel.isDomeinInspection(url) {
-            if let url = URL(string: webViewModel.displayUrl) {
+        if !webViewModel.isDomeinCheck(url) {
+            if let url = URL(string: dataManager.displayUrl) {
                 AKLog(level: .DEBUG, message: "Safariで開く")
                 UIApplication.shared.open(url)
                 
@@ -391,13 +391,15 @@ extension MainViewController: WKNavigationDelegate{
 //            webView.load(url)
 //        }
         
-        // 現在の画面がモバイル版かPC版かViewModelに登録
-        webViewModel.judgeMobileOrPC()
+        // 現在の画面がモバイル版かPC版かV
+        let responce = webViewModel.judgeMobileOrPC()
         
         // モバイル版かPC版のアイコンを設定
-        let image = UIImage(named: webViewModel.reversePCtoSPIconName)
-        reversePCtoSP.setImage(image, for: .normal)
-        reversePCtoSP.isEnabled = webViewModel.reversePCtoSPIsEnabled
+        if let imageResource = responce.0 {
+            let image = UIImage(named:imageResource.name)
+            reversePCtoSP.setImage(image, for: .normal)
+        }
+        reversePCtoSP.isEnabled = responce.1
         
     }
     
@@ -405,7 +407,7 @@ extension MainViewController: WKNavigationDelegate{
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-        if webViewModel.displayUrl == UrlModel.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if dataManager.displayUrl == UrlModel.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)

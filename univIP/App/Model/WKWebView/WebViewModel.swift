@@ -7,19 +7,18 @@
 
 import Foundation
 import Kanna
+import Rswift
 
 final class WebViewModel {
     
     static let singleton = WebViewModel() // シングルトン・インタンス
     
     private let model = Model()
+    private let dataManager = DataManager.singleton
+    
     private var requestUrl: NSURLRequest?
     
-//    public var host = ""
-    public var forwardDisplayUrl = ""    // 1つ前のURL
-    public var displayUrl = ""           // 現在表示しているURL
 
-    
     public var imageSystemName = ""
     public var animationView = ""
     public var userCAccountMailAdress = ""
@@ -33,15 +32,188 @@ final class WebViewModel {
     public var syllabusSearchOnce = true
     
     
+    // MARK: - Public
+    
+    /// 表示したいURLを返す
     public func url(_ menuTitle: SettingCellList) -> NSURLRequest? {
-
-        if let urlString = selectUrl(menuTitle, isLogedin: DataManager.singleton.isLoggedIn) {
+        
+        // 登録、非登録による場合のURLを取得
+        if let urlString = selectUrl(menuTitle, isLogedin: dataManager.isLoggedIn) {
             if let url = URL(string: urlString) {
                 return NSURLRequest(url: url)
             }
         }
+        AKLog(level: .ERROR, message: "error: URL取得エラー")
         return nil
     }
+
+    /// 現在の
+    public func isJudgeUrl(_ scene: Scene) -> Bool {
+        let forwardUrl = dataManager.forwardDisplayUrl
+        let displayUrl = dataManager.displayUrl
+        var isLists:[Bool] = []
+        
+        switch scene {
+        case .login:
+            isLists.append(!forwardUrl.contains(UrlModel.lostConnection.string()))
+            isLists.append(displayUrl.contains(UrlModel.lostConnection.string()))
+            isLists.append(displayUrl.suffix(2)=="s1")
+            isLists.append(isRegistrantCheck())
+            
+            
+        case .enqueteReminder:
+            isLists.append(!forwardUrl.contains(UrlModel.enqueteReminder.string()))
+            isLists.append(displayUrl.contains(UrlModel.enqueteReminder.string()))
+            
+            
+        case .syllabus:
+            isLists.append(displayUrl.contains(UrlModel.syllabus.string()))
+            isLists.append(syllabusSearchOnce)
+            syllabusSearchOnce = false
+            
+            
+        case .outlook:
+            isLists.append(!forwardUrl.contains(UrlModel.outlookLogin.string()))
+            isLists.append(displayUrl.contains(UrlModel.outlookLogin.string()))
+            
+            
+        case .tokudaiCareerCenter:
+            isLists.append(!forwardUrl.contains(UrlModel.tokudaiCareerCenter.string()))
+            isLists.append(displayUrl == UrlModel.tokudaiCareerCenter.string())
+
+                    
+        case .timeOut:
+            isLists.append(displayUrl == UrlModel.timeOut.string())
+        
+        
+        case .registrantAndLostConnectionDecision:
+            isLists.append(!isRegistrantCheck())
+            isLists.append(displayUrl.contains(UrlModel.lostConnection.string()))
+            
+        }
+        
+        for isList in isLists {
+            if !isList {
+                return false
+            }
+        }
+        if scene == .enqueteReminder {
+            dataManager.isLoggedIn = true  // ログインできていることを保証
+        }
+        return true
+    }
+    
+    /// 前回のURLと現在表示しているURLの保持
+    public func registUrl(_ url: URL) {
+        
+        dataManager.forwardDisplayUrl = dataManager.displayUrl
+        dataManager.displayUrl = url.absoluteString
+        
+        print("displayURL : \(dataManager.displayUrl)")
+    }
+    
+    /// 現在のURLが許可されたドメインか判定
+    public func isDomeinCheck(_ url: URL) -> Bool {
+        
+        guard let host = url.host else{
+            AKLog(level: .ERROR, message: "ドメイン取得エラー")
+            return false
+        }
+        var trigger = false
+        for allow in model.allowDomains {
+            if host.contains(allow){
+                trigger = true
+            }
+        }
+        return trigger
+    }
+    
+    /// 教務事務システムかマナバのモバイル版、PC版の判定
+    public func judgeMobileOrPC() -> (ImageResource?, Bool) {
+        
+        let displayUrl = dataManager.displayUrl
+        
+        // モバイル版の時
+        if displayUrl == UrlModel.courceManagementHomeMobile.string() ||
+            displayUrl == UrlModel.manabaHomeMobile.string() {
+            return (R.image.pcIcon, true)
+            
+            
+        // PC版の時
+        }else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
+                    displayUrl == UrlModel.manabaHomePC.string() {
+            return (R.image.spIcon, true)
+
+            
+        }else{
+            return (nil, false)
+            
+        }
+    }
+    
+    /// 登録者か判定
+    public func isRegistrantCheck() -> Bool {
+        if (DataManager.singleton.cAccount != "" &&
+            DataManager.singleton.password != ""){
+            return true
+
+        }
+        return false
+        
+    }
+    
+    public func CMAndManabaPCtoMB() -> URLRequest? {
+        
+        let displayUrl = dataManager.displayUrl
+        
+        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
+            if displayUrl == UrlModel.courceManagementHomeMobile.string() {
+                let response = url(.courseRegistration)
+                if let url = response as URLRequest? {
+                    return url
+
+                }
+            }
+            
+        } else {
+//            return UrlModel.courceManagementHomePC.urlRequest()
+            if displayUrl == UrlModel.courceManagementHomePC.string() {
+                let response = url(.courceManagementHomeSP)
+                if let url = response as URLRequest? {
+                    return url
+
+                }
+            }
+        }
+        
+        
+        if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
+//            return UrlModel.manabaHomeMobile.urlRequest()
+            if displayUrl == UrlModel.manabaHomeMobile.string() {
+                let response = url(.manabaPC)
+                if let url = response as URLRequest? {
+                    return url
+
+                }
+            }
+            
+        } else {
+//            return UrlModel.manabaHomePC.urlRequest()
+            if displayUrl == UrlModel.manabaHomePC.string() {
+                let response = url(.manabaSP)
+                if let url = response as URLRequest? {
+                    return url
+
+                }
+            }
+        }
+        return nil
+        
+    }
+    
+    
+    
+    // MARK: - Private
     
     private func selectUrl(_ menuTitle: SettingCellList, isLogedin: Bool) -> String?  {
         if isLogedin {
@@ -146,75 +318,6 @@ final class WebViewModel {
         }
     }
     
-    func registrantDecision() -> Bool{
-        if (DataManager.singleton.cAccount == "" &&
-            DataManager.singleton.password == ""){
-            return false
-            
-        }else{
-            return true
-        }
-    }
-    
-    public func openUrl(_ registrant: String, notRegistrant: String = "", isAlert: Bool = false) -> NSURLRequest? {
-        
-        var notRegi = notRegistrant
-        if notRegistrant == "" {
-            notRegi = registrant
-        }
-        
-        // 登録者判定
-        if DataManager.singleton.isLoggedIn {
-            if let url = URL(string:registrant){
-                return NSURLRequest(url: url)
-                
-            }
-            
-        } else {
-            if let url = URL(string: notRegi){
-                return NSURLRequest(url: url)
-                
-            }
-            
-        }
-        return nil
-        
-    }
-    
-    func isDomeinInspection(_ url: URL) -> Bool {
-        guard let host = url.host else{
-            AKLog(level: .ERROR, message: "ドメイン取得エラー")
-            return false
-        }
-        var trigger = false
-        for allow in model.allowDomains {
-            if host.contains(allow){
-                trigger = true
-            }
-        }
-        return trigger
-    }
-    
-
-    
-    func judgeMobileOrPC() {
-        
-        if displayUrl == UrlModel.courceManagementHomeMobile.string() ||
-            displayUrl == UrlModel.manabaHomeMobile.string() {
-            reversePCtoSPIconName = "pcIcon"
-            reversePCtoSPIsEnabled = true
-                        
-        }else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
-                    displayUrl == UrlModel.manabaHomePC.string() {
-            reversePCtoSPIconName = "spIcon"
-            reversePCtoSPIsEnabled = true
-
-        }else{
-            reversePCtoSPIsEnabled = false
-            
-        }
-    }
-    
     
     enum Scene {
         case login
@@ -226,123 +329,7 @@ final class WebViewModel {
         case registrantAndLostConnectionDecision
     }
     
-    public func isJudgeUrl(_ scene: Scene) -> Bool {
-        switch scene {
-        case .login:
-            let zero = !forwardDisplayUrl.contains(UrlModel.lostConnection.string()) // 前回のURLがログインURLではない = 初回
-            let one = displayUrl.contains(UrlModel.lostConnection.string())          // 今表示されているURLがログインURLか
-            let second = displayUrl.suffix(2)=="s1"                         // 2回目は"=e1s2"　（zero があるが、安全策）
-            let therd = registrantDecision()                                // 登録者判定
-            if zero && one && second && therd {
-                return true
-            }
-            return false
-            
-            
-        case .enqueteReminder:
-            let one = !forwardDisplayUrl.contains(UrlModel.enqueteReminder.string())
-            let second = displayUrl.contains(UrlModel.enqueteReminder.string())
-            if one && second {
-                DataManager.singleton.isLoggedIn = true  // ログインできていることを保証
-                return true
-            }
-            return false
-            
-            
-        case .syllabus:
-            syllabusSearchOnce = false
-            let one = displayUrl.contains(UrlModel.syllabus.string())
-            let second = syllabusSearchOnce
-            if one && second {
-                return true
-            }
-            return false
-            
-            
-        case .outlook:
-            let one = !forwardDisplayUrl.contains(UrlModel.outlookLogin.string())
-            let second = displayUrl.contains(UrlModel.outlookLogin.string())
-            if one && second {
-                return true
-            }
-            return false
-            
-            
-        case .tokudaiCareerCenter:
-            let one = !forwardDisplayUrl.contains(UrlModel.tokudaiCareerCenter.string())
-            let second = displayUrl == UrlModel.tokudaiCareerCenter.string()
-            if one && second {
-                return true
-            }
-            return false
-            
-        
-        case .timeOut:
-            return displayUrl == UrlModel.timeOut.string()
-        
-        
-        case .registrantAndLostConnectionDecision:
-            return !registrantDecision() && displayUrl.contains(UrlModel.lostConnection.string())
-            
-        }
-    }
-    
-    
-    public func registUrl(_ url: URL) {
-        
-        forwardDisplayUrl = displayUrl
-        displayUrl = url.absoluteString
-        
-        print("displayURL : \(displayUrl)")
-    }
-    
-    
-    public func CMAndManabaPCtoMB() -> URLRequest? {
-        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc" {
-            return UrlModel.courceManagementHomeMobile.urlRequest()
-//            if displayUrl == UrlModel.courceManagementHomeSP.string() {
-//                let response = url(.courseRegistration)
-//                if let url = response as URLRequest? {
-//                    return url
-//
-//                }
-//            }
-            
-        } else {
-            return UrlModel.courceManagementHomePC.urlRequest()
-//            if displayUrl == UrlModel.courceManagementHomePC.string() {
-//                let response = url(.courceManagementHomeSP)
-//                if let url = response as URLRequest? {
-//                    return url
-//
-//                }
-//            }
-        }
-        
-        
-        if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            return UrlModel.manabaHomeMobile.urlRequest()
-//            if displayUrl == UrlModel.manabaSP.string() {
-//                let response = url(.manabaPC)
-//                if let url = response as URLRequest? {
-//                    return url
-//
-//                }
-//            }
-            
-        } else {
-            return UrlModel.manabaHomePC.urlRequest()
-//            if displayUrl == UrlModel.manabaPC.string() {
-//                let response = url(.manabaSP)
-//                if let url = response as URLRequest? {
-//                    return url
-//
-//                }
-//            }
-        }
-        return nil
-        
-    }
+
     
     // シングルトン・インスタンスの初期処理
 //    private init() {  //シングルトン保証// privateにすることにより他から初期化させない
