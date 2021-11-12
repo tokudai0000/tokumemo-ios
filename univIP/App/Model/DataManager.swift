@@ -1,6 +1,6 @@
 //
 //  DataManager.swift
-//  共通データ管理
+//  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/10.
 //  Copyright © 2021年　akidon0000
@@ -12,7 +12,7 @@ import KeychainAccess
 final class DataManager {
     
     ///
-    /// アプリに共通するデータ（シングルトンのため、必ず同じインスタンスを参照している）
+    /// アプリの共通データ（シングルトンのため、必ず同じインスタンスを参照している）
     ///
     public var isLoggedIn = false                   // ログインしているか
     public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
