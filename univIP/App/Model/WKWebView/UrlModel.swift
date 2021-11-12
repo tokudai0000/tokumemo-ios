@@ -109,7 +109,7 @@ enum UrlModel {
         }
     }
 
-    // 文字列URLをURLRequestへフォーマット
+    /// 文字列URLをURLRequestへフォーマット
     public func format(_ urlString: String) -> URLRequest {
 
         if let url = URL(string: urlString) {
