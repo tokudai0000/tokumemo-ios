@@ -10,7 +10,7 @@ import UIKit
 
 final class PasswordSettingsViewController: BaseViewController, UITextFieldDelegate {
     
-    //MARK:- IBOutlet
+    //MARK: - IBOutlet
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var registerButton: UIButton!
     
@@ -213,58 +213,10 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
     }
 }
 
-//// MARK:- TextField
-//extension PasswordSettingsViewController:UITextFieldDelegate {
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
-//        var frame = registerButton.frame
-//        // super.viewからの絶対座標に変換する
-//        if var pv = registerButton.superview {
-//            while pv != super.view {
-//                if let gv = pv.superview {
-//                    frame = pv.convert(frame, to: gv)
-//                    pv = gv
-//                }else{
-//                    break
-//                }
-//            }
-//        }
-//
-//        super.keyboardSafeArea = frame // super.viewからの絶対座標
-//        return true //true=キーボードを表示する
-//    }
-//
-//    // 入力開始
-//    func textFieldDidBeginEditing(textField: UITextField) {
-//        switch textField.tag {
-//        case 0;
-//            cAccountUnderLine.
-//        case 1;
-//            c
-//        default;
-//            return
-//        }
-////        self.keyboardCloseGesture?.enabled = true
-//    }
-//
-//    // フォーカスが外れた
-//    func textFieldDidEndEditing(textField: UITextField) {
-////        self.keyboardCloseGesture?.enabled = false
-//    }
-//}
-
 extension UITextField {
     func setUnderLine() {
         // 枠線を非表示にする
         borderStyle = .none
-//        let underline = UIView()
-//        // heightにはアンダーラインの高さを入れる
-//        underline.frame = CGRect(x: 0, y: frame.height, width: frame.width, height: 0.5)
-//        // 枠線の色
-//        underline.backgroundColor = .white
-//        addSubview(underline)
-//        // 枠線を最前面に
-//        bringSubviewToFront(underline)
     }
     
     
