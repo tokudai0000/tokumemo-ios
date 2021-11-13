@@ -72,7 +72,7 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count ?? 1)/10"
         passwordTextSizeLabel.text = "\(passwordTextField.text?.count ?? 1)/100"
@@ -87,9 +87,9 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
             options: .curveEaseIn,
             animations: {
                 self.viewTop.layer.position.x -= 250
-        },
+            },
             completion: { bool in
-        })
+            })
     }
     
     
@@ -105,7 +105,7 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
         cAccountTextField.delegate = self
         passwordTextField.delegate = self
         
-
+        
         cAccountTextField.text = dataManager.cAccount
         passwordTextField.text = dataManager.password
         cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count ?? 0)/10"
@@ -155,9 +155,9 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
     /// キーボードが隠れる直前、画面全体を元に戻す
     @objc func keyboardWillHide(notification: Notification?) {
         guard keyboardSafeArea != nil,
-            notification != nil else {
-                return
-        }
+              notification != nil else {
+                  return
+              }
         guard let userInfo = notification!.userInfo as? [String: Any] else {
             return
         }
@@ -199,7 +199,7 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
             return
         }
     }
-
+    
     // フォーカスが外れた
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField.tag {

@@ -9,7 +9,7 @@
 import UIKit
 
 final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
-
+    
     
     // MARK: - IBOutlet
     @IBOutlet weak var viewTop: UIView!
@@ -47,11 +47,12 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
     
     
     // MARK: - IBAction
+    
     @IBAction func searchButton(_ sender: Any) {
         
         delegate?.refreshSyllabus(subjectName: subjectTextField.text ?? "",
-                                      teacherName: teacherTextField.text ?? "",
-                                      keyword: "")
+                                  teacherName: teacherTextField.text ?? "",
+                                  keyword: "")
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -78,14 +79,13 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
             options: .curveEaseIn,
             animations: {
                 self.viewTop.layer.position.x -= 250
-        },
+            },
             completion: { bool in
-        })
+            })
     }
     
     
     private func setup() {
-//        searchButton.layer.cornerRadius = 20.0
         
         subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
@@ -98,9 +98,6 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
         subjectTextField.delegate = self
         teacherTextField.delegate = self
         
-
-//        subjectTextField.text = dataManager.cAccount
-//        teacherTextField.text = dataManager.password
         subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/10"
         teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/100"
         
@@ -148,9 +145,9 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
     /// キーボードが隠れる直前、画面全体を元に戻す
     @objc func keyboardWillHide(notification: Notification?) {
         guard keyboardSafeArea != nil,
-            notification != nil else {
-                return
-        }
+              notification != nil else {
+                  return
+              }
         guard let userInfo = notification!.userInfo as? [String: Any] else {
             return
         }
@@ -192,7 +189,7 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
             return
         }
     }
-
+    
     // フォーカスが外れた
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField.tag {
@@ -205,13 +202,3 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
         }
     }
 }
-
-//extension UITextField {
-//    func setUnderLine() {
-//        // 枠線を非表示にする
-//        borderStyle = .none
-//    }
-//
-//
-//}
-

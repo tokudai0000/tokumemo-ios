@@ -69,27 +69,3 @@ struct CellList: Codable {
     let category: String
     var isDisplay: Bool
 }
-
-
-enum SettingCellList: String {
-    case login                          // ログイン画面
-    case courceManagementHomeSP         // 情報ポータル、ホーム画面URL
-    case courceManagementHomePC         // 情報ポータル、ホーム画面URL
-    case manabaSP                       // マナバURL
-    case manabaPC                       // マナバURL
-    case libraryLogin                   // 図書館URL
-    case libraryBookLendingExtension    // 図書館本貸出し期間延長URL
-    case libraryBookPurchaseRequest     // 図書館本購入リクエスト
-    case libraryCalendar                // 図書館カレンダー
-    case syllabus                       // シラバスURL
-    case timeTable                      // 時間割
-    case currentTermPerformance         // 今年の成績表
-    case termPerformance                // 成績参照
-    case presenceAbsenceRecord          // 出欠記録
-    case classQuestionnaire             // 授業アンケート
-    case mailService                    // MicroSoftのoutlookへ遷移
-    case tokudaiCareerCenter            // キャリアセンター
-    case courseRegistration             // 履修登録URL
-    case systemServiceList              // システムサービス一覧
-    case eLearningList                  // Eラーニング一覧
-}

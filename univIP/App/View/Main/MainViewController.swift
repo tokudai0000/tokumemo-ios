@@ -24,34 +24,33 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     private let model = Model()
     private let viewModel = MainViewModel()
-    private let dataManager = DataManager.singleton
     private let webViewModel = WebViewModel()
-
-
+    private let dataManager = DataManager.singleton
+    
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setup()
         refresh()
         initViewModel()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-
+        
         firstBootSetup()       // 利用規約同意判定
         registrantDecision()   // 登録者判定
     }
-
-
+    
+    
     // MARK: - IBAction
     @IBAction func settingMenuButton(_ sender: Any) {
         
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
         vc.delegate = self
-//        vc.mainViewModel = self.viewModel
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -79,7 +78,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         navigationRightButtonOnOff(operation: .reverse)
     }
     
-
+    
     // MARK: - Public func
     public func refresh() { // 教務事務システムに再度ログイン
         
@@ -103,10 +102,9 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         } else {
             toast(message: "登録者のみ")
         }
-        
     }
-
-
+    
+    
     public func popupView(scene: MainViewModel.NextView){
         
         switch scene {
@@ -127,11 +125,11 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
             self.present(vc, animated: true, completion: nil)
             
-
+            
         }
         
     }
-        
+    
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
@@ -187,13 +185,13 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // 表示:true  非表示：false
     private func webViewDisplay(_ bool: Bool){
-
+        
         switch bool {
         case true:
             leftButton.isEnabled = true
             self.activityIndicatorView.isHidden = true
             activityIndicator.stopAnimating()
-
+            
         case false:
             leftButton.isEnabled = false
             self.activityIndicatorView.isHidden = false
@@ -210,7 +208,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
             launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
-            let imageView = UIImageView(image: UIImage(named:"tokumemoIcon1")!)
+            let imageView = UIImageView(image: R.image.tokumemoIcon1())
             imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
             imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
@@ -219,24 +217,24 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             
             //少し縮小するアニメーション
             UIView.animate(withDuration: 0.3,
-                delay: 0,
-                options: UIView.AnimationOptions.curveEaseOut,
-                animations: { () in
-                    imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-                }, completion: { (Bool) in
-
+                           delay: 0,
+                           options: UIView.AnimationOptions.curveEaseOut,
+                           animations: { () in
+                imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }, completion: { (Bool) in
+                
             })
-
+            
             //拡大させて、消えるアニメーション
             UIView.animate(withDuration: 0.5,
-                delay: 0.3,
-                options: UIView.AnimationOptions.curveEaseOut,
-                animations: { () in
-                    imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
-                    imageView.alpha = 1
-                }, completion: { (Bool) in
-                    imageView.removeFromSuperview()
-                    launchScreenView.removeFromSuperview()
+                           delay: 0.3,
+                           options: UIView.AnimationOptions.curveEaseOut,
+                           animations: { () in
+                imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
+                imageView.alpha = 1
+            }, completion: { (Bool) in
+                imageView.removeFromSuperview()
+                launchScreenView.removeFromSuperview()
             })
             
         case .viewDown:
@@ -246,9 +244,9 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 options: .curveEaseOut,
                 animations: {
                     self.wkWebView.layer.position.y += 60
-            },
+                },
                 completion: { bool in
-            })
+                })
             
         case .viewUp:
             UIView.animate(
@@ -260,7 +258,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 },
                 completion: { bool in
                 })
-
+            
         default:
             return
         }
@@ -317,7 +315,7 @@ extension MainViewController: WKNavigationDelegate{
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
+        
         // 現在の表示URL
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
@@ -352,14 +350,11 @@ extension MainViewController: WKNavigationDelegate{
             }
         }
         
-//        reversePCtoSP.isEnabled = viewModel.isCourceManagementOrManaba()
-//        backButton.isEnabled = !viewModel.isCourceManagementOrManaba()
-        
         decisionHandler(.allow)
         return
     }
-
-
+    
+    
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let isRegistrant = viewModel.isRegistrantCheck()
@@ -379,7 +374,7 @@ extension MainViewController: WKNavigationDelegate{
         if webViewModel.isJudgeUrl(.enqueteReminder, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
-
+        
         // シラバス自動入力
         if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
@@ -435,7 +430,7 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
     // confirm対応
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
@@ -449,12 +444,12 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
     // prompt対応
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-
+        
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
-
+        
         let okHandler: () -> Void = {
             if let textField = alertController.textFields?.first {
                 completionHandler(textField.text)
@@ -473,7 +468,7 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
 }
 
 
@@ -490,7 +485,6 @@ extension MainViewController: UITabBarDelegate{
             toast(message: "error")
             
         }
-//        navigationRightButtonOnOff(operation: "DOWN")
     }
 }
 

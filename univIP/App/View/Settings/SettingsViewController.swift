@@ -148,7 +148,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     // セクションのタイトル
     func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
-        return model.sectionLists[section] as? String
+        return model.sectionLists[section]
     }
     
     /// セクション内のセル数
@@ -220,7 +220,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         }
         
         // シラバスに不具合
-//        viewAnimated(scene: "settingsViewDisappear")
         self.dismiss(animated: false, completion: nil)
         
         guard let delegate = delegate else {
