@@ -156,6 +156,32 @@ final class MainViewModel: NSObject {
 
     }
     
+    /// 教務事務システム、マナバのMobileかPCか判定
+    public func isDisplayCourceManagementOrManaba() -> Bool {
+                
+        switch dataManager.displayUrl {
+        // 教務事務システムMobile版
+        case UrlModel.courceManagementHomeMobile.string():
+            return true
+
+        // 教務事務システムPC版
+        case UrlModel.courceManagementHomePC.string():
+            return true
+
+        // Manaba Mobile版
+        case UrlModel.manabaHomeMobile.string():
+            return true
+
+        // Manaba PC版
+        case UrlModel.manabaHomePC.string():
+            return true
+
+
+        default:
+            return false
+        }
+    }
+    
     // MARK: - Private
     
     

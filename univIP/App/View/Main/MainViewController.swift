@@ -414,6 +414,9 @@ extension MainViewController: WKNavigationDelegate{
         }
         reversePCtoSP.isEnabled = responce.1
         
+        
+        backButton.isEnabled = !viewModel.isDisplayCourceManagementOrManaba()
+        
     }
     
     
