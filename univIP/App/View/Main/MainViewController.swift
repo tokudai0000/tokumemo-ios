@@ -9,12 +9,12 @@
 import UIKit
 import WebKit
 
-final class MainViewController: BaseViewController, WKUIDelegate{
+final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - IBOutlet
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var tabBar: UITabBar!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var wkWebView: WKWebView!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -56,7 +56,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     
     @IBAction func backButton(_ sender: Any) {
         
-        webView.goBack()
+        wkWebView.goBack()
     }
     
     @IBAction func refreshButton(_ sender: Any) {
@@ -70,7 +70,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         let response = viewModel.isDisplayUrlForPC()
         if let image = response.0 {
             reversePCtoSP.setImage(image, for: .normal)
-            self.webView.load(response.1)
+            self.wkWebView.load(response.1)
         }
     }
     
@@ -87,7 +87,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         self.activityIndicatorView.isHidden = true
         
         if let url = webViewModel.url(.login) {
-            webView.load(url as URLRequest)
+            wkWebView.load(url as URLRequest)
             
         } else {
             toast(message: "登録者のみ")
@@ -99,7 +99,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         let response = webViewModel.url(.syllabus)
         if let url = response as URLRequest? {
-            webView.load(url)
+            wkWebView.load(url)
         } else {
             toast(message: "登録者のみ")
         }
@@ -136,7 +136,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: String){
 
-        viewModel.viewPosisionType(operation: operation, posisionY: webView.frame.origin.y)
+        viewModel.viewPosisionType(operation: operation, posisionY: wkWebView.frame.origin.y)
         
         let image = UIImage(systemName: viewModel.imageSystemName)
         rightButton.setImage(image, for: .normal)
@@ -151,8 +151,8 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         
         animationView(scene: "launchScreen")
         tabBar.delegate = self
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
+        wkWebView.navigationDelegate = self
+        wkWebView.uiDelegate = self
     }
     
     
@@ -242,7 +242,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                 delay: 0.08,
                 options: .curveEaseOut,
                 animations: {
-                    self.webView.layer.position.y += 60
+                    self.wkWebView.layer.position.y += 60
             },
                 completion: { bool in
             })
@@ -253,7 +253,7 @@ final class MainViewController: BaseViewController, WKUIDelegate{
                 delay: 0.08,
                 options: .curveEaseOut,
                 animations: {
-                    self.webView.layer.position.y -= 60
+                    self.wkWebView.layer.position.y -= 60
                 },
                 completion: { bool in
                 })
@@ -291,10 +291,23 @@ final class MainViewController: BaseViewController, WKUIDelegate{
         }
     }
     
+    /// 新しいウィンドウで開く「target="_blank"」
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        // 変数 url にはリンク先のURLが入る
+        webView.load(navigationAction.request)
+        
+        return nil
+        
+    }
+    
 }
 
 
-//MARK:- WebView
+// MARK: - WebView
 extension MainViewController: WKNavigationDelegate{
     
     // MARK: - 読み込み設定（リクエスト前）
@@ -455,22 +468,7 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    
-    /// 新しいウィンドウで開く「target="_blank"」
-    func webView(_ webView: WKWebView,
-                 createWebViewWith configuration: WKWebViewConfiguration,
-                 for navigationAction: WKNavigationAction,
-                 windowFeatures: WKWindowFeatures) -> WKWebView? {
-        
-        // 変数 url にはリンク先のURLが入る
-        if let url = navigationAction.request.url {
-            webView.load(URLRequest(url: url))
-            return webView
-        }
-        AKLog(level: .ERROR, message: "リクエストエラー")
-        return nil
-        
-    }
+
 }
 
 
@@ -480,7 +478,7 @@ extension MainViewController: UITabBarDelegate{
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if let url = viewModel.tabBarDetection(num: item.tag) {
-            webView.load(url as URLRequest)
+            wkWebView.load(url as URLRequest)
             
         } else {
             AKLog(level: .ERROR, message: "error")

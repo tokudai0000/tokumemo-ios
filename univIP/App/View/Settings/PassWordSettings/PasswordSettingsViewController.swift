@@ -59,7 +59,7 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
             DataManager.singleton.password = passWordText
         }
         
-        delegate?.webView.load(webViewModel.url(.login)! as URLRequest)
+        delegate?.wkWebView.load(webViewModel.url(.login)! as URLRequest)
         self.dismiss(animated: true, completion: nil)
     }
     
