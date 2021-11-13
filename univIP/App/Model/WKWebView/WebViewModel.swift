@@ -129,25 +129,52 @@ final class WebViewModel {
     }
     
     /// 教務事務システムかマナバのモバイル版、PC版の判定
-    public func judgeMobileOrPC() -> (ImageResource?, Bool) {
+    public func judgeMobileOrPC() -> String? {
         
         let displayUrl = dataManager.displayUrl
         
         // モバイル版の時
         if displayUrl == UrlModel.courceManagementHomeMobile.string() ||
             displayUrl == UrlModel.manabaHomeMobile.string() {
-            return (R.image.pcIcon, true)
+            return R.image.pcIcon.name
             
             
         // PC版の時
-        }else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
+        } else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
                     displayUrl == UrlModel.manabaHomePC.string() {
-            return (R.image.spIcon, true)
+            return R.image.spIcon.name
 
             
-        }else{
-            return (nil, false)
+        } else {
+            AKLog(level: .FATAL, message: "教務事務システムとマナバ以外")
+            return nil
             
+        }
+    }
+    
+    /// 教務事務システム、マナバのMobileかPCか判定
+    public func isCourceManagementOrManaba() -> Bool {
+                
+        switch dataManager.displayUrl {
+        // 教務事務システムMobile版
+        case UrlModel.courceManagementHomeMobile.string():
+            return true
+
+        // 教務事務システムPC版
+        case UrlModel.courceManagementHomePC.string():
+            return true
+
+        // Manaba Mobile版
+        case UrlModel.manabaHomeMobile.string():
+            return true
+
+        // Manaba PC版
+        case UrlModel.manabaHomePC.string():
+            return true
+
+
+        default:
+            return false
         }
     }
     

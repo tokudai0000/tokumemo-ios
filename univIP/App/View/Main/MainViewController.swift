@@ -62,21 +62,21 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     @IBAction func refreshButton(_ sender: Any) {
         
         refresh()
-        navigationRightButtonOnOff(operation: "UP")
+        navigationRightButtonOnOff(operation: .UP)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
         
         let response = viewModel.isDisplayUrlForPC()
         if let image = response.0 {
-            reversePCtoSP.setImage(image, for: .normal)
+            reversePCtoSP.setImage(UIImage(named: image), for: .normal)
             self.wkWebView.load(response.1)
         }
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
         
-        navigationRightButtonOnOff(operation: "REVERSE")
+        navigationRightButtonOnOff(operation: .REVERSE)
     }
     
 
@@ -134,13 +134,14 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         
     
     // webViewを上げ下げする
-    public func navigationRightButtonOnOff(operation: String){
-
-        viewModel.viewPosisionType(operation: operation, posisionY: wkWebView.frame.origin.y)
+    public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
+        let responce = viewModel.viewPosisionType(operation, posisionY: wkWebView.frame.origin.y)
         
-        let image = UIImage(systemName: viewModel.imageSystemName)
-        rightButton.setImage(image, for: .normal)
-        animationView(scene: viewModel.animationView)
+        if let imageName = responce.0, let animationName = responce.1 {
+            let image = UIImage(systemName: viewModel.imageSystemName)
+            rightButton.setImage(image, for: .normal)
+            animationView(scene: viewModel.animationView)
+        }
         
     }
     
@@ -349,6 +350,9 @@ extension MainViewController: WKNavigationDelegate{
             }
         }
         
+//        reversePCtoSP.isEnabled = viewModel.isCourceManagementOrManaba()
+//        backButton.isEnabled = !viewModel.isCourceManagementOrManaba()
+        
         decisionHandler(.allow)
         return
     }
@@ -356,11 +360,7 @@ extension MainViewController: WKNavigationDelegate{
 
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
-        // 戻るボタンの有効判定
-        self.backButton.isEnabled = webView.canGoBack
-        self.backButton.alpha = webView.canGoBack ? 1.0 : 0.4
-        
+                
         // 非登録者がログイン画面を開いた時
         if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision) {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
@@ -395,27 +395,28 @@ extension MainViewController: WKNavigationDelegate{
         
         // キャリア支援室ログイン
         if webViewModel.isJudgeUrl(.tokudaiCareerCenter) {
-            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(DataManager.singleton.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(DataManager.singleton.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
         }
         
-        // 教務事務システム or マナバ のPC版かMB版かの判定
-//        if let url = webViewModel.CMAndManabaPCtoMB() {
-//            webView.load(url)
-//        }
         
-        // 現在の画面がモバイル版かPC版かV
-        let responce = webViewModel.judgeMobileOrPC()
+        ///
+        /// Buttonデザインの変更
+        ///
         
-        // モバイル版かPC版のアイコンを設定
-        if let imageResource = responce.0 {
-            let image = UIImage(named:imageResource.name)
-            reversePCtoSP.setImage(image, for: .normal)
+        // 教務事務システム、マナバの画面の時
+        if webViewModel.isCourceManagementOrManaba() {
+            // モバイル版かPC版か判定
+            if let imageName = webViewModel.judgeMobileOrPC() {
+                reversePCtoSP.setImage(UIImage(named: imageName), for: .normal)
+            }
         }
-        reversePCtoSP.isEnabled = responce.1
+        reversePCtoSP.isEnabled = webViewModel.isCourceManagementOrManaba()
         
-        
-        backButton.isEnabled = !viewModel.isDisplayCourceManagementOrManaba()
+        // 教務事務システム、マナバ以外の画面かつ戻れる時
+        let isBackEnabled = !webViewModel.isCourceManagementOrManaba() && webView.canGoBack
+        backButton.isEnabled = isBackEnabled
+        backButton.alpha = isBackEnabled ? 1.0 : 0.4
         
     }
     

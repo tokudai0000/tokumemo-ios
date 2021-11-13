@@ -42,32 +42,32 @@ final class MainViewModel: NSObject {
     // MARK: - Public
     
     /// 教務事務システム、マナバのMobileかPCか判定
-    public func isDisplayUrlForPC() -> (UIImage?, URLRequest) {
+    public func isDisplayUrlForPC() -> (String?, URLRequest) {
                 
         switch dataManager.displayUrl {
         // 教務事務システムMobile版
         case UrlModel.courceManagementHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_corceManagementId)
-            return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomePC.urlRequest())
+            return (R.image.pcIcon.name, UrlModel.courceManagementHomePC.urlRequest())
 
         // 教務事務システムPC版
         case UrlModel.courceManagementHomePC.string():
             UserDefaults.standard.set("mobile", forKey: KEY_corceManagementId)
-            return (UIImage(named: R.image.pcIcon.name), UrlModel.courceManagementHomeMobile.urlRequest())
+            return (R.image.pcIcon.name, UrlModel.courceManagementHomeMobile.urlRequest())
 
         // Manaba Mobile版
         case UrlModel.manabaHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_manabaId)
-            return (UIImage(named: R.image.spIcon.name), UrlModel.manabaHomePC.urlRequest())
+            return (R.image.spIcon.name, UrlModel.manabaHomePC.urlRequest())
 
         // Manaba PC版
         case UrlModel.manabaHomePC.string():
             UserDefaults.standard.set("mobile", forKey: KEY_manabaId)
-            return (UIImage(named: R.image.pcIcon.name), UrlModel.manabaHomeMobile.urlRequest())
+            return (R.image.pcIcon.name, UrlModel.manabaHomeMobile.urlRequest())
 
 
         default:
-            return (UIImage(named: "No Image"), UrlModel.systemServiceList.urlRequest())
+            return ("No Image", UrlModel.systemServiceList.urlRequest())
         }
     }
     
@@ -115,72 +115,40 @@ final class MainViewModel: NSObject {
         
     }
     
+    
+    enum ViewOperation {
+        case UP
+        case DOWN
+        case REVERSE
+    }
     /// WebViewの上げ下げを判定
-    public func viewPosisionType(operation: String, posisionY: Double) {
+    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (String?, String?) {
         
-        var ope = ""
         switch operation {
-        case "UP":
+        case .UP:
             if (posisionY != 0.0){
-                ope = "UP"
+                return ("chevron.down", "rightButtonDown")
             }
             
-        case "DOWN":
+        case .DOWN:
             if (posisionY == 0.0){
-                ope = "DOWN"
+                return ("chevron.up", "rightButtonUp")
             }
             
-        case "REVERSE":
+        case .REVERSE:
             if (posisionY == 0.0){
-                ope = "DOWN"
+                return ("chevron.up", "rightButtonUp")
+                
             } else {
-                ope = "UP"
+                return ("chevron.down", "rightButtonDown")
+                
             }
-        default:
-            return
         }
         
-        switch ope {
-        case "UP":
-            imageSystemName = "chevron.down"
-            animationView = "rightButtonDown"
-            return
-        case "DOWN":
-            imageSystemName = "chevron.up"
-            animationView = "rightButtonUp"
-            return
-        default:
-            animationView = ""
-            return
-        }
+        return (nil, nil)
 
     }
     
-    /// 教務事務システム、マナバのMobileかPCか判定
-    public func isDisplayCourceManagementOrManaba() -> Bool {
-                
-        switch dataManager.displayUrl {
-        // 教務事務システムMobile版
-        case UrlModel.courceManagementHomeMobile.string():
-            return true
-
-        // 教務事務システムPC版
-        case UrlModel.courceManagementHomePC.string():
-            return true
-
-        // Manaba Mobile版
-        case UrlModel.manabaHomeMobile.string():
-            return true
-
-        // Manaba PC版
-        case UrlModel.manabaHomePC.string():
-            return true
-
-
-        default:
-            return false
-        }
-    }
     
     // MARK: - Private
     
