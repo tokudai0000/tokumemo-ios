@@ -93,21 +93,3 @@ enum SettingCellList: String {
     case systemServiceList              // システムサービス一覧
     case eLearningList                  // Eラーニング一覧
 }
-
-
-//enum CellLists: Int {
-//    case libraryWebSite = 0              // 図書館ウェブサイト
-//    case libraryBookLendingExtension = 1 // 図書館本貸出し期間延長URL
-//    case libraryBookPurchaseRequest = 2  // 図書館本購入リクエスト
-//    case libraryCalendar = 3             // 図書館カレンダー
-//    case syllabus = 4                    // シラバスURL
-//    case timeTable = 5                   // 時間割
-//    case currentTermPerformance = 6      // 今年の成績表
-//    case termPerformance = 7             // 成績参照
-//    case presenceAbsenceRecord = 8       // 出欠記録
-//    case classQuestionnaire = 9          // 授業アンケート
-//    case mailService = 10                // MicroSoftのoutlookへ遷移
-//    case manabaPC = 11
-//    case tokudaiCareerCenter = 12        // キャリアセンター
-//    case courseRegistration = 13         // 履修登録URL
-//}

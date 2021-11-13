@@ -20,7 +20,7 @@ final class SettingsViewController: BaseViewController {
     private let viewModel = SettingViewModel()
     
     private let dataManager = DataManager.singleton
-    private let webViewModel = WebViewModel.singleton
+    private let webViewModel = WebViewModel()
     
     public var delegate : MainViewController?
     private var delegatePass : PasswordSettingsViewController?
@@ -246,7 +246,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .DOWN)
+            delegate.navigationRightButtonOnOff(operation: .down)
             
             
         case 2: // 本購入リクエスト
@@ -256,7 +256,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .DOWN)
+            delegate.navigationRightButtonOnOff(operation: .down)
             
             
         case 3: // 開館カレンダー
@@ -266,7 +266,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "失敗しました")
             }
-            delegate.navigationRightButtonOnOff(operation: .DOWN)
+            delegate.navigationRightButtonOnOff(operation: .down)
             
             
         case 4: // シラバス
@@ -280,7 +280,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .UP)
+            delegate.navigationRightButtonOnOff(operation: .up)
             
             
         case 6: // 今年の成績表
@@ -299,7 +299,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .UP)
+            delegate.navigationRightButtonOnOff(operation: .up)
             
             
         case 8: // 出欠記録
@@ -309,7 +309,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .UP)
+            delegate.navigationRightButtonOnOff(operation: .up)
             
             
         case 9: // 授業アンケート
@@ -319,7 +319,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .UP)
+            delegate.navigationRightButtonOnOff(operation: .up)
             
             
         case 10: // メール
@@ -329,7 +329,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .DOWN)
+            delegate.navigationRightButtonOnOff(operation: .down)
             
             
         case 11: // マナバPC版
@@ -339,7 +339,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .DOWN)
+            delegate.navigationRightButtonOnOff(operation: .down)
             
             
         case 12: // キャリア支援室
@@ -349,7 +349,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "失敗しました")
             }
-            delegate.navigationRightButtonOnOff(operation: .DOWN)
+            delegate.navigationRightButtonOnOff(operation: .down)
             
             
         case 13: // 履修登録
@@ -359,7 +359,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "登録者のみ")
             }
-            delegate.navigationRightButtonOnOff(operation: .UP)
+            delegate.navigationRightButtonOnOff(operation: .up)
             
             
         case 100: // パスワード設定

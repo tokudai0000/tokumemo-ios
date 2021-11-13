@@ -18,7 +18,7 @@ final class DataManager {
     public var displayUrl = ""                      // 現在表示しているURL
     public var isLoggedIn = false                   // ログインしているか
     public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
-    
+    public var isSyllabusSearchOnce = true           // Syllabusの検索を1度きりにする
     ///
     
     static let singleton = DataManager() // シングルトン・インタンス
@@ -58,14 +58,14 @@ final class DataManager {
             return
         }
     }
-        
+    
     /// cAccount
     private let KEY_cAccount = "KEY_cAccount"
     public var cAccount: String {
         get { return getKeyChain(key: KEY_cAccount) }
         set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
-
+    
     /// password
     private let KEY_passWord = "KEY_passWord"
     public var password: String {

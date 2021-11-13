@@ -189,8 +189,8 @@
 			children = (
 				1A81A93026C12C8200CC56E2 /* Model.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
-				1A9E0E07273CB75C00247F94 /* WKWebView */,
 				1AFC67C827328D840059A053 /* FileModel.swift */,
+				1A9E0E07273CB75C00247F94 /* WKWebView */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -355,10 +355,10 @@
 		1ABDE75326DE530300D4B04E /* Agreement */ = {
 			isa = PBXGroup;
 			children = (
-				1A9E0E10273D7ADF00247F94 /* PrivacyPolicy */,
-				1A9E0E0B273D676500247F94 /* TermsOfService */,
 				1ABDE75426DE534300D4B04E /* AgreementViewController.swift */,
 				1ABDE75626DE535500D4B04E /* Agreement.storyboard */,
+				1A9E0E10273D7ADF00247F94 /* PrivacyPolicy */,
+				1A9E0E0B273D676500247F94 /* TermsOfService */,
 			);
 			path = Agreement;
 			sourceTree = "<group>";

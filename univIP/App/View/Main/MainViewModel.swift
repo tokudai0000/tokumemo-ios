@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 final class MainViewModel: NSObject {
     
@@ -29,7 +28,7 @@ final class MainViewModel: NSObject {
     
     private let model = Model()
     private let dataManager = DataManager.singleton
-    private let webViewModel = WebViewModel.singleton // WebViewModel()
+    private let webViewModel = WebViewModel()
     
     private var requestUrl: NSURLRequest?
     private let KEY_corceManagementId = "KEY_corceManagementId"
@@ -38,8 +37,21 @@ final class MainViewModel: NSObject {
     public var imageSystemName = "chevron.down"
     public var animationView = ""
     
+    public var syllabusSubjectName = ""
+    public var syllabusTeacherName = ""
+    
 
     // MARK: - Public
+    
+    /// 登録者か判定
+    public func isRegistrantCheck() -> Bool {
+        if (DataManager.singleton.cAccount != "" &&
+            DataManager.singleton.password != "") {
+            return true
+
+        }
+        return false
+    }
     
     /// 教務事務システム、マナバのMobileかPCか判定
     public func isDisplayUrlForPC() -> (String?, URLRequest) {
@@ -74,7 +86,7 @@ final class MainViewModel: NSObject {
     /// タブバーの判定
     public func tabBarDetection(num: Int) -> NSURLRequest? {
         
-        if webViewModel.isRegistrantCheck() {
+        if isRegistrantCheck() {
             switch num {
             case 1: // 左
                 if UserDefaults.standard.string(forKey: KEY_corceManagementId) == "pc" {
@@ -117,35 +129,43 @@ final class MainViewModel: NSObject {
     
     
     enum ViewOperation {
-        case UP
-        case DOWN
-        case REVERSE
+        case up
+        case down
+        case reverse
     }
+    
+    enum AnimeOperation {
+        case launchScreen
+        case viewUp
+        case viewDown
+        case Nil
+    }
+   
     /// WebViewの上げ下げを判定
-    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (String?, String?) {
+    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (imageName: String?, animationName: AnimeOperation) {
         
         switch operation {
-        case .UP:
-            if (posisionY != 0.0){
-                return ("chevron.down", "rightButtonDown")
+        case .up:
+            // Viewを動かして良いのか判定
+            if (0.0 < posisionY) {
+                // Viewを上げた後、[chevron.down]のImageに差し替える
+                return ("chevron.down", .viewUp)
             }
             
-        case .DOWN:
-            if (posisionY == 0.0){
-                return ("chevron.up", "rightButtonUp")
+        case .down:
+            if (posisionY <= 0.0) {
+                return ("chevron.up", .viewDown)
             }
             
-        case .REVERSE:
-            if (posisionY == 0.0){
-                return ("chevron.up", "rightButtonUp")
+        case .reverse:
+            if (posisionY <= 0.0) {
+                return ("chevron.up", .viewDown)
                 
             } else {
-                return ("chevron.down", "rightButtonDown")
-                
+                return ("chevron.down", .viewUp)
             }
         }
-        
-        return (nil, nil)
+        return (nil, .Nil)
 
     }
     

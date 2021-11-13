@@ -8,7 +8,7 @@
 import UIKit
 
 class TermsOfServiceViewController: UIViewController {
-
+    
     @IBOutlet weak var textView: UITextView!
     
     private let rtfFileModel = FileModel()

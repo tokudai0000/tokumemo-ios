@@ -25,7 +25,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     private let model = Model()
     private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
-    private let webViewModel = WebViewModel.singleton
+    private let webViewModel = WebViewModel()
 
 
     // MARK: - LifeCycle
@@ -62,7 +62,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     @IBAction func refreshButton(_ sender: Any) {
         
         refresh()
-        navigationRightButtonOnOff(operation: .UP)
+        navigationRightButtonOnOff(operation: .up)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
@@ -76,7 +76,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
         
-        navigationRightButtonOnOff(operation: .REVERSE)
+        navigationRightButtonOnOff(operation: .reverse)
     }
     
 
@@ -135,13 +135,15 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
+        
         let responce = viewModel.viewPosisionType(operation, posisionY: wkWebView.frame.origin.y)
         
-        if let imageName = responce.0, let animationName = responce.1 {
-            let image = UIImage(systemName: viewModel.imageSystemName)
+        if let imageName = responce.imageName {
+            
+            let image = UIImage(systemName: imageName)
             rightButton.setImage(image, for: .normal)
-            animationView(scene: viewModel.animationView)
         }
+        animationView(scene: responce.animationName)
         
     }
     
@@ -150,7 +152,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     private func setup() {
         
-        animationView(scene: "launchScreen")
+        animationView(scene: .launchScreen)
         tabBar.delegate = self
         wkWebView.navigationDelegate = self
         wkWebView.uiDelegate = self
@@ -168,7 +170,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     private func registrantDecision() {
         
-        if (!webViewModel.isRegistrantCheck()) {
+        if (!viewModel.isRegistrantCheck()) {
             // "cアカウント"、"パスワード"の設定催促
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
@@ -200,9 +202,9 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     // アニメーション
-    private func animationView(scene:String){
+    private func animationView(scene: MainViewModel.AnimeOperation) {
         switch scene {
-        case "launchScreen":
+        case .launchScreen:
             
             let launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
             launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
@@ -237,7 +239,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                     launchScreenView.removeFromSuperview()
             })
             
-        case "rightButtonUp":
+        case .viewDown:
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0.08,
@@ -248,7 +250,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 completion: { bool in
             })
             
-        case "rightButtonDown":
+        case .viewUp:
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0.08,
@@ -341,7 +343,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // タイムアウト判定
-        if webViewModel.isJudgeUrl(.timeOut) {
+        if webViewModel.isJudgeUrl(.timeOut, isRegistrant: viewModel.isRegistrantCheck()) {
             let response = webViewModel.url(.login)
             if let url = response as URLRequest? {
                 webView.load(url)
@@ -360,41 +362,40 @@ extension MainViewController: WKNavigationDelegate{
 
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-                
+        let isRegistrant = viewModel.isRegistrantCheck()
         // 非登録者がログイン画面を開いた時
-        if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision) {
+        if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision, isRegistrant: isRegistrant) {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
         }
         
         // 自動ログイン
-        if webViewModel.isJudgeUrl(.login) {
+        if webViewModel.isJudgeUrl(.login, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         }
         
         // 教務事務システム、アンケート催促スキップ
-        if webViewModel.isJudgeUrl(.enqueteReminder) {
+        if webViewModel.isJudgeUrl(.enqueteReminder, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
 
         // シラバス自動入力
-        if webViewModel.isJudgeUrl(.syllabus) {
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.syllabusSubjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.syllabusTeacherName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(webViewModel.syllabusKeyword)'", completionHandler:  nil)
+        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant) {
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
         // outlookログイン
-        if webViewModel.isJudgeUrl(.outlook) {
+        if webViewModel.isJudgeUrl(.outlook, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
         
         // キャリア支援室ログイン
-        if webViewModel.isJudgeUrl(.tokudaiCareerCenter) {
+        if webViewModel.isJudgeUrl(.tokudaiCareerCenter, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
         }

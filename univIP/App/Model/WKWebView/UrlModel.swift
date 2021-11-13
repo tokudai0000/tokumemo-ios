@@ -11,7 +11,7 @@ import Foundation
 /// UrlModel.login.string()でloginの文字列URLが
 /// UrlModel.login.urlRequest()でloginのurlRequestフォーマットされたURLが取得可能
 enum UrlModel {
-
+    
     case login                       // ログイン画面
     case courceManagementHomeMobile  // 情報ポータル、ホーム画面URL
     case courceManagementHomePC      // 情報ポータル、ホーム画面URL
@@ -108,17 +108,16 @@ enum UrlModel {
         case .outlookLogin:                return format(UrlModel.outlookLogin.string())
         }
     }
-
+    
     /// 文字列URLをURLRequestへフォーマット
     public func format(_ urlString: String) -> URLRequest {
-
+        
         if let url = URL(string: urlString) {
             return URLRequest(url: url)
-        
+            
         } else {
             AKLog(level: .FATAL, message: "URLフォーマットエラー")
             fatalError() // 予期しないため、強制的にアプリを落とす
-    
         }
     }
     

@@ -8,7 +8,7 @@
 import UIKit
 
 class PrivacyPolicyViewController: UIViewController {
-
+    
     @IBOutlet weak var textView: UITextView!
     
     private let rtfFileModel = FileModel()
@@ -24,6 +24,5 @@ class PrivacyPolicyViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
     
 }
