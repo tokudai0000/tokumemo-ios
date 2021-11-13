@@ -360,7 +360,7 @@ extension MainViewController: WKNavigationDelegate{
         let isRegistrant = viewModel.isRegistrantCheck()
         // 非登録者がログイン画面を開いた時
         if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision, isRegistrant: isRegistrant) {
-            toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
+            toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", interval: 3)
         }
         
         // 自動ログイン

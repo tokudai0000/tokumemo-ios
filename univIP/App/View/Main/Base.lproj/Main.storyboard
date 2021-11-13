@@ -42,7 +42,7 @@
                                                             <constraint firstAttribute="width" constant="50" id="4Vz-e3-bUx"/>
                                                         </constraints>
                                                         <color key="tintColor" systemColor="systemGrayColor"/>
-                                                        <state key="normal" image="line.horizontal.3" catalog="system"/>
+                                                        <state key="normal" image="line.3.horizontal" catalog="system"/>
                                                         <connections>
                                                             <action selector="settingMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2V7-ge-fUf"/>
                                                         </connections>
@@ -182,7 +182,7 @@
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
-        <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
+        <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
         <image name="pcIcon" width="1280" height="1280"/>
         <image name="tokumemoIcon2" width="1280" height="1280"/>
         <systemColor name="opaqueSeparatorColor">
