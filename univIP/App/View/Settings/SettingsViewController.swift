@@ -231,7 +231,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         switch cellId {
         case 0: // 図書館Webサイト
-            let response = webViewModel.url(.libraryLogin)
+            let response = webViewModel.url(.libraryHome)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
             } else {
@@ -239,7 +239,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             }
         
         case 1: // 図書館MyPage
-            let response = webViewModel.url(.libraryHome)
+            let response = webViewModel.url(.libraryLogin)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
             } else {
