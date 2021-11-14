@@ -235,7 +235,7 @@ final class WebViewModel {
             case .courceManagementHomePC:       return UrlModel.systemServiceList.string()
             case .manabaSP:                     return UrlModel.eLearningList.string()
             case .manabaPC:                     return UrlModel.eLearningList.string()
-            case .libraryLogin:                 return UrlModel.libraryHome.string()
+            case .libraryLogin:                 return nil
             case .libraryBookLendingExtension:  return nil
             case .libraryBookPurchaseRequest:   return nil
             case .timeTable:                    return nil
