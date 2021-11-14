@@ -13,11 +13,13 @@ import Foundation
 enum UrlModel {
     
     case login                       // ログイン画面
+    case universityHome              // 大学ホームページ
     case courceManagementHomeMobile  // 情報ポータル、ホーム画面URL
     case courceManagementHomePC      // 情報ポータル、ホーム画面URL
     case manabaHomeMobile            // マナバURL
     case manabaHomePC                // マナバURL
-    case libraryLogin                // 図書館URL
+    case libraryHome                 // 図書館ホームページ
+    case libraryLogin                // 図書館MyPageログイン
     case libraryBookLendingExtension // 図書館本貸出し期間延長URL
     case libraryBookPurchaseRequest  // 図書館本購入リクエスト
     case syllabusSearchMain
@@ -30,7 +32,6 @@ enum UrlModel {
     case eLearningList               // Eラーニング一覧
     case outlookHome
     case tokudaiCareerCenter         // キャリアセンター
-    case libraryHome
     case courseRegistration          // 履修登録URL
     case lostConnection
     case libraryCalendar             // 図書館カレンダー
@@ -72,6 +73,7 @@ enum UrlModel {
         case .popupToYoutube:              return "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
         case .mailService:                 return "https://outlook.office365.com/tokushima-u.ac.jp"
         case .outlookLogin:                return "https://wa.tokushima-u.ac.jp/adfs/ls"
+        case .universityHome:              return "https://www.tokushima-u.ac.jp/"
         }
     }
     
@@ -106,6 +108,7 @@ enum UrlModel {
         case .popupToYoutube:              return format(UrlModel.popupToYoutube.string())
         case .mailService:                 return format(UrlModel.mailService.string())
         case .outlookLogin:                return format(UrlModel.outlookLogin.string())
+        case .universityHome:              return format(UrlModel.universityHome.string())
         }
     }
     

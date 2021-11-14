@@ -17,7 +17,7 @@ final class WebViewModel {
     // MARK: - Public
     
     /// 表示したいURLを返す
-    public func url(_ menuTitle: SettingCellList) -> NSURLRequest? {
+    public func url(_ menuTitle: SelectUrlList) -> NSURLRequest? {
         
         // 登録、非登録による場合のURLを取得
         if let urlString = selectUrl(menuTitle, isLogedin: dataManager.isLoggedIn) {
@@ -173,7 +173,7 @@ final class WebViewModel {
     
     // MARK: - Private
     
-    enum SettingCellList: String {
+    enum SelectUrlList: String {
         case login                          // ログイン画面
         case courceManagementHomeSP         // 情報ポータル、ホーム画面URL
         case courceManagementHomePC         // 情報ポータル、ホーム画面URL
@@ -194,9 +194,11 @@ final class WebViewModel {
         case courseRegistration             // 履修登録URL
         case systemServiceList              // システムサービス一覧
         case eLearningList                  // Eラーニング一覧
+        case libraryHome
+        case universityHome
     }
     
-    private func selectUrl(_ menuTitle: SettingCellList, isLogedin: Bool) -> String? {
+    private func selectUrl(_ menuTitle: SelectUrlList, isLogedin: Bool) -> String? {
         
         if isLogedin {
             
@@ -221,6 +223,8 @@ final class WebViewModel {
             case .libraryCalendar:              return getLibraryCalender()
             case .systemServiceList:            return UrlModel.systemServiceList.string()
             case .eLearningList:                return UrlModel.eLearningList.string()
+            case .libraryHome:                  return UrlModel.libraryHome.string()
+            case .universityHome:               return UrlModel.universityHome.string()
             }
             
         } else {
@@ -246,6 +250,8 @@ final class WebViewModel {
             case .libraryCalendar:              return getLibraryCalender()
             case .systemServiceList:            return UrlModel.systemServiceList.string()
             case .eLearningList:                return UrlModel.eLearningList.string()
+            case .libraryHome:                  return UrlModel.libraryHome.string()
+            case .universityHome:               return UrlModel.universityHome.string()
             }
         }
     }
