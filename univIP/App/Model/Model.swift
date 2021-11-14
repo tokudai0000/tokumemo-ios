@@ -11,9 +11,9 @@ import Foundation
 struct Model {
     
     /// 利用規約、ユーザーポリシーの更新したらバージョンあげること
-    public let agreementVersion = "1.0.0"
+    public let agreementVersion = "1.0"
     /// 更新日時記録
-    /// 1.0.0: 2021/11/11
+    /// 1.0: 2021/11/14
     
     
     // MARK: - MainView

@@ -135,7 +135,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
         
-        let responce = viewModel.viewPosisionType(operation, posisionY: wkWebView.frame.origin.y)
+        let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
         
         if let imageName = responce.imageName {
             
