@@ -1,50 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--About This App View Controller-->
-        <scene sceneID="S8f-fE-VyL">
+        <scene sceneID="6rL-Gw-QWe">
             <objects>
-                <viewController storyboardIdentifier="AboutThisAppViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cJc-3L-bRn" customClass="AboutThisAppViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="VJ2-rL-BPH">
+                <viewController storyboardIdentifier="AboutThisApp" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nM6-6p-iga" customClass="AboutThisAppViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hB7-0z-IAM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9h-79-NBh">
-                                <rect key="frame" x="20" y="64" width="374" height="798"/>
-                                <color key="backgroundColor" red="0.85992267119999999" green="0.95990640319999998" blue="0.9825405478" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oW6-Pz-p5T">
+                                <rect key="frame" x="0.0" y="44" width="414" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="トクメモについて" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47h-TB-tL6">
+                                        <rect key="frame" x="125.5" y="0.0" width="163.5" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIx-b9-HYh">
+                                        <rect key="frame" x="359" y="0.0" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="YiT-pq-SUL"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title=" " image="xmark" catalog="system"/>
+                                        <connections>
+                                            <action selector="backButton:" destination="nM6-6p-iga" eventType="touchUpInside" id="CLd-C0-aMG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="vIx-b9-HYh" secondAttribute="bottom" id="7fC-jG-RNX"/>
+                                    <constraint firstItem="47h-TB-tL6" firstAttribute="centerX" secondItem="oW6-Pz-p5T" secondAttribute="centerX" id="EHJ-oN-k2z"/>
+                                    <constraint firstAttribute="trailing" secondItem="vIx-b9-HYh" secondAttribute="trailing" constant="15" id="FUf-th-tYG"/>
+                                    <constraint firstItem="vIx-b9-HYh" firstAttribute="top" secondItem="oW6-Pz-p5T" secondAttribute="top" id="Ujg-5T-chy"/>
+                                    <constraint firstItem="47h-TB-tL6" firstAttribute="top" secondItem="oW6-Pz-p5T" secondAttribute="top" id="gQg-ZK-CbM"/>
+                                    <constraint firstAttribute="height" constant="40" id="gvA-U1-S1s"/>
+                                    <constraint firstAttribute="bottom" secondItem="47h-TB-tL6" secondAttribute="bottom" id="pA0-Oo-hnm"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcV-JG-Ywk">
+                                <rect key="frame" x="10" y="104" width="394" height="738"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="qWb-IA-GNX"/>
-                        <color key="backgroundColor" red="0.85992267119999999" green="0.95990640319999998" blue="0.9825405478" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="y3E-ej-uw1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="z9h-79-NBh" firstAttribute="leading" secondItem="qWb-IA-GNX" secondAttribute="leading" constant="20" id="0xb-hu-WZF"/>
-                            <constraint firstItem="z9h-79-NBh" firstAttribute="top" secondItem="qWb-IA-GNX" secondAttribute="top" constant="20" id="Bgv-eH-2vg"/>
-                            <constraint firstItem="qWb-IA-GNX" firstAttribute="bottom" secondItem="z9h-79-NBh" secondAttribute="bottom" id="IBZ-LG-J5y"/>
-                            <constraint firstItem="qWb-IA-GNX" firstAttribute="trailing" secondItem="z9h-79-NBh" secondAttribute="trailing" constant="20" id="iPU-dO-bFS"/>
+                            <constraint firstItem="oW6-Pz-p5T" firstAttribute="top" secondItem="y3E-ej-uw1" secondAttribute="top" id="Swa-UG-RxA"/>
+                            <constraint firstItem="gcV-JG-Ywk" firstAttribute="leading" secondItem="y3E-ej-uw1" secondAttribute="leading" constant="10" id="VPY-9n-CqB"/>
+                            <constraint firstItem="y3E-ej-uw1" firstAttribute="trailing" secondItem="gcV-JG-Ywk" secondAttribute="trailing" constant="10" id="WNd-5J-npF"/>
+                            <constraint firstItem="y3E-ej-uw1" firstAttribute="bottom" secondItem="gcV-JG-Ywk" secondAttribute="bottom" constant="20" id="Wb7-be-P4i"/>
+                            <constraint firstItem="oW6-Pz-p5T" firstAttribute="trailing" secondItem="y3E-ej-uw1" secondAttribute="trailing" id="aYZ-By-wcJ"/>
+                            <constraint firstItem="oW6-Pz-p5T" firstAttribute="leading" secondItem="y3E-ej-uw1" secondAttribute="leading" id="hUT-NQ-cDd"/>
+                            <constraint firstItem="gcV-JG-Ywk" firstAttribute="top" secondItem="oW6-Pz-p5T" secondAttribute="bottom" constant="20" id="nyu-U3-fTl"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="textView" destination="z9h-79-NBh" id="KFT-fZ-0KQ"/>
+                        <outlet property="textView" destination="gcV-JG-Ywk" id="eYR-hn-4FQ"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UfB-jQ-LgH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qDn-XM-EFj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="92.753623188405811" y="34.821428571428569"/>
+            <point key="canvasLocation" x="-135" y="81"/>
         </scene>
     </scenes>
     <resources>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

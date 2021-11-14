@@ -7,65 +7,76 @@
 
 import UIKit
 
-class AgreementViewController: BaseViewController {
+final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
-    //MARK:- IBOutlet
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var buttonTextureYes: UIButton!
-    @IBOutlet weak var buttonTextureNo: UIButton!
+    // MARK: - IBOutlet
+    @IBOutlet weak var termsTextView: UITextView!
+    @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
+    private let rtfFileModel = FileModel()
+    private let dataManager = DataManager.singleton
     
-    //MARK:- LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttonTextureYes.layer.cornerRadius = 20.0
-        buttonTextureNo.layer.cornerRadius = 20.0
-        
-        rtfFileOpen()
-        textView.isEditable = false
+        setup()
+        textViewSetup()
     }
     
     
-    //MARK:- IBAction
+    // MARK: - IBAction
     @IBAction func buttonAction(_ sender: Any) {
-        // tag 0:Yes  1:No
-        if let button = sender as? UIButton {
-            switch button.tag {
-            case 0:
-                // 利用規約に同意した
-                UserDefaults.standard.set(true, forKey: model.agreementVersion)
-                dismiss(animated: false, completion: nil)
-            case 1:
-                toast(message: "申し訳ありません。同意をしない限り、このアプリを利用することはできません", type: "bottom")
+        dataManager.setAgreementVersion()
+        self.dismiss(animated: true, completion: nil)
                 
-            default:
-                return
-            }
-        }
     }
     
     
-    // MARK: - Private func
-    private func rtfFileOpen(){
-        if let url = R.file.agreementRtf() {
-            do {
-                let terms = try Data(contentsOf: url)
-                let attributedString = try NSAttributedString(data: terms,
-                                                             options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
-                                                             documentAttributes: nil)
-                
-                let linkSourceCode = (attributedString.string as NSString).range(of: "https://github.com/akidon0000/univIP")
-                let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "https://firebase.google.com/support/privacy?hl=ja")
-                let attributedText = NSMutableAttributedString(string: attributedString.string)
-                attributedText.addAttribute(.link, value: "https://github.com/akidon0000/univIP", range: linkSourceCode)
-                attributedText.addAttribute(.link, value: "https://firebase.google.com/support/privacy?hl=ja", range: linkFireBasePrivacy)
-                textView.attributedText = attributedText
-                        
-            } catch let error {
-                print("ファイルの読み込みに失敗しました: \(error.localizedDescription)")
-            }
+    // MARK: - Public
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let urlString = URL.absoluteString
+        
+        if urlString == "TermsOfService" {
+            let vc = R.storyboard.termsOfService.termsOfService()!
+            self.present(vc, animated: true, completion: nil)
+            return false // 通常のURL遷移を行わない
+            
+        } else if urlString == "PrivacyPolicy" {
+            let vc = R.storyboard.privacyPolicy.privacyPolicy()!
+            self.present(vc, animated: true, completion: nil)
+            return false 
+            
         }
+        return true // 通常のURL遷移を行う
+        
+    }
+    
+    
+    // MARK: - Private
+    private func setup() {
+        agreementButton.layer.cornerRadius = 20.0
+        
+        termsTextView.isEditable = false
+        termsTextView.isScrollEnabled = false
+        termsTextView.isSelectable = true
+        termsTextView.delegate = self
+        
+    }
+    
+    private func textViewSetup() {
+
+        let attributed = rtfFileModel.rtfFileLoad(url: R.file.agreementRtf())
+        let attributedString = NSMutableAttributedString(string: attributed.string)
+        
+        let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
+        let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
+        
+        let attributedText = NSMutableAttributedString(string: attributedString.string)
+        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
+        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
+        termsTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
+        termsTextView.attributedText = attributedText
     }
     
 }

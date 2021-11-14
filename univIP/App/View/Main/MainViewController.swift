@@ -6,22 +6,15 @@
 //  Copyright © 2021年　akidon0000
 //
 
-
-/*
- JavaScript 要素取得方法
- https://qiita.com/amamamaou/items/25e8b4e1b41c8d3211f4
- */
-
-
 import UIKit
 import WebKit
 
-final class MainViewController: BaseViewController, WKUIDelegate{
+final class MainViewController: BaseViewController, WKUIDelegate {
     
-    //MARK:- IBOutlet
+    // MARK: - IBOutlet
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var tabBar: UITabBar!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var wkWebView: WKWebView!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -30,554 +23,410 @@ final class MainViewController: BaseViewController, WKUIDelegate{
     @IBOutlet weak var activityIndicatorView: UIView!
     
     private let model = Model()
-    private let dataManager = DataManager()
+    private let viewModel = MainViewModel()
+    private let webViewModel = WebViewModel()
+    private let dataManager = DataManager.singleton
     
-    // SyllabusViewの内容を渡され保存し、Webに入力する
-    private var syllabusSubjectName = ""
-    private var syllabusTeacherName = ""
-    private var syllabusKeyword = ""
-    private var syllabusSearchOnce = false
-    private var syllabusPassdThroughOnce = false
     
-    // 現在表示しているURL
-    private var displayURL = ""
-    
-    // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
-    private var onlyOnceForLogin = false
-
-
-    //MARK:- LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        animationView(scene: "launchScreen")
-        tabBar.delegate = self
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
         
+        setup()
         refresh()
+        initViewModel()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        // 利用規約同意画面
-        firstBootDecision()
         
-        // "cアカウント"、"パスワード"の設定催促
-        if (!registrantDecision()){
-            popupView(scene: "password")
-        }
+        firstBootSetup()       // 利用規約同意判定
+        registrantDecision()   // 登録者判定
     }
     
-
-    //MARK:- IBAction
-    @IBAction func navigationLeftButton(_ sender: Any) {
+    
+    // MARK: - IBAction
+    @IBAction func settingMenuButton(_ sender: Any) {
+        
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
-        vc.delegateMain = self
+        vc.delegate = self
     }
     
-    @IBAction func navigationLeftButton2(_ sender: Any) {
-        webView.goBack()
+    @IBAction func backButton(_ sender: Any) {
+        
+        wkWebView.goBack()
     }
     
-    @IBAction func navigationCenterButton(_ sender: Any) {
+    @IBAction func refreshButton(_ sender: Any) {
+        
         refresh()
-        navigationRightButtonOnOff(operation: "UP")
-    }
-
-    @IBAction func navigationRightButton(_ sender: Any) {
-        navigationRightButtonOnOff(operation: "REVERSE")
+        navigationRightButtonOnOff(operation: .up)
     }
     
-    @IBAction func revercePCtoSP(_ sender: Any) {
-        if displayURL == model.urls["courceManagementHomeSP"]!.url{
-            openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "spIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
-            
-        }else if displayURL ==  model.urls["courceManagementHomePC"]!.url{
-            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "pcIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
-            
-        }else if displayURL == model.urls["manabaSP"]!.url{
-            openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "spIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
-            
-        }else if displayURL == model.urls["manabaPC"]!.url{
-            openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            let image = UIImage(named: "pcIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
-            
+    @IBAction func webViewChangePCorMB(_ sender: Any) {
+        
+        let response = viewModel.isDisplayUrlForPC()
+        if let image = response.0 {
+            reversePCtoSP.setImage(UIImage(named: image), for: .normal)
+            self.wkWebView.load(response.1)
         }
-        
-        
-//        switch ope {
-//        case "UP":
-//            let image = UIImage(systemName: "chevron.down")
-//            rightButton.setImage(image, for: .normal)
-//            animationView(scene: "rightButtonDown")
-//            return
-//        case "DOWN":
-//            let image = UIImage(systemName: "chevron.up")
-//            rightButton.setImage(image, for: .normal)
-//            animationView(scene: "rightButtonUp")
-//        default:
-//            return
-//        }
     }
     
-
+    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
+        
+        navigationRightButtonOnOff(operation: .reverse)
+    }
+    
+    
     // MARK: - Public func
-    
-    // 文字列で指定されたURLを開く
-    public func openUrl(urlForRegistrant: String, urlForNotRegistrant: String?, alertTrigger:Bool) {
+    public func refresh() { // 教務事務システムに再度ログイン
         
-        webViewDisplay(bool: true)
-        onlyOnceForLogin = false
-        // 登録者判定
-        if registrantDecision(){
-            let request = NSURLRequest(url: URL(string:urlForRegistrant)!)
-            webView.load(request as URLRequest)
+        tabBar.selectedItem = tabBarLeft
+        self.activityIndicatorView.isHidden = true
+        
+        if let url = webViewModel.url(.login) {
+            wkWebView.load(url as URLRequest)
             
-        }else{
-            if alertTrigger {
-                toast(message: "パスワード設定をすることで利用できます", type: "bottom")
-                webViewDisplay(bool: false)
-                return
-            }
-            
-            guard let url = urlForNotRegistrant else {
-                toast(message: "エラーが起こりました", type: "bottom")
-                return
-            }
-            
-            let request = NSURLRequest(url: URL(string:url)!)
-            webView.load(request as URLRequest)
+        } else {
+            toast(message: "登録者のみ")
         }
     }
     
-    public func refresh(){
-        onlyOnceForLogin = false
-        tabBar.selectedItem = tabBarLeft
-        
-        openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+    
+    public func refreshSyllabus(subjectName: String, teacherName: String ){
+        webViewModel.subjectName = subjectName
+        webViewModel.teacherName = teacherName
+        let response = webViewModel.url(.syllabus)
+        if let url = response as URLRequest? {
+            wkWebView.load(url)
+        } else {
+            toast(message: "登録者のみ")
+        }
     }
     
-    public func refreshSyllabus(subjectName: String, teacherName: String, keyword:String){
-        syllabusSubjectName = subjectName
-        syllabusTeacherName = teacherName
-        syllabusKeyword = keyword
-        syllabusSearchOnce = true
+    
+    public func popupView(scene: MainViewModel.NextView){
         
-        openUrl(urlForRegistrant: model.urls["syllabus"]!.url, urlForNotRegistrant: model.urls["syllabus"]!.url, alertTrigger: false)
-    }
-
-    public func popupView(scene: String){
         switch scene {
-        case "firstView":
+            
+        case .syllabus:
             let vc = R.storyboard.syllabus.syllabusViewController()!
             self.present(vc, animated: true, completion: nil)
-        case "syllabus":
-            let vc = R.storyboard.syllabus.syllabusViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
-        case "password":
+            vc.delegate = self
+            
+            
+        case .password:
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
-            vc.delegateMain = self
-        case "aboutThisApp":
-            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+            vc.delegate = self
+            
+            
+        case .aboutThisApp:
+            let vc = R.storyboard.aboutThisApp.aboutThisApp()!
             self.present(vc, animated: true, completion: nil)
-        case "contactToDeveloper":
-            let vc = R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-            self.present(vc, animated: true, completion: nil)
-        default:
-            return
+            
+            
         }
+        
     }
+    
     
     // webViewを上げ下げする
-    public func navigationRightButtonOnOff(operation: String){
+    public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
         
-        let webViewPositionY = webView.frame.origin.y
-        var ope = ""
-        switch operation {
-        case "UP":
-            if (webViewPositionY != 0.0){
-                ope = "UP"
-            }
-            
-        case "DOWN":
-            if (webViewPositionY == 0.0){
-                ope = "DOWN"
-            }
-            
-        case "REVERSE":
-            if (webViewPositionY == 0.0){
-                ope = "DOWN"
-            }else{
-                ope = "UP"
-            }
-        default:
-            return
-        }
+        let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
         
-        switch ope {
-        case "UP":
-            let image = UIImage(systemName: "chevron.down")
+        if let imageName = responce.imageName {
+            
+            let image = UIImage(systemName: imageName)
             rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonDown")
-            return
-        case "DOWN":
-            let image = UIImage(systemName: "chevron.up")
-            rightButton.setImage(image, for: .normal)
-            animationView(scene: "rightButtonUp")
-        default:
-            return
         }
+        animationView(scene: responce.animationName)
+        
     }
-    
     
     
     // MARK: - Private func
     
-    // 初回起動時判定
-    private func firstBootDecision() {
-        // 利用規約同意者か判定
-        let value = UserDefaults.standard.bool(forKey: model.agreementVersion)
-        if value{
-            return
-        }else{
+    private func setup() {
+        
+        animationView(scene: .launchScreen)
+        tabBar.delegate = self
+        wkWebView.navigationDelegate = self
+        wkWebView.uiDelegate = self
+    }
+    
+    
+    // 初回起動時
+    private func firstBootSetup() {
+        
+        if !agreementPersonDecision() {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
     }
     
-    // WebViewの表示、非表示を判定
-    private func webViewHiddenJudge(){
+    private func registrantDecision() {
         
-        // 上記のURLの場合、画面を表示
-        for (_, value) in model.urls{
-            if displayURL.contains(value.url) && value.topView == true{
-                webViewDisplay(bool: false)
-                return
-            }
-        }
-        
-        // ログインできなかった時
-        if displayURL.contains(model.urls["lostConnection"]!.url) &&
-            displayURL.suffix(4) != "e1s1"{
-            webViewDisplay(bool: false)
-            return
-        }
-        
-        // シラバス
-        if displayURL == model.urls["syllabus"]!.url{
-            // 2回目に通った時
-            if syllabusPassdThroughOnce{
-                webViewDisplay(bool: false)
-                syllabusPassdThroughOnce = false
-                return
-            }else{
-                syllabusPassdThroughOnce = true
-            }
+        if (!viewModel.isRegistrantCheck()) {
+            // "cアカウント"、"パスワード"の設定催促
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegate = self
         }
     }
     
-    // 表示:false  非表示：true
-    private func webViewDisplay(bool: Bool){
+    
+    // 利用規約同意者か判定
+    private func agreementPersonDecision() -> Bool{
+        let lastTimeVersion = dataManager.getAgreementVersion()
+        let newVersion = model.agreementVersion
+        
+        return lastTimeVersion == newVersion
+    }
+    
+    
+    // 表示:true  非表示：false
+    private func webViewDisplay(_ bool: Bool){
         
         switch bool {
         case true:
-            leftButton.isEnabled = false
-            self.activityIndicatorView.isHidden = false
-            activityIndicator.startAnimating()
-
-        case false:
             leftButton.isEnabled = true
             self.activityIndicatorView.isHidden = true
             activityIndicator.stopAnimating()
             
+        case false:
+            leftButton.isEnabled = false
+            self.activityIndicatorView.isHidden = false
+            activityIndicator.startAnimating()
         }
     }
     
-    // アカウント登録者判定　登録者：true　　非登録者：false
-    private func registrantDecision() -> Bool{
-        if (dataManager.cAccount == "" &&
-                dataManager.passWord == ""){
-            return false
-            
-        }else{
-            return true
-        }
-    }
-    
-
     // アニメーション
-    private func animationView(scene:String){
+    private func animationView(scene: MainViewModel.AnimeOperation) {
         switch scene {
-        case "launchScreen":
+        case .launchScreen:
             
             let launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
             launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
             launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
-            let imageView = UIImageView(image:UIImage(named:"tokumemoIcon1")!)
-            imageView.frame = CGRect(x:0, y:0, width:50, height:50);
-            imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2 + 10)
+            let imageView = UIImageView(image: R.image.mainIconWhite())
+            imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
+            imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
             self.view.addSubview(launchScreenView)
             self.view.addSubview(imageView)
             
             //少し縮小するアニメーション
             UIView.animate(withDuration: 0.3,
-                delay: 0,
-                options: UIView.AnimationOptions.curveEaseOut,
-                animations: { () in
-                    imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-                }, completion: { (Bool) in
-
+                           delay: 0,
+                           options: UIView.AnimationOptions.curveEaseOut,
+                           animations: { () in
+                imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }, completion: { (Bool) in
+                
             })
-
+            
             //拡大させて、消えるアニメーション
             UIView.animate(withDuration: 0.5,
-                delay: 0.3,
-                options: UIView.AnimationOptions.curveEaseOut,
-                animations: { () in
-                    imageView.transform = CGAffineTransform(scaleX: 50, y: 50)
-                    imageView.alpha = 0.1
-                }, completion: { (Bool) in
-                    imageView.removeFromSuperview()
-                    launchScreenView.removeFromSuperview()
+                           delay: 0.3,
+                           options: UIView.AnimationOptions.curveEaseOut,
+                           animations: { () in
+                imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
+                imageView.alpha = 1
+            }, completion: { (Bool) in
+                imageView.removeFromSuperview()
+                launchScreenView.removeFromSuperview()
             })
             
-        case "rightButtonUp":
+        case .viewDown:
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0.08,
                 options: .curveEaseOut,
                 animations: {
-                    self.webView.layer.position.y += 60
-            },
-                completion: { bool in
-            })
-            
-        case "rightButtonDown":
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.08,
-                options: .curveEaseOut,
-                animations: {
-                    self.webView.layer.position.y -= 60
+                    self.wkWebView.layer.position.y += 60
                 },
                 completion: { bool in
                 })
-
+            
+        case .viewUp:
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.08,
+                options: .curveEaseOut,
+                animations: {
+                    self.wkWebView.layer.position.y -= 60
+                },
+                completion: { bool in
+                })
+            
         default:
             return
         }
     }
-}
-
-
-//MARK:- WebView
-extension MainViewController: WKNavigationDelegate{
+    
+    
+    /// ViewModel初期化
+    private func initViewModel() {
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else {
+                fatalError()
+            }
+            DispatchQueue.main.async {
+                switch state {
+                case .busy: // 通信中
+                    let vc = R.storyboard.syllabus.syllabusViewController()!
+                    self.present(vc, animated: true, completion: nil)
+                    break
+                    
+                case .ready: // 通信完了
+                    
+                    break
+                    
+                    
+                case .error:
+                    break
+                    
+                }//end switch
+            }
+        }
+    }
+    
+    /// 新しいウィンドウで開く「target="_blank"」
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction,
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
         // 変数 url にはリンク先のURLが入る
-        if let url = navigationAction.request.url {
-            openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
-            webViewDisplay(bool: false)
-        }
-         
+        webView.load(navigationAction.request)
+        
         return nil
+        
     }
-    // 読み込み設定（リクエスト前）
+    
+}
+
+
+// MARK: - WebView
+extension MainViewController: WKNavigationDelegate{
+    
+    // MARK: - 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
-        // 現在表示してるURL
+        
+        // 現在の表示URL
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
+            AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
-        displayURL = url.absoluteString
-        print("displayURL : " + displayURL)
         
+        // URLをViewModelに保存
+        webViewModel.registUrl(url)
         
-        // 許可するドメインを指定
-        guard let host = url.host else{
-            return
-        }
-        // [model.allowDomains] 以外はSafariで開く
-        var trigger = false
-        for allow in model.allowDomains {
-            if host.contains(allow){
-                trigger = true
+        // 許可されたドメインか判定
+        if !webViewModel.isDomeinCheck(url) {
+            if let url = URL(string: dataManager.displayUrl) {
+                AKLog(level: .DEBUG, message: "Safariで開く")
+                UIApplication.shared.open(url)
+                
+            } else {
+                AKLog(level: .ERROR, message: "URL変換エラー")
+                toast(message: "失敗")
             }
-        }
-        if trigger == false{
-            print(displayURL)
-            print("a")
-            UIApplication.shared.open(URL(string: String(describing: displayURL))!)
             decisionHandler(.cancel)
             return
-        }
-        
-        // <a href="..." target="_blank"> (新しいタブで開く)判定
-//        if (navigationAction.navigationType == .linkActivated){
-//            if navigationAction.targetFrame == nil
-//                || !navigationAction.targetFrame!.isMainFrame { // 新しく開かれるタブを新しいURLとして読み込む
-//                openUrl(urlForRegistrant: url.absoluteString, urlForNotRegistrant: url.absoluteString, alertTrigger: false)
-//                webViewDisplay(bool: false)
-//                decisionHandler(.cancel)
-//                return
-//            }
-//        }
-        
-        // Manabaの授業Youtubeリンクのタップ判定
-        if (displayURL.contains(model.urls["popupToYoutube"]!.url)){
-            // Youtubeリンクを取得
-            webView.evaluateJavaScript("document.linkform_iframe_balloon.url.value", completionHandler: { (html, error) -> Void in
-                if let htmlYoutube = html{ // type(of: htmlYoutube) >>> __NSCFString
-                    UIApplication.shared.open(URL(string: String(describing: htmlYoutube))!)
-                    return
-                }else{
-                    webView.goBack()
-                    self.toast(message: "エラー")
-                    return
-                }
-            })
         }
         
         // タイムアウト判定
-        if (displayURL == model.urls["timeOut"]!.url){
-            openUrl(urlForRegistrant: model.urls["login"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
+        if webViewModel.isJudgeUrl(.timeOut, isRegistrant: viewModel.isRegistrantCheck()) {
+            let response = webViewModel.url(.login)
+            if let url = response as URLRequest? {
+                webView.load(url)
+            } else {
+                toast(message: "失敗")
+            }
         }
         
         decisionHandler(.allow)
         return
     }
-
-
-    /// 読み込み完了
+    
+    
+    // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        DispatchQueue.main.async {
-            self.backButton.isEnabled = webView.canGoBack
-            self.backButton.alpha = webView.canGoBack ? 1.0 : 0.4
-        }
-        // KeyChain
-        let cAcaunt = dataManager.cAccount
-        let passWord = dataManager.passWord
-        if !registrantDecision(){
-            if displayURL.contains(model.urls["lostConnection"]!.url){
-                toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", type: "bottom", interval: 3)
-            }
+        let isRegistrant = viewModel.isRegistrantCheck()
+        // 非登録者がログイン画面を開いた時
+        if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision, isRegistrant: isRegistrant) {
+            toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", interval: 3)
         }
         
-        // PCサイトへ飛ばされた場合
-//        if (displayURL == model.urls["courceManagementHomePC"]!.url){
-//            openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
-//        }
-
-        // Login画面
-        if !onlyOnceForLogin{ // ddosにならない様に対策
-            if (displayURL.contains(model.urls["lostConnection"]!.url) && displayURL.suffix(2)=="s1"){ // 2回目は"=e1s2"
-                if !registrantDecision(){ // 非登録者
-                    return
-                }
-                webView.evaluateJavaScript("document.getElementById('username').value= '\(cAcaunt)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('password').value= '\(passWord)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-                onlyOnceForLogin = true
-            }
+        // 自動ログイン
+        if webViewModel.isJudgeUrl(.login, isRegistrant: isRegistrant) {
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         }
-
+        
         // 教務事務システム、アンケート催促スキップ
-        if (displayURL == model.urls["enqueteReminder"]!.url){
+        if webViewModel.isJudgeUrl(.enqueteReminder, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
-
-        // シラバス
-        if (displayURL.contains(model.urls["syllabus"]!.url) && syllabusSearchOnce){
-            syllabusSearchOnce = false
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(syllabusSubjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(syllabusTeacherName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_keyword_Search').value='\(syllabusKeyword)'", completionHandler:  nil)
+        
+        // シラバス自動入力
+        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant),
+           dataManager.isSyllabusSearchOnce {
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.subjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+            dataManager.isSyllabusSearchOnce = false
         }
         
         // outlookログイン
-        if displayURL.contains(model.urls["outlookLogin"]!.url){
-            let mailAdress = cAcaunt + "@tokushima-u.ac.jp"
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(mailAdress)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(passWord)'", completionHandler:  nil)
+        if webViewModel.isJudgeUrl(.outlook, isRegistrant: isRegistrant) {
+            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-            webViewDisplay(bool: false)
         }
         
         // キャリア支援室ログイン
-        if displayURL == model.urls["tokudaiCareerCenter"]!.url{
-            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(cAcaunt)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(passWord)'", completionHandler:  nil)
-            webViewDisplay(bool: false)
+        if webViewModel.isJudgeUrl(.tokudaiCareerCenter, isRegistrant: isRegistrant) {
+            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
         }
         
-        // WebView表示、非表示　判定
-        webViewHiddenJudge()
         
+        ///
+        /// Buttonデザインの変更
+        ///
         
-        // 以下修正必要あり
-        // モバイル版かPC版か検知
-        if displayURL == model.urls["courceManagementHomeSP"]!.url ||
-            displayURL == model.urls["manabaSP"]!.url{
-            let image = UIImage(named: "pcIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            reversePCtoSP.isEnabled = true
-            
-        }else if displayURL ==  model.urls["courceManagementHomePC"]!.url ||
-                    displayURL == model.urls["manabaPC"]!.url{
-            let image = UIImage(named: "spIcon")
-            reversePCtoSP.setImage(image, for: .normal)
-            reversePCtoSP.isEnabled = true
-
-        }else{
-            reversePCtoSP.isEnabled = false
-        }
-        
-        if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-            if displayURL == model.urls["courceManagementHomeSP"]!.url{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            }
-        }else{
-            if displayURL == model.urls["courceManagementHomePC"]!.url{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
+        // 教務事務システム、マナバの画面の時
+        if webViewModel.isCourceManagementOrManaba() {
+            // モバイル版かPC版か判定
+            if let imageName = webViewModel.judgeMobileOrPC() {
+                reversePCtoSP.setImage(UIImage(named: imageName), for: .normal)
             }
         }
+        reversePCtoSP.isEnabled = webViewModel.isCourceManagementOrManaba()
         
-        if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-            if displayURL == model.urls["manabaSP"]!.url{
-                openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            }
-        }else{
-            if displayURL == model.urls["manabaPC"]!.url{
-                openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: nil, alertTrigger: false)
-            }
-        }
+        // 教務事務システム、マナバ以外の画面かつ戻れる時
+        let isBackEnabled = !webViewModel.isCourceManagementOrManaba() && webView.canGoBack
+        backButton.isEnabled = isBackEnabled
+        backButton.alpha = isBackEnabled ? 1.0 : 0.4
+        
     }
+    
+    
     // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-        if displayURL == model.urls["courseRegistration"]!.url{ // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if dataManager.displayUrl == UrlModel.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)
@@ -587,7 +436,7 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
     // confirm対応
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
@@ -601,13 +450,12 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-
+    
     // prompt対応
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-
-        // variable to keep a reference to UIAlertController
+        
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
-
+        
         let okHandler: () -> Void = {
             if let textField = alertController.textFields?.first {
                 completionHandler(textField.text)
@@ -626,6 +474,7 @@ extension MainViewController: WKNavigationDelegate{
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
+    
 }
 
 
@@ -633,25 +482,14 @@ extension MainViewController: WKNavigationDelegate{
 extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        switch item.tag {
-        case 1: // 左
-            if UserDefaults.standard.string(forKey: "CMPCtoSP") == "pc"{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomePC"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
-                
-            }else{
-                openUrl(urlForRegistrant: model.urls["courceManagementHomeSP"]!.url, urlForNotRegistrant: model.urls["systemServiceList"]!.url, alertTrigger: false)
-            }
-            navigationRightButtonOnOff(operation: "UP")
-        case 2: // 右
-            if UserDefaults.standard.string(forKey: "ManabaPCtoSP") == "pc"{
-                openUrl(urlForRegistrant: model.urls["manabaPC"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
-                
-            }else{
-                openUrl(urlForRegistrant: model.urls["manabaSP"]!.url, urlForNotRegistrant: model.urls["eLearningList"]!.url, alertTrigger: false)
-            }
-            navigationRightButtonOnOff(operation: "UP")
-        default:
-            return
+        
+        if let url = viewModel.tabBarDetection(num: item.tag) {
+            wkWebView.load(url as URLRequest)
+            
+        } else {
+            AKLog(level: .ERROR, message: "error")
+            toast(message: "error")
+            
         }
     }
 }
