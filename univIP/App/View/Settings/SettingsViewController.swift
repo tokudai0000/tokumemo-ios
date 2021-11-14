@@ -237,6 +237,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             } else {
                 delegate.toast(message: "ERROR")
             }
+            delegate.navigationRightButtonOnOff(operation: .down)
         
         case 1: // 図書館MyPage
             let response = webViewModel.url(.libraryLogin)
