@@ -23,7 +23,7 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
     @IBOutlet weak var teacherUnderLine: UIView!
     
     public var delegate : MainViewController?
-    
+    private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -51,9 +51,8 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
     @IBAction func searchButton(_ sender: Any) {
         
         delegate?.refreshSyllabus(subjectName: subjectTextField.text ?? "",
-                                  teacherName: teacherTextField.text ?? "",
-                                  keyword: "")
-        
+                                  teacherName: teacherTextField.text ?? "")
+        dataManager.isSyllabusSearchOnce = true
         self.dismiss(animated: true, completion: nil)
     }
     

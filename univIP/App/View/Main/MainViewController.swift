@@ -94,8 +94,9 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     
-    public func refreshSyllabus(subjectName: String, teacherName: String, keyword:String){
-        
+    public func refreshSyllabus(subjectName: String, teacherName: String ){
+        webViewModel.subjectName = subjectName
+        webViewModel.teacherName = teacherName
         let response = webViewModel.url(.syllabus)
         if let url = response as URLRequest? {
             wkWebView.load(url)
@@ -379,10 +380,12 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // シラバス自動入力
-        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant) {
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.syllabusSubjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.syllabusTeacherName)'", completionHandler:  nil)
+        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant),
+           dataManager.isSyllabusSearchOnce {
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.subjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+            dataManager.isSyllabusSearchOnce = false
         }
         
         // outlookログイン

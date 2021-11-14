@@ -13,6 +13,8 @@ final class WebViewModel {
     private let model = Model()
     private let dataManager = DataManager.singleton
     
+    public var subjectName = ""
+    public var teacherName = ""
     
     // MARK: - Public
     
@@ -86,7 +88,6 @@ final class WebViewModel {
         case .syllabus:
             isLists.append(displayUrl.contains(UrlModel.syllabus.string()))
             isLists.append(dataManager.isSyllabusSearchOnce)
-            dataManager.isSyllabusSearchOnce = false
             
             
         case .outlook:
