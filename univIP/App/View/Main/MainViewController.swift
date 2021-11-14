@@ -122,7 +122,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             
             
         case .aboutThisApp:
-            let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+            let vc = R.storyboard.aboutThisApp.aboutThisApp()!
             self.present(vc, animated: true, completion: nil)
             
             

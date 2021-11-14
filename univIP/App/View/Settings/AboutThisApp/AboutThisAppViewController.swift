@@ -8,21 +8,65 @@
 
 import UIKit
 
-final class AboutThisAppViewController: BaseViewController {
+final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
     
-    // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
     private let rtfFileModel = FileModel()
     
-    
-    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.attributedText = rtfFileModel.rtfFileLoad(url: R.file.privacyPolicyRtf())
+        setup()
+        textViewSetup()
     }
     
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Public
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let urlString = URL.absoluteString
+        
+        if urlString == "TermsOfService" {
+            let vc = R.storyboard.termsOfService.termsOfService()!
+            self.present(vc, animated: true, completion: nil)
+            return false // 通常のURL遷移を行わない
+            
+        } else if urlString == "PrivacyPolicy" {
+            let vc = R.storyboard.privacyPolicy.privacyPolicy()!
+            self.present(vc, animated: true, completion: nil)
+            return false
+            
+        }
+        return true // 通常のURL遷移を行う
+        
+    }
+    
+    
+    // MARK: - Private
+    private func setup() {
+        
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.delegate = self
+        
+    }
+    
+    private func textViewSetup() {
+
+        let attributed = rtfFileModel.rtfFileLoad(url: R.file.aboutThisAppRtf())
+        let attributedString = NSMutableAttributedString(string: attributed.string)
+        
+        let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
+        let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
+        
+        let attributedText = NSMutableAttributedString(string: attributedString.string)
+        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
+        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
+        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
+        textView.attributedText = attributedText
+    }
 }
