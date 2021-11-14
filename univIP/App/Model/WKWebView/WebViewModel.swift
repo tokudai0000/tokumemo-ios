@@ -134,7 +134,7 @@ final class WebViewModel {
             // PC版の時
         } else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
                     displayUrl == UrlModel.manabaHomePC.string() {
-            return R.image.spIcon.name
+            return R.image.mobileIcon.name
             
             
         } else {

@@ -208,7 +208,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
             launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             
-            let imageView = UIImageView(image: R.image.tokumemoIcon1())
+            let imageView = UIImageView(image: R.image.mainIconWhite())
             imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
             imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
             

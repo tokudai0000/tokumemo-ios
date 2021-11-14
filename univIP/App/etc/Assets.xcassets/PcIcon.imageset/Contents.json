@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "PcIcon.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "PcIcon@×2.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "無題9_20210817140139 (1).png",
+      "filename" : "PcIcon@×3.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

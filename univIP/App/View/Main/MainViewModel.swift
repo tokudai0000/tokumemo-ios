@@ -70,7 +70,7 @@ final class MainViewModel: NSObject {
         // Manaba Mobile版
         case UrlModel.manabaHomeMobile.string():
             UserDefaults.standard.set("pc", forKey: KEY_manabaId)
-            return (R.image.spIcon.name, UrlModel.manabaHomePC.urlRequest())
+            return (R.image.mobileIcon.name, UrlModel.manabaHomePC.urlRequest())
 
         // Manaba PC版
         case UrlModel.manabaHomePC.string():

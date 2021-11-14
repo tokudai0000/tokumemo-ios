@@ -67,7 +67,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="CYO-cc-FFi"/>
                                                         </constraints>
-                                                        <state key="normal" image="tokumemoIcon2"/>
+                                                        <state key="normal" image="MainIconColor"/>
                                                         <connections>
                                                             <action selector="refreshButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cym-mA-rVe"/>
                                                         </connections>
@@ -78,7 +78,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="gvb-ns-vPe"/>
                                                         </constraints>
-                                                        <state key="normal" image="pcIcon"/>
+                                                        <state key="normal" image="PcIcon"/>
                                                         <connections>
                                                             <action selector="webViewChangePCorMB:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lCD-IR-UDl"/>
                                                         </connections>
@@ -180,11 +180,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="MainIconColor" width="427" height="427"/>
+        <image name="PcIcon" width="427" height="427"/>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
-        <image name="pcIcon" width="1280" height="1280"/>
-        <image name="tokumemoIcon2" width="1280" height="1280"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

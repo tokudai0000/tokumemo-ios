@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "MobileIcon.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "MobileIcon@×2.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "spIcon.jpg",
+      "filename" : "MobileIcon@×3.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }
