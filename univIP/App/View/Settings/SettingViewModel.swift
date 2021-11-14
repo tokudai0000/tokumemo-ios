@@ -5,49 +5,84 @@
 //  Created by Akihiro Matsuyama on 2021/10/28.
 //
 
-import UIKit
+import Foundation
 
-class SettingViewModel: NSObject {
-//    var cellList:[CellList] = [CellList(id:0, name: "Webサイト", category: "図書館", display: true),
-//                               CellList(id:1, name: "貸し出し期間延長", category: "図書館", display: true),
-//                               CellList(id:2, name: "本購入リクエスト", category: "図書館", display: true),
-//                               CellList(id:3, name: "開館カレンダー", category: "図書館", display: true),
-//                               CellList(id:4, name: "シラバス", category: "シラバス", display: true),
-//                               CellList(id:5, name: "時間割", category: "教務事務システム", display: true),
-//                               CellList(id:6, name: "今年の成績表", category: "教務事務システム", display: true),
-//                               CellList(id:7, name: "成績参照", category: "教務事務システム", display: true),
-//                               CellList(id:8, name: "出欠記録", category: "教務事務システム", display: true),
-//                               CellList(id:9, name: "授業アンケート", category: "教務事務システム", display: true),
-//                               CellList(id:10, name: "メール", category: "Outlook", display: true),
-//                               CellList(id:11, name: "マナバPC版", category: "manaba", display: true),
-//                               CellList(id:12, name: "キャリア支援室", category: "就職活動", display: true),
-//                               CellList(id:13, name: "履修登録", category: "教務事務システム", display: true)]
+final class SettingViewModel: NSObject {
     
-    var sectionHight:Int = 2
-    var cellHight:Int = 44
-    var allCellList:[[CellList]] =  [[],
-                                             [CellList(id:100, name: "パスワード設定", category: "", display: true),
-                                              CellList(id:101, name: "このアプリについて", category: "", display: true),
-                                              CellList(id:102, name: "開発者へ連絡", category: "", display: true)]]
-    var cellList:[CellList] = []
-    let cellKey = "CellKey"
-    var editSituation = true
+    public let sectionHight:Int = 15
+    public let cellHight:Int = 44
+    public var editSituation = true
     
+    private let model = Model()
+    private var dataManager = DataManager.singleton
+    
+    /// セルID
     func saveCellList(lists:[CellList]){
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        UserDefaults.standard.set(data, forKey: cellKey)
+        dataManager.setSettingCellList(data: data)
     }
     
     func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: cellKey),
+        guard let data = dataManager.getSettingCellList(),
               let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
-            return cellList
+            return []
         }
             
         return bookmarks
+    }
+    
+
+    func firstBootDecision() {
+    
+        var serviceL:[CellList] = []      // 並び順などを反映するcell
+                
+        // アプリ起動後、初回の表示か判定
+        if dataManager.allCellList[0].isEmpty {
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String // 今のバージョン
+            
+            guard let lastTimeVersion = dataManager.getVersion() else {
+                // 初回の利用者か判定
+                dataManager.allCellList[0].append(contentsOf: model.serviceCellLists)
+                dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
+                saveCellList(lists: dataManager.allCellList[0])
+                return
+            }
+
+            
+            // アップデート後、初回の表示か判定
+            if lastTimeVersion != version {
+                // cellの内容を更新する
+                let lastL = loadCellList()        // 前回のcell
+                var newL = model.serviceCellLists // 新しいcell
+                
+                for item in lastL {
+                    // 前回のcellのidで新しいcellのidを検索（ユーザーが指定した並び順を更新しても保持できる）
+                    // 前回のcellのdisplayを検索した新しいcellへ引き継ぎ
+                    // 引き継ぎした内容をserviceLに追加後、newLから削除することで新規機能をまとめて追加できる
+                    if let userIndex = newL.firstIndex(where: {$0.id == item.id}) {
+                        var edit = newL[userIndex]
+                        edit.isDisplay = item.isDisplay
+                        serviceL.append(edit)
+                        newL.remove(at: userIndex)
+                    }
+                    // elseには前回にはあったが、今回削除された機能の場合追加しないように通る
+                }
+                serviceL.append(contentsOf: newL)
+            
+                dataManager.allCellList[0].append(contentsOf: serviceL)
+                
+            } else {
+                dataManager.allCellList[0].append(contentsOf: loadCellList())
+
+            }
+            saveCellList(lists: dataManager.allCellList[0])
+            dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
+            
+            dataManager.setVersion(word: version)          // 更新
+        }
     }
 }

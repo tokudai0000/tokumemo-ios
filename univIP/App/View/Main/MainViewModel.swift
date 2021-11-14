@@ -7,7 +7,8 @@
 
 import Foundation
 
-class MainViewModel: NSObject {
+final class MainViewModel: NSObject {
+    
     //MARK: - STATE ステータス
     enum State {
         case busy           // 準備中
@@ -16,162 +17,158 @@ class MainViewModel: NSObject {
     }
     public var state: ((State) -> Void)?
     
-    //MARK: - STATE ステータス
+    
     enum NextView {
         case syllabus           // 準備中
         case password
         case aboutThisApp
-        case contactToDeveloper
     }
     public var next: ((NextView) -> Void)?
     
-    private let dataManager = DataManager()
-    var test = ""
-    var displayURL = ""
-    let model = Model()
-    let urlModel = UrlModel()
-    // Dos攻撃を防ぐ為、1度ログイン処理したら結果の有無に関わらず終了させる
-    private var onlyOnceForLogin = false
     
-    var requestUrl: NSURLRequest?
+    private let model = Model()
+    private let dataManager = DataManager.singleton
+    private let webViewModel = WebViewModel()
     
-    private enum iconEnum: String {
-        case spIcon = "spIcon"
-        case pcIcon = "pcIcon"
-    }
+    private var requestUrl: NSURLRequest?
     
-    func reversePCandSP() -> String {
-        
-        switch displayURL {
-        case urlModel.courceManagementHomeSP:
-            UserDefaults.standard.set("pc", forKey: "CMPCtoSP")
-            return R.image.spIcon.name
-            
-            
-        case urlModel.courceManagementHomePC:
-            UserDefaults.standard.set("sp", forKey: "CMPCtoSP")
-            return R.image.pcIcon.name
-            
-            
-        case urlModel.manabaSP:
-            UserDefaults.standard.set("pc", forKey: "ManabaPCtoSP")
-            return R.image.spIcon.name
-            
-            
-        case urlModel.manabaPC:
-            UserDefaults.standard.set("sp", forKey: "ManabaPCtoSP")
-            return R.image.pcIcon.name
-            
-            
-        default:
-            return "No Image"
-        }
-    }
+    public var imageSystemName = "chevron.down"
+    public var animationView = ""
     
-    func openUrl(_ registrant: String, notRegistrant: String = "", isAlert: Bool = false) -> NSURLRequest? {
-        var notRegi = notRegistrant
-        if notRegistrant == "" {
-            notRegi = registrant
-        }
+    public var syllabusSubjectName = ""
+    public var syllabusTeacherName = ""
+    
 
-//        webViewDisplay(bool: true)
-//        onlyOnceForLogin = false
-        print(isAlert)
-        // 登録者判定
-        if isRegistrant(){
-            if let url = URL(string:registrant){
-                return NSURLRequest(url: url)
+    // MARK: - Public
+    
+    /// 登録者か判定
+    public func isRegistrantCheck() -> Bool {
+        if (DataManager.singleton.cAccount != "" &&
+            DataManager.singleton.password != "") {
+            return true
+
+        }
+        return false
+    }
+    
+    /// 教務事務システム、マナバのMobileかPCか判定
+    public func isDisplayUrlForPC() -> (String?, URLRequest) {
                 
-            }
-//            AKLog()
-//            webView.load(request as URLRequest)
-            
-            
-        }else{
-            if isAlert {
-//                toast(message: "パスワード設定をすることで利用できます", type: "bottom")
-//                webViewDisplay(bool: false)
+        switch dataManager.displayUrl {
+        // 教務事務システムMobile版
+        case UrlModel.courceManagementHomeMobile.string():
+            dataManager.setCorceManagement(word: "PC")
+            return (R.image.pcIcon.name, UrlModel.courceManagementHomePC.urlRequest())
+
+        // 教務事務システムPC版
+        case UrlModel.courceManagementHomePC.string():
+            dataManager.setCorceManagement(word: "Mobile")
+            return (R.image.pcIcon.name, UrlModel.courceManagementHomeMobile.urlRequest())
+
+        // Manaba Mobile版
+        case UrlModel.manabaHomeMobile.string():
+            dataManager.setManabaId(word: "PC")
+            return (R.image.mobileIcon.name, UrlModel.manabaHomePC.urlRequest())
+
+        // Manaba PC版
+        case UrlModel.manabaHomePC.string():
+            dataManager.setManabaId(word: "Mobile")
+            return (R.image.pcIcon.name, UrlModel.manabaHomeMobile.urlRequest())
+
+
+        default:
+            return ("No Image", UrlModel.systemServiceList.urlRequest())
+        }
+    }
+    
+    /// タブバーの判定
+    public func tabBarDetection(num: Int) -> NSURLRequest? {
+        
+        if isRegistrantCheck() {
+            switch num {
+            case 1: // 左
+                if dataManager.getCorceManagement() == "PC" {
+                    return webViewModel.url(.courceManagementHomePC)
+                    
+                } else {
+                    return webViewModel.url(.courceManagementHomeSP)
+                    
+                }
+                
+                
+            case 2: // 右
+                if dataManager.getManaba() == "PC" {
+                    return webViewModel.url(.manabaPC)
+                    
+                } else {
+                    return webViewModel.url(.manabaSP)
+
+                }
+                
+            default:
                 return nil
             }
-
-            if let url = URL(string: notRegi){
-                return NSURLRequest(url: url)
+        } else {
+            switch num {
+            case 1: // 左
+                return webViewModel.url(.systemServiceList)
                 
+                
+            case 2: // 右
+                return webViewModel.url(.eLearningList)
+                
+                
+            default:
+                return nil
             }
         }
-        return nil
         
     }
     
-    // アカウント登録者判定　登録者：true　　非登録者：false
-    private func isRegistrant() -> Bool{
-        if (dataManager.cAccount == "" &&
-                dataManager.passWord == ""){
-            return false
+    
+    enum ViewOperation {
+        case up
+        case down
+        case reverse
+    }
+    
+    enum AnimeOperation {
+        case launchScreen
+        case viewUp
+        case viewDown
+        case Nil
+    }
+   
+    /// WebViewの上げ下げを判定
+    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (imageName: String?, animationName: AnimeOperation) {
+        
+        switch operation {
+        case .up:
+            // Viewを動かして良いのか判定
+            if (0.0 < posisionY) {
+                // Viewを上げた後、[chevron.down]のImageに差し替える
+                return ("chevron.down", .viewUp)
+            }
             
-        }else{
-            return true
+        case .down:
+            if (posisionY <= 0.0) {
+                return ("chevron.up", .viewDown)
+            }
+            
+        case .reverse:
+            if (posisionY <= 0.0) {
+                return ("chevron.up", .viewDown)
+                
+            } else {
+                return ("chevron.down", .viewUp)
+            }
         }
-    }
-    var imageSystemName = ""
-    var animationView = ""
-    //  SyllabusViewの内容を渡され保存し、Webに入力する
-    var syllabusSubjectName = ""
-    var syllabusTeacherName = ""
-    var syllabusKeyword = ""
-    var syllabusSearchOnce = true
-    var syllabusPassdThroughOnce = false
-    
-    func viewPosisionType(posisionY: Double) {
-        
-        switch posisionY {
-        case 0.0:
-            imageSystemName = "chevron.up"
-            animationView = "rightButtonUp"
+        return (nil, .Nil)
 
-            
-        default:
-            imageSystemName = "chevron.down"
-            animationView = "rightButtonDown"
-        }
-        
     }
     
-    func registrantDecision() -> Bool{
-        if (dataManager.cAccount == "" &&
-                dataManager.passWord == ""){
-            return false
-            
-        }else{
-            return true
-        }
-    }
     
-//    func popupView(_ scene: String) -> BaseViewController {
-//
-//        switch scene {
-//        case "firstView":
-//            return R.storyboard.syllabus.syllabusViewController()!
-//
-//        case "syllabus":
-//            return R.storyboard.syllabus.syllabusViewController()!
-//
-////            self.present(vc, animated: true, completion: nil)
-////            vc.delegateMain = self
-//        case "password":
-//            return R.storyboard.passwordSettings.passwordSettingsViewController()!
-////            self.present(vc, animated: true, completion: nil)
-////            vc.delegateMain = self
-//        case "aboutThisApp":
-//            return R.storyboard.aboutThisApp.aboutThisAppViewController()!
-////            self.present(vc, animated: true, completion: nil)
-//        case "contactToDeveloper":
-//            return R.storyboard.contactToDeveloper.contactToDeveloperViewController()!
-////            self.present(vc, animated: true, completion: nil)
-//        default:
-//            return
-//        }
-//
-//    }
+    // MARK: - Private
+    
     
 }

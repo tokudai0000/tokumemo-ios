@@ -7,54 +7,76 @@
 
 import UIKit
 
-class AgreementViewController: BaseViewController {
+final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
-    //MARK:- IBOutlet
-    @IBOutlet weak var termsOfServiceView: UITextView!
-    @IBOutlet weak var agreementButtonYes: UIButton!
-    @IBOutlet weak var agreementButtonNo: UIButton!
+    // MARK: - IBOutlet
+    @IBOutlet weak var termsTextView: UITextView!
+    @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
-    private let viewModel = AgreementViewModel()
+    private let rtfFileModel = FileModel()
+    private let dataManager = DataManager.singleton
     
-    //MARK:- LifeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-    }
-    
-    private func setup() {
-        agreementButtonYes.layer.cornerRadius = 20.0
-        agreementButtonNo.layer.cornerRadius = 20.0
-        
-        termsOfServiceView.isEditable = false
-        
-        termsOfServiceView.attributedText = viewModel.rtfFileOpen()
-        
+        textViewSetup()
     }
     
     
-    //MARK:- IBAction
-    private enum buttonTag: Int {
-        case agree = 1
-        case dissAgree = 2
-    }
-    
+    // MARK: - IBAction
     @IBAction func buttonAction(_ sender: Any) {
-        if let button = sender as? UIButton,
-           let tag = buttonTag(rawValue: button.tag){
+        dataManager.setAgreementVersion()
+        self.dismiss(animated: true, completion: nil)
+                
+    }
+    
+    
+    // MARK: - Public
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let urlString = URL.absoluteString
+        
+        if urlString == "TermsOfService" {
+            let vc = R.storyboard.termsOfService.termsOfService()!
+            self.present(vc, animated: true, completion: nil)
+            return false // 通常のURL遷移を行わない
             
-            switch tag {
-            case .agree:
-                UserDefaults.standard.set(true, forKey: model.agreementVersion)
-                dismiss(animated: false, completion: nil)
-                
-                
-            case .dissAgree:
-                toast(message: "同意をしない限り、このアプリを利用することはできません", type: "bottom")
-                
-            }
+        } else if urlString == "PrivacyPolicy" {
+            let vc = R.storyboard.privacyPolicy.privacyPolicy()!
+            self.present(vc, animated: true, completion: nil)
+            return false 
+            
         }
+        return true // 通常のURL遷移を行う
+        
+    }
+    
+    
+    // MARK: - Private
+    private func setup() {
+        agreementButton.layer.cornerRadius = 20.0
+        
+        termsTextView.isEditable = false
+        termsTextView.isScrollEnabled = false
+        termsTextView.isSelectable = true
+        termsTextView.delegate = self
+        
+    }
+    
+    private func textViewSetup() {
+
+        let attributed = rtfFileModel.rtfFileLoad(url: R.file.agreementRtf())
+        let attributedString = NSMutableAttributedString(string: attributed.string)
+        
+        let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
+        let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
+        
+        let attributedText = NSMutableAttributedString(string: attributedString.string)
+        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
+        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
+        termsTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
+        termsTextView.attributedText = attributedText
     }
     
 }
