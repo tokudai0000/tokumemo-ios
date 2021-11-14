@@ -15,7 +15,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     private let model = Model()
     private let rtfFileModel = FileModel()
-    
+    private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -27,7 +27,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - IBAction
     @IBAction func buttonAction(_ sender: Any) {
-        UserDefaults.standard.set(true, forKey: model.agreementVersion)
+        dataManager.setAgreementVersion()
         self.dismiss(animated: true, completion: nil)
                 
     }

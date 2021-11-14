@@ -31,8 +31,6 @@ final class MainViewModel: NSObject {
     private let webViewModel = WebViewModel()
     
     private var requestUrl: NSURLRequest?
-    private let KEY_corceManagementId = "KEY_corceManagementId"
-    private let KEY_manabaId = "KEY_manabaId"
     
     public var imageSystemName = "chevron.down"
     public var animationView = ""
@@ -59,22 +57,22 @@ final class MainViewModel: NSObject {
         switch dataManager.displayUrl {
         // 教務事務システムMobile版
         case UrlModel.courceManagementHomeMobile.string():
-            UserDefaults.standard.set("pc", forKey: KEY_corceManagementId)
+            dataManager.setCorceManagement(word: "PC")
             return (R.image.pcIcon.name, UrlModel.courceManagementHomePC.urlRequest())
 
         // 教務事務システムPC版
         case UrlModel.courceManagementHomePC.string():
-            UserDefaults.standard.set("mobile", forKey: KEY_corceManagementId)
+            dataManager.setCorceManagement(word: "Mobile")
             return (R.image.pcIcon.name, UrlModel.courceManagementHomeMobile.urlRequest())
 
         // Manaba Mobile版
         case UrlModel.manabaHomeMobile.string():
-            UserDefaults.standard.set("pc", forKey: KEY_manabaId)
+            dataManager.setManabaId(word: "PC")
             return (R.image.mobileIcon.name, UrlModel.manabaHomePC.urlRequest())
 
         // Manaba PC版
         case UrlModel.manabaHomePC.string():
-            UserDefaults.standard.set("mobile", forKey: KEY_manabaId)
+            dataManager.setManabaId(word: "Mobile")
             return (R.image.pcIcon.name, UrlModel.manabaHomeMobile.urlRequest())
 
 
@@ -89,7 +87,7 @@ final class MainViewModel: NSObject {
         if isRegistrantCheck() {
             switch num {
             case 1: // 左
-                if UserDefaults.standard.string(forKey: KEY_corceManagementId) == "pc" {
+                if dataManager.getCorceManagement() == "PC" {
                     return webViewModel.url(.courceManagementHomePC)
                     
                 } else {
@@ -99,7 +97,7 @@ final class MainViewModel: NSObject {
                 
                 
             case 2: // 右
-                if UserDefaults.standard.string(forKey: KEY_manabaId) == "pc"{
+                if dataManager.getManaba() == "PC" {
                     return webViewModel.url(.manabaPC)
                     
                 } else {

@@ -17,18 +17,17 @@ final class SettingViewModel: NSObject {
     private var dataManager = DataManager.singleton
     
     /// セルID
-    private let KEY_settingCellListId = "KEY_settingCellListId"
     func saveCellList(lists:[CellList]){
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        UserDefaults.standard.set(data, forKey: KEY_settingCellListId)
+        dataManager.setSettingCellList(data: data)
     }
     
     func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: KEY_settingCellListId),
+        guard let data = dataManager.getSettingCellList(),
               let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
             return []
         }
@@ -36,8 +35,7 @@ final class SettingViewModel: NSObject {
         return bookmarks
     }
     
-    /// バージョンID
-    private let KEY_versionId = "KEY_versionId"
+
     func firstBootDecision() {
     
         var serviceL:[CellList] = []      // 並び順などを反映するcell
@@ -45,16 +43,15 @@ final class SettingViewModel: NSObject {
         // アプリ起動後、初回の表示か判定
         if dataManager.allCellList[0].isEmpty {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String // 今のバージョン
-            let lastTimeVersion = UserDefaults.standard.string(forKey: KEY_versionId)                       // 前回ログイン時のバージョン
-            UserDefaults.standard.set(version, forKey: KEY_versionId)                                       // 更新
             
-            // 初回の利用者か判定
-            if lastTimeVersion == nil {
+            guard let lastTimeVersion = dataManager.getVersion() else {
+                // 初回の利用者か判定
                 dataManager.allCellList[0].append(contentsOf: model.serviceCellLists)
                 dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
                 saveCellList(lists: dataManager.allCellList[0])
                 return
             }
+
             
             // アップデート後、初回の表示か判定
             if lastTimeVersion != version {
@@ -84,7 +81,8 @@ final class SettingViewModel: NSObject {
             }
             saveCellList(lists: dataManager.allCellList[0])
             dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
+            
+            dataManager.setVersion(word: version)          // 更新
         }
-        
     }
 }

@@ -13,6 +13,8 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
     //MARK: - IBOutlet
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var passwordViewButton: UIButton!
+    
     
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -65,6 +67,12 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
     
     @IBAction func passwordViewChangeButton(_ sender: Any) {
         self.passwordTextField.isSecureTextEntry = !self.passwordTextField.isSecureTextEntry
+        
+        if passwordTextField.isSecureTextEntry {
+            passwordViewButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        } else {
+            passwordViewButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
     }
     
     @IBAction func dissmissButton(_ sender: Any) {

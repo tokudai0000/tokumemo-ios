@@ -23,6 +23,8 @@ final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
     
+    private let model = Model()
+    private var userDefaults = UserDefaults.standard
     
     /// KeychainAccess インスタンス
     public var keychain: Keychain {
@@ -73,4 +75,54 @@ final class DataManager {
         set(v) { setKeyChain(key: KEY_passWord, value: v) }
     }
     
+    
+    /// agreementversion
+    private let KEY_AgreementVersion = "KEY_AgreementVersion"
+    public func setAgreementVersion() {
+        userDefaults.set(model.agreementVersion ,forKey: KEY_AgreementVersion)
+    }
+    
+    public func getAgreementVersion() -> String? {
+        return userDefaults.string(forKey: KEY_AgreementVersion)
+    }
+    
+    
+    private let KEY_corceManagement = "KEY_corceManagement"
+    public func setCorceManagement(word: String) {
+        userDefaults.set(word, forKey: KEY_corceManagement)
+    }
+    
+    public func getCorceManagement() -> String? {
+        return userDefaults.string(forKey: KEY_corceManagement)
+    }
+
+    
+    private let KEY_manaba = "KEY_manaba"
+    public func setManabaId(word: String) {
+        userDefaults.set(word, forKey: KEY_manaba)
+    }
+    
+    public func getManaba() -> String? {
+        return userDefaults.string(forKey: KEY_manaba)
+    }
+    
+    
+    private let KEY_settingCellList = "KEY_settingCellList"
+    public func setSettingCellList(data: Data) {
+        userDefaults.set(data, forKey: KEY_settingCellList)
+    }
+    
+    public func getSettingCellList() -> Data? {
+        return userDefaults.data(forKey: KEY_settingCellList)
+    }
+    
+    
+    private let KEY_version = "KEY_version"
+    public func setVersion(word: String) {
+        userDefaults.set(word, forKey: KEY_version)
+    }
+    
+    public func getVersion() -> String? {
+        return userDefaults.string(forKey: KEY_version)
+    }
 }

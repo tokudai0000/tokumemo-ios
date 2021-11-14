@@ -179,7 +179,10 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // 利用規約同意者か判定
     private func agreementPersonDecision() -> Bool{
-        return UserDefaults.standard.bool(forKey: model.agreementVersion)
+        let lastTimeVersion = dataManager.getAgreementVersion()
+        let newVersion = model.agreementVersion
+        
+        return lastTimeVersion == newVersion
     }
     
     

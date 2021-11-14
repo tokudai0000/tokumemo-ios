@@ -24,7 +24,6 @@ final class SettingsViewController: BaseViewController {
     
     public var delegate : MainViewController?
     private var delegatePass : PasswordSettingsViewController?
-    private var userDefaults = UserDefaults.standard
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
