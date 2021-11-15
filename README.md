@@ -7,17 +7,12 @@
 </p>
 
 # 概要
-TokumemoはSwiftで開発された徳島大学生の学修を支援するアプリケーションです。
-
-普段利用する大学Webサービスのログインを自動化、本日の授業や成績など知りたい情報をボタン1つで利用できます。
-
+トクメモは日々のパスワード入力、煩雑なボタンクリックを自動化する、徳島大学専用の学修サポートアプリです。
 
 
 ## スクリーンショット
 
-<img src="https://user-images.githubusercontent.com/53287375/131691222-db0288ec-28a1-438c-b46c-549cfedcd985.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691249-0b38e0a7-d75f-4530-9778-be991fa0ef25.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691278-3853efe1-9487-4c60-ae3f-7ff196566c54.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/134928169-5e26628a-cc6b-474d-8822-cd56bfd3be3f.png" width="320px"><img src="https://user-images.githubusercontent.com/53287375/131691304-19214b9a-e921-4719-bf22-65aeb9c59948.png" width="320px">
-
-
+<img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_courceManagementMobile.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_manabaMobile.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_manabaPC.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting1.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting2.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_mail.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_syllabus.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_password.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_aboutThisApp.png" width="320px">
 
 ## 開発背景
 
@@ -29,7 +24,6 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 - R.swift
 - Kanna
 - KeychainAccess
-- mailcore2-ios
 - Firebase/Analytics
 
 ## 機能一覧
@@ -60,11 +54,6 @@ TokumemoはSwiftで開発された徳島大学生の学修を支援するアプ�
 ・　他学生が運営しているWebサイトとの連携
 ・　Android版の開発
 
-## Build方法
-univIP/App/etc/password/mailAccountPassword.txtは
-お問合せメールのパスワードが保存されているのでGitHubに保存していません。
-
-自分で作成する必要があります。白紙でmailAccountPassword.txtを追加してもらうことで動きます。
 
 ---
 
@@ -72,7 +61,7 @@ univIP/App/etc/password/mailAccountPassword.txtは
 
 © 2021 akidon0000
 
-Tokumemoは[MITライセンス](https://github.com/akidon0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
+トクメモは[MITライセンス](https://github.com/akidon0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
 
 ## オープンソース
 本プロジェクトにご協力いただける方はWikiを参照してください。
