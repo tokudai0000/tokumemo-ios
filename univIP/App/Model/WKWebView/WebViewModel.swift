@@ -74,39 +74,39 @@ final class WebViewModel {
         
         switch scene {
         case .login:
-            isLists.append(!forwardUrl.contains(UrlModel.lostConnection.string()))
-            isLists.append(displayUrl.contains(UrlModel.lostConnection.string()))
+            isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
             isLists.append(displayUrl.suffix(2)=="s1")
             isLists.append(isRegistrant)
             
             
         case .enqueteReminder:
-            isLists.append(!forwardUrl.contains(UrlModel.enqueteReminder.string()))
-            isLists.append(displayUrl.contains(UrlModel.enqueteReminder.string()))
+            isLists.append(!forwardUrl.contains(Url.enqueteReminder.string()))
+            isLists.append(displayUrl.contains(Url.enqueteReminder.string()))
             
             
         case .syllabus:
-            isLists.append(displayUrl.contains(UrlModel.syllabus.string()))
+            isLists.append(displayUrl.contains(Url.syllabus.string()))
             isLists.append(dataManager.isSyllabusSearchOnce)
             
             
         case .outlook:
-            isLists.append(!forwardUrl.contains(UrlModel.outlookLogin.string()))
-            isLists.append(displayUrl.contains(UrlModel.outlookLogin.string()))
+            isLists.append(!forwardUrl.contains(Url.outlookLogin.string()))
+            isLists.append(displayUrl.contains(Url.outlookLogin.string()))
             
             
         case .tokudaiCareerCenter:
-            isLists.append(!forwardUrl.contains(UrlModel.tokudaiCareerCenter.string()))
-            isLists.append(displayUrl == UrlModel.tokudaiCareerCenter.string())
+            isLists.append(!forwardUrl.contains(Url.tokudaiCareerCenter.string()))
+            isLists.append(displayUrl == Url.tokudaiCareerCenter.string())
             
             
         case .timeOut:
-            isLists.append(displayUrl == UrlModel.timeOut.string())
+            isLists.append(displayUrl == Url.timeOut.string())
             
             
         case .registrantAndLostConnectionDecision:
             isLists.append(!isRegistrant)
-            isLists.append(displayUrl.contains(UrlModel.lostConnection.string()))
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
             
         }
         
@@ -127,14 +127,14 @@ final class WebViewModel {
         let displayUrl = dataManager.displayUrl
         
         // モバイル版の時
-        if displayUrl == UrlModel.courceManagementHomeMobile.string() ||
-            displayUrl == UrlModel.manabaHomeMobile.string() {
+        if displayUrl == Url.courceManagementHomeMobile.string() ||
+            displayUrl == Url.manabaHomeMobile.string() {
             return R.image.pcIcon.name
             
             
             // PC版の時
-        } else if displayUrl ==  UrlModel.courceManagementHomePC.string() ||
-                    displayUrl == UrlModel.manabaHomePC.string() {
+        } else if displayUrl ==  Url.courceManagementHomePC.string() ||
+                    displayUrl == Url.manabaHomePC.string() {
             return R.image.mobileIcon.name
             
             
@@ -150,19 +150,19 @@ final class WebViewModel {
         
         switch dataManager.displayUrl {
             // 教務事務システムMobile版
-        case UrlModel.courceManagementHomeMobile.string():
+        case Url.courceManagementHomeMobile.string():
             return true
             
             // 教務事務システムPC版
-        case UrlModel.courceManagementHomePC.string():
+        case Url.courceManagementHomePC.string():
             return true
             
             // Manaba Mobile版
-        case UrlModel.manabaHomeMobile.string():
+        case Url.manabaHomeMobile.string():
             return true
             
             // Manaba PC版
-        case UrlModel.manabaHomePC.string():
+        case Url.manabaHomePC.string():
             return true
             
             
@@ -204,38 +204,38 @@ final class WebViewModel {
         if isLogedin {
             
             switch menuTitle {
-            case .login:                        return UrlModel.login.string()
-            case .courceManagementHomeSP:       return UrlModel.courceManagementHomeMobile.string()
-            case .courceManagementHomePC:       return UrlModel.courceManagementHomePC.string()
-            case .manabaSP:                     return UrlModel.manabaHomeMobile.string()
-            case .manabaPC:                     return UrlModel.manabaHomePC.string()
-            case .libraryLogin:                 return UrlModel.libraryLogin.string()
-            case .libraryBookLendingExtension:  return UrlModel.libraryBookLendingExtension.string()
-            case .libraryBookPurchaseRequest:   return UrlModel.libraryBookPurchaseRequest.string()
-            case .timeTable:                    return UrlModel.timeTable.string()
+            case .login:                        return Url.login.string()
+            case .courceManagementHomeSP:       return Url.courceManagementHomeMobile.string()
+            case .courceManagementHomePC:       return Url.courceManagementHomePC.string()
+            case .manabaSP:                     return Url.manabaHomeMobile.string()
+            case .manabaPC:                     return Url.manabaHomePC.string()
+            case .libraryLogin:                 return Url.libraryLogin.string()
+            case .libraryBookLendingExtension:  return Url.libraryBookLendingExtension.string()
+            case .libraryBookPurchaseRequest:   return Url.libraryBookPurchaseRequest.string()
+            case .timeTable:                    return Url.timeTable.string()
             case .currentTermPerformance:       return getCurrentTermPerformance()
-            case .termPerformance:              return UrlModel.termPerformance.string()
-            case .presenceAbsenceRecord:        return UrlModel.presenceAbsenceRecord.string()
-            case .classQuestionnaire:           return UrlModel.classQuestionnaire.string()
-            case .tokudaiCareerCenter:          return UrlModel.tokudaiCareerCenter.string()
-            case .courseRegistration:           return UrlModel.courseRegistration.string()
-            case .syllabus:                     return UrlModel.syllabus.string()
-            case .mailService:                  return UrlModel.mailService.string()
+            case .termPerformance:              return Url.termPerformance.string()
+            case .presenceAbsenceRecord:        return Url.presenceAbsenceRecord.string()
+            case .classQuestionnaire:           return Url.classQuestionnaire.string()
+            case .tokudaiCareerCenter:          return Url.tokudaiCareerCenter.string()
+            case .courseRegistration:           return Url.courseRegistration.string()
+            case .syllabus:                     return Url.syllabus.string()
+            case .mailService:                  return Url.mailService.string()
             case .libraryCalendar:              return getLibraryCalender()
-            case .systemServiceList:            return UrlModel.systemServiceList.string()
-            case .eLearningList:                return UrlModel.eLearningList.string()
-            case .libraryHome:                  return UrlModel.libraryHome.string()
-            case .universityHome:               return UrlModel.universityHome.string()
+            case .systemServiceList:            return Url.systemServiceList.string()
+            case .eLearningList:                return Url.eLearningList.string()
+            case .libraryHome:                  return Url.libraryHome.string()
+            case .universityHome:               return Url.universityHome.string()
             }
             
         } else {
             
             switch menuTitle {
-            case .login:                        return UrlModel.login.string()
-            case .courceManagementHomeSP:       return UrlModel.systemServiceList.string()
-            case .courceManagementHomePC:       return UrlModel.systemServiceList.string()
-            case .manabaSP:                     return UrlModel.eLearningList.string()
-            case .manabaPC:                     return UrlModel.eLearningList.string()
+            case .login:                        return Url.login.string()
+            case .courceManagementHomeSP:       return Url.systemServiceList.string()
+            case .courceManagementHomePC:       return Url.systemServiceList.string()
+            case .manabaSP:                     return Url.eLearningList.string()
+            case .manabaPC:                     return Url.eLearningList.string()
             case .libraryLogin:                 return nil
             case .libraryBookLendingExtension:  return nil
             case .libraryBookPurchaseRequest:   return nil
@@ -244,21 +244,21 @@ final class WebViewModel {
             case .termPerformance:              return nil
             case .presenceAbsenceRecord:        return nil
             case .classQuestionnaire:           return nil
-            case .tokudaiCareerCenter:          return UrlModel.tokudaiCareerCenter.string()
+            case .tokudaiCareerCenter:          return Url.tokudaiCareerCenter.string()
             case .courseRegistration:           return nil
-            case .syllabus:                     return UrlModel.syllabus.string()
-            case .mailService:                  return UrlModel.mailService.string()
+            case .syllabus:                     return Url.syllabus.string()
+            case .mailService:                  return Url.mailService.string()
             case .libraryCalendar:              return getLibraryCalender()
-            case .systemServiceList:            return UrlModel.systemServiceList.string()
-            case .eLearningList:                return UrlModel.eLearningList.string()
-            case .libraryHome:                  return UrlModel.libraryHome.string()
-            case .universityHome:               return UrlModel.universityHome.string()
+            case .systemServiceList:            return Url.systemServiceList.string()
+            case .eLearningList:                return Url.eLearningList.string()
+            case .libraryHome:                  return Url.libraryHome.string()
+            case .universityHome:               return Url.universityHome.string()
             }
         }
     }
     
     private func getLibraryCalender() -> String? {
-        let url = NSURL(string: UrlModel.libraryHome.string())
+        let url = NSURL(string: Url.libraryHome.string())
         let data = NSData(contentsOf: url! as URL)
         
         var calenderURL = ""
@@ -278,7 +278,7 @@ final class WebViewModel {
         } catch {
             return nil
         }
-        return UrlModel.libraryCalendar.string()
+        return Url.libraryCalendar.string()
     }
     
     private func getCurrentTermPerformance() -> String {
@@ -289,7 +289,7 @@ final class WebViewModel {
         if (month <= 3){ // 1月から3月までは前年の成績であるから
             year -= 1
         }
-        let termPerformanceYearURL = UrlModel.currentTermPerformance.string() + String(year)
+        let termPerformanceYearURL = Url.currentTermPerformance.string() + String(year)
         return termPerformanceYearURL
     }
         
