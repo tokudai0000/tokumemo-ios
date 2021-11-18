@@ -34,7 +34,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         
         setup()
         refresh()
-        initViewModel()
+//        initViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,7 +123,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     
-    public func popupView(scene: MainViewModel.NextView){
+    public func popupView(scene: MainViewModel.NextModalView){
         
         switch scene {
             
@@ -151,14 +151,11 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
-        
         let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
         
-        if let imageName = responce.imageName {
-            
-            let image = UIImage(systemName: imageName)
-            rightButton.setImage(image, for: .normal)
-        }
+        let image = UIImage(systemName: responce.imageName.rawValue)
+        rightButton.setImage(image, for: .normal)
+        
         animationView(scene: responce.animationName)
         
     }
@@ -287,31 +284,31 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     /// ViewModel初期化
-    private func initViewModel() {
-        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
-        self.viewModel.state = { [weak self] (state) in
-            guard let self = self else {
-                fatalError()
-            }
-            DispatchQueue.main.async {
-                switch state {
-                case .busy: // 通信中
-                    let vc = R.storyboard.syllabus.syllabusViewController()!
-                    self.present(vc, animated: true, completion: nil)
-                    break
-                    
-                case .ready: // 通信完了
-                    
-                    break
-                    
-                    
-                case .error:
-                    break
-                    
-                }//end switch
-            }
-        }
-    }
+//    private func initViewModel() {
+//        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+//        self.viewModel.state = { [weak self] (state) in
+//            guard let self = self else {
+//                fatalError()
+//            }
+//            DispatchQueue.main.async {
+//                switch state {
+//                case .busy: // 通信中
+//                    let vc = R.storyboard.syllabus.syllabusViewController()!
+//                    self.present(vc, animated: true, completion: nil)
+//                    break
+//
+//                case .ready: // 通信完了
+//
+//                    break
+//
+//
+//                case .error:
+//                    break
+//
+//                }//end switch
+//            }
+//        }
+//    }
     
     /// 新しいウィンドウで開く「target="_blank"」
     func webView(_ webView: WKWebView,
@@ -500,7 +497,10 @@ extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        if let url = viewModel.tabBarDetection(num: item.tag) {
+        if let url = viewModel.tabBarDetection(num: item.tag,
+                                               isRegist: dataManager.isRegistrantCheck,
+                                               courceType: dataManager.courceManagement,
+                                               manabaType: dataManager.manaba) {
             wkWebView.load(url as URLRequest)
             
         } else {
