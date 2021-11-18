@@ -41,95 +41,54 @@ final class MainViewModel: NSObject {
 
     // MARK: - Public
     
-    /// 登録者か判定
-    public func isRegistrantCheck() -> Bool {
-        if (dataManager.cAccount != "" &&
-            dataManager.password != "") {
-            return true
-        }
-        return false
-    }
-//    public func isRegistrantCheck(cAccount: String, password: String) -> Bool {
-//        if (cAccount.isEmpty || password.isEmpty) {
-//            return false
-//        }
-//        return true
+//    enum PcOrMobile {
+//        case pc
+//        case mobile
 //    }
-//    set get
-//    dataManager.isRegistrantCheck()
-    
-    /// 教務事務システム、マナバのMobileかPCかそれ以外か判定
-    public func isDisplayUrlForPC() -> (String?, URLRequest) {
-        switch dataManager.displayUrl {
-        // 教務事務システムMobile版
-        case Url.courceManagementHomeMobile.string():
-            dataManager.setCorceManagement(word: "PC")
-            return (R.image.pcIcon.name, Url.courceManagementHomePC.urlRequest())
-
-        // 教務事務システムPC版
-        case Url.courceManagementHomePC.string():
-            dataManager.setCorceManagement(word: "Mobile")
-            return (R.image.pcIcon.name, Url.courceManagementHomeMobile.urlRequest())
-
-        // Manaba Mobile版
-        case Url.manabaHomeMobile.string():
-            dataManager.setManabaId(word: "PC")
-            return (R.image.mobileIcon.name, Url.manabaHomePC.urlRequest())
-
-        // Manaba PC版
-        case Url.manabaHomePC.string():
-            dataManager.setManabaId(word: "Mobile")
-            return (R.image.pcIcon.name, Url.manabaHomeMobile.urlRequest())
-
-
-        default:
-            return ("No Image", Url.systemServiceList.urlRequest())
-        }
+//    enum CourceManagementManaba {
+//        case courceManagement
+//        case manaba
+//    }
+    enum CourceManagementManabaPcOrMobile {
+        case courceManagementPC
+        case courceManagementMobile
+        case manabaPC
+        case manabaMobile
     }
     
-    /// 教務事務システム、マナバのMobileかPCかそれ以外か判定
-    public func isDisplayUrlForPC(displayUrl: String) -> (String, URLRequest) {
+    /// 教務事務システム、マナバのMobileかPCか判定
+    public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile {
         switch displayUrl {
-        // 教務事務システムMobile版
-          //  enum pc: Int {
-//            case pc = 0
-//            case mobile = 1
-        case Url.courceManagementHomeMobile.string():
-            dataManager.setCorceManagement(word: "PC")
-//            dataManager.setCorceManagement = .pc
-        return (R.image.pcIcon.name, Url.courceManagementHomePC.urlRequest())
-
-        // 教務事務システムPC版
-        case Url.courceManagementHomePC.string():
-            dataManager.setCorceManagement(word: "Mobile")
-            return (R.image.pcIcon.name, Url.courceManagementHomeMobile.urlRequest())
-
-        // Manaba Mobile版
-        case Url.manabaHomeMobile.string():
-            dataManager.setManabaId(word: "PC")
-            return (R.image.mobileIcon.name, Url.manabaHomePC.urlRequest())
-
-        // Manaba PC版
-        case Url.manabaHomePC.string():
-            dataManager.setManabaId(word: "Mobile")
-            return (R.image.pcIcon.name, Url.manabaHomeMobile.urlRequest())
-
+        case Url.courceManagementHomeMobile.string():  return .courceManagementPC
+        case Url.courceManagementHomePC.string():      return .courceManagementMobile
+        case Url.manabaHomeMobile.string():            return .manabaPC
+        case Url.manabaHomePC.string():                return .manabaMobile
 
         default:
-            // 正常やったらtrueになる
-//            assert(<#T##condition: Bool##Bool#>)
-            fatalError("aiueo")
-//            return (nil, nil)
+            fatalError()
         }
     }
     
+    enum TabBarItem: Int {
+        case courceManagement = 1
+        case manaba = 2
+    }
     /// タブバーの判定
     public func tabBarDetection(num: Int) -> NSURLRequest? {
+        let tabBarItem = TabBarItem(rawValue: num)
         
-        if isRegistrantCheck() {
-            switch num {
-            case 1: // 左
-                if dataManager.getCorceManagement() == "PC" {
+        switch TabBarItem(rawValue: num) {
+            
+        case .none:
+            <#code#>
+        case .some(_):
+            <#code#>
+        }
+        
+        if dataManager.isRegistrantCheck {
+            switch tabBarItem {
+            case .courceManagement: // 左
+                if dataManager.courceManagement == "PC" {
                     return webViewModel.url(.courceManagementHomePC)
                     
                 } else {
@@ -138,8 +97,8 @@ final class MainViewModel: NSObject {
                 }
                 
                 
-            case 2: // 右
-                if dataManager.getManaba() == "PC" {
+            case .manaba: // 右
+                if dataManager.manaba == "PC" {
                     return webViewModel.url(.manabaPC)
                     
                 } else {
@@ -151,12 +110,12 @@ final class MainViewModel: NSObject {
                 return nil
             }
         } else {
-            switch num {
-            case 1: // 左
+            switch tabBarItem {
+            case .courceManagement: // 左
                 return webViewModel.url(.systemServiceList)
                 
                 
-            case 2: // 右
+            case .manaba: // 右
                 return webViewModel.url(.eLearningList)
                 
                 
@@ -174,7 +133,7 @@ final class MainViewModel: NSObject {
             case 1: // 左
 //                return aaa
 //                func aaa() {
-                    if dataManager.getCorceManagement() == "PC" {
+                    if dataManager.courceManagement == "PC" {
                         return webViewModel.url(.courceManagementHomePC)
                     } else {
                         return webViewModel.url(.courceManagementHomeSP)
@@ -182,7 +141,7 @@ final class MainViewModel: NSObject {
                 
                 
             case 2: // 右
-                if dataManager.getManaba() == "PC" {
+                if dataManager.manaba == "PC" {
                     return webViewModel.url(.manabaPC)
                 } else {
                     return webViewModel.url(.manabaSP)

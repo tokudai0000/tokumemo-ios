@@ -27,7 +27,8 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - IBAction
     @IBAction func buttonAction(_ sender: Any) {
-        dataManager.setAgreementVersion()
+//        dataManager.setAgreementVersion()
+        dataManager.agreementVersion = model.agreementVersion
         self.dismiss(animated: true, completion: nil)
                 
     }

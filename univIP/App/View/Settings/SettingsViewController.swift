@@ -43,7 +43,7 @@ final class SettingsViewController: BaseViewController {
     @IBAction func editButton(_ sender: Any) {
         
         if viewModel.editSituation {
-            editButton.setTitle("終了", for: .normal)
+            editButton.setTitle("完了", for: .normal)
             
         }else{
             editButton.setTitle("編集", for: .normal)

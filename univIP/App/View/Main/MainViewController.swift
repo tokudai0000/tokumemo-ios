@@ -65,12 +65,29 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
+        var image: String
+        var url: URLRequest
         
-        let response = viewModel.isDisplayUrlForPC()
-        if let image = response.0 {
-            reversePCtoSP.setImage(UIImage(named: image), for: .normal)
-            self.wkWebView.load(response.1)
+        switch viewModel.isCourceManagementUrlForPC(displayUrl: dataManager.displayUrl) {
+        case .courceManagementPC:
+            image = R.image.pcIcon.name
+            url = Url.courceManagementHomePC.urlRequest()
+            
+        case .courceManagementMobile:
+            image = R.image.mobileIcon.name
+            url = Url.courceManagementHomeMobile.urlRequest()
+            
+        case .manabaPC:
+            image = R.image.pcIcon.name
+            url = Url.manabaHomePC.urlRequest()
+            
+        case .manabaMobile:
+            image = R.image.mobileIcon.name
+            url = Url.manabaHomeMobile.urlRequest()
         }
+        
+        reversePCtoSP.setImage(UIImage(named: image), for: .normal)
+        self.wkWebView.load(url)
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
@@ -160,8 +177,8 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // 初回起動時
     private func firstBootSetup() {
-        
-        if !agreementPersonDecision() {
+        print(dataManager.isRegistrantCheck)
+        if !dataManager.isAgreementPersonDecision {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
@@ -169,7 +186,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     private func registrantDecision() {
         
-        if (!viewModel.isRegistrantCheck()) {
+        if (!dataManager.isRegistrantCheck) {
             // "cアカウント"、"パスワード"の設定催促
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
@@ -179,12 +196,12 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     // 利用規約同意者か判定
-    private func agreementPersonDecision() -> Bool{
-        let lastTimeVersion = dataManager.getAgreementVersion()
-        let newVersion = model.agreementVersion
-        
-        return lastTimeVersion == newVersion
-    }
+//    private func agreementPersonDecision() -> Bool{
+//        let lastTimeVersion = dataManager.agreementVersion
+//        let newVersion = model.agreementVersion
+//        
+//        return lastTimeVersion == newVersion
+//    }
     
     
     // 表示:true  非表示：false
@@ -345,7 +362,7 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // タイムアウト判定
-        if webViewModel.isJudgeUrl(.timeOut, isRegistrant: viewModel.isRegistrantCheck()) {
+        if webViewModel.isJudgeUrl(.timeOut, isRegistrant: dataManager.isRegistrantCheck) {
             let response = webViewModel.url(.login)
             if let url = response as URLRequest? {
                 webView.load(url)
@@ -361,7 +378,7 @@ extension MainViewController: WKNavigationDelegate{
     
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let isRegistrant = viewModel.isRegistrantCheck()
+        let isRegistrant = dataManager.isRegistrantCheck
         // 非登録者がログイン画面を開いた時
         if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision, isRegistrant: isRegistrant) {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", interval: 3)
