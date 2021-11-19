@@ -18,7 +18,14 @@ class TermsOfServiceViewController: UIViewController {
         textView.isEditable = false
         textView.isSelectable = true
         
-        textView.attributedText = rtfFileModel.rtfFileLoad(url: R.file.termsOfServiceRtf())
+        let attributedText = NSMutableAttributedString(string: rtfFileModel.rtfFileLoad(url: R.file.termsOfServiceRtf()).string,
+                                                       attributes:[
+                                                        .font:UIFont(name:"GillSans", size:15)!,
+                                                        .foregroundColor:UIColor.label,
+                                                       ])
+        
+        textView.attributedText = attributedText
+        
     }
     
     @IBAction func backButton(_ sender: Any) {

@@ -73,7 +73,11 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
         let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
         let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
         
-        let attributedText = NSMutableAttributedString(string: attributedString.string)
+        let attributedText = NSMutableAttributedString(string: attributedString.string,
+                                                       attributes:[
+                                                        .font:UIFont(name:"GillSans", size:15)!,
+                                                        .foregroundColor:UIColor.label,
+                                                       ])
         attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
         attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
         termsTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
