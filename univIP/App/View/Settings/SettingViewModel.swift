@@ -22,13 +22,13 @@ final class SettingViewModel: NSObject {
         guard let data = try? jsonEncoder.encode(lists) else {
             return
         }
-        dataManager.setSettingCellList(data: data)
+        dataManager.settingCellList = data
     }
     
     func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
-        guard let data = dataManager.getSettingCellList(),
-              let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
+        let data = dataManager.settingCellList
+        guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
             return []
         }
             
@@ -43,8 +43,9 @@ final class SettingViewModel: NSObject {
         // アプリ起動後、初回の表示か判定
         if dataManager.allCellList[0].isEmpty {
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String // 今のバージョン
+            let lastTimeVersion = dataManager.version
             
-            guard let lastTimeVersion = dataManager.getVersion() else {
+            if dataManager.isFirstTime {
                 // 初回の利用者か判定
                 dataManager.allCellList[0].append(contentsOf: model.serviceCellLists)
                 dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
@@ -82,7 +83,7 @@ final class SettingViewModel: NSObject {
             saveCellList(lists: dataManager.allCellList[0])
             dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
             
-            dataManager.setVersion(word: version)          // 更新
+            dataManager.version = version          // 更新
         }
     }
 }

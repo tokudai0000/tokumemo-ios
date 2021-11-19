@@ -39,7 +39,7 @@ struct Model {
     
     
     
-    enum SettingCellList {
+    enum SettingCellList: Codable {
         case libraryWeb                     // 図書館Webサイト
         case libraryMyPage                  // 図書館MyPage
         case libraryBookLendingExtension    // 図書館本貸出し期間延長
@@ -62,31 +62,37 @@ struct Model {
         case aboutThisApp                   // このアプリについて
     }
     
+    enum Category: Codable {
+        case library
+        case corceManagement
+        case syllabus
+        case mail
+        case recruit
+        case setting
+    }
+        
     /// サービスCell初期状態（更新確認、初回利用者はここを確認される）
-    public let serviceCellLists = [CellList(id: 0,  title: "[図書館]Webサイト", category: "図書館", isDisplay: true),
-                                   CellList(id: 1,  title: "[図書館]MyPage", category: "図書館", isDisplay: true),
-                                   CellList(id: 2,  title: "[図書館]貸し出し期間延長", category: "図書館", isDisplay: true),
-                                   CellList(id: 3,  title: "[図書館]本購入リクエスト", category: "図書館", isDisplay: true),
-                                   CellList(id: 4,  title: "[図書館]開館カレンダー",   category: "図書館", isDisplay: true),
-                                   CellList(id: 5,  title: "シラバス",        category: "シラバス",      isDisplay: true),
-                                   CellList(id: 6,  title: "時間割",         category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 7,  title: "今期の成績表",    category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 8,  title: "これまでの成績",       category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 9,  title: "出欠記録",       category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 10, title: "授業アンケート",  category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 11, title: "メール",         category: "Outlook",      isDisplay: true),
-                                   CellList(id: 12, title: "キャリア支援室",  category: "就職活動",       isDisplay: true),
-                                   CellList(id: 13, title: "履修登録",       category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 14, title: "システムサービス一覧", category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 15, title: "Eラーニング一覧", category: "教務事務システム", isDisplay: true),
-                                   CellList(id: 16, title: "大学サイト", category: "教務事務システム", isDisplay: true)]
-    
-    /// 設定Cell（固定）
-    public let settingCellLists = [CellList(id:100, title: "パスワード",     category: "",             isDisplay: true),
-                                   CellList(id:101, title: "このアプリについて", category: "",           isDisplay: true)]
-    
-}
+    public let serviceCellLists = [CellList(id: 0,  type:.libraryWeb,                  category: .library,         title: "[図書館]Webサイト"),
+                                   CellList(id: 1,  type:.libraryMyPage,               category: .library,         title: "[図書館]MyPage"),
+                                   CellList(id: 2,  type:.libraryBookLendingExtension, category: .library,         title: "[図書館]貸し出し期間延長"),
+                                   CellList(id: 3,  type:.libraryBookPurchaseRequest,  category: .library,         title: "[図書館]本購入リクエスト"),
+                                   CellList(id: 4,  type:.libraryCalendar,             category: .library,         title: "[図書館]開館カレンダー"),
+                                   CellList(id: 5,  type:.syllabus,                    category: .syllabus,        title: "シラバス"),
+                                   CellList(id: 6,  type:.timeTable,                   category: .corceManagement, title: "時間割"),
+                                   CellList(id: 7,  type:.currentTermPerformance,      category: .corceManagement, title: "今年の成績表"),
+                                   CellList(id: 8,  type:.termPerformance,             category: .corceManagement, title: "成績参照"),
+                                   CellList(id: 9,  type:.presenceAbsenceRecord,       category: .corceManagement, title: "出欠記録"),
+                                   CellList(id: 10, type:.classQuestionnaire,          category: .corceManagement, title: "授業アンケート"),
+                                   CellList(id: 11, type:.mailService,                 category: .mail,            title: "メール"),
+                                   CellList(id: 12, type:.tokudaiCareerCenter,         category: .recruit,         title: "キャリア支援室"),
+                                   CellList(id: 13, type:.courseRegistration,          category: .corceManagement, title: "履修登録"),
+                                   CellList(id: 14, type:.systemServiceList,           category: .corceManagement, title: "システムサービス一覧"),
+                                   CellList(id: 15, type:.eLearningList,               category: .corceManagement, title: "Eラーニング一覧"),
+                                   CellList(id: 16, type:.universityWeb,               category: .corceManagement, title: "大学サイト")]
 
+    public let settingCellLists = [CellList(id: 100, type:.password,                   category: .setting,         title: "パスワード"),
+                                   CellList(id: 101, type:.aboutThisApp,               category: .setting,         title: "このアプリについて")]
+}
 
 /// - CellList:
 ///   - id             : タップ時にどのCellか判定するid
@@ -95,30 +101,8 @@ struct Model {
 ///   - isDisplay : Cellに表示するか決定
 struct CellList: Codable {
     let id: Int
-//    let id: Model.SettingCellList
+    let type: Model.SettingCellList
+    let category: Model.Category
+    var isDisplay: Bool = true
     let title: String
-    let category: String
-    var isDisplay: Bool
 }
-
-
-//    public let serviceCellLists = [CellList(id: .libraryWeb,                  title: "図書館Webサイト", category: "図書館", isDisplay: true),
-//                                   CellList(id: .libraryMyPage,               title: "図書館MyPage", category: "図書館", isDisplay: true),
-//                                   CellList(id: .libraryBookLendingExtension, title: "貸し出し期間延長", category: "図書館", isDisplay: true),
-//                                   CellList(id: .libraryBookPurchaseRequest,  title: "本購入リクエスト", category: "図書館", isDisplay: true),
-//                                   CellList(id: .libraryCalendar,             title: "開館カレンダー", category: "図書館", isDisplay: true),
-//                                   CellList(id: .syllabus,                    title: "シラバス", category: "シラバス", isDisplay: true),
-//                                   CellList(id: .timeTable,                   title: "時間割", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .currentTermPerformance,      title: "今年の成績表", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .termPerformance,             title: "成績参照", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .presenceAbsenceRecord,       title: "出欠記録", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .classQuestionnaire,          title: "授業アンケート", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .mailService,                 title: "メール", category: "Outlook", isDisplay: true),
-//                                   CellList(id: .tokudaiCareerCenter,         title: "キャリア支援室", category: "就職活動", isDisplay: true),
-//                                   CellList(id: .courseRegistration,          title: "履修登録", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .systemServiceList,           title: "システムサービス一覧", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .eLearningList,               title: "Eラーニング一覧", category: "教務事務システム", isDisplay: true),
-//                                   CellList(id: .universityWeb,               title: "大学サイト", category: "教務事務システム", isDisplay: true)]
-
-//    public let settingCellLists = [CellList(id: .password,                    title: "パスワード", category: "", isDisplay: true),
-//                                   CellList(id: .aboutThisApp,                title: "このアプリについて", category: "", isDisplay: true)]
