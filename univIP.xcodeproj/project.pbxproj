@@ -41,6 +41,7 @@
 		1AA056D426BD2AE100343005 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D226BD2AE100343005 /* Main.storyboard */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D726BD2AE500343005 /* LaunchScreen.storyboard */; };
+		1AAF27022748587C0071B89F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF27012748587C0071B89F /* Settings.bundle */; };
 		1AB37B6526FDFC93008A2D2F /* PrivacyPolicy.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1AB37B6426FDFC93008A2D2F /* PrivacyPolicy.rtf */; };
 		1AB37B6F26FDFCEA008A2D2F /* univIPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* univIPTests.swift */; };
 		1AB37B7D26FDFCF4008A2D2F /* univIPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */; };
@@ -107,6 +108,7 @@
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056D826BD2AE500343005 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1AAF27012748587C0071B89F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1AB37B6426FDFC93008A2D2F /* PrivacyPolicy.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = PrivacyPolicy.rtf; sourceTree = "<group>"; };
 		1AB37B6C26FDFCEA008A2D2F /* univIPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB37B6E26FDFCEA008A2D2F /* univIPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = univIPTests.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 			children = (
 				1A9E0E09273CDAE800247F94 /* R.generated.swift */,
 				1AA056E326BD2D3700343005 /* App */,
+				1AAF27012748587C0071B89F /* Settings.bundle */,
 			);
 			path = univIP;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A0CC330274541B200851126 /* Property List.plist in Resources */,
+				1AAF27022748587C0071B89F /* Settings.bundle in Resources */,
 				1AA056D926BD2AE500343005 /* LaunchScreen.storyboard in Resources */,
 				1A81A93C26C1507E00CC56E2 /* AboutThisApp.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,

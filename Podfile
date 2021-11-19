@@ -12,3 +12,11 @@ target 'univIP' do
   pod 'Firebase/Analytics' , '~> 8'
   
 end
+
+
+post_install do | installer |
+  require 'fileutils'
+
+  FileUtils.cp_r('Pods/Target Support Files/Pods-univIP/Pods-univIP-Acknowledgements.plist', 'univIP/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+
+end
