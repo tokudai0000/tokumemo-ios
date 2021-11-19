@@ -75,7 +75,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
         
         let attributedText = NSMutableAttributedString(string: attributedString.string,
                                                        attributes:[
-                                                        .font:UIFont(name:"GillSans", size:15)!,
+                                                        .font:UIFont(name:"Futura-Medium", size:15)!,
                                                         .foregroundColor:UIColor.label,
                                                        ])
         attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)

@@ -20,7 +20,7 @@ class PrivacyPolicyViewController: UIViewController {
         
         let attributedText = NSMutableAttributedString(string: rtfFileModel.rtfFileLoad(url: R.file.privacyPolicyRtf()).string,
                                                        attributes:[
-                                                        .font:UIFont(name:"GillSans", size:15)!,
+                                                        .font:UIFont(name:"Futura-Medium", size:15)!,
                                                         .foregroundColor:UIColor.label,
                                                        ])
         
