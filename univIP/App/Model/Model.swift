@@ -72,11 +72,11 @@ struct Model {
     }
         
     /// サービスCell初期状態（更新確認、初回利用者はここを確認される）
-    public let serviceCellLists = [CellList(id: 0,  type:.libraryWeb,                  category: .library,         title: "図書館Webサイト"),
-                                   CellList(id: 1,  type:.libraryMyPage,               category: .library,         title: "図書館MyPage"),
-                                   CellList(id: 2,  type:.libraryBookLendingExtension, category: .library,         title: "貸し出し期間延長"),
-                                   CellList(id: 3,  type:.libraryBookPurchaseRequest,  category: .library,         title: "本購入リクエスト"),
-                                   CellList(id: 4,  type:.libraryCalendar,             category: .library,         title: "開館カレンダー"),
+    public let serviceCellLists = [CellList(id: 0,  type:.libraryWeb,                  category: .library,         title: "[図書館]Webサイト"),
+                                   CellList(id: 1,  type:.libraryMyPage,               category: .library,         title: "[図書館]MyPage"),
+                                   CellList(id: 2,  type:.libraryBookLendingExtension, category: .library,         title: "[図書館]貸し出し期間延長"),
+                                   CellList(id: 3,  type:.libraryBookPurchaseRequest,  category: .library,         title: "[図書館]本購入リクエスト"),
+                                   CellList(id: 4,  type:.libraryCalendar,             category: .library,         title: "[図書館]開館カレンダー"),
                                    CellList(id: 5,  type:.syllabus,                    category: .syllabus,        title: "シラバス"),
                                    CellList(id: 6,  type:.timeTable,                   category: .corceManagement, title: "時間割"),
                                    CellList(id: 7,  type:.currentTermPerformance,      category: .corceManagement, title: "今年の成績表"),

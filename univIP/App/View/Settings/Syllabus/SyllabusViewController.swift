@@ -65,8 +65,8 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
     // MARK: - Private func
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/10"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/100"
+        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
+        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
     }
     
     
@@ -97,8 +97,8 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
         subjectTextField.delegate = self
         teacherTextField.delegate = self
         
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/10"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/100"
+        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
+        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
         
     }
     
