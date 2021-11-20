@@ -42,7 +42,7 @@
                                                             <constraint firstAttribute="width" constant="50" id="4Vz-e3-bUx"/>
                                                         </constraints>
                                                         <color key="tintColor" systemColor="systemGrayColor"/>
-                                                        <state key="normal" image="line.horizontal.3.decrease" catalog="system"/>
+                                                        <state key="normal" image="MenuIcon"/>
                                                         <connections>
                                                             <action selector="settingMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2V7-ge-fUf"/>
                                                         </connections>
@@ -181,9 +181,9 @@
     </scenes>
     <resources>
         <image name="MainIconColor" width="427" height="427"/>
+        <image name="MenuIcon" width="426.66665649414062" height="426.66665649414062"/>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
-        <image name="line.horizontal.3.decrease" catalog="system" width="128" height="73"/>
         <image name="pcIcon" width="427" height="427"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
