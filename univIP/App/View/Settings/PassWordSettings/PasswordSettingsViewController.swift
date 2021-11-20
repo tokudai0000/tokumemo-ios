@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 final class PasswordSettingsViewController: BaseViewController, UITextFieldDelegate {
     
@@ -54,7 +53,7 @@ final class PasswordSettingsViewController: BaseViewController, UITextFieldDeleg
     
     //MARK:- IBAction
     @IBAction func registrationButton(_ sender: Any) {
-        Analytics.logEvent("passwordRegistButton", parameters: nil) // Analytics: 調べる・タップ
+        
         if let cAccountText = cAccountTextField.text{
             DataManager.singleton.cAccount = cAccountText
         }
