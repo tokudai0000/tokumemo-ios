@@ -43,7 +43,7 @@ final class SettingsViewController: BaseViewController {
     @IBAction func editButton(_ sender: Any) {
         
         if viewModel.editSituation {
-            editButton.setTitle("終了", for: .normal)
+            editButton.setTitle("完了", for: .normal)
             
         }else{
             editButton.setTitle("編集", for: .normal)
@@ -227,10 +227,10 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             return
         }
         
-        let cellId = dataManager.allCellList[indexPath[0]][indexPath[1]].id
+        let cellType = dataManager.allCellList[indexPath[0]][indexPath[1]].type
         
-        switch cellId {
-        case 0: // 図書館Webサイト
+        switch cellType {
+        case .libraryWeb: // 図書館Webサイト
             let response = webViewModel.url(.libraryHome)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -238,8 +238,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                 delegate.toast(message: "ERROR")
             }
             delegate.navigationRightButtonOnOff(operation: .down)
-        
-        case 1: // 図書館MyPage
+            
+        case .libraryMyPage: // 図書館MyPage
             let response = webViewModel.url(.libraryLogin)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -248,7 +248,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             }
             delegate.navigationRightButtonOnOff(operation: .down)
             
-        case 2: // 貸し出し期間延長
+        case .libraryBookLendingExtension: // 貸し出し期間延長
             let response = webViewModel.url(.libraryBookLendingExtension)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -258,7 +258,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .down)
             
             
-        case 3: // 本購入リクエスト
+        case .libraryBookPurchaseRequest: // 本購入リクエスト
             let response = webViewModel.url(.libraryBookPurchaseRequest)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -268,7 +268,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .down)
             
             
-        case 4: // 開館カレンダー
+        case .libraryCalendar: // 開館カレンダー
             let response = webViewModel.url(.libraryCalendar)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -278,11 +278,11 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .down)
             
             
-        case 5: // シラバス
+        case .syllabus: // シラバス
             delegate.popupView(scene: .syllabus)
             
             
-        case 6: // 時間割
+        case .timeTable: // 時間割
             let response = webViewModel.url(.timeTable)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -292,7 +292,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 7: // 今年の成績表
+        case .currentTermPerformance: // 今年の成績表
             let response = webViewModel.url(.currentTermPerformance)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -301,7 +301,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             }
             
             
-        case 8: // 成績参照
+        case .termPerformance: // 成績参照
             let response = webViewModel.url(.termPerformance)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -311,7 +311,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 9: // 出欠記録
+        case .presenceAbsenceRecord: // 出欠記録
             let response = webViewModel.url(.presenceAbsenceRecord)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -321,7 +321,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 10: // 授業アンケート
+        case .classQuestionnaire: // 授業アンケート
             let response = webViewModel.url(.classQuestionnaire)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -331,7 +331,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 11: // メール
+        case .mailService: // メール
             let response = webViewModel.url(.mailService)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -341,7 +341,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .down)
             
             
-        case 12: // キャリア支援室
+        case .tokudaiCareerCenter: // キャリア支援室
             let response = webViewModel.url(.tokudaiCareerCenter)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -351,7 +351,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .down)
             
             
-        case 13: // 履修登録
+        case .courseRegistration: // 履修登録
             let response = webViewModel.url(.courseRegistration)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -361,7 +361,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 14: // システムサービス一覧
+        case .systemServiceList: // システムサービス一覧
             let response = webViewModel.url(.systemServiceList)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -371,7 +371,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 15: // Eラーニング一覧
+        case .eLearningList: // Eラーニング一覧
             let response = webViewModel.url(.eLearningList)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -381,7 +381,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 16: // 大学サイト
+        case .universityWeb: // 大学サイト
             let response = webViewModel.url(.universityHome)
             if let url = response as URLRequest? {
                 delegate.wkWebView.load(url)
@@ -391,16 +391,13 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             delegate.navigationRightButtonOnOff(operation: .up)
             
             
-        case 100: // パスワード設定
+        case .password: // パスワード設定
             delegate.popupView(scene: .password)
             
             
-        case 101: // このアプリについて
+        case .aboutThisApp: // このアプリについて
             delegate.popupView(scene: .aboutThisApp)
             
-            
-        default:
-            return
         }
     }
     

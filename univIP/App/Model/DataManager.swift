@@ -26,6 +26,19 @@ final class DataManager {
     private let model = Model()
     private var userDefaults = UserDefaults.standard
     
+    
+    
+    public var isFirstTime: Bool { get { return version.isEmpty }}
+    
+    public var isRegistrantCheck: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
+    // 利用規約同意者か判定
+    public var isAgreementPersonDecision: Bool { get { return agreementVersion == model.agreementVersion }}
+    
+
+    
+
+    
+    
     /// KeychainAccess インスタンス
     public var keychain: Keychain {
         guard let identifier = Bundle.main.object(forInfoDictionaryKey: "CFBundleIdentifier") as? String else {
@@ -76,53 +89,84 @@ final class DataManager {
     }
     
     
+    /// GET (UserDefaults)
+    private func getUserDefaultsString(key:String) -> String {
+        if let value = userDefaults.string(forKey: key) {
+            return value
+        }
+        AKLog(level: .ERROR, message: "error: Datamanager.getUserDefaults")
+        return ""
+    }
+    
+    /// SET (UserDefaults)
+    private func setUserDefaultsString(key:String, value:String) {
+        userDefaults.set(value ,forKey: key)
+    }
+    
+    
     /// agreementversion
     private let KEY_AgreementVersion = "KEY_AgreementVersion"
-    public func setAgreementVersion() {
-        userDefaults.set(model.agreementVersion ,forKey: KEY_AgreementVersion)
+    public var agreementVersion: String {
+        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
+        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
     }
     
-    public func getAgreementVersion() -> String? {
-        return userDefaults.string(forKey: KEY_AgreementVersion)
-    }
-    
-    
-    private let KEY_corceManagement = "KEY_corceManagement"
-    public func setCorceManagement(word: String) {
-        userDefaults.set(word, forKey: KEY_corceManagement)
-    }
-    
-    public func getCorceManagement() -> String? {
-        return userDefaults.string(forKey: KEY_corceManagement)
+    private let KEY_courceManagement = "KEY_corceManagement"
+    public var courceManagement: String {
+        get { return getUserDefaultsString(key: KEY_courceManagement) }
+        set(v) { setUserDefaultsString(key: KEY_courceManagement, value: v) }
     }
 
     
     private let KEY_manaba = "KEY_manaba"
-    public func setManabaId(word: String) {
-        userDefaults.set(word, forKey: KEY_manaba)
+    public var manaba: String {
+        get { return getUserDefaultsString(key: KEY_manaba) }
+        set(v) { setUserDefaultsString(key: KEY_manaba, value: v) }
+    }
+
+    private let KEY_version = "KEY_version"
+    public var version: String {
+        get { return getUserDefaultsString(key: KEY_version) }
+        set(v) { setUserDefaultsString(key: KEY_version, value: v) }
     }
     
-    public func getManaba() -> String? {
-        return userDefaults.string(forKey: KEY_manaba)
+    /// GET (UserDefaults)
+    private func getUserDefaultsData(key:String) -> Data {
+        if let value = userDefaults.data(forKey: key) {
+            return value
+        }
+        AKLog(level: .ERROR, message: "error: Datamanager.getUserDefaults")
+        return Data()
     }
     
+    /// SET (UserDefaults)
+    private func setUserDefaultsData(key:String, value:Data) {
+        userDefaults.set(value ,forKey: key)
+    }
     
     private let KEY_settingCellList = "KEY_settingCellList"
-    public func setSettingCellList(data: Data) {
-        userDefaults.set(data, forKey: KEY_settingCellList)
+    public var settingCellList: Data {
+        get { return getUserDefaultsData(key: KEY_settingCellList) }
+        set(v) { setUserDefaultsData(key: KEY_settingCellList, value: v) }
     }
-    
-    public func getSettingCellList() -> Data? {
-        return userDefaults.data(forKey: KEY_settingCellList)
-    }
-    
-    
-    private let KEY_version = "KEY_version"
-    public func setVersion(word: String) {
-        userDefaults.set(word, forKey: KEY_version)
-    }
-    
-    public func getVersion() -> String? {
-        return userDefaults.string(forKey: KEY_version)
-    }
+
 }
+
+
+//extension UserDefaults {
+//
+//    func setEnum<T: RawRepresentable>(_ value: T?, forKey key: String) where T.RawValue == String {
+//        if let value = value {
+//            set(value.rawValue, forKey: key)
+//        } else {
+//            removeObject(forKey: key)
+//        }
+//    }
+//
+//    func getEnum<T: RawRepresentable>(forKey key: String) -> T? where T.RawValue == String {
+//        if let string = string(forKey: key) {
+//            return T(rawValue: string)
+//        }
+//        return nil
+//    }
+//}
