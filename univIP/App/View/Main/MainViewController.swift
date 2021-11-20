@@ -8,6 +8,8 @@
 
 import UIKit
 import WebKit
+import Firebase
+import FirebaseCore
 
 final class MainViewController: BaseViewController, WKUIDelegate {
     
@@ -39,7 +41,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        
+        Analytics.logEvent("mainViewOpened", parameters: nil) // Analytics: 調べる・タップ
         firstBootSetup()       // 利用規約同意判定
         registrantDecision()   // 登録者判定
     }
@@ -47,24 +49,25 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - IBAction
     @IBAction func settingMenuButton(_ sender: Any) {
-        
+        Analytics.logEvent("mainViewSettingMenuButton", parameters: nil) // Analytics: 調べる・タップ
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
         vc.delegate = self
     }
     
     @IBAction func backButton(_ sender: Any) {
-        
+        Analytics.logEvent("mainViewBackButton", parameters: nil) // Analytics: 調べる・タップ
         wkWebView.goBack()
     }
     
     @IBAction func refreshButton(_ sender: Any) {
-        
+        Analytics.logEvent("mainViewRefreshButton", parameters: nil) // Analytics: 調べる・タップ
         refresh()
         navigationRightButtonOnOff(operation: .up)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
+        Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil) // Analytics: 調べる・タップ
         var image: String
         var url: URLRequest
         
@@ -151,6 +154,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
+        Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil) // Analytics: 調べる・タップ
         let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
         
         let image = UIImage(systemName: responce.imageName.rawValue)
@@ -176,6 +180,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     private func firstBootSetup() {
         print(dataManager.isRegistrantCheck)
         if !dataManager.isAgreementPersonDecision {
+            Analytics.logEvent("calledFirstBootSetup", parameters: nil) // Analytics: 調べる・タップ
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
@@ -185,9 +190,12 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         
         if (!dataManager.isRegistrantCheck) {
             // "cアカウント"、"パスワード"の設定催促
+            Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
             vc.delegate = self
+        } else {
+            Analytics.logEvent("isRegistrantCheck=true", parameters: nil) // Analytics: 調べる・タップ
         }
     }
     
@@ -333,13 +341,14 @@ extension MainViewController: WKNavigationDelegate{
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
         // 現在の表示URL
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
             AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
+        
+        Analytics.logEvent("webViewLoaded", parameters: [AnalyticsParameterItems: "\(url)"]) // Analytics: 調べる・タップ
         
         // URLをViewModelに保存
         webViewModel.registUrl(url)
@@ -496,6 +505,11 @@ extension MainViewController: WKNavigationDelegate{
 extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 1 {
+            Analytics.logEvent("mainViewCourceManagement", parameters: nil) // Analytics: 調べる・タップ
+        } else {
+            Analytics.logEvent("mainViewManaba", parameters: nil) // Analytics: 調べる・タップ
+        }
         
         if let url = viewModel.tabBarDetection(num: item.tag,
                                                isRegist: dataManager.isRegistrantCheck,

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class PrivacyPolicyViewController: UIViewController {
     
@@ -15,6 +16,8 @@ class PrivacyPolicyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Analytics.logEvent("privacyPolicyViewOpen", parameters: nil) // Analytics: 調べる・タップ
+
         textView.isEditable = false
         textView.isSelectable = true
         
