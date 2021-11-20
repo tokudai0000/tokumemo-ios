@@ -8,6 +8,7 @@
 
 import UIKit
 import Kanna
+import FirebaseAnalytics
 
 final class SettingsViewController: BaseViewController {
     
@@ -46,6 +47,7 @@ final class SettingsViewController: BaseViewController {
             editButton.setTitle("完了", for: .normal)
             
         }else{
+            Analytics.logEvent("settingViewEditButton", parameters: nil) // Analytics: 調べる・タップ
             editButton.setTitle("編集", for: .normal)
             
         }
@@ -218,6 +220,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
             viewModel.saveCellList(lists: dataManager.allCellList[0])
             return
         }
+        
+        Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil) // Analytics: 調べる・タップ
         
         // シラバスに不具合
         //        viewAnimated(scene: "settingsViewDisappear")**修正必須**
