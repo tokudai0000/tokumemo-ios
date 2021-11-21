@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class TermsOfServiceViewController: UIViewController {
     
@@ -15,6 +16,8 @@ class TermsOfServiceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Analytics.logEvent("termsOfServiceViewOpen", parameters: nil) // Analytics: 調べる・タップ
+
         textView.isEditable = false
         textView.isSelectable = true
         
