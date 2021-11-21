@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -78,7 +78,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="gvb-ns-vPe"/>
                                                         </constraints>
-                                                        <state key="normal" image="pcIcon"/>
+                                                        <state key="normal" image="PcIcon"/>
                                                         <connections>
                                                             <action selector="webViewChangePCorMB:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lCD-IR-UDl"/>
                                                         </connections>
@@ -181,10 +181,10 @@
     </scenes>
     <resources>
         <image name="MainIconColor" width="427" height="427"/>
-        <image name="MenuIcon" width="426.66665649414062" height="426.66665649414062"/>
+        <image name="MenuIcon" width="427" height="427"/>
+        <image name="PcIcon" width="427" height="427"/>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="106"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
-        <image name="pcIcon" width="427" height="427"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
