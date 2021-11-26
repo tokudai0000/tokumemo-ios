@@ -34,12 +34,12 @@ final class SyllabusViewController: BaseViewController {
         super.viewDidLoad()
         setup()
     }
-        
+    
     
     // MARK: - IBAction
     @IBAction func searchButton(_ sender: Any) {
         delegate.refreshSyllabus(subjectName: subjectTextField.text ?? "",
-                                teacherName: teacherTextField.text ?? "")
+                                 teacherName: teacherTextField.text ?? "")
         dataManager.isSyllabusSearchOnce = true
         self.dismiss(animated: true, completion: nil)
     }
@@ -61,6 +61,7 @@ final class SyllabusViewController: BaseViewController {
             completion: { bool in
             })
     }
+    
     
     // MARK: - Private
     private func setup() {
@@ -118,8 +119,9 @@ final class SyllabusViewController: BaseViewController {
             teacherUnderLine.backgroundColor = .red
         }
     }
-
+    
 }
+
 
 // MARK: - UITextFieldDelegate
 extension SyllabusViewController: UITextFieldDelegate {

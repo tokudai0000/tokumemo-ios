@@ -18,25 +18,23 @@ final class SettingsViewController: BaseViewController {
     @IBOutlet weak var editButton: UIButton!
     
     private let model = Model()
+    private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
-    private let dataManager = DataManager.singleton
-    private let webViewModel = WebViewModel()
+    public var delegate : MainViewController!
     
-    public var delegate : MainViewController?
-    private var delegatePass : PasswordSettingsViewController?
+    private let dataManager = DataManager.singleton
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        
-        viewAnimated(scene: "settingsViewAppear")
+        viewAnimated(scene: .settingViewAppear)
     }
     
     
@@ -46,10 +44,9 @@ final class SettingsViewController: BaseViewController {
         if viewModel.editSituation {
             editButton.setTitle("完了", for: .normal)
             
-        }else{
+        } else {
             Analytics.logEvent("settingViewEditButton", parameters: nil) // Analytics: 調べる・タップ
             editButton.setTitle("編集", for: .normal)
-            
         }
         
         tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation // 編集モード時、複数選択を許可
@@ -58,6 +55,7 @@ final class SettingsViewController: BaseViewController {
         
         self.tableView.reloadData()
         
+        // 編集モード時、display=true のセルを選択状態にする
         if !viewModel.editSituation {
             for i in 0 ..< dataManager.allCellList[0].count {
                 print(dataManager.allCellList[0][i].isDisplay)
@@ -65,23 +63,29 @@ final class SettingsViewController: BaseViewController {
                     self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
             }
-            
         }
+        
     }
     
     
     // MARK: - Private func
     private func setup() {
-        
-        viewModel.firstBootDecision() // 初回起動時処理
+        // 初回起動時処理
+        viewModel.firstBootDecision()
+        // セル同士の仕切り板
         tableView.separatorColor = UIColor(white: 0, alpha: 0)
         self.tableView.reloadData()
     }
     
     
-    private func viewAnimated(scene:String){
+    enum ViewAnimationType {
+        case settingViewAppear
+        case settingsViewDisappear
+    }
+    
+    private func viewAnimated(scene: ViewAnimationType) {
         switch scene {
-        case "settingsViewAppear":
+        case .settingViewAppear:
             //制約を追加　width:self.view.frame.width/2
             let widthConstraint = NSLayoutConstraint.init(item: self.contentView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.width * (3 / 4) )
             widthConstraint.isActive = true
@@ -100,7 +104,7 @@ final class SettingsViewController: BaseViewController {
                 })
             
             
-        case "settingsViewDisappear":
+        case .settingsViewDisappear:
             UIView.animate(
                 withDuration: 0.2,
                 delay: 0,
@@ -111,24 +115,9 @@ final class SettingsViewController: BaseViewController {
                 completion: { _ in
                     self.dismiss(animated: false, completion: nil)
                 })
-            
-            
-        default:
-            return
         }
     }
     
-    // MARK: - Override(Animate)
-    
-    // メニューエリア以外タップ時の処理
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        for touch in touches {
-            if touch.view?.tag == 1 {
-                viewAnimated(scene: "settingsViewDisappear")
-            }
-        }
-    }
 }
 
 
@@ -140,13 +129,12 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return CGFloat(viewModel.sectionHight)
     }
     
-    
     /// セクション数
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataManager.allCellList.count
     }
     
-    // セクションのタイトル
+    /// セクションのタイトル
     func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
         return model.sectionLists[section]
@@ -157,22 +145,17 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return dataManager.allCellList[section].count
     }
     
-    
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
         
         tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
-        // セルの詳細情報
-        //        tableCell.detailTextLabel?.text = dataManager.allCellList[indexPath.section][indexPath.item].category
-        //        tableCell.detailTextLabel?.font = UIFont.systemFont(ofSize: 11)
         tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         
         return tableCell
     }
-    
     
     /// 並び替え
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
@@ -182,7 +165,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return sourceIndexPath
     }
     
-    
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let todo = dataManager.allCellList[sourceIndexPath.section][sourceIndexPath.row]
@@ -190,7 +172,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         dataManager.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
         viewModel.saveCellList(lists: dataManager.allCellList[0])
     }
-    
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -205,8 +186,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    
-    // セルを選択した時のイベント
+    /// セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // 編集モードでの選択時処理無効
@@ -222,9 +202,9 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         }
         
         Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil) // Analytics: 調べる・タップ
-
+        
         // シラバスに不具合
-        //        viewAnimated(scene: "settingsViewDisappear")**修正必須**
+        // viewAnimated(scene: "settingsViewDisappear")**修正必須**
         self.dismiss(animated: false, completion: nil)
         
         guard let delegate = delegate else {
@@ -405,7 +385,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    // 編集モード時、チェックが外された時
+    /// 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
@@ -421,4 +401,19 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return true
     }
     
+}
+
+
+// MARK: - Override(Animate)
+extension SettingsViewController {
+    
+    // メニューエリア以外タップ時、画面をMainViewに戻る
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        for touch in touches {
+            if touch.view?.tag == 1 {
+                viewAnimated(scene: .settingsViewDisappear)
+            }
+        }
+    }
 }
