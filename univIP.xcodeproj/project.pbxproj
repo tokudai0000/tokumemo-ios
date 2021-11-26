@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A00A4362750706400EF3F99 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4352750706400EF3F99 /* FileModel.swift */; };
 		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
 		1A09314E272A7DAC00B7BAED /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */; };
 		1A0CC330274541B200851126 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A0CC32F274541B200851126 /* Property List.plist */; };
@@ -73,7 +72,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1A00A4352750706400EF3F99 /* FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		1A0CC32F274541B200851126 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 				1A4D14D827453D78009D6CD2 /* SettingsList.plist */,
 				1A81A93026C12C8200CC56E2 /* Model.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
-				1A00A4352750706400EF3F99 /* FileModel.swift */,
 				1A9E0E07273CB75C00247F94 /* WKWebView */,
 				1A0CC32F274541B200851126 /* Property List.plist */,
 			);
@@ -646,7 +643,6 @@
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
-				1A00A4362750706400EF3F99 /* FileModel.swift in Sources */,
 				1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* Model.swift in Sources */,
 				1A81A93A26C1507000CC56E2 /* AboutThisAppViewController.swift in Sources */,

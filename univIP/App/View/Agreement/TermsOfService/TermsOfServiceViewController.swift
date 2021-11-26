@@ -12,8 +12,6 @@ class TermsOfServiceViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
     
-    private let rtfFileModel = FileModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         Analytics.logEvent("termsOfServiceViewOpen", parameters: nil) // Analytics: 調べる・タップ
@@ -21,7 +19,13 @@ class TermsOfServiceViewController: UIViewController {
         textView.isEditable = false
         textView.isSelectable = true
         
-        let attributedText = NSMutableAttributedString(string: rtfFileModel.rtfFileLoad(url: R.file.termsOfServiceRtf()).string,
+        guard let filePath = R.file.termsOfServiceRtf() else {
+            return // faitalで落とすべきか？
+        }
+
+        let attributed = Common.rtfFileLoad(url: filePath)
+        
+        let attributedText = NSMutableAttributedString(string: attributed.string,
                                                        attributes:[
                                                         .font:UIFont(name:"Futura-Medium", size:15)!,
                                                         .foregroundColor:UIColor.label,

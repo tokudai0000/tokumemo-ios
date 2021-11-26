@@ -14,7 +14,6 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
-    private let rtfFileModel = FileModel()
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
@@ -66,8 +65,11 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     }
     
     private func textViewSetup() {
+        guard let filePath = R.file.agreementRtf() else {
+            return // faitalで落とすべきか？
+        }
 
-        let attributed = rtfFileModel.rtfFileLoad(url: R.file.agreementRtf())
+        let attributed = Common.rtfFileLoad(url: filePath)
         let attributedString = NSMutableAttributedString(string: attributed.string)
         
         let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")

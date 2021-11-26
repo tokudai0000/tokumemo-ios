@@ -12,8 +12,6 @@ final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
     
     @IBOutlet weak var textView: UITextView!
     
-    private let rtfFileModel = FileModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,8 +54,12 @@ final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
     }
     
     private func textViewSetup() {
+        
+        guard let filePath = R.file.aboutThisAppRtf() else {
+            return // faitalで落とすべきか？
+        }
 
-        let attributed = rtfFileModel.rtfFileLoad(url: R.file.aboutThisAppRtf())
+        let attributed = Common.rtfFileLoad(url: filePath)
         let attributedString = NSMutableAttributedString(string: attributed.string)
         
         let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
