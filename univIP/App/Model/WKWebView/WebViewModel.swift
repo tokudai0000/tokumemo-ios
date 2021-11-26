@@ -292,5 +292,5 @@ final class WebViewModel {
         let termPerformanceYearURL = Url.currentTermPerformance.string() + String(year)
         return termPerformanceYearURL
     }
-        
+    
 }
