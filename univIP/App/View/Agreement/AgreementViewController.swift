@@ -10,11 +10,12 @@ import UIKit
 final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var termsTextView: UITextView!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
     private let dataManager = DataManager.singleton
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -25,11 +26,10 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     
     // MARK: - IBAction
-    @IBAction func buttonAction(_ sender: Any) {
-//        dataManager.setAgreementVersion()
+    @IBAction func agreementButton(_ sender: Any) {
+        // 利用規約のバージョン更新
         dataManager.agreementVersion = model.agreementVersion
         self.dismiss(animated: true, completion: nil)
-                
     }
     
     
@@ -57,11 +57,11 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     private func setup() {
         agreementButton.layer.cornerRadius = 20.0
         
-        termsTextView.isEditable = false
-        termsTextView.isScrollEnabled = false
-        termsTextView.isSelectable = true
-        termsTextView.delegate = self
-        
+        textView.delegate = self
+        textView.isSelectable = true
+        textView.isEditable = false
+        textView.isScrollEnabled = false
+        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
     }
     
     private func textViewSetup() {
@@ -69,21 +69,9 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
             return // faitalで落とすべきか？
         }
 
-        let attributed = Common.rtfFileLoad(url: filePath)
-        let attributedString = NSMutableAttributedString(string: attributed.string)
+        let attributedText = Common.rtfFileLoad(url: filePath)
         
-        let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
-        let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
-        
-        let attributedText = NSMutableAttributedString(string: attributedString.string,
-                                                       attributes:[
-                                                        .font:UIFont(name:"Futura-Medium", size:15)!,
-                                                        .foregroundColor:UIColor.label,
-                                                       ])
-        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
-        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
-        termsTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
-        termsTextView.attributedText = attributedText
+        textView.attributedText = Common.setAttributedText(attributedText)
     }
     
 }

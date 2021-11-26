@@ -10,33 +10,38 @@ import FirebaseAnalytics
 
 class TermsOfServiceViewController: UIViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        textViewSetup()
+    }
+    
+    
+    // MARK: - IBAction
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private
+    private func setup() {
         Analytics.logEvent("termsOfServiceViewOpen", parameters: nil) // Analytics: 調べる・タップ
-
+        
         textView.isEditable = false
         textView.isSelectable = true
-        
+    }
+    
+    private func textViewSetup() {
         guard let filePath = R.file.termsOfServiceRtf() else {
             return // faitalで落とすべきか？
         }
-
-        let attributed = Common.rtfFileLoad(url: filePath)
         
-        let attributedText = NSMutableAttributedString(string: attributed.string,
-                                                       attributes:[
-                                                        .font:UIFont(name:"Futura-Medium", size:15)!,
-                                                        .foregroundColor:UIColor.label,
-                                                       ])
-        
-        textView.attributedText = attributedText
-        
-    }
-    
-    @IBAction func backButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        textView.attributedText = Common.rtfFileLoad(url: filePath)
     }
     
 }
