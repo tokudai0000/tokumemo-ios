@@ -90,8 +90,8 @@ struct Model {
                                    CellList(id: 15, type: .eLearningList,               category: .corceManagement, title: "Eラーニング一覧"),
                                    CellList(id: 16, type: .universityWeb,               category: .corceManagement, title: "大学サイト")]
     
-    public let settingCellLists = [CellList(id: 100, type:.password,                   category: .setting,         title: "パスワード"),
-                                   CellList(id: 101, type:.aboutThisApp,               category: .setting,         title: "このアプリについて")]
+    public let settingCellLists = [CellList(id: 100, type: .password,                   category: .setting,         title: "パスワード"),
+                                   CellList(id: 101, type: .aboutThisApp,               category: .setting,         title: "このアプリについて")]
 }
 
 /// - CellList:
