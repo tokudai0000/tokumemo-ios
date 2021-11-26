@@ -132,14 +132,6 @@ SPEC CHECKSUMS:
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-PODFILE CHECKSUM: a1ac1d5254f09eb975e3ebc9bb6a2955ab8c47e7
-=======
-PODFILE CHECKSUM: ae9b6909ebd7c3faf4b5850e868c73c53b01bd12
->>>>>>> Stashed changes
-=======
-PODFILE CHECKSUM: ae9b6909ebd7c3faf4b5850e868c73c53b01bd12
->>>>>>> Stashed changes
+PODFILE CHECKSUM: dcfbc66bc41c8b3e987292ad7b1ee35a568f7237
 
 COCOAPODS: 1.11.2
