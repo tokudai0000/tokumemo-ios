@@ -105,7 +105,7 @@ final class PasswordSettingsViewController: BaseViewController {
             return false
         }
         
-        if cAccount.prefix(0) != "c" {
+        if cAccount.prefix(1) != "c" {
             cAccountMessageLabel.text = "cアカウントを入力してください"
             cAccountTextFieldCursorSetup(type: .error)
             return false
@@ -155,11 +155,11 @@ final class PasswordSettingsViewController: BaseViewController {
             
         case .forcus:
             passwordTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            passwordTextField.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            passwordUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             
         case .error:
             passwordTextField.tintColor = .red
-            passwordTextField.backgroundColor = .red
+            passwordUnderLine.backgroundColor = .red
         }
     }
     

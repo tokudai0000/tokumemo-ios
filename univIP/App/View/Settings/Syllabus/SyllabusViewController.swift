@@ -76,7 +76,6 @@ final class SyllabusViewController: BaseViewController {
         subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
         teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
         
-        teacherTextField.isSecureTextEntry = true
         searchButton.layer.cornerRadius = 5.0
     }
     
@@ -112,11 +111,11 @@ final class SyllabusViewController: BaseViewController {
             
         case .forcus:
             teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            teacherTextField.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             
         case .error:
             teacherTextField.tintColor = .red
-            teacherTextField.backgroundColor = .red
+            teacherUnderLine.backgroundColor = .red
         }
     }
 
