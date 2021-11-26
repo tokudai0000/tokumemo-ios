@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A00A4362750706400EF3F99 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4352750706400EF3F99 /* FileModel.swift */; };
+		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
 		1A09314E272A7DAC00B7BAED /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */; };
 		1A0CC330274541B200851126 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A0CC32F274541B200851126 /* Property List.plist */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
@@ -48,7 +50,6 @@
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABDE75926DE585300D4B04E /* TermsOfService.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75826DE585300D4B04E /* TermsOfService.rtf */; };
-		1AFC67C927328D840059A053 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67C827328D840059A053 /* NSAttributedString.swift */; };
 		1AFC67CB2732BBFF0059A053 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CA2732BBFF0059A053 /* WebViewModel.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		ECD19C20B2F6629E841DA3BF /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1776F6A33ADC4A5363617FC /* Pods_univIP.framework */; };
@@ -72,6 +73,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A00A4352750706400EF3F99 /* FileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
+		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1A09314D272A7DAC00B7BAED /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		1A0CC32F274541B200851126 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -119,7 +122,6 @@
 		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABDE75826DE585300D4B04E /* TermsOfService.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TermsOfService.rtf; sourceTree = "<group>"; };
-		1AFC67C827328D840059A053 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		1AFC67CA2732BBFF0059A053 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		324240FE5E6B4AEFD2C4922B /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +157,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A00A4372750714C00EF3F99 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1A00A4382750716C00EF3F99 /* Common.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,7 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				1A41EAE1272914CC0064CDB7 /* UIImageView.swift */,
-				1AFC67C827328D840059A053 /* NSAttributedString.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -201,6 +210,7 @@
 				1A4D14D827453D78009D6CD2 /* SettingsList.plist */,
 				1A81A93026C12C8200CC56E2 /* Model.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
+				1A00A4352750706400EF3F99 /* FileModel.swift */,
 				1A9E0E07273CB75C00247F94 /* WKWebView */,
 				1A0CC32F274541B200851126 /* Property List.plist */,
 			);
@@ -299,6 +309,7 @@
 				1A41EADF272914CC0064CDB7 /* AKLibrary */,
 				1AA056E526BD2D4900343005 /* etc */,
 				1A5F98A526D8E1B000BCCF59 /* Base */,
+				1A00A4372750714C00EF3F99 /* Common */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* View */,
 			);
@@ -618,11 +629,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AFC67C927328D840059A053 /* NSAttributedString.swift in Sources */,
 				1A9E0E12273D7B1E00247F94 /* PrivacyPolicyViewController.swift in Sources */,
 				1A81A92826C103D500CC56E2 /* SyllabusViewController.swift in Sources */,
 				1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */,
 				1AFC67CB2732BBFF0059A053 /* WebViewModel.swift in Sources */,
+				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
 				1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */,
@@ -635,6 +646,7 @@
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
+				1A00A4362750706400EF3F99 /* FileModel.swift in Sources */,
 				1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* Model.swift in Sources */,
 				1A81A93A26C1507000CC56E2 /* AboutThisAppViewController.swift in Sources */,
