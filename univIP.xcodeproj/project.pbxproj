@@ -194,7 +194,7 @@
 				1A81A91D26C02FEC00CC56E2 /* SettingsViewController.swift */,
 				1A81A91F26C02FF900CC56E2 /* Settings.storyboard */,
 				1AA056E826BD2DA900343005 /* Syllabus */,
-				1A81A93226C14FBA00CC56E2 /* PassWordSettings */,
+				1A81A93226C14FBA00CC56E2 /* PasswordSettings */,
 				1A81A93326C14FCC00CC56E2 /* AboutThisApp */,
 			);
 			path = Settings;
@@ -210,13 +210,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1A81A93226C14FBA00CC56E2 /* PassWordSettings */ = {
+		1A81A93226C14FBA00CC56E2 /* PasswordSettings */ = {
 			isa = PBXGroup;
 			children = (
 				1A81A93526C1503300CC56E2 /* PasswordSettingsViewController.swift */,
 				1A81A93726C1504500CC56E2 /* PasswordSettings.storyboard */,
 			);
-			path = PassWordSettings;
+			path = PasswordSettings;
 			sourceTree = "<group>";
 		};
 		1A81A93326C14FCC00CC56E2 /* AboutThisApp */ = {

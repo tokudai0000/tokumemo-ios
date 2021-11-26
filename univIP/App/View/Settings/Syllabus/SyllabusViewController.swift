@@ -25,6 +25,7 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
     public var delegate : MainViewController?
     private let dataManager = DataManager.singleton
     
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,8 +92,8 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
         
         teacherTextField.isSecureTextEntry = true
         searchButton.layer.cornerRadius = 5.0
-        subjectTextField.setUnderLine()
-        teacherTextField.setUnderLine()
+        subjectTextField.borderStyle = .none
+        teacherTextField.borderStyle = .none
         
         subjectTextField.delegate = self
         teacherTextField.delegate = self
