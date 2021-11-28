@@ -40,25 +40,22 @@ final class SettingsViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
-        
-        if viewModel.editSituation {
-            editButton.setTitle("完了", for: .normal)
-            
-        } else {
-            Analytics.logEvent("settingViewEditButton", parameters: nil) // Analytics: 調べる・タップ
-            editButton.setTitle("編集", for: .normal)
-        }
-        
         tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation // 編集モード時、複数選択を許可
         tableView.setEditing(viewModel.editSituation, animated: true)            // 編集モード起動、停止
         viewModel.editSituation = !viewModel.editSituation                       // 編集モード, 使用モード反転
-        
         self.tableView.reloadData()
+        
+        if viewModel.editSituation {
+            Analytics.logEvent("settingViewEditButton", parameters: nil) // Analytics: 調べる・タップ
+            editButton.setTitle("編集", for: .normal)
+            editButton.setTitle("完了", for: .normal)
+        } else {
+            editButton.setTitle("完了", for: .normal)
+        }
         
         // 編集モード時、display=true のセルを選択状態にする
         if !viewModel.editSituation {
             for i in 0 ..< dataManager.allCellList[0].count {
-                print(dataManager.allCellList[0][i].isDisplay)
                 if dataManager.allCellList[0][i].isDisplay {
                     self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
@@ -118,6 +115,16 @@ final class SettingsViewController: BaseViewController {
         }
     }
     
+    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewOperation) {
+        let response = webViewModel.url(url)
+        if let url = response as URLRequest? {
+            delegate.wkWebView.load(url)
+        } else {
+            delegate.toast(message: word)
+        }
+        delegate.navigationRightButtonOnOff(operation: viewOperation)
+    }
+    
 }
 
 
@@ -147,13 +154,11 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-        
+        // MARK: - Question 「!」でいいのか
         tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
         tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
-        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        
+        tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
     
@@ -175,35 +180,32 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if !viewModel.editSituation {
-            return CGFloat(viewModel.cellHight)
-        }else{
-            if !dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
-                return 0
-            }else{
+        if viewModel.editSituation {
+            if dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
                 return CGFloat(viewModel.cellHight)
+            } else {
+                return 0
             }
+        } else {
+            return CGFloat(viewModel.cellHight)
         }
     }
     
     /// セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         // 編集モードでの選択時処理無効
         if !viewModel.editSituation {
             // チェックボックスTrueの場合
             if indexPath.section == 0 {
                 dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = true
-                
             }
-            
             viewModel.saveCellList(lists: dataManager.allCellList[0])
             return
         }
         
         Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil) // Analytics: 調べる・タップ
         
-        // シラバスに不具合
+        // MARK: - Question シラバスに不具合
         // viewAnimated(scene: "settingsViewDisappear")**修正必須**
         self.dismiss(animated: false, completion: nil)
         
@@ -215,190 +217,105 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         
         switch cellType {
         case .libraryWeb: // 図書館Webサイト
-            let response = webViewModel.url(.libraryHome)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "ERROR")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
+            tableViewEvent(url: .libraryHome,
+                           viewOperation: .down)
             
         case .libraryMyPage: // 図書館MyPage
-            let response = webViewModel.url(.libraryLogin)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
+            tableViewEvent(url: .libraryLogin,
+                           word: "登録者のみ",
+                           viewOperation: .down)
             
         case .libraryBookLendingExtension: // 貸し出し期間延長
-            let response = webViewModel.url(.libraryBookLendingExtension)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
-            
+            tableViewEvent(url: .libraryBookLendingExtension,
+                           word: "登録者のみ",
+                           viewOperation: .down)
             
         case .libraryBookPurchaseRequest: // 本購入リクエスト
-            let response = webViewModel.url(.libraryBookPurchaseRequest)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
-            
+            tableViewEvent(url: .libraryBookPurchaseRequest,
+                           word: "登録者のみ",
+                           viewOperation: .down)
             
         case .libraryCalendar: // 開館カレンダー
-            let response = webViewModel.url(.libraryCalendar)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "失敗しました")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
-            
+            tableViewEvent(url: .libraryCalendar,
+                           viewOperation: .down)
             
         case .syllabus: // シラバス
             delegate.popupView(scene: .syllabus)
             
-            
         case .timeTable: // 時間割
-            let response = webViewModel.url(.timeTable)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .timeTable,
+                           word: "登録者のみ",
+                           viewOperation: .up)
             
         case .currentTermPerformance: // 今年の成績表
-            let response = webViewModel.url(.currentTermPerformance)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            
+            tableViewEvent(url: .currentTermPerformance,
+                           word: "登録者のみ",
+                           viewOperation: .up)
             
         case .termPerformance: // 成績参照
-            let response = webViewModel.url(.termPerformance)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .termPerformance,
+                           word: "登録者のみ",
+                           viewOperation: .up)
             
         case .presenceAbsenceRecord: // 出欠記録
-            let response = webViewModel.url(.presenceAbsenceRecord)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .presenceAbsenceRecord,
+                           word: "登録者のみ",
+                           viewOperation: .up)
             
         case .classQuestionnaire: // 授業アンケート
-            let response = webViewModel.url(.classQuestionnaire)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .classQuestionnaire,
+                           word: "登録者のみ",
+                           viewOperation: .up)
             
         case .mailService: // メール
-            let response = webViewModel.url(.mailService)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
-            
+            tableViewEvent(url: .mailService,
+                           word: "登録者のみ",
+                           viewOperation: .down)
             
         case .tokudaiCareerCenter: // キャリア支援室
-            let response = webViewModel.url(.tokudaiCareerCenter)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "失敗しました")
-            }
-            delegate.navigationRightButtonOnOff(operation: .down)
-            
+            tableViewEvent(url: .tokudaiCareerCenter,
+                           viewOperation: .down)
             
         case .courseRegistration: // 履修登録
-            let response = webViewModel.url(.courseRegistration)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .courseRegistration,
+                           word: "登録者のみ",
+                           viewOperation: .up)
             
         case .systemServiceList: // システムサービス一覧
-            let response = webViewModel.url(.systemServiceList)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .systemServiceList,
+                           viewOperation: .up)
             
         case .eLearningList: // Eラーニング一覧
-            let response = webViewModel.url(.eLearningList)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .eLearningList,
+                           viewOperation: .up)
             
         case .universityWeb: // 大学サイト
-            let response = webViewModel.url(.universityHome)
-            if let url = response as URLRequest? {
-                delegate.wkWebView.load(url)
-            } else {
-                delegate.toast(message: "登録者のみ")
-            }
-            delegate.navigationRightButtonOnOff(operation: .up)
-            
+            tableViewEvent(url: .universityHome,
+                           viewOperation: .up)
             
         case .password: // パスワード設定
             delegate.popupView(scene: .password)
             
-            
         case .aboutThisApp: // このアプリについて
             delegate.popupView(scene: .aboutThisApp)
-            
         }
     }
     
     /// 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
+        // サービス一覧のみ編集可能
         if indexPath.section == 0 {
             dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = false
-            
+            viewModel.saveCellList(lists: dataManager.allCellList[0])
         }
-        viewModel.saveCellList(lists: dataManager.allCellList[0])
     }
     
     /// 編集できるセクションを限定
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 1 { return false }
-        return true
+        if indexPath.section == 0 {
+            return true
+        }
+        return false
     }
     
 }

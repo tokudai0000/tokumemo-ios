@@ -14,24 +14,20 @@ final class SettingViewModel: NSObject {
     public var editSituation = true
     
     private let model = Model()
-    private var dataManager = DataManager.singleton
+    private let dataManager = DataManager.singleton
+    
     
     /// セルID
-    func saveCellList(lists:[CellList]){
+    func saveCellList(lists:[CellList]) {
         let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(lists) else {
-            return
-        }
+        guard let data = try? jsonEncoder.encode(lists) else { return }
         dataManager.settingCellList = data
     }
     
     func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
         let data = dataManager.settingCellList
-        guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else {
-            return []
-        }
-            
+        guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return [] }
         return bookmarks
     }
     
