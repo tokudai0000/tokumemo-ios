@@ -45,7 +45,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
         } else if urlString == "PrivacyPolicy" {
             let vc = R.storyboard.privacyPolicy.privacyPolicy()!
             self.present(vc, animated: true, completion: nil)
-            return false 
+            return false
             
         }
         return true // 通常のURL遷移を行う
@@ -69,9 +69,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
             // MARK: - Question faitalで落とすべきか？
             return
         }
-
         let attributedText = Common.rtfFileLoad(url: filePath)
-        
         textView.attributedText = Common.setAttributedText(attributedText)
     }
     

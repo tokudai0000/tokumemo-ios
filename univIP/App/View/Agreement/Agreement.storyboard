@@ -65,7 +65,7 @@
                                     <constraint firstItem="2w6-7P-wGy" firstAttribute="top" secondItem="fGB-96-rFv" secondAttribute="top" id="y16-3a-Yhz"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="All-6b-Aq6">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" highlighted="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="All-6b-Aq6">
                                 <rect key="frame" x="82" y="782" width="250" height="50"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <constraints>
@@ -73,11 +73,12 @@
                                     <constraint firstAttribute="width" constant="250" id="jmF-5R-KGh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="同意する">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="GKI-h9-RmG"/>
+                                    <action selector="agreementButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="gvJ-ZV-FCt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -96,7 +97,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="agreementButton" destination="All-6b-Aq6" id="adU-nq-K5Y"/>
+                        <outlet property="agreementButton" destination="All-6b-Aq6" id="dll-4s-J0F"/>
                         <outlet property="textView" destination="edu-sd-MsI" id="e8u-yh-xcV"/>
                     </connections>
                 </viewController>
