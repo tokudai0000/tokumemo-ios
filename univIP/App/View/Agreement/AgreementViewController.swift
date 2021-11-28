@@ -66,7 +66,8 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     private func textViewSetup() {
         guard let filePath = R.file.agreementRtf() else {
-            return // faitalで落とすべきか？
+            // MARK: - Question faitalで落とすべきか？
+            return
         }
 
         let attributedText = Common.rtfFileLoad(url: filePath)

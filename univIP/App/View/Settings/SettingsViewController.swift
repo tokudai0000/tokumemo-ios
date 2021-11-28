@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kanna
 import FirebaseAnalytics
 
 final class SettingsViewController: BaseViewController {
