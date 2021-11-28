@@ -14,6 +14,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
+    
     private let dataManager = DataManager.singleton
     
     
