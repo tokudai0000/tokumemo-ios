@@ -55,6 +55,8 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - Private
     private func setup() {
+        agreementButton.layer.cornerRadius = 20.0
+        
         textView.delegate = self
         textView.isSelectable = true
         textView.isEditable = false

@@ -22,7 +22,7 @@ final class WebViewModel {
     public func url(_ menuTitle: SelectUrlList) -> NSURLRequest? {
         
         // 登録、非登録による場合のURLを取得
-        if let urlString = selectUrl(menuTitle, isLogedin: dataManager.isLoggedIn) {
+        if let urlString = selectUrl(menuTitle, isLogedin: dataManager.isRegistrantCheck) {
             if let url = URL(string: urlString) {
                 return NSURLRequest(url: url)
             }
@@ -231,7 +231,7 @@ final class WebViewModel {
         } else {
             
             switch menuTitle {
-            case .login:                        return Url.login.string()
+            case .login:                        return Url.systemServiceList.string()
             case .courceManagementHomeSP:       return Url.systemServiceList.string()
             case .courceManagementHomePC:       return Url.systemServiceList.string()
             case .manabaSP:                     return Url.eLearningList.string()

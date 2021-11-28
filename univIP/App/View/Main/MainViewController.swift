@@ -20,7 +20,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var reversePCtoSP: UIButton!
     @IBOutlet weak var tabBarLeft: UITabBarItem!
-    @IBOutlet weak var activityIndicatorView: UIView!
     
     private let model = Model()
     private let viewModel = MainViewModel()
@@ -105,9 +104,9 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     // MARK: - Public func
     public func refresh() {
         tabBar.selectedItem = tabBarLeft
-        self.activityIndicatorView.isHidden = true
         
         if let url = webViewModel.url(.login) {
+            print(url)
             wkWebView.load(url as URLRequest)
         } else {
             toast(message: "登録者のみ")
@@ -115,7 +114,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     
-    public func refreshSyllabus(subjectName: String, teacherName: String ){
+    public func refreshSyllabus(subjectName: String, teacherName: String) {
         webViewModel.subjectName = subjectName
         webViewModel.teacherName = teacherName
         let response = webViewModel.url(.syllabus)
@@ -161,7 +160,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - Private func
     private func setup() {
-        
         animationView(scene: .launchScreen)
         tabBar.delegate = self
         wkWebView.navigationDelegate = self
@@ -175,38 +173,22 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             Analytics.logEvent("calledFirstBootSetup", parameters: nil) // Analytics: 調べる・タップ
             
             let vc = R.storyboard.agreement.agreementViewController()!
-//            let vc = R.storyboard.agreement.agreement()!
             present(vc, animated: false, completion: nil)
         }
     }
     
     private func registrantDecision() {
         
-        if !dataManager.isRegistrantCheck {
-            Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
-            
-            // "cアカウント"、"パスワード"の設定催促
-//            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-//            self.present(vc, animated: true, completion: nil)
-//            vc.delegate = self
-        } else {
+        if dataManager.isRegistrantCheck {
             Analytics.logEvent("isRegistrantCheck=true", parameters: nil) // Analytics: 調べる・タップ
-        }
-    }
-    
-    // 表示:true  非表示：false
-    private func webViewDisplay(_ bool: Bool){
         
-        switch bool {
-        case true:
-            leftButton.isEnabled = true
-            self.activityIndicatorView.isHidden = true
-            activityIndicator.stopAnimating()
-            
-        case false:
-            leftButton.isEnabled = false
-            self.activityIndicatorView.isHidden = false
-            activityIndicator.startAnimating()
+        } else {
+            Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
+    
+            // "cアカウント"、"パスワード"の設定催促
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            self.present(vc, animated: true, completion: nil)
+            vc.delegate = self
         }
     }
     
