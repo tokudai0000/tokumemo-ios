@@ -10,17 +10,19 @@ import UIKit
 
 final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
-    private let rtfFileModel = FileModel()
     
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
         textViewSetup()
     }
     
+    
+    // MARK: - IBAction
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -48,29 +50,20 @@ final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - Private
     private func setup() {
-        
-        textView.isEditable = false
-        textView.isSelectable = true
         textView.delegate = self
-        
+        textView.isSelectable = true
+        textView.isEditable = false
+        textView.isScrollEnabled = true
+        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
     }
     
     private func textViewSetup() {
-
-        let attributed = rtfFileModel.rtfFileLoad(url: R.file.aboutThisAppRtf())
-        let attributedString = NSMutableAttributedString(string: attributed.string)
+        guard let filePath = R.file.aboutThisAppRtf() else {
+            return // faitalで落とすべきか？
+        }
         
-        let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
-        let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
-        
-        let attributedText = NSMutableAttributedString(string: attributedString.string,
-                                                       attributes:[
-                                                        .font:UIFont(name: "Futura-Medium", size:15)!,
-                                                        .foregroundColor:UIColor.label,
-                                                       ])
-        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
-        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
-        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
-        textView.attributedText = attributedText
+        let attributedText = Common.rtfFileLoad(url: filePath)
+        textView.attributedText = Common.setAttributedText(attributedText)
     }
+    
 }

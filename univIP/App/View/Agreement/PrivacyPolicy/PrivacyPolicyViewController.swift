@@ -10,29 +10,38 @@ import FirebaseAnalytics
 
 class PrivacyPolicyViewController: UIViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
-    private let rtfFileModel = FileModel()
     
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.logEvent("privacyPolicyViewOpen", parameters: nil) // Analytics: 調べる・タップ
-
-        textView.isEditable = false
-        textView.isSelectable = true
-        
-        let attributedText = NSMutableAttributedString(string: rtfFileModel.rtfFileLoad(url: R.file.privacyPolicyRtf()).string,
-                                                       attributes:[
-                                                        .font:UIFont(name:"Futura-Medium", size:15)!,
-                                                        .foregroundColor:UIColor.label,
-                                                       ])
-        
-        textView.attributedText = attributedText
-        
+        setup()
+        textViewSetup()
     }
     
+    
+    // MARK: - IBAction
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private
+    private func setup() {
+        Analytics.logEvent("privacyPolicyViewOpen", parameters: nil) // Analytics: 調べる・タップ
+        
+        textView.isEditable = false
+        textView.isSelectable = true
+    }
+    
+    private func textViewSetup() {
+        guard let filePath = R.file.privacyPolicyRtf() else {
+            return // faitalで落とすべきか？
+        }
+        
+        textView.attributedText = Common.rtfFileLoad(url: filePath)
     }
     
 }

@@ -170,7 +170,6 @@
                         <outlet property="rightButton" destination="MGQ-CS-G7C" id="2HP-cf-zhM"/>
                         <outlet property="tabBar" destination="vOC-hs-bC3" id="TIw-Uj-CMz"/>
                         <outlet property="tabBarLeft" destination="ccm-vt-1FV" id="lPD-QR-Fb5"/>
-                        <outlet property="viewTop" destination="P6G-LK-c80" id="DMv-xK-wma"/>
                         <outlet property="wkWebView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
                     </connections>
                 </viewController>

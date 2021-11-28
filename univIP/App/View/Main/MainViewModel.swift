@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Question NSObjectなし
 final class MainViewModel: NSObject {
     
     private let model = Model()
@@ -52,7 +53,6 @@ final class MainViewModel: NSObject {
     
     
     // MARK: - Public
-    
     /// 教務事務システム、マナバのMobileかPCか判定
     public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile {
         switch displayUrl {
@@ -65,7 +65,6 @@ final class MainViewModel: NSObject {
             fatalError()
         }
     }
-    
     
     /// タブバーの判定
     public func tabBarDetection(num: Int, isRegist: Bool, courceType: String, manabaType: String) -> NSURLRequest? {
@@ -98,7 +97,6 @@ final class MainViewModel: NSObject {
         }
     }
     
-
     /// WebViewの上げ下げを判定
     public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (imageName: ViewMoveIcon, animationName: AnimeOperation) {
         switch operation {
@@ -126,9 +124,5 @@ final class MainViewModel: NSObject {
             }
         }
     }
-    
-    
-    // MARK: - Private
-    
     
 }

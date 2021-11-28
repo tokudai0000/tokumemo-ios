@@ -13,7 +13,6 @@ import FirebaseAnalytics
 final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var tabBar: UITabBar!
     @IBOutlet weak var wkWebView: WKWebView!
     @IBOutlet weak var leftButton: UIButton!
@@ -26,22 +25,22 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     private let model = Model()
     private let viewModel = MainViewModel()
     private let webViewModel = WebViewModel()
+    
     private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
         refresh()
-//        initViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
+        // MARK: - Question Analyticsはこれでいいのか
         Analytics.logEvent("mainViewOpened", parameters: nil) // Analytics: 調べる・タップ
-
+        
         firstBootSetup()       // 利用規約同意判定
         registrantDecision()   // 登録者判定
     }
@@ -50,7 +49,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     // MARK: - IBAction
     @IBAction func settingMenuButton(_ sender: Any) {
         Analytics.logEvent("mainViewSettingMenuButton", parameters: nil) // Analytics: 調べる・タップ
-
+        
         let vc = R.storyboard.settings.settingsViewController()!
         self.present(vc, animated: false, completion: nil)
         vc.delegate = self
@@ -58,20 +57,20 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     @IBAction func backButton(_ sender: Any) {
         Analytics.logEvent("mainViewBackButton", parameters: nil) // Analytics: 調べる・タップ
-
+        
         wkWebView.goBack()
     }
     
     @IBAction func refreshButton(_ sender: Any) {
         Analytics.logEvent("mainViewRefreshButton", parameters: nil) // Analytics: 調べる・タップ
-
+        
         refresh()
         navigationRightButtonOnOff(operation: .up)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
         Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil) // Analytics: 調べる・タップ
-
+        
         var image: String
         var url: URLRequest
         
@@ -94,24 +93,22 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         }
         
         reversePCtoSP.setImage(UIImage(named: image), for: .normal)
+        // MARK: - Question self
         self.wkWebView.load(url)
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        
         navigationRightButtonOnOff(operation: .reverse)
     }
     
     
     // MARK: - Public func
-    public func refresh() { // 教務事務システムに再度ログイン
-        
+    public func refresh() {
         tabBar.selectedItem = tabBarLeft
         self.activityIndicatorView.isHidden = true
         
         if let url = webViewModel.url(.login) {
             wkWebView.load(url as URLRequest)
-            
         } else {
             toast(message: "登録者のみ")
         }
@@ -131,35 +128,27 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     public func popupView(scene: MainViewModel.NextModalView){
-        
         switch scene {
-            
         case .syllabus:
             let vc = R.storyboard.syllabus.syllabusViewController()!
             self.present(vc, animated: true, completion: nil)
             vc.delegate = self
-            
             
         case .password:
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
             vc.delegate = self
             
-            
         case .aboutThisApp:
             let vc = R.storyboard.aboutThisApp.aboutThisApp()!
             self.present(vc, animated: true, completion: nil)
-            
-            
         }
-        
     }
-    
     
     // webViewを上げ下げする
     public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
         Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil) // Analytics: 調べる・タップ
-
+        
         let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
         
         let image = UIImage(systemName: responce.imageName.rawValue)
@@ -171,7 +160,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     // MARK: - Private func
-    
     private func setup() {
         
         animationView(scene: .launchScreen)
@@ -180,13 +168,12 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         wkWebView.uiDelegate = self
     }
     
-    
     // 初回起動時
     private func firstBootSetup() {
         print(dataManager.isRegistrantCheck)
         if !dataManager.isAgreementPersonDecision {
             Analytics.logEvent("calledFirstBootSetup", parameters: nil) // Analytics: 調べる・タップ
-
+            
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
@@ -196,7 +183,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         
         if (!dataManager.isRegistrantCheck) {
             Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
-
+            
             // "cアカウント"、"パスワード"の設定催促
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
             self.present(vc, animated: true, completion: nil)
@@ -205,16 +192,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             Analytics.logEvent("isRegistrantCheck=true", parameters: nil) // Analytics: 調べる・タップ
         }
     }
-    
-    
-    // 利用規約同意者か判定
-//    private func agreementPersonDecision() -> Bool{
-//        let lastTimeVersion = dataManager.agreementVersion
-//        let newVersion = model.agreementVersion
-//        
-//        return lastTimeVersion == newVersion
-//    }
-    
     
     // 表示:true  非表示：false
     private func webViewDisplay(_ bool: Bool){
@@ -297,45 +274,14 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         }
     }
     
-    
-    /// ViewModel初期化
-//    private func initViewModel() {
-//        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
-//        self.viewModel.state = { [weak self] (state) in
-//            guard let self = self else {
-//                fatalError()
-//            }
-//            DispatchQueue.main.async {
-//                switch state {
-//                case .busy: // 通信中
-//                    let vc = R.storyboard.syllabus.syllabusViewController()!
-//                    self.present(vc, animated: true, completion: nil)
-//                    break
-//
-//                case .ready: // 通信完了
-//
-//                    break
-//
-//
-//                case .error:
-//                    break
-//
-//                }//end switch
-//            }
-//        }
-//    }
-    
     /// 新しいウィンドウで開く「target="_blank"」
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction,
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
-        
         // 変数 url にはリンク先のURLが入る
         webView.load(navigationAction.request)
-        
         return nil
-        
     }
     
 }
@@ -395,7 +341,7 @@ extension MainViewController: WKNavigationDelegate{
         if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision, isRegistrant: isRegistrant) {
             toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", interval: 3)
         }
-        
+        // MARK: - Question わける
         // 自動ログイン
         if webViewModel.isJudgeUrl(.login, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
@@ -452,7 +398,7 @@ extension MainViewController: WKNavigationDelegate{
     }
     
     
-    // alert対応
+    /// alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
         if dataManager.displayUrl == Url.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
@@ -466,7 +412,7 @@ extension MainViewController: WKNavigationDelegate{
         present(alertController, animated: true, completion: nil)
     }
     
-    // confirm対応
+    /// confirm対応
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
@@ -480,7 +426,7 @@ extension MainViewController: WKNavigationDelegate{
         present(alertController, animated: true, completion: nil)
     }
     
-    // prompt対応
+    /// prompt対応
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
@@ -507,7 +453,7 @@ extension MainViewController: WKNavigationDelegate{
 }
 
 
-//MARK:- TabBar
+// MARK: - TabBar
 extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -516,7 +462,7 @@ extension MainViewController: UITabBarDelegate{
         } else {
             Analytics.logEvent("mainViewManaba", parameters: nil) // Analytics: 調べる・タップ
         }
-
+        
         if let url = viewModel.tabBarDetection(num: item.tag,
                                                isRegist: dataManager.isRegistrantCheck,
                                                courceType: dataManager.courceManagement,
