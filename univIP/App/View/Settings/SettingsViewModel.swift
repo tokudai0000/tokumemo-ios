@@ -18,13 +18,13 @@ final class SettingViewModel: NSObject {
     
     
     /// セルID
-    func saveCellList(lists:[CellList]) {
+    public func saveCellList(lists:[CellList]) {
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(lists) else { return }
         dataManager.settingCellList = data
     }
     
-    func loadCellList() -> [CellList] {
+    public func loadCellList() -> [CellList] {
         let jsonDecoder = JSONDecoder()
         let data = dataManager.settingCellList
         guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return [] }
@@ -32,9 +32,10 @@ final class SettingViewModel: NSObject {
     }
     
 
-    func firstBootDecision() {
-    
-        var serviceL:[CellList] = []      // 並び順などを反映するcell
+    // MARK: - Question 分たい
+    public func firstBootDecision() {
+        // 並び順などを反映するcell
+        var serviceL:[CellList] = []
                 
         // アプリ起動後、初回の表示か判定
         if dataManager.allCellList[0].isEmpty {
@@ -70,10 +71,8 @@ final class SettingViewModel: NSObject {
                     
                 } else {
                     dataManager.allCellList[0].append(contentsOf: loadCellList())
-
                 }
             }
-            
             saveCellList(lists: dataManager.allCellList[0])
             dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
             
