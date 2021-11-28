@@ -175,19 +175,20 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             Analytics.logEvent("calledFirstBootSetup", parameters: nil) // Analytics: 調べる・タップ
             
             let vc = R.storyboard.agreement.agreementViewController()!
+//            let vc = R.storyboard.agreement.agreement()!
             present(vc, animated: false, completion: nil)
         }
     }
     
     private func registrantDecision() {
         
-        if (!dataManager.isRegistrantCheck) {
+        if !dataManager.isRegistrantCheck {
             Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
             
             // "cアカウント"、"パスワード"の設定催促
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegate = self
+//            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+//            self.present(vc, animated: true, completion: nil)
+//            vc.delegate = self
         } else {
             Analytics.logEvent("isRegistrantCheck=true", parameters: nil) // Analytics: 調べる・タップ
         }

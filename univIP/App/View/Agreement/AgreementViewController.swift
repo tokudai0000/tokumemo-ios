@@ -55,12 +55,10 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     
     // MARK: - Private
     private func setup() {
-        agreementButton.layer.cornerRadius = 20.0
-        
         textView.delegate = self
         textView.isSelectable = true
         textView.isEditable = false
-        textView.isScrollEnabled = false
+        textView.isScrollEnabled = true
         textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
     }
     
@@ -69,8 +67,10 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
             // MARK: - Question faitalで落とすべきか？
             return
         }
+        
         let attributedText = Common.rtfFileLoad(url: filePath)
         textView.attributedText = Common.setAttributedText(attributedText)
     }
+    
     
 }
