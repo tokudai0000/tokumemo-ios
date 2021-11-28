@@ -216,87 +216,87 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let cellType = dataManager.allCellList[indexPath[0]][indexPath[1]].type
         
         switch cellType {
-        case .libraryWeb: // 図書館Webサイト
+        case .libraryWeb:                        // [図書館]Webサイト
             tableViewEvent(url: .libraryHome,
                            viewOperation: .down)
             
-        case .libraryMyPage: // 図書館MyPage
+        case .libraryMyPage:                     // [図書館]MyPage
             tableViewEvent(url: .libraryLogin,
                            word: "登録者のみ",
                            viewOperation: .down)
             
-        case .libraryBookLendingExtension: // 貸し出し期間延長
+        case .libraryBookLendingExtension:       // [図書館]貸し出し期間延長
             tableViewEvent(url: .libraryBookLendingExtension,
                            word: "登録者のみ",
                            viewOperation: .down)
             
-        case .libraryBookPurchaseRequest: // 本購入リクエスト
+        case .libraryBookPurchaseRequest:        // [図書館]本購入リクエスト
             tableViewEvent(url: .libraryBookPurchaseRequest,
                            word: "登録者のみ",
                            viewOperation: .down)
             
-        case .libraryCalendar: // 開館カレンダー
+        case .libraryCalendar:                   // [図書館]開館カレンダー
             tableViewEvent(url: .libraryCalendar,
                            viewOperation: .down)
             
-        case .syllabus: // シラバス
+        case .syllabus:                          // シラバス
             delegate.popupView(scene: .syllabus)
             
-        case .timeTable: // 時間割
+        case .timeTable:                         // 時間割
             tableViewEvent(url: .timeTable,
                            word: "登録者のみ",
                            viewOperation: .up)
             
-        case .currentTermPerformance: // 今年の成績表
+        case .currentTermPerformance:            // 今年の成績表
             tableViewEvent(url: .currentTermPerformance,
                            word: "登録者のみ",
                            viewOperation: .up)
             
-        case .termPerformance: // 成績参照
+        case .termPerformance:                   // 成績参照
             tableViewEvent(url: .termPerformance,
                            word: "登録者のみ",
                            viewOperation: .up)
             
-        case .presenceAbsenceRecord: // 出欠記録
+        case .presenceAbsenceRecord:             // 出欠記録
             tableViewEvent(url: .presenceAbsenceRecord,
                            word: "登録者のみ",
                            viewOperation: .up)
             
-        case .classQuestionnaire: // 授業アンケート
+        case .classQuestionnaire:                // 授業アンケート
             tableViewEvent(url: .classQuestionnaire,
                            word: "登録者のみ",
                            viewOperation: .up)
             
-        case .mailService: // メール
+        case .mailService:                       // メール
             tableViewEvent(url: .mailService,
                            word: "登録者のみ",
                            viewOperation: .down)
             
-        case .tokudaiCareerCenter: // キャリア支援室
+        case .tokudaiCareerCenter:               // キャリア支援室
             tableViewEvent(url: .tokudaiCareerCenter,
                            viewOperation: .down)
             
-        case .courseRegistration: // 履修登録
+        case .courseRegistration:                // 履修登録
             tableViewEvent(url: .courseRegistration,
                            word: "登録者のみ",
                            viewOperation: .up)
             
-        case .systemServiceList: // システムサービス一覧
+        case .systemServiceList:                 // システムサービス一覧
             tableViewEvent(url: .systemServiceList,
                            viewOperation: .up)
             
-        case .eLearningList: // Eラーニング一覧
+        case .eLearningList:                     // Eラーニング一覧
             tableViewEvent(url: .eLearningList,
                            viewOperation: .up)
             
-        case .universityWeb: // 大学サイト
+        case .universityWeb:                     // 大学サイト
             tableViewEvent(url: .universityHome,
                            viewOperation: .up)
             
-        case .password: // パスワード設定
+        case .password:                          // パスワード設定
             delegate.popupView(scene: .password)
             
-        case .aboutThisApp: // このアプリについて
+        case .aboutThisApp:                      // このアプリについて
             delegate.popupView(scene: .aboutThisApp)
         }
     }
