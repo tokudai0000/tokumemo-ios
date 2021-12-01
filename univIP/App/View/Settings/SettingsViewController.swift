@@ -153,7 +153,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
+        let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) // R.swift
         // MARK: - Question 「!」でいいのか
         tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
         tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定

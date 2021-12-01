@@ -24,7 +24,7 @@ final class SyllabusViewController: BaseViewController {
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var searchButton: UIButton!
     
-    public var delegate : MainViewController!
+    public var delegate : MainViewController? // メモリリーク
     
     private let dataManager = DataManager.singleton
     
@@ -38,10 +38,12 @@ final class SyllabusViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func searchButton(_ sender: Any) {
-        delegate.refreshSyllabus(subjectName: subjectTextField.text ?? "",
-                                 teacherName: teacherTextField.text ?? "")
-        dataManager.isSyllabusSearchOnce = true
-        self.dismiss(animated: true, completion: nil)
+        if let delegate = delegate {
+            delegate.refreshSyllabus(subjectName: subjectTextField.text ?? "",
+                                     teacherName: teacherTextField.text ?? "")
+            dataManager.isSyllabusSearchOnce = true
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func dissmissButton(_ sender: Any) {
