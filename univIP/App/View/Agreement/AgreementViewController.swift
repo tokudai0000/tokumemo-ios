@@ -14,6 +14,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
     @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
+    
     private let dataManager = DataManager.singleton
     
     
@@ -45,7 +46,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
         } else if urlString == "PrivacyPolicy" {
             let vc = R.storyboard.privacyPolicy.privacyPolicy()!
             self.present(vc, animated: true, completion: nil)
-            return false 
+            return false
             
         }
         return true // 通常のURL遷移を行う
@@ -60,7 +61,7 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
         textView.delegate = self
         textView.isSelectable = true
         textView.isEditable = false
-        textView.isScrollEnabled = false
+        textView.isScrollEnabled = true
         textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
     }
     
@@ -69,10 +70,10 @@ final class AgreementViewController: BaseViewController, UITextViewDelegate {
             // MARK: - Question faitalで落とすべきか？
             return
         }
-
-        let attributedText = Common.rtfFileLoad(url: filePath)
         
+        let attributedText = Common.rtfFileLoad(url: filePath)
         textView.attributedText = Common.setAttributedText(attributedText)
     }
+    
     
 }

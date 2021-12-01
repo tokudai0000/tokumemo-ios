@@ -107,10 +107,6 @@
                                             <constraint firstAttribute="trailing" secondItem="RlI-hd-QIn" secondAttribute="trailing" constant="10" id="zNd-65-ycb"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="id6-fu-2ZM">
-                                        <rect key="frame" x="0.0" y="60" width="375" height="558"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.4956798427152318" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-Hs-zL9" userLabel="GrayLineTexture">
                                         <rect key="frame" x="0.0" y="59" width="375" height="1"/>
                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
@@ -131,19 +127,15 @@
                                         </items>
                                     </tabBar>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="QXx-Hs-zL9" firstAttribute="top" secondItem="8DI-Ir-GH5" secondAttribute="bottom" id="2zu-Ca-KT2"/>
                                     <constraint firstAttribute="trailing" secondItem="gcY-Bk-hxx" secondAttribute="trailing" id="6o0-xc-dMQ"/>
                                     <constraint firstItem="vOC-hs-bC3" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="Cky-77-pzK"/>
-                                    <constraint firstAttribute="trailing" secondItem="id6-fu-2ZM" secondAttribute="trailing" id="FF4-BV-dJ7"/>
                                     <constraint firstAttribute="trailing" secondItem="8DI-Ir-GH5" secondAttribute="trailing" id="Kx8-yW-h3n"/>
                                     <constraint firstItem="8DI-Ir-GH5" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="LYa-rv-xGh"/>
-                                    <constraint firstItem="id6-fu-2ZM" firstAttribute="top" secondItem="QXx-Hs-zL9" secondAttribute="bottom" id="Qel-M7-Iqf"/>
                                     <constraint firstItem="QXx-Hs-zL9" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="U5U-fi-uXy"/>
                                     <constraint firstItem="gcY-Bk-hxx" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="top" id="XBv-Mg-I33"/>
-                                    <constraint firstItem="vOC-hs-bC3" firstAttribute="top" secondItem="id6-fu-2ZM" secondAttribute="bottom" id="Y2C-dB-T3M"/>
-                                    <constraint firstItem="id6-fu-2ZM" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="cD5-93-DiV"/>
                                     <constraint firstAttribute="trailing" secondItem="vOC-hs-bC3" secondAttribute="trailing" id="dZP-JI-1Es"/>
                                     <constraint firstItem="gcY-Bk-hxx" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="ekM-e5-aMp"/>
                                     <constraint firstAttribute="trailing" secondItem="QXx-Hs-zL9" secondAttribute="trailing" id="jUS-kE-sZG"/>
@@ -163,7 +155,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="id6-fu-2ZM" id="kOa-6p-jaj"/>
                         <outlet property="backButton" destination="IUH-6M-2c4" id="6zw-44-bSv"/>
                         <outlet property="leftButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
                         <outlet property="reversePCtoSP" destination="ajZ-3e-GEs" id="TZO-OT-9LA"/>
