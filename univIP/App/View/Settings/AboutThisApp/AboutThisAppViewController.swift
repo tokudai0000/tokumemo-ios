@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
+final class AboutThisAppViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
@@ -17,54 +17,49 @@ final class AboutThisAppViewController: BaseViewController, UITextViewDelegate {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        textViewSetup()
+        
+        textView.delegate = self
+        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
+        
+        // このアプリについて内容の読み込み
+        let filePath = R.file.aboutThisAppRtf()!
+        let attributedText = Common.rtfFileLoad(url: filePath)
+        textView.attributedText = Common.setAttributedText(attributedText)
     }
     
     
     // MARK: - IBAction
     @IBAction func backButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
+
+}
+
+
+// MARK: - UITextViewDelegate
+extension AboutThisAppViewController: UITextViewDelegate {
     
-    
-    // MARK: - Public
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public func textView(_ textView: UITextView,
+                         shouldInteractWith URL: URL,
+                         in characterRange: NSRange,
+                         interaction: UITextItemInteraction) -> Bool {
+        
         let urlString = URL.absoluteString
         
-        if urlString == "TermsOfService" {
+        switch urlString {
+        case "TermsOfService":
             let vc = R.storyboard.termsOfService.termsOfService()!
-            self.present(vc, animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
             return false // 通常のURL遷移を行わない
             
-        } else if urlString == "PrivacyPolicy" {
+        case "PrivacyPolicy":
             let vc = R.storyboard.privacyPolicy.privacyPolicy()!
-            self.present(vc, animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
             return false
             
+        default:
+            return true // 通常のURL遷移を行う
         }
-        return true // 通常のURL遷移を行う
-        
-    }
-    
-    
-    // MARK: - Private
-    private func setup() {
-        textView.delegate = self
-        textView.isSelectable = true
-        textView.isEditable = false
-        textView.isScrollEnabled = true
-        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
-    }
-    
-    private func textViewSetup() {
-        guard let filePath = R.file.aboutThisAppRtf() else {
-            // MARK: - Question faitalで落とすべきか？
-            return
-        }
-        
-        let attributedText = Common.rtfFileLoad(url: filePath)
-        textView.attributedText = Common.setAttributedText(attributedText)
     }
     
 }
