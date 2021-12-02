@@ -31,37 +31,58 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        animationView(scene: .launchScreen)
+        tabBar.delegate = self
+        wkWebView.navigationDelegate = self
+        wkWebView.uiDelegate = self
+        
         refresh()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        // MARK: - Question Analyticsはこれでいいのか
-        Analytics.logEvent("mainViewOpened", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("mainViewOpened", parameters: nil)
         
-        firstBootSetup()       // 利用規約同意判定
-        registrantDecision()   // 登録者判定
+        // 利用規約同意判定
+        if !dataManager.isAgreementPersonDecision {
+            Analytics.logEvent("calledFirstBootSetup", parameters: nil)
+            
+            let vc = R.storyboard.agreement.agreementViewController()!
+            present(vc, animated: false, completion: nil)
+        }
+        
+        // 登録者判定
+        if dataManager.isRegistrantCheck {
+            Analytics.logEvent("isRegistrantCheck=true", parameters: nil)
+        
+        } else {
+            Analytics.logEvent("isRegistrantCheck=false", parameters: nil)
+    
+            // "cアカウント"、"パスワード"の設定催促
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            present(vc, animated: true, completion: nil)
+            vc.delegate = self
+        }
     }
     
     
     // MARK: - IBAction
     @IBAction func settingMenuButton(_ sender: Any) {
-        Analytics.logEvent("mainViewSettingMenuButton", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("mainViewSettingMenuButton", parameters: nil)
         
         let vc = R.storyboard.settings.settingsViewController()!
-        self.present(vc, animated: false, completion: nil)
+        present(vc, animated: false, completion: nil)
         vc.delegate = self
     }
     
     @IBAction func backButton(_ sender: Any) {
-        Analytics.logEvent("mainViewBackButton", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("mainViewBackButton", parameters: nil)
         
         wkWebView.goBack()
     }
     
     @IBAction func refreshButton(_ sender: Any) {
-        Analytics.logEvent("mainViewRefreshButton", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("mainViewRefreshButton", parameters: nil)
         
         refresh()
         navigationRightButtonOnOff(operation: .up)
@@ -92,8 +113,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         }
         
         reversePCtoSP.setImage(UIImage(named: image), for: .normal)
-        // MARK: - Question self
-        self.wkWebView.load(url)
+        wkWebView.load(url)
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
@@ -159,39 +179,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     // MARK: - Private func
-    private func setup() {
-        animationView(scene: .launchScreen)
-        tabBar.delegate = self
-        wkWebView.navigationDelegate = self
-        wkWebView.uiDelegate = self
-    }
-    
-    // 初回起動時
-    private func firstBootSetup() {
-        print(dataManager.isRegistrantCheck)
-        if !dataManager.isAgreementPersonDecision {
-            Analytics.logEvent("calledFirstBootSetup", parameters: nil) // Analytics: 調べる・タップ
-            
-            let vc = R.storyboard.agreement.agreementViewController()!
-            present(vc, animated: false, completion: nil)
-        }
-    }
-    
-    private func registrantDecision() {
-        
-        if dataManager.isRegistrantCheck {
-            Analytics.logEvent("isRegistrantCheck=true", parameters: nil) // Analytics: 調べる・タップ
-        
-        } else {
-            Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
-    
-            // "cアカウント"、"パスワード"の設定催促
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegate = self
-        }
-    }
-    
     // アニメーション
     private func animationView(scene: MainViewModel.AnimeOperation) {
         switch scene {
@@ -256,22 +243,32 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             return
         }
     }
+        
+}
+
+// MARK: - WKUIDelegate
+extension MainViewModel {
+    
+//    // MARK: - LifeCycle
+//    override func viewDidLoad() {
+//        wkWebView.uiDelegate = self
+//    }
     
     /// 新しいウィンドウで開く「target="_blank"」
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction,
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
         // 変数 url にはリンク先のURLが入る
         webView.load(navigationAction.request)
         return nil
     }
-    
 }
 
 
-// MARK: - WebView
-extension MainViewController: WKNavigationDelegate{
+// MARK: - WKNavigationDelegate
+extension MainViewController: WKNavigationDelegate {
     
     // MARK: - 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
