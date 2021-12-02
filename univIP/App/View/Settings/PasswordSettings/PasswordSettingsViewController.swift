@@ -73,7 +73,7 @@ final class PasswordSettingsViewController: BaseViewController {
             
             if let delegate = delegate {
                 delegate.wkWebView.load(webViewModel.url(.login)! as URLRequest)
-                self.dismiss(animated: true, completion: nil)
+                dismiss(animated: true, completion: nil)
             }
         }
     }
@@ -91,7 +91,7 @@ final class PasswordSettingsViewController: BaseViewController {
     }
     
     @IBAction func dissmissButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
