@@ -53,7 +53,8 @@ final class MainViewModel: NSObject {
     
     // MARK: - Public
     /// 教務事務システム、マナバのMobileかPCか判定
-    public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile {
+    public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile
+    {
         switch displayUrl {
         case Url.courceManagementHomeMobile.string():  return .courceManagementPC
         case Url.courceManagementHomePC.string():      return .courceManagementMobile
@@ -66,8 +67,12 @@ final class MainViewModel: NSObject {
     }
     
     /// タブバーの判定
-    public func tabBarDetection(num: Int, isRegist: Bool, courceType: String, manabaType: String) -> NSURLRequest? {
-        let tabBarItem = TabBarItem(rawValue: num)!
+    public func tabBarDetection(tabBarRowValue: Int,
+                                isRegist: Bool,
+                                courceType: String,
+                                manabaType: String) -> NSURLRequest?
+    {
+        let tabBarItem = TabBarItem(rawValue: tabBarRowValue)!
         
         switch tabBarItem {
         case .courceManagement:
@@ -96,9 +101,16 @@ final class MainViewModel: NSObject {
         }
     }
     
-    /// WebViewの上げ下げを判定
+    enum ViewMoveType {
+        case moveUp
+        case moveDown
+        case moveReverse
+    }
     
-    public func viewVerticallyMoveButtonImage(_ operation: ViewMoveType, posisionY: Double) -> String? {
+    /// WebViewの上げ下げを判定
+    public func viewVerticallyMoveButtonImage(_ operation: ViewMoveType,
+                                              posisionY: Double) -> String?
+    {
         let up = "chevron.up"
         let down = "chevron.down"
         
@@ -123,8 +135,9 @@ final class MainViewModel: NSObject {
         return nil
     }
     
-    public func viewVerticallyMoveAnimation(_ operation: ViewMoveType, posisionY: Double) -> AnimeOperation? {
-        
+    public func viewVerticallyMoveAnimation(_ operation: ViewMoveType,
+                                            posisionY: Double) -> AnimeOperation?
+    {
         switch operation {
         case .moveUp: // Viewを上げたい場合
             if (0.0 < posisionY) { // Viewを動かして良いのか判定
@@ -145,60 +158,5 @@ final class MainViewModel: NSObject {
         }
         return nil
     }
-    
-    enum ViewMoveType {
-        case moveUp
-        case moveDown
-        case moveReverse
-    }
-//    private func viewPosisionType(_ operation: ViewMoveType, posisionY: Double) -> ViewMoveType? {
-//        switch operation {
-//        case .moveUp: // Viewを上げたい場合
-//            if (0.0 < posisionY) { // Viewを動かして良いのか判定
-//                return .moveUp
-//            }
-//
-//        case .moveDown: // Viewを下げたい場合
-//            if (posisionY <= 0.0) { // 下げる前のViewのポジション
-//                return .moveDown
-//            }
-//
-//        case .moveReverse:
-//            if (posisionY <= 0.0) {
-//                return .moveDown
-//            } else {
-//                return .moveUp
-//            }
-//        }
-//        return nil
-//    }
-//
-//
-//    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (imageName: ViewMoveIcon, animationName: AnimeOperation) {
-//        switch operation {
-//        case .up:
-//            // Viewを動かして良いのか判定
-//            if (0.0 < posisionY) {
-//                // Viewを上げた後、[chevron.down]のImageに差し替える
-//                return (.down, .moveUp)
-//            } else {
-//                return (.up, .Nil)
-//            }
-//
-//        case .down:
-//            if (posisionY <= 0.0) {
-//                return (.up, .moveDown)
-//            } else {
-//                return (.down, .Nil)
-//            }
-//
-//        case .reverse:
-//            if (posisionY <= 0.0) {
-//                return (.up, .moveDown)
-//            } else {
-//                return (.down, .moveUp)
-//            }
-//        }
-//    }
-    
+        
 }

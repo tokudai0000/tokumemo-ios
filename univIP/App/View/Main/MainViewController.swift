@@ -450,7 +450,7 @@ extension MainViewController: UITabBarDelegate{
             Analytics.logEvent("mainViewManaba", parameters: nil) // Analytics: 調べる・タップ
         }
         
-        if let url = viewModel.tabBarDetection(num: item.tag,
+        if let url = viewModel.tabBarDetection(tabBarRowValue: item.tag,
                                                isRegist: dataManager.isRegistrantCheck,
                                                courceType: dataManager.courceManagement,
                                                manabaType: dataManager.manaba) {
