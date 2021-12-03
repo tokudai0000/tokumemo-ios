@@ -38,8 +38,8 @@ import Foundation
 /// universityHome                            : 大学ホームページ
 
 /// 全てのURLはここに保存
-/// UrlModel.login.string()でloginの文字列URLが
-/// UrlModel.login.urlRequest()でloginのurlRequestフォーマットされたURLが取得可能
+/// Url.login.string()でloginの文字列URLが
+/// Url.login.urlRequest()でloginのurlRequestフォーマットされたURLが取得可能
 enum Url: String {
     case login
     case universityHome
@@ -73,7 +73,8 @@ enum Url: String {
     
     /// URLを文字列として返す
     func string() -> String {
-        return NSLocalizedString(self.rawValue, tableName: "url", comment: "")
+        // rowValueの値をurl.stringsから取ってくる
+        return NSLocalizedString(rawValue, tableName: "url", comment: "")
     }
     
     /// URLをURLRequestとして返す

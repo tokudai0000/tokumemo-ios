@@ -24,7 +24,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     private let model = Model()
     private let viewModel = MainViewModel()
     private let webViewModel = WebViewModel()
-    
     private let dataManager = DataManager.singleton
     
     
@@ -85,39 +84,25 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         Analytics.logEvent("mainViewRefreshButton", parameters: nil)
         
         refresh()
-        navigationRightButtonOnOff(operation: .moveUp)
+        viewVerticallyMove(operation: .moveUp)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
-        Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil)
         
-        var image: String
-        var url: URLRequest
+        let image = viewModel.webViewChangeButtonImage(displayUrl: dataManager.displayUrl)
+        let url = viewModel.webViewChangeUrl(displayUrl: dataManager.displayUrl)
         
-        switch viewModel.isCourceManagementUrlForPC(displayUrl: dataManager.displayUrl) {
-        case .courceManagementPC:
-            image = R.image.pcIcon.name
-            url = Url.courceManagementHomePC.urlRequest()
-            
-        case .courceManagementMobile:
-            image = R.image.mobileIcon.name
-            url = Url.courceManagementHomeMobile.urlRequest()
-            
-        case .manabaPC:
-            image = R.image.pcIcon.name
-            url = Url.manabaHomePC.urlRequest()
-            
-        case .manabaMobile:
-            image = R.image.mobileIcon.name
-            url = Url.manabaHomeMobile.urlRequest()
+        if let image = image {
+            reversePCtoSP.setImage(UIImage(named: image), for: .normal)
         }
-        
-        reversePCtoSP.setImage(UIImage(named: image), for: .normal)
-        wkWebView.load(url)
+        if let url = url {
+            wkWebView.load(url)
+        }
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        navigationRightButtonOnOff(operation: .moveReverse)
+        viewVerticallyMove(operation: .moveReverse)
     }
     
     
@@ -126,54 +111,42 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         tabBar.selectedItem = tabBarLeft
         
         if let url = webViewModel.url(.login) {
-            print(url)
             wkWebView.load(url as URLRequest)
-        } else {
-            toast(message: "登録者のみ")
         }
     }
-    
     
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         webViewModel.subjectName = subjectName
         webViewModel.teacherName = teacherName
-        let response = webViewModel.url(.syllabus)
-        if let url = response as URLRequest? {
+        if let url = webViewModel.url(.syllabus) {
             wkWebView.load(url)
-        } else {
-            toast(message: "登録者のみ")
         }
     }
     
-    
-    public func popupView(scene: MainViewModel.NextModalView){
+    public func showModalView(scene: MainViewModel.NextModalView){
         switch scene {
         case .syllabus:
             let vc = R.storyboard.syllabus.syllabusViewController()!
-            self.present(vc, animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
             vc.delegate = self
             
         case .password:
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
             vc.delegate = self
             
         case .aboutThisApp:
             let vc = R.storyboard.aboutThisApp.aboutThisApp()!
-            self.present(vc, animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
         }
     }
     
     // webViewを上げ下げする
-    public func navigationRightButtonOnOff(operation: MainViewModel.ViewMoveType){
+    public func viewVerticallyMove(operation: MainViewModel.ViewMoveType){
         Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil)
         
         let image = viewModel.viewVerticallyMoveButtonImage(operation, posisionY: Double(wkWebView.frame.origin.y))
         let animation = viewModel.viewVerticallyMoveAnimation(operation, posisionY: Double(wkWebView.frame.origin.y))
-        
-//        let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
-        
-//        let image = UIImage(systemName: responce.imageName.rawValue)
         
         if let image = image {
             rightButton.setImage(UIImage(systemName: image), for: .normal)
@@ -246,8 +219,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 completion: { bool in
                 })
             
-        default:
-            return
         }
     }
         

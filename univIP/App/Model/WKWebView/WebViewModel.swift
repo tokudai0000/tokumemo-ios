@@ -19,15 +19,14 @@ final class WebViewModel {
     // MARK: - Public
     
     /// 表示したいURLを返す
-    public func url(_ menuTitle: SelectUrlList) -> NSURLRequest? {
+    public func url(_ menuTitle: SelectUrlList) -> URLRequest? {
         
         // 登録、非登録による場合のURLを取得
         if let urlString = selectUrl(menuTitle, isLogedin: dataManager.isRegistrantCheck) {
             if let url = URL(string: urlString) {
-                return NSURLRequest(url: url)
+                return URLRequest(url: url)
             }
         }
-        AKLog(level: .ERROR, message: "error: URL取得エラー")
         return nil
     }
     

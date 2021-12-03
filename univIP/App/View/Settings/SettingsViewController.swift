@@ -121,7 +121,7 @@ final class SettingsViewController: BaseViewController {
         } else {
             delegate.toast(message: word)
         }
-        delegate.navigationRightButtonOnOff(operation: viewOperation)
+        delegate.viewVerticallyMove(operation: viewOperation)
     }
     
 }
@@ -239,7 +239,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                            viewOperation: .moveDown)
             
         case .syllabus:                          // シラバス
-            delegate.popupView(scene: .syllabus)
+            delegate.showModalView(scene: .syllabus)
             
         case .timeTable:                         // 時間割
             tableViewEvent(url: .timeTable,
@@ -293,10 +293,10 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                            viewOperation: .moveUp)
             
         case .password:                          // パスワード設定
-            delegate.popupView(scene: .password)
+            delegate.showModalView(scene: .password)
             
         case .aboutThisApp:                      // このアプリについて
-            delegate.popupView(scene: .aboutThisApp)
+            delegate.showModalView(scene: .aboutThisApp)
         }
     }
     

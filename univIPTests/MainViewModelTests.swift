@@ -20,29 +20,29 @@ class MainViewModelTests: XCTestCase {
         super.tearDown()
     }
     
-    func testIsCourceManagementUrlForPC() {
-        let courceManagementHomePC = Url.courceManagementHomeMobile.string()
-        let courceManagementHomeSP = Url.courceManagementHomePC.string()
-        let manabaPC = Url.manabaHomeMobile.string()
-        let manabaSP = Url.manabaHomePC.string()
-        
-        // 基本的なテスト
-        let test1 = viewModel.isCourceManagementUrlForPC(displayUrl: courceManagementHomePC)
-        XCTAssertEqual(test1, .courceManagementPC)
-        
-        let test2 = viewModel.isCourceManagementUrlForPC(displayUrl: courceManagementHomeSP)
-        XCTAssertEqual(test2, .courceManagementMobile)
-        
-        let test3 = viewModel.isCourceManagementUrlForPC(displayUrl: manabaPC)
-        XCTAssertEqual(test3, .manabaPC)
-        
-        let test4 = viewModel.isCourceManagementUrlForPC(displayUrl: manabaSP)
-        XCTAssertEqual(test4, .manabaMobile)
-        
-        // エラー処理　fatalError()
-//        let test5 = viewModel.isCourceManagementUrlForPC(displayUrl: "")
-//        XCTAssertThrowsError(test5)
-    }
+//    func testIsCourceManagementUrlForPC() {
+//        let courceManagementHomePC = Url.courceManagementHomeMobile.string()
+//        let courceManagementHomeSP = Url.courceManagementHomePC.string()
+//        let manabaPC = Url.manabaHomeMobile.string()
+//        let manabaSP = Url.manabaHomePC.string()
+//        
+//        // 基本的なテスト
+//        let test1 = viewModel.isCourceManagementUrlForPC(displayUrl: courceManagementHomePC)
+//        XCTAssertEqual(test1, .courceManagementPC)
+//        
+//        let test2 = viewModel.isCourceManagementUrlForPC(displayUrl: courceManagementHomeSP)
+//        XCTAssertEqual(test2, .courceManagementMobile)
+//        
+//        let test3 = viewModel.isCourceManagementUrlForPC(displayUrl: manabaPC)
+//        XCTAssertEqual(test3, .manabaPC)
+//        
+//        let test4 = viewModel.isCourceManagementUrlForPC(displayUrl: manabaSP)
+//        XCTAssertEqual(test4, .manabaMobile)
+//        
+//        // エラー処理　fatalError()
+////        let test5 = viewModel.isCourceManagementUrlForPC(displayUrl: "")
+////        XCTAssertThrowsError(test5)
+//    }
     
 
     func testTabBarDetection() {

@@ -11,8 +11,8 @@ import Foundation
 final class MainViewModel: NSObject {
     
     private let model = Model()
-    private let dataManager = DataManager.singleton
     private let webViewModel = WebViewModel()
+    private let dataManager = DataManager.singleton
     
     
     enum NextModalView {
@@ -33,44 +33,31 @@ final class MainViewModel: NSObject {
         case manaba = 2
     }
     
-    enum ViewOperation {
-        case up
-        case down
-        case reverse
-    }
-    
     enum AnimeOperation {
         case launchScreen
         case moveUp
         case moveDown
     }
     
-    enum ViewMoveIcon: String {
-        case up = "chevron.up"
-        case down = "chevron.down"
+    enum ViewMoveIcon {
+        case up
+        case down
+    }
+    
+    enum ViewMoveType {
+        case moveUp
+        case moveDown
+        case moveReverse
     }
     
     
     // MARK: - Public
-    /// 教務事務システム、マナバのMobileかPCか判定
-    public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile
-    {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return .courceManagementPC
-        case Url.courceManagementHomePC.string():      return .courceManagementMobile
-        case Url.manabaHomeMobile.string():            return .manabaPC
-        case Url.manabaHomePC.string():                return .manabaMobile
-
-        default:
-            fatalError()
-        }
-    }
     
     /// タブバーの判定
     public func tabBarDetection(tabBarRowValue: Int,
                                 isRegist: Bool,
                                 courceType: String,
-                                manabaType: String) -> NSURLRequest?
+                                manabaType: String) -> URLRequest?
     {
         let tabBarItem = TabBarItem(rawValue: tabBarRowValue)!
         
@@ -101,10 +88,26 @@ final class MainViewModel: NSObject {
         }
     }
     
-    enum ViewMoveType {
-        case moveUp
-        case moveDown
-        case moveReverse
+    public func webViewChangeButtonImage(displayUrl: String) -> String? {
+        switch displayUrl {
+        case Url.courceManagementHomeMobile.string():  return R.image.pcIcon.name
+        case Url.courceManagementHomePC.string():      return R.image.mobileIcon.name
+        case Url.manabaHomeMobile.string():            return R.image.pcIcon.name
+        case Url.manabaHomePC.string():                return R.image.mobileIcon.name
+
+        default:                                       return nil
+        }
+    }
+    
+    public func webViewChangeUrl(displayUrl: String) -> URLRequest? {
+        switch displayUrl {
+        case Url.courceManagementHomeMobile.string():  return Url.courceManagementHomeMobile.urlRequest()
+        case Url.courceManagementHomePC.string():      return Url.courceManagementHomePC.urlRequest()
+        case Url.manabaHomeMobile.string():            return Url.manabaHomeMobile.urlRequest()
+        case Url.manabaHomePC.string():                return Url.manabaHomePC.urlRequest()
+
+        default:                                       return nil
+        }
     }
     
     /// WebViewの上げ下げを判定
