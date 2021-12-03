@@ -85,7 +85,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         Analytics.logEvent("mainViewRefreshButton", parameters: nil)
         
         refresh()
-        navigationRightButtonOnOff(operation: .up)
+        navigationRightButtonOnOff(operation: .moveUp)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
@@ -117,7 +117,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        navigationRightButtonOnOff(operation: .reverse)
+        navigationRightButtonOnOff(operation: .moveReverse)
     }
     
     
@@ -165,15 +165,22 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     // webViewを上げ下げする
-    public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
-        Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil) // Analytics: 調べる・タップ
+    public func navigationRightButtonOnOff(operation: MainViewModel.ViewMoveType){
+        Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil)
         
-        let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
+        let image = viewModel.viewVerticallyMoveButtonImage(operation, posisionY: Double(wkWebView.frame.origin.y))
+        let animation = viewModel.viewVerticallyMoveAnimation(operation, posisionY: Double(wkWebView.frame.origin.y))
         
-        let image = UIImage(systemName: responce.imageName.rawValue)
-        rightButton.setImage(image, for: .normal)
+//        let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
         
-        animationView(scene: responce.animationName)
+//        let image = UIImage(systemName: responce.imageName.rawValue)
+        
+        if let image = image {
+            rightButton.setImage(UIImage(systemName: image), for: .normal)
+        }
+        if let animation = animation {
+            animationView(scene: animation)
+        }
         
     }
     
@@ -217,7 +224,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 launchScreenView.removeFromSuperview()
             })
             
-        case .viewDown:
+        case .moveDown:
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0.08,
@@ -228,7 +235,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 completion: { bool in
                 })
             
-        case .viewUp:
+        case .moveUp:
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0.08,

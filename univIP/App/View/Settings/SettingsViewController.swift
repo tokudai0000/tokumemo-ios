@@ -114,7 +114,7 @@ final class SettingsViewController: BaseViewController {
         }
     }
     
-    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewOperation) {
+    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewMoveType) {
         let response = webViewModel.url(url)
         if let url = response as URLRequest? {
             delegate.wkWebView.load(url)
@@ -217,26 +217,26 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         switch cellType {
         case .libraryWeb:                        // [図書館]Webサイト
             tableViewEvent(url: .libraryHome,
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .libraryMyPage:                     // [図書館]MyPage
             tableViewEvent(url: .libraryLogin,
                            word: "登録者のみ",
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .libraryBookLendingExtension:       // [図書館]貸し出し期間延長
             tableViewEvent(url: .libraryBookLendingExtension,
                            word: "登録者のみ",
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .libraryBookPurchaseRequest:        // [図書館]本購入リクエスト
             tableViewEvent(url: .libraryBookPurchaseRequest,
                            word: "登録者のみ",
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .libraryCalendar:                   // [図書館]開館カレンダー
             tableViewEvent(url: .libraryCalendar,
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .syllabus:                          // シラバス
             delegate.popupView(scene: .syllabus)
@@ -244,53 +244,53 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         case .timeTable:                         // 時間割
             tableViewEvent(url: .timeTable,
                            word: "登録者のみ",
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .currentTermPerformance:            // 今年の成績表
             tableViewEvent(url: .currentTermPerformance,
                            word: "登録者のみ",
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .termPerformance:                   // 成績参照
             tableViewEvent(url: .termPerformance,
                            word: "登録者のみ",
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .presenceAbsenceRecord:             // 出欠記録
             tableViewEvent(url: .presenceAbsenceRecord,
                            word: "登録者のみ",
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .classQuestionnaire:                // 授業アンケート
             tableViewEvent(url: .classQuestionnaire,
                            word: "登録者のみ",
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .mailService:                       // メール
             tableViewEvent(url: .mailService,
                            word: "登録者のみ",
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .tokudaiCareerCenter:               // キャリア支援室
             tableViewEvent(url: .tokudaiCareerCenter,
-                           viewOperation: .down)
+                           viewOperation: .moveDown)
             
         case .courseRegistration:                // 履修登録
             tableViewEvent(url: .courseRegistration,
                            word: "登録者のみ",
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .systemServiceList:                 // システムサービス一覧
             tableViewEvent(url: .systemServiceList,
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .eLearningList:                     // Eラーニング一覧
             tableViewEvent(url: .eLearningList,
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .universityWeb:                     // 大学サイト
             tableViewEvent(url: .universityHome,
-                           viewOperation: .up)
+                           viewOperation: .moveUp)
             
         case .password:                          // パスワード設定
             delegate.popupView(scene: .password)

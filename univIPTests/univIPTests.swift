@@ -21,9 +21,9 @@ class MainViewModelTests: XCTestCase {
     }
 
 
-    func testviewPosisionType() {
-        XCTAssertEqual(viewModel.viewPosisionType(.up, posisionY: 0), (.down, .viewUp))
-    }
+//    func testviewPosisionType() {
+////        XCTAssertEqual(viewModel.viewPosisionType(.up, posisionY: 0), (.down, .viewUp))
+//    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
