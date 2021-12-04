@@ -20,7 +20,7 @@ final class SettingsViewController: BaseViewController {
     private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
-    public var delegate : MainViewController!
+    public var delegate : MainViewController?
     
     private let dataManager = DataManager.singleton
     
@@ -28,7 +28,11 @@ final class SettingsViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        // 初回起動時処理
+        viewModel.firstBootDecision()
+        // セル同士の仕切り板
+        tableView.separatorColor = UIColor(white: 0, alpha: 0)
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,16 +43,19 @@ final class SettingsViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
-        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation // 編集モード時、複数選択を許可
-        tableView.setEditing(viewModel.editSituation, animated: true)            // 編集モード起動、停止
-        viewModel.editSituation = !viewModel.editSituation                       // 編集モード, 使用モード反転
+        // 編集モード時、複数選択を許可
+        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation
+        // 編集モード起動、停止
+        tableView.setEditing(viewModel.editSituation, animated: true)
+        // 編集モード, 使用モード反転
+        viewModel.editSituation = !viewModel.editSituation
         self.tableView.reloadData()
         
         if viewModel.editSituation {
-            Analytics.logEvent("settingViewEditButton", parameters: nil) // Analytics: 調べる・タップ
             editButton.setTitle("編集", for: .normal)
-            editButton.setTitle("完了", for: .normal)
         } else {
+            Analytics.logEvent("settingViewEditButton", parameters: nil)
+            
             editButton.setTitle("完了", for: .normal)
         }
         
@@ -65,14 +72,6 @@ final class SettingsViewController: BaseViewController {
     
     
     // MARK: - Private func
-    private func setup() {
-        // 初回起動時処理
-        viewModel.firstBootDecision()
-        // セル同士の仕切り板
-        tableView.separatorColor = UIColor(white: 0, alpha: 0)
-        self.tableView.reloadData()
-    }
-    
     
     enum ViewAnimationType {
         case settingViewAppear
@@ -115,6 +114,9 @@ final class SettingsViewController: BaseViewController {
     }
     
     private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewMoveType) {
+        guard let delegate = delegate else {
+            return
+        }
         let response = webViewModel.url(url)
         if let url = response as URLRequest? {
             delegate.wkWebView.load(url)
