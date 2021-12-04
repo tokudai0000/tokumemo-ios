@@ -313,12 +313,10 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // シラバス自動入力
-        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant),
-           dataManager.isSyllabusSearchOnce {
+        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.subjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-            dataManager.isSyllabusSearchOnce = false
         }
         
         // outlookログイン
@@ -416,9 +414,9 @@ extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1 {
-            Analytics.logEvent("mainViewCourceManagement", parameters: nil) // Analytics: 調べる・タップ
+            Analytics.logEvent("mainViewCourceManagement", parameters: nil)
         } else {
-            Analytics.logEvent("mainViewManaba", parameters: nil) // Analytics: 調べる・タップ
+            Analytics.logEvent("mainViewManaba", parameters: nil)
         }
         
         if let url = viewModel.tabBarDetection(tabBarRowValue: item.tag,

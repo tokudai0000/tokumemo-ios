@@ -41,7 +41,8 @@ final class SyllabusViewController: BaseViewController {
         if let delegate = delegate {
             delegate.refreshSyllabus(subjectName: subjectTextField.text ?? "",
                                      teacherName: teacherTextField.text ?? "")
-            dataManager.isSyllabusSearchOnce = true
+//            dataManager.isSyllabusSearchOnce = true
+            dataManager.displayUrl = "" // だいぶ無理矢理
             self.dismiss(animated: true, completion: nil)
         }
     }

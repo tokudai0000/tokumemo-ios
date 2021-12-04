@@ -85,8 +85,8 @@ final class WebViewModel {
             
             
         case .syllabus:
+            isLists.append(forwardUrl != Url.syllabus.string())
             isLists.append(displayUrl.contains(Url.syllabus.string()))
-            isLists.append(dataManager.isSyllabusSearchOnce)
             
             
         case .outlook:
