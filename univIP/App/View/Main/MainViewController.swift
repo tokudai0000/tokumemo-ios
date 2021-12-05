@@ -49,19 +49,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
-        
-        // 登録者判定
-        if dataManager.isRegistrantCheck {
-            Analytics.logEvent("isRegistrantCheck=true", parameters: nil)
-        
-        } else {
-            Analytics.logEvent("isRegistrantCheck=false", parameters: nil)
-    
-            // "cアカウント"、"パスワード"の設定催促
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            present(vc, animated: true, completion: nil)
-            vc.delegate = self
-        }
     }
     
     
