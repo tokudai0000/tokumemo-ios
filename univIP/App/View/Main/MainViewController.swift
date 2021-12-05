@@ -13,13 +13,9 @@ import FirebaseAnalytics
 final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var tabBar: UITabBar!
     @IBOutlet weak var wkWebView: WKWebView!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
-    @IBOutlet weak var reversePCtoSP: UIButton!
-    @IBOutlet weak var tabBarLeft: UITabBarItem!
     
     private let model = Model()
     private let viewModel = MainViewModel()
@@ -31,7 +27,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         animationView(scene: .launchScreen)
-        tabBar.delegate = self
         wkWebView.navigationDelegate = self
         wkWebView.uiDelegate = self
         
@@ -80,9 +75,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         let imageName = viewModel.webViewChangeButtonImage(displayUrl: dataManager.displayUrl)
         let url = viewModel.webViewChangeUrl(displayUrl: dataManager.displayUrl)
         
-        if let imageName = imageName {
-            reversePCtoSP.setImage(UIImage(named: imageName), for: .normal)
-        }
+
         if let url = url {
             wkWebView.load(url)
         }
@@ -99,7 +92,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - Public func
     public func refresh() {
-        tabBar.selectedItem = tabBarLeft
         // 登録者判定
         if dataManager.isRegistrantCheck {
             wkWebView.load(Url.login.urlRequest())
@@ -181,8 +173,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         case .headerIsShow:
             // Viewを動かして良いのか判定
             if (wkWebView.frame.origin.y <= 0.0) {
-                let image = "chevron.up"
-                rightButton.setImage(UIImage(systemName: image), for: .normal)
                 // show 60.0に向けて0.5秒かけて移動する
                 UIView.animate(
                     withDuration: 0.5,
@@ -197,8 +187,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         case .headerIsHidden:
             // Viewを動かして良いのか判定
             if (0.0 < wkWebView.frame.origin.y) {
-                let image = "chevron.down"
-                rightButton.setImage(UIImage(systemName: image), for: .normal)
                 // hidden 0.0に向けて0.5秒かけて移動する
                 UIView.animate(
                     withDuration: 0.5,
@@ -326,14 +314,7 @@ extension MainViewController: WKNavigationDelegate {
         /// Buttonデザインの変更
         ///
         
-        // 教務事務システム、マナバの画面の時
-        if webViewModel.isCourceManagementOrManaba() {
-            // モバイル版かPC版か判定
-            if let imageName = webViewModel.judgeMobileOrPC() {
-                reversePCtoSP.setImage(UIImage(named: imageName), for: .normal)
-            }
-        }
-        reversePCtoSP.isEnabled = webViewModel.isCourceManagementOrManaba()
+
         
         // 教務事務システム、マナバ以外の画面かつ戻れる時
         let isBackEnabled = !webViewModel.isCourceManagementOrManaba() && webView.canGoBack
