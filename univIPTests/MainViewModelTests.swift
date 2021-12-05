@@ -78,26 +78,26 @@ class MainViewModelTests: XCTestCase {
     func testviewPosisionType() {
         
         // 基本的なテスト
-        let test1 = viewModel.viewVerticallyMoveButtonImage( .moveUp, posisionY: -10.0)
+        let test1 = viewModel.viewVerticallyMoveButtonImage( .headerIsHidden, posisionY: -10.0)
         XCTAssertNil(test1, "[now] up, [next] up -> nil")
         
         
-        let test2 = viewModel.viewVerticallyMoveButtonImage( .moveDown, posisionY: -10.0)!
+        let test2 = viewModel.viewVerticallyMoveButtonImage( .headerIsShow, posisionY: -10.0)!
         XCTAssertEqual(test2, "chevron.up", "[now] up, [next] down -> chevron.up")
         
         
-        let test3 = viewModel.viewVerticallyMoveButtonImage( .moveUp, posisionY: 60.0)!
+        let test3 = viewModel.viewVerticallyMoveButtonImage( .headerIsHidden, posisionY: 60.0)!
         XCTAssertEqual(test3, "chevron.down", "[now] down, [next] up -> chevron.down")
         
         
-        let test4 = viewModel.viewVerticallyMoveButtonImage( .moveDown, posisionY: 60.0)
+        let test4 = viewModel.viewVerticallyMoveButtonImage( .headerIsShow, posisionY: 60.0)
         XCTAssertNil(test4, "[now] down, [next] down -> nil")
         
         // 境界値テスト
-        let test10 = viewModel.viewVerticallyMoveButtonImage( .moveUp, posisionY: 0.0)
+        let test10 = viewModel.viewVerticallyMoveButtonImage( .headerIsHidden, posisionY: 0.0)
         XCTAssertNil(test10, "[now] up, [next] up -> nil")
         
-        let test20 = viewModel.viewVerticallyMoveButtonImage( .moveDown, posisionY: 0.0)!
+        let test20 = viewModel.viewVerticallyMoveButtonImage( .headerIsShow, posisionY: 0.0)!
         XCTAssertEqual(test20, "chevron.up", "[now] up, [next] down -> chevron.up")
         
     }

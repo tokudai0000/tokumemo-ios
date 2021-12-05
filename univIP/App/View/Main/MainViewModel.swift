@@ -33,21 +33,15 @@ final class MainViewModel: NSObject {
         case manaba = 2
     }
     
-    enum AnimeOperation {
-        case launchScreen
-        case moveUp
-        case moveDown
-    }
-    
     enum ViewMoveIcon {
         case up
         case down
     }
     
     enum ViewMoveType {
-        case moveUp
-        case moveDown
-        case moveReverse
+        case headerIsHidden
+        case headerIsShow
+        case headerIsReverse
     }
     
     
@@ -109,57 +103,5 @@ final class MainViewModel: NSObject {
         default:                                       return nil
         }
     }
-    
-    /// WebViewの上げ下げを判定
-    public func viewVerticallyMoveButtonImage(_ operation: ViewMoveType,
-                                              posisionY: Double) -> String?
-    {
-        let up = "chevron.up"
-        let down = "chevron.down"
-        
-        switch operation {
-        case .moveUp: // Viewを上げたい場合
-            if (0.0 < posisionY) { // Viewを動かして良いのか判定
-                return down
-            }
-            
-        case .moveDown: // Viewを下げたい場合
-            if (posisionY <= 0.0) { // 下げる前のViewのポジション
-                return up
-            }
-            
-        case .moveReverse:
-            if posisionY <= 0.0 {
-                return up
-            } else {
-                return down
-            }
-        }
-        return nil
-    }
-    
-    public func viewVerticallyMoveAnimation(_ operation: ViewMoveType,
-                                            posisionY: Double) -> AnimeOperation?
-    {
-        switch operation {
-        case .moveUp: // Viewを上げたい場合
-            if (0.0 < posisionY) { // Viewを動かして良いのか判定
-                return .moveUp
-            }
-            
-        case .moveDown: // Viewを下げたい場合
-            if (posisionY <= 0.0) { // 下げる前のViewのポジション
-                return .moveDown
-            }
-            
-        case .moveReverse:
-            if !(posisionY <= 0.0) {
-                return .moveUp
-            } else {
-                return .moveDown
-            }
-        }
-        return nil
-    }
-        
+
 }

@@ -72,26 +72,27 @@ struct Model {
     }
     
     /// サービスCell初期状態（更新確認、初回利用者はここを確認される）
-    public let serviceCellLists = [CellList(id: 0,  type: .libraryWeb,                  category: .library,         title: "[図書館]Webサイト"),
-                                   CellList(id: 1,  type: .libraryMyPage,               category: .library,         title: "[図書館]MyPage"),
-                                   CellList(id: 2,  type: .libraryBookLendingExtension, category: .library,         title: "[図書館]貸し出し期間延長"),
-                                   CellList(id: 3,  type: .libraryBookPurchaseRequest,  category: .library,         title: "[図書館]本購入リクエスト"),
-                                   CellList(id: 4,  type: .libraryCalendar,             category: .library,         title: "[図書館]開館カレンダー"),
-                                   CellList(id: 5,  type: .syllabus,                    category: .syllabus,        title: "シラバス"),
-                                   CellList(id: 6,  type: .timeTable,                   category: .corceManagement, title: "時間割"),
-                                   CellList(id: 7,  type: .currentTermPerformance,      category: .corceManagement, title: "今年の成績表"),
-                                   CellList(id: 8,  type: .termPerformance,             category: .corceManagement, title: "成績参照"),
-                                   CellList(id: 9,  type: .presenceAbsenceRecord,       category: .corceManagement, title: "出欠記録"),
-                                   CellList(id: 10, type: .classQuestionnaire,          category: .corceManagement, title: "授業アンケート"),
-                                   CellList(id: 11, type: .mailService,                 category: .mail,            title: "メール"),
-                                   CellList(id: 12, type: .tokudaiCareerCenter,         category: .recruit,         title: "キャリア支援室"),
-                                   CellList(id: 13, type: .courseRegistration,          category: .corceManagement, title: "履修登録"),
-                                   CellList(id: 14, type: .systemServiceList,           category: .corceManagement, title: "システムサービス一覧"),
-                                   CellList(id: 15, type: .eLearningList,               category: .corceManagement, title: "Eラーニング一覧"),
-                                   CellList(id: 16, type: .universityWeb,               category: .corceManagement, title: "大学サイト")]
+    public let serviceCellLists = [CellList(type: .libraryWeb,                  url: Url.libraryHome.string(),                 title: "[図書館]Webサイト"),
+                                   CellList(type: .libraryMyPage,               url: Url.libraryLogin.string(),                title: "[図書館]MyPage"),
+                                   CellList(type: .libraryBookLendingExtension, url: Url.libraryBookLendingExtension.string(), title: "[図書館]貸し出し期間延長"),
+                                   CellList(type: .libraryBookPurchaseRequest,  url: Url.libraryBookPurchaseRequest.string(),  title: "[図書館]本購入リクエスト"),
+                                   CellList(type: .libraryCalendar,             url: Url.libraryCalendar.string(),             title: "[図書館]開館カレンダー"),
+                                   CellList(type: .syllabus,                                                                   title: "シラバス"),
+                                   CellList(type: .timeTable,                   url: Url.timeTable.string(),                   title: "時間割"),
+                                   CellList(type: .currentTermPerformance,      url: Url.currentTermPerformance.string(),      title: "今年の成績表"),
+                                   CellList(type: .termPerformance,             url: Url.termPerformance.string(),             title: "成績参照"),
+                                   CellList(type: .presenceAbsenceRecord,       url: Url.presenceAbsenceRecord.string(),       title: "出欠記録"),
+                                   CellList(type: .classQuestionnaire,          url: Url.classQuestionnaire.string(),          title: "授業アンケート"),
+                                   CellList(type: .mailService,                 url: Url.mailService.string(),                 title: "メール"),
+                                   CellList(type: .tokudaiCareerCenter,         url: Url.tokudaiCareerCenter.string(),         title: "キャリア支援室"),
+                                   CellList(type: .courseRegistration,          url: Url.courseRegistration.string(),          title: "履修登録"),
+                                   CellList(type: .systemServiceList,           url: Url.systemServiceList.string(),           title: "システムサービス一覧"),
+                                   CellList(type: .eLearningList,               url: Url.eLearningList.string(),               title: "Eラーニング一覧"),
+                                   CellList(type: .universityWeb,               url: Url.universityHome.string(),              title: "大学サイト")]
     
-    public let settingCellLists = [CellList(id: 100, type: .password,                   category: .setting,         title: "パスワード"),
-                                   CellList(id: 101, type: .aboutThisApp,               category: .setting,         title: "このアプリについて")]
+    public let settingCellLists = [CellList(type: .password,                                                                   title: "パスワード"),
+                                   CellList(type: .aboutThisApp,                                                               title: "このアプリについて")]
+    
 }
 
 /// - CellList:
@@ -100,9 +101,8 @@ struct Model {
 ///   - category  : Cellのサブタイトル
 ///   - isDisplay : Cellに表示するか決定
 struct CellList: Codable {
-    let id: Int
     let type: Model.SettingCellList
-    let category: Model.Category
+    var url: String = ""
     var isDisplay: Bool = true
     let title: String
 }

@@ -84,17 +84,17 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         Analytics.logEvent("mainViewRefreshButton", parameters: nil)
         
         refresh()
-        viewVerticallyMove(operation: .moveUp)
+        animationView(scene: .headerIsHidden)
     }
     
     @IBAction func webViewChangePCorMB(_ sender: Any) {
         Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil)
         
-        let image = viewModel.webViewChangeButtonImage(displayUrl: dataManager.displayUrl)
+        let imageName = viewModel.webViewChangeButtonImage(displayUrl: dataManager.displayUrl)
         let url = viewModel.webViewChangeUrl(displayUrl: dataManager.displayUrl)
         
-        if let image = image {
-            reversePCtoSP.setImage(UIImage(named: image), for: .normal)
+        if let imageName = imageName {
+            reversePCtoSP.setImage(UIImage(named: imageName), for: .normal)
         }
         if let url = url {
             wkWebView.load(url)
@@ -102,25 +102,29 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     }
     
     @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        viewVerticallyMove(operation: .moveReverse)
+        if !(wkWebView.frame.origin.y <= 0.0) {
+            animationView(scene: .headerIsHidden)
+        } else {
+            animationView(scene: .headerIsShow)
+        }
     }
     
     
     // MARK: - Public func
     public func refresh() {
         tabBar.selectedItem = tabBarLeft
-        
-        if let url = webViewModel.url(.login) {
-            wkWebView.load(url as URLRequest)
+        // 登録者判定
+        if dataManager.isRegistrantCheck {
+            wkWebView.load(Url.login.urlRequest())
+        } else {
+            wkWebView.load(Url.systemServiceList.urlRequest())
         }
     }
     
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         webViewModel.subjectName = subjectName
         webViewModel.teacherName = teacherName
-        if let url = webViewModel.url(.syllabus) {
-            wkWebView.load(url)
-        }
+        wkWebView.load(Url.syllabus.urlRequest())
     }
     
     public func showModalView(scene: MainViewModel.NextModalView){
@@ -141,26 +145,15 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         }
     }
     
-    // webViewを上げ下げする
-    public func viewVerticallyMove(operation: MainViewModel.ViewMoveType){
-        Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil)
-        
-        let image = viewModel.viewVerticallyMoveButtonImage(operation, posisionY: Double(wkWebView.frame.origin.y))
-        let animation = viewModel.viewVerticallyMoveAnimation(operation, posisionY: Double(wkWebView.frame.origin.y))
-        
-        if let image = image {
-            rightButton.setImage(UIImage(systemName: image), for: .normal)
-        }
-        if let animation = animation {
-            animationView(scene: animation)
-        }
-        
-    }
-    
     
     // MARK: - Private func
+    enum AnimeOperation {
+        case launchScreen
+        case headerIsHidden
+        case headerIsShow
+    }
     // アニメーション
-    private func animationView(scene: MainViewModel.AnimeOperation) {
+    private func animationView(scene: AnimeOperation) {
         switch scene {
         case .launchScreen:
             
@@ -197,28 +190,37 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 launchScreenView.removeFromSuperview()
             })
             
-        case .moveDown:
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.08,
-                options: .curveEaseOut,
-                animations: {
-                    self.wkWebView.layer.position.y += 60
-                },
-                completion: { bool in
-                })
             
-        case .moveUp:
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.08,
-                options: .curveEaseOut,
-                animations: {
-                    self.wkWebView.layer.position.y -= 60
-                },
-                completion: { bool in
-                })
+        case .headerIsShow:
+            // Viewを動かして良いのか判定
+            if (wkWebView.frame.origin.y <= 0.0) {
+                let image = "chevron.up"
+                rightButton.setImage(UIImage(systemName: image), for: .normal)
+                // show 60.0に向けて0.5秒かけて移動する
+                UIView.animate(
+                    withDuration: 0.5,
+                    delay: 0.08,
+                    options: .curveEaseOut,
+                    animations: { self.wkWebView.layer.position.y += 60 },
+                    completion: { bool in }
+                )
+            }
             
+            
+        case .headerIsHidden:
+            // Viewを動かして良いのか判定
+            if (0.0 < wkWebView.frame.origin.y) {
+                let image = "chevron.down"
+                rightButton.setImage(UIImage(systemName: image), for: .normal)
+                // hidden 0.0に向けて0.5秒かけて移動する
+                UIView.animate(
+                    withDuration: 0.5,
+                    delay: 0.08,
+                    options: .curveEaseOut,
+                    animations: { self.wkWebView.layer.position.y -= 60 },
+                    completion: { bool in }
+                )
+            }
         }
     }
         

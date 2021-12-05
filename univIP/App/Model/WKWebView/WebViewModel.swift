@@ -292,4 +292,35 @@ final class WebViewModel {
         return termPerformanceYearURL
     }
     
+    public func getLibraryCalenderUrl() -> URLRequest? {
+        let url = NSURL(string: Url.libraryHome.string())
+        let data = NSData(contentsOf: url! as URL)
+        
+        var calenderURL = ""
+        
+        do {
+            let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
+            for node in doc.xpath("//a") {
+                guard let str = node["href"] else {
+                    return nil
+                }
+                if str.contains("pub/pdf/calender/calender_main_"){
+                    calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
+                    if let url = URL(string: calenderURL) {
+                        return URLRequest(url: url)
+                        
+                    } else {
+                        // エラー処理
+                        AKLog(level: .FATAL, message: "URLフォーマットエラー")
+                        fatalError() // 予期しないため、強制的にアプリを落とす
+                    }
+                }
+            }
+            return nil
+            
+        } catch {
+            return nil
+        }
+    }
+    
 }
