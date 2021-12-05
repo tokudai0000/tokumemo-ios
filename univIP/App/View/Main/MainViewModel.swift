@@ -11,8 +11,8 @@ import Foundation
 final class MainViewModel: NSObject {
     
     private let model = Model()
-    private let dataManager = DataManager.singleton
     private let webViewModel = WebViewModel()
+    private let dataManager = DataManager.singleton
     
     
     enum NextModalView {
@@ -33,42 +33,27 @@ final class MainViewModel: NSObject {
         case manaba = 2
     }
     
-    enum ViewOperation {
+    enum ViewMoveIcon {
         case up
         case down
-        case reverse
     }
     
-    enum AnimeOperation {
-        case launchScreen
-        case viewUp
-        case viewDown
-        case Nil
-    }
-    
-    enum ViewMoveIcon: String {
-        case up = "chevron.up"
-        case down = "chevron.down"
+    enum ViewMoveType {
+        case headerIsHidden
+        case headerIsShow
+        case headerIsReverse
     }
     
     
     // MARK: - Public
-    /// 教務事務システム、マナバのMobileかPCか判定
-    public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return .courceManagementPC
-        case Url.courceManagementHomePC.string():      return .courceManagementMobile
-        case Url.manabaHomeMobile.string():            return .manabaPC
-        case Url.manabaHomePC.string():                return .manabaMobile
-
-        default:
-            fatalError()
-        }
-    }
     
     /// タブバーの判定
-    public func tabBarDetection(num: Int, isRegist: Bool, courceType: String, manabaType: String) -> NSURLRequest? {
-        let tabBarItem = TabBarItem(rawValue: num)!
+    public func tabBarDetection(tabBarRowValue: Int,
+                                isRegist: Bool,
+                                courceType: String,
+                                manabaType: String) -> URLRequest?
+    {
+        let tabBarItem = TabBarItem(rawValue: tabBarRowValue)!
         
         switch tabBarItem {
         case .courceManagement:
@@ -97,32 +82,26 @@ final class MainViewModel: NSObject {
         }
     }
     
-    /// WebViewの上げ下げを判定
-    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (imageName: ViewMoveIcon, animationName: AnimeOperation) {
-        switch operation {
-        case .up:
-            // Viewを動かして良いのか判定
-            if (0.0 < posisionY) {
-                // Viewを上げた後、[chevron.down]のImageに差し替える
-                return (.down, .viewUp)
-            } else {
-                return (.up, .Nil)
-            }
-            
-        case .down:
-            if (posisionY <= 0.0) {
-                return (.up, .viewDown)
-            } else {
-                return (.down, .Nil)
-            }
-            
-        case .reverse:
-            if (posisionY <= 0.0) {
-                return (.up, .viewDown)
-            } else {
-                return (.down, .viewUp)
-            }
+    public func webViewChangeButtonImage(displayUrl: String) -> String? {
+        switch displayUrl {
+        case Url.courceManagementHomeMobile.string():  return R.image.pcIcon.name
+        case Url.courceManagementHomePC.string():      return R.image.mobileIcon.name
+        case Url.manabaHomeMobile.string():            return R.image.pcIcon.name
+        case Url.manabaHomePC.string():                return R.image.mobileIcon.name
+
+        default:                                       return nil
         }
     }
     
+    public func webViewChangeUrl(displayUrl: String) -> URLRequest? {
+        switch displayUrl {
+        case Url.courceManagementHomeMobile.string():  return Url.courceManagementHomeMobile.urlRequest()
+        case Url.courceManagementHomePC.string():      return Url.courceManagementHomePC.urlRequest()
+        case Url.manabaHomeMobile.string():            return Url.manabaHomeMobile.urlRequest()
+        case Url.manabaHomePC.string():                return Url.manabaHomePC.urlRequest()
+
+        default:                                       return nil
+        }
+    }
+
 }

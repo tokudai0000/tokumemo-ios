@@ -24,176 +24,123 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     private let model = Model()
     private let viewModel = MainViewModel()
     private let webViewModel = WebViewModel()
-    
     private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        animationView(scene: .launchScreen)
+        tabBar.delegate = self
+        wkWebView.navigationDelegate = self
+        wkWebView.uiDelegate = self
+        
         refresh()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        // MARK: - Question Analyticsはこれでいいのか
-        Analytics.logEvent("mainViewOpened", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("mainViewOpened", parameters: nil)
         
-        firstBootSetup()       // 利用規約同意判定
-        registrantDecision()   // 登録者判定
-    }
-    
-    
-    // MARK: - IBAction
-    @IBAction func settingMenuButton(_ sender: Any) {
-        Analytics.logEvent("mainViewSettingMenuButton", parameters: nil) // Analytics: 調べる・タップ
-        
-        let vc = R.storyboard.settings.settingsViewController()!
-        self.present(vc, animated: false, completion: nil)
-        vc.delegate = self
-    }
-    
-    @IBAction func backButton(_ sender: Any) {
-        Analytics.logEvent("mainViewBackButton", parameters: nil) // Analytics: 調べる・タップ
-        
-        wkWebView.goBack()
-    }
-    
-    @IBAction func refreshButton(_ sender: Any) {
-        Analytics.logEvent("mainViewRefreshButton", parameters: nil) // Analytics: 調べる・タップ
-        
-        refresh()
-        navigationRightButtonOnOff(operation: .up)
-    }
-    
-    @IBAction func webViewChangePCorMB(_ sender: Any) {
-        Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil) // Analytics: 調べる・タップ
-        
-        var image: String
-        var url: URLRequest
-        
-        switch viewModel.isCourceManagementUrlForPC(displayUrl: dataManager.displayUrl) {
-        case .courceManagementPC:
-            image = R.image.pcIcon.name
-            url = Url.courceManagementHomePC.urlRequest()
-            
-        case .courceManagementMobile:
-            image = R.image.mobileIcon.name
-            url = Url.courceManagementHomeMobile.urlRequest()
-            
-        case .manabaPC:
-            image = R.image.pcIcon.name
-            url = Url.manabaHomePC.urlRequest()
-            
-        case .manabaMobile:
-            image = R.image.mobileIcon.name
-            url = Url.manabaHomeMobile.urlRequest()
-        }
-        
-        reversePCtoSP.setImage(UIImage(named: image), for: .normal)
-        // MARK: - Question self
-        self.wkWebView.load(url)
-    }
-    
-    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        navigationRightButtonOnOff(operation: .reverse)
-    }
-    
-    
-    // MARK: - Public func
-    public func refresh() {
-        tabBar.selectedItem = tabBarLeft
-        
-        if let url = webViewModel.url(.login) {
-            print(url)
-            wkWebView.load(url as URLRequest)
-        } else {
-            toast(message: "登録者のみ")
-        }
-    }
-    
-    
-    public func refreshSyllabus(subjectName: String, teacherName: String) {
-        webViewModel.subjectName = subjectName
-        webViewModel.teacherName = teacherName
-        let response = webViewModel.url(.syllabus)
-        if let url = response as URLRequest? {
-            wkWebView.load(url)
-        } else {
-            toast(message: "登録者のみ")
-        }
-    }
-    
-    
-    public func popupView(scene: MainViewModel.NextModalView){
-        switch scene {
-        case .syllabus:
-            let vc = R.storyboard.syllabus.syllabusViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegate = self
-            
-        case .password:
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegate = self
-            
-        case .aboutThisApp:
-            let vc = R.storyboard.aboutThisApp.aboutThisApp()!
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
-    
-    // webViewを上げ下げする
-    public func navigationRightButtonOnOff(operation: MainViewModel.ViewOperation){
-        Analytics.logEvent("mainViewNavigationRightButtonOnOff", parameters: nil) // Analytics: 調べる・タップ
-        
-        let responce = viewModel.viewPosisionType(operation, posisionY: Double(wkWebView.frame.origin.y))
-        
-        let image = UIImage(systemName: responce.imageName.rawValue)
-        rightButton.setImage(image, for: .normal)
-        
-        animationView(scene: responce.animationName)
-        
-    }
-    
-    
-    // MARK: - Private func
-    private func setup() {
-        animationView(scene: .launchScreen)
-        tabBar.delegate = self
-        wkWebView.navigationDelegate = self
-        wkWebView.uiDelegate = self
-    }
-    
-    // 初回起動時
-    private func firstBootSetup() {
-        print(dataManager.isRegistrantCheck)
+        // 利用規約同意判定
         if !dataManager.isAgreementPersonDecision {
-            Analytics.logEvent("calledFirstBootSetup", parameters: nil) // Analytics: 調べる・タップ
+            Analytics.logEvent("calledFirstBootSetup", parameters: nil)
             
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
     }
     
-    private func registrantDecision() {
-        
-        if dataManager.isRegistrantCheck {
-            Analytics.logEvent("isRegistrantCheck=true", parameters: nil) // Analytics: 調べる・タップ
-        
-        } else {
-            Analytics.logEvent("isRegistrantCheck=false", parameters: nil) // Analytics: 調べる・タップ
     
-            // "cアカウント"、"パスワード"の設定催促
-            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-            self.present(vc, animated: true, completion: nil)
-            vc.delegate = self
+    // MARK: - IBAction
+    @IBAction func settingMenuButton(_ sender: Any) {
+        Analytics.logEvent("mainViewSettingMenuButton", parameters: nil)
+        
+        let vc = R.storyboard.settings.settingsViewController()!
+        present(vc, animated: false, completion: nil)
+        vc.delegate = self
+    }
+    
+    @IBAction func backButton(_ sender: Any) {
+        Analytics.logEvent("mainViewBackButton", parameters: nil)
+        
+        wkWebView.goBack()
+    }
+    
+    @IBAction func refreshButton(_ sender: Any) {
+        Analytics.logEvent("mainViewRefreshButton", parameters: nil)
+        
+        refresh()
+        animationView(scene: .headerIsHidden)
+    }
+    
+    @IBAction func webViewChangePCorMB(_ sender: Any) {
+        Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil)
+        
+        let imageName = viewModel.webViewChangeButtonImage(displayUrl: dataManager.displayUrl)
+        let url = viewModel.webViewChangeUrl(displayUrl: dataManager.displayUrl)
+        
+        if let imageName = imageName {
+            reversePCtoSP.setImage(UIImage(named: imageName), for: .normal)
+        }
+        if let url = url {
+            wkWebView.load(url)
         }
     }
     
+    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
+        if !(wkWebView.frame.origin.y <= 0.0) {
+            animationView(scene: .headerIsHidden)
+        } else {
+            animationView(scene: .headerIsShow)
+        }
+    }
+    
+    
+    // MARK: - Public func
+    public func refresh() {
+        tabBar.selectedItem = tabBarLeft
+        // 登録者判定
+        if dataManager.isRegistrantCheck {
+            wkWebView.load(Url.login.urlRequest())
+        } else {
+            wkWebView.load(Url.systemServiceList.urlRequest())
+        }
+    }
+    
+    public func refreshSyllabus(subjectName: String, teacherName: String) {
+        webViewModel.subjectName = subjectName
+        webViewModel.teacherName = teacherName
+        wkWebView.load(Url.syllabus.urlRequest())
+    }
+    
+    public func showModalView(scene: MainViewModel.NextModalView){
+        switch scene {
+        case .syllabus:
+            let vc = R.storyboard.syllabus.syllabusViewController()!
+            present(vc, animated: true, completion: nil)
+            vc.delegate = self
+            
+        case .password:
+            let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+            present(vc, animated: true, completion: nil)
+            vc.delegate = self
+            
+        case .aboutThisApp:
+            let vc = R.storyboard.aboutThisApp.aboutThisApp()!
+            present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    
+    // MARK: - Private func
+    enum AnimeOperation {
+        case launchScreen
+        case headerIsHidden
+        case headerIsShow
+    }
     // アニメーション
-    private func animationView(scene: MainViewModel.AnimeOperation) {
+    private func animationView(scene: AnimeOperation) {
         switch scene {
         case .launchScreen:
             
@@ -230,48 +177,65 @@ final class MainViewController: BaseViewController, WKUIDelegate {
                 launchScreenView.removeFromSuperview()
             })
             
-        case .viewDown:
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.08,
-                options: .curveEaseOut,
-                animations: {
-                    self.wkWebView.layer.position.y += 60
-                },
-                completion: { bool in
-                })
             
-        case .viewUp:
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.08,
-                options: .curveEaseOut,
-                animations: {
-                    self.wkWebView.layer.position.y -= 60
-                },
-                completion: { bool in
-                })
+        case .headerIsShow:
+            // Viewを動かして良いのか判定
+            if (wkWebView.frame.origin.y <= 0.0) {
+                let image = "chevron.up"
+                rightButton.setImage(UIImage(systemName: image), for: .normal)
+                // show 60.0に向けて0.5秒かけて移動する
+                UIView.animate(
+                    withDuration: 0.5,
+                    delay: 0.08,
+                    options: .curveEaseOut,
+                    animations: { self.wkWebView.layer.position.y += 60 },
+                    completion: { bool in }
+                )
+            }
             
-        default:
-            return
+            
+        case .headerIsHidden:
+            // Viewを動かして良いのか判定
+            if (0.0 < wkWebView.frame.origin.y) {
+                let image = "chevron.down"
+                rightButton.setImage(UIImage(systemName: image), for: .normal)
+                // hidden 0.0に向けて0.5秒かけて移動する
+                UIView.animate(
+                    withDuration: 0.5,
+                    delay: 0.08,
+                    options: .curveEaseOut,
+                    animations: { self.wkWebView.layer.position.y -= 60 },
+                    completion: { bool in }
+                )
+            }
         }
     }
+        
+}
+
+// MARK: - WKUIDelegate
+extension MainViewModel {
+    
+//    // MARK: - LifeCycle
+//    override func viewDidLoad() {
+//        wkWebView.uiDelegate = self
+//    }
     
     /// 新しいウィンドウで開く「target="_blank"」
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction,
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
         // 変数 url にはリンク先のURLが入る
         webView.load(navigationAction.request)
         return nil
     }
-    
 }
 
 
-// MARK: - WebView
-extension MainViewController: WKNavigationDelegate{
+// MARK: - WKNavigationDelegate
+extension MainViewController: WKNavigationDelegate {
     
     // MARK: - 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
@@ -338,12 +302,10 @@ extension MainViewController: WKNavigationDelegate{
         }
         
         // シラバス自動入力
-        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant),
-           dataManager.isSyllabusSearchOnce {
+        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.subjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-            dataManager.isSyllabusSearchOnce = false
         }
         
         // outlookログイン
@@ -441,12 +403,12 @@ extension MainViewController: UITabBarDelegate{
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 1 {
-            Analytics.logEvent("mainViewCourceManagement", parameters: nil) // Analytics: 調べる・タップ
+            Analytics.logEvent("mainViewCourceManagement", parameters: nil)
         } else {
-            Analytics.logEvent("mainViewManaba", parameters: nil) // Analytics: 調べる・タップ
+            Analytics.logEvent("mainViewManaba", parameters: nil)
         }
         
-        if let url = viewModel.tabBarDetection(num: item.tag,
+        if let url = viewModel.tabBarDetection(tabBarRowValue: item.tag,
                                                isRegist: dataManager.isRegistrantCheck,
                                                courceType: dataManager.courceManagement,
                                                manabaType: dataManager.manaba) {

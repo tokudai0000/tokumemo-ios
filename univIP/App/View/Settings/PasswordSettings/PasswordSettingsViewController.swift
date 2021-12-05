@@ -27,15 +27,36 @@ final class PasswordSettingsViewController: BaseViewController {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var passwordViewButton: UIButton!
     
-    public var delegate : MainViewController!
-    
+    public var delegate : MainViewController?
     private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        
+        cAccountTextFieldCursorSetup(type: .normal)
+        passwordTextFieldCursorSetup(type: .normal)
+        
+        // 枠線
+        cAccountTextField.borderStyle = .none
+        passwordTextField.borderStyle = .none
+        
+        cAccountTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        cAccountTextField.text = dataManager.cAccount
+        passwordTextField.text = dataManager.password
+        
+        // 初期状態時、文字数カウント(初回のみ)
+        cAccountTextSizeLabel.text = "\(dataManager.cAccount.count)/10"
+        passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
+        
+        cAccountMessageLabel.textColor = .red
+        passwordMessageLabel.textColor = .red
+        
+        passwordTextField.isSecureTextEntry = true
+        registerButton.layer.cornerRadius = 5.0
     }
     
     
@@ -49,8 +70,11 @@ final class PasswordSettingsViewController: BaseViewController {
             dataManager.password = passwordTextField.text!
             
             let webViewModel = WebViewModel() // 1つの場合はインスタンス生成どうしたらいいのか
-            delegate.wkWebView.load(webViewModel.url(.login)! as URLRequest)
-            self.dismiss(animated: true, completion: nil)
+            
+            if let delegate = delegate {
+                delegate.wkWebView.load(webViewModel.url(.login)! as URLRequest)
+                dismiss(animated: true, completion: nil)
+            }
         }
     }
     
@@ -67,7 +91,7 @@ final class PasswordSettingsViewController: BaseViewController {
     }
     
     @IBAction func dissmissButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     

@@ -57,7 +57,7 @@ final class SettingViewModel: NSObject {
                         // 前回のcellのidで新しいcellのidを検索（ユーザーが指定した並び順を更新しても保持できる）
                         // 前回のcellのdisplayを検索した新しいcellへ引き継ぎ
                         // 引き継ぎした内容をserviceLに追加後、newLから削除することで新規機能をまとめて追加できる
-                        if let userIndex = newL.firstIndex(where: {$0.id == item.id}) {
+                        if let userIndex = newL.firstIndex(where: {$0.type == item.type}) {
                             var edit = newL[userIndex]
                             edit.isDisplay = item.isDisplay
                             serviceL.append(edit)

@@ -18,7 +18,7 @@ final class DataManager {
     public var displayUrl = ""                      // 現在表示しているURL
     public var isLoggedIn = false                   // ログインしているかの保証
     public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
-    public var isSyllabusSearchOnce = false           // Syllabusの検索を1度きりにする
+//    public var isSyllabusSearchOnce = false           // Syllabusの検索を1度きりにする
     ///
     
     static let singleton = DataManager() // シングルトン・インタンス

@@ -20,7 +20,7 @@ final class SettingsViewController: BaseViewController {
     private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
-    public var delegate : MainViewController!
+    public var delegate : MainViewController?
     
     private let dataManager = DataManager.singleton
     
@@ -28,7 +28,11 @@ final class SettingsViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        // 初回起動時処理
+        viewModel.firstBootDecision()
+        // セル同士の仕切り板(透明)
+        tableView.separatorColor = UIColor(white: 0, alpha: 0)
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,16 +43,20 @@ final class SettingsViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
-        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation // 編集モード時、複数選択を許可
-        tableView.setEditing(viewModel.editSituation, animated: true)            // 編集モード起動、停止
-        viewModel.editSituation = !viewModel.editSituation                       // 編集モード, 使用モード反転
+        // 編集モード時、複数選択を許可
+        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation
+        // 編集モード起動、停止
+        tableView.setEditing(viewModel.editSituation, animated: true)
+        // 編集モード, 使用モード反転
+        viewModel.editSituation = !viewModel.editSituation
+        
         self.tableView.reloadData()
         
         if viewModel.editSituation {
-            Analytics.logEvent("settingViewEditButton", parameters: nil) // Analytics: 調べる・タップ
             editButton.setTitle("編集", for: .normal)
-            editButton.setTitle("完了", for: .normal)
         } else {
+            Analytics.logEvent("settingViewEditButton", parameters: nil)
+            
             editButton.setTitle("完了", for: .normal)
         }
         
@@ -65,15 +73,6 @@ final class SettingsViewController: BaseViewController {
     
     
     // MARK: - Private func
-    private func setup() {
-        // 初回起動時処理
-        viewModel.firstBootDecision()
-        // セル同士の仕切り板
-        tableView.separatorColor = UIColor(white: 0, alpha: 0)
-        self.tableView.reloadData()
-    }
-    
-    
     enum ViewAnimationType {
         case settingViewAppear
         case settingsViewDisappear
@@ -82,47 +81,52 @@ final class SettingsViewController: BaseViewController {
     private func viewAnimated(scene: ViewAnimationType) {
         switch scene {
         case .settingViewAppear:
-            //制約を追加　width:self.view.frame.width/2
-            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.frame.width * (3 / 4) )
-            widthConstraint.isActive = true
-            // メニューの位置を取得する
+            // Viewは1/4残した状態で左からスライドして表示
             let menuPos = self.view.frame.width * (3 / 4)
+            
+            //制約を追加　width:self.view.frame.width/2
+            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!,
+                                                          attribute: .width,
+                                                          relatedBy: .equal,
+                                                          toItem: nil,
+                                                          attribute: .notAnAttribute,
+                                                          multiplier: 1.0,
+                                                          constant: self.view.frame.width * (3 / 4))
+            // 制約有効化
+            widthConstraint.isActive = true
+            
             // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
             self.contentView.layer.position.x = -self.view.frame.width * (3 / 4)
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0,
-                options: .curveEaseOut,
-                animations: {
-                    self.contentView.layer.position.x = menuPos
-                },
-                completion: { bool in
-                })
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: { self.contentView.layer.position.x = menuPos },
+                           completion: { bool in }
+            )
             
             
         case .settingsViewDisappear:
-            UIView.animate(
-                withDuration: 0.2,
-                delay: 0,
-                options: .curveEaseIn,
-                animations: {
-                    self.contentView.layer.position.x = -self.contentView.frame.width
-                },
-                completion: { _ in
-                    self.dismiss(animated: false, completion: nil)
-                })
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseIn,
+                           animations: { self.contentView.layer.position.x = -self.contentView.frame.width },
+                           completion: { _ in self.dismiss(animated: false, completion: nil) }
+            )
         }
     }
     
-    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewOperation) {
-        let response = webViewModel.url(url)
-        if let url = response as URLRequest? {
-            delegate.wkWebView.load(url)
-        } else {
-            delegate.toast(message: word)
-        }
-        delegate.navigationRightButtonOnOff(operation: viewOperation)
-    }
+//    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewMoveType) {
+//        guard let delegate = delegate else {
+//            return
+//        }
+//        let response = webViewModel.url(url)
+//        if let url = response as URLRequest? {
+//            delegate.wkWebView.load(url)
+//        } else {
+//            delegate.toast(message: word)
+//        }
+//        delegate.viewVerticallyMove(operation: viewOperation)
+//    }
     
 }
 
@@ -153,8 +157,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
-        // MARK: - Question 「!」でいいのか
+        let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) // R.swift
         tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
         tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
@@ -192,112 +195,51 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 編集モードでの選択時処理無効
+        // 編集モード判定
         if !viewModel.editSituation {
-            // チェックボックスTrueの場合
             if indexPath.section == 0 {
+                // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
                 dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = true
             }
             viewModel.saveCellList(lists: dataManager.allCellList[0])
             return
         }
         
-        Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil) // Analytics: 調べる・タップ
+        Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil)
         
-        // MARK: - Question シラバスに不具合
-        // viewAnimated(scene: "settingsViewDisappear")**修正必須**
-        self.dismiss(animated: false, completion: nil)
-        
-        guard let delegate = delegate else {
-            return
+        if let delegate = delegate {
+            switch dataManager.allCellList[indexPath[0]][indexPath[1]].type {
+            case .libraryCalendar:                   // [図書館]開館カレンダー
+                dismiss(animated: false, completion: nil)
+                if let url = webViewModel.getLibraryCalenderUrl() {
+                    delegate.wkWebView.load(url)
+                }
+                
+            case .syllabus:                          // シラバス
+                dismiss(animated: false, completion: nil)
+                delegate.showModalView(scene: .syllabus)
+                
+            case .password:                          // パスワード設定
+                dismiss(animated: false, completion: nil)
+                delegate.showModalView(scene: .password)
+                
+            case .aboutThisApp:                      // このアプリについて
+                dismiss(animated: false, completion: nil)
+                delegate.showModalView(scene: .aboutThisApp)
+                
+            default:
+                viewAnimated(scene: .settingsViewDisappear)
+                if let url = URL(string: dataManager.allCellList[indexPath[0]][indexPath[1]].url) {
+                    delegate.wkWebView.load(URLRequest(url: url))
+                    
+                } else {
+                    // エラー処理
+                    AKLog(level: .FATAL, message: "URLフォーマットエラー")
+                    fatalError() // 予期しないため、強制的にアプリを落とす
+                }
+            }
         }
         
-        let cellType = dataManager.allCellList[indexPath[0]][indexPath[1]].type
-        
-        switch cellType {
-        case .libraryWeb:                        // [図書館]Webサイト
-            tableViewEvent(url: .libraryHome,
-                           viewOperation: .down)
-            
-        case .libraryMyPage:                     // [図書館]MyPage
-            tableViewEvent(url: .libraryLogin,
-                           word: "登録者のみ",
-                           viewOperation: .down)
-            
-        case .libraryBookLendingExtension:       // [図書館]貸し出し期間延長
-            tableViewEvent(url: .libraryBookLendingExtension,
-                           word: "登録者のみ",
-                           viewOperation: .down)
-            
-        case .libraryBookPurchaseRequest:        // [図書館]本購入リクエスト
-            tableViewEvent(url: .libraryBookPurchaseRequest,
-                           word: "登録者のみ",
-                           viewOperation: .down)
-            
-        case .libraryCalendar:                   // [図書館]開館カレンダー
-            tableViewEvent(url: .libraryCalendar,
-                           viewOperation: .down)
-            
-        case .syllabus:                          // シラバス
-            delegate.popupView(scene: .syllabus)
-            
-        case .timeTable:                         // 時間割
-            tableViewEvent(url: .timeTable,
-                           word: "登録者のみ",
-                           viewOperation: .up)
-            
-        case .currentTermPerformance:            // 今年の成績表
-            tableViewEvent(url: .currentTermPerformance,
-                           word: "登録者のみ",
-                           viewOperation: .up)
-            
-        case .termPerformance:                   // 成績参照
-            tableViewEvent(url: .termPerformance,
-                           word: "登録者のみ",
-                           viewOperation: .up)
-            
-        case .presenceAbsenceRecord:             // 出欠記録
-            tableViewEvent(url: .presenceAbsenceRecord,
-                           word: "登録者のみ",
-                           viewOperation: .up)
-            
-        case .classQuestionnaire:                // 授業アンケート
-            tableViewEvent(url: .classQuestionnaire,
-                           word: "登録者のみ",
-                           viewOperation: .up)
-            
-        case .mailService:                       // メール
-            tableViewEvent(url: .mailService,
-                           word: "登録者のみ",
-                           viewOperation: .down)
-            
-        case .tokudaiCareerCenter:               // キャリア支援室
-            tableViewEvent(url: .tokudaiCareerCenter,
-                           viewOperation: .down)
-            
-        case .courseRegistration:                // 履修登録
-            tableViewEvent(url: .courseRegistration,
-                           word: "登録者のみ",
-                           viewOperation: .up)
-            
-        case .systemServiceList:                 // システムサービス一覧
-            tableViewEvent(url: .systemServiceList,
-                           viewOperation: .up)
-            
-        case .eLearningList:                     // Eラーニング一覧
-            tableViewEvent(url: .eLearningList,
-                           viewOperation: .up)
-            
-        case .universityWeb:                     // 大学サイト
-            tableViewEvent(url: .universityHome,
-                           viewOperation: .up)
-            
-        case .password:                          // パスワード設定
-            delegate.popupView(scene: .password)
-            
-        case .aboutThisApp:                      // このアプリについて
-            delegate.popupView(scene: .aboutThisApp)
-        }
     }
     
     /// 編集モード時、チェックが外された時

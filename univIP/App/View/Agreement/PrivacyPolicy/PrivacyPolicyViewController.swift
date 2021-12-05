@@ -17,31 +17,16 @@ class PrivacyPolicyViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        textViewSetup()
+        Analytics.logEvent("privacyPolicyViewOpen", parameters: nil)
+        
+        let filePath = R.file.privacyPolicyRtf()!
+        textView.attributedText = Common.rtfFileLoad(url: filePath)
     }
     
     
     // MARK: - IBAction
     @IBAction func backButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    // MARK: - Private
-    private func setup() {
-        Analytics.logEvent("privacyPolicyViewOpen", parameters: nil) // Analytics: 調べる・タップ
-        
-        textView.isEditable = false
-        textView.isSelectable = true
-    }
-    
-    private func textViewSetup() {
-        guard let filePath = R.file.privacyPolicyRtf() else {
-            return // faitalで落とすべきか？
-        }
-        
-        textView.attributedText = Common.rtfFileLoad(url: filePath)
+        dismiss(animated: true, completion: nil)
     }
     
 }
