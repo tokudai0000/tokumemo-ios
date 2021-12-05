@@ -14,8 +14,9 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - IBOutlet
     @IBOutlet weak var wkWebView: WKWebView!
-    @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var goBackButton: UIButton!
+    @IBOutlet weak var goForwardButton: UIButton!
+    @IBOutlet weak var showServiceListsButton: UIButton!
     
     private let model = Model()
     private let viewModel = MainViewModel()
@@ -56,39 +57,13 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         vc.delegate = self
     }
     
-    @IBAction func backButton(_ sender: Any) {
-        Analytics.logEvent("mainViewBackButton", parameters: nil)
-        
+    @IBAction func tappedBackButton(_ sender: Any) {
         wkWebView.goBack()
     }
-    
-    @IBAction func refreshButton(_ sender: Any) {
-        Analytics.logEvent("mainViewRefreshButton", parameters: nil)
-        
-        refresh()
-        animationView(scene: .headerIsHidden)
+    @IBAction func tappedForwardButton(_ sender: Any) {
+        wkWebView.goForward()
     }
-    
-    @IBAction func webViewChangePCorMB(_ sender: Any) {
-        Analytics.logEvent("mainViewWebViewChangePCorMB", parameters: nil)
         
-        let imageName = viewModel.webViewChangeButtonImage(displayUrl: dataManager.displayUrl)
-        let url = viewModel.webViewChangeUrl(displayUrl: dataManager.displayUrl)
-        
-
-        if let url = url {
-            wkWebView.load(url)
-        }
-    }
-    
-    @IBAction func webViewMoveToUpDownButton(_ sender: Any) {
-        if !(wkWebView.frame.origin.y <= 0.0) {
-            animationView(scene: .headerIsHidden)
-        } else {
-            animationView(scene: .headerIsShow)
-        }
-    }
-    
     
     // MARK: - Public func
     public func refresh() {
@@ -313,13 +288,15 @@ extension MainViewController: WKNavigationDelegate {
         ///
         /// Buttonデザインの変更
         ///
-        
 
-        
-        // 教務事務システム、マナバ以外の画面かつ戻れる時
-        let isBackEnabled = !webViewModel.isCourceManagementOrManaba() && webView.canGoBack
-        backButton.isEnabled = isBackEnabled
-        backButton.alpha = isBackEnabled ? 1.0 : 0.4
+        DispatchQueue.main.async {
+            // 教務事務システム、マナバ以外の画面かつ戻れる時
+            let isBackEnabled = !self.webViewModel.isCourceManagementOrManaba() && webView.canGoBack
+            self.goBackButton.isEnabled = isBackEnabled
+            self.goBackButton.alpha = isBackEnabled ? 1.0 : 0.4
+            self.goForwardButton.isEnabled = webView.canGoForward
+            self.goForwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
+        }
         
     }
     
