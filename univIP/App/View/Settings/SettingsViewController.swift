@@ -15,7 +15,7 @@ final class SettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private let model = Model()
-    private let webViewModel = WebViewModel()
+//    private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
     public var delegate : MainViewController?
@@ -39,7 +39,10 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
     
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(viewModel.sectionHight)
+        if section == 0 {
+            return 0
+        }
+        return 1
     }
     
     /// セクション数
@@ -47,9 +50,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
         return dataManager.allCellList.count
     }
     
-    /// セクションのタイトル
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return model.sectionLists[section]
+    // セクションの背景とテキストの色を変更する
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == 1 {
+            view.tintColor = .gray
+        }
     }
     
     /// セクション内のセル数
@@ -111,10 +116,10 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
         dismiss(animated: false, completion: nil)
         if let delegate = delegate {
             switch dataManager.allCellList[indexPath[0]][indexPath[1]].type {
-            case .libraryCalendar:                   // [図書館]開館カレンダー
-                if let url = webViewModel.getLibraryCalenderUrl() {
-                    delegate.wkWebView.load(url)
-                }
+//            case .libraryCalendar:                   // [図書館]開館カレンダー
+//                if let url = webViewModel.getLibraryCalenderUrl() {
+//                    delegate.webView.load(url)
+//                }
                 
             case .syllabus:                          // シラバス
                 delegate.showModalView(scene: .syllabus)
@@ -127,7 +132,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
                 
             default:
                 if let url = URL(string: dataManager.allCellList[indexPath[0]][indexPath[1]].url) {
-                    delegate.wkWebView.load(URLRequest(url: url))
+                    delegate.webView.load(URLRequest(url: url))
                     
                 } else {
                     // エラー処理

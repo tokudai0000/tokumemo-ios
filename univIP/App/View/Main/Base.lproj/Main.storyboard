@@ -138,7 +138,7 @@
                         <outlet property="goBackButton" destination="IUH-6M-2c4" id="2oZ-Hs-zfb"/>
                         <outlet property="goForwardButton" destination="giU-2e-I5f" id="EKD-iX-vTS"/>
                         <outlet property="showServiceListsButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
-                        <outlet property="wkWebView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
+                        <outlet property="webView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

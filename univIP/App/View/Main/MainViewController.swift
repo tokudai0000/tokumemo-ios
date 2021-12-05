@@ -10,32 +10,33 @@ import UIKit
 import WebKit
 import FirebaseAnalytics
 
-final class MainViewController: BaseViewController, WKUIDelegate {
+final class MainViewController: UIViewController, WKUIDelegate {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var wkWebView: WKWebView!
+    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var goBackButton: UIButton!
     @IBOutlet weak var goForwardButton: UIButton!
     @IBOutlet weak var showServiceListsButton: UIButton!
     
     private let model = Model()
     private let viewModel = MainViewModel()
-    private let webViewModel = WebViewModel()
     private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         launchScreenAnimation()
-        wkWebView.navigationDelegate = self
-        wkWebView.uiDelegate = self
+        
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
         
         // 登録者判定
         if dataManager.isRegistrantCheck {
-            wkWebView.load(Url.login.urlRequest())
+            webView.load(Url.login.urlRequest())
         } else {
-            wkWebView.load(Url.systemServiceList.urlRequest())
+            webView.load(Url.systemServiceList.urlRequest())
         }
     }
     
@@ -43,8 +44,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
         super.viewDidAppear(false)
         // 利用規約同意判定
         if !dataManager.isAgreementPersonDecision {
-            Analytics.logEvent("calledFirstBootSetup", parameters: nil)
-            
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
@@ -52,29 +51,28 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     // MARK: - IBAction
+    @IBAction func tappedBackButton(_ sender: Any) {
+        webView.goBack()
+    }
+    
+    @IBAction func tappedForwardButton(_ sender: Any) {
+        webView.goForward()
+    }
+    
     @IBAction func settingMenuButton(_ sender: Any) {
         let vc = R.storyboard.settings.settingsViewController()!
         present(vc, animated: false, completion: nil)
         vc.delegate = self
     }
     
-    @IBAction func tappedBackButton(_ sender: Any) {
-        wkWebView.goBack()
-    }
-    
-    @IBAction func tappedForwardButton(_ sender: Any) {
-        wkWebView.goForward()
-    }
-        
     
     // MARK: - Public func
-    public func refreshSyllabus(subjectName: String, teacherName: String) {
-        webViewModel.subjectName = subjectName
-        webViewModel.teacherName = teacherName
-        wkWebView.load(Url.syllabus.urlRequest())
+    enum NextModalView {
+        case syllabus
+        case password
+        case aboutThisApp
     }
-    
-    public func showModalView(scene: MainViewModel.NextModalView){
+    public func showModalView(scene: NextModalView){
         switch scene {
         case .syllabus:
             let vc = R.storyboard.syllabus.syllabusViewController()!
@@ -91,10 +89,15 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             present(vc, animated: true, completion: nil)
         }
     }
+    // シラバス検索ボタンを押された際
+    public func refreshSyllabus(subjectName: String, teacherName: String) {
+        viewModel.subjectName = subjectName
+        viewModel.teacherName = teacherName
+        webView.load(Url.syllabus.urlRequest())
+    }
     
     
     // MARK: - Private func
-    // アニメーション
     private func launchScreenAnimation() {
         let launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
@@ -129,27 +132,7 @@ final class MainViewController: BaseViewController, WKUIDelegate {
             launchScreenView.removeFromSuperview()
         })
     }
-        
-}
-
-// MARK: - WKUIDelegate
-extension MainViewModel {
     
-//    // MARK: - LifeCycle
-//    override func viewDidLoad() {
-//        wkWebView.uiDelegate = self
-//    }
-    
-    /// 新しいウィンドウで開く「target="_blank"」
-    func webView(_ webView: WKWebView,
-                 createWebViewWith configuration: WKWebViewConfiguration,
-                 for navigationAction: WKNavigationAction,
-                 windowFeatures: WKWindowFeatures) -> WKWebView? {
-        
-        // 変数 url にはリンク先のURLが入る
-        webView.load(navigationAction.request)
-        return nil
-    }
 }
 
 
@@ -162,37 +145,26 @@ extension MainViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         // 現在の表示URL
-        guard let url = navigationAction.request.url else {
+        guard let displayUrl = navigationAction.request.url else {
             decisionHandler(.cancel)
             AKLog(level: .ERROR, message: "リクエストエラー")
             return
         }
-        Analytics.logEvent("webViewLoaded", parameters: [AnalyticsParameterItems: "\(url)"]) // Analytics: 調べる・タップ
+        
         // URLをViewModelに保存
-        webViewModel.registUrl(url)
+        viewModel.registUrl(displayUrl)
         
         // 許可されたドメインか判定
-        if !webViewModel.isDomeinCheck(url) {
-            if let url = URL(string: dataManager.displayUrl) {
-                AKLog(level: .DEBUG, message: "Safariで開く")
-                UIApplication.shared.open(url)
-                
-            } else {
-                AKLog(level: .ERROR, message: "URL変換エラー")
-                toast(message: "失敗")
-            }
+        if !viewModel.isDomeinCheck(displayUrl) {
+            AKLog(level: .DEBUG, message: "Safariで開く")
+            UIApplication.shared.open(displayUrl)
             decisionHandler(.cancel)
             return
         }
         
         // タイムアウト判定
-        if webViewModel.isJudgeUrl(.timeOut, isRegistrant: dataManager.isRegistrantCheck) {
-            let response = webViewModel.url(.login)
-            if let url = response as URLRequest? {
-                webView.load(url)
-            } else {
-                toast(message: "失敗")
-            }
+        if viewModel.isJudgeUrl(.timeOut, isRegistrant: dataManager.isRegistrantCheck) {
+            webView.load(Url.login.urlRequest())
         }
         
         decisionHandler(.allow)
@@ -202,40 +174,35 @@ extension MainViewController: WKNavigationDelegate {
     
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let isRegistrant = dataManager.isRegistrantCheck
-        // 非登録者がログイン画面を開いた時
-        if webViewModel.isJudgeUrl(.registrantAndLostConnectionDecision, isRegistrant: isRegistrant) {
-            toast(message: "左上のボタンからパスワードを設定することで、自動でログインされる様になりますよ", interval: 3)
-        }
-        // MARK: - Question わける
+
         // 自動ログイン
-        if webViewModel.isJudgeUrl(.login, isRegistrant: isRegistrant) {
+        if viewModel.isJudgeUrl(.login) {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
         }
         
         // 教務事務システム、アンケート催促スキップ
-        if webViewModel.isJudgeUrl(.enqueteReminder, isRegistrant: isRegistrant) {
+        if viewModel.isJudgeUrl(.enqueteReminder) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
         
         // シラバス自動入力
-        if webViewModel.isJudgeUrl(.syllabus, isRegistrant: isRegistrant) {
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(webViewModel.subjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(webViewModel.teacherName)'", completionHandler:  nil)
+        if viewModel.isJudgeUrl(.syllabus) {
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
         // outlookログイン
-        if webViewModel.isJudgeUrl(.outlook, isRegistrant: isRegistrant) {
+        if viewModel.isJudgeUrl(.outlook) {
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
         }
         
         // キャリア支援室ログイン
-        if webViewModel.isJudgeUrl(.tokudaiCareerCenter, isRegistrant: isRegistrant) {
+        if viewModel.isJudgeUrl(.tokudaiCareerCenter) {
             webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
         }
@@ -244,10 +211,10 @@ extension MainViewController: WKNavigationDelegate {
         ///
         /// Buttonデザインの変更
         ///
-
+        
         DispatchQueue.main.async {
             // 教務事務システム、マナバ以外の画面かつ戻れる時
-            let isBackEnabled = !self.webViewModel.isCourceManagementOrManaba() && webView.canGoBack
+            let isBackEnabled = webView.canGoBack//!self.viewModel.isCourceManagementOrManaba() && webView.canGoBack
             self.goBackButton.isEnabled = isBackEnabled
             self.goBackButton.alpha = isBackEnabled ? 1.0 : 0.4
             self.goForwardButton.isEnabled = webView.canGoForward
@@ -312,28 +279,22 @@ extension MainViewController: WKNavigationDelegate {
 }
 
 
-// MARK: - TabBar
-extension MainViewController: UITabBarDelegate{
+// MARK: - WKUIDelegate
+extension MainViewModel {
     
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if item.tag == 1 {
-            Analytics.logEvent("mainViewCourceManagement", parameters: nil)
-        } else {
-            Analytics.logEvent("mainViewManaba", parameters: nil)
-        }
+    //    // MARK: - LifeCycle
+    //    override func viewDidLoad() {
+    //        wkWebView.uiDelegate = self
+    //    }
+    
+    /// 新しいウィンドウで開く「target="_blank"」
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
         
-        if let url = viewModel.tabBarDetection(tabBarRowValue: item.tag,
-                                               isRegist: dataManager.isRegistrantCheck,
-                                               courceType: dataManager.courceManagement,
-                                               manabaType: dataManager.manaba) {
-            wkWebView.load(url as URLRequest)
-            
-        } else {
-            AKLog(level: .ERROR, message: "error")
-            toast(message: "error")
-            
-        }
+        // 変数 url にはリンク先のURLが入る
+        webView.load(navigationAction.request)
+        return nil
     }
 }
-
-

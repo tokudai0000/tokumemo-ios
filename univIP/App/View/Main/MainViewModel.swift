@@ -6,102 +6,156 @@
 //
 
 import Foundation
+import Kanna
 
-// MARK: - Question NSObjectなし
-final class MainViewModel: NSObject {
+final class MainViewModel {
     
     private let model = Model()
-    private let webViewModel = WebViewModel()
     private let dataManager = DataManager.singleton
     
-    
-    enum NextModalView {
-        case syllabus
-        case password
-        case aboutThisApp
-    }
-    
-    enum CourceManagementManabaPcOrMobile {
-        case courceManagementPC
-        case courceManagementMobile
-        case manabaPC
-        case manabaMobile
-    }
-    
-    enum TabBarItem: Int {
-        case courceManagement = 1
-        case manaba = 2
-    }
-    
-    enum ViewMoveIcon {
-        case up
-        case down
-    }
-    
-    enum ViewMoveType {
-        case headerIsHidden
-        case headerIsShow
-        case headerIsReverse
-    }
-    
-    
-    // MARK: - Public
-    
-    /// タブバーの判定
-    public func tabBarDetection(tabBarRowValue: Int,
-                                isRegist: Bool,
-                                courceType: String,
-                                manabaType: String) -> URLRequest?
-    {
-        let tabBarItem = TabBarItem(rawValue: tabBarRowValue)!
+    public var subjectName = ""
+    public var teacherName = ""
         
-        switch tabBarItem {
-        case .courceManagement:
-            if isRegist {
-                if courceType == "PC" {
-                    return webViewModel.url(.courceManagementHomePC)
-                } else {
-                    return webViewModel.url(.courceManagementHomeSP)
-                }
-                
-            } else {
-                return webViewModel.url(.systemServiceList)
+    /// 前回のURLと現在表示しているURLの保持
+    public func registUrl(_ url: URL) {
+        
+        dataManager.forwardDisplayUrl = dataManager.displayUrl
+        dataManager.displayUrl = url.absoluteString
+        
+        print("displayURL : \(dataManager.displayUrl)")
+    }
+
+    /// 現在のURLが許可されたドメインか判定
+    public func isDomeinCheck(_ url: URL) -> Bool {
+        
+        guard let host = url.host else{
+            AKLog(level: .ERROR, message: "ドメイン取得エラー")
+            return false
+        }
+        var trigger = false
+        for allow in model.allowDomains {
+            if host.contains(allow){
+                trigger = true
             }
+        }
+        return trigger
+    }
+
+    enum Scene {
+        case login
+        case enqueteReminder
+        case syllabus
+        case outlook
+        case tokudaiCareerCenter
+        case timeOut
+        case registrantAndLostConnectionDecision
+    }
+    
+    /// 現在のURLがsceneかどうか判定
+    public func isJudgeUrl(_ scene: Scene, isRegistrant: Bool = DataManager.singleton.isRegistrantCheck) -> Bool {
+        let forwardUrl = dataManager.forwardDisplayUrl
+        let displayUrl = dataManager.displayUrl
+        var isLists:[Bool] = []
+        
+        switch scene {
+        case .login:
+            isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.suffix(2)=="s1")
+            isLists.append(isRegistrant)
             
-        case .manaba:
-            if isRegist {
-                if manabaType == "PC" {
-                    return webViewModel.url(.manabaPC)
-                } else {
-                    return webViewModel.url(.manabaSP)
-                }
-                
-            } else {
-                return webViewModel.url(.eLearningList)
+            
+        case .enqueteReminder:
+            isLists.append(!forwardUrl.contains(Url.enqueteReminder.string()))
+            isLists.append(displayUrl.contains(Url.enqueteReminder.string()))
+            
+            
+        case .syllabus:
+            isLists.append(forwardUrl != Url.syllabus.string())
+            isLists.append(displayUrl.contains(Url.syllabus.string()))
+            
+            
+        case .outlook:
+            isLists.append(!forwardUrl.contains(Url.outlookLogin.string()))
+            isLists.append(displayUrl.contains(Url.outlookLogin.string()))
+            
+            
+        case .tokudaiCareerCenter:
+            isLists.append(!forwardUrl.contains(Url.tokudaiCareerCenter.string()))
+            isLists.append(displayUrl == Url.tokudaiCareerCenter.string())
+            
+            
+        case .timeOut:
+            isLists.append(displayUrl == Url.timeOut.string())
+            
+            
+        case .registrantAndLostConnectionDecision:
+            isLists.append(!isRegistrant)
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            
+        }
+        
+        for item in isLists {
+            if !item {
+                return false
             }
         }
+        if scene == .enqueteReminder {
+            dataManager.isLoggedIn = true  // ログインできていることを保証
+        }
+        return true
     }
     
-    public func webViewChangeButtonImage(displayUrl: String) -> String? {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return R.image.pcIcon.name
-        case Url.courceManagementHomePC.string():      return R.image.mobileIcon.name
-        case Url.manabaHomeMobile.string():            return R.image.pcIcon.name
-        case Url.manabaHomePC.string():                return R.image.mobileIcon.name
-
-        default:                                       return nil
+    public func getCurrentTermPerformance() -> URLRequest {
+        let current = Calendar.current
+        var year = current.component(.year, from: Date())
+        let month = current.component(.month, from: Date())
+        
+        if (month <= 3){ // 1月から3月までは前年の成績であるから
+            year -= 1
+        }
+        let termPerformanceYearURL = Url.currentTermPerformance.string() + String(year)
+        if let url = URL(string: termPerformanceYearURL) {
+            return URLRequest(url: url)
+            
+        } else {
+            // エラー処理
+            AKLog(level: .FATAL, message: "URLフォーマットエラー")
+            fatalError() // 予期しないため、強制的にアプリを落とす
         }
     }
     
-    public func webViewChangeUrl(displayUrl: String) -> URLRequest? {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return Url.courceManagementHomeMobile.urlRequest()
-        case Url.courceManagementHomePC.string():      return Url.courceManagementHomePC.urlRequest()
-        case Url.manabaHomeMobile.string():            return Url.manabaHomeMobile.urlRequest()
-        case Url.manabaHomePC.string():                return Url.manabaHomePC.urlRequest()
-
-        default:                                       return nil
+    public func getLibraryCalenderUrl() -> URLRequest? {
+        let url = NSURL(string: Url.libraryHome.string())
+        let data = NSData(contentsOf: url! as URL)
+        
+        var calenderURL = ""
+        
+        do {
+            let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
+            for node in doc.xpath("//a") {
+                guard let str = node["href"] else {
+                    return nil
+                }
+                if str.contains("pub/pdf/calender/calender_main_"){
+                    calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
+                    if let url = URL(string: calenderURL) {
+                        return URLRequest(url: url)
+                        
+                    } else {
+                        // エラー処理
+                        AKLog(level: .FATAL, message: "URLフォーマットエラー")
+                        fatalError() // 予期しないため、強制的にアプリを落とす
+                    }
+                }
+            }
+            return nil
+            
+        } catch {
+            return nil
         }
     }
+    
+
 
 }
