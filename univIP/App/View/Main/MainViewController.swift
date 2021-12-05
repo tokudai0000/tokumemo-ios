@@ -27,17 +27,20 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        animationView(scene: .launchScreen)
+        launchScreenAnimation()
         wkWebView.navigationDelegate = self
         wkWebView.uiDelegate = self
         
-        refresh()
+        // 登録者判定
+        if dataManager.isRegistrantCheck {
+            wkWebView.load(Url.login.urlRequest())
+        } else {
+            wkWebView.load(Url.systemServiceList.urlRequest())
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        Analytics.logEvent("mainViewOpened", parameters: nil)
-        
         // 利用規約同意判定
         if !dataManager.isAgreementPersonDecision {
             Analytics.logEvent("calledFirstBootSetup", parameters: nil)
@@ -50,8 +53,6 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     // MARK: - IBAction
     @IBAction func settingMenuButton(_ sender: Any) {
-        Analytics.logEvent("mainViewSettingMenuButton", parameters: nil)
-        
         let vc = R.storyboard.settings.settingsViewController()!
         present(vc, animated: false, completion: nil)
         vc.delegate = self
@@ -60,21 +61,13 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     @IBAction func tappedBackButton(_ sender: Any) {
         wkWebView.goBack()
     }
+    
     @IBAction func tappedForwardButton(_ sender: Any) {
         wkWebView.goForward()
     }
         
     
     // MARK: - Public func
-    public func refresh() {
-        // 登録者判定
-        if dataManager.isRegistrantCheck {
-            wkWebView.load(Url.login.urlRequest())
-        } else {
-            wkWebView.load(Url.systemServiceList.urlRequest())
-        }
-    }
-    
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         webViewModel.subjectName = subjectName
         webViewModel.teacherName = teacherName
@@ -101,77 +94,40 @@ final class MainViewController: BaseViewController, WKUIDelegate {
     
     
     // MARK: - Private func
-    enum AnimeOperation {
-        case launchScreen
-        case headerIsHidden
-        case headerIsShow
-    }
     // アニメーション
-    private func animationView(scene: AnimeOperation) {
-        switch scene {
-        case .launchScreen:
+    private func launchScreenAnimation() {
+        let launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
+        launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
+        
+        let imageView = UIImageView(image: R.image.mainIconWhite())
+        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
+        imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
+        
+        self.view.addSubview(launchScreenView)
+        self.view.addSubview(imageView)
+        
+        //少し縮小するアニメーション
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: UIView.AnimationOptions.curveEaseOut,
+                       animations: { () in
+            imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }, completion: { (Bool) in
             
-            let launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-            launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
-            launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
-            
-            let imageView = UIImageView(image: R.image.mainIconWhite())
-            imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
-            imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
-            
-            self.view.addSubview(launchScreenView)
-            self.view.addSubview(imageView)
-            
-            //少し縮小するアニメーション
-            UIView.animate(withDuration: 0.3,
-                           delay: 0,
-                           options: UIView.AnimationOptions.curveEaseOut,
-                           animations: { () in
-                imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            }, completion: { (Bool) in
-                
-            })
-            
-            //拡大させて、消えるアニメーション
-            UIView.animate(withDuration: 0.5,
-                           delay: 0.3,
-                           options: UIView.AnimationOptions.curveEaseOut,
-                           animations: { () in
-                imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
-                imageView.alpha = 1
-            }, completion: { (Bool) in
-                imageView.removeFromSuperview()
-                launchScreenView.removeFromSuperview()
-            })
-            
-            
-        case .headerIsShow:
-            // Viewを動かして良いのか判定
-            if (wkWebView.frame.origin.y <= 0.0) {
-                // show 60.0に向けて0.5秒かけて移動する
-                UIView.animate(
-                    withDuration: 0.5,
-                    delay: 0.08,
-                    options: .curveEaseOut,
-                    animations: { self.wkWebView.layer.position.y += 60 },
-                    completion: { bool in }
-                )
-            }
-            
-            
-        case .headerIsHidden:
-            // Viewを動かして良いのか判定
-            if (0.0 < wkWebView.frame.origin.y) {
-                // hidden 0.0に向けて0.5秒かけて移動する
-                UIView.animate(
-                    withDuration: 0.5,
-                    delay: 0.08,
-                    options: .curveEaseOut,
-                    animations: { self.wkWebView.layer.position.y -= 60 },
-                    completion: { bool in }
-                )
-            }
-        }
+        })
+        
+        //拡大させて、消えるアニメーション
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.3,
+                       options: UIView.AnimationOptions.curveEaseOut,
+                       animations: { () in
+            imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
+            imageView.alpha = 1
+        }, completion: { (Bool) in
+            imageView.removeFromSuperview()
+            launchScreenView.removeFromSuperview()
+        })
     }
         
 }

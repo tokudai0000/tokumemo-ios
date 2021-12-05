@@ -13,15 +13,12 @@ final class SettingsViewController: BaseViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var editButton: UIButton!
     
     private let model = Model()
     private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
     public var delegate : MainViewController?
-    
     private let dataManager = DataManager.singleton
     
     
@@ -37,83 +34,82 @@ final class SettingsViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
-        viewAnimated(scene: .settingViewAppear)
+//        viewAnimated(scene: .settingViewAppear)
     }
     
     
     // MARK: - IBAction
-    @IBAction func editButton(_ sender: Any) {
-        // 編集モード時、複数選択を許可
-        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation
-        // 編集モード起動、停止
-        tableView.setEditing(viewModel.editSituation, animated: true)
-        // 編集モード, 使用モード反転
-        viewModel.editSituation = !viewModel.editSituation
-        
-        self.tableView.reloadData()
-        
-        if viewModel.editSituation {
-            editButton.setTitle("編集", for: .normal)
-        } else {
-            Analytics.logEvent("settingViewEditButton", parameters: nil)
-            
-            editButton.setTitle("完了", for: .normal)
-        }
-        
-        // 編集モード時、display=true のセルを選択状態にする
-        if !viewModel.editSituation {
-            for i in 0 ..< dataManager.allCellList[0].count {
-                if dataManager.allCellList[0][i].isDisplay {
-                    self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
-                }
-            }
-        }
-        
-    }
+//    @IBAction func editButton(_ sender: Any) {
+//        // 編集モード時、複数選択を許可
+//        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation
+//        // 編集モード起動、停止
+//        tableView.setEditing(viewModel.editSituation, animated: true)
+//        // 編集モード, 使用モード反転
+//        viewModel.editSituation = !viewModel.editSituation
+//
+//        self.tableView.reloadData()
+//
+//        if viewModel.editSituation {
+//            editButton.setTitle("編集", for: .normal)
+//        } else {
+//            Analytics.logEvent("settingViewEditButton", parameters: nil)
+//
+//            editButton.setTitle("完了", for: .normal)
+//        }
+//
+//        // 編集モード時、display=true のセルを選択状態にする
+//        if !viewModel.editSituation {
+//            for i in 0 ..< dataManager.allCellList[0].count {
+//                if dataManager.allCellList[0][i].isDisplay {
+//                    self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
+//                }
+//            }
+//        }
+//    }
     
     
     // MARK: - Private func
-    enum ViewAnimationType {
-        case settingViewAppear
-        case settingsViewDisappear
-    }
+//    enum ViewAnimationType {
+//        case settingViewAppear
+//        case settingsViewDisappear
+//    }
     
-    private func viewAnimated(scene: ViewAnimationType) {
-        switch scene {
-        case .settingViewAppear:
-            // Viewは1/4残した状態で左からスライドして表示
-            let menuPos = self.view.frame.width * (3 / 4)
-            
-            //制約を追加　width:self.view.frame.width/2
-            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!,
-                                                          attribute: .width,
-                                                          relatedBy: .equal,
-                                                          toItem: nil,
-                                                          attribute: .notAnAttribute,
-                                                          multiplier: 1.0,
-                                                          constant: self.view.frame.width * (3 / 4))
-            // 制約有効化
-            widthConstraint.isActive = true
-            
-            // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
-            self.contentView.layer.position.x = -self.view.frame.width * (3 / 4)
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           options: .curveEaseOut,
-                           animations: { self.contentView.layer.position.x = menuPos },
-                           completion: { bool in }
-            )
-            
-            
-        case .settingsViewDisappear:
-            UIView.animate(withDuration: 0.2,
-                           delay: 0,
-                           options: .curveEaseIn,
-                           animations: { self.contentView.layer.position.x = -self.contentView.frame.width },
-                           completion: { _ in self.dismiss(animated: false, completion: nil) }
-            )
-        }
-    }
+//    private func viewAnimated(scene: ViewAnimationType) {
+//        switch scene {
+//        case .settingViewAppear:
+//            // Viewは1/4残した状態で左からスライドして表示
+//            let menuPos = self.view.frame.width * (3 / 4)
+//
+//            //制約を追加　width:self.view.frame.width/2
+//            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!,
+//                                                          attribute: .width,
+//                                                          relatedBy: .equal,
+//                                                          toItem: nil,
+//                                                          attribute: .notAnAttribute,
+//                                                          multiplier: 1.0,
+//                                                          constant: self.view.frame.width * (3 / 4))
+//            // 制約有効化
+//            widthConstraint.isActive = true
+//
+//            // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
+//            self.contentView.layer.position.x = -self.view.frame.width * (3 / 4)
+//            UIView.animate(withDuration: 0.5,
+//                           delay: 0,
+//                           options: .curveEaseOut,
+//                           animations: { self.contentView.layer.position.x = menuPos },
+//                           completion: { bool in }
+//            )
+//
+//
+//        case .settingsViewDisappear:
+//            UIView.animate(withDuration: 0.2,
+//                           delay: 0,
+//                           options: .curveEaseIn,
+//                           animations: { self.contentView.layer.position.x = -self.contentView.frame.width },
+//                           completion: { _ in self.dismiss(animated: false, completion: nil) }
+//            )
+//        }
+//    }
     
 //    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewMoveType) {
 //        guard let delegate = delegate else {
@@ -228,7 +224,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                 delegate.showModalView(scene: .aboutThisApp)
                 
             default:
-                viewAnimated(scene: .settingsViewDisappear)
+//                viewAnimated(scene: .settingsViewDisappear)
                 if let url = URL(string: dataManager.allCellList[indexPath[0]][indexPath[1]].url) {
                     delegate.wkWebView.load(URLRequest(url: url))
                     
@@ -270,7 +266,8 @@ extension SettingsViewController {
         super.touchesEnded(touches, with: event)
         for touch in touches {
             if touch.view?.tag == 1 {
-                viewAnimated(scene: .settingsViewDisappear)
+                dismiss(animated: false, completion: nil)
+//                viewAnimated(scene: .settingsViewDisappear)
             }
         }
     }
