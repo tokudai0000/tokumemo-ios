@@ -62,6 +62,7 @@ struct Model {
         case eLearningList                  // Eラーニング一覧
         case universityWeb                  // 大学サイト
         
+        case cellSort                       // 並び替え
         case password                       // パスワード
         case aboutThisApp                   // このアプリについて
     }
@@ -98,7 +99,8 @@ struct Model {
                                    CellList(type: .eLearningList,               url: Url.eLearningList.string(),               title: "Eラーニング一覧"),
                                    CellList(type: .universityWeb,               url: Url.universityHome.string(),              title: "大学サイト")]
     
-    public let settingCellLists = [CellList(type: .password,                                                                   title: "パスワード"),
+    public let settingCellLists = [CellList(type: .cellSort,                                                                   title: "並び替え・編集"),
+                                   CellList(type: .password,                                                                   title: "パスワード"),
                                    CellList(type: .aboutThisApp,                                                               title: "このアプリについて")]
     
 }

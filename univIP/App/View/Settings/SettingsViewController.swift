@@ -32,7 +32,7 @@ final class SettingsViewController: UIViewController {
 
 
 // MARK: - TableView
-extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -119,6 +119,9 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
                 
             case .syllabus:                          // シラバス
                 delegate.showModalView(scene: .syllabus)
+                
+            case .cellSort:
+                delegate.showModalView(scene: .cellSort)
                 
             case .password:                          // パスワード設定
                 delegate.showModalView(scene: .password)

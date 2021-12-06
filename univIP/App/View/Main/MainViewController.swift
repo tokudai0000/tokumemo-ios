@@ -69,6 +69,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
     // MARK: - Public func
     enum NextModalView {
         case syllabus
+        case cellSort
         case password
         case aboutThisApp
     }
@@ -78,6 +79,10 @@ final class MainViewController: UIViewController, WKUIDelegate {
             let vc = R.storyboard.syllabus.syllabusViewController()!
             present(vc, animated: true, completion: nil)
             vc.delegate = self
+            
+        case .cellSort:
+            let vc = R.storyboard.cellSort.cellSort()!
+            present(vc, animated: true, completion: nil)
             
         case .password:
             let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
