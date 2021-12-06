@@ -16,9 +16,7 @@ final class DataManager {
     ///
     public var forwardDisplayUrl = ""               // 1つ前のURL
     public var displayUrl = ""                      // 現在表示しているURL
-    public var isLoggedIn = false                   // ログインしているかの保証
     public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
-//    public var isSyllabusSearchOnce = false           // Syllabusの検索を1度きりにする
     ///
     
     static let singleton = DataManager() // シングルトン・インタンス
@@ -53,7 +51,6 @@ final class DataManager {
             if let value = try keychain.get(key) {
                 return value
             }
-            AKLog(level: .ERROR, message: "error: Datamanager.getKeyChain do")
             return ""
         } catch {
             AKLog(level: .ERROR, message: "error: Datamanager.getKeyChain catch")

@@ -15,16 +15,16 @@ final class MainViewModel {
     
     public var subjectName = ""
     public var teacherName = ""
-        
+    
     /// 前回のURLと現在表示しているURLの保持
     public func registUrl(_ url: URL) {
         
         dataManager.forwardDisplayUrl = dataManager.displayUrl
         dataManager.displayUrl = url.absoluteString
         
-        print("displayURL : \(dataManager.displayUrl)")
+        print("displayURL:\n \(dataManager.displayUrl) \n")
     }
-
+    
     /// 現在のURLが許可されたドメインか判定
     public func isDomeinCheck(_ url: URL) -> Bool {
         
@@ -40,7 +40,7 @@ final class MainViewModel {
         }
         return trigger
     }
-
+    
     enum Scene {
         case login
         case enqueteReminder
@@ -100,9 +100,6 @@ final class MainViewModel {
                 return false
             }
         }
-        if scene == .enqueteReminder {
-            dataManager.isLoggedIn = true  // ログインできていることを保証
-        }
         return true
     }
     
@@ -156,6 +153,4 @@ final class MainViewModel {
         }
     }
     
-
-
 }
