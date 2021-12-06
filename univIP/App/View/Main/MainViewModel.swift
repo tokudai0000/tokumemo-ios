@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Kanna
 
 final class MainViewModel {
     
@@ -52,9 +51,11 @@ final class MainViewModel {
     }
     
     /// 現在のURLがsceneかどうか判定
-    public func isJudgeUrl(_ scene: Scene, isRegistrant: Bool = DataManager.singleton.isRegistrantCheck) -> Bool {
-        let forwardUrl = dataManager.forwardDisplayUrl
-        let displayUrl = dataManager.displayUrl
+    public func isJudgeUrl(_ scene: Scene,
+                           isRegistrant: Bool = DataManager.singleton.isRegistrantCheck,
+                           forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
+                           displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
+        
         var isLists:[Bool] = []
         
         switch scene {
@@ -101,56 +102,6 @@ final class MainViewModel {
             }
         }
         return true
-    }
-    
-    public func getCurrentTermPerformance() -> URLRequest {
-        let current = Calendar.current
-        var year = current.component(.year, from: Date())
-        let month = current.component(.month, from: Date())
-        
-        if (month <= 3){ // 1月から3月までは前年の成績であるから
-            year -= 1
-        }
-        let termPerformanceYearURL = Url.currentTermPerformance.string() + String(year)
-        if let url = URL(string: termPerformanceYearURL) {
-            return URLRequest(url: url)
-            
-        } else {
-            // エラー処理
-            AKLog(level: .FATAL, message: "URLフォーマットエラー")
-            fatalError() // 予期しないため、強制的にアプリを落とす
-        }
-    }
-    
-    public func getLibraryCalenderUrl() -> URLRequest? {
-        let url = NSURL(string: Url.libraryHome.string())
-        let data = NSData(contentsOf: url! as URL)
-        
-        var calenderURL = ""
-        
-        do {
-            let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
-            for node in doc.xpath("//a") {
-                guard let str = node["href"] else {
-                    return nil
-                }
-                if str.contains("pub/pdf/calender/calender_main_"){
-                    calenderURL = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
-                    if let url = URL(string: calenderURL) {
-                        return URLRequest(url: url)
-                        
-                    } else {
-                        // エラー処理
-                        AKLog(level: .FATAL, message: "URLフォーマットエラー")
-                        fatalError() // 予期しないため、強制的にアプリを落とす
-                    }
-                }
-            }
-            return nil
-            
-        } catch {
-            return nil
-        }
     }
     
 }

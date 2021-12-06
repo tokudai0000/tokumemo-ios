@@ -141,9 +141,18 @@ final class DataManager {
     }
     
     private let KEY_settingCellList = "KEY_settingCellList"
-    public var settingCellList: Data {
-        get { return getUserDefaultsData(key: KEY_settingCellList) }
-        set(v) { setUserDefaultsData(key: KEY_settingCellList, value: v) }
+    public var settingCellList: [CellList] {
+        get {
+            let jsonDecoder = JSONDecoder()
+            let data = getUserDefaultsData(key: KEY_settingCellList)
+            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return [] }
+            return bookmarks
+        }
+        set(v) {
+            let jsonEncoder = JSONEncoder()
+            guard let data = try? jsonEncoder.encode(v) else { return }
+            setUserDefaultsData(key: KEY_settingCellList, value: data)
+        }
     }
 
 }

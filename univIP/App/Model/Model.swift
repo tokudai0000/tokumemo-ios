@@ -112,5 +112,5 @@ struct CellList: Codable {
     let type: Model.SettingCellList
     var url: String = ""
     var isDisplay: Bool = true
-    let title: String
+    var title: String
 }

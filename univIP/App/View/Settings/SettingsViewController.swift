@@ -7,15 +7,12 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 final class SettingsViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
     
-    private let model = Model()
-//    private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
     public var delegate : MainViewController?
@@ -83,20 +80,17 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
         let todo = dataManager.allCellList[sourceIndexPath.section][sourceIndexPath.row]
         dataManager.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
         dataManager.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        viewModel.saveCellList(lists: dataManager.allCellList[0])
+        dataManager.settingCellList = dataManager.allCellList[0]
     }
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if viewModel.editSituation {
-            if dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
-                return CGFloat(viewModel.cellHight)
-            } else {
+            if !dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
                 return 0
             }
-        } else {
-            return CGFloat(viewModel.cellHight)
         }
+        return 44
     }
     
     /// セルを選択した時のイベント
@@ -107,19 +101,21 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
                 // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
                 dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = true
             }
-            viewModel.saveCellList(lists: dataManager.allCellList[0])
+            dataManager.settingCellList = dataManager.allCellList[0]
             return
         }
         
-        Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil)
-        
         dismiss(animated: false, completion: nil)
+        
         if let delegate = delegate {
             switch dataManager.allCellList[indexPath[0]][indexPath[1]].type {
-//            case .libraryCalendar:                   // [図書館]開館カレンダー
-//                if let url = webViewModel.getLibraryCalenderUrl() {
-//                    delegate.webView.load(url)
-//                }
+            case .libraryCalendar:                   // [図書館]開館カレンダー
+                if let url = viewModel.getLibraryCalenderUrl() {
+                    delegate.webView.load(url)
+                }
+                
+            case .currentTermPerformance:            // 今年の成績
+                delegate.webView.load(viewModel.getCurrentTermPerformance())
                 
             case .syllabus:                          // シラバス
                 delegate.showModalView(scene: .syllabus)
@@ -141,7 +137,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
                 }
             }
         }
-        
     }
     
     /// 編集モード時、チェックが外された時
@@ -149,7 +144,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource{
         // サービス一覧のみ編集可能
         if indexPath.section == 0 {
             dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = false
-            viewModel.saveCellList(lists: dataManager.allCellList[0])
+            dataManager.settingCellList = dataManager.allCellList[0]
         }
     }
     
