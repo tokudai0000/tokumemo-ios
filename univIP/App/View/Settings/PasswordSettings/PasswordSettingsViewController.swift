@@ -69,10 +69,8 @@ final class PasswordSettingsViewController: BaseViewController {
             dataManager.cAccount = cAccountTextField.text!
             dataManager.password = passwordTextField.text!
             
-            let webViewModel = WebViewModel() // 1つの場合はインスタンス生成どうしたらいいのか
-            
             if let delegate = delegate {
-                delegate.wkWebView.load(webViewModel.url(.login)! as URLRequest)
+                delegate.webView.load(Url.login.urlRequest())
                 dismiss(animated: true, completion: nil)
             }
         }

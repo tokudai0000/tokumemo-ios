@@ -7,21 +7,15 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
-final class SettingsViewController: BaseViewController {
+final class SettingsViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var editButton: UIButton!
     
-    private let model = Model()
-    private let webViewModel = WebViewModel()
     private let viewModel = SettingViewModel()
     
     public var delegate : MainViewController?
-    
     private let dataManager = DataManager.singleton
     
     
@@ -30,113 +24,22 @@ final class SettingsViewController: BaseViewController {
         super.viewDidLoad()
         // 初回起動時処理
         viewModel.firstBootDecision()
-        // セル同士の仕切り板(透明)
-        tableView.separatorColor = UIColor(white: 0, alpha: 0)
-        self.tableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-        viewAnimated(scene: .settingViewAppear)
-    }
-    
-    
-    // MARK: - IBAction
-    @IBAction func editButton(_ sender: Any) {
-        // 編集モード時、複数選択を許可
-        tableView.allowsMultipleSelectionDuringEditing = viewModel.editSituation
-        // 編集モード起動、停止
-        tableView.setEditing(viewModel.editSituation, animated: true)
-        // 編集モード, 使用モード反転
-        viewModel.editSituation = !viewModel.editSituation
         
         self.tableView.reloadData()
-        
-        if viewModel.editSituation {
-            editButton.setTitle("編集", for: .normal)
-        } else {
-            Analytics.logEvent("settingViewEditButton", parameters: nil)
-            
-            editButton.setTitle("完了", for: .normal)
-        }
-        
-        // 編集モード時、display=true のセルを選択状態にする
-        if !viewModel.editSituation {
-            for i in 0 ..< dataManager.allCellList[0].count {
-                if dataManager.allCellList[0][i].isDisplay {
-                    self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
-                }
-            }
-        }
-        
     }
-    
-    
-    // MARK: - Private func
-    enum ViewAnimationType {
-        case settingViewAppear
-        case settingsViewDisappear
-    }
-    
-    private func viewAnimated(scene: ViewAnimationType) {
-        switch scene {
-        case .settingViewAppear:
-            // Viewは1/4残した状態で左からスライドして表示
-            let menuPos = self.view.frame.width * (3 / 4)
-            
-            //制約を追加　width:self.view.frame.width/2
-            let widthConstraint = NSLayoutConstraint.init(item: self.contentView!,
-                                                          attribute: .width,
-                                                          relatedBy: .equal,
-                                                          toItem: nil,
-                                                          attribute: .notAnAttribute,
-                                                          multiplier: 1.0,
-                                                          constant: self.view.frame.width * (3 / 4))
-            // 制約有効化
-            widthConstraint.isActive = true
-            
-            // 初期位置を画面の外側にするため、メニューの幅の分だけマイナスする
-            self.contentView.layer.position.x = -self.view.frame.width * (3 / 4)
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           options: .curveEaseOut,
-                           animations: { self.contentView.layer.position.x = menuPos },
-                           completion: { bool in }
-            )
-            
-            
-        case .settingsViewDisappear:
-            UIView.animate(withDuration: 0.2,
-                           delay: 0,
-                           options: .curveEaseIn,
-                           animations: { self.contentView.layer.position.x = -self.contentView.frame.width },
-                           completion: { _ in self.dismiss(animated: false, completion: nil) }
-            )
-        }
-    }
-    
-//    private func tableViewEvent(url: WebViewModel.SelectUrlList, word: String = "ERROR", viewOperation: MainViewModel.ViewMoveType) {
-//        guard let delegate = delegate else {
-//            return
-//        }
-//        let response = webViewModel.url(url)
-//        if let url = response as URLRequest? {
-//            delegate.wkWebView.load(url)
-//        } else {
-//            delegate.toast(message: word)
-//        }
-//        delegate.viewVerticallyMove(operation: viewOperation)
-//    }
     
 }
 
 
 // MARK: - TableView
-extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(viewModel.sectionHight)
+        if section == 0 {
+            return 0
+        }
+        return 1
     }
     
     /// セクション数
@@ -144,10 +47,11 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         return dataManager.allCellList.count
     }
     
-    /// セクションのタイトル
-    func tableView(_ tableView: UITableView,
-                   titleForHeaderInSection section: Int) -> String? {
-        return model.sectionLists[section]
+    // セクションの背景とテキストの色を変更する
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == 1 {
+            view.tintColor = .gray
+        }
     }
     
     /// セクション内のセル数
@@ -157,9 +61,8 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) // R.swift
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)!
         tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
-        tableCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator // 「>」ボタンを設定
         tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
@@ -177,20 +80,17 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         let todo = dataManager.allCellList[sourceIndexPath.section][sourceIndexPath.row]
         dataManager.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
         dataManager.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        viewModel.saveCellList(lists: dataManager.allCellList[0])
+        dataManager.settingCellList = dataManager.allCellList[0]
     }
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if viewModel.editSituation {
-            if dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
-                return CGFloat(viewModel.cellHight)
-            } else {
+            if !dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
                 return 0
             }
-        } else {
-            return CGFloat(viewModel.cellHight)
         }
+        return 44
     }
     
     /// セルを選択した時のイベント
@@ -201,36 +101,37 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                 // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
                 dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = true
             }
-            viewModel.saveCellList(lists: dataManager.allCellList[0])
+            dataManager.settingCellList = dataManager.allCellList[0]
             return
         }
         
-        Analytics.logEvent("\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil)
+        dismiss(animated: false, completion: nil)
         
         if let delegate = delegate {
             switch dataManager.allCellList[indexPath[0]][indexPath[1]].type {
             case .libraryCalendar:                   // [図書館]開館カレンダー
-                dismiss(animated: false, completion: nil)
-                if let url = webViewModel.getLibraryCalenderUrl() {
-                    delegate.wkWebView.load(url)
+                if let url = viewModel.getLibraryCalenderUrl() {
+                    delegate.webView.load(url)
                 }
                 
+            case .currentTermPerformance:            // 今年の成績
+                delegate.webView.load(viewModel.getCurrentTermPerformance())
+                
             case .syllabus:                          // シラバス
-                dismiss(animated: false, completion: nil)
                 delegate.showModalView(scene: .syllabus)
                 
+            case .cellSort:
+                delegate.showModalView(scene: .cellSort)
+                
             case .password:                          // パスワード設定
-                dismiss(animated: false, completion: nil)
                 delegate.showModalView(scene: .password)
                 
             case .aboutThisApp:                      // このアプリについて
-                dismiss(animated: false, completion: nil)
                 delegate.showModalView(scene: .aboutThisApp)
                 
             default:
-                viewAnimated(scene: .settingsViewDisappear)
                 if let url = URL(string: dataManager.allCellList[indexPath[0]][indexPath[1]].url) {
-                    delegate.wkWebView.load(URLRequest(url: url))
+                    delegate.webView.load(URLRequest(url: url))
                     
                 } else {
                     // エラー処理
@@ -239,7 +140,6 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
                 }
             }
         }
-        
     }
     
     /// 編集モード時、チェックが外された時
@@ -247,7 +147,7 @@ extension SettingsViewController:  UITableViewDelegate, UITableViewDataSource{
         // サービス一覧のみ編集可能
         if indexPath.section == 0 {
             dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = false
-            viewModel.saveCellList(lists: dataManager.allCellList[0])
+            dataManager.settingCellList = dataManager.allCellList[0]
         }
     }
     
@@ -270,7 +170,7 @@ extension SettingsViewController {
         super.touchesEnded(touches, with: event)
         for touch in touches {
             if touch.view?.tag == 1 {
-                viewAnimated(scene: .settingsViewDisappear)
+                dismiss(animated: false, completion: nil)
             }
         }
     }

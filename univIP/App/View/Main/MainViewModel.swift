@@ -7,101 +7,101 @@
 
 import Foundation
 
-// MARK: - Question NSObjectなし
-final class MainViewModel: NSObject {
+final class MainViewModel {
     
     private let model = Model()
-    private let webViewModel = WebViewModel()
     private let dataManager = DataManager.singleton
     
+    public var subjectName = ""
+    public var teacherName = ""
     
-    enum NextModalView {
-        case syllabus
-        case password
-        case aboutThisApp
-    }
-    
-    enum CourceManagementManabaPcOrMobile {
-        case courceManagementPC
-        case courceManagementMobile
-        case manabaPC
-        case manabaMobile
-    }
-    
-    enum TabBarItem: Int {
-        case courceManagement = 1
-        case manaba = 2
-    }
-    
-    enum ViewMoveIcon {
-        case up
-        case down
-    }
-    
-    enum ViewMoveType {
-        case headerIsHidden
-        case headerIsShow
-        case headerIsReverse
-    }
-    
-    
-    // MARK: - Public
-    
-    /// タブバーの判定
-    public func tabBarDetection(tabBarRowValue: Int,
-                                isRegist: Bool,
-                                courceType: String,
-                                manabaType: String) -> URLRequest?
-    {
-        let tabBarItem = TabBarItem(rawValue: tabBarRowValue)!
+    /// 前回のURLと現在表示しているURLの保持
+    public func registUrl(_ url: URL) {
         
-        switch tabBarItem {
-        case .courceManagement:
-            if isRegist {
-                if courceType == "PC" {
-                    return webViewModel.url(.courceManagementHomePC)
-                } else {
-                    return webViewModel.url(.courceManagementHomeSP)
-                }
-                
-            } else {
-                return webViewModel.url(.systemServiceList)
+        dataManager.forwardDisplayUrl = dataManager.displayUrl
+        dataManager.displayUrl = url.absoluteString
+        
+        print("displayURL:\n \(dataManager.displayUrl) \n")
+    }
+    
+    /// 現在のURLが許可されたドメインか判定
+    public func isDomeinCheck(_ url: URL) -> Bool {
+        
+        guard let host = url.host else{
+            AKLog(level: .ERROR, message: "ドメイン取得エラー")
+            return false
+        }
+        var trigger = false
+        for allow in model.allowDomains {
+            if host.contains(allow){
+                trigger = true
             }
+        }
+        return trigger
+    }
+    
+    enum Scene {
+        case login
+        case enqueteReminder
+        case syllabus
+        case outlook
+        case tokudaiCareerCenter
+        case timeOut
+        case registrantAndLostConnectionDecision
+    }
+    
+    /// 現在のURLがsceneかどうか判定
+    public func isJudgeUrl(_ scene: Scene,
+                           isRegistrant: Bool = DataManager.singleton.isRegistrantCheck,
+                           forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
+                           displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
+        
+        var isLists:[Bool] = []
+        
+        switch scene {
+        case .login:
+            isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.suffix(2)=="s1")
+            isLists.append(isRegistrant)
             
-        case .manaba:
-            if isRegist {
-                if manabaType == "PC" {
-                    return webViewModel.url(.manabaPC)
-                } else {
-                    return webViewModel.url(.manabaSP)
-                }
-                
-            } else {
-                return webViewModel.url(.eLearningList)
+            
+        case .enqueteReminder:
+            isLists.append(!forwardUrl.contains(Url.enqueteReminder.string()))
+            isLists.append(displayUrl.contains(Url.enqueteReminder.string()))
+            
+            
+        case .syllabus:
+            isLists.append(forwardUrl != Url.syllabus.string())
+            isLists.append(displayUrl.contains(Url.syllabus.string()))
+            
+            
+        case .outlook:
+            isLists.append(!forwardUrl.contains(Url.outlookLogin.string()))
+            isLists.append(displayUrl.contains(Url.outlookLogin.string()))
+            
+            
+        case .tokudaiCareerCenter:
+            isLists.append(!forwardUrl.contains(Url.tokudaiCareerCenter.string()))
+            isLists.append(displayUrl == Url.tokudaiCareerCenter.string())
+            
+            
+        case .timeOut:
+            isLists.append(displayUrl == Url.timeOut.string())
+            
+            
+        case .registrantAndLostConnectionDecision:
+            isLists.append(!isRegistrant)
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            
+        }
+        
+        for item in isLists {
+            if !item {
+                return false
             }
         }
+        return true
     }
     
-    public func webViewChangeButtonImage(displayUrl: String) -> String? {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return R.image.pcIcon.name
-        case Url.courceManagementHomePC.string():      return R.image.mobileIcon.name
-        case Url.manabaHomeMobile.string():            return R.image.pcIcon.name
-        case Url.manabaHomePC.string():                return R.image.mobileIcon.name
-
-        default:                                       return nil
-        }
-    }
-    
-    public func webViewChangeUrl(displayUrl: String) -> URLRequest? {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return Url.courceManagementHomeMobile.urlRequest()
-        case Url.courceManagementHomePC.string():      return Url.courceManagementHomePC.urlRequest()
-        case Url.manabaHomeMobile.string():            return Url.manabaHomeMobile.urlRequest()
-        case Url.manabaHomePC.string():                return Url.manabaHomePC.urlRequest()
-
-        default:                                       return nil
-        }
-    }
-
 }

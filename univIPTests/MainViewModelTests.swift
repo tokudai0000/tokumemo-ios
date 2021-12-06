@@ -20,86 +20,116 @@ class MainViewModelTests: XCTestCase {
         super.tearDown()
     }
     
-//    func testIsCourceManagementUrlForPC() {
-//        let courceManagementHomePC = Url.courceManagementHomeMobile.string()
-//        let courceManagementHomeSP = Url.courceManagementHomePC.string()
-//        let manabaPC = Url.manabaHomeMobile.string()
-//        let manabaSP = Url.manabaHomePC.string()
-//        
-//        // 基本的なテスト
-//        let test1 = viewModel.isCourceManagementUrlForPC(displayUrl: courceManagementHomePC)
-//        XCTAssertEqual(test1, .courceManagementPC)
-//        
-//        let test2 = viewModel.isCourceManagementUrlForPC(displayUrl: courceManagementHomeSP)
-//        XCTAssertEqual(test2, .courceManagementMobile)
-//        
-//        let test3 = viewModel.isCourceManagementUrlForPC(displayUrl: manabaPC)
-//        XCTAssertEqual(test3, .manabaPC)
-//        
-//        let test4 = viewModel.isCourceManagementUrlForPC(displayUrl: manabaSP)
-//        XCTAssertEqual(test4, .manabaMobile)
-//        
-//        // エラー処理　fatalError()
-////        let test5 = viewModel.isCourceManagementUrlForPC(displayUrl: "")
-////        XCTAssertThrowsError(test5)
-//    }
     
-
-    func testTabBarDetection() {
-        let courceManagementHomePC = WebViewModel().url(.courceManagementHomePC)
-        let courceManagementHomeSP = WebViewModel().url(.courceManagementHomeSP)
-        let manabaPC = WebViewModel().url(.manabaPC)
-        let manabaSP = WebViewModel().url(.manabaSP)
-        let systemServiceList = WebViewModel().url(.systemServiceList)
-        let eLearningList = WebViewModel().url(.eLearningList)
+    func testIsDomeinCheck() {
         
         // 基本的なテスト
-        let test1 = viewModel.tabBarDetection(tabBarRowValue: 1, isRegist: true, courceType: "PC", manabaType: "")
-        XCTAssertEqual(test1, courceManagementHomePC)
+        let url1 = URL(string: "https://tokushima-u.ac.jp/")!
+        let test1 = viewModel.isDomeinCheck(url1)
+        XCTAssertEqual(test1, true)
         
-        let test2 = viewModel.tabBarDetection(tabBarRowValue: 1, isRegist: true, courceType: "Mobile", manabaType: "")
-        XCTAssertEqual(test2, courceManagementHomeSP)
+        let url2 = URL(string: "https://microsoftonline.com/")!
+        let test2 = viewModel.isDomeinCheck(url2)
+        XCTAssertEqual(test2, true)
         
-        let test3 = viewModel.tabBarDetection(tabBarRowValue: 1, isRegist: false, courceType: "", manabaType: "")
-        XCTAssertEqual(test3, systemServiceList)
+        let url3 = URL(string: "https://office365.com/")!
+        let test3 = viewModel.isDomeinCheck(url3)
+        XCTAssertEqual(test3, true)
+        
+        let url4 = URL(string: "https://office.com/")!
+        let test4 = viewModel.isDomeinCheck(url4)
+        XCTAssertEqual(test4, true)
+        
+        let url5 = URL(string: "https://youtube.com/")!
+        let test5 = viewModel.isDomeinCheck(url5)
+        XCTAssertEqual(test5, true)
+        
+        let url6 = URL(string: "https://example.com/")!
+        let test6 = viewModel.isDomeinCheck(url6)
+        XCTAssertEqual(test6, false)
         
         
-        let test10 = viewModel.tabBarDetection(tabBarRowValue: 2, isRegist: true, courceType: "", manabaType: "PC")
-        XCTAssertEqual(test10, manabaPC)
+        // 境界テスト
+        let url100 = URL(string: "https://tokushima-u.ac.jp/aaaa/aaaa/")!
+        let test100 = viewModel.isDomeinCheck(url100)
+        XCTAssertEqual(test100, true)
         
-        let test20 = viewModel.tabBarDetection(tabBarRowValue: 2, isRegist: true, courceType: "", manabaType: "Mobile")
-        XCTAssertEqual(test20, manabaSP)
+        let url101 = URL(string: "https://aaatokushima-u.ac.jp/")!
+        let test101 = viewModel.isDomeinCheck(url101)
+        XCTAssertEqual(test101, true)
         
-        let test30 = viewModel.tabBarDetection(tabBarRowValue: 2, isRegist: false, courceType: "", manabaType: "")
-        XCTAssertEqual(test30, eLearningList)
+        let url102 = URL(string: "https://takushima-u.ac.jp/")!
+        let test102 = viewModel.isDomeinCheck(url102)
+        XCTAssertEqual(test102, false)
+        
+        
+        // 稼働テスト
+        let url201 = URL(string: "https://eweb.stud.tokushima-u.ac.jp/Portal/")!
+        let test201 = viewModel.isDomeinCheck(url201)
+        XCTAssertEqual(test201, true)
+        
+        let url202 = URL(string: "https://www.lib.tokushima-u.ac.jp/")!
+        let test202 = viewModel.isDomeinCheck(url202)
+        XCTAssertEqual(test202, true)
+        
+        let url203 = URL(string: "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/")!
+        let test203 = viewModel.isDomeinCheck(url203)
+        XCTAssertEqual(test203, true)
+        
+        let url204 = URL(string: "https://login.microsoftonline.com/login")!
+        let test204 = viewModel.isDomeinCheck(url204)
+        XCTAssertEqual(test204, true)
+        
+        let url205 = URL(string: "https://login.microsoftonline.com/common/SAS/ProcessAuth")!
+        let test205 = viewModel.isDomeinCheck(url205)
+        XCTAssertEqual(test205, true)
+        
+        let url206 = URL(string: "https://outlook.office365.com/owa/")!
+        let test206 = viewModel.isDomeinCheck(url206)
+        XCTAssertEqual(test206, true)
+        
+        let url207 = URL(string: "https://www.tokudai-syusyoku.com/index.php")!
+        let test207 = viewModel.isDomeinCheck(url207)
+        XCTAssertEqual(test207, true)
+        
+        let url208 = URL(string: "https://manaba.lms.tokushima-u.ac.jp/ct/home")!
+        let test208 = viewModel.isDomeinCheck(url208)
+        XCTAssertEqual(test208, true)
+        
+//        let url209 = URL(string: "")!
+//        let test209 = viewModel.isDomeinCheck(url209)
+//        XCTAssertEqual(test209, true)
+//
+//        let url210 = URL(string: "")!
+//        let test210 = viewModel.isDomeinCheck(url210)
+//        XCTAssertEqual(test210, true)
+//
+//        let url211 = URL(string: "")!
+//        let test211 = viewModel.isDomeinCheck(url211)
+//        XCTAssertEqual(test211, true)
+//
+//        let url212 = URL(string: "")!
+//        let test212 = viewModel.isDomeinCheck(url212)
+//        XCTAssertEqual(test212, true)
+//
+//        let url213 = URL(string: "")!
+//        let test213 = viewModel.isDomeinCheck(url213)
+//        XCTAssertEqual(test213, true)
+        
     }
     
-
-    func testviewPosisionType() {
-        
-        // 基本的なテスト
-        let test1 = viewModel.viewVerticallyMoveButtonImage( .headerIsHidden, posisionY: -10.0)
-        XCTAssertNil(test1, "[now] up, [next] up -> nil")
-        
-        
-        let test2 = viewModel.viewVerticallyMoveButtonImage( .headerIsShow, posisionY: -10.0)!
-        XCTAssertEqual(test2, "chevron.up", "[now] up, [next] down -> chevron.up")
-        
-        
-        let test3 = viewModel.viewVerticallyMoveButtonImage( .headerIsHidden, posisionY: 60.0)!
-        XCTAssertEqual(test3, "chevron.down", "[now] down, [next] up -> chevron.down")
-        
-        
-        let test4 = viewModel.viewVerticallyMoveButtonImage( .headerIsShow, posisionY: 60.0)
-        XCTAssertNil(test4, "[now] down, [next] down -> nil")
-        
-        // 境界値テスト
-        let test10 = viewModel.viewVerticallyMoveButtonImage( .headerIsHidden, posisionY: 0.0)
-        XCTAssertNil(test10, "[now] up, [next] up -> nil")
-        
-        let test20 = viewModel.viewVerticallyMoveButtonImage( .headerIsShow, posisionY: 0.0)!
-        XCTAssertEqual(test20, "chevron.up", "[now] up, [next] down -> chevron.up")
-        
+    func testIsJudgeUrl() {
+        do {
+            let isRegistrant = true
+            let forwardUrl = ""
+            let displayUrl = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1"
+            let test = viewModel.isJudgeUrl(.login,
+                                            isRegistrant: isRegistrant,
+                                            forwardUrl: forwardUrl,
+                                            displayUrl: displayUrl)
+            XCTAssertEqual(test, true)
+        }
     }
-
+    
+    
 }
