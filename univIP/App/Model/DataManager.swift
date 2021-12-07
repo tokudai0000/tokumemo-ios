@@ -145,7 +145,7 @@ final class DataManager {
         get {
             let jsonDecoder = JSONDecoder()
             let data = getUserDefaultsData(key: KEY_settingCellList)
-            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return [] }
+            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return model.serviceCellLists }
             return bookmarks
         }
         set(v) {

@@ -34,7 +34,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
         
         // 登録者判定
         if dataManager.isRegistrantCheck {
-            webView.load(Url.login.urlRequest())
+            webView.load(Url.manabaHomePC.urlRequest())
         } else {
             webView.load(Url.systemServiceList.urlRequest())
         }

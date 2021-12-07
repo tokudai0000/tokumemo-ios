@@ -56,6 +56,8 @@ final class SettingViewModel {
             } else {
                 dataManager.allCellList[0].append(contentsOf: dataManager.settingCellList)
                 
+                
+                
             }
             
             dataManager.settingCellList = dataManager.allCellList[0]
