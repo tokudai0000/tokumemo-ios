@@ -138,6 +138,17 @@ final class MainViewController: UIViewController, WKUIDelegate {
         })
     }
     
+    /// 新しいウィンドウで開く「target="_blank"」
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        // 変数 url にはリンク先のURLが入る
+        webView.load(navigationAction.request)
+        return nil
+    }
+    
 }
 
 
@@ -284,22 +295,22 @@ extension MainViewController: WKNavigationDelegate {
 }
 
 
-// MARK: - WKUIDelegate
-extension MainViewModel {
-    
-    //    // MARK: - LifeCycle
-    //    override func viewDidLoad() {
-    //        wkWebView.uiDelegate = self
-    //    }
-    
-    /// 新しいウィンドウで開く「target="_blank"」
-    func webView(_ webView: WKWebView,
-                 createWebViewWith configuration: WKWebViewConfiguration,
-                 for navigationAction: WKNavigationAction,
-                 windowFeatures: WKWindowFeatures) -> WKWebView? {
-        
-        // 変数 url にはリンク先のURLが入る
-        webView.load(navigationAction.request)
-        return nil
-    }
-}
+//// MARK: - WKUIDelegate
+//extension MainViewModel {
+//
+//    //    // MARK: - LifeCycle
+//    //    override func viewDidLoad() {
+//    //        wkWebView.uiDelegate = self
+//    //    }
+//
+//    /// 新しいウィンドウで開く「target="_blank"」
+//    func webView(_ webView: WKWebView,
+//                 createWebViewWith configuration: WKWebViewConfiguration,
+//                 for navigationAction: WKNavigationAction,
+//                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+//
+//        // 変数 url にはリンク先のURLが入る
+//        webView.load(navigationAction.request)
+//        return nil
+//    }
+//}
