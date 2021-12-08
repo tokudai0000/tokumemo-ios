@@ -9,8 +9,8 @@ import UIKit
 
 class CellSortViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     private let dataManager = DataManager.singleton
     
@@ -31,7 +31,7 @@ class CellSortViewController: UIViewController {
         tableView.allowsMultipleSelectionDuringEditing = editSituation
         // 編集モード起動、停止
         tableView.setEditing(editSituation, animated: true)
-        
+        print(tableView.isEditing)
         self.tableView.reloadData()
         
         if editSituation {
