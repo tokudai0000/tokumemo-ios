@@ -118,16 +118,16 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
                 delegate.webView.load(viewModel.getCurrentTermPerformance())
                 
             case .syllabus:                          // シラバス
-                delegate.showModalView(scene: .syllabus)
+                delegate.showModalView(type: .syllabus)
                 
             case .cellSort:
-                delegate.showModalView(scene: .cellSort)
+                delegate.showModalView(type: .cellSort)
                 
             case .password:                          // パスワード設定
-                delegate.showModalView(scene: .password)
+                delegate.showModalView(type: .password)
                 
             case .aboutThisApp:                      // このアプリについて
-                delegate.showModalView(scene: .aboutThisApp)
+                delegate.showModalView(type: .aboutThisApp)
                 
             default:
                 if let url = URL(string: dataManager.allCellList[indexPath[0]][indexPath[1]].url) {

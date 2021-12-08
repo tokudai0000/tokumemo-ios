@@ -16,16 +16,18 @@ final class MainViewModel {
     public var teacherName = ""
     
     /// 前回のURLと現在表示しているURLの保持
-    public func registUrl(_ url: URL) {
-        
+    public func recordUrl(_ url: URL) {
         dataManager.forwardDisplayUrl = dataManager.displayUrl
         dataManager.displayUrl = url.absoluteString
-        
-        print("displayURL:\n \(dataManager.displayUrl) \n")
+        print("displayURL:\n \(url.absoluteString) \n")
     }
     
     /// 現在のURLが許可されたドメインか判定
-    public func isDomeinCheck(_ url: URL) -> Bool {
+    public func isAllowedDomeinCheck(_ urlString: String = DataManager.singleton.displayUrl) -> Bool {
+        guard let url = URL(string: urlString) else {
+            AKLog(level: .ERROR, message: "ドメイン取得エラー")
+            return false
+        }
         
         guard let host = url.host else{
             AKLog(level: .ERROR, message: "ドメイン取得エラー")
@@ -52,7 +54,7 @@ final class MainViewModel {
     
     /// 現在のURLがsceneかどうか判定
     public func isJudgeUrl(_ scene: Scene,
-                           isRegistrant: Bool = DataManager.singleton.isRegistrantCheck,
+                           isRegistrant: Bool = DataManager.singleton.canLogedInServiece,
                            forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
                            displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
         

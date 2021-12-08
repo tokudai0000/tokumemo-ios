@@ -28,9 +28,9 @@ final class DataManager {
     /// アプリ使用初回者か判定
     public var isFirstTime: Bool { get { return version.isEmpty }}
     /// cアカウント、パスワードを登録しているか判定
-    public var isRegistrantCheck: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
+    public var canLogedInServiece: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
     /// 利用規約同意者か判定
-    public var isAgreementPersonDecision: Bool { get { return agreementVersion == model.agreementVersion }}
+    public var hasAgreedTermsOfUse: Bool { get { return agreementVersion == model.agreementVersion }}
     
 
     
