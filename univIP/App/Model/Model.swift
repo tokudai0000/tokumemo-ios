@@ -23,7 +23,7 @@ struct Model {
     /// microsoftonline.com, office365.com, office.com:  outlook関連のドメイン
     /// tokudai-syusyoku.com:                                         キャリア支援室ドメイン
     /// youtube.com:                                                        大学サイトのYoutubeインライン再生に対応させる為
-    public let allowDomains = ["tokushima-u.ac.jp",
+    public let allowedDomains = ["tokushima-u.ac.jp",
                                "microsoftonline.com",
                                "office365.com",
                                "office.com",

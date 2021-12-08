@@ -184,7 +184,7 @@ extension MainViewController: WKNavigationDelegate {
     
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-
+        
         if viewModel.isJudgeUrl(.login) {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
@@ -213,7 +213,7 @@ extension MainViewController: WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
         }
         
-        // MARK: - Quesion DispatchQueueの必要性 非同期にする必要あるか？
+        // MARK: - HACK DispatchQueueの必要性 非同期にする必要あるか？
         DispatchQueue.main.async {
             self.goBackButton.isEnabled = webView.canGoBack
             self.goBackButton.alpha = webView.canGoBack ? 1.0 : 0.4
