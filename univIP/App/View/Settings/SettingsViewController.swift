@@ -22,17 +22,17 @@ final class SettingsViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // viewをタップされた際の処理
-        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
-        self.view.addGestureRecognizer(tap)
+        // viewをタップされた際の処理 **後日修正する**
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
+//        self.view.addGestureRecognizer(tap)
         
         viewModel.initialBootProcess()
         self.tableView.reloadData()
     }
-    
-    @objc func viewTap(_ sender: UITapGestureRecognizer) {
-        dismiss(animated: false, completion: nil)
-    }
+    // これだとcellをタップしても呼ばれてしまう **後日修正する**
+//    @objc func viewTap(_ sender: UITapGestureRecognizer) {
+//        dismiss(animated: false, completion: nil)
+//    }
 }
 
 
@@ -112,6 +112,19 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 AKLog(level: .FATAL, message: "URLフォーマットエラー")
                 fatalError()
+            }
+        }
+    }
+}
+
+// MARK: - Override(Animate)
+extension SettingsViewController {
+    // メニューエリア以外タップ時、画面をMainViewに戻る
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        for touch in touches {
+            if touch.view?.tag == 1 {
+                dismiss(animated: false, completion: nil)
             }
         }
     }
