@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 final class PasswordSettingsViewController: BaseViewController {
     

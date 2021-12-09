@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 class TermsOfServiceViewController: UIViewController {
     
@@ -17,7 +16,6 @@ class TermsOfServiceViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.logEvent("termsOfServiceViewOpen", parameters: nil)
         
         let filePath = R.file.termsOfServiceRtf()!
         textView.attributedText = Common.rtfFileLoad(url: filePath)

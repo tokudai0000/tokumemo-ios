@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class CellSortViewController: UIViewController {
     
@@ -47,6 +48,10 @@ class CellSortViewController: UIViewController {
     
     @IBAction func dissmissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+        
+        Analytics.logEvent("allCellList", parameters:  [
+            AnalyticsParameterItemName: "\(dataManager.allCellList[0])",
+          ])
     }
 }
 

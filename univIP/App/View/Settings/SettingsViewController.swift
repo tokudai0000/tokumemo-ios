@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 final class SettingsViewController: UIViewController {
     
@@ -114,6 +115,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
                 fatalError()
             }
         }
+        
+        Analytics.logEvent("service\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil)
     }
 }
 

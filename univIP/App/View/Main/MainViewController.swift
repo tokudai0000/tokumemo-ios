@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import FirebaseAnalytics // Analytics.logEvent("", parameters: nil)
 
 final class MainViewController: UIViewController, WKUIDelegate {
     

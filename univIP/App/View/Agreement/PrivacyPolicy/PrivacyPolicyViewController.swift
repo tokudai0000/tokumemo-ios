@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 class PrivacyPolicyViewController: UIViewController {
     
@@ -17,7 +16,6 @@ class PrivacyPolicyViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Analytics.logEvent("privacyPolicyViewOpen", parameters: nil)
         
         let filePath = R.file.privacyPolicyRtf()!
         textView.attributedText = Common.rtfFileLoad(url: filePath)
