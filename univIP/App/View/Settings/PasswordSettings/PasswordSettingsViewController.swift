@@ -38,7 +38,6 @@ final class PasswordSettingsViewController: BaseViewController {
         cAccountTextFieldCursorSetup(type: .normal)
         passwordTextFieldCursorSetup(type: .normal)
         
-        // 枠線
         cAccountTextField.borderStyle = .none
         passwordTextField.borderStyle = .none
         
@@ -48,7 +47,6 @@ final class PasswordSettingsViewController: BaseViewController {
         cAccountTextField.text = dataManager.cAccount
         passwordTextField.text = dataManager.password
         
-        // 初期状態時、文字数カウント(初回のみ)
         cAccountTextSizeLabel.text = "\(dataManager.cAccount.count)/10"
         passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
         
@@ -62,26 +60,41 @@ final class PasswordSettingsViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func registrationButton(_ sender: Any) {
-        Analytics.logEvent("passwordRegistButton", parameters: nil) // Analytics: 調べる・タップ
+        guard let cAccountText = cAccountTextField.text else {
+            cAccountMessageLabel.text = "空欄です"
+            cAccountTextFieldCursorSetup(type: .error)
+            return
+        }
+        guard let passwordText = passwordTextField.text else {
+            passwordMessageLabel.text = "空欄です"
+            passwordTextFieldCursorSetup(type: .error)
+            return
+        }
         
-        if isRegisterable() {
-            // isRegisterableでnilがないことはチェック済みのため強制アンラップ(予期しない場合は落ちる)
-            dataManager.cAccount = cAccountTextField.text!
-            dataManager.password = passwordTextField.text!
-            
-            if let delegate = delegate {
-                delegate.webView.load(Url.login.urlRequest())
-                dismiss(animated: true, completion: nil)
-            }
+        if cAccountText.prefix(1) != "c" {
+            cAccountMessageLabel.text = "cアカウントを入力してください"
+            cAccountTextFieldCursorSetup(type: .error)
+            return
+        }
+        
+        dataManager.cAccount = cAccountText
+        dataManager.password = passwordText
+        
+        cAccountTextFieldCursorSetup(type: .normal)
+        passwordTextFieldCursorSetup(type: .normal)
+        
+        if let delegate = delegate {
+            delegate.webView.load(Url.manabaHomePC.urlRequest())
+            dismiss(animated: true, completion: nil)
         }
     }
     
-    /// パスワードのシークレットモード切り替え
+    /// パスワードのシークレットモード
     @IBAction func passwordViewChangeButton(_ sender: Any) {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
         
         if passwordTextField.isSecureTextEntry {
-            // ボタンを押した後、シークレットモードに入る場合
+            // シークレットモード
             passwordViewButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
         } else {
             passwordViewButton.setImage(UIImage(systemName: "eye"), for: .normal)
@@ -94,64 +107,12 @@ final class PasswordSettingsViewController: BaseViewController {
     
     
     // MARK: - Private
-    private func setup() {
-        
-        cAccountTextFieldCursorSetup(type: .normal)
-        passwordTextFieldCursorSetup(type: .normal)
-        
-        // 枠線
-        cAccountTextField.borderStyle = .none
-        passwordTextField.borderStyle = .none
-        
-        cAccountTextField.delegate = self
-        passwordTextField.delegate = self
-        
-        cAccountTextField.text = dataManager.cAccount
-        passwordTextField.text = dataManager.password
-        
-        // 初期状態時、文字数カウント(初回のみ)
-        cAccountTextSizeLabel.text = "\(dataManager.cAccount.count)/10"
-        passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
-        
-        cAccountMessageLabel.textColor = .red
-        passwordMessageLabel.textColor = .red
-        
-        passwordTextField.isSecureTextEntry = true
-        registerButton.layer.cornerRadius = 5.0
-    }
-    
-    private func isRegisterable() -> Bool {
-        guard let cAccount = cAccountTextField.text else {
-            cAccountMessageLabel.text = "空欄です"
-            cAccountTextFieldCursorSetup(type: .error)
-            return false
-        }
-        
-        if cAccount.prefix(1) != "c" {
-            cAccountMessageLabel.text = "cアカウントを入力してください"
-            cAccountTextFieldCursorSetup(type: .error)
-            return false
-        }
-        
-        // 空欄か確認
-        if passwordTextField.text?.isEmpty ?? true {
-            passwordMessageLabel.text = ""
-            passwordTextFieldCursorSetup(type: .error)
-            return false
-        }
-        
-        cAccountTextFieldCursorSetup(type: .normal)
-        passwordTextFieldCursorSetup(type: .normal)
-        return true
-    }
-    
     
     enum cursorType {
         case normal
         case forcus
         case error
     }
-    
     private func cAccountTextFieldCursorSetup(type: cursorType) {
         switch type {
             
@@ -184,7 +145,6 @@ final class PasswordSettingsViewController: BaseViewController {
             passwordUnderLine.backgroundColor = .red
         }
     }
-    
 }
 
 
