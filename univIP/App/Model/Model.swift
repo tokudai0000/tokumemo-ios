@@ -63,6 +63,7 @@ struct Model {
         case universityWeb                  // 大学サイト
         
         case cellSort                       // 並び替え
+        case firstViewSetting               // 初期画面設定
         case password                       // パスワード
         case aboutThisApp                   // このアプリについて
     }
@@ -86,7 +87,7 @@ struct Model {
                                    CellList(type: .libraryBookLendingExtension, url: Url.libraryBookLendingExtension.string(), title: "[図書館]貸し出し期間延長"),
                                    CellList(type: .libraryBookPurchaseRequest,  url: Url.libraryBookPurchaseRequest.string(),  title: "[図書館]本購入リクエスト"),
                                    CellList(type: .libraryCalendar,             url: Url.libraryCalendar.string(),             title: "[図書館]開館カレンダー"),
-                                   CellList(type: .syllabus,                                                                   title: "シラバス"),
+                                   CellList(type: .syllabus,                    url: Url.syllabus.string(),                    title: "シラバス"),
                                    CellList(type: .timeTable,                   url: Url.timeTable.string(),                   title: "時間割"),
                                    CellList(type: .currentTermPerformance,      url: Url.currentTermPerformance.string(),      title: "今年の成績表"),
                                    CellList(type: .termPerformance,             url: Url.termPerformance.string(),             title: "成績参照"),
@@ -100,6 +101,7 @@ struct Model {
                                    CellList(type: .universityWeb,               url: Url.universityHome.string(),              title: "大学サイト")]
     
     public let settingCellLists = [CellList(type: .cellSort,                                                                   title: "並び替え・編集"),
+                                   CellList(type: .firstViewSetting,                                                           title: "初期画面設定"),
                                    CellList(type: .password,                                                                   title: "パスワード"),
                                    CellList(type: .aboutThisApp,                                                               title: "このアプリについて")]
     
@@ -114,5 +116,6 @@ struct CellList: Codable {
     let type: Model.SettingCellList
     var url: String = ""
     var isDisplay: Bool = true
+    var initialView: Bool = false
     var title: String
 }

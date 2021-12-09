@@ -101,6 +101,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case .cellSort:
             delegate.showModalView(type: .cellSort)
             
+        case .firstViewSetting:
+            delegate.showModalView(type: .firstViewSetting)
         case .password:                          // パスワード設定
             delegate.showModalView(type: .password)
             

@@ -10,6 +10,7 @@ import FirebaseAnalytics
 
 class CellSortViewController: UIViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     

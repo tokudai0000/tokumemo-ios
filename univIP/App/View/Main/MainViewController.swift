@@ -31,10 +31,19 @@ final class MainViewController: UIViewController, WKUIDelegate {
         launchScreenAnimation()
         
         if dataManager.canLogedInServiece {
+            let lists = dataManager.settingCellList
+            for list in lists {
+                if list.initialView {
+                    if let url = URL(string: list.url) {
+                        webView.load(URLRequest(url: url))
+                        return
+                    }
+                }
+            }
             webView.load(Url.manabaHomePC.urlRequest())
-        } else {
-            webView.load(Url.systemServiceList.urlRequest())
+            return
         }
+        webView.load(Url.systemServiceList.urlRequest())
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,6 +76,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
     enum ModalViewType {
         case syllabus
         case cellSort
+        case firstViewSetting
         case password
         case aboutThisApp
     }
@@ -79,6 +89,10 @@ final class MainViewController: UIViewController, WKUIDelegate {
             
         case .cellSort:
             let vc = R.storyboard.cellSort.cellSort()!
+            present(vc, animated: true, completion: nil)
+        
+        case .firstViewSetting:
+            let vc = R.storyboard.firstViewSetting.firstViewSetting()!
             present(vc, animated: true, completion: nil)
             
         case .password:

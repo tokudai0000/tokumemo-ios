@@ -154,5 +154,11 @@ final class DataManager {
             setUserDefaultsData(key: KEY_settingCellList, value: data)
         }
     }
+    
+    private let KEY_initialViewName = "KEY_initialViewName"
+    public var initialViewName: String {
+        get { return getUserDefaultsString(key: KEY_initialViewName) }
+        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
+    }
 
 }
