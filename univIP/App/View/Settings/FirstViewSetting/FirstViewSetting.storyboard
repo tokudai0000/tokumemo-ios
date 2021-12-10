@@ -54,13 +54,23 @@
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4r4-jK-eaE">
-                                        <rect key="frame" x="107" y="392" width="200" height="34"/>
+                                        <rect key="frame" x="57" y="392" width="300" height="34"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="ttr-Pp-xJT"/>
+                                            <constraint firstAttribute="width" constant="300" id="ttr-Pp-xJT"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アプリ起動時に表示する画面を選ぶことができます。" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SUK-MU-dVd">
+                                        <rect key="frame" x="57" y="324" width="300" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="fK0-9l-vau"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -68,6 +78,8 @@
                                     <constraint firstItem="4r4-jK-eaE" firstAttribute="centerY" secondItem="MdP-cm-Dmf" secondAttribute="centerY" id="HDF-gc-rHc"/>
                                     <constraint firstItem="9Ng-QC-K8j" firstAttribute="top" secondItem="MdP-cm-Dmf" secondAttribute="top" id="X1Q-cR-xk2"/>
                                     <constraint firstAttribute="trailing" secondItem="9Ng-QC-K8j" secondAttribute="trailing" id="jKb-Q2-zoo"/>
+                                    <constraint firstItem="4r4-jK-eaE" firstAttribute="top" secondItem="SUK-MU-dVd" secondAttribute="bottom" constant="20" id="lcG-dS-dlZ"/>
+                                    <constraint firstItem="SUK-MU-dVd" firstAttribute="centerX" secondItem="MdP-cm-Dmf" secondAttribute="centerX" id="rcT-b2-dge"/>
                                     <constraint firstItem="9Ng-QC-K8j" firstAttribute="leading" secondItem="MdP-cm-Dmf" secondAttribute="leading" id="xal-Uk-CtL"/>
                                 </constraints>
                             </view>
@@ -94,6 +106,9 @@
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

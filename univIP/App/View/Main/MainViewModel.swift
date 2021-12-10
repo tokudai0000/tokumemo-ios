@@ -101,4 +101,18 @@ final class MainViewModel {
         return true
     }
     
+    public func searchInitialViewUrl() -> URLRequest {
+        if dataManager.canLogedInServiece {
+            let lists = dataManager.settingCellList
+            for list in lists {
+                if list.initialView {
+                    if let url = URL(string: list.url) {
+                        return URLRequest(url: url)
+                    }
+                }
+            }
+            return Url.manabaHomePC.urlRequest()
+        }
+        return Url.systemServiceList.urlRequest()
+    }
 }
