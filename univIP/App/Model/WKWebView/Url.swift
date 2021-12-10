@@ -47,7 +47,8 @@ enum Url: String {
     case courceManagementHomePC
     case manabaHomeMobile
     case manabaHomePC
-    case libraryHome
+    case libraryHomePC
+    case libraryHomeMobile
     case libraryLogin
     case libraryBookLendingExtension
     case libraryBookPurchaseRequest

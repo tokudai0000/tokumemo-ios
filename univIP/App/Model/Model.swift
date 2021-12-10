@@ -24,11 +24,11 @@ struct Model {
     /// tokudai-syusyoku.com:                                         キャリア支援室ドメイン
     /// youtube.com:                                                        大学サイトのYoutubeインライン再生に対応させる為
     public let allowedDomains = ["tokushima-u.ac.jp",
-                               "microsoftonline.com",
-                               "office365.com",
-                               "office.com",
-                               "tokudai-syusyoku.com",
-                               "youtube.com"]
+                                 "microsoftonline.com",
+                                 "office365.com",
+                                 "office.com",
+                                 "tokudai-syusyoku.com",
+                                 "youtube.com"]
     
     
     // MARK: -  SettingView
@@ -44,7 +44,8 @@ struct Model {
         case courceManagementHomeMobile
         case manabaHomePC
         case manabaHomeMobile
-        case libraryWeb                     // 図書館Webサイト
+        case libraryWebHomePC               // 図書館Webサイト
+        case libraryWebHomeMobile
         case libraryMyPage                  // 図書館MyPage
         case libraryBookLendingExtension    // 図書館本貸出し期間延長
         case libraryBookPurchaseRequest     // 図書館本購入リクエスト
@@ -82,7 +83,8 @@ struct Model {
                                    CellList(type: .courceManagementHomeMobile,  url: Url.courceManagementHomeMobile.string(),  title: "教務事務システムMobile版"),
                                    CellList(type: .manabaHomePC,                url: Url.manabaHomePC.string(),                title: "マナバPC版"),
                                    CellList(type: .manabaHomeMobile,            url: Url.manabaHomeMobile.string(),            title: "マナバMobile版"),
-                                   CellList(type: .libraryWeb,                  url: Url.libraryHome.string(),                 title: "[図書館]Webサイト"),
+                                   CellList(type: .libraryWebHomePC,            url: Url.libraryHomePC.string(),               title: "[図書館]WebサイトPC版"),
+                                   CellList(type: .libraryWebHomeMobile,        url: Url.libraryHomeMobile.string(),           title: "[図書館]WebサイトMobile版"),
                                    CellList(type: .libraryMyPage,               url: Url.libraryLogin.string(),                title: "[図書館]MyPage"),
                                    CellList(type: .libraryBookLendingExtension, url: Url.libraryBookLendingExtension.string(), title: "[図書館]貸し出し期間延長"),
                                    CellList(type: .libraryBookPurchaseRequest,  url: Url.libraryBookPurchaseRequest.string(),  title: "[図書館]本購入リクエスト"),
@@ -105,6 +107,20 @@ struct Model {
                                    CellList(type: .password,                                                                   title: "パスワード"),
                                    CellList(type: .aboutThisApp,                                                               title: "このアプリについて")]
     
+    /// 初期画面に設定しても問題ないやつ
+    static public let firstViewPickerLists = [CellList(type: .courceManagementHomePC,     title: "教務事務システムPC版"),
+                                              CellList(type: .courceManagementHomeMobile, title: "教務事務システムMobile版"),
+                                              CellList(type: .manabaHomePC,               title: "マナバPC版"),
+                                              CellList(type: .manabaHomeMobile,           title: "マナバMobile版"),
+                                              CellList(type: .libraryWebHomePC,                 title: "[図書館]Webサイト"),
+                                              CellList(type: .libraryMyPage,              title: "[図書館]MyPage"),
+                                              CellList(type: .libraryCalendar,            title: "[図書館]開館カレンダー"),
+                                              CellList(type: .syllabus,                   title: "シラバス"),
+                                              CellList(type: .mailService,                title: "メール"),
+                                              CellList(type: .tokudaiCareerCenter,        title: "キャリア支援室"),
+                                              CellList(type: .systemServiceList,          title: "システムサービス一覧"),
+                                              CellList(type: .eLearningList,              title: "Eラーニング一覧"),
+                                              CellList(type: .universityWeb,              title: "大学サイト")]
 }
 
 /// - CellList:

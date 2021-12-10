@@ -25,7 +25,8 @@
 "eLearningList"               = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html";
 "outlookHome"                 = "https://outlook.office.com/mail/";
 "tokudaiCareerCenter"         = "https://www.tokudai-syusyoku.com/index.php";
-"libraryHome"                 = "https://www.lib.tokushima-u.ac.jp/";
+"libraryHomePC"               = "https://www.lib.tokushima-u.ac.jp/";
+"libraryHomeMobile"           = "https://opac.lib.tokushima-u.ac.jp/drupal/";
 "courseRegistration"          = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx";
 "lostConnection"              = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=";
 "libraryCalendar"             = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_";

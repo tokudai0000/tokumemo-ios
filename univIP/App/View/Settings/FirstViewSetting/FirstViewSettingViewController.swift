@@ -14,19 +14,7 @@ class FirstViewSettingViewController: UIViewController, UIPickerViewDelegate, UI
     
     var pickerView: UIPickerView = UIPickerView()
     let dataManager = DataManager.singleton
-    private let list: [CellList] = [CellList(type: .courceManagementHomePC,      url: Url.courceManagementHomePC.string(),      title: "教務事務システムPC版"),
-                                    CellList(type: .courceManagementHomeMobile,  url: Url.courceManagementHomeMobile.string(),  title: "教務事務システムMobile版"),
-                                    CellList(type: .manabaHomePC,                url: Url.manabaHomePC.string(),                title: "マナバPC版"),
-                                    CellList(type: .manabaHomeMobile,            url: Url.manabaHomeMobile.string(),            title: "マナバMobile版"),
-                                    CellList(type: .libraryWeb,                  url: Url.libraryHome.string(),                 title: "[図書館]Webサイト"),
-                                    CellList(type: .libraryMyPage,               url: Url.libraryLogin.string(),                title: "[図書館]MyPage"),
-                                    CellList(type: .libraryCalendar,             url: Url.libraryCalendar.string(),             title: "[図書館]開館カレンダー"),
-                                    CellList(type: .syllabus,                    url: Url.syllabus.string(),                    title: "シラバス"),
-                                    CellList(type: .mailService,                 url: Url.mailService.string(),                 title: "メール"),
-                                    CellList(type: .tokudaiCareerCenter,         url: Url.tokudaiCareerCenter.string(),         title: "キャリア支援室"),
-                                    CellList(type: .systemServiceList,           url: Url.systemServiceList.string(),           title: "システムサービス一覧"),
-                                    CellList(type: .eLearningList,               url: Url.eLearningList.string(),               title: "Eラーニング一覧"),
-                                    CellList(type: .universityWeb,               url: Url.universityHome.string(),              title: "大学サイト")]
+    private let list: [CellList] = Model.firstViewPickerLists
     
     
     // MARK: - LifeCycle
@@ -45,6 +33,12 @@ class FirstViewSettingViewController: UIViewController, UIPickerViewDelegate, UI
         // インプットビュー設定
         textField.inputView = pickerView
         textField.inputAccessoryView = toolbar
+        
+        for item in dataManager.allCellList[0] {
+            if item.initialView {
+                textField.placeholder = item.title
+            }
+        }
     }
     
     
@@ -55,16 +49,11 @@ class FirstViewSettingViewController: UIViewController, UIPickerViewDelegate, UI
     
     @objc func done() {
         textField.endEditing(true)
-        
-        // 全てfalseに初期化
+                
         for i in 0..<dataManager.allCellList[0].count {
-            dataManager.allCellList[0][i].initialView = false
-        }
-        
-        for i in 0..<dataManager.allCellList[0].count {
-            if dataManager.allCellList[0][i].type == list[pickerView.selectedRow(inComponent: 0)].type {
-                dataManager.allCellList[0][i].initialView = true
-            }
+            // 選択された内容とインデックス番号を照合
+            let s = dataManager.allCellList[0][i].type == list[pickerView.selectedRow(inComponent: 0)].type
+            dataManager.allCellList[0][i].initialView = s
         }
         
         dataManager.settingCellList = dataManager.allCellList[0]

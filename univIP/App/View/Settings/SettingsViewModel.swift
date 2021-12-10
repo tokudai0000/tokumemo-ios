@@ -71,7 +71,7 @@ final class SettingViewModel {
     }
     
     public func fetchLibraryCalenderUrl() -> URLRequest? {
-        let urlString = URL(string: Url.libraryHome.string())
+        let urlString = URL(string: Url.libraryHomePC.string())
         let data = NSData(contentsOf: urlString! as URL)
         
         do {
