@@ -94,7 +94,7 @@
                                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                                         <state key="normal" image="ellipsis" catalog="system"/>
                                                         <connections>
-                                                            <action selector="settingMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2V7-ge-fUf"/>
+                                                            <action selector="showServiceListsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Rl-Eh-J9O"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>

@@ -47,7 +47,9 @@ enum Url: String {
     case courceManagementHomePC
     case manabaHomeMobile
     case manabaHomePC
-    case libraryHome
+    case libraryHomePC
+    case libraryHomeKuraPC
+    case libraryHomeMobile
     case libraryLogin
     case libraryBookLendingExtension
     case libraryBookPurchaseRequest
@@ -64,6 +66,7 @@ enum Url: String {
     case courseRegistration
     case lostConnection
     case libraryCalendar
+    case libraryCalendarKura
     case syllabus
     case timeOut
     case enqueteReminder

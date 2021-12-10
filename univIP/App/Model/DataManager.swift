@@ -28,9 +28,9 @@ final class DataManager {
     /// アプリ使用初回者か判定
     public var isFirstTime: Bool { get { return version.isEmpty }}
     /// cアカウント、パスワードを登録しているか判定
-    public var isRegistrantCheck: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
+    public var canLogedInServiece: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
     /// 利用規約同意者か判定
-    public var isAgreementPersonDecision: Bool { get { return agreementVersion == model.agreementVersion }}
+    public var hasAgreedTermsOfUse: Bool { get { return agreementVersion == model.agreementVersion }}
     
 
     
@@ -145,7 +145,7 @@ final class DataManager {
         get {
             let jsonDecoder = JSONDecoder()
             let data = getUserDefaultsData(key: KEY_settingCellList)
-            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return [] }
+            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return model.serviceCellLists }
             return bookmarks
         }
         set(v) {
@@ -153,6 +153,12 @@ final class DataManager {
             guard let data = try? jsonEncoder.encode(v) else { return }
             setUserDefaultsData(key: KEY_settingCellList, value: data)
         }
+    }
+    
+    private let KEY_initialViewName = "KEY_initialViewName"
+    public var initialViewName: String {
+        get { return getUserDefaultsString(key: KEY_initialViewName) }
+        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
     }
 
 }

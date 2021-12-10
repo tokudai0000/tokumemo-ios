@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class CellSortViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    // MARK: - IBOutlet
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     private let dataManager = DataManager.singleton
-    
-    var editSituation = false
+
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -25,26 +26,22 @@ class CellSortViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
-        // 編集モード, 使用モード反転
-        editSituation = !editSituation
-        // 編集モード時、複数選択を許可
-        tableView.allowsMultipleSelectionDuringEditing = editSituation
-        // 編集モード起動、停止
-        tableView.setEditing(editSituation, animated: true)
+        let editing = !tableView.isEditing
+        tableView.setEditing(editing, animated: true)
+        tableView.allowsMultipleSelectionDuringEditing = editing
+        tableView.reloadData()
         
-        self.tableView.reloadData()
-        
-        if editSituation {
+        if editing {
             editButton.setTitle("完了", for: .normal)
         } else {
             editButton.setTitle("編集", for: .normal)
         }
         
-        // 編集モード時、display=true のセルを選択状態にする
-        if editSituation {
+        if editing {
             for i in 0 ..< dataManager.allCellList[0].count {
+                // display=true のセルを選択状態にする
                 if dataManager.allCellList[0][i].isDisplay {
-                    self.tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
+                    tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
             }
         }
@@ -52,8 +49,11 @@ class CellSortViewController: UIViewController {
     
     @IBAction func dissmissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+        
+        Analytics.logEvent("allCellList", parameters:  [
+            AnalyticsParameterItemName: "\(dataManager.allCellList[0])",
+          ])
     }
-    
 }
 
 
@@ -96,14 +96,15 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 編集モード判定
-        if editSituation {
+        if tableView.isEditing {
             // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
             dataManager.allCellList[0][indexPath.row].isDisplay = true
             dataManager.settingCellList = dataManager.allCellList[0]
-            return
         }
-        showAlart(indexPath.row)
+        
+        if !tableView.isEditing {
+            showRenameEditPopup(indexPath.row)
+        }
     }
     
     /// 編集モード時、チェックが外された時
@@ -111,42 +112,39 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
         dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = false
         dataManager.settingCellList = dataManager.allCellList[0]
     }
-    
-    
 }
 
 extension CellSortViewController: UITextFieldDelegate {
-    private func showAlart(_ indexPath: Int) {
-        let alert = UIAlertController(title: "名前の変更", message: nil, preferredStyle: .alert)
+    private func showRenameEditPopup(_ indexPath: Int) {
+        // popupではなく、Alertを使用
+        let popup = UIAlertController(title: "名前の変更", message: nil, preferredStyle: .alert)
 
-        let ok = UIAlertAction(title: "変更", style: .default, handler: {[weak alert] (action) -> Void in
-            guard let textFields = alert?.textFields else {
+        let ok = UIAlertAction(title: "変更",
+                               style: .default,
+                               handler: {[weak popup] (action) -> Void in
+            guard let textField = popup?.textFields else {
                 return
             }
+            if textField.isEmpty { return }
 
-            guard !textFields.isEmpty else {
-                return
-            }
-            if let text = textFields[0].text {
+            if let text = textField[0].text {
                 DataManager.singleton.allCellList[0][indexPath].title = text
                 DataManager.singleton.settingCellList = DataManager.singleton.allCellList[0]
             }
-            
             self.tableView.reloadData()
         })
-        let cancel = UIAlertAction(title: "キャンセル", style: .cancel, handler: { _ in self.tableView.reloadData() })
         
+        let cancel = UIAlertAction(title: "キャンセル",
+                                   style: .cancel,
+                                   handler: { _ in self.tableView.reloadData() })
         
-        //textfiledの追加
-        alert.addTextField(configurationHandler: {(textField:UITextField!) -> Void in
+        popup.addAction(ok)
+        popup.addAction(cancel)
+        popup.addTextField(configurationHandler: {(textField:UITextField!) -> Void in
             textField.delegate = self
             textField.placeholder = DataManager.singleton.allCellList[0][indexPath].title
         })
-        
-        alert.addAction(ok)
-        alert.addAction(cancel)
 
-        present(alert, animated: true, completion: nil)
-        
+        present(popup, animated: true, completion: nil)
     }
 }

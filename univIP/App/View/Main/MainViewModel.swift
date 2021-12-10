@@ -16,31 +16,29 @@ final class MainViewModel {
     public var teacherName = ""
     
     /// 前回のURLと現在表示しているURLの保持
-    public func registUrl(_ url: URL) {
-        
+    public func recordUrl(_ url: URL) {
         dataManager.forwardDisplayUrl = dataManager.displayUrl
         dataManager.displayUrl = url.absoluteString
-        
-        print("displayURL:\n \(dataManager.displayUrl) \n")
+        print("displayURL:\n \(url.absoluteString) \n")
     }
     
     /// 現在のURLが許可されたドメインか判定
-    public func isDomeinCheck(_ url: URL) -> Bool {
+    public func isAllowedDomeinCheck(_ urlString: String = DataManager.singleton.displayUrl) -> Bool {
+        guard let url = URL(string: urlString),
+              let host = url.host else {
+                  AKLog(level: .ERROR, message: "URL(string)パース,ドメイン取得エラー")
+                  return false
+              }
         
-        guard let host = url.host else{
-            AKLog(level: .ERROR, message: "ドメイン取得エラー")
-            return false
-        }
-        var trigger = false
-        for allow in model.allowDomains {
+        for allow in model.allowedDomains {
             if host.contains(allow){
-                trigger = true
+                return true
             }
         }
-        return trigger
+        return false
     }
     
-    enum Scene {
+    enum DiscriminantType {
         case login
         case enqueteReminder
         case syllabus
@@ -49,16 +47,15 @@ final class MainViewModel {
         case timeOut
         case registrantAndLostConnectionDecision
     }
-    
     /// 現在のURLがsceneかどうか判定
-    public func isJudgeUrl(_ scene: Scene,
-                           isRegistrant: Bool = DataManager.singleton.isRegistrantCheck,
+    public func isJudgeUrl(_ type: DiscriminantType,
+                           isRegistrant: Bool = DataManager.singleton.canLogedInServiece,
                            forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
                            displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
-        
+        // MARK: - HACK
         var isLists:[Bool] = []
         
-        switch scene {
+        switch type {
         case .login:
             isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
             isLists.append(displayUrl.contains(Url.lostConnection.string()))
@@ -104,4 +101,18 @@ final class MainViewModel {
         return true
     }
     
+    public func searchInitialViewUrl() -> URLRequest {
+        if dataManager.canLogedInServiece {
+            let lists = dataManager.settingCellList
+            for list in lists {
+                if list.initialView {
+                    if let url = URL(string: list.url) {
+                        return URLRequest(url: url)
+                    }
+                }
+            }
+            return Url.manabaHomePC.urlRequest()
+        }
+        return Url.systemServiceList.urlRequest()
+    }
 }

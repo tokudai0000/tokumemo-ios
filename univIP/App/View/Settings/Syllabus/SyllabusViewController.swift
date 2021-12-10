@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 final class SyllabusViewController: BaseViewController {
     
@@ -24,50 +23,14 @@ final class SyllabusViewController: BaseViewController {
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var searchButton: UIButton!
     
-    public var delegate : MainViewController? // メモリリーク
-    
     private let dataManager = DataManager.singleton
+    
+    public var delegate : MainViewController?
     
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-    }
-    
-    
-    // MARK: - IBAction
-    @IBAction func searchButton(_ sender: Any) {
-        if let delegate = delegate {
-            delegate.refreshSyllabus(subjectName: subjectTextField.text ?? "",
-                                     teacherName: teacherTextField.text ?? "")
-//            dataManager.isSyllabusSearchOnce = true
-            dataManager.displayUrl = "" // だいぶ無理矢理
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func dissmissButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    // MARK: - Public
-    public func restoreView(){
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                self.viewTop.layer.position.x -= 250
-            },
-            completion: { bool in
-            })
-    }
-    
-    
-    // MARK: - Private
-    private func setup() {
         subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         
@@ -83,6 +46,26 @@ final class SyllabusViewController: BaseViewController {
         searchButton.layer.cornerRadius = 5.0
     }
     
+    
+    // MARK: - IBAction
+    @IBAction func searchButton(_ sender: Any) {
+        let subjectText = subjectTextField.text ?? ""
+        let teacherText = teacherTextField.text ?? ""
+        
+        if let delegate = delegate {
+            delegate.refreshSyllabus(subjectName: subjectText,
+                                     teacherName: teacherText)
+            dataManager.displayUrl = "" // MARK: - HACK だいぶ無理矢理
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func dissmissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private
     
     enum cursorType {
         case normal
@@ -129,26 +112,6 @@ final class SyllabusViewController: BaseViewController {
 // MARK: - UITextFieldDelegate
 extension SyllabusViewController: UITextFieldDelegate {
     
-    // キーボードが現れる直前
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // キーボードで隠されたくない範囲（注意！super.viewからの絶対座標で渡すこと）
-        var frame = searchButton.frame
-        // super.viewからの絶対座標に変換する
-        if var pv = searchButton.superview {
-            while pv != super.view {
-                if let gv = pv.superview {
-                    frame = pv.convert(frame, to: gv)
-                    pv = gv
-                }else{
-                    break
-                }
-            }
-        }
-        super.keyboardSafeArea = frame // super.viewからの絶対座標
-        return true //true=キーボードを表示する
-    }
-    
-    
     enum TextFieldTag: Int {
         case subject = 0
         case teacher = 1
@@ -169,6 +132,7 @@ extension SyllabusViewController: UITextFieldDelegate {
             fatalError()
         }
     }
+    
     // textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
         subjectTextFieldCursorSetup(type: .normal)
@@ -181,6 +145,24 @@ extension SyllabusViewController: UITextFieldDelegate {
         teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
     }
     
+    // キーボードが現れる直前
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // キーボードで隠されたくない範囲（注意！super.viewからの絶対座標で渡すこと）
+        var frame = searchButton.frame
+        // super.viewからの絶対座標に変換する
+        if var pv = searchButton.superview {
+            while pv != super.view {
+                if let gv = pv.superview {
+                    frame = pv.convert(frame, to: gv)
+                    pv = gv
+                }else{
+                    break
+                }
+            }
+        }
+        super.keyboardSafeArea = frame // super.viewからの絶対座標
+        return true //true=キーボードを表示する
+    }
 }
 
 
