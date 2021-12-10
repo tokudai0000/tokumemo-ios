@@ -16,9 +16,7 @@ final class DataManager {
     ///
     public var forwardDisplayUrl = ""               // 1つ前のURL
     public var displayUrl = ""                      // 現在表示しているURL
-    public var isLoggedIn = false                   // ログインしているか
     public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
-    public var isSyllabusSearchOnce = false           // Syllabusの検索を1度きりにする
     ///
     
     static let singleton = DataManager() // シングルトン・インタンス
@@ -27,12 +25,12 @@ final class DataManager {
     private var userDefaults = UserDefaults.standard
     
     
-    
+    /// アプリ使用初回者か判定
     public var isFirstTime: Bool { get { return version.isEmpty }}
-    
-    public var isRegistrantCheck: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
-    // 利用規約同意者か判定
-    public var isAgreementPersonDecision: Bool { get { return agreementVersion == model.agreementVersion }}
+    /// cアカウント、パスワードを登録しているか判定
+    public var canLogedInServiece: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
+    /// 利用規約同意者か判定
+    public var hasAgreedTermsOfUse: Bool { get { return agreementVersion == model.agreementVersion }}
     
 
     
@@ -53,7 +51,6 @@ final class DataManager {
             if let value = try keychain.get(key) {
                 return value
             }
-            AKLog(level: .ERROR, message: "error: Datamanager.getKeyChain do")
             return ""
         } catch {
             AKLog(level: .ERROR, message: "error: Datamanager.getKeyChain catch")
@@ -82,24 +79,37 @@ final class DataManager {
     }
     
     /// password
-    private let KEY_passWord = "KEY_passWord"
+    private let KEY_password = "KEY_passWord" // KEY_password にするべき(**注意** 変更するとユーザーは再度パスワードを登録しなければならない)
     public var password: String {
-        get { return getKeyChain(key: KEY_passWord) }
-        set(v) { setKeyChain(key: KEY_passWord, value: v) }
+        get { return getKeyChain(key: KEY_password) }
+        set(v) { setKeyChain(key: KEY_password, value: v) }
     }
     
     
-    /// GET (UserDefaults)
+    
+    /// GET (UserDefaults) String
     private func getUserDefaultsString(key:String) -> String {
         if let value = userDefaults.string(forKey: key) {
             return value
         }
-        AKLog(level: .ERROR, message: "error: Datamanager.getUserDefaults")
-        return ""
+        return "" // 非登録者の場合
     }
     
-    /// SET (UserDefaults)
+    /// SET (UserDefaults) String
     private func setUserDefaultsString(key:String, value:String) {
+        userDefaults.set(value ,forKey: key)
+    }
+    
+    /// GET (UserDefaults) Data
+    private func getUserDefaultsData(key:String) -> Data {
+        if let value = userDefaults.data(forKey: key) {
+            return value
+        }
+        return Data() // 非登録者の場合
+    }
+    
+    /// SET (UserDefaults) Data
+    private func setUserDefaultsData(key:String, value:Data) {
         userDefaults.set(value ,forKey: key)
     }
     
@@ -124,49 +134,31 @@ final class DataManager {
         set(v) { setUserDefaultsString(key: KEY_manaba, value: v) }
     }
 
-    private let KEY_version = "KEY_version"
+    private let KEY_applicationVersion = "KEY_version" // KEY_applicationVersion にするべき(**注意** 変更するとサービスリストが初期化される)
     public var version: String {
-        get { return getUserDefaultsString(key: KEY_version) }
-        set(v) { setUserDefaultsString(key: KEY_version, value: v) }
-    }
-    
-    /// GET (UserDefaults)
-    private func getUserDefaultsData(key:String) -> Data {
-        if let value = userDefaults.data(forKey: key) {
-            return value
-        }
-        AKLog(level: .ERROR, message: "error: Datamanager.getUserDefaults")
-        return Data()
-    }
-    
-    /// SET (UserDefaults)
-    private func setUserDefaultsData(key:String, value:Data) {
-        userDefaults.set(value ,forKey: key)
+        get { return getUserDefaultsString(key: KEY_applicationVersion) }
+        set(v) { setUserDefaultsString(key: KEY_applicationVersion, value: v) }
     }
     
     private let KEY_settingCellList = "KEY_settingCellList"
-    public var settingCellList: Data {
-        get { return getUserDefaultsData(key: KEY_settingCellList) }
-        set(v) { setUserDefaultsData(key: KEY_settingCellList, value: v) }
+    public var settingCellList: [CellList] {
+        get {
+            let jsonDecoder = JSONDecoder()
+            let data = getUserDefaultsData(key: KEY_settingCellList)
+            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return model.serviceCellLists }
+            return bookmarks
+        }
+        set(v) {
+            let jsonEncoder = JSONEncoder()
+            guard let data = try? jsonEncoder.encode(v) else { return }
+            setUserDefaultsData(key: KEY_settingCellList, value: data)
+        }
+    }
+    
+    private let KEY_initialViewName = "KEY_initialViewName"
+    public var initialViewName: String {
+        get { return getUserDefaultsString(key: KEY_initialViewName) }
+        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
     }
 
 }
-
-
-//extension UserDefaults {
-//
-//    func setEnum<T: RawRepresentable>(_ value: T?, forKey key: String) where T.RawValue == String {
-//        if let value = value {
-//            set(value.rawValue, forKey: key)
-//        } else {
-//            removeObject(forKey: key)
-//        }
-//    }
-//
-//    func getEnum<T: RawRepresentable>(forKey key: String) -> T? where T.RawValue == String {
-//        if let string = string(forKey: key) {
-//            return T(rawValue: string)
-//        }
-//        return nil
-//    }
-//}

@@ -1,4 +1,6 @@
 PODS:
+  - Firebase (8.9.1):
+    - Firebase/Core (= 8.9.1)
   - Firebase/Analytics (8.9.1):
     - Firebase/Core
   - Firebase/Core (8.9.1):
@@ -94,6 +96,7 @@ PODS:
   - R.swift.Library (5.3.0)
 
 DEPENDENCIES:
+  - Firebase
   - Firebase/Analytics (~> 8)
   - Kanna (~> 5)
   - KeychainAccess (~> 4)
@@ -132,6 +135,6 @@ SPEC CHECKSUMS:
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: a1ac1d5254f09eb975e3ebc9bb6a2955ab8c47e7
+PODFILE CHECKSUM: 43981a88e9c69bfb5b47437bcf1b6ea47d9686e4
 
 COCOAPODS: 1.11.2

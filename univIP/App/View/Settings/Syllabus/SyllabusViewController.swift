@@ -8,91 +8,34 @@
 
 import UIKit
 
-final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
-    
+final class SyllabusViewController: BaseViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var viewTop: UIView!
-    @IBOutlet weak var searchButton: UIButton!
-    
     @IBOutlet weak var subjectTextField: UITextField!
     @IBOutlet weak var teacherTextField: UITextField!
+    
     @IBOutlet weak var subjectTextSizeLabel: UILabel!
     @IBOutlet weak var teacherTextSizeLabel: UILabel!
+    
     @IBOutlet weak var subjectUnderLine: UIView!
     @IBOutlet weak var teacherUnderLine: UIView!
     
-    public var delegate : MainViewController?
+    @IBOutlet weak var viewTop: UIView!
+    @IBOutlet weak var searchButton: UIButton!
+    
     private let dataManager = DataManager.singleton
+    
+    public var delegate : MainViewController?
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setup()
-    }
-    
-    /// 画面が現れる直前
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // 通知セット
-        let notification = NotificationCenter.default
-        // キーボードが現れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
-                                 name: UIResponder.keyboardWillShowNotification, object: nil)
-        // キーボードが隠れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
-                                 name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    
-    // MARK: - IBAction
-    
-    @IBAction func searchButton(_ sender: Any) {
-        
-        delegate?.refreshSyllabus(subjectName: subjectTextField.text ?? "",
-                                  teacherName: teacherTextField.text ?? "")
-        dataManager.isSyllabusSearchOnce = true
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func dissmissButton(_ sender: Any) {
-        
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    // MARK: - Private func
-    
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
-    }
-    
-    
-    // MARK:- Public func
-    public func restoreView(){
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0,
-            options: .curveEaseIn,
-            animations: {
-                self.viewTop.layer.position.x -= 250
-            },
-            completion: { bool in
-            })
-    }
-    
-    
-    private func setup() {
-        
         subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         
-        teacherTextField.isSecureTextEntry = true
-        searchButton.layer.cornerRadius = 5.0
-        subjectTextField.setUnderLine()
-        teacherTextField.setUnderLine()
+        subjectTextField.borderStyle = .none
+        teacherTextField.borderStyle = .none
         
         subjectTextField.delegate = self
         teacherTextField.delegate = self
@@ -100,6 +43,142 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
         subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
         teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
         
+        searchButton.layer.cornerRadius = 5.0
+    }
+    
+    
+    // MARK: - IBAction
+    @IBAction func searchButton(_ sender: Any) {
+        let subjectText = subjectTextField.text ?? ""
+        let teacherText = teacherTextField.text ?? ""
+        
+        if let delegate = delegate {
+            delegate.refreshSyllabus(subjectName: subjectText,
+                                     teacherName: teacherText)
+            dataManager.displayUrl = "" // MARK: - HACK だいぶ無理矢理
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func dissmissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private
+    
+    enum cursorType {
+        case normal
+        case forcus
+        case error
+    }
+    
+    private func subjectTextFieldCursorSetup(type: cursorType) {
+        switch type {
+            
+        case .normal:
+            subjectUnderLine.backgroundColor = .lightGray
+            
+        case .forcus:
+            // カーソルの色
+            subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            
+        case .error:
+            subjectTextField.tintColor = .red
+            subjectUnderLine.backgroundColor = .red
+        }
+    }
+    
+    private func teacherTextFieldCursorSetup(type: cursorType) {
+        switch type {
+            
+        case .normal:
+            teacherUnderLine.backgroundColor = .lightGray
+            
+        case .forcus:
+            teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            
+        case .error:
+            teacherTextField.tintColor = .red
+            teacherUnderLine.backgroundColor = .red
+        }
+    }
+    
+}
+
+
+// MARK: - UITextFieldDelegate
+extension SyllabusViewController: UITextFieldDelegate {
+    
+    enum TextFieldTag: Int {
+        case subject = 0
+        case teacher = 1
+    }
+    // textField編集前
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let textFieldTag = TextFieldTag(rawValue: textField.tag)
+        
+        switch textFieldTag {
+        case .subject:
+            subjectTextFieldCursorSetup(type: .forcus)
+            
+        case .teacher:
+            teacherTextFieldCursorSetup(type: .forcus)
+            
+        case .none:
+            AKLog(level: .FATAL, message: "TextFieldTagが不正")
+            fatalError()
+        }
+    }
+    
+    // textField編集後
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        subjectTextFieldCursorSetup(type: .normal)
+        teacherTextFieldCursorSetup(type: .normal)
+    }
+    
+    // text内容が変更されるたびに
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
+        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
+    }
+    
+    // キーボードが現れる直前
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // キーボードで隠されたくない範囲（注意！super.viewからの絶対座標で渡すこと）
+        var frame = searchButton.frame
+        // super.viewからの絶対座標に変換する
+        if var pv = searchButton.superview {
+            while pv != super.view {
+                if let gv = pv.superview {
+                    frame = pv.convert(frame, to: gv)
+                    pv = gv
+                }else{
+                    break
+                }
+            }
+        }
+        super.keyboardSafeArea = frame // super.viewからの絶対座標
+        return true //true=キーボードを表示する
+    }
+}
+
+
+// MARK: - Notification
+extension SyllabusViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // キーボードの通知セット
+        let notification = NotificationCenter.default
+        // キーボードが現れる直前
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
+                                 name: UIResponder.keyboardWillShowNotification, object: nil)
+        // キーボードが隠れる直前
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
+                                 name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: Notification?) {
@@ -156,48 +235,5 @@ final class SyllabusViewController: BaseViewController, UITextFieldDelegate {
         UIView.animate(withDuration: duration + 0.2, animations: { () in
             self.searchButton.transform = CGAffineTransform.identity
         })
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
-        var frame = searchButton.frame
-        // super.viewからの絶対座標に変換する
-        if var pv = searchButton.superview {
-            while pv != super.view {
-                if let gv = pv.superview {
-                    frame = pv.convert(frame, to: gv)
-                    pv = gv
-                }else{
-                    break
-                }
-            }
-        }
-        
-        super.keyboardSafeArea = frame // super.viewからの絶対座標
-        return true //true=キーボードを表示する
-    }
-    
-    // 入力開始
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        switch textField.tag {
-        case 0:
-            subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-        case 1:
-            teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-        default:
-            return
-        }
-    }
-    
-    // フォーカスが外れた
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        switch textField.tag {
-        case 0:
-            subjectUnderLine.backgroundColor = .lightGray
-        case 1:
-            teacherUnderLine.backgroundColor = .lightGray
-        default:
-            return
-        }
     }
 }

@@ -7,128 +7,112 @@
 
 import Foundation
 
-final class MainViewModel: NSObject {
+final class MainViewModel {
     
     private let model = Model()
     private let dataManager = DataManager.singleton
-    private let webViewModel = WebViewModel()
     
+    public var subjectName = ""
+    public var teacherName = ""
     
-    enum NextModalView {
-        case syllabus
-        case password
-        case aboutThisApp
+    /// 前回のURLと現在表示しているURLの保持
+    public func recordUrl(_ url: URL) {
+        dataManager.forwardDisplayUrl = dataManager.displayUrl
+        dataManager.displayUrl = url.absoluteString
+        print("displayURL:\n \(url.absoluteString) \n")
     }
     
-    enum CourceManagementManabaPcOrMobile {
-        case courceManagementPC
-        case courceManagementMobile
-        case manabaPC
-        case manabaMobile
-    }
-    
-    enum TabBarItem: Int {
-        case courceManagement = 1
-        case manaba = 2
-    }
-    
-    enum ViewOperation {
-        case up
-        case down
-        case reverse
-    }
-    
-    enum AnimeOperation {
-        case launchScreen
-        case viewUp
-        case viewDown
-        case Nil
-    }
-    
-    enum ViewMoveIcon: String {
-        case up = "chevron.up"
-        case down = "chevron.down"
-    }
-    
-    
-    // MARK: - Public
-    
-    /// 教務事務システム、マナバのMobileかPCか判定
-    public func isCourceManagementUrlForPC(displayUrl: String) -> CourceManagementManabaPcOrMobile {
-        switch displayUrl {
-        case Url.courceManagementHomeMobile.string():  return .courceManagementPC
-        case Url.courceManagementHomePC.string():      return .courceManagementMobile
-        case Url.manabaHomeMobile.string():            return .manabaPC
-        case Url.manabaHomePC.string():                return .manabaMobile
-
-        default:
-            fatalError()
-        }
-    }
-    
-    
-    /// タブバーの判定
-    public func tabBarDetection(num: Int, isRegist: Bool, courceType: String, manabaType: String) -> NSURLRequest? {
-        let tabBarItem = TabBarItem(rawValue: num)!
+    /// 現在のURLが許可されたドメインか判定
+    public func isAllowedDomeinCheck(_ urlString: String = DataManager.singleton.displayUrl) -> Bool {
+        guard let url = URL(string: urlString),
+              let host = url.host else {
+                  AKLog(level: .ERROR, message: "URL(string)パース,ドメイン取得エラー")
+                  return false
+              }
         
-        switch tabBarItem {
-        case .courceManagement:
-            if isRegist {
-                if courceType == "PC" {
-                    return webViewModel.url(.courceManagementHomePC)
-                } else {
-                    return webViewModel.url(.courceManagementHomeSP)
-                }
-                
-            } else {
-                return webViewModel.url(.systemServiceList)
-            }
-            
-        case .manaba:
-            if isRegist {
-                if manabaType == "PC" {
-                    return webViewModel.url(.manabaPC)
-                } else {
-                    return webViewModel.url(.manabaSP)
-                }
-                
-            } else {
-                return webViewModel.url(.eLearningList)
+        for allow in model.allowedDomains {
+            if host.contains(allow){
+                return true
             }
         }
+        return false
     }
     
-
-    /// WebViewの上げ下げを判定
-    public func viewPosisionType(_ operation: ViewOperation, posisionY: Double) -> (imageName: ViewMoveIcon, animationName: AnimeOperation) {
-        switch operation {
-        case .up:
-            // Viewを動かして良いのか判定
-            if (0.0 < posisionY) {
-                // Viewを上げた後、[chevron.down]のImageに差し替える
-                return (.down, .viewUp)
-            } else {
-                return (.up, .Nil)
-            }
+    enum DiscriminantType {
+        case login
+        case enqueteReminder
+        case syllabus
+        case outlook
+        case tokudaiCareerCenter
+        case timeOut
+        case registrantAndLostConnectionDecision
+    }
+    /// 現在のURLがsceneかどうか判定
+    public func isJudgeUrl(_ type: DiscriminantType,
+                           isRegistrant: Bool = DataManager.singleton.canLogedInServiece,
+                           forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
+                           displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
+        // MARK: - HACK
+        var isLists:[Bool] = []
+        
+        switch type {
+        case .login:
+            isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.suffix(2)=="s1")
+            isLists.append(isRegistrant)
             
-        case .down:
-            if (posisionY <= 0.0) {
-                return (.up, .viewDown)
-            } else {
-                return (.down, .Nil)
-            }
             
-        case .reverse:
-            if (posisionY <= 0.0) {
-                return (.up, .viewDown)
-            } else {
-                return (.down, .viewUp)
+        case .enqueteReminder:
+            isLists.append(!forwardUrl.contains(Url.enqueteReminder.string()))
+            isLists.append(displayUrl.contains(Url.enqueteReminder.string()))
+            
+            
+        case .syllabus:
+            isLists.append(forwardUrl != Url.syllabus.string())
+            isLists.append(displayUrl.contains(Url.syllabus.string()))
+            
+            
+        case .outlook:
+            isLists.append(!forwardUrl.contains(Url.outlookLogin.string()))
+            isLists.append(displayUrl.contains(Url.outlookLogin.string()))
+            
+            
+        case .tokudaiCareerCenter:
+            isLists.append(!forwardUrl.contains(Url.tokudaiCareerCenter.string()))
+            isLists.append(displayUrl == Url.tokudaiCareerCenter.string())
+            
+            
+        case .timeOut:
+            isLists.append(displayUrl == Url.timeOut.string())
+            
+            
+        case .registrantAndLostConnectionDecision:
+            isLists.append(!isRegistrant)
+            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            
+        }
+        
+        for item in isLists {
+            if !item {
+                return false
             }
         }
+        return true
     }
     
-    
-    // MARK: - Private
-    
-    
+    public func searchInitialViewUrl() -> URLRequest {
+        if dataManager.canLogedInServiece {
+            let lists = dataManager.settingCellList
+            for list in lists {
+                if list.initialView {
+                    if let url = URL(string: list.url) {
+                        return URLRequest(url: url)
+                    }
+                }
+            }
+            return Url.manabaHomePC.urlRequest()
+        }
+        return Url.systemServiceList.urlRequest()
+    }
 }

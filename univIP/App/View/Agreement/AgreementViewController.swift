@@ -7,81 +7,65 @@
 
 import UIKit
 
-final class AgreementViewController: BaseViewController, UITextViewDelegate {
+final class AgreementViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var termsTextView: UITextView!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var agreementButton: UIButton!
     
     private let model = Model()
-    private let rtfFileModel = FileModel()
     private let dataManager = DataManager.singleton
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        textViewSetup()
+        
+        textView.delegate = self
+        textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
+        agreementButton.layer.cornerRadius = 20.0
+        
+        // 同意規約内容の読み込み
+        let filePath = R.file.agreementRtf()!
+        let attributedText = Common.rtfFileLoad(url: filePath)
+        textView.attributedText = Common.setAttributedText(attributedText)
     }
     
     
     // MARK: - IBAction
-    @IBAction func buttonAction(_ sender: Any) {
-//        dataManager.setAgreementVersion()
+    @IBAction func agreementButton(_ sender: Any) {
+        // 利用規約のバージョン更新
         dataManager.agreementVersion = model.agreementVersion
-        self.dismiss(animated: true, completion: nil)
-                
+        dismiss(animated: true, completion: nil)
     }
+
+}
+
+
+// MARK: - UITextViewDelegate
+extension AgreementViewController: UITextViewDelegate {
     
-    
-    // MARK: - Public
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    public func textView(_ textView: UITextView,
+                         shouldInteractWith URL: URL,
+                         in characterRange: NSRange,
+                         interaction: UITextItemInteraction) -> Bool {
+        
         let urlString = URL.absoluteString
         
-        if urlString == "TermsOfService" {
+        switch urlString {
+        case "TermsOfService":
             let vc = R.storyboard.termsOfService.termsOfService()!
-            self.present(vc, animated: true, completion: nil)
+            present(vc, animated: true, completion: nil)
             return false // 通常のURL遷移を行わない
             
-        } else if urlString == "PrivacyPolicy" {
+        case "PrivacyPolicy":
             let vc = R.storyboard.privacyPolicy.privacyPolicy()!
-            self.present(vc, animated: true, completion: nil)
-            return false 
+            present(vc, animated: true, completion: nil)
+            return false
             
+        default:
+            return true // 通常のURL遷移を行う
         }
-        return true // 通常のURL遷移を行う
-        
-    }
-    
-    
-    // MARK: - Private
-    private func setup() {
-        agreementButton.layer.cornerRadius = 20.0
-        
-        termsTextView.isEditable = false
-        termsTextView.isScrollEnabled = false
-        termsTextView.isSelectable = true
-        termsTextView.delegate = self
-        
-    }
-    
-    private func textViewSetup() {
-
-        let attributed = rtfFileModel.rtfFileLoad(url: R.file.agreementRtf())
-        let attributedString = NSMutableAttributedString(string: attributed.string)
-        
-        let linkSourceCode = (attributedString.string as NSString).range(of: "ご利用規約")
-        let linkFireBasePrivacy = (attributedString.string as NSString).range(of: "プライバシーポリシー")
-        
-        let attributedText = NSMutableAttributedString(string: attributedString.string,
-                                                       attributes:[
-                                                        .font:UIFont(name:"Futura-Medium", size:15)!,
-                                                        .foregroundColor:UIColor.label,
-                                                       ])
-        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
-        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
-        termsTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
-        termsTextView.attributedText = attributedText
     }
     
 }
