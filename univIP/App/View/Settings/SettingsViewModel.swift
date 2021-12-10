@@ -70,9 +70,11 @@ final class SettingViewModel {
         }
     }
     
-    public func fetchLibraryCalenderUrl() -> URLRequest? {
-        let urlString = URL(string: Url.libraryHomePC.string())
-        let data = NSData(contentsOf: urlString! as URL)
+    public func fetchLibraryCalenderUrl(urlString: String) -> URLRequest? {
+        guard let url = URL(string: urlString) else {
+            fatalError()
+        }
+        let data = NSData(contentsOf: url as URL)
         
         do {
             // MARK: - HACK 汚い
@@ -81,7 +83,7 @@ final class SettingViewModel {
                 guard let str = node["href"] else {
                     return nil
                 }
-                if str.contains("pub/pdf/calender/calender_main_"){
+                if str.contains("pub/pdf/calender/calender") {
                     let urlString = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
                     if let url = URL(string: urlString) {
                         return URLRequest(url: url)

@@ -44,12 +44,14 @@ struct Model {
         case courceManagementHomeMobile
         case manabaHomePC
         case manabaHomeMobile
-        case libraryWebHomePC               // 図書館Webサイト
+        case libraryWebHomePC               // 図書館Webサイト常三島
+        case libraryWebHomeKuraPC           // 図書館Webサイト蔵本
         case libraryWebHomeMobile
         case libraryMyPage                  // 図書館MyPage
         case libraryBookLendingExtension    // 図書館本貸出し期間延長
         case libraryBookPurchaseRequest     // 図書館本購入リクエスト
-        case libraryCalendar                // 図書館カレンダー
+        case libraryCalendar                // 図書館カレンダー常三島
+        case libraryCalendarKura            // 図書館カレンダー蔵本
         case syllabus                       // シラバス
         case timeTable                      // 時間割
         case currentTermPerformance         // 今年の成績表
@@ -83,12 +85,14 @@ struct Model {
                                    CellList(type: .courceManagementHomeMobile,  url: Url.courceManagementHomeMobile.string(),  title: "教務事務システムMobile版"),
                                    CellList(type: .manabaHomePC,                url: Url.manabaHomePC.string(),                title: "マナバPC版"),
                                    CellList(type: .manabaHomeMobile,            url: Url.manabaHomeMobile.string(),            title: "マナバMobile版"),
-                                   CellList(type: .libraryWebHomePC,            url: Url.libraryHomePC.string(),               title: "[図書館]WebサイトPC版"),
-                                   CellList(type: .libraryWebHomeMobile,        url: Url.libraryHomeMobile.string(),           title: "[図書館]WebサイトMobile版"),
+                                   CellList(type: .libraryWebHomePC,            url: Url.libraryHomePC.string(),               title: "[図書館常三島]WebサイトPC版"),
+                                   CellList(type: .libraryWebHomePC,            url: Url.libraryHomePC.string(),               title: "[図書館蔵本]WebサイトPC版"),
+                                   CellList(type: .libraryWebHomeMobile,        url: Url.libraryHomeMobile.string(),           title: "[図書館常三島]WebサイトMobile版"),
                                    CellList(type: .libraryMyPage,               url: Url.libraryLogin.string(),                title: "[図書館]MyPage"),
                                    CellList(type: .libraryBookLendingExtension, url: Url.libraryBookLendingExtension.string(), title: "[図書館]貸し出し期間延長"),
                                    CellList(type: .libraryBookPurchaseRequest,  url: Url.libraryBookPurchaseRequest.string(),  title: "[図書館]本購入リクエスト"),
-                                   CellList(type: .libraryCalendar,             url: Url.libraryCalendar.string(),             title: "[図書館]開館カレンダー"),
+                                   CellList(type: .libraryCalendar,             url: Url.libraryCalendar.string(),             title: "[図書館常三島]開館カレンダー"),
+                                   CellList(type: .libraryCalendarKura,         url: Url.libraryCalendar.string(),             title: "[図書館蔵本]開館カレンダー"),
                                    CellList(type: .syllabus,                    url: Url.syllabus.string(),                    title: "シラバス"),
                                    CellList(type: .timeTable,                   url: Url.timeTable.string(),                   title: "時間割"),
                                    CellList(type: .currentTermPerformance,      url: Url.currentTermPerformance.string(),      title: "今年の成績表"),
