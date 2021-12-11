@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PrivacyPolicyViewController: UIViewController {
+final class PrivacyPolicyViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!

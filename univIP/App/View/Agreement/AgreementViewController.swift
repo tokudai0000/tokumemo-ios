@@ -38,7 +38,7 @@ final class AgreementViewController: UIViewController {
         dataManager.agreementVersion = model.agreementVersion
         dismiss(animated: true, completion: nil)
     }
-
+    
 }
 
 

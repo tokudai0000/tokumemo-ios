@@ -77,7 +77,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
         case .cellSort:
             let vc = R.storyboard.cellSort.cellSort()!
             present(vc, animated: true, completion: nil)
-        
+            
         case .firstViewSetting:
             let vc = R.storyboard.firstViewSetting.firstViewSetting()!
             present(vc, animated: true, completion: nil)

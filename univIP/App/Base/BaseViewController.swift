@@ -14,26 +14,26 @@ class BaseViewController: UIViewController {
     // キーボードで隠されたくない範囲（UITextField.frameなどをセットする）
     public var keyboardSafeArea: CGRect? = nil
     /** UITextFieldDelegateにて下記コードを組み込んでUITextField.frameを知らせる。
-            /// 入力可能になる直前
-            func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-                // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
-                var frame = textField.frame
-                // super.viewからの絶対座標に変換する
-                if var pv = textField.superview {
-                    while pv != super.view {
-                        if let gv = pv.superview {
-                            frame = pv.convert(frame, to: gv)
-                            pv = gv
-                        }else{
-                            break
-                        }
-                    }
-                }
-                super.keyboardSafeArea = frame // super.viewからの絶対座標
-                return true //true=キーボードを表示する
-            }
-    **/
-
+     /// 入力可能になる直前
+     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+     // BaseViewControllerへキーボードで隠されたくない範囲を伝える（注意！super.viewからの絶対座標で渡すこと）
+     var frame = textField.frame
+     // super.viewからの絶対座標に変換する
+     if var pv = textField.superview {
+     while pv != super.view {
+     if let gv = pv.superview {
+     frame = pv.convert(frame, to: gv)
+     pv = gv
+     }else{
+     break
+     }
+     }
+     }
+     super.keyboardSafeArea = frame // super.viewからの絶対座標
+     return true //true=キーボードを表示する
+     }
+     **/
+    
     var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - View Life Cycle

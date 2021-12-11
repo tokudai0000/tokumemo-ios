@@ -24,16 +24,16 @@ final class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // viewをタップされた際の処理 **後日修正する**
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
-//        self.view.addGestureRecognizer(tap)
+        //        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
+        //        self.view.addGestureRecognizer(tap)
         
         viewModel.initialBootProcess()
         self.tableView.reloadData()
     }
     // これだとcellをタップしても呼ばれてしまう **後日修正する**
-//    @objc func viewTap(_ sender: UITapGestureRecognizer) {
-//        dismiss(animated: false, completion: nil)
-//    }
+    //    @objc func viewTap(_ sender: UITapGestureRecognizer) {
+    //        dismiss(animated: false, completion: nil)
+    //    }
 }
 
 

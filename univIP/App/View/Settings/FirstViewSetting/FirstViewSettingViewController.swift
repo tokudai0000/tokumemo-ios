@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FirstViewSettingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+final class FirstViewSettingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textField: UITextField!
@@ -49,7 +49,7 @@ class FirstViewSettingViewController: UIViewController, UIPickerViewDelegate, UI
     
     @objc func done() {
         textField.endEditing(true)
-                
+        
         for i in 0..<dataManager.allCellList[0].count {
             // 選択された内容とインデックス番号を照合
             let s = dataManager.allCellList[0][i].type == list[pickerView.selectedRow(inComponent: 0)].type
