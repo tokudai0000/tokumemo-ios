@@ -71,14 +71,6 @@ struct Model {
         case aboutThisApp                   // このアプリについて
     }
     
-    enum Category: Codable {
-        case library
-        case corceManagement
-        case syllabus
-        case mail
-        case recruit
-        case setting
-    }
     
     /// サービスCell初期状態（更新確認、初回利用者はここを確認される）
     public let serviceCellLists = [CellList(type: .courceManagementHomePC,      url: Url.courceManagementHomePC.string(),      title: "教務事務システムPC版"),
@@ -116,7 +108,7 @@ struct Model {
                                               CellList(type: .courceManagementHomeMobile, title: "教務事務システムMobile版"),
                                               CellList(type: .manabaHomePC,               title: "マナバPC版"),
                                               CellList(type: .manabaHomeMobile,           title: "マナバMobile版"),
-                                              CellList(type: .libraryWebHomePC,                 title: "[図書館]Webサイト"),
+                                              CellList(type: .libraryWebHomePC,           title: "[図書館]Webサイト"),
                                               CellList(type: .libraryMyPage,              title: "[図書館]MyPage"),
                                               CellList(type: .libraryCalendar,            title: "[図書館]開館カレンダー"),
                                               CellList(type: .syllabus,                   title: "シラバス"),
