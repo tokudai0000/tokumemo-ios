@@ -449,7 +449,8 @@
 			buildConfigurationList = 1AA056DD26BD2AE500343005 /* Build configuration list for PBXNativeTarget "univIP" */;
 			buildPhases = (
 				2F704F3F01C4CDEC8E4D8125 /* [CP] Check Pods Manifest.lock */,
-				1AA056E026BD2CC300343005 /* ShellScript */,
+				1AA056E026BD2CC300343005 /* Run Script R.Swift */,
+				1A69FB74276722DB006A34C0 /* Run Script Align Xcode Version */,
 				1AA056C526BD2AE100343005 /* Sources */,
 				1AA056C626BD2AE100343005 /* Frameworks */,
 				1AA056C726BD2AE100343005 /* Resources */,
@@ -590,7 +591,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AA056E026BD2CC300343005 /* ShellScript */ = {
+		1A69FB74276722DB006A34C0 /* Run Script Align Xcode Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script Align Xcode Version";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ $XCODE_VERSION_ACTUAL != \"1310\" ]]; then\n    echo \"Xcodeのversionが指定されているのと異なります\"\n    echo \"詳しくはReadMeを見てください\"\n    echo \"BuildPhases -> RunScript AlignXcodeVersion\"\n    echo \"あなたのversion->\"$XCODE_VERSION_ACTUAL\n    exit -1 #強制に別バージョンで動かしたい場合はリマーク\nfi\n";
+		};
+		1AA056E026BD2CC300343005 /* Run Script R.Swift */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
@@ -600,6 +619,7 @@
 			inputPaths = (
 				"$TEMP_DIR/rswift-lastrun",
 			);
+			name = "Run Script R.Swift";
 			outputFileListPaths = (
 			);
 			outputPaths = (
