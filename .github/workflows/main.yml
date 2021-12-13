@@ -1,24 +1,24 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-    paths-ignore:
-      - Docs/**
-      - README.md
-      - LICENSE
-      - Rambafile
-  pull_request:
-    branches:
-      # - !main
-      - develop
-    paths-ignore:
-      - Docs/**
-      - README.md
-      - LICENSE
-      - Rambafile
+on: [push]
+#  push:
+#    branches:
+#      - main
+#      - develop
+#    paths-ignore:
+#      - Docs/**
+#      - README.md
+#      - LICENSE
+#      - Rambafile
+#  pull_request:
+#    branches:
+#      # - !main
+#      - develop
+#    paths-ignore:
+#      - Docs/**
+#      - README.md
+#      - LICENSE
+#      - Rambafile
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_13.1.app
@@ -28,168 +28,32 @@ jobs:
     runs-on: macos-11
 
     steps:
-    # チェックアウト
-    - uses: actions/checkout@v2
+    # ソースコードを取得する
+    - uses: actions/checkout@v1
 
-    # Bundlerで管理しているライブラリのキャッシュ
-    - name: Cache Gems
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    # Bundlerで管理しているライブラリのインストール
-    - name: Install Bundled Gems
-      run: make install-bundler
+    # Ruby製のライブラリをインストールする
+    - name: Bundle install
+      run: bundle install
 
-    # SwiftPMで管理しているCLIツールのキャッシュ
-#    - name: Cache CLI tools managed by SwiftPM
-#      uses: actions/cache@v2
-#      id: cli-tools-cache
-#      with:
-#        path: Tools/UhooiPicBookTools/.build
-#        key: ${{ runner.os }}-spm-${{ hashFiles('**/Tools/UhooiPicBookTools/Package.resolved') }}
-#        restore-keys: |
-#          ${{ runner.os }}-spm-
-    # SwiftPMで管理しているCLIツールのビルド
-#    - name: Build CLI tools managed by SwiftPM
-#      if: steps.cli-tools-cache.outputs.cache-hit != 'true'
-#      run: make build-cli-tools
-
-    # Firebase SDKのダウンロード
-#    - name: Download Firebase SDK
-#      run: make download-firebase-sdk
-
-    # ライセンス情報の生成
-#    - name: Generate licenses
-#      run: make generate-licenses
-
-    # プロジェクトファイルの生成
-    - name: Generate Xcode project for develop
-      run: make generate-xcodeproj-develop
-
-    # SwiftPMで管理しているライブラリのキャッシュ
-#    - name: Cache libraries managed by SwiftPM
-#      uses: actions/cache@v2
-#      with:
-#        path: SourcePackages
-#        key: ${{ runner.os }}-swiftpm-${{ hashFiles('**/univIP.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
-#        restore-keys: |
-#          ${{ runner.os }}-swiftpm-
-    # ビルド
+    # ビルドする
     - name: Xcode build
-      run: make build-debug
+      run: xcodebuild
+        -sdk iphonesimulator
+        -configuration Debug
+        build
+        | bundle exec xcpretty
 
-    # ビルドログのアップロード
-    - name: Upload build log Artifact
-      uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: xcodebuild-logs
-        path: xcodebuild_build.log
-        if-no-files-found: ignore
-        retention-days: 14
-
-  test:
-    runs-on: macos-11
-
-    steps:
-    # チェックアウト
-    - uses: actions/checkout@v2
-
-    # Bundlerで管理しているライブラリのキャッシュ
-    - name: Cache Gems
-      uses: actions/cache@v2
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    # Bundlerで管理しているライブラリのインストール
-    - name: Install Bundled Gems
-      run: make install-bundler
-
-    # SwiftPMで管理しているCLIツールのキャッシュ
-#    - name: Cache CLI tools managed by SwiftPM
-#      uses: actions/cache@v2
-#      id: cli-tools-cache
-#      with:
-#        path: Tools/UhooiPicBookTools/.build
-#        key: ${{ runner.os }}-spm-${{ hashFiles('**/Tools/UhooiPicBookTools/Package.resolved') }}
-#        restore-keys: |
-#          ${{ runner.os }}-spm-
-    # SwiftPMで管理しているCLIツールのビルド
-#    - name: Build CLI tools managed by SwiftPM
-#      if: steps.cli-tools-cache.outputs.cache-hit != 'true'
-#      run: make build-cli-tools
-
-    # Firebase SDKのダウンロード
-#    - name: Download Firebase SDK
-#      run: make download-firebase-sdk
-
-    # ライセンス情報の生成
-#    - name: Generate licenses
-#      run: make generate-licenses
-
-    # プロジェクトファイルの生成
-    - name: Generate Xcode project for develop
-      run: make generate-xcodeproj-develop
-
-    # SwiftPMで管理しているライブラリのキャッシュ
-#    - name: Cache libraries managed by SwiftPM
-#      uses: actions/cache@v2
-#      with:
-#        path: SourcePackages
-#        key: ${{ runner.os }}-swiftpm-${{ hashFiles('**/UhooiPicBook.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
-#        restore-keys: |
-#          ${{ runner.os }}-swiftpm-
-    # 単体テストの実行
+    # テストする
     - name: Xcode test
-      run: make test
-
-    # 結果の表示
-#    - uses: kishikawakatsumi/xcresulttool@v1
-#      if: success() || failure()
-#      with:
-#        path: TestResults.xcresult
-
-    # 単体テストログのアップロード
-    - name: Upload test log Artifact
-      uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: xcodebuild-logs
-        path: |
-          xcodebuild_test.log
-        if-no-files-found: ignore
-        retention-days: 14
-
-    # コードカバレッジをHTML形式で取得
-    - name: Get code coverage for HTML
-      run: make get-coverage-html
-
-    # テスト結果とコードカバレッジのアップロード
-    - name: Upload test results and code coverage Artifact
-      uses: actions/upload-artifact@v2
-      if: success() || failure()
-      with:
-        name: results
-        path: |
-          TestResults.xcresult
-          html_report/**/*
-        if-no-files-found: warn
-        retention-days: 14
-
-    # コードカバレッジをCobertura形式で取得
-    - name: Get code coverage for Cobertura
-      run: make get-coverage-cobertura
-
-    # コードカバレッジをCodecovへアップロード
-    - name: Upload code coverage to Codecov
-      run: make upload-coverage
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: xcodebuild
+        -sdk iphonesimulator
+        -configuration Debug
+        -scheme aruaru-lt-mobile-9-demo
+        -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
+        -skip-testing:aruaru-lt-mobile-9-demoUITests
+        clean test
+        | bundle exec xcpretty --report html
+        
 
   info:
     runs-on: macos-11
