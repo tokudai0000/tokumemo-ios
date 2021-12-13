@@ -18,13 +18,13 @@ class Common {
             let attributedString = try NSAttributedString(data: terms,
                                                           options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
                                                           documentAttributes: nil)
-
+            
             
             let mutableString = NSMutableAttributedString(string: attributedString.string,
-                                                           attributes:[
+                                                          attributes:[
                                                             .font:UIFont(name:"Futura-Medium", size:15)!,
                                                             .foregroundColor:UIColor.label,
-                                                           ])
+                                                          ])
             
             return mutableString
             

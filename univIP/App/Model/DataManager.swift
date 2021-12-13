@@ -32,9 +32,9 @@ final class DataManager {
     /// 利用規約同意者か判定
     public var hasAgreedTermsOfUse: Bool { get { return agreementVersion == model.agreementVersion }}
     
-
     
-
+    
+    
     
     
     /// KeychainAccess インスタンス
@@ -126,14 +126,14 @@ final class DataManager {
         get { return getUserDefaultsString(key: KEY_courceManagement) }
         set(v) { setUserDefaultsString(key: KEY_courceManagement, value: v) }
     }
-
+    
     
     private let KEY_manaba = "KEY_manaba"
     public var manaba: String {
         get { return getUserDefaultsString(key: KEY_manaba) }
         set(v) { setUserDefaultsString(key: KEY_manaba, value: v) }
     }
-
+    
     private let KEY_applicationVersion = "KEY_version" // KEY_applicationVersion にするべき(**注意** 変更するとサービスリストが初期化される)
     public var version: String {
         get { return getUserDefaultsString(key: KEY_applicationVersion) }
@@ -160,5 +160,5 @@ final class DataManager {
         get { return getUserDefaultsString(key: KEY_initialViewName) }
         set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
     }
-
+    
 }

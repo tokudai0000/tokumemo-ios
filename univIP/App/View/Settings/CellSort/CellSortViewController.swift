@@ -8,19 +8,19 @@
 import UIKit
 import FirebaseAnalytics
 
-class CellSortViewController: UIViewController {
+final class CellSortViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     private let dataManager = DataManager.singleton
-
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
     
@@ -52,7 +52,7 @@ class CellSortViewController: UIViewController {
         
         Analytics.logEvent("allCellList", parameters:  [
             AnalyticsParameterItemName: "\(dataManager.allCellList[0])",
-          ])
+        ])
     }
 }
 
@@ -118,7 +118,7 @@ extension CellSortViewController: UITextFieldDelegate {
     private func showRenameEditPopup(_ indexPath: Int) {
         // popupではなく、Alertを使用
         let popup = UIAlertController(title: "名前の変更", message: nil, preferredStyle: .alert)
-
+        
         let ok = UIAlertAction(title: "変更",
                                style: .default,
                                handler: {[weak popup] (action) -> Void in
@@ -126,7 +126,7 @@ extension CellSortViewController: UITextFieldDelegate {
                 return
             }
             if textField.isEmpty { return }
-
+            
             if let text = textField[0].text {
                 DataManager.singleton.allCellList[0][indexPath].title = text
                 DataManager.singleton.settingCellList = DataManager.singleton.allCellList[0]
@@ -144,7 +144,7 @@ extension CellSortViewController: UITextFieldDelegate {
             textField.delegate = self
             textField.placeholder = DataManager.singleton.allCellList[0][indexPath].title
         })
-
+        
         present(popup, animated: true, completion: nil)
     }
 }

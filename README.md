@@ -57,6 +57,14 @@
 
 ---
 
+# SetUp
+・CocoaPodsのバージョンを揃えるためにBundlerを使用しています。
+Bundlerインストール後
+$ bundle exec pod install
+
+・Xcodeのバージョンを揃えるため
+Xcode13.1での動作を行なってください。
+
 # ライセンス
 
 © 2021 akidon0000
