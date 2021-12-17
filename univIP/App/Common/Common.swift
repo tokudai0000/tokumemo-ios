@@ -34,16 +34,4 @@ class Common {
         }
     }
     
-    
-    /// 「ご利用規約」と「プライバシーポリシー」をハイライト表示
-    class func setAttributedText(_ attributedText: NSMutableAttributedString) -> NSMutableAttributedString {
-        let linkSourceCode = (attributedText.string as NSString).range(of: "ご利用規約")
-        attributedText.addAttribute(.link, value: "TermsOfService", range: linkSourceCode)
-        
-        let linkFireBasePrivacy = (attributedText.string as NSString).range(of: "プライバシーポリシー")
-        attributedText.addAttribute(.link, value: "PrivacyPolicy", range: linkFireBasePrivacy)
-        
-        return attributedText
-    }
-    
 }

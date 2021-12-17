@@ -9,34 +9,25 @@ import Foundation
 
 final class MainViewModel {
     
-    private let model = Model()
     private let dataManager = DataManager.singleton
     
     public var subjectName = ""
     public var teacherName = ""
     
-    /// 前回のURLと現在表示しているURLの保持
-    public func recordUrl(_ url: URL) {
-        dataManager.forwardDisplayUrl = dataManager.displayUrl
-        dataManager.displayUrl = url.absoluteString
-        print("displayURL:\n \(url.absoluteString) \n")
-    }
-    
-    /// 現在のURLが許可されたドメインか判定
-    public func isAllowedDomeinCheck(_ urlString: String = DataManager.singleton.displayUrl) -> Bool {
-        guard let url = URL(string: urlString),
-              let host = url.host else {
-                  AKLog(level: .ERROR, message: "URL(string)パース,ドメイン取得エラー")
-                  return false
-              }
+    /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
+    /// - Returns: 許可されているドメイン名ならtrueを返す
+    public func isAllowedDomeinCheck() -> Bool {
         
-        for allow in model.allowedDomains {
-            if host.contains(allow){
-                return true
-            }
+        guard let url = URL(string: dataManager.displayUrl),
+              let hostDomain = url.host else { fatalError() }
+        
+        for allowedUrl in Constant.allowedDomains {
+            if hostDomain.contains(allowedUrl) { return true }
         }
         return false
+        
     }
+    
     
     enum DiscriminantType {
         case login
@@ -49,7 +40,6 @@ final class MainViewModel {
     }
     /// 現在のURLがsceneかどうか判定
     public func isJudgeUrl(_ type: DiscriminantType,
-                           isRegistrant: Bool = DataManager.singleton.canLogedInServiece,
                            forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
                            displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
         // MARK: - HACK
@@ -60,7 +50,7 @@ final class MainViewModel {
             isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
             isLists.append(displayUrl.contains(Url.lostConnection.string()))
             isLists.append(displayUrl.suffix(2)=="s1")
-            isLists.append(isRegistrant)
+            isLists.append(canLogedInServiece)
             
             
         case .enqueteReminder:
@@ -88,7 +78,7 @@ final class MainViewModel {
             
             
         case .registrantAndLostConnectionDecision:
-            isLists.append(!isRegistrant)
+            isLists.append(!canLogedInServiece)
             isLists.append(displayUrl.contains(Url.lostConnection.string()))
             
         }
@@ -102,7 +92,7 @@ final class MainViewModel {
     }
     
     public func searchInitialViewUrl() -> URLRequest {
-        if dataManager.canLogedInServiece {
+        if canLogedInServiece {
             let lists = dataManager.settingCellList
             for list in lists {
                 if list.initialView {
@@ -111,8 +101,13 @@ final class MainViewModel {
                     }
                 }
             }
-            return Url.manabaHomePC.urlRequest()
+            guard let url = URL(string: Url.manabaHomePC.string()) else {fatalError()}
+            return URLRequest(url: url)
         }
-        return Url.systemServiceList.urlRequest()
+        guard let url = URL(string: Url.systemServiceList.string()) else {fatalError()}
+        return URLRequest(url: url)
     }
+    
+    // cアカウント、パスワードを登録しているか判定
+    private var canLogedInServiece: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
 }

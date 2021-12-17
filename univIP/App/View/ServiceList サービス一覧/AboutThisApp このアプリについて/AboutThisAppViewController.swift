@@ -1,20 +1,17 @@
 //
-//  AgreementViewController.swift
+//  AboutThisAppViewController.swift
 //  univIP
 //
-//  Created by Akihiro Matsuyama on 2021/08/31.
+//  Created by Akihiro Matsuyama on 2021/08/09.
+//  Copyright © 2021年　akidon0000
 //
 
 import UIKit
 
-final class AgreementViewController: UIViewController {
+final class AboutThisAppViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var agreementButton: UIButton!
-    
-    private let model = Model()
-    private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
@@ -23,19 +20,16 @@ final class AgreementViewController: UIViewController {
         
         textView.delegate = self
         textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemTeal]
-        agreementButton.layer.cornerRadius = 20.0
         
-        // 同意規約内容の読み込み
-        let filePath = R.file.agreementRtf()!
+        // このアプリについて内容の読み込み
+        let filePath = R.file.aboutThisAppRtf()!
         let attributedText = Common.rtfFileLoad(url: filePath)
-        textView.attributedText = Common.setAttributedText(attributedText)
+//        textView.attributedText = Common.setAttributedText(attributedText)
     }
     
     
     // MARK: - IBAction
-    @IBAction func agreementButton(_ sender: Any) {
-        // 利用規約のバージョン更新
-        dataManager.agreementVersion = model.agreementVersion
+    @IBAction func backButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -43,7 +37,7 @@ final class AgreementViewController: UIViewController {
 
 
 // MARK: - UITextViewDelegate
-extension AgreementViewController: UITextViewDelegate {
+extension AboutThisAppViewController: UITextViewDelegate {
     
     public func textView(_ textView: UITextView,
                          shouldInteractWith URL: URL,

@@ -35,8 +35,10 @@ final class MainViewController: UIViewController, WKUIDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
+        // 利用規約同意者か判定
+        let hasAgreedTermsOfUse = (dataManager.agreementVersion == Constant.agreementVersion)
         
-        if !dataManager.hasAgreedTermsOfUse {
+        if !hasAgreedTermsOfUse {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
@@ -53,7 +55,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
     }
     
     @IBAction func showServiceListsButton(_ sender: Any) {
-        let vc = R.storyboard.settings.settingsViewController()!
+        let vc = R.storyboard.menu.menuViewController()!
         present(vc, animated: false, completion: nil)
         vc.delegate = self
     }
@@ -97,7 +99,8 @@ final class MainViewController: UIViewController, WKUIDelegate {
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
         viewModel.teacherName = teacherName
-        webView.load(Url.syllabus.urlRequest())
+        guard let url = URL(string: Url.syllabus.string()) else {fatalError()}
+        webView.load(URLRequest(url: url))
     }
     
     
@@ -164,7 +167,8 @@ extension MainViewController: WKNavigationDelegate {
             return
         }
         
-        viewModel.recordUrl(url)
+        // 現在読み込み中のURLを記録
+        dataManager.displayUrl = url.absoluteString
         
         if !viewModel.isAllowedDomeinCheck() {
             AKLog(level: .DEBUG, message: "Safariで開く")
@@ -174,7 +178,8 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         if viewModel.isJudgeUrl(.timeOut) {
-            webView.load(Url.login.urlRequest())
+            guard let url = URL(string: Url.manabaHomePC.string()) else {fatalError()}
+            webView.load(URLRequest(url: url))
         }
         
         decisionHandler(.allow)

@@ -83,7 +83,8 @@ final class PasswordSettingsViewController: BaseViewController {
         passwordTextFieldCursorSetup(type: .normal)
         
         if let delegate = delegate {
-            delegate.webView.load(Url.manabaHomePC.urlRequest())
+            guard let url = URL(string: Url.manabaHomePC.string()) else {fatalError()}
+            delegate.webView.load(URLRequest(url: url))
             dismiss(animated: true, completion: nil)
         }
     }

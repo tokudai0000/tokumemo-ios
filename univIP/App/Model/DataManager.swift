@@ -11,29 +11,33 @@ import KeychainAccess
 
 final class DataManager {
     
-    ///
-    /// アプリの共通データ（シングルトンのため、必ず同じインスタンスを参照している）
-    ///
-    public var forwardDisplayUrl = ""               // 1つ前のURL
-    public var displayUrl = ""                      // 現在表示しているURL
-    public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
-    ///
-    
     static let singleton = DataManager() // シングルトン・インタンス
+    private init() {} // インスタンスが1つであることを補償
     
-    private let model = Model()
+    
     private var userDefaults = UserDefaults.standard
     
     
-    /// アプリ使用初回者か判定
-    public var isFirstTime: Bool { get { return version.isEmpty }}
-    /// cアカウント、パスワードを登録しているか判定
-    public var canLogedInServiece: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
-    /// 利用規約同意者か判定
-    public var hasAgreedTermsOfUse: Bool { get { return agreementVersion == model.agreementVersion }}
+    public var menuLists:[[Constant.Menu]] =  [[], []]
     
     
+    private var im_displayUrl = ""
+    public var displayUrl: String {
+        get { return im_displayUrl }
+        set(v) {
+            // 1つ前のURLを保持
+            im_forwardDisplayUrl = im_displayUrl
+            im_displayUrl = v
+            
+            AKLog(level: .DEBUG, message: "\n displayURL: \(im_displayUrl)")
+        }
+    }
     
+    private var im_forwardDisplayUrl = ""
+    public var forwardDisplayUrl: String {
+        // 外部から書き換え禁止
+        get { return im_forwardDisplayUrl }
+    }
     
     
     
@@ -141,11 +145,11 @@ final class DataManager {
     }
     
     private let KEY_settingCellList = "KEY_settingCellList"
-    public var settingCellList: [CellList] {
+    public var settingCellList: [Constant.Menu] {
         get {
             let jsonDecoder = JSONDecoder()
             let data = getUserDefaultsData(key: KEY_settingCellList)
-            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return model.serviceCellLists }
+            guard let bookmarks = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
             return bookmarks
         }
         set(v) {

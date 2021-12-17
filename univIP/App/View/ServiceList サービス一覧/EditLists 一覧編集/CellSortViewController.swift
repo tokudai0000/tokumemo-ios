@@ -38,9 +38,9 @@ final class CellSortViewController: UIViewController {
         }
         
         if editing {
-            for i in 0 ..< dataManager.allCellList[0].count {
+            for i in 0 ..< dataManager.menuLists[0].count {
                 // display=true のセルを選択状態にする
-                if dataManager.allCellList[0][i].isDisplay {
+                if dataManager.menuLists[0][i].isDisplay {
                     tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
             }
@@ -51,7 +51,7 @@ final class CellSortViewController: UIViewController {
         dismiss(animated: true, completion: nil)
         
         Analytics.logEvent("allCellList", parameters:  [
-            AnalyticsParameterItemName: "\(dataManager.allCellList[0])",
+            AnalyticsParameterItemName: "\(dataManager.menuLists[0])",
         ])
     }
 }
@@ -62,13 +62,13 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.allCellList[0].count
+        return dataManager.menuLists[0].count
     }
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.cellSort, for: indexPath)!
-        tableCell.textLabel!.text = dataManager.allCellList[0][indexPath.item].title
+        tableCell.textLabel!.text = dataManager.menuLists[0][indexPath.item].title
         tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
@@ -83,10 +83,10 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let todo = dataManager.allCellList[sourceIndexPath.section][sourceIndexPath.row]
-        dataManager.allCellList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        dataManager.allCellList[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        dataManager.settingCellList = dataManager.allCellList[0]
+        let todo = dataManager.menuLists[sourceIndexPath.section][sourceIndexPath.row]
+        dataManager.menuLists[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        dataManager.menuLists[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
+        dataManager.settingCellList = dataManager.menuLists[0]
     }
     
     /// セルの高さ
@@ -98,8 +98,8 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
-            dataManager.allCellList[0][indexPath.row].isDisplay = true
-            dataManager.settingCellList = dataManager.allCellList[0]
+            dataManager.menuLists[0][indexPath.row].isDisplay = true
+            dataManager.settingCellList = dataManager.menuLists[0]
         }
         
         if !tableView.isEditing {
@@ -109,8 +109,8 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        dataManager.allCellList[indexPath.section][indexPath.row].isDisplay = false
-        dataManager.settingCellList = dataManager.allCellList[0]
+        dataManager.menuLists[indexPath.section][indexPath.row].isDisplay = false
+        dataManager.settingCellList = dataManager.menuLists[0]
     }
 }
 
@@ -128,8 +128,8 @@ extension CellSortViewController: UITextFieldDelegate {
             if textField.isEmpty { return }
             
             if let text = textField[0].text {
-                DataManager.singleton.allCellList[0][indexPath].title = text
-                DataManager.singleton.settingCellList = DataManager.singleton.allCellList[0]
+                DataManager.singleton.menuLists[0][indexPath].title = text
+                DataManager.singleton.settingCellList = DataManager.singleton.menuLists[0]
             }
             self.tableView.reloadData()
         })
@@ -142,7 +142,7 @@ extension CellSortViewController: UITextFieldDelegate {
         popup.addAction(cancel)
         popup.addTextField(configurationHandler: {(textField:UITextField!) -> Void in
             textField.delegate = self
-            textField.placeholder = DataManager.singleton.allCellList[0][indexPath].title
+            textField.placeholder = DataManager.singleton.menuLists[0][indexPath].title
         })
         
         present(popup, animated: true, completion: nil)

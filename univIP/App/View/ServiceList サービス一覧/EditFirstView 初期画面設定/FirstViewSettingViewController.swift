@@ -14,7 +14,7 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
     
     var pickerView: UIPickerView = UIPickerView()
     let dataManager = DataManager.singleton
-    private let list: [CellList] = Model.firstViewPickerLists
+    private let list: [Constant.Menu] = []//Constant.firstViewPickerLists
     
     
     // MARK: - LifeCycle
@@ -34,7 +34,7 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
         textField.inputView = pickerView
         textField.inputAccessoryView = toolbar
         
-        for item in dataManager.allCellList[0] {
+        for item in dataManager.menuLists[0] {
             if item.initialView {
                 textField.placeholder = item.title
             }
@@ -50,13 +50,13 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
     @objc func done() {
         textField.endEditing(true)
         
-        for i in 0..<dataManager.allCellList[0].count {
+        for i in 0..<dataManager.menuLists[0].count {
             // 選択された内容とインデックス番号を照合
-            let s = dataManager.allCellList[0][i].type == list[pickerView.selectedRow(inComponent: 0)].type
-            dataManager.allCellList[0][i].initialView = s
+            let s = dataManager.menuLists[0][i].type == list[pickerView.selectedRow(inComponent: 0)].type
+            dataManager.menuLists[0][i].initialView = s
         }
         
-        dataManager.settingCellList = dataManager.allCellList[0]
+        dataManager.settingCellList = dataManager.menuLists[0]
         
         textField.text = "\(list[pickerView.selectedRow(inComponent: 0)].title)"
     }
