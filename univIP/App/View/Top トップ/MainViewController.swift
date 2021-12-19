@@ -28,8 +28,6 @@ final class MainViewController: UIViewController, WKUIDelegate {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         
-        launchScreenAnimation()
-        
         webView.load(viewModel.searchInitialViewUrl())
     }
     
@@ -105,41 +103,6 @@ final class MainViewController: UIViewController, WKUIDelegate {
     
     
     // MARK: - Private func
-    private func launchScreenAnimation() {
-        // 背景
-        let launchScreenView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        launchScreenView.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1)
-        launchScreenView.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
-        view.addSubview(launchScreenView)
-        
-        // 中心のicon
-        let imageView = UIImageView(image: R.image.mainIconWhite())
-        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100);
-        imageView.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2)
-        view.addSubview(imageView)
-        
-        // 少し縮小する
-        UIView.animate(withDuration: 0.3,
-                       delay: 0,
-                       options: UIView.AnimationOptions.curveEaseOut,
-                       animations: { () in
-            imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        },
-                       completion: { (Bool) in }
-        )
-        
-        // 拡大させて、消える
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.3,
-                       options: UIView.AnimationOptions.curveEaseOut,
-                       animations: { () in
-            imageView.transform = CGAffineTransform(scaleX: 100, y: 100)
-            imageView.alpha = 1
-        }, completion: { (Bool) in
-            imageView.removeFromSuperview()
-            launchScreenView.removeFromSuperview() }
-        )
-    }
     
     /// target="_blank" の処理
     func webView(_ webView: WKWebView,

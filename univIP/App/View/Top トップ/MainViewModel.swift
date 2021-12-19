@@ -90,15 +90,16 @@ final class MainViewModel {
     
     
     public func searchInitialViewUrl() -> URLRequest {
-        let lists = dataManager.menuLists[0]
-        for list in lists {
+        // MARK: - 修正必要あり
+        // 登録者、非登録者の条件分岐必要
+        for list in dataManager.menuLists[0] {
             if list.initialView {
-                if let url = URL(string: list.url) {
-                    return URLRequest(url: url)
-                }
+                guard let url = URL(string: list.url) else { fatalError() }
+                return URLRequest(url: url)
             }
         }
-        guard let url = URL(string: Url.systemServiceList.string()) else {fatalError()}
+        // もし表示されない場合は
+        guard let url = URL(string: Url.systemServiceList.string()) else { fatalError() }
         return URLRequest(url: url)
     }
     
