@@ -1,5 +1,5 @@
 //
-//  PrivacyPolicyViewController.swift
+//  TermsOfServiceViewController.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/11/12.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PrivacyPolicyViewController: UIViewController {
+final class TermsOfServiceViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
@@ -17,8 +17,9 @@ final class PrivacyPolicyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let filePath = R.file.privacyPolicyRtf()!
-        textView.attributedText = Common.rtfFileLoad(url: filePath)
+        // 利用規約読み込み
+        let filePath = R.file.termsOfServiceRtf()!
+        textView.attributedText = Common.rtfFileLoad(filePath)
     }
     
     

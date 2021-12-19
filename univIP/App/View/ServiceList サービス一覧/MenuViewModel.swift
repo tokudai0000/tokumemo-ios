@@ -8,9 +8,8 @@
 import Foundation
 import Kanna
 
-final class SettingViewModel {
+final class MenuViewModel {
     
-    private let model = Model()
     private let dataManager = DataManager.singleton
     
     
@@ -18,18 +17,18 @@ final class SettingViewModel {
     public func initialBootProcess() {
         
         // 2回目以降は、読み込む必要がない
-        if !dataManager.allCellList[0].isEmpty {
+        if !dataManager.menuLists[0].isEmpty {
             return
         }
         
-        var modelLists = model.serviceCellLists
-        let savingLists = dataManager.settingCellList
-        var updateForLists:[CellList] = []
+        var modelLists = Constant.initServiceLists
+        let savingLists = dataManager.serviceLists
+        var updateForLists:[Constant.Menu] = []
         
         if savingLists.isEmpty {
-            dataManager.allCellList[0].append(contentsOf: model.serviceCellLists)
-            dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
-            dataManager.settingCellList = dataManager.allCellList[0]
+            dataManager.menuLists[0].append(contentsOf: Constant.initServiceLists)
+            dataManager.menuLists[1].append(contentsOf: Constant.initSettingLists)
+            dataManager.serviceLists = dataManager.menuLists[0]
             return
         }
         
@@ -47,9 +46,9 @@ final class SettingViewModel {
         // 新規実装があれば通る
         updateForLists.append(contentsOf: modelLists)
         
-        dataManager.allCellList[0].append(contentsOf: updateForLists)
-        dataManager.allCellList[1].append(contentsOf: model.settingCellLists)
-        dataManager.settingCellList = dataManager.allCellList[0]
+        dataManager.menuLists[0].append(contentsOf: updateForLists)
+        dataManager.menuLists[1].append(contentsOf: Constant.initSettingLists)
+        dataManager.serviceLists = dataManager.menuLists[0]
     }
     
     public func createCurrentTermPerformanceUrl() -> URLRequest {

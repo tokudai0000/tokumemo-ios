@@ -9,12 +9,12 @@
 import UIKit
 import FirebaseAnalytics
 
-final class SettingsViewController: UIViewController {
+final class MenuViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
     
-    private let viewModel = SettingViewModel()
+    private let viewModel = MenuViewModel()
     private let dataManager = DataManager.singleton
     
     public var delegate : MainViewController?
@@ -38,7 +38,7 @@ final class SettingsViewController: UIViewController {
 
 
 // MARK: - TableView
-extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
+extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - HACK
     /// セクションの高さ
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -48,7 +48,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セクション数
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataManager.allCellList.count
+        return dataManager.menuLists.count
     }
     
     // セクションの背景とテキストの色を変更する
@@ -58,13 +58,13 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.allCellList[section].count
+        return dataManager.menuLists[section].count
     }
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)!
-        tableCell.textLabel!.text = dataManager.allCellList[indexPath.section][indexPath.item].title
+        tableCell.textLabel!.text = dataManager.menuLists[indexPath.section][indexPath.item].title
         // 「17」程度が文字が消えず、また見やすいサイズ
         tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
         return tableCell
@@ -72,7 +72,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if dataManager.allCellList[indexPath.section][indexPath.row].isDisplay {
+        if dataManager.menuLists[indexPath.section][indexPath.row].isDisplay {
             return 44
         }
         return 0
@@ -86,13 +86,13 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        switch dataManager.allCellList[indexPath[0]][indexPath[1]].type {
+        switch dataManager.menuLists[indexPath[0]][indexPath[1]].type {
         case .libraryCalendar:                   // [図書館常三島]開館カレンダー
-            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePC.string()) {
+            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
                 delegate.webView.load(url)
             }
         case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
-            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomeKuraPC.string()) {
+            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
                 delegate.webView.load(url)
             }
             
@@ -114,7 +114,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             delegate.showModalView(type: .aboutThisApp)
             
         default:
-            if let url = URL(string: dataManager.allCellList[indexPath[0]][indexPath[1]].url) {
+            if let url = URL(string: dataManager.menuLists[indexPath[0]][indexPath[1]].url) {
                 delegate.webView.load(URLRequest(url: url))
             } else {
                 AKLog(level: .FATAL, message: "URLフォーマットエラー")
@@ -122,12 +122,12 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        Analytics.logEvent("service\(dataManager.allCellList[indexPath[0]][indexPath[1]].type)", parameters: nil)
+        Analytics.logEvent("service\(dataManager.menuLists[indexPath[0]][indexPath[1]].type)", parameters: nil)
     }
 }
 
 // MARK: - Override(Animate)
-extension SettingsViewController {
+extension MenuViewController {
     // メニューエリア以外タップ時、画面をMainViewに戻る
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)

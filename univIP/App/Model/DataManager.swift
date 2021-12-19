@@ -11,29 +11,33 @@ import KeychainAccess
 
 final class DataManager {
     
-    ///
-    /// アプリの共通データ（シングルトンのため、必ず同じインスタンスを参照している）
-    ///
-    public var forwardDisplayUrl = ""               // 1つ前のURL
-    public var displayUrl = ""                      // 現在表示しているURL
-    public var allCellList:[[CellList]] =  [[], []] // SettingViewのCell内容（ViewModelではその都度インスタンスが生成される為）
-    ///
-    
     static let singleton = DataManager() // シングルトン・インタンス
+    private init() {} // インスタンスが1つであることを補償
     
-    private let model = Model()
+    
     private var userDefaults = UserDefaults.standard
     
     
-    /// アプリ使用初回者か判定
-    public var isFirstTime: Bool { get { return version.isEmpty }}
-    /// cアカウント、パスワードを登録しているか判定
-    public var canLogedInServiece: Bool { get { return !(cAccount.isEmpty || password.isEmpty) }}
-    /// 利用規約同意者か判定
-    public var hasAgreedTermsOfUse: Bool { get { return agreementVersion == model.agreementVersion }}
+    public var menuLists:[[Constant.Menu]] =  [[], []]
     
     
+    private var im_displayUrlString = ""
+    public var displayUrlString: String {
+        get { return im_displayUrlString }
+        set(v) {
+            // 1つ前のURLを保持
+            im_forwardDisplayUrlString = im_displayUrlString
+            im_displayUrlString = v
+            
+            AKLog(level: .DEBUG, message: "\n displayURL: \(im_displayUrlString)")
+        }
+    }
     
+    private var im_forwardDisplayUrlString = ""
+    public var forwardDisplayUrlString: String {
+        // 外部から書き換え禁止
+        get { return im_forwardDisplayUrlString }
+    }
     
     
     
@@ -53,7 +57,7 @@ final class DataManager {
             }
             return ""
         } catch {
-            AKLog(level: .ERROR, message: "error: Datamanager.getKeyChain catch")
+            AKLog(level: .ERROR, message: "error: DataManager.getKeyChain catch")
             return ""
         }
     }
@@ -66,7 +70,6 @@ final class DataManager {
                 .set(value, key: key)
         } catch {
             AKLog(level: .ERROR, message: "error: Datamanager.setKeyChain")
-            print("error: Datamanager.setKeyChain")
             return
         }
     }
@@ -100,6 +103,21 @@ final class DataManager {
         userDefaults.set(value ,forKey: key)
     }
     
+    /// 利用規約のバージョン
+    private let KEY_AgreementVersion = "KEY_AgreementVersion" // KEY_agreementVersion にするべき(**注意** 変更すると再度利用規約が表示される)
+    public var agreementVersion: String {
+        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
+        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
+    }
+    
+    private let KEY_initialViewName = "KEY_initialViewName"
+    public var initialViewName: String {
+        get { return getUserDefaultsString(key: KEY_initialViewName) }
+        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
+    }
+    
+    
+    
     /// GET (UserDefaults) Data
     private func getUserDefaultsData(key:String) -> Data {
         if let value = userDefaults.data(forKey: key) {
@@ -112,53 +130,19 @@ final class DataManager {
     private func setUserDefaultsData(key:String, value:Data) {
         userDefaults.set(value ,forKey: key)
     }
-    
-    
-    /// agreementversion
-    private let KEY_AgreementVersion = "KEY_AgreementVersion"
-    public var agreementVersion: String {
-        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
-        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
-    }
-    
-    private let KEY_courceManagement = "KEY_corceManagement"
-    public var courceManagement: String {
-        get { return getUserDefaultsString(key: KEY_courceManagement) }
-        set(v) { setUserDefaultsString(key: KEY_courceManagement, value: v) }
-    }
-    
-    
-    private let KEY_manaba = "KEY_manaba"
-    public var manaba: String {
-        get { return getUserDefaultsString(key: KEY_manaba) }
-        set(v) { setUserDefaultsString(key: KEY_manaba, value: v) }
-    }
-    
-    private let KEY_applicationVersion = "KEY_version" // KEY_applicationVersion にするべき(**注意** 変更するとサービスリストが初期化される)
-    public var version: String {
-        get { return getUserDefaultsString(key: KEY_applicationVersion) }
-        set(v) { setUserDefaultsString(key: KEY_applicationVersion, value: v) }
-    }
-    
-    private let KEY_settingCellList = "KEY_settingCellList"
-    public var settingCellList: [CellList] {
+        
+    private let KEY_serviceLists = "KEY_settingCellList"
+    public var serviceLists: [Constant.Menu] {
         get {
             let jsonDecoder = JSONDecoder()
-            let data = getUserDefaultsData(key: KEY_settingCellList)
-            guard let bookmarks = try? jsonDecoder.decode([CellList].self, from: data) else { return model.serviceCellLists }
+            let data = getUserDefaultsData(key: KEY_serviceLists)
+            guard let bookmarks = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
             return bookmarks
         }
         set(v) {
             let jsonEncoder = JSONEncoder()
             guard let data = try? jsonEncoder.encode(v) else { return }
-            setUserDefaultsData(key: KEY_settingCellList, value: data)
+            setUserDefaultsData(key: KEY_serviceLists, value: data)
         }
     }
-    
-    private let KEY_initialViewName = "KEY_initialViewName"
-    public var initialViewName: String {
-        get { return getUserDefaultsString(key: KEY_initialViewName) }
-        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
-    }
-    
 }
