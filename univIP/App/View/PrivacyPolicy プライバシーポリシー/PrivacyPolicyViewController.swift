@@ -17,8 +17,9 @@ final class PrivacyPolicyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // プライバシーポリシ読み込み
         let filePath = R.file.privacyPolicyRtf()!
-        textView.attributedText = Common.rtfFileLoad(url: filePath)
+        textView.attributedText = Common.rtfFileLoad(filePath)
     }
     
     
@@ -26,5 +27,5 @@ final class PrivacyPolicyViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
+
 }

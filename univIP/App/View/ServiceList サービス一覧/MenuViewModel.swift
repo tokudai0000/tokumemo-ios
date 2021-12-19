@@ -22,13 +22,13 @@ final class MenuViewModel {
         }
         
         var modelLists = Constant.initServiceLists
-        let savingLists = dataManager.settingCellList
+        let savingLists = dataManager.serviceLists
         var updateForLists:[Constant.Menu] = []
         
         if savingLists.isEmpty {
             dataManager.menuLists[0].append(contentsOf: Constant.initServiceLists)
             dataManager.menuLists[1].append(contentsOf: Constant.initSettingLists)
-            dataManager.settingCellList = dataManager.menuLists[0]
+            dataManager.serviceLists = dataManager.menuLists[0]
             return
         }
         
@@ -48,7 +48,7 @@ final class MenuViewModel {
         
         dataManager.menuLists[0].append(contentsOf: updateForLists)
         dataManager.menuLists[1].append(contentsOf: Constant.initSettingLists)
-        dataManager.settingCellList = dataManager.menuLists[0]
+        dataManager.serviceLists = dataManager.menuLists[0]
     }
     
     public func createCurrentTermPerformanceUrl() -> URLRequest {

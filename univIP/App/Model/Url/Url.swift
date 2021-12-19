@@ -13,8 +13,8 @@ enum Url: String {
     case systemServiceList           // システムサービス一覧
     case eLearningList               // Eラーニング一覧
     
-    case courceManagementPC          // 教務事務システム(PC)
-    case courceManagementMobile      // 教務事務システム(Mobile)
+    case courseManagementPC          // 教務事務システム(PC)
+    case courseManagementMobile      // 教務事務システム(Mobile)
     case manabaPC                    // マナバ(PC)
     case manabaMobile                // マナバ(Mobile)
     

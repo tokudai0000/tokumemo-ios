@@ -168,9 +168,9 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // 現在読み込み中のURLを記録
-        dataManager.displayUrl = url.absoluteString
+        dataManager.displayUrlString = url.absoluteString
         
-        if !viewModel.isAllowedDomeinCheck() {
+        if !viewModel.isAllowedDomainCheck() {
             AKLog(level: .DEBUG, message: "Safariで開く")
             UIApplication.shared.open(url)
             decisionHandler(.cancel)
@@ -197,7 +197,7 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // 教務事務システム、アンケート催促スキップ
-        if viewModel.isJudgeUrl(type: .enqueteReminder) {
+        if viewModel.isJudgeUrl(type: .questionnaireReminder) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
         
@@ -231,7 +231,7 @@ extension MainViewController: WKNavigationDelegate {
     /// alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-        if dataManager.displayUrl == Url.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if dataManager.displayUrlString == Url.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)

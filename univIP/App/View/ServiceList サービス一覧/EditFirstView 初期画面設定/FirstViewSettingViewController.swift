@@ -50,13 +50,15 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
     @objc func done() {
         textField.endEditing(true)
         
-        for i in 0..<dataManager.menuLists[0].count {
+        var menuLists = dataManager.menuLists
+        for i in 0..<menuLists[0].count {
             // 選択された内容とインデックス番号を照合
-            let s = dataManager.menuLists[0][i].type == list[pickerView.selectedRow(inComponent: 0)].type
-            dataManager.menuLists[0][i].initialView = s
+            let menuType = menuLists[0][i].type
+            let pickerType = list[pickerView.selectedRow(inComponent: 0)].type
+            
+            menuLists[0][i].initialView = (menuType == pickerType)
         }
-        
-        dataManager.settingCellList = dataManager.menuLists[0]
+        dataManager.menuLists = menuLists
         
         textField.text = "\(list[pickerView.selectedRow(inComponent: 0)].title)"
     }

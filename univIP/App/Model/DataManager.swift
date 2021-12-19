@@ -21,22 +21,22 @@ final class DataManager {
     public var menuLists:[[Constant.Menu]] =  [[], []]
     
     
-    private var im_displayUrl = ""
-    public var displayUrl: String {
-        get { return im_displayUrl }
+    private var im_displayUrlString = ""
+    public var displayUrlString: String {
+        get { return im_displayUrlString }
         set(v) {
             // 1つ前のURLを保持
-            im_forwardDisplayUrl = im_displayUrl
-            im_displayUrl = v
+            im_forwardDisplayUrlString = im_displayUrlString
+            im_displayUrlString = v
             
-            AKLog(level: .DEBUG, message: "\n displayURL: \(im_displayUrl)")
+            AKLog(level: .DEBUG, message: "\n displayURL: \(im_displayUrlString)")
         }
     }
     
-    private var im_forwardDisplayUrl = ""
-    public var forwardDisplayUrl: String {
+    private var im_forwardDisplayUrlString = ""
+    public var forwardDisplayUrlString: String {
         // 外部から書き換え禁止
-        get { return im_forwardDisplayUrl }
+        get { return im_forwardDisplayUrlString }
     }
     
     
@@ -57,7 +57,7 @@ final class DataManager {
             }
             return ""
         } catch {
-            AKLog(level: .ERROR, message: "error: Datamanager.getKeyChain catch")
+            AKLog(level: .ERROR, message: "error: DataManager.getKeyChain catch")
             return ""
         }
     }
@@ -70,7 +70,6 @@ final class DataManager {
                 .set(value, key: key)
         } catch {
             AKLog(level: .ERROR, message: "error: Datamanager.setKeyChain")
-            print("error: Datamanager.setKeyChain")
             return
         }
     }
@@ -104,6 +103,21 @@ final class DataManager {
         userDefaults.set(value ,forKey: key)
     }
     
+    /// 利用規約のバージョン
+    private let KEY_AgreementVersion = "KEY_AgreementVersion" // KEY_agreementVersion にするべき(**注意** 変更すると再度利用規約が表示される)
+    public var agreementVersion: String {
+        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
+        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
+    }
+    
+    private let KEY_initialViewName = "KEY_initialViewName"
+    public var initialViewName: String {
+        get { return getUserDefaultsString(key: KEY_initialViewName) }
+        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
+    }
+    
+    
+    
     /// GET (UserDefaults) Data
     private func getUserDefaultsData(key:String) -> Data {
         if let value = userDefaults.data(forKey: key) {
@@ -116,53 +130,19 @@ final class DataManager {
     private func setUserDefaultsData(key:String, value:Data) {
         userDefaults.set(value ,forKey: key)
     }
-    
-    
-    /// agreementversion
-    private let KEY_AgreementVersion = "KEY_AgreementVersion"
-    public var agreementVersion: String {
-        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
-        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
-    }
-    
-    private let KEY_courceManagement = "KEY_corceManagement"
-    public var courceManagement: String {
-        get { return getUserDefaultsString(key: KEY_courceManagement) }
-        set(v) { setUserDefaultsString(key: KEY_courceManagement, value: v) }
-    }
-    
-    
-    private let KEY_manaba = "KEY_manaba"
-    public var manaba: String {
-        get { return getUserDefaultsString(key: KEY_manaba) }
-        set(v) { setUserDefaultsString(key: KEY_manaba, value: v) }
-    }
-    
-    private let KEY_applicationVersion = "KEY_version" // KEY_applicationVersion にするべき(**注意** 変更するとサービスリストが初期化される)
-    public var version: String {
-        get { return getUserDefaultsString(key: KEY_applicationVersion) }
-        set(v) { setUserDefaultsString(key: KEY_applicationVersion, value: v) }
-    }
-    
-    private let KEY_settingCellList = "KEY_settingCellList"
-    public var settingCellList: [Constant.Menu] {
+        
+    private let KEY_serviceLists = "KEY_settingCellList"
+    public var serviceLists: [Constant.Menu] {
         get {
             let jsonDecoder = JSONDecoder()
-            let data = getUserDefaultsData(key: KEY_settingCellList)
+            let data = getUserDefaultsData(key: KEY_serviceLists)
             guard let bookmarks = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
             return bookmarks
         }
         set(v) {
             let jsonEncoder = JSONEncoder()
             guard let data = try? jsonEncoder.encode(v) else { return }
-            setUserDefaultsData(key: KEY_settingCellList, value: data)
+            setUserDefaultsData(key: KEY_serviceLists, value: data)
         }
     }
-    
-    private let KEY_initialViewName = "KEY_initialViewName"
-    public var initialViewName: String {
-        get { return getUserDefaultsString(key: KEY_initialViewName) }
-        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
-    }
-    
 }

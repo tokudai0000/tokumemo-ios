@@ -619,7 +619,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ $XCODE_VERSION_ACTUAL != \"1310\" ]]; then\n    echo \"Xcodeのversionが指定されているのと異なります\"\n    echo \"詳しくはReadMeを見てください\"\n    echo \"BuildPhases -> RunScript AlignXcodeVersion\"\n    echo \"あなたのversion->\"$XCODE_VERSION_ACTUAL\n    exit -1 #強制に別バージョンで動かしたい場合はリマーク\nfi\n";
+			shellScript = "# 安定的なXcodeのバージョンが理解不足なので現時点ではリマークしておく\n#if [[ $XCODE_VERSION_ACTUAL != \"1310\" ]]; then\n    #echo \"Xcodeのversionが指定されているのと異なります\"\n    #echo \"詳しくはReadMeを見てください\"\n    #echo \"BuildPhases -> RunScript AlignXcodeVersion\"\n    #echo \"あなたのversion->\"$XCODE_VERSION_ACTUAL\n    #exit -1\n#fi\n";
 		};
 		1AA056E026BD2CC300343005 /* Run Script R.Swift */ = {
 			isa = PBXShellScriptBuildPhase;

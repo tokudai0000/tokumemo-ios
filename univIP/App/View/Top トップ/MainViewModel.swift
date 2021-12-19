@@ -16,9 +16,9 @@ final class MainViewModel {
     
     /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
     /// - Returns: 許可されているドメイン名ならtrueを返す
-    public func isAllowedDomeinCheck() -> Bool {
+    public func isAllowedDomainCheck() -> Bool {
         
-        guard let url = URL(string: dataManager.displayUrl),
+        guard let url = URL(string: dataManager.displayUrlString),
               let hostDomain = url.host else { fatalError() }
         
         for allowedUrl in Constant.allowedDomains {
@@ -36,7 +36,7 @@ final class MainViewModel {
         case syllabusFirstTime
         case outlookLogin
         case tokudaiCareerCenter
-        case enqueteReminder
+        case questionnaireReminder
         case universityServiceTimeOut
     }
     /// 読み込み中のURLとisJudgeTypeが同じか、JavaScriptを動かす必要があるかを判定する
@@ -44,8 +44,8 @@ final class MainViewModel {
     /// - Returns: 判定結果
     public func isJudgeUrl(type: isJudgeType) -> Bool {
     
-        let forwardUrlString = dataManager.forwardDisplayUrl
-        let displayUrlString = dataManager.displayUrl
+        let forwardUrlString = dataManager.forwardDisplayUrlString
+        let displayUrlString = dataManager.displayUrlString
         
         var isLists:[Bool] = []
         
@@ -76,7 +76,7 @@ final class MainViewModel {
                 // ログインに失敗した場合false
                 isLists.append(!forwardUrlString.contains(Url.tokudaiCareerCenter.string()))
                 
-            case .enqueteReminder:
+            case .questionnaireReminder:
                 // アンケート催促画面(教務事務表示前に出現)
                 isLists.append(displayUrlString.contains(Url.enqueteReminder.string()))
                 

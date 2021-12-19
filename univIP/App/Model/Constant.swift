@@ -15,15 +15,15 @@ class Constant {
     
     // WebViewで読み込みを許可するドメイン
     static let allowedDomains = ["tokushima-u.ac.jp",    // 大学サイト
-                                 "microsoftonline.com",  // outlook(メール)関連
-                                 "office365.com",
-                                 "office.com",
+                                 "office365.com",        // outlook(メール) ログイン画面
+                                 "microsoftonline.com",  // outlook(メール) ログイン画面表示前、1度だけ遷移されるその後"office365.com"へ遷移される
+                                 "office.com",           // outlook(メール) メールボックス
                                  "tokudai-syusyoku.com", // キャリア支援室
                                  "youtube.com"]          // 大学サイトのインライン再生に対応させる為
     
     enum MenuLists: Codable {
-        case courceManagementHomePC
-        case courceManagementHomeMobile
+        case courseManagementHomePC
+        case courseManagementHomeMobile
         case manabaHomePC
         case manabaHomeMobile
         case libraryWebHomePC               // 図書館Webサイト常三島
@@ -65,13 +65,13 @@ class Constant {
     // サービスCell初期状態（更新確認、初回利用者はここを確認される）
     static let initServiceLists = [
         Menu(title: "教務事務システムPC版",
-             type: .courceManagementHomePC,
-             url: Url.courceManagementPC.string(),
+             type: .courseManagementHomePC,
+             url: Url.courseManagementPC.string(),
              canInitView: true),
         
         Menu(title: "教務事務システムMobile版",
-             type: .courceManagementHomeMobile,
-             url: Url.courceManagementMobile.string(),
+             type: .courseManagementHomeMobile,
+             url: Url.courseManagementMobile.string(),
              canInitView: true),
         
         Menu(title: "マナバPC版",

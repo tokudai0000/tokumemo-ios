@@ -10,8 +10,8 @@
 "systemServiceList"           = "https://www.ait.tokushima-u.ac.jp/service/list_out/";
 "eLearningList"               = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html";
 
-"courceManagementPC"          = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx";
-"courceManagementMobile"      = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx";
+"courseManagementPC"          = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx";
+"courseManagementMobile"      = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx";
 "manabaPC"                    = "https://manaba.lms.tokushima-u.ac.jp/ct/home";
 "manabaMobile"                = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary";
 

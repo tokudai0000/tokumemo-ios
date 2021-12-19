@@ -17,8 +17,9 @@ final class TermsOfServiceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 利用規約読み込み
         let filePath = R.file.termsOfServiceRtf()!
-        textView.attributedText = Common.rtfFileLoad(url: filePath)
+        textView.attributedText = Common.rtfFileLoad(filePath)
     }
     
     
