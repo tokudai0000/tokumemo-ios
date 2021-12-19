@@ -90,7 +90,7 @@ final class MainViewModel {
     
     
     public func searchInitialViewUrl() -> URLRequest {
-        let lists = dataManager.menuLists
+        let lists = dataManager.menuLists[0]
         for list in lists {
             if list.initialView {
                 if let url = URL(string: list.url) {
