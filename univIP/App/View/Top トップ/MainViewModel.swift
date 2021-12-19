@@ -22,87 +22,81 @@ final class MainViewModel {
               let hostDomain = url.host else { fatalError() }
         
         for allowedUrl in Constant.allowedDomains {
-            if hostDomain.contains(allowedUrl) { return true }
+            if hostDomain.contains(allowedUrl) {
+                return true
+            }
         }
         return false
         
     }
     
     
-    enum DiscriminantType {
-        case login
-        case enqueteReminder
-        case syllabus
-        case outlook
+    enum isJudgeType {
+        case universityLogin
+        case syllabusFirstTime
+        case outlookLogin
         case tokudaiCareerCenter
-        case timeOut
-        case registrantAndLostConnectionDecision
+        case enqueteReminder
+        case universityServiceTimeOut
     }
-    /// 現在のURLがsceneかどうか判定
-    public func isJudgeUrl(_ type: DiscriminantType,
-                           forwardUrl: String = DataManager.singleton.forwardDisplayUrl,
-                           displayUrl: String = DataManager.singleton.displayUrl) -> Bool {
-        // MARK: - HACK
+    /// 読み込み中のURLとisJudgeTypeが同じか、JavaScriptを動かす必要があるかを判定する
+    /// - Parameter type:判定させたいパラメータ
+    /// - Returns: 判定結果
+    public func isJudgeUrl(type: isJudgeType) -> Bool {
+    
+        let forwardUrlString = dataManager.forwardDisplayUrl
+        let displayUrlString = dataManager.displayUrl
+        
         var isLists:[Bool] = []
         
         switch type {
-        case .login:
-            isLists.append(!forwardUrl.contains(Url.universityServiceError.string()))
-            isLists.append(displayUrl.contains(Url.universityServiceError.string()))
-            isLists.append(displayUrl.suffix(2)=="s1")
-            isLists.append(canLogedInServiece)
-            
-            
-        case .enqueteReminder:
-            isLists.append(!forwardUrl.contains(Url.enqueteReminder.string()))
-            isLists.append(displayUrl.contains(Url.enqueteReminder.string()))
-            
-            
-        case .syllabus:
-            isLists.append(forwardUrl != Url.syllabusFirstTime.string())
-            isLists.append(displayUrl.contains(Url.syllabusFirstTime.string()))
-            
-            
-        case .outlook:
-            isLists.append(!forwardUrl.contains(Url.outlookLogin.string()))
-            isLists.append(displayUrl.contains(Url.outlookLogin.string()))
-            
-            
-        case .tokudaiCareerCenter:
-            isLists.append(!forwardUrl.contains(Url.tokudaiCareerCenter.string()))
-            isLists.append(displayUrl == Url.tokudaiCareerCenter.string())
-            
-            
-        case .timeOut:
-            isLists.append(displayUrl == Url.timeOut.string())
-            
-            
-        case .registrantAndLostConnectionDecision:
-            isLists.append(!canLogedInServiece)
-            isLists.append(displayUrl.contains(Url.universityServiceError.string()))
-            
+            case .universityLogin:
+                // 大学サイト、ログイン画面
+                isLists.append(displayUrlString.contains(Url.universityLogin.string()))
+                // ログインに失敗した場合false
+                isLists.append(!forwardUrlString.contains(Url.universityLogin.string()))
+                // JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
+                isLists.append(canLogedInServiece)
+                
+            case .syllabusFirstTime:
+                // シラバス
+                isLists.append(displayUrlString == Url.syllabus.string())
+                // 2回目からはfalse
+                isLists.append(forwardUrlString != Url.syllabus.string())
+                
+            case .outlookLogin:
+                // outlook(メール)
+                isLists.append(displayUrlString.contains(Url.outlookLogin.string()))
+                // ログインに失敗した場合false
+                isLists.append(!forwardUrlString.contains(Url.outlookLogin.string()))
+                
+            case .tokudaiCareerCenter:
+                // 徳島大学キャリアセンター
+                isLists.append(displayUrlString == Url.tokudaiCareerCenter.string())
+                // ログインに失敗した場合false
+                isLists.append(!forwardUrlString.contains(Url.tokudaiCareerCenter.string()))
+                
+            case .enqueteReminder:
+                // アンケート催促画面(教務事務表示前に出現)
+                isLists.append(displayUrlString.contains(Url.enqueteReminder.string()))
+                
+            case .universityServiceTimeOut:
+                // タイムアウト(20分無操作)
+                isLists.append(displayUrlString == Url.universityServiceTimeOut.string())
         }
-        
-        for item in isLists {
-            if !item {
-                return false
-            }
-        }
-        return true
+        // 配列内全てがtrueならtrueを返す
+        return isLists.allSatisfy{ $0 == true }
     }
     
+    
     public func searchInitialViewUrl() -> URLRequest {
-        if canLogedInServiece {
-            let lists = dataManager.settingCellList
-            for list in lists {
-                if list.initialView {
-                    if let url = URL(string: list.url) {
-                        return URLRequest(url: url)
-                    }
+        let lists = dataManager.menuLists
+        for list in lists {
+            if list.initialView {
+                if let url = URL(string: list.url) {
+                    return URLRequest(url: url)
                 }
             }
-            guard let url = URL(string: Url.manabaPC.string()) else {fatalError()}
-            return URLRequest(url: url)
         }
         guard let url = URL(string: Url.systemServiceList.string()) else {fatalError()}
         return URLRequest(url: url)

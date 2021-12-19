@@ -33,13 +33,11 @@
 
 "outlookLogin"                = "https://outlook.office365.com/tokushima-u.ac.jp";
 
-"syllabusFirstTime"           = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/";
-"syllabusResult"              = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx";
+"syllabus"                    = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/";
 
 "tokudaiCareerCenter"         = "https://www.tokudai-syusyoku.com/index.php";
 
-"universityLogin"             = "https://eweb.stud.tokushima-u.ac.jp/Portal/";
-"universityServiceError"      = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=";
-"timeOut"                     = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx";
+"universityLogin"             = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=";
+"universityServiceTimeOut"    = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx";
 "enqueteReminder"             = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx";
 "popupToYoutube"              = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon";

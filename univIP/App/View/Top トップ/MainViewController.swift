@@ -99,7 +99,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
         viewModel.teacherName = teacherName
-        guard let url = URL(string: Url.syllabusFirstTime.string()) else {fatalError()}
+        guard let url = URL(string: Url.syllabus.string()) else {fatalError()}
         webView.load(URLRequest(url: url))
     }
     
@@ -177,7 +177,7 @@ extension MainViewController: WKNavigationDelegate {
             return
         }
         
-        if viewModel.isJudgeUrl(.timeOut) {
+        if viewModel.isJudgeUrl(.universityServiceTimeOut) {
             guard let url = URL(string: Url.manabaPC.string()) else {fatalError()}
             webView.load(URLRequest(url: url))
         }
@@ -190,7 +190,7 @@ extension MainViewController: WKNavigationDelegate {
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
-        if viewModel.isJudgeUrl(.login) {
+        if viewModel.isJudgeUrl(.universityLogin) {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
@@ -201,13 +201,13 @@ extension MainViewController: WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
         }
         
-        if viewModel.isJudgeUrl(.syllabus) {
+        if viewModel.isJudgeUrl(.syllabusFirstTime) {
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
         }
         
-        if viewModel.isJudgeUrl(.outlook) {
+        if viewModel.isJudgeUrl(.outlookLogin) {
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)

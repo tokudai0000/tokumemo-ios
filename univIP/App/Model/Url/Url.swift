@@ -36,14 +36,12 @@ enum Url: String {
     
     case outlookLogin                // outlook(メール)
     
-    case syllabusFirstTime           // シラバス(初回)
-    case syllabusResult              // 検索結果
+    case syllabus                    // シラバス
     
     case tokudaiCareerCenter         // 徳島大学キャリアセンター
     
     case universityLogin             // 大学サイト、ログイン画面
-    case universityServiceError      // エラー
-    case timeOut                     // タイムアウト(20分無操作)
+    case universityServiceTimeOut    // タイムアウト(20分無操作)
     case enqueteReminder             // アンケート催促画面(教務事務表示前に出現)
     case popupToYoutube              // マナバから授業動画[Youtube]を開く時
     

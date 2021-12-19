@@ -77,6 +77,7 @@ class Constant {
         Menu(title: "マナバPC版",
              type: .manabaHomePC,
              url: Url.manabaPC.string(),
+             initialView: true,         // デフォルトの初期画面
              canInitView: true),
         
         Menu(title: "マナバMobile版",
@@ -122,7 +123,7 @@ class Constant {
         
         Menu(title: "シラバス",
              type: .syllabus,
-             url: Url.syllabusFirstTime.string(),
+             url: Url.syllabus.string(),
              canInitView: true),
         
         Menu(title: "時間割",
@@ -188,4 +189,6 @@ class Constant {
         Menu(title: "このアプリについて",
              type: .aboutThisApp)
     ]
+    
+    static let sectionNum = 2
 }
