@@ -88,11 +88,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch dataManager.menuLists[indexPath[0]][indexPath[1]].type {
         case .libraryCalendar:                   // [図書館常三島]開館カレンダー
-            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePC.string()) {
+            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
                 delegate.webView.load(url)
             }
         case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
-            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomeKuraPC.string()) {
+            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
                 delegate.webView.load(url)
             }
             

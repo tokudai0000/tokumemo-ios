@@ -66,32 +66,32 @@ class Constant {
     static let initServiceLists = [
         Menu(title: "教務事務システムPC版",
              type: .courceManagementHomePC,
-             url: Url.courceManagementHomePC.string(),
+             url: Url.courceManagementPC.string(),
              canInitView: true),
         
         Menu(title: "教務事務システムMobile版",
              type: .courceManagementHomeMobile,
-             url: Url.courceManagementHomeMobile.string(),
+             url: Url.courceManagementMobile.string(),
              canInitView: true),
         
         Menu(title: "マナバPC版",
              type: .manabaHomePC,
-             url: Url.manabaHomePC.string(),
+             url: Url.manabaPC.string(),
              canInitView: true),
         
         Menu(title: "マナバMobile版",
              type: .manabaHomeMobile,
-             url: Url.manabaHomeMobile.string(),
+             url: Url.manabaMobile.string(),
              canInitView: true),
         
         Menu(title: "[図書館常三島]WebサイトPC版",
              type: .libraryWebHomePC,
-             url: Url.libraryHomePC.string(),
+             url: Url.libraryHomePageMainPC.string(),
              canInitView: true),
         
         Menu(title: "[図書館蔵本]WebサイトPC版",
              type: .libraryWebHomePC,
-             url: Url.libraryHomePC.string(),
+             url: Url.libraryHomePageMainPC.string(),
              canInitView: true),
         
         Menu(title: "[図書館常三島]WebサイトMobile版",
@@ -101,7 +101,7 @@ class Constant {
         
         Menu(title: "[図書館]MyPage",
              type: .libraryMyPage,
-             url: Url.libraryLogin.string(),
+             url: Url.libraryMyPage.string(),
              canInitView: true),
         
         Menu(title: "[図書館]貸し出し期間延長",
@@ -114,15 +114,15 @@ class Constant {
         
         Menu(title: "[図書館常三島]開館カレンダー",
              type: .libraryCalendar,
-             url: Url.libraryCalendar.string()),
+             url: Url.libraryCalendarMain.string()),
         
         Menu(title: "[図書館蔵本]開館カレンダー",
              type: .libraryCalendarKura,
-             url: Url.libraryCalendar.string()),
+             url: Url.libraryCalendarKura.string()),
         
         Menu(title: "シラバス",
              type: .syllabus,
-             url: Url.syllabus.string(),
+             url: Url.syllabusFirstTime.string(),
              canInitView: true),
         
         Menu(title: "時間割",
@@ -147,7 +147,7 @@ class Constant {
         
         Menu(title: "メール",
              type: .mailService,
-             url: Url.mailService.string(),
+             url: Url.outlookLogin.string(),
              canInitView: true),
         
         Menu(title: "キャリア支援室",
@@ -171,7 +171,7 @@ class Constant {
         
         Menu(title: "大学サイト",
              type: .universityWeb,
-             url: Url.universityHome.string(),
+             url: Url.universityHomePage.string(),
              canInitView: true)
     ]
     

@@ -47,8 +47,8 @@ final class MainViewModel {
         
         switch type {
         case .login:
-            isLists.append(!forwardUrl.contains(Url.lostConnection.string()))
-            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            isLists.append(!forwardUrl.contains(Url.universityServiceError.string()))
+            isLists.append(displayUrl.contains(Url.universityServiceError.string()))
             isLists.append(displayUrl.suffix(2)=="s1")
             isLists.append(canLogedInServiece)
             
@@ -59,8 +59,8 @@ final class MainViewModel {
             
             
         case .syllabus:
-            isLists.append(forwardUrl != Url.syllabus.string())
-            isLists.append(displayUrl.contains(Url.syllabus.string()))
+            isLists.append(forwardUrl != Url.syllabusFirstTime.string())
+            isLists.append(displayUrl.contains(Url.syllabusFirstTime.string()))
             
             
         case .outlook:
@@ -79,7 +79,7 @@ final class MainViewModel {
             
         case .registrantAndLostConnectionDecision:
             isLists.append(!canLogedInServiece)
-            isLists.append(displayUrl.contains(Url.lostConnection.string()))
+            isLists.append(displayUrl.contains(Url.universityServiceError.string()))
             
         }
         
@@ -101,7 +101,7 @@ final class MainViewModel {
                     }
                 }
             }
-            guard let url = URL(string: Url.manabaHomePC.string()) else {fatalError()}
+            guard let url = URL(string: Url.manabaPC.string()) else {fatalError()}
             return URLRequest(url: url)
         }
         guard let url = URL(string: Url.systemServiceList.string()) else {fatalError()}

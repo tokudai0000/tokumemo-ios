@@ -99,7 +99,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
         viewModel.teacherName = teacherName
-        guard let url = URL(string: Url.syllabus.string()) else {fatalError()}
+        guard let url = URL(string: Url.syllabusFirstTime.string()) else {fatalError()}
         webView.load(URLRequest(url: url))
     }
     
@@ -178,7 +178,7 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         if viewModel.isJudgeUrl(.timeOut) {
-            guard let url = URL(string: Url.manabaHomePC.string()) else {fatalError()}
+            guard let url = URL(string: Url.manabaPC.string()) else {fatalError()}
             webView.load(URLRequest(url: url))
         }
         
