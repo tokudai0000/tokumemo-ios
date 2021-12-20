@@ -35,7 +35,7 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
         textField.inputAccessoryView = toolbar
         
         for item in dataManager.menuLists[0] {
-            if item.initialView {
+            if item.isInitView {
                 textField.placeholder = item.title
             }
         }
@@ -56,7 +56,7 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
             let menuType = menuLists[0][i].type
             let pickerType = list[pickerView.selectedRow(inComponent: 0)].type
             
-            menuLists[0][i].initialView = (menuType == pickerType)
+            menuLists[0][i].isInitView = (menuType == pickerType)
         }
         dataManager.menuLists = menuLists
         

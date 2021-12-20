@@ -8,8 +8,9 @@
 
 import UIKit
 import WebKit
+import EAIntroView
 
-final class MainViewController: UIViewController, WKUIDelegate {
+final class MainViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var webView: WKWebView!
@@ -24,7 +25,6 @@ final class MainViewController: UIViewController, WKUIDelegate {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         webView.navigationDelegate = self
         webView.uiDelegate = self
         
@@ -40,6 +40,7 @@ final class MainViewController: UIViewController, WKUIDelegate {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
         }
+        tutorial()
     }
     
     
@@ -97,22 +98,34 @@ final class MainViewController: UIViewController, WKUIDelegate {
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
         viewModel.teacherName = teacherName
-        guard let url = URL(string: Url.syllabus.string()) else {fatalError()}
+        
+        let url = URL(string: Url.syllabus.string())! // fatalError
         webView.load(URLRequest(url: url))
     }
     
     
     // MARK: - Private func
     
-    /// target="_blank" の処理
-    func webView(_ webView: WKWebView,
-                 createWebViewWith configuration: WKWebViewConfiguration,
-                 for navigationAction: WKNavigationAction,
-                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+    private func tutorial() {
         
-        webView.load(navigationAction.request)
-        return nil
+        let page1 = EAIntroPage()
+        page1.bgImage = UIImage(named: R.image.tutorialImage1.name)
+        
+        let page2 = EAIntroPage()
+        page2.bgImage = UIImage(named: R.image.tutorialImage2.name)
+        
+        let page3 = EAIntroPage()
+        page3.bgImage = UIImage(named: R.image.tutorialImage3.name)
+        
+        //ここでページを追加
+        let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
+        
+        //スキップボタン
+        introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
+        introView?.backgroundColor = UIColor(named: R.color.tokumemoColor.name)
+        introView?.show(in: self.view, animateDuration: 0)
     }
+    
 }
 
 
@@ -191,10 +204,11 @@ extension MainViewController: WKNavigationDelegate {
     }
     
     
-    /// alert対応
+    // alert対応
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         var messageText = message
-        if dataManager.displayUrlString == Url.courseRegistration.string() { // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        // 履修登録の追加ボタンを押す際、ブラウザのポップアップブロックを解除せよとのalertが出る(必要ない)
+        if dataManager.displayUrlString == Url.courseRegistration.string() {
             messageText = "OKを押してください"
         }
         let alertController = UIAlertController(title: "", message: messageText, preferredStyle: .alert)
@@ -205,7 +219,7 @@ extension MainViewController: WKNavigationDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    /// confirm対応
+    // confirm対応
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
@@ -219,7 +233,7 @@ extension MainViewController: WKNavigationDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    /// prompt対応
+    // prompt対応
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
@@ -241,6 +255,22 @@ extension MainViewController: WKNavigationDelegate {
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+}
+
+
+// MARK: - WKUIDelegate
+extension MainViewController: WKUIDelegate {
+    
+    // target="_blank" の処理
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        webView.load(navigationAction.request)
+        return nil
     }
     
 }

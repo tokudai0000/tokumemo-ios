@@ -37,7 +37,7 @@ final class MenuViewModel {
             if let index = modelLists.firstIndex(where: {$0.type == oldList.type}) {
                 modelLists[index].title = oldList.title             // ユーザーが指定した名前
                 modelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
-                modelLists[index].initialView = oldList.initialView // ユーザーが指定した初期画面
+                modelLists[index].isInitView = oldList.isInitView // ユーザーが指定した初期画面
                 updateForLists.append(modelLists[index])
                 modelLists.remove(at: index)
             }

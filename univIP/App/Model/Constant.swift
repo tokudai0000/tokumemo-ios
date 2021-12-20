@@ -58,8 +58,8 @@ class Constant {
         let type: MenuLists
         var url: String = ""
         var isDisplay: Bool = true
-        var initialView: Bool = false
-        var canInitView: Bool = false
+        var isInitView: Bool = false  // 初期画面がtrue
+        var canInitView: Bool = false // 初期画面として設定可能か
     }
     
     // サービスCell初期状態（更新確認、初回利用者はここを確認される）
@@ -77,7 +77,7 @@ class Constant {
         Menu(title: "マナバPC版",
              type: .manabaHomePC,
              url: Url.manabaPC.string(),
-             initialView: true,         // デフォルトの初期画面
+             isInitView: true,         // デフォルトの初期画面
              canInitView: true),
         
         Menu(title: "マナバMobile版",

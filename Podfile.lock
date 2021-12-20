@@ -1,4 +1,7 @@
 PODS:
+  - EAIntroView (2.13.0):
+    - EARestrictedScrollView (~> 1.1.0)
+  - EARestrictedScrollView (1.1.0)
   - Firebase (8.9.1):
     - Firebase/Core (= 8.9.1)
   - Firebase/Analytics (8.9.1):
@@ -96,6 +99,7 @@ PODS:
   - R.swift.Library (5.3.0)
 
 DEPENDENCIES:
+  - EAIntroView (~> 2)
   - Firebase
   - Firebase/Analytics (~> 8)
   - Kanna (~> 5)
@@ -104,6 +108,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - EAIntroView
+    - EARestrictedScrollView
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -120,6 +126,8 @@ SPEC REPOS:
     - R.swift.Library
 
 SPEC CHECKSUMS:
+  EAIntroView: 9adedfc6b5c3fd3ebe19766da01dae573e6ce053
+  EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Firebase: fb5114cd2bf96e2ff7bcb01d0d9a156cf5fd2f07
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseCore: c5aab092d9c4b8efea894946166b04c9d9ef0e68
@@ -135,6 +143,6 @@ SPEC CHECKSUMS:
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: 43981a88e9c69bfb5b47437bcf1b6ea47d9686e4
+PODFILE CHECKSUM: b824fc7e30028ba042d53e130aeca6f5ae61b57b
 
 COCOAPODS: 1.11.2

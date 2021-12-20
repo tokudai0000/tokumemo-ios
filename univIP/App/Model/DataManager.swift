@@ -130,14 +130,33 @@ final class DataManager {
     private func setUserDefaultsData(key:String, value:Data) {
         userDefaults.set(value ,forKey: key)
     }
+    
+//    func changeServiceLists(section: Int, row: Int, flag: Bool? = nil) {
+//        var list = serviceLists[section][row]
+//        
+//        if let flag = flag {
+//            list.type = flag
+//        }
+//        saveServiceLists()
+//        
+//    }
+//    
+//    func saveServiceLists() {
+//        let jsonEncoder = JSONEncoder()
+//        guard let data = try? jsonEncoder.encode(v) else { return }
+//        setUserDefaultsData(key: KEY_serviceLists, value: data)
+//        
+//        serviceLists = serviceLists[0][1].type = true
+//    }
         
     private let KEY_serviceLists = "KEY_settingCellList"
     public var serviceLists: [Constant.Menu] {
+        // オンメモリで動いている為、動作時間に問題ない(1〜1000行未満なら)
         get {
             let jsonDecoder = JSONDecoder()
             let data = getUserDefaultsData(key: KEY_serviceLists)
-            guard let bookmarks = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
-            return bookmarks
+            guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
+            return lists
         }
         set(v) {
             let jsonEncoder = JSONEncoder()
@@ -145,4 +164,7 @@ final class DataManager {
             setUserDefaultsData(key: KEY_serviceLists, value: data)
         }
     }
+//    var lists = serviceLists
+//    lists.type = true
+//    serviceLists = lists
 }
