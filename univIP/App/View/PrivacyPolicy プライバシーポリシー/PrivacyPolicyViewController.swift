@@ -19,7 +19,7 @@ final class PrivacyPolicyViewController: UIViewController {
         
         // プライバシーポリシ読み込み
         let filePath = R.file.privacyPolicyRtf()!
-        textView.attributedText = Common.rtfFileLoad(filePath)
+        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
     

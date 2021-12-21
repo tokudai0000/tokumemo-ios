@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Constant {
+final class Constant {
     
     // 利用規約バージョン
     static let agreementVersion = "1.0"

@@ -7,12 +7,12 @@
 
 import UIKit
 
-class Common {
+final class Common {
     
     /// rtfファイルを読み込む
     /// - Parameter url: rtfFileまでのPATH
     /// - Returns: rtfFileの内容
-    static func rtfFileLoad(_ filePath: URL) -> NSAttributedString {
+    static func loadRtfFileContents(_ filePath: URL) -> NSAttributedString {
         do {
             let terms = try Data(contentsOf: filePath)
             let attributedString = try NSAttributedString(
@@ -23,7 +23,7 @@ class Common {
             return attributedString
             
         } catch let error {
-            AKLog(level: .FATAL, message: "[Fatalファイルの読み込み失敗]:\(error.localizedDescription)")
+            AKLog(level: .FATAL, message: "[rtfファイルのDataパース失敗]:\(error.localizedDescription)")
             fatalError()
         }
     }

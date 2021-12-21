@@ -22,7 +22,7 @@ final class AgreementViewController: UIViewController {
         
         // 同意規約内容の読み込み
         let filePath = R.file.agreementRtf()!
-        textView.attributedText = Common.rtfFileLoad(filePath)
+        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
     
