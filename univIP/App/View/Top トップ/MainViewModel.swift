@@ -99,7 +99,8 @@ final class MainViewModel {
         // 登録者、非登録者の条件分岐必要
         for list in dataManager.menuLists[0] {
             if list.isInitView {
-                guard let url = URL(string: list.url) else { fatalError() }
+                let urlString = list.url!         // fatalError 
+                let url = URL(string: urlString)! // fatalError
                 return URLRequest(url: url)
             }
         }

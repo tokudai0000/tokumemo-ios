@@ -34,7 +34,7 @@ final class MenuViewModel {
         
         /// 並び順、名前、表示　を引き継ぐ
         for oldList in savingLists { // 並び順を保持する
-            if let index = modelLists.firstIndex(where: {$0.type == oldList.type}) {
+            if let index = modelLists.firstIndex(where: {$0.id == oldList.id}) {
                 modelLists[index].title = oldList.title             // ユーザーが指定した名前
                 modelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
                 modelLists[index].isInitView = oldList.isInitView // ユーザーが指定した初期画面

@@ -53,8 +53,8 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
         var menuLists = dataManager.menuLists
         for i in 0..<menuLists[0].count {
             // 選択された内容とインデックス番号を照合
-            let menuType = menuLists[0][i].type
-            let pickerType = list[pickerView.selectedRow(inComponent: 0)].type
+            let menuType = menuLists[0][i].id
+            let pickerType = list[pickerView.selectedRow(inComponent: 0)].id
             
             menuLists[0][i].isInitView = (menuType == pickerType)
         }

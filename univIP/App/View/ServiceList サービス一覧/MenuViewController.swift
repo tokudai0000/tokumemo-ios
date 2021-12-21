@@ -87,42 +87,40 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        switch dataManager.menuLists[indexPath[0]][indexPath[1]].type {
-        case .libraryCalendar:                   // [図書館常三島]開館カレンダー
-            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
-                delegate.webView.load(url)
-            }
-        case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
-            if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
-                delegate.webView.load(url)
-            }
-            
-        case .currentTermPerformance:            // 今年の成績
-            delegate.webView.load(viewModel.createCurrentTermPerformanceUrl())
-            
-        case .syllabus:                          // シラバス
-            delegate.showModalView(type: .syllabus)
-            
-        case .cellSort:
-            delegate.showModalView(type: .cellSort)
-            
-        case .firstViewSetting:
-            delegate.showModalView(type: .firstViewSetting)
-        case .password:                          // パスワード設定
-            delegate.showModalView(type: .password)
-            
-        case .aboutThisApp:                      // このアプリについて
-            delegate.showModalView(type: .aboutThisApp)
-            
-        default:
-            if let url = URL(string: dataManager.menuLists[indexPath[0]][indexPath[1]].url) {
+        switch dataManager.menuLists[indexPath[0]][indexPath[1]].id {
+            case .libraryCalendar:                   // [図書館常三島]開館カレンダー
+                if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
+                    delegate.webView.load(url)
+                }
+            case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
+                if let url = viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
+                    delegate.webView.load(url)
+                }
+                
+            case .currentTermPerformance:            // 今年の成績
+                delegate.webView.load(viewModel.createCurrentTermPerformanceUrl())
+                
+            case .syllabus:                          // シラバス
+                delegate.showModalView(type: .syllabus)
+                
+            case .cellSort:
+                delegate.showModalView(type: .cellSort)
+                
+            case .firstViewSetting:
+                delegate.showModalView(type: .firstViewSetting)
+            case .password:                          // パスワード設定
+                delegate.showModalView(type: .password)
+                
+            case .aboutThisApp:                      // このアプリについて
+                delegate.showModalView(type: .aboutThisApp)
+                
+            default:
+                let urlString = dataManager.menuLists[indexPath[0]][indexPath[1]].url! // fatalError
+                let url = URL(string: urlString)!                                      // fatalError
                 delegate.webView.load(URLRequest(url: url))
-            } else {
-                AKLog(level: .FATAL, message: "URLフォーマットエラー")
-                fatalError()
-            }
+                
         }
-        Analytics.logEvent("service\(dataManager.menuLists[indexPath[0]][indexPath[1]].type)", parameters: nil)
+        Analytics.logEvent("service\(dataManager.menuLists[indexPath[0]][indexPath[1]].id)", parameters: nil)
     }
 }
 
