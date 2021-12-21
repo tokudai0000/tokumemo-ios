@@ -12,12 +12,15 @@ import KeychainAccess
 final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
-    private init() {} // インスタンスが1つであることを補償
+    private init() {
+        // インスタンスが1つであることを補償
+        menuLists = loadMenuLists()
+    }
     
     
     private var userDefaults = UserDefaults.standard
     
-    
+    // 毎回UserDefaultsから取ってきて保存する
     public var menuLists:[[Constant.Menu]] =  [[], []]
     
     
@@ -33,6 +36,7 @@ final class DataManager {
         }
     }
     
+    // 連続で表示されている時、ログインに失敗したと判定する場面があるため
     private var im_forwardDisplayUrlString = ""
     public var forwardDisplayUrlString: String {
         // 外部から書き換え禁止
@@ -69,7 +73,7 @@ final class DataManager {
                 .accessibility(Accessibility.alwaysThisDeviceOnly)  // 常時アクセス可能、デバイス限定
                 .set(value, key: key)
         } catch {
-            AKLog(level: .ERROR, message: "error: Datamanager.setKeyChain")
+            AKLog(level: .ERROR, message: "error: DataManager.setKeyChain catch")
             return
         }
     }
@@ -103,13 +107,15 @@ final class DataManager {
         userDefaults.set(value ,forKey: key)
     }
     
-    /// 利用規約のバージョン
+    
+    // 利用規約のバージョン
     private let KEY_AgreementVersion = "KEY_AgreementVersion" // KEY_agreementVersion にするべき(**注意** 変更すると再度利用規約が表示される)
     public var agreementVersion: String {
         get { return getUserDefaultsString(key: KEY_AgreementVersion) }
         set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
     }
     
+    // 初期画面の設定
     private let KEY_initialViewName = "KEY_initialViewName"
     public var initialViewName: String {
         get { return getUserDefaultsString(key: KEY_initialViewName) }
@@ -131,39 +137,85 @@ final class DataManager {
         userDefaults.set(value ,forKey: key)
     }
     
-//    func changeServiceLists(section: Int, row: Int, flag: Bool? = nil) {
-//        var list = serviceLists[section][row]
-//        
-//        if let flag = flag {
-//            list.type = flag
-//        }
-//        saveServiceLists()
-//        
-//    }
-//    
-//    func saveServiceLists() {
-//        let jsonEncoder = JSONEncoder()
-//        guard let data = try? jsonEncoder.encode(v) else { return }
-//        setUserDefaultsData(key: KEY_serviceLists, value: data)
-//        
-//        serviceLists = serviceLists[0][1].type = true
-//    }
+    
+    private let KEY_menuLists = "KEY_menuLists"
+    public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
         
-    private let KEY_serviceLists = "KEY_settingCellList"
-    public var serviceLists: [Constant.Menu] {
-        // オンメモリで動いている為、動作時間に問題ない(1〜1000行未満なら)
-        get {
-            let jsonDecoder = JSONDecoder()
-            let data = getUserDefaultsData(key: KEY_serviceLists)
-            guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
-            return lists
+        if let title = title {
+            menuLists[0][row].title = title
         }
-        set(v) {
-            let jsonEncoder = JSONEncoder()
-            guard let data = try? jsonEncoder.encode(v) else { return }
-            setUserDefaultsData(key: KEY_serviceLists, value: data)
+        if let isDisplay = isDisplay {
+            menuLists[0][row].isDisplay = isDisplay
         }
+        if let isInitView = isInitView {
+            menuLists[0][row].isInitView = isInitView
+        }
+        saveMenuLists()
+        
     }
+    
+    public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
+        
+        let todo = menuLists[0][sourceRow]
+        menuLists[0].remove(at: sourceRow)
+        menuLists[0].insert(todo, at: destinationRow)
+        saveMenuLists()
+        
+    }
+    
+    private func loadMenuLists() -> [[Constant.Menu]] {
+        let jsonDecoder = JSONDecoder()
+        let data = getUserDefaultsData(key: KEY_menuLists)
+        guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
+            // 初回利用者は初期値を返す
+            return [Constant.initServiceLists, Constant.initSettingLists]
+        }
+        
+        // アップデートごとに機能追加等があるため、更新する
+        var newModelLists = Constant.initServiceLists
+        var updateForLists:[Constant.Menu] = []
+        
+        for oldList in lists {
+            // 並び順を保持する
+            if let index = newModelLists.firstIndex(where: {$0.id == oldList.id}) {
+                // 引き継ぎ
+                newModelLists[index].title = oldList.title             // ユーザーが指定した名前
+                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
+                newModelLists[index].isInitView = oldList.isInitView   // ユーザーが指定した初期画面
+                updateForLists.append(newModelLists[index])
+                newModelLists.remove(at: index)
+            }
+        }
+        
+        // 新規実装があれば通る
+        updateForLists.append(contentsOf: newModelLists)
+        
+        return [updateForLists, Constant.initSettingLists]
+    }
+
+    private func saveMenuLists() {
+        
+        let jsonEncoder = JSONEncoder()
+        guard let data = try? jsonEncoder.encode(menuLists[0]) else { return }
+        setUserDefaultsData(key: KEY_menuLists, value: data)
+        
+    }
+        
+    
+//    public var serviceLists: [Constant.Menu] {
+//        // オンメモリで動いている為、動作時間に問題ない(1〜1000行未満なら)
+//        get {
+//            let jsonDecoder = JSONDecoder()
+//            let data = getUserDefaultsData(key: KEY_serviceLists)
+//            guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
+//            return lists
+//        }
+//        set(v) {
+//            let jsonEncoder = JSONEncoder()
+//            guard let data = try? jsonEncoder.encode(v) else { return }
+//            setUserDefaultsData(key: KEY_serviceLists, value: data)
+//        }
+//    }
 //    var lists = serviceLists
 //    lists.type = true
 //    serviceLists = lists
