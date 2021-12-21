@@ -17,13 +17,13 @@ final class DataManager {
         menuLists = loadMenuLists()
     }
     
-    
     private var userDefaults = UserDefaults.standard
     
     // 毎回UserDefaultsから取ってきて保存する
     public var menuLists:[[Constant.Menu]] =  [[], []]
     
     
+    // 現在読み込んでいるURLを基点に処理の分岐を行う
     private var im_displayUrlString = ""
     public var displayUrlString: String {
         get { return im_displayUrlString }
@@ -43,6 +43,42 @@ final class DataManager {
         get { return im_forwardDisplayUrlString }
     }
     
+    
+    /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    ///   - title: タイトルの変更
+    ///   - isDisplay: リストで表示する
+    ///   - isInitView: 初期画面にする
+    public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
+        
+        if let title = title {
+            menuLists[0][row].title = title
+        }
+        if let isDisplay = isDisplay {
+            menuLists[0][row].isDisplay = isDisplay
+        }
+        if let isInitView = isInitView {
+            // falseに初期化する
+            for i in 0..<menuLists[0].count { menuLists[0][i].isInitView = false }
+            menuLists[0][row].isInitView = isInitView
+        }
+        saveMenuLists()
+        
+    }
+    
+    /// MenuLists内の順番を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - sourceRow: 移動させたいcellのindex
+    ///   - destinationRow: 挿入場所のindex
+    public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
+        
+        let todo = menuLists[0][sourceRow]
+        menuLists[0].remove(at: sourceRow)
+        menuLists[0].insert(todo, at: destinationRow)
+        saveMenuLists()
+        
+    }
     
     
     /// KeychainAccess インスタンス
@@ -139,31 +175,9 @@ final class DataManager {
     
     
     private let KEY_menuLists = "KEY_menuLists"
-    public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
-        
-        if let title = title {
-            menuLists[0][row].title = title
-        }
-        if let isDisplay = isDisplay {
-            menuLists[0][row].isDisplay = isDisplay
-        }
-        if let isInitView = isInitView {
-            menuLists[0][row].isInitView = isInitView
-        }
-        saveMenuLists()
-        
-    }
-    
-    public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
-        
-        let todo = menuLists[0][sourceRow]
-        menuLists[0].remove(at: sourceRow)
-        menuLists[0].insert(todo, at: destinationRow)
-        saveMenuLists()
-        
-    }
-    
     private func loadMenuLists() -> [[Constant.Menu]] {
+        // UserDefaultsから読み込む
+        // Data -> Json -> 配列 にパースする必要がある
         let jsonDecoder = JSONDecoder()
         let data = getUserDefaultsData(key: KEY_menuLists)
         guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
@@ -194,29 +208,12 @@ final class DataManager {
     }
 
     private func saveMenuLists() {
-        
+        // UserDefaultsに保存
+        // 配列 -> Json -> Data にパースする必要がある
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(menuLists[0]) else { return }
         setUserDefaultsData(key: KEY_menuLists, value: data)
         
     }
-        
     
-//    public var serviceLists: [Constant.Menu] {
-//        // オンメモリで動いている為、動作時間に問題ない(1〜1000行未満なら)
-//        get {
-//            let jsonDecoder = JSONDecoder()
-//            let data = getUserDefaultsData(key: KEY_serviceLists)
-//            guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else { return Constant.initServiceLists }
-//            return lists
-//        }
-//        set(v) {
-//            let jsonEncoder = JSONEncoder()
-//            guard let data = try? jsonEncoder.encode(v) else { return }
-//            setUserDefaultsData(key: KEY_serviceLists, value: data)
-//        }
-//    }
-//    var lists = serviceLists
-//    lists.type = true
-//    serviceLists = lists
 }

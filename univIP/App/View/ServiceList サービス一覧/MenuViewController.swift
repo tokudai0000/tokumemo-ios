@@ -28,7 +28,7 @@ final class MenuViewController: UIViewController {
         //        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
         //        self.view.addGestureRecognizer(tap)
         
-        viewModel.initialBootProcess()
+//        viewModel.initialBootProcess()
         self.tableView.reloadData()
     }
     // これだとcellをタップしても呼ばれてしまう **後日修正する**
