@@ -19,7 +19,12 @@ final class MainViewModel {
     public func isAllowedDomainCheck() -> Bool {
         
         guard let url = URL(string: dataManager.displayUrlString),
-              let hostDomain = url.host else { fatalError() }
+              let hostDomain = url.host else {
+                  return false
+//                  AKLog(level: .FATAL, message: dataManager.displayUrlString)
+//                  AKLog(level: .FATAL, message: url.host)
+//                  fatalError()
+              }
         
         for allowedUrl in Constant.allowedDomains {
             if hostDomain.contains(allowedUrl) {
@@ -93,7 +98,7 @@ final class MainViewModel {
         // MARK: - 修正必要あり
         // 登録者、非登録者の条件分岐必要
         for list in dataManager.menuLists[0] {
-            if list.initialView {
+            if list.isInitView {
                 guard let url = URL(string: list.url) else { fatalError() }
                 return URLRequest(url: url)
             }

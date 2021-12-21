@@ -23,6 +23,7 @@ final class MenuViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.delegate = self
         // viewをタップされた際の処理 **後日修正する**
         //        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
         //        self.view.addGestureRecognizer(tap)
@@ -121,7 +122,6 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 fatalError()
             }
         }
-        
         Analytics.logEvent("service\(dataManager.menuLists[indexPath[0]][indexPath[1]].type)", parameters: nil)
     }
 }
