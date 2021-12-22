@@ -86,6 +86,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             AKLog(level: .ERROR, message: "[delegateエラー]")
             return
         }
+        //
+        dataManager.isExecuteJavascript = true
         
         self.dismiss(animated: false, completion: {
             switch self.dataManager.menuLists[indexPath[0]][indexPath[1]].id {

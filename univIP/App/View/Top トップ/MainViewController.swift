@@ -116,6 +116,8 @@ final class MainViewController: UIViewController {
     
     // 最初に読み込むURLを取得し表示(初期画面)
     private func refreshWebLoad() {
+        // フラグを立てる
+        dataManager.isExecuteJavascript = true
         webView.load(viewModel.searchInitialViewUrl())
     }
     
@@ -156,9 +158,6 @@ extension MainViewController: WKNavigationDelegate {
             return
         }
         
-        // 読み込み中のURLをStringで記録
-        dataManager.displayUrlString = url.absoluteString
-        
         // 読み込み中のURL(ドメイン)が許可されたドメインは判定
         if !viewModel.isAllowedDomainCheck(url) {
             // 許可外のURLが来た場合は、Safariで開く
@@ -168,7 +167,7 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // タイムアウト(20分無操作)の場合
-        if viewModel.isJudgeUrl(type: .universityServiceTimeOut) {
+        if url.absoluteString == Url.universityServiceTimeOut.string() {
             refreshWebLoad()
         }
         
@@ -180,43 +179,46 @@ extension MainViewController: WKNavigationDelegate {
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
-        // 徳島大学　統合認証システムサイト(ログインサイト)
-        if viewModel.isJudgeUrl(type: .universityLogin) {
-            // 自動ログインを行う
-            webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-        }
+        let activeUrl = self.webView.url! // fatalError
         
-        // 教務事務システム、アンケート催促スキップ
-        if viewModel.isJudgeUrl(type: .questionnaireReminder) {
-            // 「情報システムを使用後直ちに回答を行う」のボタンを自動でクリック
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
-        }
-        
-        // シラバスの検索画面
-        if viewModel.isJudgeUrl(type: .syllabusFirstTime) {
-            // ネイティブでの検索内容をWebに反映したのち、検索を行う
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-        }
-        
-        // outlook(メール)へのログイン画面
-        if viewModel.isJudgeUrl(type: .outlookLogin) {
-            // cアカウントを登録していなければ自動ログインは効果がないため
-            // 自動ログインを行う
-            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-        }
-        
-        // 徳島大学キャリアセンター室
-        if viewModel.isJudgeUrl(type: .tokudaiCareerCenter) {
-            // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
-            // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
-            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
-            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+        // 現在のURLがJavaScript
+        switch viewModel.anyJavaScriptExecute(activeUrl) {
+            case .universityLogin:
+                // 徳島大学　統合認証システムサイト(ログインサイト)
+                // 自動ログインを行う
+                webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+                
+            case .questionnaireReminder:
+                // 教務事務システム、アンケート催促スキップ
+                // 「情報システムを使用後直ちに回答を行う」のボタンを自動でクリック
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+                
+            case .syllabusFirstTime:
+                // シラバスの検索画面
+                // ネイティブでの検索内容をWebに反映したのち、検索を行う
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+                
+            case .outlookLogin:
+                // outlook(メール)へのログイン画面
+                // cアカウントを登録していなければ自動ログインは効果がないため
+                // 自動ログインを行う
+                webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
+                
+            case .tokudaiCareerCenter:
+                // 徳島大学キャリアセンター室
+                // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
+                // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
+                webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+                
+            case .none:
+                break
         }
         
         webViewGoBackButton.isEnabled = webView.canGoBack
@@ -228,18 +230,27 @@ extension MainViewController: WKNavigationDelegate {
     
     
     // alert対応
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+    func webView(_ webView: WKWebView,
+                 runJavaScriptAlertPanelWithMessage message: String,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping () -> Void) {
+        
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         let otherAction = UIAlertAction(title: "OK", style: .default) {
             action in completionHandler()
         }
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
+        
     }
     
     // confirm対応
     // 確認画面、イメージは「この内容で保存しますか？はい・いいえ」のようなもの
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+    func webView(_ webView: WKWebView,
+                 runJavaScriptConfirmPanelWithMessage message: String,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (Bool) -> Void) {
+        
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
             action in completionHandler(false)
@@ -250,11 +261,16 @@ extension MainViewController: WKNavigationDelegate {
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+        
     }
     
     // prompt対応
     // 入力ダイアログ、Alertのtext入力できる版
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+    func webView(_ webView: WKWebView,
+                 runJavaScriptTextInputPanelWithPrompt prompt: String,
+                 defaultText: String?, initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (String?) -> Void) {
+        
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
         let okHandler: () -> Void = {
             if let textField = alertController.textFields?.first {
@@ -273,6 +289,7 @@ extension MainViewController: WKNavigationDelegate {
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+        
     }
     
 }

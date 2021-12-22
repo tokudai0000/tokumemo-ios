@@ -22,28 +22,9 @@ final class DataManager {
     // 毎回UserDefaultsから取ってきて保存する
     public var menuLists:[[Constant.Menu]] =  [[], []]
     
-    
-    // 現在読み込んでいるURLを基点に処理の分岐を行う
-    // Stringの方が扱いやすい場面が多かったため
-    private var im_displayUrlString = ""
-    public var displayUrlString: String {
-        get { return im_displayUrlString }
-        set(v) {
-            // 1つ前のURLを保持
-            im_forwardDisplayUrlString = im_displayUrlString
-            im_displayUrlString = v
-            
-            AKLog(level: .DEBUG, message: "\n displayURL: \(im_displayUrlString)")
-        }
-    }
-    
-    // 連続で表示されている時、ログインに失敗したと判定する場面があるため
-    private var im_forwardDisplayUrlString = ""
-    public var forwardDisplayUrlString: String {
-        // 外部から書き換え禁止
-        get { return im_forwardDisplayUrlString }
-    }
-    
+    // JavaScriptを実行するかどうか
+    public var isExecuteJavascript = false
+
     
     /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
     /// - Parameters:
