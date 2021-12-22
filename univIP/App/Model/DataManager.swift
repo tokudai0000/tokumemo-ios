@@ -24,6 +24,7 @@ final class DataManager {
     
     
     // 現在読み込んでいるURLを基点に処理の分岐を行う
+    // Stringの方が扱いやすい場面が多かったため
     private var im_displayUrlString = ""
     public var displayUrlString: String {
         get { return im_displayUrlString }
@@ -114,14 +115,14 @@ final class DataManager {
         }
     }
     
-    /// cAccount
+    // cAccount
     private let KEY_cAccount = "KEY_cAccount"
     public var cAccount: String {
         get { return getKeyChain(key: KEY_cAccount) }
         set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
     
-    /// password
+    // password
     private let KEY_password = "KEY_passWord" // KEY_password にするべき(**注意** 変更するとユーザーは再度パスワードを登録しなければならない)
     public var password: String {
         get { return getKeyChain(key: KEY_password) }
@@ -156,6 +157,40 @@ final class DataManager {
     public var initialViewName: String {
         get { return getUserDefaultsString(key: KEY_initialViewName) }
         set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
+    }
+    
+    
+    /// GET (UserDefaults) Bool
+    private func getUserDefaultsBool(key:String) -> Bool {
+        // 非登録者(nilでも)はfalseを返す
+        let value = userDefaults.bool(forKey: key)
+        return value
+    }
+    
+    /// SET (UserDefaults) Bool
+    private func setUserDefaultsBool(key:String, value:Bool) {
+        userDefaults.set(value ,forKey: key)
+    }
+    
+    // チュートリアルを終了したかのフラグ
+    private let KEY_shouldEndedTutorial = "KEY_shouldEndedTutorial"
+    public var shouldEndedTutorial: Bool {
+        get { return getUserDefaultsBool(key: KEY_shouldEndedTutorial) }
+        set(v) { setUserDefaultsBool(key: KEY_shouldEndedTutorial, value: v) }
+    }
+    
+    // password入力催促のフラグ(falseの時passwordSettingViewが出てくる)
+    private let KEY_shouldInputedPassword = "KEY_shouldInputedPassword"
+    public var shouldInputedPassword: Bool {
+        get { return getUserDefaultsBool(key: KEY_shouldInputedPassword) }
+        set(v) { setUserDefaultsBool(key: KEY_shouldInputedPassword, value: v) }
+    }
+    
+    // メニューリストのカスタマイズ催促のフラグ
+    private let KEY_shouldShowCustomizeMenu = "KEY_shouldShowCustomizeMenu"
+    public var shouldShowCustomizeMenu: Bool {
+        get { return getUserDefaultsBool(key: KEY_shouldShowCustomizeMenu) }
+        set(v) { setUserDefaultsBool(key: KEY_shouldShowCustomizeMenu, value: v) }
     }
     
     

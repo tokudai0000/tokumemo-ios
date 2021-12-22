@@ -14,6 +14,11 @@ final class MainViewModel {
     public var subjectName = ""
     public var teacherName = ""
     
+    // 利用規約同意者か判定
+    public var hasAgreedTermsOfUse: Bool {
+        get { return dataManager.agreementVersion == Constant.agreementVersion }
+    }
+    
     /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
     /// - Returns: 許可されているドメイン名ならtrueを返す
     public func isAllowedDomainCheck() -> Bool {

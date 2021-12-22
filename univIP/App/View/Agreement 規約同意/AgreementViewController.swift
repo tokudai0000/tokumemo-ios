@@ -28,11 +28,13 @@ final class AgreementViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction func termsOfServiceButton(_ sender: Any) {
+        // 利用規約
         let vc = R.storyboard.termsOfService.termsOfService()!
         present(vc, animated: true, completion: nil)
     }
     
     @IBAction func privacyPolicyButton(_ sender: Any) {
+        // プライバシーポリシー
         let vc = R.storyboard.privacyPolicy.privacyPolicy()!
         present(vc, animated: true, completion: nil)
     }
@@ -42,4 +44,5 @@ final class AgreementViewController: UIViewController {
         dataManager.agreementVersion = Constant.agreementVersion
         dismiss(animated: true, completion: nil)
     }
+    
 }
