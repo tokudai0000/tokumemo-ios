@@ -36,9 +36,9 @@ final class MainViewController: UIViewController {
         }
         
         // チュートリアルを完了したか判定
-        if dataManager.shouldEndedTutorial {
+        if !dataManager.isFinishedTutorial {
             // 完了していない場合、チュートリアルを表示
-            // チュートリアル->Menuカスタマイズ画面->パスワード入力画面を出す
+            // ウォークスルーチュートリアル -> スポットライトチュートリアル
             tutorial()
         }
         webView.uiDelegate = self
@@ -58,10 +58,11 @@ final class MainViewController: UIViewController {
     
     @IBAction func showServiceListsButton(_ sender: Any) {
         let vc = R.storyboard.menu.menuViewController()!
+        vc.delegate = self
         // アニメーションは表示しない
         // トクメモはデザインよりもシンプル、速さを求める(Menuは頻繁に使用すると想定する)
         present(vc, animated: false, completion: nil)
-        vc.delegate = self
+    
     }
     
     
@@ -73,12 +74,12 @@ final class MainViewController: UIViewController {
         case password
         case aboutThisApp
     }
-    public func showModalView(type: ModalViewType){
+    public func showModalView(type: ModalViewType) {
         switch type {
             case .syllabus:
                 let vc = R.storyboard.syllabus.syllabusViewController()!
-                present(vc, animated: true, completion: nil)
                 vc.delegate = self
+                present(vc, animated: true, completion: nil)
                 
             case .cellSort:
                 let vc = R.storyboard.cellSort.cellSort()!
@@ -90,13 +91,15 @@ final class MainViewController: UIViewController {
                 
             case .password:
                 let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-                present(vc, animated: true, completion: nil)
                 vc.delegate = self
+                present(vc, animated: true, completion: nil)
+                
                 
             case .aboutThisApp:
                 let vc = R.storyboard.aboutThisApp.aboutThisApp()!
                 present(vc, animated: true, completion: nil)
         }
+        
     }
     
     /// シラバス検索ボタンを押された際
@@ -157,7 +160,7 @@ extension MainViewController: WKNavigationDelegate {
         dataManager.displayUrlString = url.absoluteString
         
         // 読み込み中のURL(ドメイン)が許可されたドメインは判定
-        if !viewModel.isAllowedDomainCheck() {
+        if !viewModel.isAllowedDomainCheck(url) {
             // 許可外のURLが来た場合は、Safariで開く
             UIApplication.shared.open(url)
             decisionHandler(.cancel)
@@ -202,12 +205,10 @@ extension MainViewController: WKNavigationDelegate {
         // outlook(メール)へのログイン画面
         if viewModel.isJudgeUrl(type: .outlookLogin) {
             // cアカウントを登録していなければ自動ログインは効果がないため
-//            if dataManager. {
             // 自動ログインを行う
             webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-//            }
         }
         
         // 徳島大学キャリアセンター室
@@ -222,7 +223,7 @@ extension MainViewController: WKNavigationDelegate {
         webViewGoBackButton.alpha = webView.canGoBack ? 1.0 : 0.4
         webViewGoForwardButton.isEnabled = webView.canGoForward
         webViewGoForwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
-    
+        
     }
     
     

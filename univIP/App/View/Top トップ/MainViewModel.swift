@@ -14,6 +14,9 @@ final class MainViewModel {
     public var subjectName = ""
     public var teacherName = ""
     
+    // JavaScriptを実行するかどうか
+    public var isExecuteJavascript = false
+    
     // 利用規約同意者か判定
     public var hasAgreedTermsOfUse: Bool {
         get { return dataManager.agreementVersion == Constant.agreementVersion }
@@ -21,18 +24,16 @@ final class MainViewModel {
     
     /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
     /// - Returns: 許可されているドメイン名ならtrueを返す
-    public func isAllowedDomainCheck() -> Bool {
+    public func isAllowedDomainCheck(_ url: URL) -> Bool {
         
-        guard let url = URL(string: dataManager.displayUrlString),
-              let hostDomain = url.host else {
+        guard let hostDomain = url.host else {
+                  AKLog(level: .ERROR, message: "[Domain取得エラー] \n displayUrlString:\(dataManager.displayUrlString)")
                   return false
-//                  AKLog(level: .FATAL, message: dataManager.displayUrlString)
-//                  AKLog(level: .FATAL, message: url.host)
-//                  fatalError()
               }
         
-        for allowedUrl in Constant.allowedDomains {
-            if hostDomain.contains(allowedUrl) {
+        for domainString in Constant.allowedDomains {
+            if hostDomain.contains(domainString) {
+                // 許可されたdomainと一致している場合
                 return true
             }
         }
@@ -52,7 +53,7 @@ final class MainViewModel {
     /// 読み込み中のURLとisJudgeTypeが同じか、JavaScriptを動かす必要があるかを判定する
     /// - Parameter type:判定させたいパラメータ
     /// - Returns: 判定結果
-    public func isJudgeUrl(type: isJudgeType) -> Bool {
+    public func isJudgeUrl(type: isJudgeType, forUrl: String = DataManager.singleton.forwardDisplayUrlString) -> Bool {
     
         let forwardUrlString = dataManager.forwardDisplayUrlString
         let displayUrlString = dataManager.displayUrlString
@@ -63,10 +64,10 @@ final class MainViewModel {
             case .universityLogin:
                 // 大学サイト、ログイン画面
                 isLists.append(displayUrlString.contains(Url.universityLogin.string()))
-                // ログインに失敗した場合false
+                // ログインに失敗した場合前のURLと被るためjavascriptを動かさないためにfalseを入れる
                 isLists.append(!forwardUrlString.contains(Url.universityLogin.string()))
                 // JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
-                isLists.append(canLogedInServiece)
+                isLists.append(canLoggedInService)
                 
             case .syllabusFirstTime:
                 // シラバス
@@ -77,13 +78,15 @@ final class MainViewModel {
             case .outlookLogin:
                 // outlook(メール)
                 isLists.append(displayUrlString.contains(Url.outlookLogin.string()))
-                // ログインに失敗した場合false
+                // ログインに失敗した場合前のURLと被るためjavascriptを動かさないためにfalseを入れる
                 isLists.append(!forwardUrlString.contains(Url.outlookLogin.string()))
+                // 登録者判定
+                isLists.append(canLoggedInService)
                 
             case .tokudaiCareerCenter:
                 // 徳島大学キャリアセンター
                 isLists.append(displayUrlString == Url.tokudaiCareerCenter.string())
-                // ログインに失敗した場合false
+                // ログインに失敗した場合前のURLと被るためjavascriptを動かさないためにfalseを入れる
                 isLists.append(!forwardUrlString.contains(Url.tokudaiCareerCenter.string()))
                 
             case .questionnaireReminder:
@@ -94,7 +97,7 @@ final class MainViewModel {
                 // タイムアウト(20分無操作)
                 isLists.append(displayUrlString == Url.universityServiceTimeOut.string())
         }
-        // 配列内全てがtrueならtrueを返す
+        // 配列内全てがtrueならtrueを返す、それ以外ならfalse
         return isLists.allSatisfy{ $0 == true }
     }
     
@@ -115,5 +118,5 @@ final class MainViewModel {
     }
     
     // cアカウント、パスワードを登録しているか判定
-    private var canLogedInServiece: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    private var canLoggedInService: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
 }
