@@ -14,20 +14,23 @@ final class MainViewModel {
     public var subjectName = ""
     public var teacherName = ""
     
+    // 利用規約同意者か判定
+    public var hasAgreedTermsOfUse: Bool {
+        get { return dataManager.agreementVersion == Constant.agreementVersion }
+    }
+    
     /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
     /// - Returns: 許可されているドメイン名ならtrueを返す
-    public func isAllowedDomainCheck() -> Bool {
+    public func isAllowedDomainCheck(_ url: URL) -> Bool {
         
-        guard let url = URL(string: dataManager.displayUrlString),
-              let hostDomain = url.host else {
+        guard let hostDomain = url.host else {
+                  AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
                   return false
-//                  AKLog(level: .FATAL, message: dataManager.displayUrlString)
-//                  AKLog(level: .FATAL, message: url.host)
-//                  fatalError()
               }
         
-        for allowedUrl in Constant.allowedDomains {
-            if hostDomain.contains(allowedUrl) {
+        for domainString in Constant.allowedDomains {
+            if hostDomain.contains(domainString) {
+                // 許可されたdomainと一致している場合
                 return true
             }
         }
@@ -36,70 +39,56 @@ final class MainViewModel {
     }
     
     
-    enum isJudgeType {
+    enum JavaScriptType {
         case universityLogin
+        case questionnaireReminder
         case syllabusFirstTime
         case outlookLogin
         case tokudaiCareerCenter
-        case questionnaireReminder
-        case universityServiceTimeOut
+        case none
     }
-    /// 読み込み中のURLとisJudgeTypeが同じか、JavaScriptを動かす必要があるかを判定する
-    /// - Parameter type:判定させたいパラメータ
-    /// - Returns: 判定結果
-    public func isJudgeUrl(type: isJudgeType) -> Bool {
-    
-        let forwardUrlString = dataManager.forwardDisplayUrlString
-        let displayUrlString = dataManager.displayUrlString
+    public func anyJavaScriptExecute(_ url: URL) -> JavaScriptType {
+
+        let urlString = url.absoluteString
         
-        var isLists:[Bool] = []
-        
-        switch type {
-            case .universityLogin:
-                // 大学サイト、ログイン画面
-                isLists.append(displayUrlString.contains(Url.universityLogin.string()))
-                // ログインに失敗した場合false
-                isLists.append(!forwardUrlString.contains(Url.universityLogin.string()))
-                // JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
-                isLists.append(canLogedInServiece)
-                
-            case .syllabusFirstTime:
-                // シラバス
-                isLists.append(displayUrlString == Url.syllabus.string())
-                // 2回目からはfalse
-                isLists.append(forwardUrlString != Url.syllabus.string())
-                
-            case .outlookLogin:
-                // outlook(メール)
-                isLists.append(displayUrlString.contains(Url.outlookLogin.string()))
-                // ログインに失敗した場合false
-                isLists.append(!forwardUrlString.contains(Url.outlookLogin.string()))
-                
-            case .tokudaiCareerCenter:
-                // 徳島大学キャリアセンター
-                isLists.append(displayUrlString == Url.tokudaiCareerCenter.string())
-                // ログインに失敗した場合false
-                isLists.append(!forwardUrlString.contains(Url.tokudaiCareerCenter.string()))
-                
-            case .questionnaireReminder:
-                // アンケート催促画面(教務事務表示前に出現)
-                isLists.append(displayUrlString.contains(Url.enqueteReminder.string()))
-                
-            case .universityServiceTimeOut:
-                // タイムアウト(20分無操作)
-                isLists.append(displayUrlString == Url.universityServiceTimeOut.string())
+        // JavaScriptを実行するフラグが立っていない場合は抜ける
+        if !dataManager.isExecuteJavascript {
+            return .none
         }
-        // 配列内全てがtrueならtrueを返す
-        return isLists.allSatisfy{ $0 == true }
+        // フラグを下ろす
+        dataManager.isExecuteJavascript = false
+        // 大学サイト、ログイン画面 && JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
+        if urlString.contains(Url.universityLogin.string()) && canLoggedInService {
+            return .universityLogin
+        }
+        // シラバス
+        if urlString == Url.syllabus.string() {
+            return .syllabusFirstTime
+        }
+        // outlook(メール) && 登録者判定
+        if urlString.contains(Url.outlookLogin.string()) && canLoggedInService {
+            return .outlookLogin
+        }
+        // 徳島大学キャリアセンター
+        if urlString == Url.tokudaiCareerCenter.string() {
+            return .tokudaiCareerCenter
+        }
+        // アンケート催促画面(教務事務表示前に出現)
+        if urlString.contains(Url.enqueteReminder.string()) {
+            return .questionnaireReminder
+        }
+        
+        return .none
+        
     }
-    
     
     public func searchInitialViewUrl() -> URLRequest {
         // MARK: - 修正必要あり
         // 登録者、非登録者の条件分岐必要
         for list in dataManager.menuLists[0] {
             if list.isInitView {
-                guard let url = URL(string: list.url) else { fatalError() }
+                let urlString = list.url!         // fatalError 
+                let url = URL(string: urlString)! // fatalError
                 return URLRequest(url: url)
             }
         }
@@ -109,5 +98,5 @@ final class MainViewModel {
     }
     
     // cアカウント、パスワードを登録しているか判定
-    private var canLogedInServiece: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    private var canLoggedInService: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
 }

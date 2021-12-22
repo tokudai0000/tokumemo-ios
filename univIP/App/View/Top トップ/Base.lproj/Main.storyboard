@@ -54,7 +54,7 @@
                                                             <imageReference key="image" image="arrow.left" catalog="system" symbolScale="default"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="tappedBackButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQK-aU-r47"/>
+                                                            <action selector="webViewGoBackButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rLP-v1-Iyw"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="giU-2e-I5f" userLabel="Go Forward Button">
@@ -68,7 +68,7 @@
                                                             <imageReference key="image" image="arrow.right" catalog="system" symbolScale="default"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="tappedForwardButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0cz-4q-92S"/>
+                                                            <action selector="webViewGoForwardButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pbb-2o-28O"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uM2-HP-Cfm" userLabel="None">
@@ -135,10 +135,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="goBackButton" destination="IUH-6M-2c4" id="2oZ-Hs-zfb"/>
-                        <outlet property="goForwardButton" destination="giU-2e-I5f" id="EKD-iX-vTS"/>
                         <outlet property="showServiceListsButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
                         <outlet property="webView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
+                        <outlet property="webViewGoBackButton" destination="IUH-6M-2c4" id="efv-nw-gl7"/>
+                        <outlet property="webViewGoForwardButton" destination="giU-2e-I5f" id="HCe-TY-jjJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

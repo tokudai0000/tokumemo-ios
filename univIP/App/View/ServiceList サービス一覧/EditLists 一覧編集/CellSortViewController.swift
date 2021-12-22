@@ -83,10 +83,7 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let todo = dataManager.menuLists[sourceIndexPath.section][sourceIndexPath.row]
-        dataManager.menuLists[sourceIndexPath.section].remove(at: sourceIndexPath.row)
-        dataManager.menuLists[sourceIndexPath.section].insert(todo, at: destinationIndexPath.row)
-        dataManager.serviceLists = dataManager.menuLists[0]
+        dataManager.changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
     }
     
     /// セルの高さ
@@ -98,8 +95,7 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
-            dataManager.menuLists[0][indexPath.row].isDisplay = true
-            dataManager.serviceLists = dataManager.menuLists[0]
+            dataManager.changeContentsMenuLists(row: indexPath.row, isDisplay: true)
         }
         
         if !tableView.isEditing {
@@ -109,8 +105,7 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        dataManager.menuLists[indexPath.section][indexPath.row].isDisplay = false
-        dataManager.serviceLists = dataManager.menuLists[0]
+        dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
     }
 }
 
@@ -128,8 +123,7 @@ extension CellSortViewController: UITextFieldDelegate {
             if textField.isEmpty { return }
             
             if let text = textField[0].text {
-                DataManager.singleton.menuLists[0][indexPath].title = text
-                DataManager.singleton.serviceLists = DataManager.singleton.menuLists[0]
+                self.dataManager.changeContentsMenuLists(row: indexPath, title: text)
             }
             self.tableView.reloadData()
         })

@@ -19,7 +19,7 @@ final class TermsOfServiceViewController: UIViewController {
         
         // 利用規約読み込み
         let filePath = R.file.termsOfServiceRtf()!
-        textView.attributedText = Common.rtfFileLoad(filePath)
+        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
     

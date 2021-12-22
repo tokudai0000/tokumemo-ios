@@ -55,9 +55,10 @@ final class SyllabusViewController: BaseViewController {
         if let delegate = delegate {
             delegate.refreshSyllabus(subjectName: subjectText,
                                      teacherName: teacherText)
-            dataManager.displayUrlString = "" // MARK: - HACK だいぶ無理矢理
+//            dataManager.displayUrlString = "" // MARK: - HACK だいぶ無理矢理
             dismiss(animated: true, completion: nil)
         }
+        // flag 
     }
     
     @IBAction func dissmissButton(_ sender: Any) {

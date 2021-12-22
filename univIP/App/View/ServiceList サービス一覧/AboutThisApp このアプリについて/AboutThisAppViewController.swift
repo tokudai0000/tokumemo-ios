@@ -20,7 +20,7 @@ final class AboutThisAppViewController: UIViewController {
         
         // このアプリについて内容の読み込み
         let filePath = R.file.aboutThisAppRtf()!
-        textView.attributedText = Common.rtfFileLoad(filePath)
+        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
     

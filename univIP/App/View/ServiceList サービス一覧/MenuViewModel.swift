@@ -14,42 +14,6 @@ final class MenuViewModel {
     
     
     // MARK: public
-    public func initialBootProcess() {
-        
-        // 2回目以降は、読み込む必要がない
-        if !dataManager.menuLists[0].isEmpty {
-            return
-        }
-        
-        var modelLists = Constant.initServiceLists
-        let savingLists = dataManager.serviceLists
-        var updateForLists:[Constant.Menu] = []
-        
-        if savingLists.isEmpty {
-            dataManager.menuLists[0].append(contentsOf: Constant.initServiceLists)
-            dataManager.menuLists[1].append(contentsOf: Constant.initSettingLists)
-            dataManager.serviceLists = dataManager.menuLists[0]
-            return
-        }
-        
-        /// 並び順、名前、表示　を引き継ぐ
-        for oldList in savingLists { // 並び順を保持する
-            if let index = modelLists.firstIndex(where: {$0.type == oldList.type}) {
-                modelLists[index].title = oldList.title             // ユーザーが指定した名前
-                modelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
-                modelLists[index].isInitView = oldList.isInitView // ユーザーが指定した初期画面
-                updateForLists.append(modelLists[index])
-                modelLists.remove(at: index)
-            }
-        }
-        
-        // 新規実装があれば通る
-        updateForLists.append(contentsOf: modelLists)
-        
-        dataManager.menuLists[0].append(contentsOf: updateForLists)
-        dataManager.menuLists[1].append(contentsOf: Constant.initSettingLists)
-        dataManager.serviceLists = dataManager.menuLists[0]
-    }
     
     public func createCurrentTermPerformanceUrl() -> URLRequest {
         var year = Calendar.current.component(.year, from: Date())
