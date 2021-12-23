@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import Gecco
 import EAIntroView
 
 final class MainViewController: UIViewController {
@@ -20,7 +21,7 @@ final class MainViewController: UIViewController {
     
     private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
-    
+    private var spotlightViewController: SpotlightViewController!
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -39,8 +40,10 @@ final class MainViewController: UIViewController {
         if !dataManager.isFinishedTutorial {
             // 完了していない場合、チュートリアルを表示
             // ウォークスルーチュートリアル -> スポットライトチュートリアル
-            tutorial()
+//            tutorial()
         }
+        tutorialSpotlight()
+        
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
@@ -49,7 +52,8 @@ final class MainViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction func webViewGoBackButton(_ sender: Any) {
-        webView.goBack()
+        tutorialSpotlight()
+//        webView.goBack()
     }
     
     @IBAction func webViewGoForwardButton(_ sender: Any) {
@@ -139,6 +143,24 @@ final class MainViewController: UIViewController {
         introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
         introView?.backgroundColor = UIColor(named: R.color.tokumemoColor.name)
         introView?.show(in: self.view, animateDuration: 0)
+    }
+    
+    private func tutorialSpotlight() {
+        let spotlightViewController = TutorialSpotlightViewController()
+        present(spotlightViewController, animated: true, completion: nil)
+        spotlightViewController.spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: self.view.frame.width - 35, y: self.view.frame.height - 25),
+                                                                           size: CGSize(width: showServiceListsButton.frame.width + 20, height: showServiceListsButton.frame.height + 20),
+                                                                           cornerRadius: 50))
+        let label = UILabel()
+        label.text = "ここからショートカット機能を利用できます"
+        //labelの設定
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.frame = CGRect(x: self.view.frame.width - 170, y: self.view.frame.height - 120, width: 170, height: 60)
+        spotlightViewController.spotlightView.addSubview(label)
+        
     }
     
 }
