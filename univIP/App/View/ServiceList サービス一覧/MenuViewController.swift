@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Gecco
 import FirebaseAnalytics
 
 final class MenuViewController: UIViewController {
@@ -30,11 +31,31 @@ final class MenuViewController: UIViewController {
         
 //        viewModel.initialBootProcess()
         self.tableView.reloadData()
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !dataManager.isFinishedTutorial {
+            tutorialSpotlight()
+        }
+    }
+    
+
     // これだとcellをタップしても呼ばれてしまう **後日修正する**
     //    @objc func viewTap(_ sender: UITapGestureRecognizer) {
     //        dismiss(animated: false, completion: nil)
     //    }
+    
+    private func tutorialSpotlight() {
+        let spotlightViewController = TutorialSpotlightMenuViewController()
+        let pos1 = tableView.convert(tableView.cellForRow(at: IndexPath(row: 0, section: 0))!.frame, to: self.view)
+        let pos2 = tableView.convert(tableView.cellForRow(at: IndexPath(row: 1, section: 0))!.frame, to: self.view)
+        spotlightViewController.uiLabels_frames.append(pos1)
+        spotlightViewController.uiLabels_frames.append(pos2)
+        present(spotlightViewController, animated: true, completion: nil)
+    }
 }
 
 

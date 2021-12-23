@@ -8,7 +8,7 @@
 import UIKit
 import Gecco
 
-class TutorialSpotlightViewController: SpotlightViewController, SpotlightViewControllerDelegate {
+class TutorialSpotlightMainViewController: SpotlightViewController, SpotlightViewControllerDelegate {
     
     //各UILabelの座標データ
     var uiLabels_frames = [CGRect()]

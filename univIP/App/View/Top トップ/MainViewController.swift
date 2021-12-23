@@ -40,15 +40,18 @@ final class MainViewController: UIViewController {
         if !dataManager.isFinishedTutorial {
             // 完了していない場合、チュートリアルを表示
             // ウォークスルーチュートリアル -> スポットライトチュートリアル
-//            tutorial()
+            tutorial()
         }
-        tutorialSpotlight()
-        
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        tutorialSpotlight()
+    }
     
     // MARK: - IBAction
     @IBAction func webViewGoBackButton(_ sender: Any) {
@@ -138,6 +141,7 @@ final class MainViewController: UIViewController {
         
         //ここでページを追加
         let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
+        introView?.delegate = self
         
         //スキップボタン
         introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
@@ -146,8 +150,10 @@ final class MainViewController: UIViewController {
     }
     
     private func tutorialSpotlight() {
-        let spotlightViewController = TutorialSpotlightViewController()
+        let spotlightViewController = TutorialSpotlightMainViewController()
         present(spotlightViewController, animated: true, completion: nil)
+        
+        print(showServiceListsButton.convert(showServiceListsButton.frame, to: self.view))
         spotlightViewController.spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: self.view.frame.width - 35, y: self.view.frame.height - 25),
                                                                            size: CGSize(width: showServiceListsButton.frame.width + 20, height: showServiceListsButton.frame.height + 20),
                                                                            cornerRadius: 50))
@@ -165,6 +171,12 @@ final class MainViewController: UIViewController {
     
 }
 
+extension MainViewController: EAIntroDelegate {
+    // チュートリアルが終了したら呼ばれる
+    func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
+        tutorialSpotlight()
+    }
+}
 
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {
