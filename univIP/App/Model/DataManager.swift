@@ -154,10 +154,10 @@ final class DataManager {
     }
     
     // チュートリアルを終了したかのフラグ
-    private let KEY_isFinishedTutorial = "KEY_isFinishedTutorial"
-    public var isFinishedTutorial: Bool {
-        get { return getUserDefaultsBool(key: KEY_isFinishedTutorial) }
-        set(v) { setUserDefaultsBool(key: KEY_isFinishedTutorial, value: v) }
+    private let KEY_isFinishedMainTutorial = "KEY_isFinishedMainTutorial"
+    public var isFinishedMainTutorial: Bool {
+        get { return getUserDefaultsBool(key: KEY_isFinishedMainTutorial) }
+        set(v) { setUserDefaultsBool(key: KEY_isFinishedMainTutorial, value: v) }
     }
     
     // password入力催促のフラグ(falseの時passwordSettingViewが出てくる)

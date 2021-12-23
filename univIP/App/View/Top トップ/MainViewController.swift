@@ -27,36 +27,41 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // **DEBUGでfalseにしている**
+        dataManager.isFinishedMainTutorial = false
+        
         refreshWebLoad()
         
-        // 利用規約同意者か判定
-        if !viewModel.hasAgreedTermsOfUse {
-            // 現在の規約バージョンに同意していない場合
-            let vc = R.storyboard.agreement.agreementViewController()!
-            present(vc, animated: false, completion: nil)
-        }
-        
-        // チュートリアルを完了したか判定
-        if !dataManager.isFinishedTutorial {
-            // 完了していない場合、チュートリアルを表示
-            // ウォークスルーチュートリアル -> スポットライトチュートリアル
-            tutorial()
-        }
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-//        tutorialSpotlight()
+        // 利用規約同意者か判定
+        if viewModel.hasAgreedTermsOfUse {
+            // チュートリアルを完了したか判定(すでに利用者が40名いるため、初回起動時ではダメ)
+            if !dataManager.isFinishedMainTutorial {
+                // 完了していない場合、チュートリアルを表示
+                // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
+                walkThroughTutorial()
+                // チュートリアル完了とする(以降チュートリアルを表示しない)
+                dataManager.isFinishedMainTutorial = true
+            }
+
+        } else {
+            // 利用規約同意画面を表示させる
+            let vc = R.storyboard.agreement.agreementViewController()!
+            present(vc, animated: false, completion: nil)
+        }
+        
     }
     
     // MARK: - IBAction
     @IBAction func webViewGoBackButton(_ sender: Any) {
-        tutorialSpotlight()
-//        webView.goBack()
+        webView.goBack()
     }
     
     @IBAction func webViewGoForwardButton(_ sender: Any) {
@@ -128,7 +133,8 @@ final class MainViewController: UIViewController {
         webView.load(viewModel.searchInitialViewUrl())
     }
     
-    private func tutorial() {
+    // ウォークスルーチュートリアル、3枚の画像を表示する
+    private func walkThroughTutorial() {
         
         let page1 = EAIntroPage()
         page1.bgImage = UIImage(named: R.image.tutorialImage1.name)
@@ -139,34 +145,19 @@ final class MainViewController: UIViewController {
         let page3 = EAIntroPage()
         page3.bgImage = UIImage(named: R.image.tutorialImage3.name)
         
-        //ここでページを追加
         let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
         introView?.delegate = self
-        
-        //スキップボタン
         introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
         introView?.backgroundColor = UIColor(named: R.color.tokumemoColor.name)
         introView?.show(in: self.view, animateDuration: 0)
+        
     }
     
     private func tutorialSpotlight() {
         let spotlightViewController = TutorialSpotlightMainViewController()
+        // スポットする座標を渡す
+        spotlightViewController.uiLabels_frames.append(showServiceListsButton.convert(showServiceListsButton.frame, to: self.view))
         present(spotlightViewController, animated: true, completion: nil)
-        
-        print(showServiceListsButton.convert(showServiceListsButton.frame, to: self.view))
-        spotlightViewController.spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: self.view.frame.width - 35, y: self.view.frame.height - 25),
-                                                                           size: CGSize(width: showServiceListsButton.frame.width + 20, height: showServiceListsButton.frame.height + 20),
-                                                                           cornerRadius: 50))
-        let label = UILabel()
-        label.text = "ここからショートカット機能を利用できます"
-        //labelの設定
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.frame = CGRect(x: self.view.frame.width - 170, y: self.view.frame.height - 120, width: 170, height: 60)
-        spotlightViewController.spotlightView.addSubview(label)
-        
     }
     
 }

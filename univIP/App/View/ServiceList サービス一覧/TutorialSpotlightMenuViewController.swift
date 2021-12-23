@@ -7,7 +7,7 @@
 
 import Gecco
 
-class TutorialSpotlightMenuViewController: SpotlightViewController {
+final class TutorialSpotlightMenuViewController: SpotlightViewController {
     
     //各UILabelの座標データ
     public var uiLabels_frames:[CGRect] = []
@@ -18,7 +18,7 @@ class TutorialSpotlightMenuViewController: SpotlightViewController {
     private let screenSize = UIScreen.main.bounds.size
     
     private var updateIndex = 0
-    
+    private let dataManager = DataManager.singleton
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,9 +76,7 @@ extension TutorialSpotlightMenuViewController: SpotlightViewControllerDelegate {
     //画面タップ時
     func spotlightViewControllerTapped(_ viewController: SpotlightViewController, tappedSpotlight: SpotlightType?) {
         if updateIndex == 2 {
-            uiLabels_frames.removeAll()
-            
-            //            DataManager.singleton.isFinishedTutorial = true
+            dataManager.isFinishedMainTutorial = true
             spotlightView.disappear()
             dismiss(animated: true, completion: nil)
             return
