@@ -70,7 +70,7 @@ final class Constant {
              url: nil,
              canInitView: false),
         
-        Menu(title: "並び替え・編集",
+        Menu(title: "カスタマイズ",
              id: .cellSort,
              url: nil,
              canInitView: false),
@@ -93,7 +93,7 @@ final class Constant {
         
         Menu(title: "開館カレンダー",
              id: .libraryCalendar,
-             url: Url.libraryCalendarMain.string(),
+             url: nil,
              canInitView: false),
         
         Menu(title: "シラバス",
@@ -101,7 +101,7 @@ final class Constant {
              url: Url.syllabus.string(),
              canInitView: true),
         
-        Menu(title: "今年の成績表",
+        Menu(title: "今期の成績",
              id: .currentTermPerformance,
              url: Url.currentTermPerformance.string(),
              canInitView: false),
@@ -121,51 +121,45 @@ final class Constant {
              url: nil,
              canInitView: false),
         
-        Menu(title: "教務事務システムPC版",
+        Menu(title: "教務事務システム[PC]",
              id: .courseManagementHomePC,
              url: Url.courseManagementPC.string(),
              isDisplay: false,
              canInitView: true),
         
-        Menu(title: "マナバMobile版",
+        Menu(title: "マナバ[Mobile]",
              id: .manabaHomeMobile,
              url: Url.manabaMobile.string(),
              isDisplay: false,
              canInitView: true),
         
-        Menu(title: "[図書館常三島]WebサイトPC版",
+        Menu(title: "図書Web[常三島]",
              id: .libraryWebHomePC,
              url: Url.libraryHomePageMainPC.string(),
              isDisplay: false,
              canInitView: true),
         
-        Menu(title: "[図書館蔵本]WebサイトPC版",
+        Menu(title: "図書Web[蔵本]",
              id: .libraryWebHomePC,
              url: Url.libraryHomePageMainPC.string(),
              isDisplay: false,
              canInitView: true),
         
-        Menu(title: "[図書館]WebサイトMobile版",
+        Menu(title: "図書Web[Mobile]",
              id: .libraryWebHomeMobile,
              url: Url.libraryHomeMobile.string(),
              isDisplay: false,
              canInitView: true),
         
-        Menu(title: "[図書館]MyPage",
+        Menu(title: "図書MyPage",
              id: .libraryMyPage,
              url: Url.libraryMyPage.string(),
              isDisplay: false,
              canInitView: true),
         
-        Menu(title: "[図書館]本購入リクエスト",
+        Menu(title: "図書本購入リクエスト",
              id: .libraryBookPurchaseRequest,
              url: Url.libraryBookPurchaseRequest.string(),
-             isDisplay: false,
-             canInitView: false),
-        
-        Menu(title: "[図書館蔵本]開館カレンダー",
-             id: .libraryCalendarKura,
-             url: Url.libraryCalendarKura.string(),
              isDisplay: false,
              canInitView: false),
         
@@ -198,12 +192,6 @@ final class Constant {
              url: Url.tokudaiCareerCenter.string(),
              isDisplay: false,
              canInitView: true),
-        
-        Menu(title: "履修登録",
-             id: .courseRegistration,
-             url: Url.courseRegistration.string(),
-             isDisplay: false,
-             canInitView: false),
         
         Menu(title: "システムサービス一覧",
              id: .systemServiceList,

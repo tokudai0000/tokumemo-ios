@@ -20,24 +20,37 @@ final class CellSortViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // 編集モードの状態で表示
+        editMode(isEditing: true)
     }
     
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
-        let editing = !tableView.isEditing
-        tableView.setEditing(editing, animated: true)
-        tableView.allowsMultipleSelectionDuringEditing = editing
+        editMode(isEditing: !tableView.isEditing)
+    }
+    
+    @IBAction func dissmissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+        
+        Analytics.logEvent("allCellList", parameters:  [
+            AnalyticsParameterItemName: "\(dataManager.menuLists[0])",
+        ])
+    }
+    
+    private func editMode(isEditing: Bool) {
+        cellSort()
+        tableView.setEditing(isEditing, animated: true)
+        tableView.allowsMultipleSelectionDuringEditing = isEditing
         tableView.reloadData()
         
-        if editing {
+        if isEditing {
             editButton.setTitle("完了", for: .normal)
         } else {
             editButton.setTitle("編集", for: .normal)
         }
         
-        if editing {
+        if isEditing {
             for i in 0 ..< dataManager.menuLists.count {
                 // display=true のセルを選択状態にする
                 if dataManager.menuLists[i].isDisplay {
@@ -47,12 +60,18 @@ final class CellSortViewController: UIViewController {
         }
     }
     
-    @IBAction func dissmissButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-        
-        Analytics.logEvent("allCellList", parameters:  [
-            AnalyticsParameterItemName: "\(dataManager.menuLists[0])",
-        ])
+    private func cellSort() {
+        var oldLists:[Constant.Menu] = dataManager.menuLists
+        var newLists:[Constant.Menu] = []
+        var counter = 0
+        for i in 0..<dataManager.menuLists.count {
+            if dataManager.menuLists[i].isDisplay {
+                newLists.append(dataManager.menuLists[i])
+                oldLists.remove(at: i - counter)
+                counter += 1
+            }
+        }
+        dataManager.menuLists = newLists + oldLists
     }
 }
 
@@ -88,7 +107,14 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        if tableView.isEditing {
+            return 44
+        }
+        if dataManager.menuLists[indexPath.row].isDisplay {
+            return 44
+        }else{
+            return 0
+        }
     }
     
     /// セルを選択した時のイベント

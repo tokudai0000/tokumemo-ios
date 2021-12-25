@@ -101,14 +101,15 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         
         self.dismiss(animated: false, completion: {
             switch self.dataManager.menuLists[indexPath[1]].id {
-                case .libraryCalendar:                   // [図書館常三島]開館カレンダー
-                    if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
-                        delegate.webView.load(url)
-                    }
-                case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
-                    if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
-                        delegate.webView.load(url)
-                    }
+                case .libraryCalendar:                   // [図書館]開館カレンダー
+                    delegate.showModalView(type: .libraryCalendar)
+//                    if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
+//                        delegate.webView.load(url)
+//                    }
+//                case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
+//                    if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
+//                        delegate.webView.load(url)
+//                    }
                     
                 case .currentTermPerformance:            // 今年の成績
                     delegate.webView.load(self.viewModel.createCurrentTermPerformanceUrl())
