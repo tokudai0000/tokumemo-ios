@@ -42,7 +42,7 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if !viewModel.hasAgreedTermsOfUse {
-            // 規約 未同意者なら
+            // 規約 未同意者の場合
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
@@ -51,7 +51,7 @@ final class MainViewController: UIViewController {
         // ////チュートリアル////
         // すでに利用者が40名いるため、初回起動時処理では行わない
         if !dataManager.isFinishedMainTutorial {
-            // 未完了なら
+            // 未完了の場合
             // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
             walkThroughTutorial()
             // チュートリアル完了とする(以降チュートリアルを表示しない)
@@ -108,8 +108,10 @@ final class MainViewController: UIViewController {
                     style: UIAlertAction.Style.default,
                     handler: { action in
                         // 常三島のカレンダーURLを取得後、webView読み込み
-                        if let url = self.viewModel.fetchLibraryCalendarUrl(urlString: Url.libraryHomePageMainPC.string()) {
+                        if let url = self.viewModel.fetchLibraryCalendarUrl(type: .main) {
                             self.webView.load(url)
+                        }else{
+                            AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
                         }
                     })
                 
@@ -118,8 +120,10 @@ final class MainViewController: UIViewController {
                     style: UIAlertAction.Style.default,
                     handler: { action in
                         // 蔵本のカレンダーURLを取得後、webView読み込み
-                        if let url = self.viewModel.fetchLibraryCalendarUrl(urlString: Url.libraryHomePageKuraPC.string()) {
+                        if let url = self.viewModel.fetchLibraryCalendarUrl(type: .kura) {
                             self.webView.load(url)
+                        }else{
+                            AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
                         }
                     })
                 
