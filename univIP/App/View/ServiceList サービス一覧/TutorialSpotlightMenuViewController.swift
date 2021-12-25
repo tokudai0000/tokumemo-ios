@@ -12,13 +12,10 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
     //各UILabelの座標データ
     public var uiLabels_frames:[CGRect] = []
     
-    
     private let label = UILabel()
-    //画面サイズ
-    private let screenSize = UIScreen.main.bounds.size
+    private let dataManager = DataManager.singleton
     
     private var updateIndex = 0
-    private let dataManager = DataManager.singleton
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +36,7 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.frame = CGRect(x: 0, y: uiLabels_frames[updateIndex].origin.y + uiLabels_frames[updateIndex].height + 20, width: screenSize.width, height: 60)
+        label.frame = CGRect(x: 0, y: uiLabels_frames[updateIndex].origin.y + uiLabels_frames[updateIndex].height + 20, width: uiLabels_frames[updateIndex].width, height: 60)
         self.view.addSubview(label)
     }
     
@@ -63,7 +60,6 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
     }
     
 }
-
 
 
 extension TutorialSpotlightMenuViewController: SpotlightViewControllerDelegate {

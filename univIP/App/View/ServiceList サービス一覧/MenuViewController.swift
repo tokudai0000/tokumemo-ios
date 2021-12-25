@@ -37,9 +37,9 @@ final class MenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !dataManager.isFinishedMainTutorial {
+        if !dataManager.isFinishedMenuTutorial {
             tutorialSpotlight()
-//            dataManager.isFinishedMainTutorial = true
+            dataManager.isFinishedMenuTutorial = true
         }
     }
     

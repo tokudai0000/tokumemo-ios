@@ -160,6 +160,13 @@ final class DataManager {
         set(v) { setUserDefaultsBool(key: KEY_isFinishedMainTutorial, value: v) }
     }
     
+    // チュートリアルを終了したかのフラグ
+    private let KEY_isFinishedMenuTutorial = "KEY_isFinishedMenuTutorial"
+    public var isFinishedMenuTutorial: Bool {
+        get { return getUserDefaultsBool(key: KEY_isFinishedMenuTutorial) }
+        set(v) { setUserDefaultsBool(key: KEY_isFinishedMenuTutorial, value: v) }
+    }
+    
     // password入力催促のフラグ(falseの時passwordSettingViewが出てくる)
     private let KEY_shouldInputedPassword = "KEY_shouldInputedPassword"
     public var shouldInputedPassword: Bool {

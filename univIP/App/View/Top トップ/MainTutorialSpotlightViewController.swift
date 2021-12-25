@@ -7,12 +7,11 @@
 
 import Gecco
 
-final class TutorialSpotlightMainViewController: SpotlightViewController {
+final class MainTutorialSpotlightViewController: SpotlightViewController {
     
     //各UILabelの座標データ
-    var uiLabels_frames:[CGRect] = []
-    //画面サイズ
-    let screenSize = UIScreen.main.bounds.size
+    public var uiLabels_frames:[CGRect] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +39,7 @@ final class TutorialSpotlightMainViewController: SpotlightViewController {
     
 }
 
-extension TutorialSpotlightMainViewController: SpotlightViewControllerDelegate {
+extension MainTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     
     //画面が表示される時
     func spotlightViewControllerWillPresent(_ viewController: SpotlightViewController, animated: Bool) {
@@ -57,8 +56,6 @@ extension TutorialSpotlightMainViewController: SpotlightViewControllerDelegate {
     func spotlightViewControllerTapped(_ viewController: SpotlightViewController, tappedSpotlight: SpotlightType?) {
         spotlightView.disappear()
         self.dismiss(animated: true, completion: nil)
-//        let vc = R.storyboard.menu.menuViewController()!
-//        self.present(vc, animated: true, completion: nil)
     }
     
 }

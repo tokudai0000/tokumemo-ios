@@ -29,6 +29,7 @@ final class MainViewController: UIViewController {
         
         // **DEBUGでfalseにしている**
         dataManager.isFinishedMainTutorial = false
+        dataManager.isFinishedMenuTutorial = false
         
         refreshWebLoad()
         
@@ -49,6 +50,11 @@ final class MainViewController: UIViewController {
                 walkThroughTutorial()
                 // チュートリアル完了とする(以降チュートリアルを表示しない)
                 dataManager.isFinishedMainTutorial = true
+            } else {
+                if !dataManager.isFinishedMenuTutorial {
+                    let vc = R.storyboard.menu.menuViewController()!
+                    self.present(vc, animated: true, completion: nil)
+                }
             }
 
         } else {
@@ -154,9 +160,12 @@ final class MainViewController: UIViewController {
     }
     
     private func tutorialSpotlight() {
-        let spotlightViewController = TutorialSpotlightMainViewController()
+        let spotlightViewController = MainTutorialSpotlightViewController()
+        // 絶対座標(画面左上X=0,Y=0からの座標)
+        let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.frame, to: self.view)
+        print(showServiceButtonFrame)
         // スポットする座標を渡す
-        spotlightViewController.uiLabels_frames.append(showServiceListsButton.convert(showServiceListsButton.frame, to: self.view))
+        spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
         present(spotlightViewController, animated: true, completion: nil)
     }
     

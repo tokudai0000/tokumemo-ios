@@ -49,7 +49,7 @@
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABDE75926DE585300D4B04E /* TermsOfService.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75826DE585300D4B04E /* TermsOfService.rtf */; };
-		1AD1AEB5277414B10068C7E5 /* TutorialSpotlightMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD1AEB4277414B10068C7E5 /* TutorialSpotlightMainViewController.swift */; };
+		1AD1AEB5277414B10068C7E5 /* MainTutorialSpotlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD1AEB4277414B10068C7E5 /* MainTutorialSpotlightViewController.swift */; };
 		1AD1AEB7277452300068C7E5 /* TutorialSpotlightMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD1AEB6277452300068C7E5 /* TutorialSpotlightMenuViewController.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		509381F26FAE698FBE4F53F4 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3F8BED9CAEF99CD66B615F /* Pods_univIPTests.framework */; };
@@ -124,7 +124,7 @@
 		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABDE75826DE585300D4B04E /* TermsOfService.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TermsOfService.rtf; sourceTree = "<group>"; };
-		1AD1AEB4277414B10068C7E5 /* TutorialSpotlightMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSpotlightMainViewController.swift; sourceTree = "<group>"; };
+		1AD1AEB4277414B10068C7E5 /* MainTutorialSpotlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTutorialSpotlightViewController.swift; sourceTree = "<group>"; };
 		1AD1AEB6277452300068C7E5 /* TutorialSpotlightMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSpotlightMenuViewController.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		324240FE5E6B4AEFD2C4922B /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
@@ -344,7 +344,7 @@
 		1AA056E426BD2D4100343005 /* Main メイン */ = {
 			isa = PBXGroup;
 			children = (
-				1AD1AEB4277414B10068C7E5 /* TutorialSpotlightMainViewController.swift */,
+				1AD1AEB4277414B10068C7E5 /* MainTutorialSpotlightViewController.swift */,
 				1A41EADD27290D150064CDB7 /* MainViewModel.swift */,
 				1AA056D026BD2AE100343005 /* MainViewController.swift */,
 				1AA056D226BD2AE100343005 /* Main.storyboard */,
@@ -740,7 +740,7 @@
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
 				1AD1AEB7277452300068C7E5 /* TutorialSpotlightMenuViewController.swift in Sources */,
 				1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */,
-				1AD1AEB5277414B10068C7E5 /* TutorialSpotlightMainViewController.swift in Sources */,
+				1AD1AEB5277414B10068C7E5 /* MainTutorialSpotlightViewController.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1A9E0E0A273CDAE800247F94 /* R.generated.swift in Sources */,
 				1A09314E272A7DAC00B7BAED /* MenuViewModel.swift in Sources */,
