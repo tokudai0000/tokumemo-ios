@@ -21,7 +21,6 @@ final class MainViewController: UIViewController {
     
     private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
-    private var spotlightViewController: SpotlightViewController!
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -41,28 +40,29 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // 利用規約同意者か判定
-        if viewModel.hasAgreedTermsOfUse {
-            // チュートリアルを完了したか判定(すでに利用者が40名いるため、初回起動時ではダメ)
-            if !dataManager.isFinishedMainTutorial {
-                // 完了していない場合、チュートリアルを表示
-                // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
-                walkThroughTutorial()
-                // チュートリアル完了とする(以降チュートリアルを表示しない)
-                dataManager.isFinishedMainTutorial = true
-            } else {
-                if !dataManager.isFinishedMenuTutorial {
-                    let vc = R.storyboard.menu.menuViewController()!
-                    self.present(vc, animated: true, completion: nil)
-                }
-            }
-
-        } else {
-            // 利用規約同意画面を表示させる
+        if !viewModel.hasAgreedTermsOfUse {
+            // 規約 未同意者 なら
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
+            return
         }
-        
+                
+        // ////チュートリアル////
+        // すでに利用者が40名いるため、初回起動時処理では行わない
+        if !dataManager.isFinishedMainTutorial {
+            // 完了していない場合、チュートリアルを表示
+            // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
+            walkThroughTutorial()
+            // チュートリアル完了とする(以降チュートリアルを表示しない)
+            dataManager.isFinishedMainTutorial = true
+            return
+        }
+        if !dataManager.isFinishedMenuTutorial {
+            // Mainチュートリアルが終了した後、MenuViewを表示させ、Menuチュートリアルを実行する
+            let vc = R.storyboard.menu.menuViewController()!
+            self.present(vc, animated: true, completion: nil)
+        }
+
     }
     
     // MARK: - IBAction
@@ -162,7 +162,7 @@ final class MainViewController: UIViewController {
     private func tutorialSpotlight() {
         let spotlightViewController = MainTutorialSpotlightViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
-        let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.frame, to: self.view)
+        let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
         print(showServiceButtonFrame)
         // スポットする座標を渡す
         spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
