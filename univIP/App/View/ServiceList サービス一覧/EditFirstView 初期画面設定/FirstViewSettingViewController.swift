@@ -34,7 +34,7 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
         textField.inputView = pickerView
         textField.inputAccessoryView = toolbar
         
-        for item in dataManager.menuLists[0] {
+        for item in dataManager.menuLists {
             if item.isInitView {
                 textField.placeholder = item.title
             }
@@ -51,12 +51,12 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
         textField.endEditing(true)
         
         var menuLists = dataManager.menuLists
-        for i in 0..<menuLists[0].count {
+        for i in 0..<menuLists.count {
             // 選択された内容とインデックス番号を照合
-            let menuType = menuLists[0][i].id
+            let menuType = menuLists[i].id
             let pickerType = list[pickerView.selectedRow(inComponent: 0)].id
             
-            menuLists[0][i].isInitView = (menuType == pickerType)
+            menuLists[i].isInitView = (menuType == pickerType)
         }
         dataManager.menuLists = menuLists
         

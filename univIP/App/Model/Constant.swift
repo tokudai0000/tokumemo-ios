@@ -224,27 +224,4 @@ final class Constant {
              canInitView: true)
     ]
     
-    static let initSettingLists = [
-        Menu(title: "並び替え・編集",
-             id: .cellSort,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "初期画面設定",
-             id: .firstViewSetting,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "パスワード",
-             id: .password,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "このアプリについて",
-             id: .aboutThisApp,
-             url: nil,
-             canInitView: false)
-    ]
-    
-    static let sectionNum = 2
 }

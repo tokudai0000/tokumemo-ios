@@ -20,7 +20,7 @@ final class DataManager {
     private var userDefaults = UserDefaults.standard
     
     // 毎回UserDefaultsから取ってきて保存する
-    public var menuLists:[[Constant.Menu]] =  [[], []]
+    public var menuLists:[Constant.Menu] =  []
     
     // JavaScriptを実行するかどうか
     public var isExecuteJavascript = false
@@ -35,15 +35,15 @@ final class DataManager {
     public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
         
         if let title = title {
-            menuLists[0][row].title = title
+            menuLists[row].title = title
         }
         if let isDisplay = isDisplay {
-            menuLists[0][row].isDisplay = isDisplay
+            menuLists[row].isDisplay = isDisplay
         }
         if let isInitView = isInitView {
             // falseに初期化する
-            for i in 0..<menuLists[0].count { menuLists[0][i].isInitView = false }
-            menuLists[0][row].isInitView = isInitView
+            for i in 0..<menuLists.count { menuLists[i].isInitView = false }
+            menuLists[row].isInitView = isInitView
         }
         saveMenuLists()
         
@@ -55,9 +55,9 @@ final class DataManager {
     ///   - destinationRow: 挿入場所のindex
     public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
         
-        let todo = menuLists[0][sourceRow]
-        menuLists[0].remove(at: sourceRow)
-        menuLists[0].insert(todo, at: destinationRow)
+        let todo = menuLists[sourceRow]
+        menuLists.remove(at: sourceRow)
+        menuLists.insert(todo, at: destinationRow)
         saveMenuLists()
         
     }
@@ -198,14 +198,14 @@ final class DataManager {
     
     
     private let KEY_menuLists = "KEY_menuLists"
-    private func loadMenuLists() -> [[Constant.Menu]] {
+    private func loadMenuLists() -> [Constant.Menu] {
         // UserDefaultsから読み込む
         // Data -> Json -> 配列 にパースする必要がある
         let jsonDecoder = JSONDecoder()
         let data = getUserDefaultsData(key: KEY_menuLists)
         guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
             // 初回利用者は初期値を返す
-            return [Constant.initServiceLists, Constant.initSettingLists]
+            return Constant.initServiceLists
         }
         
         // アップデートごとに機能追加等があるため、更新する
@@ -227,7 +227,7 @@ final class DataManager {
         // 新規実装があれば通る
         updateForLists.append(contentsOf: newModelLists)
         
-        return [updateForLists, Constant.initSettingLists]
+        return updateForLists
     }
 
     private func saveMenuLists() {

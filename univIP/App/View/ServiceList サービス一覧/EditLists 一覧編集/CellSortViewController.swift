@@ -38,9 +38,9 @@ final class CellSortViewController: UIViewController {
         }
         
         if editing {
-            for i in 0 ..< dataManager.menuLists[0].count {
+            for i in 0 ..< dataManager.menuLists.count {
                 // display=true のセルを選択状態にする
-                if dataManager.menuLists[0][i].isDisplay {
+                if dataManager.menuLists[i].isDisplay {
                     tableView.selectRow(at: [0,i], animated: true, scrollPosition: .bottom)
                 }
             }
@@ -62,13 +62,13 @@ extension CellSortViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.menuLists[0].count
+        return dataManager.menuLists.count
     }
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.cellSort, for: indexPath)!
-        tableCell.textLabel!.text = dataManager.menuLists[0][indexPath.item].title
+        tableCell.textLabel!.text = dataManager.menuLists[indexPath.item].title
         tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
@@ -136,7 +136,7 @@ extension CellSortViewController: UITextFieldDelegate {
         popup.addAction(cancel)
         popup.addTextField(configurationHandler: {(textField:UITextField!) -> Void in
             textField.delegate = self
-            textField.placeholder = DataManager.singleton.menuLists[0][indexPath].title
+            textField.placeholder = DataManager.singleton.menuLists[indexPath].title
         })
         
         present(popup, animated: true, completion: nil)

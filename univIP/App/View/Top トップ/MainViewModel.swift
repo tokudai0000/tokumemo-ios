@@ -85,7 +85,7 @@ final class MainViewModel {
     public func searchInitialViewUrl() -> URLRequest {
         // MARK: - 修正必要あり
         // 登録者、非登録者の条件分岐必要
-        for list in dataManager.menuLists[0] {
+        for list in dataManager.menuLists {
             if list.isInitView {
                 let urlString = list.url!         // fatalError 
                 let url = URL(string: urlString)! // fatalError

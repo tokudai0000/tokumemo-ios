@@ -24,13 +24,9 @@ final class MenuViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        // viewをタップされた際の処理 **後日修正する**
-        //        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
-        //        self.view.addGestureRecognizer(tap)
+        tableView.delegate = self
         
-//        viewModel.initialBootProcess()
-        self.tableView.reloadData()
+        tableView.reloadData()
         
     }
     
@@ -46,13 +42,9 @@ final class MenuViewController: UIViewController {
         }
 
     }
+
     
-
-    // これだとcellをタップしても呼ばれてしまう **後日修正する**
-    //    @objc func viewTap(_ sender: UITapGestureRecognizer) {
-    //        dismiss(animated: false, completion: nil)
-    //    }
-
+    // MARK: - Private
     private func tutorialSpotlight() {
         let spotlightViewController = TutorialSpotlightMenuViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
@@ -73,31 +65,16 @@ final class MenuViewController: UIViewController {
 // MARK: - TableView
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - HACK
-    /// セクションの高さ
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 { return 0 }
-        return 1
-    }
-    
-    /// セクション数
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return dataManager.menuLists.count
-    }
-    
-    // セクションの背景とテキストの色を変更する
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = .gray
-    }
     
     /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.menuLists[section].count
+        return dataManager.menuLists.count
     }
     
     /// cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)!
-        tableCell.textLabel!.text = dataManager.menuLists[indexPath.section][indexPath.item].title
+        tableCell.textLabel!.text = dataManager.menuLists[indexPath.item].title
         // 「17」程度が文字が消えず、また見やすいサイズ
         tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
         return tableCell
@@ -105,10 +82,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if dataManager.menuLists[indexPath.section][indexPath.row].isDisplay {
+        if dataManager.menuLists[indexPath.row].isDisplay {
             return 44
+        }else{
+            return 0
         }
-        return 0
     }
     
     /// セルを選択した時のイベント
@@ -118,11 +96,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             AKLog(level: .ERROR, message: "[delegateエラー]")
             return
         }
-        //
+        
         dataManager.isExecuteJavascript = true
         
         self.dismiss(animated: false, completion: {
-            switch self.dataManager.menuLists[indexPath[0]][indexPath[1]].id {
+            switch self.dataManager.menuLists[indexPath[1]].id {
                 case .libraryCalendar:                   // [図書館常三島]開館カレンダー
                     if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
                         delegate.webView.load(url)
@@ -151,12 +129,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     delegate.showModalView(type: .aboutThisApp)
                     
                 default:
-                    let urlString = self.dataManager.menuLists[indexPath[0]][indexPath[1]].url! // fatalError
+                    let urlString = self.dataManager.menuLists[indexPath[1]].url! // fatalError
                     let url = URL(string: urlString)!                                      // fatalError
                     delegate.webView.load(URLRequest(url: url))
                     
             }
-            Analytics.logEvent("service\(self.dataManager.menuLists[indexPath[0]][indexPath[1]].id)", parameters: nil)
+            Analytics.logEvent("service\(self.dataManager.menuLists[indexPath[1]].id)", parameters: nil)
         })
         
         
