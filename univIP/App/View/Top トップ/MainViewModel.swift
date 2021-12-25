@@ -98,7 +98,7 @@ final class MainViewModel {
         return URLRequest(url: url)
     }
     
-    public func fetchLibraryCalenderUrl(urlString: String) -> URLRequest? {
+    public func fetchLibraryCalendarUrl(urlString: String) -> URLRequest? {
         guard let url = URL(string: urlString) else {
             fatalError()
         }

@@ -96,31 +96,28 @@ final class MainViewController: UIViewController {
     public func showModalView(type: ModalViewType) {
         switch type {
             case .libraryCalendar:
+                // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
                 var alert:UIAlertController!
                 //アラートコントローラーを作成する。
-                alert = UIAlertController(title: "確認", message: "次の画面に移動します。", preferredStyle: UIAlertController.Style.alert)
+                alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
                 
-                //「続けるボタン」のアラートアクションを作成する。
                 let alertAction = UIAlertAction(
-                    title: "蔵本",
+                    title: "常三島",
                     style: UIAlertAction.Style.default,
                     handler: { action in
-                        if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
+                        if let url = self.viewModel.fetchLibraryCalendarUrl(urlString: Url.libraryHomePageMainPC.string()) {
                             self.webView.load(url)
                         }
                     })
                 
-                
-                //「キャンセルボタン」のアラートアクションを作成する。
                 let alertAction2 = UIAlertAction(
-                    title: "常三島",
-                    style: UIAlertAction.Style.cancel,
+                    title: "蔵本",
+                    style: UIAlertAction.Style.default,
                     handler: { action in
-                        if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
+                        if let url = self.viewModel.fetchLibraryCalendarUrl(urlString: Url.libraryHomePageKuraPC.string()) {
                             self.webView.load(url)
                         }
-                    }
-                )
+                    })
                 
                 //アラートアクションを追加する。
                 alert.addAction(alertAction)
