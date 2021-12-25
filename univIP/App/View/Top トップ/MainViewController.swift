@@ -163,7 +163,6 @@ final class MainViewController: UIViewController {
         let spotlightViewController = MainTutorialSpotlightViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
         let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
-        print(showServiceButtonFrame)
         // スポットする座標を渡す
         spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
         present(spotlightViewController, animated: true, completion: nil)

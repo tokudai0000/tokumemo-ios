@@ -36,11 +36,15 @@ final class MenuViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         if !dataManager.isFinishedMenuTutorial {
+            // 完了していない場合、チュートリアルを表示
+            // スポットライトチュートリアル
             tutorialSpotlight()
+            // チュートリアル完了とする(以降チュートリアルを表示しない)
             dataManager.isFinishedMenuTutorial = true
         }
+
     }
     
 
@@ -48,13 +52,19 @@ final class MenuViewController: UIViewController {
     //    @objc func viewTap(_ sender: UITapGestureRecognizer) {
     //        dismiss(animated: false, completion: nil)
     //    }
-    
+
     private func tutorialSpotlight() {
         let spotlightViewController = TutorialSpotlightMenuViewController()
-        let pos1 = tableView.convert(tableView.cellForRow(at: IndexPath(row: 0, section: 0))!.frame, to: self.view)
-        let pos2 = tableView.convert(tableView.cellForRow(at: IndexPath(row: 1, section: 0))!.frame, to: self.view)
+        // 絶対座標(画面左上X=0,Y=0からの座標)
+        let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 0, section: 0))! // fatalError
+        let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 1, section: 0))! // fatalError
+        let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
+        let pos2 = tableView.convert(tableViewPos2.frame, to: self.view)
+        // スポットする座標を渡す
         spotlightViewController.uiLabels_frames.append(pos1)
         spotlightViewController.uiLabels_frames.append(pos2)
+        
+        spotlightViewController.delegateMenu = self
         present(spotlightViewController, animated: true, completion: nil)
     }
 }
