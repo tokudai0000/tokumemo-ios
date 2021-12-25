@@ -43,6 +43,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.6)
     - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
+  - Gecco (2.0.0)
   - GoogleAppMeasurement (8.9.1):
     - GoogleAppMeasurement/AdIdSupport (= 8.9.1)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
@@ -102,6 +103,7 @@ DEPENDENCIES:
   - EAIntroView (~> 2)
   - Firebase
   - Firebase/Analytics (~> 8)
+  - Gecco (~> 2)
   - Kanna (~> 5)
   - KeychainAccess (~> 4)
   - R.swift (~> 5)
@@ -115,6 +117,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseInstallations
+    - Gecco
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -133,6 +136,7 @@ SPEC CHECKSUMS:
   FirebaseCore: c5aab092d9c4b8efea894946166b04c9d9ef0e68
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
   FirebaseInstallations: caa7c8e0d3e2345b8829d2fa9ca1b4dfbf2fcc85
+  Gecco: 6d4225d0b58f6cf952d198a831904d50e646ec3f
   GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
@@ -143,6 +147,6 @@ SPEC CHECKSUMS:
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: b824fc7e30028ba042d53e130aeca6f5ae61b57b
+PODFILE CHECKSUM: 7f1bce6e71f808628eaf594a42d473c8c6ba0503
 
 COCOAPODS: 1.11.2

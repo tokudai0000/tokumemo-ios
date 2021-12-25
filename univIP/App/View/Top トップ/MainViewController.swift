@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import Gecco
 import EAIntroView
 
 final class MainViewController: UIViewController {
@@ -21,31 +22,48 @@ final class MainViewController: UIViewController {
     private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // **DEBUGでfalseにしている**
+        dataManager.isFinishedMainTutorial = false
+        dataManager.isFinishedMenuTutorial = false
+        
         refreshWebLoad()
         
-        // 利用規約同意者か判定
-        if !viewModel.hasAgreedTermsOfUse {
-            // 現在の規約バージョンに同意していない場合
-            let vc = R.storyboard.agreement.agreementViewController()!
-            present(vc, animated: false, completion: nil)
-        }
-        
-        // チュートリアルを完了したか判定
-        if !dataManager.isFinishedTutorial {
-            // 完了していない場合、チュートリアルを表示
-            // ウォークスルーチュートリアル -> スポットライトチュートリアル
-            tutorial()
-        }
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !viewModel.hasAgreedTermsOfUse {
+            // 規約 未同意者 なら
+            let vc = R.storyboard.agreement.agreementViewController()!
+            present(vc, animated: false, completion: nil)
+            return
+        }
+                
+        // ////チュートリアル////
+        // すでに利用者が40名いるため、初回起動時処理では行わない
+        if !dataManager.isFinishedMainTutorial {
+            // 完了していない場合、チュートリアルを表示
+            // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
+            walkThroughTutorial()
+            // チュートリアル完了とする(以降チュートリアルを表示しない)
+            dataManager.isFinishedMainTutorial = true
+            return
+        }
+        if !dataManager.isFinishedMenuTutorial {
+            // Mainチュートリアルが終了した後、MenuViewを表示させ、Menuチュートリアルを実行する
+            let vc = R.storyboard.menu.menuViewController()!
+            self.present(vc, animated: true, completion: nil)
+        }
+
+    }
     
     // MARK: - IBAction
     @IBAction func webViewGoBackButton(_ sender: Any) {
@@ -121,7 +139,8 @@ final class MainViewController: UIViewController {
         webView.load(viewModel.searchInitialViewUrl())
     }
     
-    private func tutorial() {
+    // ウォークスルーチュートリアル、3枚の画像を表示する
+    private func walkThroughTutorial() {
         
         let page1 = EAIntroPage()
         page1.bgImage = UIImage(named: R.image.tutorialImage1.name)
@@ -132,17 +151,31 @@ final class MainViewController: UIViewController {
         let page3 = EAIntroPage()
         page3.bgImage = UIImage(named: R.image.tutorialImage3.name)
         
-        //ここでページを追加
         let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
-        
-        //スキップボタン
+        introView?.delegate = self
         introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
         introView?.backgroundColor = UIColor(named: R.color.tokumemoColor.name)
         introView?.show(in: self.view, animateDuration: 0)
+        
+    }
+    
+    private func tutorialSpotlight() {
+        let spotlightViewController = MainTutorialSpotlightViewController()
+        // 絶対座標(画面左上X=0,Y=0からの座標)
+        let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
+        // スポットする座標を渡す
+        spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
+        present(spotlightViewController, animated: true, completion: nil)
     }
     
 }
 
+extension MainViewController: EAIntroDelegate {
+    // チュートリアルが終了したら呼ばれる
+    func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
+        tutorialSpotlight()
+    }
+}
 
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {

@@ -11,6 +11,7 @@ target 'univIP' do
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
   pod 'EAIntroView' , '~> 2'
+  pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
   
   target  'univIPTests' do
