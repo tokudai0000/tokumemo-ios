@@ -48,8 +48,8 @@ final class MenuViewController: UIViewController {
     private func tutorialSpotlight() {
         let spotlightViewController = TutorialSpotlightMenuViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
-        let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 0, section: 0))! // fatalError
-        let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 1, section: 0))! // fatalError
+        let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 7, section: 0))! // fatalError
+        let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 8, section: 0))! // fatalError
         let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
         let pos2 = tableView.convert(tableViewPos2.frame, to: self.view)
         // スポットする座標を渡す

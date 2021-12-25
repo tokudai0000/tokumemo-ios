@@ -65,16 +65,6 @@ final class Constant {
     // サービスCell初期状態（更新確認、初回利用者はここを確認される）
     static let initServiceLists = [
         
-        Menu(title: "パスワード",
-             id: .password,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "カスタマイズ",
-             id: .cellSort,
-             url: nil,
-             canInitView: false),
-        
         Menu(title: "教務事務システム",
              id: .courseManagementHomeMobile,
              url: Url.courseManagementMobile.string(),
@@ -110,6 +100,16 @@ final class Constant {
              id: .mailService,
              url: Url.outlookLogin.string(),
              canInitView: true),
+        
+        Menu(title: "パスワード",
+             id: .password,
+             url: nil,
+             canInitView: false),
+        
+        Menu(title: "カスタマイズ",
+             id: .cellSort,
+             url: nil,
+             canInitView: false),
         
         Menu(title: "初期画面設定",
              id: .firstViewSetting,

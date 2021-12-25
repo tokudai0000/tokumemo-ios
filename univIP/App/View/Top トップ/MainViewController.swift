@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import Gecco
 import EAIntroView
 
 final class MainViewController: UIViewController {
@@ -22,18 +21,20 @@ final class MainViewController: UIViewController {
     private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
     
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // **DEBUGでfalseにしている**
-//        dataManager.isFinishedMainTutorial = false
-//        dataManager.isFinishedMenuTutorial = false
         
         refreshWebLoad()
         
         webView.uiDelegate = self
         webView.navigationDelegate = self
+        
+        // **DEBUG**
+        dataManager.isFinishedMainTutorial = false
+        dataManager.isFinishedMenuTutorial = false
+        // *********
         
     }
     
@@ -41,7 +42,7 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if !viewModel.hasAgreedTermsOfUse {
-            // 規約 未同意者 なら
+            // 規約 未同意者なら
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
@@ -50,7 +51,7 @@ final class MainViewController: UIViewController {
         // ////チュートリアル////
         // すでに利用者が40名いるため、初回起動時処理では行わない
         if !dataManager.isFinishedMainTutorial {
-            // 完了していない場合、チュートリアルを表示
+            // 未完了なら
             // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
             walkThroughTutorial()
             // チュートリアル完了とする(以降チュートリアルを表示しない)
@@ -96,6 +97,7 @@ final class MainViewController: UIViewController {
     public func showModalView(type: ModalViewType) {
         switch type {
             case .libraryCalendar:
+                // MARK: - HACK 推奨されたAlertの使い方ではない
                 // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
                 var alert:UIAlertController!
                 //アラートコントローラーを作成する。
@@ -105,6 +107,7 @@ final class MainViewController: UIViewController {
                     title: "常三島",
                     style: UIAlertAction.Style.default,
                     handler: { action in
+                        // 常三島のカレンダーURLを取得後、webView読み込み
                         if let url = self.viewModel.fetchLibraryCalendarUrl(urlString: Url.libraryHomePageMainPC.string()) {
                             self.webView.load(url)
                         }
@@ -114,6 +117,7 @@ final class MainViewController: UIViewController {
                     title: "蔵本",
                     style: UIAlertAction.Style.default,
                     handler: { action in
+                        // 蔵本のカレンダーURLを取得後、webView読み込み
                         if let url = self.viewModel.fetchLibraryCalendarUrl(urlString: Url.libraryHomePageKuraPC.string()) {
                             self.webView.load(url)
                         }
@@ -164,8 +168,9 @@ final class MainViewController: UIViewController {
     
     // 最初に読み込むURLを取得し表示(初期画面)
     private func refreshWebLoad() {
-        // フラグを立てる
+        // 次に読み込まれるURLはJavaScriptを動かすことを許可する
         dataManager.isExecuteJavascript = true
+        // ユーザーによって初期画面を設定できる(デフォルト「マナバ」)
         webView.load(viewModel.searchInitialViewUrl())
     }
     
@@ -189,6 +194,7 @@ final class MainViewController: UIViewController {
         
     }
     
+    // スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
     private func tutorialSpotlight() {
         let spotlightViewController = MainTutorialSpotlightViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
@@ -200,12 +206,6 @@ final class MainViewController: UIViewController {
     
 }
 
-extension MainViewController: EAIntroDelegate {
-    // チュートリアルが終了したら呼ばれる
-    func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
-        tutorialSpotlight()
-    }
-}
 
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {
@@ -360,12 +360,20 @@ extension MainViewController: WKNavigationDelegate {
 
 // MARK: - WKUIDelegate
 extension MainViewController: WKUIDelegate {
-    
     // target="_blank"(新しいタブで開く) の処理
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         // 新しいタブで開くURLを取得し、読み込む
         webView.load(navigationAction.request)
         return nil
     }
-    
+}
+
+
+// MARK: - EAIntroDelegate
+extension MainViewController: EAIntroDelegate {
+    // ウォークスルーチュートリアルが終了したら呼ばれる
+    func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
+        // ウォークスルーチュートリアル後、スポットライトチュートリアルを実行する
+        tutorialSpotlight()
+    }
 }

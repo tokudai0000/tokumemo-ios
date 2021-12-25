@@ -20,7 +20,6 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        spotlightView.delegate = self
         delegate = self
     }
     
@@ -49,16 +48,16 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
     
     private func createSpotlight() {
         // スポットライトのサイズ**可変**
-        let width = uiLabels_frames[0].width + 25
-        let height = uiLabels_frames[0].height + 25
+        let width = uiLabels_frames[0].width
+        let height = uiLabels_frames[0].height
         var posY = CGFloat()
         
         switch updateIndex {
             case 0:
-                posY = uiLabels_frames[0].midY
+                posY = uiLabels_frames[0].midY - 10
                 
             case 1:
-                posY = uiLabels_frames[1].midY
+                posY = uiLabels_frames[1].midY - 10
                 
             default:
                 dismiss(animated: true, completion: nil)
