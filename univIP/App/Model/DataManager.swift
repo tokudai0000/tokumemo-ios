@@ -234,7 +234,7 @@ final class DataManager {
         // UserDefaultsに保存
         // 配列 -> Json -> Data にパースする必要がある
         let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(menuLists[0]) else { return }
+        guard let data = try? jsonEncoder.encode(menuLists) else { return }
         setUserDefaultsData(key: KEY_menuLists, value: data)
         
     }
