@@ -47,7 +47,7 @@ final class MainViewController: UIViewController {
             present(vc, animated: false, completion: nil)
             return
         }
-                
+        
         // ////チュートリアル////
         // すでに利用者が40名いるため、初回起動時処理では行わない
         if !dataManager.isFinishedMainTutorial {
@@ -63,7 +63,7 @@ final class MainViewController: UIViewController {
             let vc = R.storyboard.menu.menuViewController()!
             self.present(vc, animated: true, completion: nil)
         }
-
+        
     }
     
     // MARK: - IBAction
@@ -81,7 +81,7 @@ final class MainViewController: UIViewController {
         // アニメーションは表示しない
         // トクメモはデザインよりもシンプル、速さを求める(Menuは頻繁に使用すると想定する)
         present(vc, animated: false, completion: nil)
-    
+        
     }
     
     

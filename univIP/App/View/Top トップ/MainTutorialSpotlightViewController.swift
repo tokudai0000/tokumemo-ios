@@ -14,11 +14,15 @@ final class MainTutorialSpotlightViewController: SpotlightViewController {
     
     private let label = UILabel()
     
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
     }
     
+    
+    // MARK: - Private
     private func createLabels() {
         // Labelのサイズ**可変**
         let width = CGFloat(200)
@@ -46,6 +50,8 @@ final class MainTutorialSpotlightViewController: SpotlightViewController {
     
 }
 
+
+// MARK: - SpotlightViewControllerDelegate
 extension MainTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     
     //画面が表示される時

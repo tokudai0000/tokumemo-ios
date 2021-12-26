@@ -26,9 +26,9 @@ final class MainViewModel {
     public func isAllowedDomainCheck(_ url: URL) -> Bool {
         
         guard let hostDomain = url.host else {
-                  AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
-                  return false
-              }
+            AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
+            return false
+        }
         // ドメインを検証
         for domainString in Constant.allowedDomains {
             if hostDomain.contains(domainString) {
@@ -53,7 +53,7 @@ final class MainViewModel {
     /// - Parameter url: 現在、表示中のURL
     /// - Returns: 動かすJavaScriptの種類
     public func anyJavaScriptExecute(_ url: URL) -> JavaScriptType {
-
+        
         let urlString = url.absoluteString
         
         // JavaScriptを実行するフラグが立っていない場合は抜ける
