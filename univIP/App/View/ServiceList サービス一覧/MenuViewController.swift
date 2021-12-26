@@ -13,6 +13,7 @@ import FirebaseAnalytics
 final class MenuViewController: UIViewController {
     
     // MARK: - IBOutlet
+    @IBOutlet var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     private let viewModel = MenuViewModel()
@@ -24,19 +25,15 @@ final class MenuViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        // viewをタップされた際の処理 **後日修正する**
-        //        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.viewTap(_:)))
-        //        self.view.addGestureRecognizer(tap)
         
-//        viewModel.initialBootProcess()
-        self.tableView.reloadData()
+        tableView.delegate = self
+        tableView.reloadData()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         if !dataManager.isFinishedMenuTutorial {
             // 完了していない場合、チュートリアルを表示
             // スポットライトチュートリアル
@@ -44,20 +41,16 @@ final class MenuViewController: UIViewController {
             // チュートリアル完了とする(以降チュートリアルを表示しない)
             dataManager.isFinishedMenuTutorial = true
         }
-
+        
     }
     
-
-    // これだとcellをタップしても呼ばれてしまう **後日修正する**
-    //    @objc func viewTap(_ sender: UITapGestureRecognizer) {
-    //        dismiss(animated: false, completion: nil)
-    //    }
-
+    
+    // MARK: - Private
     private func tutorialSpotlight() {
-        let spotlightViewController = TutorialSpotlightMenuViewController()
+        let spotlightViewController = MenuTutorialSpotlightViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
-        let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 0, section: 0))! // fatalError
-        let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 1, section: 0))! // fatalError
+        let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 7, section: 0))! // fatalError
+        let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 8, section: 0))! // fatalError
         let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
         let pos2 = tableView.convert(tableViewPos2.frame, to: self.view)
         // スポットする座標を渡す
@@ -72,78 +65,64 @@ final class MenuViewController: UIViewController {
 
 // MARK: - TableView
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
-    // MARK: - HACK
-    /// セクションの高さ
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 { return 0 }
-        return 1
-    }
     
-    /// セクション数
-    func numberOfSections(in tableView: UITableView) -> Int {
+    // セクション内のセル数
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataManager.menuLists.count
     }
     
-    // セクションの背景とテキストの色を変更する
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = .gray
-    }
-    
-    /// セクション内のセル数
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.menuLists[section].count
-    }
-    
-    /// cellの中身
+    // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)!
-        tableCell.textLabel!.text = dataManager.menuLists[indexPath.section][indexPath.item].title
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
+        tableCell.textLabel?.text = dataManager.menuLists[indexPath.item].title
         // 「17」程度が文字が消えず、また見やすいサイズ
-        tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
+        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
     
-    /// セルの高さ
+    // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if dataManager.menuLists[indexPath.section][indexPath.row].isDisplay {
+        // 表示を許可されているCellの場合、高さを44とする
+        if dataManager.menuLists[indexPath.row].isDisplay {
             return 44
+        }else{
+            return 0
         }
-        return 0
     }
     
-    /// セルを選択した時のイベント
+    // セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let delegate = self.delegate else {
-            AKLog(level: .ERROR, message: "[delegateエラー]")
-            return
+            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
+            fatalError()
         }
-        //
+        
+        // JavaScriptを動かすことを許可する
+        // JavaScriptを動かす必要がないCellでも、trueにしてOK(1度きりしか動かさないを判定するフラグだから)
         dataManager.isExecuteJavascript = true
         
+        // メニュー画面を消去後、画面を読み込む
         self.dismiss(animated: false, completion: {
-            switch self.dataManager.menuLists[indexPath[0]][indexPath[1]].id {
-                case .libraryCalendar:                   // [図書館常三島]開館カレンダー
-                    if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageMainPC.string()) {
-                        delegate.webView.load(url)
-                    }
-                case .libraryCalendarKura:               // [図書館蔵本]開館カレンダー
-                    if let url = self.viewModel.fetchLibraryCalenderUrl(urlString: Url.libraryHomePageKuraPC.string()) {
-                        delegate.webView.load(url)
-                    }
+            // どのセルが押されたか
+            switch self.dataManager.menuLists[indexPath[1]].id {
+                case .libraryCalendar:                   // [図書館]開館カレンダー
+                    delegate.showModalView(type: .libraryCalendar)
                     
                 case .currentTermPerformance:            // 今年の成績
-                    delegate.webView.load(self.viewModel.createCurrentTermPerformanceUrl())
+                    if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
+                        delegate.webView.load(urlRequest)
+                    }
                     
                 case .syllabus:                          // シラバス
-                    
                     delegate.showModalView(type: .syllabus)
                     
-                case .cellSort:
+                case .cellSort:                          // カスタマイズ画面
                     delegate.showModalView(type: .cellSort)
                     
-                case .firstViewSetting:
+                case .firstViewSetting:                  // 初期画面の設定画面
                     delegate.showModalView(type: .firstViewSetting)
+                    
                 case .password:                          // パスワード設定
                     delegate.showModalView(type: .password)
                     
@@ -151,24 +130,25 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     delegate.showModalView(type: .aboutThisApp)
                     
                 default:
-                    let urlString = self.dataManager.menuLists[indexPath[0]][indexPath[1]].url! // fatalError
-                    let url = URL(string: urlString)!                                      // fatalError
+                    // 上記以外のCellをタップした場合
+                    // Constant.Menu(構造体)のURLを表示する
+                    let urlString = self.dataManager.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
+                    let url = URL(string: urlString)!                               // fatalError
                     delegate.webView.load(URLRequest(url: url))
-                    
             }
-            Analytics.logEvent("service\(self.dataManager.menuLists[indexPath[0]][indexPath[1]].id)", parameters: nil)
+            Analytics.logEvent("service\(self.dataManager.menuLists[indexPath[1]].id)", parameters: nil)
         })
-        
-        
     }
 }
 
 // MARK: - Override(Animate)
 extension MenuViewController {
-    // メニューエリア以外タップ時、画面をMainViewに戻る
+    // メニューエリア以外タップ時、画面をMainViewに戻す
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
+        // 画面をタップした時
         for touch in touches {
+            // どの画面がタップされたかtagで判定
             if touch.view?.tag == 1 {
                 dismiss(animated: false, completion: nil)
             }

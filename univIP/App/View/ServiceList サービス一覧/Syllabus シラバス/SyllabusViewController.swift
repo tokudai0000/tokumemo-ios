@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SyllabusViewController: BaseViewController {
+final class SyllabusViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var subjectTextField: UITextField!
@@ -23,9 +23,9 @@ final class SyllabusViewController: BaseViewController {
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var searchButton: UIButton!
     
-    private let dataManager = DataManager.singleton
-    
     public var delegate : MainViewController?
+    
+    private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
@@ -46,22 +46,38 @@ final class SyllabusViewController: BaseViewController {
         searchButton.layer.cornerRadius = 5.0
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // キーボードの通知セット
+        let notification = NotificationCenter.default
+        // キーボードが現れる直前呼び出す
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
+                                 name: UIResponder.keyboardWillShowNotification, object: nil)
+        // キーボードが隠れる直前呼び出す
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
+                                 name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     
     // MARK: - IBAction
     @IBAction func searchButton(_ sender: Any) {
+        
+        guard let delegate = self.delegate else {
+            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
+            fatalError()
+        }
+        
         let subjectText = subjectTextField.text ?? ""
         let teacherText = teacherTextField.text ?? ""
         
-        if let delegate = delegate {
-            delegate.refreshSyllabus(subjectName: subjectText,
-                                     teacherName: teacherText)
-//            dataManager.displayUrlString = "" // MARK: - HACK だいぶ無理矢理
-            dismiss(animated: true, completion: nil)
-        }
-        // flag 
+        delegate.refreshSyllabus(subjectName: subjectText,
+                                 teacherName: teacherText)
+        
+        dismiss(animated: true, completion: nil)
+        
     }
     
-    @IBAction func dissmissButton(_ sender: Any) {
+    @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -70,40 +86,42 @@ final class SyllabusViewController: BaseViewController {
     
     enum cursorType {
         case normal
-        case forcus
+        case forcas
         case error
     }
-    
+    // 科目名フィールド
     private func subjectTextFieldCursorSetup(type: cursorType) {
         switch type {
-            
-        case .normal:
-            subjectUnderLine.backgroundColor = .lightGray
-            
-        case .forcus:
-            // カーソルの色
-            subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            
-        case .error:
-            subjectTextField.tintColor = .red
-            subjectUnderLine.backgroundColor = .red
+            case .normal:
+                // 非選択状態
+                subjectUnderLine.backgroundColor = .lightGray
+                
+            case .forcas:
+                // 選択状態
+                // カーソルの色
+                subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                
+            case .error:
+                subjectTextField.tintColor = .red
+                subjectUnderLine.backgroundColor = .red
         }
     }
-    
+    // 教員名フィールド
     private func teacherTextFieldCursorSetup(type: cursorType) {
         switch type {
-            
-        case .normal:
-            teacherUnderLine.backgroundColor = .lightGray
-            
-        case .forcus:
-            teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            
-        case .error:
-            teacherTextField.tintColor = .red
-            teacherUnderLine.backgroundColor = .red
+            case .normal:
+                // 非選択状態
+                teacherUnderLine.backgroundColor = .lightGray
+                
+            case .forcas:
+                // 選択状態
+                teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                
+            case .error:
+                teacherTextField.tintColor = .red
+                teacherUnderLine.backgroundColor = .red
         }
     }
     
@@ -122,15 +140,15 @@ extension SyllabusViewController: UITextFieldDelegate {
         let textFieldTag = TextFieldTag(rawValue: textField.tag)
         
         switch textFieldTag {
-        case .subject:
-            subjectTextFieldCursorSetup(type: .forcus)
-            
-        case .teacher:
-            teacherTextFieldCursorSetup(type: .forcus)
-            
-        case .none:
-            AKLog(level: .FATAL, message: "TextFieldTagが不正")
-            fatalError()
+            case .subject:
+                subjectTextFieldCursorSetup(type: .forcas)
+                
+            case .teacher:
+                teacherTextFieldCursorSetup(type: .forcas)
+                
+            case .none:
+                AKLog(level: .FATAL, message: "TextFieldTagが不正")
+                fatalError()
         }
     }
     
@@ -145,96 +163,71 @@ extension SyllabusViewController: UITextFieldDelegate {
         subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
         teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
     }
-    
-    // キーボードが現れる直前
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // キーボードで隠されたくない範囲（注意！super.viewからの絶対座標で渡すこと）
-        var frame = searchButton.frame
-        // super.viewからの絶対座標に変換する
-        if var pv = searchButton.superview {
-            while pv != super.view {
-                if let gv = pv.superview {
-                    frame = pv.convert(frame, to: gv)
-                    pv = gv
-                }else{
-                    break
-                }
-            }
-        }
-        super.keyboardSafeArea = frame // super.viewからの絶対座標
-        return true //true=キーボードを表示する
-    }
+
 }
 
 
-// MARK: - Notification
+// キーボード関連
 extension SyllabusViewController {
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // キーボードの通知セット
-        let notification = NotificationCenter.default
-        // キーボードが現れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
-                                 name: UIResponder.keyboardWillShowNotification, object: nil)
-        // キーボードが隠れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
-                                 name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
+    // キーボードが現れる直前に呼ばれる
     @objc func keyboardWillShow(notification: Notification?) {
-        guard keyboardSafeArea != nil,
-              notification != nil else {
-                  return
-              }
-        guard let userInfo = notification!.userInfo as? [String: Any] else {
+        // UIKeyboardWillShowNotification を取得
+        guard let notification = notification else {
+            AKLog(level: .ERROR, message: "[notification取得エラー]")
             return
         }
+        // キーボード関連の情報
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            AKLog(level: .ERROR, message: "[userInfo取得エラー]")
+            return
+        }
+        // キーボードの表示範囲
+        // NSRect{{x, y}, {wide, hight}}
         guard let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            AKLog(level: .ERROR, message: "[keyboardInfo取得エラー]")
             return
         }
+        // キーボード表示アニメーション時間
         guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+            AKLog(level: .ERROR, message: "[duration取得エラー]")
             return
         }
-        let keyboardSize = keyboardInfo.cgRectValue.size
         
-        let safeAreaTop:CGFloat = 5.0
+        // キーボードで隠れた高さ
+        let hideY = -keyboardInfo.cgRectValue.size.height
         
-        let hide = (self.view.frame.height - safeAreaTop - keyboardSize.height) - keyboardSafeArea!.maxY
-        
-        if hide < 0.0 {
-            // キーボドに隠れる。隠れる分(hide)だけ上げる
-            if UIApplication.shared.applicationState == .background {
-                // フォアグランドに戻ったとき画面が上がらない不具合対応
-                // DispatchQueue.mainThread では改善しなかった。（メイン判定に問題があるのかも知れない）
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: duration + 0.2, animations: { () in
-                        let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
-                        self.searchButton.transform = transform
-                    })
-                }
-            } else {
-                UIView.animate(withDuration: duration + 0.2, animations: { () in
-                    let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
-                    self.searchButton.transform = transform
-                })
-            }
-        }
+        UIView.animate(withDuration: duration + 0.2, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: hideY)
+            self.searchButton.transform = transform
+        })
     }
-    /// キーボードが隠れる直前、画面全体を元に戻す
+    
+    // キーボードが隠れる直前呼ばれる
     @objc func keyboardWillHide(notification: Notification?) {
-        guard keyboardSafeArea != nil,
-              notification != nil else {
-                  return
-              }
-        guard let userInfo = notification!.userInfo as? [String: Any] else {
+        // 画面全体を元に戻す
+        // UIKeyboardWillShowNotification を取得
+        guard let notification = notification else {
+            AKLog(level: .ERROR, message: "[notification取得エラー]")
             return
         }
+        // キーボード関連の情報
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            AKLog(level: .ERROR, message: "[userInfo取得エラー]")
+            return
+        }
+        // キーボード表示アニメーション時間
         guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+            AKLog(level: .ERROR, message: "[duration取得エラー]")
             return
         }
+        
         UIView.animate(withDuration: duration + 0.2, animations: { () in
             self.searchButton.transform = CGAffineTransform.identity
         })
+    }
+    
+    // キーボードを非表示
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

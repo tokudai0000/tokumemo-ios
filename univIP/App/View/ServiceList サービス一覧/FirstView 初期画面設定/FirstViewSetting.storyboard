@@ -38,7 +38,7 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title=" " image="xmark" catalog="system"/>
                                                 <connections>
-                                                    <action selector="dissmissButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qWv-zg-yGI"/>
+                                                    <action selector="dismissButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="thS-2D-EYo"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -99,7 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="81.696428571428569"/>
+            <point key="canvasLocation" x="-65" y="205"/>
         </scene>
     </scenes>
     <resources>

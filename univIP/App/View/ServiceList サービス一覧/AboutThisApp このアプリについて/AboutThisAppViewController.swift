@@ -25,7 +25,7 @@ final class AboutThisAppViewController: UIViewController {
     
     
     // MARK: - IBAction
-    @IBAction func backButton(_ sender: Any) {
+    @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     

@@ -13,13 +13,12 @@
 		1A207F9B2761C5CB00A22F9C /* FirstViewSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A207F9A2761C5CB00A22F9C /* FirstViewSettingViewController.swift */; };
 		1A207F9D2761C5DA00A22F9C /* FirstViewSetting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A207F9C2761C5DA00A22F9C /* FirstViewSetting.storyboard */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
-		1A3FF1DA275DC93900D45623 /* CellSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3FF1D9275DC93900D45623 /* CellSortViewController.swift */; };
+		1A3FF1DA275DC93900D45623 /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3FF1D9275DC93900D45623 /* CustomizeViewController.swift */; };
 		1A3FF1DC275DC94600D45623 /* CellSort.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A3FF1DB275DC94600D45623 /* CellSort.storyboard */; };
 		1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EADD27290D150064CDB7 /* MainViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
 		1A4D14D027452A14009D6CD2 /* url.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14D227452A14009D6CD2 /* url.strings */; };
-		1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */; };
 		1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A5FD6832715305D0081F952 /* GoogleService-Info.plist */; };
 		1A81A91E26C02FEC00CC56E2 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A91D26C02FEC00CC56E2 /* MenuViewController.swift */; };
 		1A81A92026C02FF900CC56E2 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A91F26C02FF900CC56E2 /* Menu.storyboard */; };
@@ -50,7 +49,7 @@
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABDE75926DE585300D4B04E /* TermsOfService.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75826DE585300D4B04E /* TermsOfService.rtf */; };
 		1AD1AEB5277414B10068C7E5 /* MainTutorialSpotlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD1AEB4277414B10068C7E5 /* MainTutorialSpotlightViewController.swift */; };
-		1AD1AEB7277452300068C7E5 /* TutorialSpotlightMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD1AEB6277452300068C7E5 /* TutorialSpotlightMenuViewController.swift */; };
+		1AD1AEB7277452300068C7E5 /* MenuTutorialSpotlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD1AEB6277452300068C7E5 /* MenuTutorialSpotlightViewController.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		509381F26FAE698FBE4F53F4 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3F8BED9CAEF99CD66B615F /* Pods_univIPTests.framework */; };
 		ECD19C20B2F6629E841DA3BF /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1776F6A33ADC4A5363617FC /* Pods_univIP.framework */; };
@@ -80,13 +79,12 @@
 		1A207F9A2761C5CB00A22F9C /* FirstViewSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewSettingViewController.swift; sourceTree = "<group>"; };
 		1A207F9C2761C5DA00A22F9C /* FirstViewSetting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FirstViewSetting.storyboard; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		1A3FF1D9275DC93900D45623 /* CellSortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSortViewController.swift; sourceTree = "<group>"; };
+		1A3FF1D9275DC93900D45623 /* CustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
 		1A3FF1DB275DC94600D45623 /* CellSort.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CellSort.storyboard; sourceTree = "<group>"; };
 		1A41EADD27290D150064CDB7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
 		1A4D14D327452A3D009D6CD2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/url.strings; sourceTree = "<group>"; };
-		1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1A5FD6832715305D0081F952 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A91D26C02FEC00CC56E2 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -125,7 +123,7 @@
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABDE75826DE585300D4B04E /* TermsOfService.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TermsOfService.rtf; sourceTree = "<group>"; };
 		1AD1AEB4277414B10068C7E5 /* MainTutorialSpotlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTutorialSpotlightViewController.swift; sourceTree = "<group>"; };
-		1AD1AEB6277452300068C7E5 /* TutorialSpotlightMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSpotlightMenuViewController.swift; sourceTree = "<group>"; };
+		1AD1AEB6277452300068C7E5 /* MenuTutorialSpotlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTutorialSpotlightViewController.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		324240FE5E6B4AEFD2C4922B /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
 		846F548F1EA4F2D8D7589A43 /* Pods-univIPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.debug.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -170,22 +168,23 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		1A207F992761C57F00A22F9C /* EditFirstView 初期画面設定 */ = {
+		1A207F992761C57F00A22F9C /* FirstView 初期画面設定 */ = {
 			isa = PBXGroup;
 			children = (
 				1A207F9A2761C5CB00A22F9C /* FirstViewSettingViewController.swift */,
 				1A207F9C2761C5DA00A22F9C /* FirstViewSetting.storyboard */,
 			);
-			path = "EditFirstView 初期画面設定";
+			path = "FirstView 初期画面設定";
 			sourceTree = "<group>";
 		};
-		1A3FF1D8275DC91D00D45623 /* EditLists 一覧編集 */ = {
+		1A3FF1D8275DC91D00D45623 /* Customize カスタマイズ */ = {
 			isa = PBXGroup;
 			children = (
-				1A3FF1D9275DC93900D45623 /* CellSortViewController.swift */,
+				1A3FF1D9275DC93900D45623 /* CustomizeViewController.swift */,
 				1A3FF1DB275DC94600D45623 /* CellSort.storyboard */,
 			);
-			path = "EditLists 一覧編集";
+			name = "Customize カスタマイズ";
+			path = "Customize カスタマイズ";
 			sourceTree = "<group>";
 		};
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
@@ -205,25 +204,17 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		1A5F98A526D8E1B000BCCF59 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
 		1A81A91C26C02FB700CC56E2 /* Menu メニュー */ = {
 			isa = PBXGroup;
 			children = (
-				1AD1AEB6277452300068C7E5 /* TutorialSpotlightMenuViewController.swift */,
+				1AD1AEB6277452300068C7E5 /* MenuTutorialSpotlightViewController.swift */,
 				1A09314D272A7DAC00B7BAED /* MenuViewModel.swift */,
 				1A81A91D26C02FEC00CC56E2 /* MenuViewController.swift */,
 				1A81A91F26C02FF900CC56E2 /* Menu.storyboard */,
 				1AA056E826BD2DA900343005 /* Syllabus シラバス */,
-				1A3FF1D8275DC91D00D45623 /* EditLists 一覧編集 */,
-				1A207F992761C57F00A22F9C /* EditFirstView 初期画面設定 */,
-				1A81A93226C14FBA00CC56E2 /* PasswordSettings パスワード登録 */,
+				1A3FF1D8275DC91D00D45623 /* Customize カスタマイズ */,
+				1A207F992761C57F00A22F9C /* FirstView 初期画面設定 */,
+				1A81A93226C14FBA00CC56E2 /* Password パスワード登録 */,
 				1A81A93326C14FCC00CC56E2 /* AboutThisApp このアプリについて */,
 			);
 			name = "Menu メニュー";
@@ -240,13 +231,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1A81A93226C14FBA00CC56E2 /* PasswordSettings パスワード登録 */ = {
+		1A81A93226C14FBA00CC56E2 /* Password パスワード登録 */ = {
 			isa = PBXGroup;
 			children = (
 				1A81A93526C1503300CC56E2 /* PasswordSettingsViewController.swift */,
 				1A81A93726C1504500CC56E2 /* PasswordSettings.storyboard */,
 			);
-			name = "PasswordSettings パスワード登録";
+			name = "Password パスワード登録";
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};
@@ -333,7 +324,6 @@
 			children = (
 				1A41EADF272914CC0064CDB7 /* AKLibrary */,
 				1AA056E526BD2D4900343005 /* etc */,
-				1A5F98A526D8E1B000BCCF59 /* Base */,
 				1A00A4372750714C00EF3F99 /* Common */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* View */,
@@ -738,18 +728,17 @@
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
-				1AD1AEB7277452300068C7E5 /* TutorialSpotlightMenuViewController.swift in Sources */,
+				1AD1AEB7277452300068C7E5 /* MenuTutorialSpotlightViewController.swift in Sources */,
 				1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */,
 				1AD1AEB5277414B10068C7E5 /* MainTutorialSpotlightViewController.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1A9E0E0A273CDAE800247F94 /* R.generated.swift in Sources */,
 				1A09314E272A7DAC00B7BAED /* MenuViewModel.swift in Sources */,
-				1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */,
 				1A207F9B2761C5CB00A22F9C /* FirstViewSettingViewController.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
 				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
-				1A3FF1DA275DC93900D45623 /* CellSortViewController.swift in Sources */,
+				1A3FF1DA275DC93900D45623 /* CustomizeViewController.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1A81A93626C1503300CC56E2 /* PasswordSettingsViewController.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* Constant.swift in Sources */,

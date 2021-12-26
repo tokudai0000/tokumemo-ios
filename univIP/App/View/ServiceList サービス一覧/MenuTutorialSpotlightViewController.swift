@@ -7,7 +7,7 @@
 
 import Gecco
 
-final class TutorialSpotlightMenuViewController: SpotlightViewController {
+final class MenuTutorialSpotlightViewController: SpotlightViewController {
     
     //各UILabelの座標データ
     public var uiLabels_frames:[CGRect] = []
@@ -18,13 +18,15 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
     
     private var updateIndex = 0
     
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        spotlightView.delegate = self
         delegate = self
     }
     
-    // メッセージ用のUILabelを生成
+    
+    // MARK: - Private
     private func createLabels() {
         // Labelのサイズ**可変**
         let width = CGFloat(250)
@@ -49,16 +51,16 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
     
     private func createSpotlight() {
         // スポットライトのサイズ**可変**
-        let width = uiLabels_frames[0].width + 25
-        let height = uiLabels_frames[0].height + 25
+        let width = uiLabels_frames[0].width
+        let height = uiLabels_frames[0].height
         var posY = CGFloat()
         
         switch updateIndex {
             case 0:
-                posY = uiLabels_frames[0].midY
+                posY = uiLabels_frames[0].midY - 10
                 
             case 1:
-                posY = uiLabels_frames[1].midY
+                posY = uiLabels_frames[1].midY - 10
                 
             default:
                 dismiss(animated: true, completion: nil)
@@ -70,13 +72,12 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
                                                    cornerRadius: 50))
         
         updateIndex += 1
-        
     }
-    
 }
 
 
-extension TutorialSpotlightMenuViewController: SpotlightViewControllerDelegate {
+// MARK: - SpotlightViewControllerDelegate
+extension MenuTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     
     //画面が表示される時
     func spotlightViewControllerWillPresent(_ viewController: SpotlightViewController, animated: Bool) {

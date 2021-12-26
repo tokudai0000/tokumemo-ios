@@ -64,65 +64,26 @@ final class Constant {
     
     // サービスCell初期状態（更新確認、初回利用者はここを確認される）
     static let initServiceLists = [
-        Menu(title: "教務事務システムPC版",
-             id: .courseManagementHomePC,
-             url: Url.courseManagementPC.string(),
-             canInitView: true),
         
-        Menu(title: "教務事務システムMobile版",
+        Menu(title: "教務事務システム",
              id: .courseManagementHomeMobile,
              url: Url.courseManagementMobile.string(),
              canInitView: true),
         
-        Menu(title: "マナバPC版",
+        Menu(title: "マナバ",
              id: .manabaHomePC,
              url: Url.manabaPC.string(),
              isInitView: true,         // デフォルトの初期画面
              canInitView: true),
         
-        Menu(title: "マナバMobile版",
-             id: .manabaHomeMobile,
-             url: Url.manabaMobile.string(),
-             canInitView: true),
-        
-        Menu(title: "[図書館常三島]WebサイトPC版",
-             id: .libraryWebHomePC,
-             url: Url.libraryHomePageMainPC.string(),
-             canInitView: true),
-        
-        Menu(title: "[図書館蔵本]WebサイトPC版",
-             id: .libraryWebHomePC,
-             url: Url.libraryHomePageMainPC.string(),
-             canInitView: true),
-        
-        Menu(title: "[図書館常三島]WebサイトMobile版",
-             id: .libraryWebHomeMobile,
-             url: Url.libraryHomeMobile.string(),
-             canInitView: true),
-        
-        Menu(title: "[図書館]MyPage",
-             id: .libraryMyPage,
-             url: Url.libraryMyPage.string(),
-             canInitView: true),
-        
-        Menu(title: "[図書館]貸し出し期間延長",
+        Menu(title: "図書貸し出し延長",
              id: .libraryBookLendingExtension,
              url: Url.libraryBookLendingExtension.string(),
              canInitView: false),
         
-        Menu(title: "[図書館]本購入リクエスト",
-             id: .libraryBookPurchaseRequest,
-             url: Url.libraryBookPurchaseRequest.string(),
-             canInitView: false),
-        
-        Menu(title: "[図書館常三島]開館カレンダー",
+        Menu(title: "開館カレンダー",
              id: .libraryCalendar,
-             url: Url.libraryCalendarMain.string(),
-             canInitView: false),
-        
-        Menu(title: "[図書館蔵本]開館カレンダー",
-             id: .libraryCalendarKura,
-             url: Url.libraryCalendarKura.string(),
+             url: nil,
              canInitView: false),
         
         Menu(title: "シラバス",
@@ -130,29 +91,9 @@ final class Constant {
              url: Url.syllabus.string(),
              canInitView: true),
         
-        Menu(title: "時間割",
-             id: .timeTable,
-             url: Url.timeTable.string(),
-             canInitView: false),
-        
-        Menu(title: "今年の成績表",
+        Menu(title: "今期の成績",
              id: .currentTermPerformance,
              url: Url.currentTermPerformance.string(),
-             canInitView: false),
-        
-        Menu(title: "成績参照",
-             id: .termPerformance,
-             url: Url.termPerformance.string(),
-             canInitView: false),
-        
-        Menu(title: "出欠記録",
-             id: .presenceAbsenceRecord,
-             url: Url.presenceAbsenceRecord.string(),
-             canInitView: false),
-        
-        Menu(title: "授業アンケート",
-             id: .classQuestionnaire,
-             url: Url.classQuestionnaire.string(),
              canInitView: false),
         
         Menu(title: "メール",
@@ -160,34 +101,12 @@ final class Constant {
              url: Url.outlookLogin.string(),
              canInitView: true),
         
-        Menu(title: "キャリア支援室",
-             id: .tokudaiCareerCenter,
-             url: Url.tokudaiCareerCenter.string(),
-             canInitView: true),
-        
-        Menu(title: "履修登録",
-             id: .courseRegistration,
-             url: Url.courseRegistration.string(),
+        Menu(title: "パスワード",
+             id: .password,
+             url: nil,
              canInitView: false),
         
-        Menu(title: "システムサービス一覧",
-             id: .systemServiceList,
-             url: Url.systemServiceList.string(),
-             canInitView: true),
-        
-        Menu(title: "Eラーニング一覧",
-             id: .eLearningList,
-             url: Url.eLearningList.string(),
-             canInitView: true),
-        
-        Menu(title: "大学サイト",
-             id: .universityWeb,
-             url: Url.universityHomePage.string(),
-             canInitView: true)
-    ]
-    
-    static let initSettingLists = [
-        Menu(title: "並び替え・編集",
+        Menu(title: "カスタマイズ",
              id: .cellSort,
              url: nil,
              canInitView: false),
@@ -197,16 +116,100 @@ final class Constant {
              url: nil,
              canInitView: false),
         
-        Menu(title: "パスワード",
-             id: .password,
-             url: nil,
-             canInitView: false),
-        
         Menu(title: "このアプリについて",
              id: .aboutThisApp,
              url: nil,
-             canInitView: false)
+             canInitView: false),
+        
+        Menu(title: "教務事務システム[PC]",
+             id: .courseManagementHomePC,
+             url: Url.courseManagementPC.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "マナバ[Mobile]",
+             id: .manabaHomeMobile,
+             url: Url.manabaMobile.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "図書Web[常三島]",
+             id: .libraryWebHomePC,
+             url: Url.libraryHomePageMainPC.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "図書Web[蔵本]",
+             id: .libraryWebHomePC,
+             url: Url.libraryHomePageMainPC.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "図書Web[Mobile]",
+             id: .libraryWebHomeMobile,
+             url: Url.libraryHomeMobile.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "図書MyPage",
+             id: .libraryMyPage,
+             url: Url.libraryMyPage.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "図書本購入リクエスト",
+             id: .libraryBookPurchaseRequest,
+             url: Url.libraryBookPurchaseRequest.string(),
+             isDisplay: false,
+             canInitView: false),
+        
+        Menu(title: "時間割",
+             id: .timeTable,
+             url: Url.timeTable.string(),
+             isDisplay: false,
+             canInitView: false),
+        
+        Menu(title: "成績参照",
+             id: .termPerformance,
+             url: Url.termPerformance.string(),
+             isDisplay: false,
+             canInitView: false),
+        
+        Menu(title: "出欠記録",
+             id: .presenceAbsenceRecord,
+             url: Url.presenceAbsenceRecord.string(),
+             isDisplay: false,
+             canInitView: false),
+        
+        Menu(title: "授業アンケート",
+             id: .classQuestionnaire,
+             url: Url.classQuestionnaire.string(),
+             isDisplay: false,
+             canInitView: false),
+        
+        Menu(title: "キャリア支援室",
+             id: .tokudaiCareerCenter,
+             url: Url.tokudaiCareerCenter.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "システムサービス一覧",
+             id: .systemServiceList,
+             url: Url.systemServiceList.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "Eラーニング一覧",
+             id: .eLearningList,
+             url: Url.eLearningList.string(),
+             isDisplay: false,
+             canInitView: true),
+        
+        Menu(title: "大学サイト",
+             id: .universityWeb,
+             url: Url.universityHomePage.string(),
+             isDisplay: false,
+             canInitView: true)
     ]
     
-    static let sectionNum = 2
 }
