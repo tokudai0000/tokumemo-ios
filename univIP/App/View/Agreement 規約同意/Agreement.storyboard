@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="サービス利用規約" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PjB-M9-Hts">
-                                        <rect key="frame" x="125" y="0.0" width="164" height="40"/>
+                                        <rect key="frame" x="125.5" y="0.0" width="163.5" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -35,8 +35,8 @@
                                     <constraint firstItem="PjB-M9-Hts" firstAttribute="top" secondItem="u1j-2i-4ek" secondAttribute="top" id="m5z-Hp-aa1"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KbZ-OY-929">
-                                <rect key="frame" x="10" y="104" width="394" height="230"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KbZ-OY-929">
+                                <rect key="frame" x="10" y="104" width="394" height="588"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -63,42 +63,46 @@
                                     <action selector="agreementButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="jkI-aw-oWc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vA4-cV-wKk">
-                                <rect key="frame" x="5" y="632" width="404" height="20"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="QLw-jH-i59">
+                                <rect key="frame" x="10" y="692" width="394" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vA4-cV-wKk">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="利用規約"/>
+                                        <connections>
+                                            <action selector="termsOfServiceButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="mj7-1B-gvj"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-yp-BMa">
+                                        <rect key="frame" x="0.0" y="46" width="394" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="プライバシーポリシー"/>
+                                        <connections>
+                                            <action selector="privacyPolicyButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="hCr-rn-LLq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="YO5-IA-9Zn"/>
+                                    <constraint firstAttribute="height" constant="80" id="kSV-lY-wJg"/>
                                 </constraints>
-                                <state key="normal" title="利用規約"/>
-                                <connections>
-                                    <action selector="termsOfServiceButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="mj7-1B-gvj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-yp-BMa">
-                                <rect key="frame" x="5" y="672" width="404" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="gbC-4w-Sgd"/>
-                                </constraints>
-                                <state key="normal" title="プライバシーポリシー"/>
-                                <connections>
-                                    <action selector="privacyPolicyButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="hCr-rn-LLq"/>
-                                </connections>
-                            </button>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YGM-qQ-O9g"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YGM-qQ-O9g" firstAttribute="trailing" secondItem="KbZ-OY-929" secondAttribute="trailing" constant="10" id="4nM-0U-BUe"/>
                             <constraint firstItem="YGM-qQ-O9g" firstAttribute="bottom" secondItem="Ld6-fy-omR" secondAttribute="bottom" constant="20" id="99H-EN-Huz"/>
-                            <constraint firstItem="tVJ-yp-BMa" firstAttribute="top" secondItem="vA4-cV-wKk" secondAttribute="bottom" constant="20" id="BbM-yS-L5T"/>
                             <constraint firstItem="Ld6-fy-omR" firstAttribute="centerX" secondItem="FjM-kX-fxE" secondAttribute="centerX" id="NlH-gS-xlj"/>
+                            <constraint firstItem="QLw-jH-i59" firstAttribute="top" secondItem="KbZ-OY-929" secondAttribute="bottom" id="OJv-Ad-elG"/>
                             <constraint firstItem="KbZ-OY-929" firstAttribute="top" secondItem="u1j-2i-4ek" secondAttribute="bottom" constant="20" id="PaN-Tc-wmS"/>
-                            <constraint firstItem="vA4-cV-wKk" firstAttribute="leading" secondItem="YGM-qQ-O9g" secondAttribute="leading" constant="5" id="Uap-Wn-6Uq"/>
+                            <constraint firstItem="YGM-qQ-O9g" firstAttribute="trailing" secondItem="QLw-jH-i59" secondAttribute="trailing" constant="10" id="YBb-WD-Fqd"/>
                             <constraint firstItem="u1j-2i-4ek" firstAttribute="trailing" secondItem="YGM-qQ-O9g" secondAttribute="trailing" id="ZDQ-BZ-tKd"/>
-                            <constraint firstItem="YGM-qQ-O9g" firstAttribute="trailing" secondItem="vA4-cV-wKk" secondAttribute="trailing" constant="5" id="bmB-1O-XVp"/>
+                            <constraint firstItem="Ld6-fy-omR" firstAttribute="top" secondItem="QLw-jH-i59" secondAttribute="bottom" constant="20" id="bnM-qz-mS9"/>
                             <constraint firstItem="u1j-2i-4ek" firstAttribute="top" secondItem="YGM-qQ-O9g" secondAttribute="top" id="cAS-YC-ySI"/>
+                            <constraint firstItem="QLw-jH-i59" firstAttribute="leading" secondItem="YGM-qQ-O9g" secondAttribute="leading" constant="10" id="pga-t0-7Yf"/>
                             <constraint firstItem="u1j-2i-4ek" firstAttribute="leading" secondItem="YGM-qQ-O9g" secondAttribute="leading" id="prS-hI-ZZn"/>
                             <constraint firstItem="KbZ-OY-929" firstAttribute="leading" secondItem="YGM-qQ-O9g" secondAttribute="leading" constant="10" id="rxz-z1-OEG"/>
-                            <constraint firstItem="Ld6-fy-omR" firstAttribute="top" secondItem="tVJ-yp-BMa" secondAttribute="bottom" constant="100" id="yL2-BK-5YT"/>
                         </constraints>
                     </view>
                     <connections>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PasswordSettingsViewController: BaseViewController {
+final class PasswordSettingsViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var cAccountTextField: UITextField!
