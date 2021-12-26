@@ -137,25 +137,32 @@ final class MainViewModel {
         let url = URL(string: urlString)! // fatalError
         
         do {
-            let data = NSData(contentsOf: url as URL)
-            let doc = try HTML(html: data! as Data, encoding: String.Encoding.utf8)
+            let htmlData = NSData(contentsOf: url as URL)! as Data
+            let doc = try HTML(html: htmlData, encoding: String.Encoding.utf8)
+            // aタグを抽出
             for node in doc.xpath("//a") {
+                // href属性に設定されている文字列を出力
                 guard let str = node["href"] else {
                     return nil
                 }
+                // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれているので、正しく読み取れたか
                 if str.contains("pub/pdf/calender/calender") {
-                    let urlString = "https://www.lib.tokushima-u.ac.jp/" + node["href"]!
-                    if let url = URL(string: urlString) {
+                    // PDFまでのURLを作成する
+                    let pdfUrlString = "https://www.lib.tokushima-u.ac.jp/" + str
+                    
+                    if let url = URL(string: pdfUrlString) {
                         return URLRequest(url: url)
                         
                     } else {
-                        AKLog(level: .FATAL, message: "URLフォーマットエラー")
+                        AKLog(level: .ERROR, message: "[URLフォーマットエラー]: 図書館開館カレンダーURL取得エラー \n pdfUrlString:\(pdfUrlString)")
                         return nil
                     }
                 }
             }
+            AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(urlString)")
             return nil
         } catch {
+            AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(urlString)")
             return nil
         }
     }
