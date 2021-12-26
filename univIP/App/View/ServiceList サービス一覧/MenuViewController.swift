@@ -47,7 +47,7 @@ final class MenuViewController: UIViewController {
     
     // MARK: - Private
     private func tutorialSpotlight() {
-        let spotlightViewController = TutorialSpotlightMenuViewController()
+        let spotlightViewController = MenuTutorialSpotlightViewController()
         // 絶対座標(画面左上X=0,Y=0からの座標)
         let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 7, section: 0))! // fatalError
         let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 8, section: 0))! // fatalError
@@ -73,15 +73,16 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)!
-        tableCell.textLabel!.text = dataManager.menuLists[indexPath.item].title
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
+        tableCell.textLabel?.text = dataManager.menuLists[indexPath.item].title
         // 「17」程度が文字が消えず、また見やすいサイズ
-        tableCell.textLabel!.font = UIFont.systemFont(ofSize: 17)
+        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
     
     // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // 表示を許可されているCellの場合、高さを44とする
         if dataManager.menuLists[indexPath.row].isDisplay {
             return 44
         }else{
@@ -109,7 +110,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     delegate.showModalView(type: .libraryCalendar)
                     
                 case .currentTermPerformance:            // 今年の成績
-                    delegate.webView.load(self.viewModel.createCurrentTermPerformanceUrl())
+                    if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
+                        delegate.webView.load(urlRequest)
+                    }
                     
                 case .syllabus:                          // シラバス
                     delegate.showModalView(type: .syllabus)

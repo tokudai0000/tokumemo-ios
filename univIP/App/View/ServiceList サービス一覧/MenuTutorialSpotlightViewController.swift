@@ -7,7 +7,7 @@
 
 import Gecco
 
-final class TutorialSpotlightMenuViewController: SpotlightViewController {
+final class MenuTutorialSpotlightViewController: SpotlightViewController {
     
     //各UILabelの座標データ
     public var uiLabels_frames:[CGRect] = []
@@ -75,7 +75,7 @@ final class TutorialSpotlightMenuViewController: SpotlightViewController {
 }
 
 
-extension TutorialSpotlightMenuViewController: SpotlightViewControllerDelegate {
+extension MenuTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     
     //画面が表示される時
     func spotlightViewControllerWillPresent(_ viewController: SpotlightViewController, animated: Bool) {
