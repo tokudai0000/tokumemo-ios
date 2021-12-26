@@ -12,9 +12,6 @@ final class MenuViewModel {
     
     private let dataManager = DataManager.singleton
     
-    
-    // MARK: public
-    
     /// 今年度の成績表のURLを作成する
     /// - Returns: 今年度の成績表のURL
     public func createCurrentTermPerformanceUrl() -> URLRequest? {

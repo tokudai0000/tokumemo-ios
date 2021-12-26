@@ -18,12 +18,15 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
     
     private var updateIndex = 0
     
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
     }
     
-    // メッセージ用のUILabelを生成
+    
+    // MARK: - Private
     private func createLabels() {
         // Labelのサイズ**可変**
         let width = CGFloat(250)
@@ -69,12 +72,11 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
                                                    cornerRadius: 50))
         
         updateIndex += 1
-        
     }
-    
 }
 
 
+// MARK: - SpotlightViewControllerDelegate
 extension MenuTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     
     //画面が表示される時
