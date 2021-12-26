@@ -5,6 +5,7 @@
 //  Created by Akihiro Matsuyama on 2021/10/27.
 //
 
+//WARNING// import UIKit 等UI関係は実装しない
 import Foundation
 import Kanna
 
