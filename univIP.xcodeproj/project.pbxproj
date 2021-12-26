@@ -170,13 +170,13 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		1A207F992761C57F00A22F9C /* EditFirstView 初期画面設定 */ = {
+		1A207F992761C57F00A22F9C /* FirstView 初期画面設定 */ = {
 			isa = PBXGroup;
 			children = (
 				1A207F9A2761C5CB00A22F9C /* FirstViewSettingViewController.swift */,
 				1A207F9C2761C5DA00A22F9C /* FirstViewSetting.storyboard */,
 			);
-			path = "EditFirstView 初期画面設定";
+			path = "FirstView 初期画面設定";
 			sourceTree = "<group>";
 		};
 		1A3FF1D8275DC91D00D45623 /* Customize カスタマイズ */ = {
@@ -223,7 +223,7 @@
 				1A81A91F26C02FF900CC56E2 /* Menu.storyboard */,
 				1AA056E826BD2DA900343005 /* Syllabus シラバス */,
 				1A3FF1D8275DC91D00D45623 /* Customize カスタマイズ */,
-				1A207F992761C57F00A22F9C /* EditFirstView 初期画面設定 */,
+				1A207F992761C57F00A22F9C /* FirstView 初期画面設定 */,
 				1A81A93226C14FBA00CC56E2 /* Password パスワード登録 */,
 				1A81A93326C14FCC00CC56E2 /* AboutThisApp このアプリについて */,
 			);
