@@ -57,6 +57,8 @@ final class FirstViewSettingViewController: UIViewController {
             menuLists[i].isInitView = (menuType == pickerType)
         }
         dataManager.menuLists = menuLists
+        // menuListsをUserDefaultsに保存
+        dataManager.saveMenuLists()
         
         textField.text = "\(pickerList[pickerView.selectedRow(inComponent: 0)].title)"
     }

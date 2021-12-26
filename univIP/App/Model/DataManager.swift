@@ -230,7 +230,7 @@ final class DataManager {
         return updateForLists
     }
 
-    private func saveMenuLists() {
+    public func saveMenuLists() {
         // UserDefaultsに保存
         // 配列 -> Json -> Data にパースする必要がある
         let jsonEncoder = JSONEncoder()

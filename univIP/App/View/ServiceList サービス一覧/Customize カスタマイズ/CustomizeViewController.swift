@@ -91,7 +91,9 @@ final class CustomizeViewController: UIViewController {
             
             if let textField = alert.textFields {
                 if let text = textField[0].text {
+                    // 名前の更新
                     self.dataManager.changeContentsMenuLists(row: indexPath, title: text)
+                    self.dataManager.saveMenuLists()
                     self.tableView.reloadData()
                 }
                 
@@ -143,7 +145,9 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // 並び替えを更新
         dataManager.changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
+        dataManager.saveMenuLists()
     }
     
     // セルの高さ
@@ -165,8 +169,10 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     // セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
+            // 表示許可情報を更新
             // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
             dataManager.changeContentsMenuLists(row: indexPath.row, isDisplay: true)
+            dataManager.saveMenuLists()
             
         }else{
             showRenameEditPopup(indexPath.row)
@@ -176,6 +182,8 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // 表示許可情報を更新
         dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
+        dataManager.saveMenuLists()
     }
 }
