@@ -17,6 +17,7 @@
 		1A3FF1DC275DC94600D45623 /* CellSort.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A3FF1DB275DC94600D45623 /* CellSort.storyboard */; };
 		1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EADD27290D150064CDB7 /* MainViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
+		1A4CADAE27787D7F001E2B7F /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4CADAC27787D7F001E2B7F /* KeyboardViewController.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
 		1A4D14D027452A14009D6CD2 /* url.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14D227452A14009D6CD2 /* url.strings */; };
 		1A5F98A726D8E1CC00BCCF59 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */; };
@@ -84,6 +85,7 @@
 		1A3FF1DB275DC94600D45623 /* CellSort.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CellSort.storyboard; sourceTree = "<group>"; };
 		1A41EADD27290D150064CDB7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
+		1A4CADAC27787D7F001E2B7F /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
 		1A4D14D327452A3D009D6CD2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/url.strings; sourceTree = "<group>"; };
 		1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				1A5F98A626D8E1CC00BCCF59 /* BaseViewController.swift */,
+				1A4CADAC27787D7F001E2B7F /* KeyboardViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
 				1AA056D126BD2AE100343005 /* MainViewController.swift in Sources */,
 				1AD1AEB7277452300068C7E5 /* MenuTutorialSpotlightViewController.swift in Sources */,
+				1A4CADAE27787D7F001E2B7F /* KeyboardViewController.swift in Sources */,
 				1A41EADE27290D150064CDB7 /* MainViewModel.swift in Sources */,
 				1AD1AEB5277414B10068C7E5 /* MainTutorialSpotlightViewController.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
