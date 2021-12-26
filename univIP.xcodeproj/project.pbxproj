@@ -224,7 +224,7 @@
 				1AA056E826BD2DA900343005 /* Syllabus シラバス */,
 				1A3FF1D8275DC91D00D45623 /* Customize カスタマイズ */,
 				1A207F992761C57F00A22F9C /* EditFirstView 初期画面設定 */,
-				1A81A93226C14FBA00CC56E2 /* PasswordSettings パスワード登録 */,
+				1A81A93226C14FBA00CC56E2 /* Password パスワード登録 */,
 				1A81A93326C14FCC00CC56E2 /* AboutThisApp このアプリについて */,
 			);
 			name = "Menu メニュー";
@@ -241,13 +241,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1A81A93226C14FBA00CC56E2 /* PasswordSettings パスワード登録 */ = {
+		1A81A93226C14FBA00CC56E2 /* Password パスワード登録 */ = {
 			isa = PBXGroup;
 			children = (
 				1A81A93526C1503300CC56E2 /* PasswordSettingsViewController.swift */,
 				1A81A93726C1504500CC56E2 /* PasswordSettings.storyboard */,
 			);
-			name = "PasswordSettings パスワード登録";
+			name = "Password パスワード登録";
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};

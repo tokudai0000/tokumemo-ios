@@ -101,7 +101,7 @@ final class PasswordSettingsViewController: BaseViewController {
         }
     }
     
-    @IBAction func dissmissButton(_ sender: Any) {
+    @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -110,7 +110,7 @@ final class PasswordSettingsViewController: BaseViewController {
     
     enum cursorType {
         case normal
-        case forcus
+        case forcas
         case error
     }
     private func cAccountTextFieldCursorSetup(type: cursorType) {
@@ -119,7 +119,7 @@ final class PasswordSettingsViewController: BaseViewController {
         case .normal:
             cAccountUnderLine.backgroundColor = .lightGray
             
-        case .forcus:
+        case .forcas:
             // カーソルの色
             cAccountTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             cAccountUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
@@ -136,7 +136,7 @@ final class PasswordSettingsViewController: BaseViewController {
         case .normal:
             passwordUnderLine.backgroundColor = .lightGray
             
-        case .forcus:
+        case .forcas:
             passwordTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             passwordUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             
@@ -181,10 +181,10 @@ extension PasswordSettingsViewController: UITextFieldDelegate {
         
         switch textFieldTag {
         case .cAccount:
-            cAccountTextFieldCursorSetup(type: .forcus)
+            cAccountTextFieldCursorSetup(type: .forcas)
             
         case .password:
-            passwordTextFieldCursorSetup(type: .forcus)
+            passwordTextFieldCursorSetup(type: .forcas)
             
         case .none:
             AKLog(level: .FATAL, message: "TextFieldTagが不正")

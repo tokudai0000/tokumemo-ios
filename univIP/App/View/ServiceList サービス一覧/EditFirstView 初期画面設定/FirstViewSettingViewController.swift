@@ -26,9 +26,9 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
         
         // 決定バーの生成
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let spaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
+        toolbar.setItems([spaceItem, doneItem], animated: true)
         
         // インプットビュー設定
         textField.inputView = pickerView
@@ -43,7 +43,7 @@ final class FirstViewSettingViewController: UIViewController, UIPickerViewDelega
     
     
     // MARK: - IBAction
-    @IBAction func dissmissButton(_ sender: Any) {
+    @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
