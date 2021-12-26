@@ -32,8 +32,7 @@ final class Constant {
         case libraryMyPage                  // 図書館MyPage
         case libraryBookLendingExtension    // 図書館本貸出し期間延長
         case libraryBookPurchaseRequest     // 図書館本購入リクエスト
-        case libraryCalendar                // 図書館カレンダー常三島
-        case libraryCalendarKura            // 図書館カレンダー蔵本
+        case libraryCalendar                // 図書館カレンダー
         case syllabus                       // シラバス
         case timeTable                      // 時間割
         case currentTermPerformance         // 今年の成績表
@@ -120,6 +119,8 @@ final class Constant {
              id: .aboutThisApp,
              url: nil,
              canInitView: false),
+        
+        // 以下デフォルトでは表示させない
         
         Menu(title: "教務事務システム[PC]",
              id: .courseManagementHomePC,
