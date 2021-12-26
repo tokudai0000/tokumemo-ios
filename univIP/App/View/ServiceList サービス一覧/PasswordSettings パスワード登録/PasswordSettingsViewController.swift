@@ -56,6 +56,18 @@ final class PasswordSettingsViewController: BaseViewController {
         registerButton.layer.cornerRadius = 5.0
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // キーボードの通知セット
+        let notification = NotificationCenter.default
+        // キーボードが現れる直前呼び出す
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
+                                 name: UIResponder.keyboardWillShowNotification, object: nil)
+        // キーボードが隠れる直前呼び出す
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
+                                 name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     
     // MARK: - IBAction
     @IBAction func registrationButton(_ sender: Any) {
@@ -151,26 +163,6 @@ final class PasswordSettingsViewController: BaseViewController {
 // MARK: - UITextFieldDelegate
 extension PasswordSettingsViewController: UITextFieldDelegate {
     
-    // キーボードが現れる直前
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // キーボードで隠されたくない範囲（注意！super.viewからの絶対座標で渡すこと）
-        var frame = registerButton.frame
-        // super.viewからの絶対座標に変換する
-        if var pv = registerButton.superview {
-            while pv != super.view {
-                if let gv = pv.superview {
-                    frame = pv.convert(frame, to: gv)
-                    pv = gv
-                }else{
-                    break
-                }
-            }
-        }
-        super.keyboardSafeArea = frame // super.viewからの絶対座標
-        return true //true=キーボードを表示する
-    }
-    
-    
     enum TextFieldTag: Int {
         case cAccount = 0
         case password = 1
@@ -206,74 +198,67 @@ extension PasswordSettingsViewController: UITextFieldDelegate {
 }
 
 
-// MARK: - Notification
+// キーボード関連
 extension PasswordSettingsViewController {
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // キーボードの通知セット
-        let notification = NotificationCenter.default
-        // キーボードが現れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)),
-                                 name: UIResponder.keyboardWillShowNotification, object: nil)
-        // キーボードが隠れる直前
-        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
-                                 name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
+    // キーボードが現れる直前に呼ばれる
     @objc func keyboardWillShow(notification: Notification?) {
-        guard keyboardSafeArea != nil,
-              notification != nil else {
-                  return
-              }
-        guard let userInfo = notification!.userInfo as? [String: Any] else {
+        // UIKeyboardWillShowNotification を取得
+        guard let notification = notification else {
+            AKLog(level: .ERROR, message: "[notification取得エラー]")
             return
         }
+        // キーボード関連の情報
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            AKLog(level: .ERROR, message: "[userInfo取得エラー]")
+            return
+        }
+        // キーボードの表示範囲
+        // NSRect{{x, y}, {wide, hight}}
         guard let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            AKLog(level: .ERROR, message: "[keyboardInfo取得エラー]")
             return
         }
+        // キーボード表示アニメーション時間
         guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+            AKLog(level: .ERROR, message: "[duration取得エラー]")
             return
         }
-        let keyboardSize = keyboardInfo.cgRectValue.size
         
-        let safeAreaTop:CGFloat = 5.0
+        // キーボードで隠れた高さ
+        let hideY = -keyboardInfo.cgRectValue.size.height
         
-        let hide = (self.view.frame.height - safeAreaTop - keyboardSize.height) - keyboardSafeArea!.maxY
-        
-        if hide < 0.0 {
-            // キーボドに隠れる。隠れる分(hide)だけ上げる
-            if UIApplication.shared.applicationState == .background {
-                // フォアグランドに戻ったとき画面が上がらない不具合対応
-                // DispatchQueue.mainThread では改善しなかった。（メイン判定に問題があるのかも知れない）
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: duration + 0.2, animations: { () in
-                        let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
-                        self.registerButton.transform = transform
-                    })
-                }
-            } else {
-                UIView.animate(withDuration: duration + 0.2, animations: { () in
-                    let transform = CGAffineTransform(translationX: 0, y: hide - safeAreaTop)
-                    self.registerButton.transform = transform
-                })
-            }
-        }
+        UIView.animate(withDuration: duration + 0.2, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: hideY)
+            self.registerButton.transform = transform
+        })
     }
-    /// キーボードが隠れる直前、画面全体を元に戻す
+    
+    // キーボードが隠れる直前呼ばれる
     @objc func keyboardWillHide(notification: Notification?) {
-        guard keyboardSafeArea != nil,
-              notification != nil else {
-                  return
-              }
-        guard let userInfo = notification!.userInfo as? [String: Any] else {
+        // 画面全体を元に戻す
+        // UIKeyboardWillShowNotification を取得
+        guard let notification = notification else {
+            AKLog(level: .ERROR, message: "[notification取得エラー]")
             return
         }
+        // キーボード関連の情報
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            AKLog(level: .ERROR, message: "[userInfo取得エラー]")
+            return
+        }
+        // キーボード表示アニメーション時間
         guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+            AKLog(level: .ERROR, message: "[duration取得エラー]")
             return
         }
+        
         UIView.animate(withDuration: duration + 0.2, animations: { () in
             self.registerButton.transform = CGAffineTransform.identity
         })
+    }
+    
+    // キーボードを非表示
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
