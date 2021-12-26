@@ -183,7 +183,7 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title=" " image="xmark" catalog="system"/>
                                                 <connections>
-                                                    <action selector="dissmissButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="LNS-UA-Z3s"/>
+                                                    <action selector="dismissButton:" destination="LeW-Iv-QPG" eventType="touchUpInside" id="Hav-OI-Lkc"/>
                                                 </connections>
                                             </button>
                                         </subviews>

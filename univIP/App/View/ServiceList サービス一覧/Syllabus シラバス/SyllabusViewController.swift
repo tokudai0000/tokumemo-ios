@@ -23,9 +23,9 @@ final class SyllabusViewController: BaseViewController {
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var searchButton: UIButton!
     
-    private let dataManager = DataManager.singleton
-    
     public var delegate : MainViewController?
+    
+    private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
@@ -49,19 +49,23 @@ final class SyllabusViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func searchButton(_ sender: Any) {
+        
+        guard let delegate = self.delegate else {
+            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
+            fatalError()
+        }
+        
         let subjectText = subjectTextField.text ?? ""
         let teacherText = teacherTextField.text ?? ""
         
-        if let delegate = delegate {
-            delegate.refreshSyllabus(subjectName: subjectText,
-                                     teacherName: teacherText)
-//            dataManager.displayUrlString = "" // MARK: - HACK だいぶ無理矢理
-            dismiss(animated: true, completion: nil)
-        }
-        // flag 
+        delegate.refreshSyllabus(subjectName: subjectText,
+                                 teacherName: teacherText)
+        
+        dismiss(animated: true, completion: nil)
+        
     }
     
-    @IBAction func dissmissButton(_ sender: Any) {
+    @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -70,40 +74,42 @@ final class SyllabusViewController: BaseViewController {
     
     enum cursorType {
         case normal
-        case forcus
+        case forcas
         case error
     }
-    
+    // 科目名フィールド
     private func subjectTextFieldCursorSetup(type: cursorType) {
         switch type {
-            
-        case .normal:
-            subjectUnderLine.backgroundColor = .lightGray
-            
-        case .forcus:
-            // カーソルの色
-            subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            
-        case .error:
-            subjectTextField.tintColor = .red
-            subjectUnderLine.backgroundColor = .red
+            case .normal:
+                // 非選択状態
+                subjectUnderLine.backgroundColor = .lightGray
+                
+            case .forcas:
+                // 選択状態
+                // カーソルの色
+                subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                
+            case .error:
+                subjectTextField.tintColor = .red
+                subjectUnderLine.backgroundColor = .red
         }
     }
-    
+    // 教員名フィールド
     private func teacherTextFieldCursorSetup(type: cursorType) {
         switch type {
-            
-        case .normal:
-            teacherUnderLine.backgroundColor = .lightGray
-            
-        case .forcus:
-            teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            
-        case .error:
-            teacherTextField.tintColor = .red
-            teacherUnderLine.backgroundColor = .red
+            case .normal:
+                // 非選択状態
+                teacherUnderLine.backgroundColor = .lightGray
+                
+            case .forcas:
+                // 選択状態
+                teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                
+            case .error:
+                teacherTextField.tintColor = .red
+                teacherUnderLine.backgroundColor = .red
         }
     }
     
@@ -122,15 +128,15 @@ extension SyllabusViewController: UITextFieldDelegate {
         let textFieldTag = TextFieldTag(rawValue: textField.tag)
         
         switch textFieldTag {
-        case .subject:
-            subjectTextFieldCursorSetup(type: .forcus)
-            
-        case .teacher:
-            teacherTextFieldCursorSetup(type: .forcus)
-            
-        case .none:
-            AKLog(level: .FATAL, message: "TextFieldTagが不正")
-            fatalError()
+            case .subject:
+                subjectTextFieldCursorSetup(type: .forcas)
+                
+            case .teacher:
+                teacherTextFieldCursorSetup(type: .forcas)
+                
+            case .none:
+                AKLog(level: .FATAL, message: "TextFieldTagが不正")
+                fatalError()
         }
     }
     
