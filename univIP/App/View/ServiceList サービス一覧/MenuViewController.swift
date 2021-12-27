@@ -8,7 +8,6 @@
 
 import UIKit
 import Gecco
-import FirebaseAnalytics
 
 final class MenuViewController: UIViewController {
     
@@ -103,7 +102,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         dataManager.isExecuteJavascript = true
         
         // メニュー画面を消去後、画面を読み込む
-        self.dismiss(animated: false, completion: {
+        self.dismiss(animated: false, completion: { [self] in
             // どのセルが押されたか
             switch self.dataManager.menuLists[indexPath[1]].id {
                 case .libraryCalendar:                   // [図書館]開館カレンダー
@@ -136,7 +135,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     let url = URL(string: urlString)!                               // fatalError
                     delegate.webView.load(URLRequest(url: url))
             }
-            Analytics.logEvent("service\(self.dataManager.menuLists[indexPath[1]].id)", parameters: nil)
+            // アナリティクスを送信
+            self.viewModel.analytics("\(self.dataManager.menuLists[indexPath[1]].id)")
         })
     }
 }

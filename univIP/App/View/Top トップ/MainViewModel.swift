@@ -8,6 +8,7 @@
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
 import Kanna
+import FirebaseAnalytics
 
 final class MainViewModel {
     
@@ -186,6 +187,16 @@ final class MainViewModel {
         }
         
         return false
+    }
+    
+    public func analytics(_ url:URL) {
+        
+        // シュミレーターではAnalyticsを送信しない
+        #if !targetEnvironment(simulator)
+            let urlString = url.absoluteString
+            Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
+        #endif
+        
     }
     
     // cアカウント、パスワードを登録しているか判定

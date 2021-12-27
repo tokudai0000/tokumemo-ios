@@ -24,6 +24,14 @@ final class CustomizeViewController: UIViewController {
         editMode(isEditing: true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // シュミレーターではAnalyticsを送信しない
+        #if !targetEnvironment(simulator)
+            Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
+        #endif
+    }
+    
     
     // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
@@ -33,10 +41,6 @@ final class CustomizeViewController: UIViewController {
     
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-        
-        Analytics.logEvent("allCellList", parameters:  [
-            AnalyticsParameterItemName: "\(dataManager.menuLists[0])",
-        ])
     }
     
     private func editMode(isEditing: Bool) {
@@ -95,6 +99,10 @@ final class CustomizeViewController: UIViewController {
                     self.dataManager.changeContentsMenuLists(row: indexPath, title: text)
                     self.dataManager.saveMenuLists()
                     self.tableView.reloadData()
+                    // シュミレーターではAnalyticsを送信しない
+                    #if !targetEnvironment(simulator)
+                        Analytics.logEvent("CustomizeText", parameters: ["changeName": text])
+                    #endif
                 }
                 
             }else{

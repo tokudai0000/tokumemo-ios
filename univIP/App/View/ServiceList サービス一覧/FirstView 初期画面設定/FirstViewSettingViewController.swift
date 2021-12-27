@@ -60,7 +60,12 @@ final class FirstViewSettingViewController: UIViewController {
         // menuListsをUserDefaultsに保存
         dataManager.saveMenuLists()
         
-        textField.text = "\(pickerList[pickerView.selectedRow(inComponent: 0)].title)"
+        textField.text = pickerList[pickerView.selectedRow(inComponent: 0)].title
+        
+        // シュミレーターではAnalyticsを送信しない
+        #if !targetEnvironment(simulator)
+            Analytics.logEvent("FirstViewSetting", parameters: ["initViewName": pickerList[pickerView.selectedRow(inComponent: 0)].title])
+        #endif
     }
     
     // textfieldにpickerViewを埋め込む

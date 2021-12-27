@@ -309,6 +309,9 @@ extension MainViewController: WKNavigationDelegate {
         webViewGoForwardButton.isEnabled = webView.canGoForward
         webViewGoForwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
         
+        // アナリティクスを送信
+        viewModel.analytics(activeUrl)
+        
     }
     
     
