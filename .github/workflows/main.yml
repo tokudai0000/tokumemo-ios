@@ -13,16 +13,12 @@ jobs:
     # ソースコードを取得する
     - uses: actions/checkout@v1
     
-    # Ruby製のライブラリをインストールする
-#    - name: Bundle install
-#      run: bundle config path vendor/bundle
-#           bundle install --without=documentation --jobs 4 --retry 3
-        # CocoaPodsをインストールする
-        - name: CocoaPods
-        run: pod install
+    # CocoaPodsをインストールする
+    - name: CocoaPods
+      run: pod install
     
     - name: Build # シミュレーター向けにビルド
-        run: xcodebuild -sdk iphonesimulator -configuration Debug build
+      run: xcodebuild -sdk iphonesimulator -configuration Debug build
 
     # ビルドする
     - name: Xcode build
