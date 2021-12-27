@@ -36,7 +36,7 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
             case 0:
                 label.text = "パスワードを入力し、自動ログイン機能を活用しましよう"
             case 1:
-                label.text = "他にも学部に依ってさまざまなカスタマイズをしましょう"
+                label.text = "他にも、さまざまなカスタマイズを試してみましょう"
             default:
                 break
         }
@@ -55,19 +55,22 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
         let height = uiLabels_frames[0].height
         var posY = CGFloat()
         
+        // MARK: - HACK なぜ見た目正常に動いているかわからない
+        let safeAreaTop = 47 - self.view.safeAreaInsets.top
+        
         switch updateIndex {
             case 0:
-                posY = uiLabels_frames[0].midY - 10
+                posY = uiLabels_frames[0].midY - safeAreaTop
                 
             case 1:
-                posY = uiLabels_frames[1].midY - 10
+                posY = uiLabels_frames[1].midY - safeAreaTop
                 
             default:
                 dismiss(animated: true, completion: nil)
                 return
         }
         
-        spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: uiLabels_frames[1].midX, y: posY),
+        spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: uiLabels_frames[0].midX, y: posY),
                                                    size: CGSize(width: width, height: height),
                                                    cornerRadius: 50))
         

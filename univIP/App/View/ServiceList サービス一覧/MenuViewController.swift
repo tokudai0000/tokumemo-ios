@@ -8,7 +8,6 @@
 
 import UIKit
 import Gecco
-import FirebaseAnalytics
 
 final class MenuViewController: UIViewController {
     
@@ -48,11 +47,15 @@ final class MenuViewController: UIViewController {
     // MARK: - Private
     private func tutorialSpotlight() {
         let spotlightViewController = MenuTutorialSpotlightViewController()
-        // 絶対座標(画面左上X=0,Y=0からの座標)
-        let tableViewPos1 = tableView.cellForRow(at: IndexPath(row: 7, section: 0))! // fatalError
-        let tableViewPos2 = tableView.cellForRow(at: IndexPath(row: 8, section: 0))! // fatalError
+        
+        // 相対座標(tableViewの左上をX=0,Y=0とした座標)
+        let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: 7, section: 0))! // fatalError
+        let tableViewPos2 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: 8, section: 0))! // fatalError
+        
+        // 絶対座標(画面左上X=0,Y=0からの座標)に変換
         let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
         let pos2 = tableView.convert(tableViewPos2.frame, to: self.view)
+        
         // スポットする座標を渡す
         spotlightViewController.uiLabels_frames.append(pos1)
         spotlightViewController.uiLabels_frames.append(pos2)
@@ -103,7 +106,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         dataManager.isExecuteJavascript = true
         
         // メニュー画面を消去後、画面を読み込む
-        self.dismiss(animated: false, completion: {
+        self.dismiss(animated: false, completion: { [self] in
             // どのセルが押されたか
             switch self.dataManager.menuLists[indexPath[1]].id {
                 case .libraryCalendar:                   // [図書館]開館カレンダー
@@ -136,7 +139,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     let url = URL(string: urlString)!                               // fatalError
                     delegate.webView.load(URLRequest(url: url))
             }
-            Analytics.logEvent("service\(self.dataManager.menuLists[indexPath[1]].id)", parameters: nil)
+            // アナリティクスを送信
+            self.viewModel.analytics("\(self.dataManager.menuLists[indexPath[1]].id)")
         })
     }
 }

@@ -8,6 +8,7 @@
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
 import Kanna
+import FirebaseAnalytics
 
 final class MainViewModel {
     
@@ -16,6 +17,9 @@ final class MainViewModel {
     // シラバスをJavaScriptで自動入力する際、参照変数
     public var subjectName = ""
     public var teacherName = ""
+    
+    // ログイン用　アンケート催促が出ないユーザー用
+    public var isInitFinishLogin = true
     
     // 利用規約同意者か判定
     public var hasAgreedTermsOfUse: Bool {
@@ -44,7 +48,6 @@ final class MainViewModel {
     
     enum JavaScriptType {
         case universityLogin
-        case questionnaireReminder
         case syllabusFirstTime
         case outlookLogin
         case tokudaiCareerCenter
@@ -61,8 +64,7 @@ final class MainViewModel {
         if !dataManager.isExecuteJavascript {
             return .none
         }
-        // フラグを下ろす
-        dataManager.isExecuteJavascript = false
+        
         // 大学サイト、ログイン画面 && JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
         if urlString.contains(Url.universityLogin.string()) && canLoggedInService {
             return .universityLogin
@@ -79,10 +81,6 @@ final class MainViewModel {
         if urlString == Url.tokudaiCareerCenter.string() {
             return .tokudaiCareerCenter
         }
-        // アンケート催促画面(教務事務表示前に出現)
-        if urlString.contains(Url.enqueteReminder.string()) {
-            return .questionnaireReminder
-        }
         
         return .none
         
@@ -91,6 +89,8 @@ final class MainViewModel {
     /// 設定した初期画面を探す
     /// - Returns: 設定した初期画面のURLRequest
     public func searchInitialViewUrl() -> URLRequest {
+        // フラグを立てる
+        dataManager.isExecuteJavascript = true
         
         for menuList in dataManager.menuLists {
             // ユーザーが指定した初期画面を探す
@@ -168,6 +168,37 @@ final class MainViewModel {
         }
     }
     
+    /// 初回ログイン後すぐか判定
+    /// - Parameter url: 現在表示しているURL
+    /// - Returns: 判定結果
+    public func isFinishLogin(_ url: URL) -> Bool {
+        let urlString = url.absoluteString
+        
+        // アンケート催促画面が出た == ログイン後すぐ
+        if urlString.contains(Url.enqueteReminder.string()) {
+            isInitFinishLogin = false
+            return true
+        }
+        
+        // モバイル画面かつisInitFinishLoginがtrue つまり　アンケート催促が出ず(アンケート全て完了してるユーザー)そのままモバイル画面へ遷移した人
+        if urlString == Url.courseManagementMobile.string() && isInitFinishLogin {
+            isInitFinishLogin = false
+            return true
+        }
+        
+        return false
+    }
+    
+    public func analytics(_ url:URL) {
+        
+        // シュミレーターではAnalyticsを送信しない
+        #if !targetEnvironment(simulator)
+            let urlString = url.absoluteString
+            Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
+        #endif
+        
+    }
+    
     // cアカウント、パスワードを登録しているか判定
-    private var canLoggedInService: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    private var canLoggedInService: Bool { get { return (!dataManager.cAccount.isEmpty && !dataManager.password.isEmpty) }}
 }

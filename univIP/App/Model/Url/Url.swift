@@ -40,6 +40,7 @@ enum Url: String {
     
     case tokudaiCareerCenter         // 徳島大学キャリアセンター
     
+    case universityTransitionLogin   // ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityLogin             // 大学サイト、ログイン画面
     case universityServiceTimeOut    // タイムアウト(20分無操作)
     case enqueteReminder             // アンケート催促画面(教務事務表示前に出現)

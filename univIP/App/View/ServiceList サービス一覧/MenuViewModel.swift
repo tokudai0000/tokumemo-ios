@@ -7,6 +7,7 @@
 
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
+import FirebaseAnalytics
 
 final class MenuViewModel {
     
@@ -34,6 +35,15 @@ final class MenuViewModel {
             AKLog(level: .ERROR, message: "[URLフォーマットエラー]: 今年度の成績表URL生成エラー urlString:\(urlString)")
             return nil
         }
+    }
+    
+    public func analytics(_ temp: String) {
+        
+        // シュミレーターではAnalyticsを送信しない
+        #if !targetEnvironment(simulator)
+            Analytics.logEvent("MenuView", parameters: ["serviceName": temp])
+        #endif
+        
     }
     
 }
