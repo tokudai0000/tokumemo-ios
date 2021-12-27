@@ -17,6 +17,7 @@ target 'univIP' do
   target  'univIPTests' do
     inherit! :search_paths
     pod 'Firebase'
+    pod 'R.swift' , '~> 5'
   end
   
 end
