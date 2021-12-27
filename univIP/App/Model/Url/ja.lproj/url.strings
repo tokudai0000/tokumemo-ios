@@ -37,6 +37,7 @@
 
 "tokudaiCareerCenter"         = "https://www.tokudai-syusyoku.com/index.php";
 
+"universityTransitionLogin"   = "https://eweb.stud.tokushima-u.ac.jp/Portal/";
 "universityLogin"             = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=";
 "universityServiceTimeOut"    = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx";
 "enqueteReminder"             = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx";

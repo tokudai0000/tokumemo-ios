@@ -26,7 +26,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        refreshWebLoad()
+        login()
         
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -169,15 +169,22 @@ final class MainViewController: UIViewController {
     
     
     // MARK: - Private func
-    
-    // 最初に読み込むURLを取得し表示(初期画面)
-    private func refreshWebLoad() {
-        // 次に読み込まれるURLはJavaScriptを動かすことを許可する
+    // 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
+    private func login() {
+        // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
         dataManager.isExecuteJavascript = true
-        // ユーザーによって初期画面を設定できる(デフォルト「マナバ」)
-        webView.load(viewModel.searchInitialViewUrl())
+        
+        let urlString = Url.universityTransitionLogin.string()
+        let url = URL(string: urlString)! // fatalError
+        webView.load(URLRequest(url: url))
     }
     
+//    // 最初に読み込むURLを取得し表示(初期画面)
+//    private func refreshWebLoad() {
+//        // ユーザーによって初期画面を設定できる(デフォルト「マナバ」)
+//        webView.load(viewModel.searchInitialViewUrl())
+//    }
+//
     // ウォークスルーチュートリアル、3枚の画像を表示する
     private func walkThroughTutorial() {
         
@@ -235,7 +242,7 @@ extension MainViewController: WKNavigationDelegate {
         
         // タイムアウト(20分無操作)の場合
         if url.absoluteString == Url.universityServiceTimeOut.string() {
-            refreshWebLoad()
+            login()
         }
         
         decisionHandler(.allow)
@@ -248,6 +255,13 @@ extension MainViewController: WKNavigationDelegate {
         
         let activeUrl = self.webView.url! // fatalError
         
+        // アンケート催促画面(教務事務表示前に出現) ログイン失敗等の対策が必要なく、ログインの時点でisExecuteJavascriptがfalseになってしまうから
+        // 4行下のコードよりも先に実行
+        if activeUrl.absoluteString.contains(Url.enqueteReminder.string()) {
+            // 初回起動時のログイン
+            webView.load(viewModel.searchInitialViewUrl())
+        }
+        
         // 現在のURLがJavaScript
         switch viewModel.anyJavaScriptExecute(activeUrl) {
             case .universityLogin:
@@ -256,11 +270,8 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-                
-            case .questionnaireReminder:
-                // 教務事務システム、アンケート催促スキップ
-                // 「情報システムを使用後直ちに回答を行う」のボタンを自動でクリック
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.isExecuteJavascript = false
                 
             case .syllabusFirstTime:
                 // シラバスの検索画面
@@ -268,6 +279,8 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.isExecuteJavascript = false
                 
             case .outlookLogin:
                 // outlook(メール)へのログイン画面
@@ -276,6 +289,8 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.isExecuteJavascript = false
                 
             case .tokudaiCareerCenter:
                 // 徳島大学キャリアセンター室
@@ -283,6 +298,8 @@ extension MainViewController: WKNavigationDelegate {
                 // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
                 webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.isExecuteJavascript = false
                 
             case .none:
                 break

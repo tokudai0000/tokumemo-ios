@@ -44,7 +44,6 @@ final class MainViewModel {
     
     enum JavaScriptType {
         case universityLogin
-        case questionnaireReminder
         case syllabusFirstTime
         case outlookLogin
         case tokudaiCareerCenter
@@ -61,8 +60,7 @@ final class MainViewModel {
         if !dataManager.isExecuteJavascript {
             return .none
         }
-        // フラグを下ろす
-        dataManager.isExecuteJavascript = false
+        
         // 大学サイト、ログイン画面 && JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
         if urlString.contains(Url.universityLogin.string()) && canLoggedInService {
             return .universityLogin
@@ -79,10 +77,6 @@ final class MainViewModel {
         if urlString == Url.tokudaiCareerCenter.string() {
             return .tokudaiCareerCenter
         }
-        // アンケート催促画面(教務事務表示前に出現)
-        if urlString.contains(Url.enqueteReminder.string()) {
-            return .questionnaireReminder
-        }
         
         return .none
         
@@ -91,6 +85,8 @@ final class MainViewModel {
     /// 設定した初期画面を探す
     /// - Returns: 設定した初期画面のURLRequest
     public func searchInitialViewUrl() -> URLRequest {
+        // フラグを立てる
+        dataManager.isExecuteJavascript = true
         
         for menuList in dataManager.menuLists {
             // ユーザーが指定した初期画面を探す
@@ -169,5 +165,5 @@ final class MainViewModel {
     }
     
     // cアカウント、パスワードを登録しているか判定
-    private var canLoggedInService: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    private var canLoggedInService: Bool { get { return (!dataManager.cAccount.isEmpty && !dataManager.password.isEmpty) }}
 }
