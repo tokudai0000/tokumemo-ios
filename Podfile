@@ -24,7 +24,7 @@ end
 
 post_install do | installer |
   require 'fileutils'
-  
+  # 謝辞
   FileUtils.cp_r('Pods/Target Support Files/Pods-univIP/Pods-univIP-Acknowledgements.plist', 'univIP/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
   
 end

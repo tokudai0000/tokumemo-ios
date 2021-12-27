@@ -54,45 +54,10 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
         let width = uiLabels_frames[0].width
         let height = uiLabels_frames[0].height
         var posY = CGFloat()
-        print(uiLabels_frames[0])
-        print(uiLabels_frames[0].minY)
-        print(uiLabels_frames[0].midY)
-        print(uiLabels_frames[0].maxY)
         
-        print(uiLabels_frames[1])
-        print(uiLabels_frames[1].minY)
-        print(uiLabels_frames[1].midY)
-        print(uiLabels_frames[1].maxY)
-        
-        //上部のSafeArea
+        // MARK: - HACK なぜ見た目正常に動いているかわからない
         let safeAreaTop = 47 - self.view.safeAreaInsets.top
-        print(safeAreaTop)
         
-        
-        /*
-         5.5inch
-         (119.0, 552.0, 290.0, 44.0)
-         552.0
-         574.0
-         596.0
-         (119.0, 596.0, 290.0, 44.0)
-         596.0
-         618.0
-         640.0
-         20.0
-         
-         6.5inch
-         (119.0, 552.0, 290.0, 44.0)
-         552.0
-         574.0
-         596.0
-         (119.0, 596.0, 290.0, 44.0)
-         596.0
-         618.0
-         640.0
-         47.0
-
-         */
         switch updateIndex {
             case 0:
                 posY = uiLabels_frames[0].midY - safeAreaTop
