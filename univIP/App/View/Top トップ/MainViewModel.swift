@@ -17,6 +17,9 @@ final class MainViewModel {
     public var subjectName = ""
     public var teacherName = ""
     
+    // ログイン用　アンケート催促が出ないユーザー用
+    public var isInitFinishLogin = true
+    
     // 利用規約同意者か判定
     public var hasAgreedTermsOfUse: Bool {
         get { return dataManager.agreementVersion == Constant.agreementVersion }
@@ -162,6 +165,27 @@ final class MainViewModel {
             AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(urlString)")
             return nil
         }
+    }
+    
+    /// 初回ログイン後すぐか判定
+    /// - Parameter url: 現在表示しているURL
+    /// - Returns: 判定結果
+    public func isFinishLogin(_ url: URL) -> Bool {
+        let urlString = url.absoluteString
+        
+        // アンケート催促画面が出た == ログイン後すぐ
+        if urlString.contains(Url.enqueteReminder.string()) {
+            isInitFinishLogin = false
+            return true
+        }
+        
+        // モバイル画面かつisInitFinishLoginがtrue つまり　アンケート催促が出ず(アンケート全て完了してるユーザー)そのままモバイル画面へ遷移した人
+        if urlString == Url.courseManagementMobile.string() && isInitFinishLogin {
+            isInitFinishLogin = false
+            return true
+        }
+        
+        return false
     }
     
     // cアカウント、パスワードを登録しているか判定

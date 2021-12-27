@@ -174,17 +174,14 @@ final class MainViewController: UIViewController {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
         dataManager.isExecuteJavascript = true
         
+        viewModel.isInitFinishLogin = true
+        
         let urlString = Url.universityTransitionLogin.string()
         let url = URL(string: urlString)! // fatalError
         webView.load(URLRequest(url: url))
     }
     
-//    // 最初に読み込むURLを取得し表示(初期画面)
-//    private func refreshWebLoad() {
-//        // ユーザーによって初期画面を設定できる(デフォルト「マナバ」)
-//        webView.load(viewModel.searchInitialViewUrl())
-//    }
-//
+
     // ウォークスルーチュートリアル、3枚の画像を表示する
     private func walkThroughTutorial() {
         
@@ -257,7 +254,7 @@ extension MainViewController: WKNavigationDelegate {
         
         // アンケート催促画面(教務事務表示前に出現) ログイン失敗等の対策が必要なく、ログインの時点でisExecuteJavascriptがfalseになってしまうから
         // 4行下のコードよりも先に実行
-        if activeUrl.absoluteString.contains(Url.enqueteReminder.string()) {
+        if viewModel.isFinishLogin(activeUrl) {
             // 初回起動時のログイン
             webView.load(viewModel.searchInitialViewUrl())
         }
