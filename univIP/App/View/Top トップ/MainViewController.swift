@@ -32,8 +32,8 @@ final class MainViewController: UIViewController {
         webView.navigationDelegate = self
         
         // **DEBUG**
-//        dataManager.isFinishedMainTutorial = false
-//        dataManager.isFinishedMenuTutorial = false
+        dataManager.isFinishedMainTutorial = false
+        dataManager.isFinishedMenuTutorial = false
         // *********
         
     }
@@ -196,6 +196,8 @@ final class MainViewController: UIViewController {
         
         let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
         introView?.delegate = self
+        // サイズを調整
+        introView?.bgViewContentMode = .scaleAspectFit
         introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
         introView?.backgroundColor = UIColor(named: R.color.tokumemoColor.name)
         introView?.show(in: self.view, animateDuration: 0)
