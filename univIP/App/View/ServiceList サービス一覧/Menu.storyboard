@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Ux-RB-lY5">
-                                <rect key="frame" x="119" y="191" width="290" height="627"/>
+                                <rect key="frame" x="119" y="244" width="290" height="574"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" id="Eec-UG-1uG">
@@ -47,10 +47,10 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="0.0" alpha="0.053807947019867547" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="3Ux-RB-lY5" firstAttribute="height" secondItem="5EZ-qb-Rvc" secondAttribute="height" multiplier="0.7" id="83a-5o-5Tj"/>
                             <constraint firstItem="3Ux-RB-lY5" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" multiplier="0.7" id="ANU-tL-XkL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="3Ux-RB-lY5" secondAttribute="trailing" constant="5" id="MwC-rj-fh4"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="3Ux-RB-lY5" secondAttribute="bottom" constant="44" id="bYH-FZ-0ro"/>
+                            <constraint firstItem="3Ux-RB-lY5" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="200" id="xJr-9x-cpW"/>
                         </constraints>
                     </view>
                     <connections>

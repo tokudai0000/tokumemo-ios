@@ -36,7 +36,7 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
             case 0:
                 label.text = "パスワードを入力し、自動ログイン機能を活用しましよう"
             case 1:
-                label.text = "他にも学部に依ってさまざまなカスタマイズをしましょう"
+                label.text = "他にも、さまざまなカスタマイズを試してみましょう"
             default:
                 break
         }
@@ -54,20 +54,58 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
         let width = uiLabels_frames[0].width
         let height = uiLabels_frames[0].height
         var posY = CGFloat()
+        print(uiLabels_frames[0])
+        print(uiLabels_frames[0].minY)
+        print(uiLabels_frames[0].midY)
+        print(uiLabels_frames[0].maxY)
         
+        print(uiLabels_frames[1])
+        print(uiLabels_frames[1].minY)
+        print(uiLabels_frames[1].midY)
+        print(uiLabels_frames[1].maxY)
+        
+        //上部のSafeArea
+        let safeAreaTop = 47 - self.view.safeAreaInsets.top
+        print(safeAreaTop)
+        
+        
+        /*
+         5.5inch
+         (119.0, 552.0, 290.0, 44.0)
+         552.0
+         574.0
+         596.0
+         (119.0, 596.0, 290.0, 44.0)
+         596.0
+         618.0
+         640.0
+         20.0
+         
+         6.5inch
+         (119.0, 552.0, 290.0, 44.0)
+         552.0
+         574.0
+         596.0
+         (119.0, 596.0, 290.0, 44.0)
+         596.0
+         618.0
+         640.0
+         47.0
+
+         */
         switch updateIndex {
             case 0:
-                posY = uiLabels_frames[0].midY - 10
+                posY = uiLabels_frames[0].midY - safeAreaTop
                 
             case 1:
-                posY = uiLabels_frames[1].midY - 10
+                posY = uiLabels_frames[1].midY - safeAreaTop
                 
             default:
                 dismiss(animated: true, completion: nil)
                 return
         }
         
-        spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: uiLabels_frames[1].midX, y: posY),
+        spotlightView.appear(Spotlight.RoundedRect(center: CGPoint(x: uiLabels_frames[0].midX, y: posY),
                                                    size: CGSize(width: width, height: height),
                                                    cornerRadius: 50))
         
