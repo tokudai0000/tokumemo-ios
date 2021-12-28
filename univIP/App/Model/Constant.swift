@@ -142,7 +142,7 @@ final class Constant {
         
         Menu(title: "図書Web[蔵本]",
              id: .libraryWebHomePC,
-             url: Url.libraryHomePageMainPC.string(),
+             url: Url.libraryHomePageKuraPC.string(),
              isDisplay: false,
              canInitView: true),
         
