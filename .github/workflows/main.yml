@@ -41,10 +41,10 @@ jobs:
           xcodebuild
           -sdk iphonesimulator
           -configuration Debug
-          -workspace githubActionPractice.xcworkspace
-          -scheme githubActionPractice
+          -workspace univIP.xcworkspace
+          -scheme univIP
           -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
-          -skip-testing:githubActionPracticeUITests
+          -skip-testing:univIPUITests
           clean test | bundle exec xcpretty --report html
 
 
