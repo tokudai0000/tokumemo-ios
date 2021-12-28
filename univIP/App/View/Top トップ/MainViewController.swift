@@ -32,8 +32,8 @@ final class MainViewController: UIViewController {
         webView.navigationDelegate = self
         
         // **DEBUG**
-        dataManager.isFinishedMainTutorial = false
-        dataManager.isFinishedMenuTutorial = false
+//        dataManager.isFinishedMainTutorial = false
+//        dataManager.isFinishedMenuTutorial = false
         // *********
         
     }
