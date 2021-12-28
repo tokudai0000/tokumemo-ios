@@ -45,7 +45,7 @@ jobs:
           -scheme univIP
           -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
           -skip-testing:univIPUITests
-          clean test | bundle exec xcpretty --report html
+          clean test
 
 
   info:
