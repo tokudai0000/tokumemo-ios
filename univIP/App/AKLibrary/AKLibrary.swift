@@ -30,13 +30,12 @@ func AKLog(file: String = #file,
            message: String ){
     
     #if DEBUG // デバック時のみ実行
-    
         let levelString: String
         switch level {
-        case .FATAL:    levelString = "FATAL"
-        case .ERROR:    levelString = "ERROR"
-        case .WARN:     levelString = "WARN"
-        case .DEBUG:    levelString = "DEBUG"
+            case .FATAL:    levelString = "FATAL"
+            case .ERROR:    levelString = "ERROR"
+            case .WARN:     levelString = "WARN"
+            case .DEBUG:    levelString = "DEBUG"
         }
         
         let fileName = NSString(string: file).lastPathComponent
