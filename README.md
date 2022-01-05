@@ -17,11 +17,6 @@
 
 <img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_courceManagementMobile.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_manabaPC.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_mail.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_library.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_syllabus.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_libraryCalendar.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting1.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting2.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_password.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_career.png" width="320px">
 
-## 開発背景
-
-スクレイピングとハイブリッドアプリについて、理解を深めたかった為、
-大学のWebサイトをスクレイピングしたアプリを作成した。
-
 ## 仕様
 
 ## ライブラリ
@@ -46,10 +41,10 @@
 
 ### 1, タップ回数削減
 学生の立場から使いやすい操作手順（タップ回数削減）に変更した。
-例えば、「ログインするのに必要だったタップ回数を3回から0回へ」「成績参照までを11回から2回へ」など他にも工夫を重ねた
+例えば、「ログインするのに必要だったタップ回数を3回から0回へ」「成績参照までを11回から2回へ」など他にも工夫を重ねた。
 
 ### 2, 再ログイン機能
-時間制限による強制ログアウトでエラーが発生し、改めてログインする必要があり面倒だったのを、自動でエラー回避した上でログインする様にした
+時間制限による強制ログアウトでエラーが発生し、改めてログインする必要があり面倒だったのを、自動でエラー回避した上でログインする様にした。
 
 ### 3, パスワード保存への信頼性
 アプリの透明性をアピールする為、また同じ大学の仲間からアドバイスが受けられる様に、GitHubで公開した。
@@ -60,22 +55,24 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 
 ### 5, 保守性の向上
 オープンソース、チーム開発をする上で、
-コードの読みやすさ、言語やフレームワークの文化に沿ったコーディングスタイルを意識した
-また、適度にコメントを増やし3ヶ月後の自分でもわかる様、可読性を意識した
+コードの読みやすさ、言語やフレームワークの文化に沿ったコーディングスタイルを意識した。
+また、適度にコメントを増やし3ヶ月後の自分でもわかる様、可読性を意識した。
 
 ### 6, コミットの粒度
-正解の粒度はわからないが、自分自身がGitTreeを見た時に、何を変更したのかを理解できることを意識してコミットを行った
+正解の粒度はわからないが、自分自身がGitTreeを見た時に、何を変更したのかを理解できることを意識してコミットを行った。
 
-### 7, Twitterアカウントの運用
-認知度を広める為に、Twitterアカウントを稼働させた
-そのおかげか、稼働後からの「トクメモ」ダウンロード数は向上した
+### 7, 広報
+認知度を広める為に、Twitterアカウントを稼働させた。
+稼働後からの「トクメモ」ダウンロード数はこれにより向上した。
+それ以外にも、ビラを作成し学内掲示板への掲示を行う予定。
+https://twitter.com/tokumemo0000
 
 
 ## 自己評価
 リリース日(2021年9月2日)
 リリースから数ヶ月が経過した。
-初期に比べて、UI面ではシンプルなアプリに
-コード面でもコードリーディングを意識し続けている為、わかりやすいコードになっているのではないかと考える
+初期に比べて、UI面ではシンプルなアプリに。
+コード面でもコードリーディングを意識し続けている為、わかりやすいコードになっているのではないかと考える。
 
 また、FireBase/Analyticsを導入した結果、毎日２〜7ユーザーが利用してくれている為、
 使いやすいアプリとして認知されているのではないかと考える。
