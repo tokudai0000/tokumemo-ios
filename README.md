@@ -6,10 +6,10 @@
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/akidon0000/univIP)
 [![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
 
-|Branch|CI|Code coverage|
-|:--|:--|:--|
-|[main](https://github.com/akidon0000/univIP/tree/main)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|[![codecov](https://codecov.io/gh/akidon0000/univIP/branch/main/graph/badge.svg?token=4HTK2YK2FG)](https://codecov.io/gh/akidon0000/univIP)|
-|[develop](https://github.com/akidon0000/univIP/tree/develop)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|[![codecov](https://codecov.io/gh/akidon0000/univIP/branch/develop/graph/badge.svg?token=4HTK2YK2FG)](https://codecov.io/gh/akidon0000/univIP)|
+|Branch|CI|
+|:--|:--|
+|[main](https://github.com/akidon0000/univIP/tree/main)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|
+|[develop](https://github.com/akidon0000/univIP/tree/develop)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|
 
 [![Download_on_the_App_Store_Badge](./Docs/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
 
