@@ -1,23 +1,91 @@
-# Tokumemo
+# Tokumemo-iOS
+
+<!-- [![Release](https://img.shields.io/github/v/release/akidon0000/univIP)](https://github.com/akidon0000/univIP/release/latest) -->
 
 [![License: MIT](https://img.shields.io/github/license/akidon0000/univIP)](https://github.com/akidon0000/univIP/blob/main/LICENSE)
-   
+[![Platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/akidon0000/univIP)
+[![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
+
+|Branch|CI|Code coverage|
+|:--|:--|:--|
+|[main](https://github.com/akidon0000/univIP/tree/main)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|[![codecov](https://codecov.io/gh/akidon0000/univIP/branch/main/graph/badge.svg?token=4HTK2YK2FG)](https://codecov.io/gh/akidon0000/univIP)|
+|[develop](https://github.com/akidon0000/univIP/tree/develop)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|[![codecov](https://codecov.io/gh/akidon0000/univIP/branch/develop/graph/badge.svg?token=4HTK2YK2FG)](https://codecov.io/gh/akidon0000/univIP)|
+
+[![Download_on_the_App_Store_Badge](./Docs/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
+
+
 <p align="center" >
   <img src="/univIP/App/etc/Assets.xcassets/AppIcon.appiconset/1024.png" width=300px>
 </p>
 
-# 概要
-トクメモは日々のパスワード入力、煩雑なボタンクリックを自動化する、徳島大学専用の学修サポートアプリです。
-画面タップ回数をログイン時は3回->0回、成績参照時は11回->2回にまで減少させるなど学生の視点からあったらいいなを実現したアプリです。
 
-#
-
-## スクリーンショット
+## Screenshots
 <img src="https://github.com/akidon0000/univIP/blob/develop/univIP/App/etc/Assets.xcassets/TutorialImage1.imageset/TutorialImage1.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/develop/univIP/App/etc/Assets.xcassets/TutorialImage2.imageset/TutorialImage2.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/develop/univIP/App/etc/Assets.xcassets/TutorialImage3.imageset/TutorialImage3.jpg" width="320px">
 
 <img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_courceManagementMobile.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_manabaPC.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_mail.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_library.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_syllabus.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_libraryCalendar.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting1.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting2.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_password.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_career.png" width="320px">
 
-## 仕様
+
+## Development
+
+オープンソースのため、開発に参加することができます！
+
+### Environment
+
+- [Xcode](https://apps.apple.com/jp/app/xcode/id497799835): 13.2.1
+- [cocoaPods](https://cocoapods.org/): 1.11.2
+
+### Configuration
+
+- UI implementation: Storyboard + XIB
+- Architecture: MVVM
+- Branching model: Git-flow
+
+### Setup
+
+1. プロジェクトのクローン
+
+    ```shell
+    $ git clone https://github.com/akidon0000/univIP.git
+    $ cd univIP
+    ```
+
+2. Cocoapodsの設定
+
+    ```shell
+    $ pod install
+    ```
+
+3. Xcodeを開く 
+
+    ```shell
+    $ open univIP.xcworkspace
+    ```
+
+## Contribution
+
+ご協力いただけると幸いです :)
+
+- [New issue](https://github.com/akidon0000/univIP/issues/new)
+- [New pull request](https://github.com/akidon0000/univIP/compare)
+
+## Stats
+
+[![Alt](https://repobeats.axiom.co/api/embed/6b954e548b883d3577fbb8019d0caac2bd1ca35a.svg "Repobeats analytics image")](https://github.com/akidon0000/univIP)
+
+
+
+
+
+
+
+
+
+
+
+
+# 概要
+トクメモは日々のパスワード入力、煩雑なボタンクリックを自動化する、徳島大学専用の学修サポートアプリです。
+画面タップ回数をログイン時は3回->0回、成績参照時は11回->2回にまで減少させるなど学生の視点からあったらいいなを実現したアプリです。
 
 ## ライブラリ
 - R.swift 
@@ -65,8 +133,7 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 認知度を広める為に、Twitterアカウントを稼働させた。
 稼働後からの「トクメモ」ダウンロード数はこれにより向上した。
 それ以外にも、ビラを作成し学内掲示板への掲示を行う予定。
-https://twitter.com/tokumemo0000
-
+[![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
 
 ## 自己評価
 リリース日(2021年9月2日)
@@ -96,6 +163,3 @@ https://twitter.com/tokumemo0000
 © 2021 akidon0000
 
 トクメモは[MITライセンス](https://github.com/akidon0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
-
-## オープンソース
-本プロジェクトにご協力いただける方はWikiを参照してください。
