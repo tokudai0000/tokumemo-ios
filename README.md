@@ -27,7 +27,7 @@
 
 |SpotlightTutorial1|SpotlightTutorial2|SpotlightTutorial3|
 |:--|:--|:--|
-|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|
+|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial2.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial3.PNG" width="207">|
 
 |教務事務システム|マナバ|Outlookメールサービス|
 |:--|:--|:--|
