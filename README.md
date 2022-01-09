@@ -31,19 +31,19 @@
 
 |教務事務システム|マナバ|Outlookメールサービス|
 |:--|:--|:--|
-|<img src=".Docs/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src=".Docs/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|<img src=".Docs/Screenshots/5.5inch/5.5inch_mail.png" width="207">|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_mail.png" width="207">|
 
 |図書館マイページ|図書館開館カレンダー|キャリア支援室|
 |:--|:--|:--|
-|<img src=".Docs/Screenshots/5.5inch/5.5inch_library.png" width="207">|<img src=".Docs/Screenshots/5.5inch/5.5inch_libraryCalendar.png" width="207">|<img src=".Docs/Screenshots/5.5inch/5.5inch_career.png" width="207">|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_library.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_libraryCalendar.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_career.png" width="207">|
 
 |シラバス検索画面|パスワード入力画面|
 |:--|:--|
-|<img src=".Docs/Screenshots/5.5inch/5.5inch_syllabus.png" width="207">|<img src=".Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_syllabus.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|
 
 |提供サービス一覧1|提供サービス一覧2|
 |:--|:--|
-|<img src=".Docs/Screenshots/5.5inch/5.5inch_setting1.png" width="207">|<img src=".Docs/Screenshots/5.5inch/5.5inch_setting2.png" width="207">|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_setting1.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_setting2.png" width="207">|
 
 
 
