@@ -19,28 +19,55 @@
 </p>
 
 
-## Screenshots
-<img src="https://github.com/akidon0000/univIP/blob/develop/univIP/App/etc/Assets.xcassets/TutorialImage1.imageset/TutorialImage1.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/develop/univIP/App/etc/Assets.xcassets/TutorialImage2.imageset/TutorialImage2.jpg" width="320px"><img src="https://github.com/akidon0000/univIP/blob/develop/univIP/App/etc/Assets.xcassets/TutorialImage3.imageset/TutorialImage3.jpg" width="320px">
-
-<img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_courceManagementMobile.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_manabaPC.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_mail.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_library.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_syllabus.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_libraryCalendar.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting1.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_setting2.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_password.png" width="320px"><img src="https://github.com/akidon0000/univIP/blob/main/IMG/5.5inch/5.5inch_career.png" width="320px">
-
-
-## Development
-
+## 概要
+トクメモは日々のパスワード入力、煩雑なボタンクリックを自動化する、徳島大学専用の学修サポートアプリです。
+画面タップ回数をログイン時は3回->0回、成績参照時は11回->2回にまで減少させるなど学生の視点からあったらいいなを実現したアプリです。
+現在、徳島大学イノベーションプロジェクトにエントリー準備中で、アプリ開発チームに参加していただける方を募集しています。
 オープンソースのため、開発に参加することができます！
 
-### Environment
+
+## スクリーンショット
+
+|WalkThroughTutorial1|WalkThroughTutorial2|WalkThroughTutorial3|
+|:--|:--|:--|
+|<img src="./univIP/App/etc/Assets.xcassets/TutorialImage1.imageset/TutorialImage1.jpg" width="207">|<img src="./univIP/App/etc/Assets.xcassets/TutorialImage2.imageset/TutorialImage2.jpg" width="207">|<img src="./univIP/App/etc/Assets.xcassets/TutorialImage3.imageset/TutorialImage3.jpg" width="207">|
+
+|SpotlightTutorial1|SpotlightTutorial2|SpotlightTutorial3|
+|:--|:--|:--|
+|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial2.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial3.PNG" width="207">|
+
+|教務事務システム|マナバ|Outlookメールサービス|
+|:--|:--|:--|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_mail.png" width="207">|
+
+|図書館マイページ|図書館開館カレンダー|キャリア支援室|
+|:--|:--|:--|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_library.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_libraryCalendar.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_career.png" width="207">|
+
+|シラバス検索画面|パスワード入力画面|
+|:--|:--|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_syllabus.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|
+
+|提供サービス一覧1|提供サービス一覧2|
+|:--|:--|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_setting1.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_setting2.png" width="207">|
+
+
+
+## 環境
 
 - [Xcode](https://apps.apple.com/jp/app/xcode/id497799835): 13.2.1
 - [cocoaPods](https://cocoapods.org/): 1.11.2
 
-### Configuration
 
-- UI implementation: Storyboard + XIB
-- Architecture: MVVM
-- Branching model: Git-flow
+## プロジェクト構成
 
-### Setup
+- UI実装: Storyboard
+- アーキテクチャ: MVVM
+- ブランチモデル: Git-flow
+
+
+## ビルド手順
 
 1. プロジェクトのクローン
 
@@ -55,45 +82,23 @@
     $ pod install
     ```
 
-3. Xcodeを開く 
+3. Xcodeを開く
+
+**Xcode13以上で開く**
 
     ```shell
     $ open univIP.xcworkspace
     ```
 
-## Contribution
-
-ご協力いただけると幸いです :)
-
-- [New issue](https://github.com/akidon0000/univIP/issues/new)
-- [New pull request](https://github.com/akidon0000/univIP/compare)
-
-## Stats
-
-[![Alt](https://repobeats.axiom.co/api/embed/6b954e548b883d3577fbb8019d0caac2bd1ca35a.svg "Repobeats analytics image")](https://github.com/akidon0000/univIP)
-
-
-
-
-
-
-
-
-
-
-
-
-# 概要
-トクメモは日々のパスワード入力、煩雑なボタンクリックを自動化する、徳島大学専用の学修サポートアプリです。
-画面タップ回数をログイン時は3回->0回、成績参照時は11回->2回にまで減少させるなど学生の視点からあったらいいなを実現したアプリです。
 
 ## ライブラリ
 - R.swift 
 - Firebase/Analytics
-- KeychainAccess // KeychainをUserDefautsのように操作するOSS
-- Kanna // WebスクレイピングのOSS
-- EAIntroView // ウォークスルー型チュートリアル生成のOSS
-- Gecco // スポットライト型チュートリアル生成のOSS
+- KeychainAccess // KeychainをUserDefautsのように操作する為に使用
+- Kanna // Webスクレイピングを行う為に使用
+- EAIntroView // ウォークスルー型チュートリアル生成の為に使用
+- Gecco // スポットライト型チュートリアル生成の為に使用
+
 
 ## 機能一覧
 - 教務事務システム、マナバ、outlookへの自動ログイン機能
@@ -103,6 +108,7 @@
 - シラバスの簡略検索
 - メニューのカスタマイズ
 - チュートリアルの表示
+
 
 ## 工夫点
 毎日利用しやすいように工夫を重ねた。
@@ -135,6 +141,32 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 それ以外にも、ビラを作成し学内掲示板への掲示を行う予定。
 [![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
 
+|ビラ|
+|:--|
+|<img src="Docs/innovationFlyer.png" width="207">|
+
+## 今後していきたい事
+- 徳島大学イノベーションプラザのプロジェクト申請
+- 他学生が運営しているWebサイトとの連携
+- Android版の開発
+- お問合せフォームの作成(APIの作成)
+- iPadのサイズ対応
+- 単体テスト等の充実 
+
+
+## 統計
+
+[![Alt](https://repobeats.axiom.co/api/embed/6b954e548b883d3577fbb8019d0caac2bd1ca35a.svg "Repobeats analytics image")](https://github.com/akidon0000/univIP)
+
+
+## 募集中
+
+ご協力いただけると幸いです :)
+
+- [New issue](https://github.com/akidon0000/univIP/issues/new)
+- [New pull request](https://github.com/akidon0000/univIP/compare)
+
+
 ## 自己評価
 リリース日(2021年9月2日)
 リリースから数ヶ月が経過した。
@@ -147,18 +179,7 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 今後も、ユーザーから意見を求めて積極的に改善していきたいと思う。
 
 
-## 今後していきたい事
-- 徳島大学イノベーションプラザのプロジェクト申請
-- 他学生が運営しているWebサイトとの連携
-- Android版の開発
-- お問合せフォームの作成(APIの作成)
-- iPadのサイズ対応
-- 単体テスト等の充実 
-
-
----
-
-# ライセンス
+## ライセンス
 
 © 2021 akidon0000
 

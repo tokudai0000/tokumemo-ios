@@ -13,13 +13,12 @@ target 'univIP' do
   pod 'EAIntroView' , '~> 2'
   pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
-  
+    
   target  'univIPTests' do
     inherit! :search_paths
     pod 'Firebase'
-    pod 'R.swift' , '~> 5'
   end
-  
+
 end
 
 
