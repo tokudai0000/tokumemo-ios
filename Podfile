@@ -14,6 +14,11 @@ target 'univIP' do
   pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
     
+  target  'univIPTests' do
+    inherit! :search_paths
+    pod 'Firebase'
+  end
+
 end
 
 
