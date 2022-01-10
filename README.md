@@ -141,6 +141,9 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 それ以外にも、ビラを作成し学内掲示板への掲示を行う予定。
 [![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
 
+|ビラ|
+|:--|
+|<img src="Docs/innovationFlyer.png" width="207">|
 
 ## 今後していきたい事
 - 徳島大学イノベーションプラザのプロジェクト申請
