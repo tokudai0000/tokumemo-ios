@@ -42,7 +42,7 @@ final class Constant {
         case classQuestionnaire             // 授業アンケート
         case mailService                    // メール
         case tokudaiCareerCenter            // キャリアセンター
-        case tokudaiCoop            // キャリアセンター
+        case tokudaiCoop                    // 徳島大学生活共同組合
         case courseRegistration             // 履修登録
         case systemServiceList              // システムサービス一覧
         case eLearningList                  // Eラーニング一覧
