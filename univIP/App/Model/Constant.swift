@@ -19,6 +19,7 @@ final class Constant {
                                  "microsoftonline.com",  // outlook(メール) ログイン画面表示前、1度だけ遷移されるその後"office365.com"へ遷移される
                                  "office.com",           // outlook(メール) メールボックス
                                  "tokudai-syusyoku.com", // キャリア支援室
+                                 "tokudai.marucoop.com", // 徳島大学生活共同組合
                                  "youtube.com"]          // 大学サイトのインライン再生に対応させる為
     
     enum MenuLists: Codable {
@@ -41,6 +42,7 @@ final class Constant {
         case classQuestionnaire             // 授業アンケート
         case mailService                    // メール
         case tokudaiCareerCenter            // キャリアセンター
+        case tokudaiCoop            // キャリアセンター
         case courseRegistration             // 履修登録
         case systemServiceList              // システムサービス一覧
         case eLearningList                  // Eラーニング一覧
@@ -84,6 +86,11 @@ final class Constant {
              id: .libraryCalendar,
              url: nil,
              canInitView: false),
+        
+        Menu(title: "生協営業状況",
+             id: .tokudaiCoop,
+             url: Url.tokudaiCoop.string(),
+             canInitView: true),
         
         Menu(title: "シラバス",
              id: .syllabus,
