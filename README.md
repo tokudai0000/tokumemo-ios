@@ -1,15 +1,15 @@
 # Tokumemo-iOS
 
-<!-- [![Release](https://img.shields.io/github/v/release/akidon0000/univIP)](https://github.com/akidon0000/univIP/release/latest) -->
+<!-- [![Release](https://img.shields.io/github/v/release/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/release/latest) -->
 
-[![License: MIT](https://img.shields.io/github/license/akidon0000/univIP)](https://github.com/akidon0000/univIP/blob/main/LICENSE)
-[![Platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/akidon0000/univIP)
+[![License: MIT](https://img.shields.io/github/license/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/blob/main/LICENSE)
+[![Platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/tokudai0000/univIP)
 [![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
 
 |Branch|CI|
 |:--|:--|
-|[main](https://github.com/akidon0000/univIP/tree/main)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|
-|[develop](https://github.com/akidon0000/univIP/tree/develop)|[![CI](https://github.com/akidon0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/akidon0000/univIP/actions/workflows/main.yml)|
+|[main](https://github.com/tokudai0000/univIP/tree/main)|[![CI](https://github.com/tokudai0000/univIP/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/tokudai0000/univIP/actions/workflows/main.yml)|
+|[develop](https://github.com/tokudai0000/univIP/tree/develop)|[![CI](https://github.com/tokudai0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/tokudai0000/univIP/actions/workflows/main.yml)|
 
 [![Download_on_the_App_Store_Badge](./Docs/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
 
@@ -72,7 +72,7 @@
 1. プロジェクトのクローン
 
     ```shell
-    $ git clone https://github.com/akidon0000/univIP.git
+    $ git clone https://github.com/tokudai0000/univIP.git
     $ cd univIP
     ```
 
@@ -156,15 +156,15 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 
 ## 統計
 
-[![Alt](https://repobeats.axiom.co/api/embed/6b954e548b883d3577fbb8019d0caac2bd1ca35a.svg "Repobeats analytics image")](https://github.com/akidon0000/univIP)
+[![Alt](https://repobeats.axiom.co/api/embed/6b954e548b883d3577fbb8019d0caac2bd1ca35a.svg "Repobeats analytics image")](https://github.com/tokudai0000/univIP)
 
 
 ## 募集中
 
 ご協力いただけると幸いです :)
 
-- [New issue](https://github.com/akidon0000/univIP/issues/new)
-- [New pull request](https://github.com/akidon0000/univIP/compare)
+- [New issue](https://github.com/tokudai0000/univIP/issues/new)
+- [New pull request](https://github.com/tokudai0000/univIP/compare)
 
 
 ## 自己評価
@@ -183,4 +183,4 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 
 © 2021 akidon0000
 
-トクメモは[MITライセンス](https://github.com/akidon0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
+トクメモは[MITライセンス](https://github.com/tokudai0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
