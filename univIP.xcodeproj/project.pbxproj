@@ -292,6 +292,7 @@
 		1AA056C026BD2AE100343005 = {
 			isa = PBXGroup;
 			children = (
+				1A9E0E09273CDAE800247F94 /* R.generated.swift */,
 				1AA056CB26BD2AE100343005 /* univIP */,
 				1AB37B6D26FDFCEA008A2D2F /* univIPTests */,
 				1AB37B7B26FDFCF4008A2D2F /* univIPUITests */,
@@ -315,7 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				1AAF27012748587C0071B89F /* Settings.bundle */,
-				1A9E0E09273CDAE800247F94 /* R.generated.swift */,
 				1AA056E326BD2D3700343005 /* App */,
 			);
 			path = univIP;
