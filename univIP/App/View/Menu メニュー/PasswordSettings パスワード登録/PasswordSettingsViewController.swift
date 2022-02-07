@@ -82,8 +82,9 @@ final class PasswordSettingsViewController: UIViewController {
             return
         }
         
-        if cAccountText.prefix(1) != "c" {
-            cAccountMessageLabel.text = "cアカウントを入力してください"
+        if cAccountText.prefix(1) != "c" ||
+            cAccountText.count > 10 {
+            cAccountMessageLabel.text = "cアカウント例(c100100100)"
             cAccountTextFieldCursorSetup(type: .error)
             return
         }
