@@ -26,6 +26,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUp()
         login()
         
         webView.uiDelegate = self
@@ -169,6 +170,30 @@ final class MainViewController: UIViewController {
     
     
     // MARK: - Private func
+    private func setUp() {
+        // フォアグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(foreground(notification:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil
+        )
+        // バックグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(background(notification:)),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil
+        )
+    }
+    
+    // 最後にアプリ画面を離脱した時刻から、10分以上経っていれば再ログイン処理を行う
+    @objc private func foreground(notification: Notification) {
+        print("フォアグラウンド")
+    }
+    @objc private func background(notification: Notification) {
+        print("バックグラウンド")
+    }
+    
+    
     // 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
     private func login() {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
