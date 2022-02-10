@@ -236,7 +236,6 @@ final class DataManager {
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(menuLists) else { return }
         setUserDefaultsData(key: KEY_menuLists, value: data)
-        
     }
     
 }
