@@ -187,10 +187,23 @@ final class MainViewController: UIViewController {
     
     // 最後にアプリ画面を離脱した時刻から、10分以上経っていれば再ログイン処理を行う
     @objc private func foreground(notification: Notification) {
-        print("フォアグラウンド")
+        let formatter: DateFormatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
+        if let lastTime = formatter.date(from: dataManager.saveTimeUsedLastTime){
+            let f = DateFormatter()
+            f.setTemplate(.time)
+            let now = Date()
+            if now.timeIntervalSince(lastTime) > 10 * 60 {
+                login()
+            }
+        }
     }
     @objc private func background(notification: Notification) {
-        print("バックグラウンド")
+        let f = DateFormatter()
+        f.setTemplate(.full)
+        let now = Date()
+        dataManager.saveTimeUsedLastTime = f.string(from: now)
     }
     
     
