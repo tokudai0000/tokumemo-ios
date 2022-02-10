@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
 		1A0CC330274541B200851126 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A0CC32F274541B200851126 /* Property List.plist */; };
+		1A1E045A27B571E300AAA686 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1E045927B571E300AAA686 /* Extension.swift */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1A0CC32F274541B200851126 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
+		1A1E045927B571E300AAA686 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
@@ -170,22 +172,23 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		1A1E045827B571CF00AAA686 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1A1E045927B571E300AAA686 /* Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				1A1E045827B571CF00AAA686 /* Extension */,
 				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
-				1A41EAE0272914CC0064CDB7 /* Extension */,
 			);
 			name = AKLibrary;
 			path = univIP/App/AKLibrary;
 			sourceTree = SOURCE_ROOT;
-		};
-		1A41EAE0272914CC0064CDB7 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extension;
-			sourceTree = "<group>";
 		};
 		1A81A92626C0D52F00CC56E2 /* Model */ = {
 			isa = PBXGroup;
@@ -726,6 +729,7 @@
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
 				1ABE8BE227B10489001EEA79 /* MenuTutorialSpotlightViewController.swift in Sources */,
+				1A1E045A27B571E300AAA686 /* Extension.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
