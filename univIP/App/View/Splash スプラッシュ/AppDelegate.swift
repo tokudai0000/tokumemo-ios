@@ -23,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure()
         #endif
         
-        // datamanager loadCellLists() saveは変更されてすぐに
-        
         return true
     }
 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
 		1A0CC330274541B200851126 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A0CC32F274541B200851126 /* Property List.plist */; };
+		1A1E045E27B5EA7400AAA686 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1E045C27B5EA7400AAA686 /* AppDelegate.swift */; };
+		1A1E045F27B5EA7400AAA686 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1E045D27B5EA7400AAA686 /* SceneDelegate.swift */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
@@ -22,8 +24,6 @@
 		1A9E0E12273D7B1E00247F94 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E0E11273D7B1E00247F94 /* PrivacyPolicyViewController.swift */; };
 		1A9E0E14273D7B2C00247F94 /* PrivacyPolicy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E13273D7B2C00247F94 /* PrivacyPolicy.storyboard */; };
 		1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E15273D848100247F94 /* Agreement.rtf */; };
-		1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CC26BD2AE100343005 /* AppDelegate.swift */; };
-		1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA056CE26BD2AE100343005 /* SceneDelegate.swift */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AAF27022748587C0071B89F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF27012748587C0071B89F /* Settings.bundle */; };
 		1AB37B6526FDFC93008A2D2F /* PrivacyPolicy.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1AB37B6426FDFC93008A2D2F /* PrivacyPolicy.rtf */; };
@@ -76,6 +76,8 @@
 /* Begin PBXFileReference section */
 		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1A0CC32F274541B200851126 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
+		1A1E045C27B5EA7400AAA686 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1A1E045D27B5EA7400AAA686 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
@@ -92,8 +94,6 @@
 		1A9E0E13273D7B2C00247F94 /* PrivacyPolicy.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyPolicy.storyboard; sourceTree = "<group>"; };
 		1A9E0E15273D848100247F94 /* Agreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1AA056CC26BD2AE100343005 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1AA056CE26BD2AE100343005 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AAF27012748587C0071B89F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -168,6 +168,15 @@
 				1A00A4382750716C00EF3F99 /* Common.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		1A1E045B27B5EA7400AAA686 /* Splash スプラッシュ */ = {
+			isa = PBXGroup;
+			children = (
+				1A1E045C27B5EA7400AAA686 /* AppDelegate.swift */,
+				1A1E045D27B5EA7400AAA686 /* SceneDelegate.swift */,
+			);
+			path = "Splash スプラッシュ";
 			sourceTree = "<group>";
 		};
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
@@ -293,24 +302,14 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A1E045B27B5EA7400AAA686 /* Splash スプラッシュ */,
 				1ABE8BC227B10489001EEA79 /* Menu メニュー */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
-				1AAFB5E0276AED6100C6FD90 /* Splash スプラッシュ */,
 				1A9E0E0B273D676500247F94 /* TermsOfService 利用規約 */,
 				1A9E0E10273D7ADF00247F94 /* PrivacyPolicy プライバシーポリシー */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		1AAFB5E0276AED6100C6FD90 /* Splash スプラッシュ */ = {
-			isa = PBXGroup;
-			children = (
-				1AA056CC26BD2AE100343005 /* AppDelegate.swift */,
-				1AA056CE26BD2AE100343005 /* SceneDelegate.swift */,
-			);
-			name = "Splash スプラッシュ";
-			path = "Splash スプラッシュ";
 			sourceTree = "<group>";
 		};
 		1AB37B6D26FDFCEA008A2D2F /* univIPTests */ = {
@@ -726,19 +725,19 @@
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
 				1ABE8BE227B10489001EEA79 /* MenuTutorialSpotlightViewController.swift in Sources */,
+				1A1E045F27B5EA7400AAA686 /* SceneDelegate.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
 				1A9E0E0A273CDAE800247F94 /* R.generated.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
-				1AA056CD26BD2AE100343005 /* AppDelegate.swift in Sources */,
-				1AA056CF26BD2AE100343005 /* SceneDelegate.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1ABE8BE327B10489001EEA79 /* MenuViewController.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* Constant.swift in Sources */,
 				1ABE8BDA27B10489001EEA79 /* MenuViewModel.swift in Sources */,
 				1ABE8BDE27B10489001EEA79 /* CustomizeViewController.swift in Sources */,
 				1ABE8BBE27B10402001EEA79 /* MainViewController.swift in Sources */,
+				1A1E045E27B5EA7400AAA686 /* AppDelegate.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* PasswordSettingsViewController.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* MainViewModel.swift in Sources */,
 			);
