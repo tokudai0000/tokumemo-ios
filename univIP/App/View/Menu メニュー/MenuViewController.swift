@@ -47,25 +47,23 @@ final class MenuViewController: UIViewController {
     // MARK: - Private
     private func tutorialSpotlight() {
         let spotlightViewController = MenuTutorialSpotlightViewController()
+        
+        // パスワードとカスタマイズのセルRowを取得する
         var passwordRow:Int?
         var customizeRow:Int?
-        // 相対座標(tableViewの左上をX=0,Y=0とした座標)
         for i in 0..<Constant.initServiceLists.count {
             let id = Constant.initServiceLists[i].id
-            if id == .password {
-                passwordRow = i
-            }
-            if id == .cellSort {
-                customizeRow = i
-            }
+            if id == .password { passwordRow = i }
+            if id == .cellSort { customizeRow = i }
         }
-        
+        // 初期配列にパスワードかカスタマイズが存在しないことはありえない
         guard let passR = passwordRow,
               let cusR = customizeRow else {
                   AKLog(level: .FATAL, message: "初期配列にパスワードかカスタマイズが存在しない")
                   return
               }
         
+        // 相対座標(tableViewの左上をX=0,Y=0とした座標)
         let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: passR, section: 0))! // fatalError
         let tableViewPos2 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: cusR, section: 0))! // fatalError
         
