@@ -187,19 +187,23 @@ final class MainViewController: UIViewController {
     
     // 最後にアプリ画面を離脱した時刻から、10分以上経っていれば再ログイン処理を行う
     @objc private func foreground(notification: Notification) {
+        // dataManagerのsaveTimeUsedLastTime(String型)をDateに変換する
         let formatter: DateFormatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
         if let lastTime = formatter.date(from: dataManager.saveTimeUsedLastTime){
+            // 現在の時刻を取得
             let f = DateFormatter()
             f.setTemplate(.time)
             let now = Date()
+            // 時刻の差分が10*60分以上であれば再ログインを行う
             if now.timeIntervalSince(lastTime) > 10 * 60 {
                 login()
             }
         }
     }
     @objc private func background(notification: Notification) {
+        // 現在の時刻を取得し保存
         let f = DateFormatter()
         f.setTemplate(.full)
         let now = Date()
