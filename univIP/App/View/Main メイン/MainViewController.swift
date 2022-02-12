@@ -211,7 +211,7 @@ final class MainViewController: UIViewController {
         let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
         // スポットする座標を渡す
         spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
-        present(spotlightViewController, animated: true, completion: nil)
+        present(spotlightViewController, animated: true, completion: nil) // Menuでスポットライトチュートリアル起動
     }
     
 }
