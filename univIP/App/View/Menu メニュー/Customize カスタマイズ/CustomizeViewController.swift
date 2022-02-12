@@ -52,7 +52,7 @@ final class CustomizeViewController: UIViewController {
         tableView.reloadData()
         
         if isEditing {
-            editButton.setTitle("完了", for: .normal)
+            editButton.setTitle("名前の変更", for: .normal)
             
             for i in 0 ..< dataManager.menuLists.count {
                 if dataManager.menuLists[i].isDisplay {
@@ -63,7 +63,7 @@ final class CustomizeViewController: UIViewController {
             }
             
         } else {
-            editButton.setTitle("編集", for: .normal)
+            editButton.setTitle("並び替え", for: .normal)
         }
     }
     
@@ -190,6 +190,9 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if (dataManager.menuLists[indexPath.row].id == .cellSort) {
+            return
+        }
         // 表示許可情報を更新
         dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
         dataManager.saveMenuLists()

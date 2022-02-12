@@ -48,9 +48,24 @@ final class MenuViewController: UIViewController {
     private func tutorialSpotlight() {
         let spotlightViewController = MenuTutorialSpotlightViewController()
         
+        // パスワードとカスタマイズのセルRowを取得する
+        var passwordRow:Int?
+        var customizeRow:Int?
+        for i in 0..<Constant.initServiceLists.count {
+            let id = Constant.initServiceLists[i].id
+            if id == .password { passwordRow = i }
+            if id == .cellSort { customizeRow = i }
+        }
+        // 初期配列にパスワードかカスタマイズが存在しないことはありえない
+        guard let passR = passwordRow,
+              let cusR = customizeRow else {
+                  AKLog(level: .FATAL, message: "初期配列にパスワードかカスタマイズが存在しない")
+                  return
+              }
+        
         // 相対座標(tableViewの左上をX=0,Y=0とした座標)
-        let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: 7, section: 0))! // fatalError
-        let tableViewPos2 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: 8, section: 0))! // fatalError
+        let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: passR, section: 0))! // fatalError
+        let tableViewPos2 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: cusR, section: 0))! // fatalError
         
         // 絶対座標(画面左上X=0,Y=0からの座標)に変換
         let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
