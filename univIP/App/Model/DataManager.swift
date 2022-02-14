@@ -140,6 +140,13 @@ final class DataManager {
         set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
     }
     
+    // 前回利用した時間を保存
+    private let KEY_saveTimeUsedLastTime = "KEY_saveTimeUsedLastTime"
+    public var saveTimeUsedLastTime: String {
+        get { return getUserDefaultsString(key: KEY_saveTimeUsedLastTime) }
+        set(v) { setUserDefaultsString(key: KEY_saveTimeUsedLastTime, value: v) }
+    }
+    
     
     /// GET (UserDefaults) Bool
     private func getUserDefaultsBool(key:String) -> Bool {
@@ -236,7 +243,6 @@ final class DataManager {
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(menuLists) else { return }
         setUserDefaultsData(key: KEY_menuLists, value: data)
-        
     }
     
 }

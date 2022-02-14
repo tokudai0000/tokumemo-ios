@@ -26,6 +26,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUp()
         login()
         
         webView.uiDelegate = self
@@ -169,6 +170,49 @@ final class MainViewController: UIViewController {
     
     
     // MARK: - Private func
+    private func setUp() {
+        // フォアグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(foreground(notification:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil
+        )
+        // バックグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(background(notification:)),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil
+        )
+    }
+    
+    // 最後にアプリ画面を離脱した時刻から、10分以上経っていれば再ログイン処理を行う
+    @objc private func foreground(notification: Notification) {
+        // dataManagerのsaveTimeUsedLastTime(String型)をDateに変換する
+        let formatter: DateFormatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
+        if let lastTime = formatter.date(from: dataManager.saveTimeUsedLastTime) {
+            // 現在の時刻を取得
+            let f = DateFormatter()
+            f.setTemplate(.time)
+            let now = Date()
+            // 時刻の差分が30*60分以上であれば再ログインを行う
+            if now.timeIntervalSince(lastTime) > 30 * 60 {
+                login()
+            }
+        }
+    }
+    // 最後にアプリ画面を離脱した時刻を保存
+    @objc private func background(notification: Notification) {
+        // 現在の時刻を取得し保存
+        let f = DateFormatter()
+        f.setTemplate(.full)
+        let now = Date()
+        dataManager.saveTimeUsedLastTime = f.string(from: now)
+    }
+    
+    
+
     // 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
     private func login() {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
@@ -211,7 +255,7 @@ final class MainViewController: UIViewController {
         let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
         // スポットする座標を渡す
         spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
-        present(spotlightViewController, animated: true, completion: nil)
+        present(spotlightViewController, animated: true, completion: nil) // Menuでスポットライトチュートリアル起動
     }
     
 }
