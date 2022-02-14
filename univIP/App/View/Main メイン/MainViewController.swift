@@ -196,8 +196,8 @@ final class MainViewController: UIViewController {
             let f = DateFormatter()
             f.setTemplate(.time)
             let now = Date()
-            // 時刻の差分が10*60分以上であれば再ログインを行う
-            if now.timeIntervalSince(lastTime) > 10 * 60 {
+            // 時刻の差分が30*60分以上であれば再ログインを行う
+            if now.timeIntervalSince(lastTime) > 30 * 60 {
                 login()
             }
         }
