@@ -17,6 +17,7 @@
 		1A4D14D027452A14009D6CD2 /* url.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14D227452A14009D6CD2 /* url.strings */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
 		1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A5FD6832715305D0081F952 /* GoogleService-Info.plist */; };
+		1A6EF50F27BA5C63004D0B2C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6EF50E27BA5C63004D0B2C /* ViewController.swift */; };
 		1A81A93126C12C8200CC56E2 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* Constant.swift */; };
 		1A9E0E0A273CDAE800247F94 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E0E09273CDAE800247F94 /* R.generated.swift */; };
 		1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9E0E0C273D67A400247F94 /* TermsOfServiceViewController.swift */; };
@@ -84,6 +85,7 @@
 		1A4D14D327452A3D009D6CD2 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/url.strings; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
 		1A5FD6832715305D0081F952 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A6EF50E27BA5C63004D0B2C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A93026C12C8200CC56E2 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -173,16 +175,17 @@
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				1A6EF50D27BA5C43004D0B2C /* Extension */,
 				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
-				1A41EAE0272914CC0064CDB7 /* Extension */,
 			);
 			name = AKLibrary;
 			path = univIP/App/AKLibrary;
 			sourceTree = SOURCE_ROOT;
 		};
-		1A41EAE0272914CC0064CDB7 /* Extension */ = {
+		1A6EF50D27BA5C43004D0B2C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1A6EF50E27BA5C63004D0B2C /* ViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				1ABE8BBF27B10402001EEA79 /* MainTutorialSpotlightViewController.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
+				1A6EF50F27BA5C63004D0B2C /* ViewController.swift in Sources */,
 				1ABE8BE227B10489001EEA79 /* MenuTutorialSpotlightViewController.swift in Sources */,
 				1A1E046627B7346E00AAA686 /* AppDelegate.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
