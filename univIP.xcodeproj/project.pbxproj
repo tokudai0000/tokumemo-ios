@@ -190,6 +190,16 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		1A6EF51027BA6F67004D0B2C /* Splash スプラッシュ */ = {
+			isa = PBXGroup;
+			children = (
+				1A1E046527B7346E00AAA686 /* AppDelegate.swift */,
+				1A1E046727B7348500AAA686 /* SceneDelegate.swift */,
+			);
+			name = "Splash スプラッシュ";
+			path = "Splash スプラッシュ";
+			sourceTree = "<group>";
+		};
 		1A81A92626C0D52F00CC56E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,8 +286,6 @@
 				1A00A4372750714C00EF3F99 /* Common */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* View */,
-				1A1E046527B7346E00AAA686 /* AppDelegate.swift */,
-				1A1E046727B7348500AAA686 /* SceneDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -298,6 +306,7 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1A6EF51027BA6F67004D0B2C /* Splash スプラッシュ */,
 				1ABE8BC227B10489001EEA79 /* Menu メニュー */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
 				1A9E0E0B273D676500247F94 /* TermsOfService 利用規約 */,
