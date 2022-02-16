@@ -86,7 +86,7 @@ final class SyllabusViewController: UIViewController {
     
     enum cursorType {
         case normal
-        case forcas
+        case focus
         case error
     }
     // 科目名フィールド
@@ -96,7 +96,7 @@ final class SyllabusViewController: UIViewController {
                 // 非選択状態
                 subjectUnderLine.backgroundColor = .lightGray
                 
-            case .forcas:
+            case .focus:
                 // 選択状態
                 // カーソルの色
                 subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
@@ -114,7 +114,7 @@ final class SyllabusViewController: UIViewController {
                 // 非選択状態
                 teacherUnderLine.backgroundColor = .lightGray
                 
-            case .forcas:
+            case .focus:
                 // 選択状態
                 teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
@@ -141,10 +141,10 @@ extension SyllabusViewController: UITextFieldDelegate {
         
         switch textFieldTag {
             case .subject:
-                subjectTextFieldCursorSetup(type: .forcas)
+                subjectTextFieldCursorSetup(type: .focus)
                 
             case .teacher:
-                teacherTextFieldCursorSetup(type: .forcas)
+                teacherTextFieldCursorSetup(type: .focus)
                 
             case .none:
                 AKLog(level: .FATAL, message: "TextFieldTagが不正")

@@ -123,7 +123,7 @@ final class PasswordSettingsViewController: UIViewController {
     
     enum cursorType {
         case normal
-        case forcas
+        case focus
         case error
     }
     private func cAccountTextFieldCursorSetup(type: cursorType) {
@@ -132,7 +132,7 @@ final class PasswordSettingsViewController: UIViewController {
         case .normal:
             cAccountUnderLine.backgroundColor = .lightGray
             
-        case .forcas:
+        case .focus:
             // カーソルの色
             cAccountTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             cAccountUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
@@ -149,7 +149,7 @@ final class PasswordSettingsViewController: UIViewController {
         case .normal:
             passwordUnderLine.backgroundColor = .lightGray
             
-        case .forcas:
+        case .focus:
             passwordTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             passwordUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
             
@@ -174,10 +174,10 @@ extension PasswordSettingsViewController: UITextFieldDelegate {
         
         switch textFieldTag {
         case .cAccount:
-            cAccountTextFieldCursorSetup(type: .forcas)
+            cAccountTextFieldCursorSetup(type: .focus)
             
         case .password:
-            passwordTextFieldCursorSetup(type: .forcas)
+            passwordTextFieldCursorSetup(type: .focus)
             
         case .none:
             AKLog(level: .FATAL, message: "TextFieldTagが不正")

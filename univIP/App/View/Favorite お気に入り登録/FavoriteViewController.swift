@@ -87,7 +87,7 @@ class FavoriteViewController: UIViewController {
     
     enum cursorType {
         case normal
-        case forcas
+        case focus
         case error
     }
     private func urlTextFieldCursorSetup(type: cursorType) {
@@ -96,7 +96,7 @@ class FavoriteViewController: UIViewController {
             case .normal:
                 urlUnderLine.backgroundColor = .lightGray
                 
-            case .forcas:
+            case .focus:
                 // カーソルの色
                 urlLabel.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
@@ -113,7 +113,7 @@ class FavoriteViewController: UIViewController {
             case .normal:
                 favoriteNameUnderLine.backgroundColor = .lightGray
                 
-            case .forcas:
+            case .focus:
                 favoriteNameTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 favoriteNameUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 
