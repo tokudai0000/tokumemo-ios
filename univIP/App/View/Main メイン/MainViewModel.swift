@@ -74,7 +74,7 @@ final class MainViewModel {
             return .syllabusFirstTime
         }
         // outlook(メール) && 登録者判定
-        if urlString.contains(Url.outlookLogin.string()) && canLoggedInService {
+        if urlString.contains(Url.outlookLoginForm.string()) && canLoggedInService {
             return .outlookLogin
         }
         // 徳島大学キャリアセンター

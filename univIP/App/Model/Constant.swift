@@ -106,7 +106,7 @@ final class Constant {
         
         Menu(title: "メール",
              id: .mailService,
-             url: Url.outlookLogin.string(),
+             url: Url.outlookService.string(),
              canInitView: true),
         
         Menu(title: "パスワード",
