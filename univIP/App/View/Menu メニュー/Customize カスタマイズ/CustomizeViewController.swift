@@ -26,10 +26,8 @@ final class CustomizeViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // シュミレーターではAnalyticsを送信しない
-        #if !targetEnvironment(simulator)
-            Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
-        #endif
+        // Analytics
+        Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
     }
     
     
@@ -99,10 +97,8 @@ final class CustomizeViewController: UIViewController {
                     self.dataManager.changeContentsMenuLists(row: indexPath, title: text)
                     self.dataManager.saveMenuLists()
                     self.tableView.reloadData()
-                    // シュミレーターではAnalyticsを送信しない
-                    #if !targetEnvironment(simulator)
-                        Analytics.logEvent("CustomizeText", parameters: ["changeName": text])
-                    #endif
+                    // Analytics
+                    Analytics.logEvent("CustomizeText", parameters: ["changeName": text])
                 }
                 
             }else{

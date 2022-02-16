@@ -201,11 +201,9 @@ final class MainViewModel {
     
     public func analytics(_ url:URL) {
         
-        // シュミレーターではAnalyticsを送信しない
-        #if !targetEnvironment(simulator)
-            let urlString = url.absoluteString
-            Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
-        #endif
+        // Analytics
+        let urlString = url.absoluteString
+        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
         
     }
     

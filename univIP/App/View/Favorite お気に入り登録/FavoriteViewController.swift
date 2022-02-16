@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class FavoriteViewController: UIViewController {
     
@@ -77,6 +78,8 @@ class FavoriteViewController: UIViewController {
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
         guard let favoriteNameText = favoriteNameTextField.text else { return }
         
+        guard let urlString = urlString else { return }
+        
         if favoriteNameText.isEmpty {
             favoriteNameMessageLabel.text = "空欄です"
             favoriteNameTextFieldCursorSetup(type: .error)
@@ -105,6 +108,9 @@ class FavoriteViewController: UIViewController {
         dataManager.addContentsMenuLists(menuItem: menuItem)
         
         dismiss(animated: true, completion: nil)
+        
+        // Analytics
+        Analytics.logEvent("FavoriteView", parameters: ["url": urlString])
     }
     
     @IBAction func dismissButton(_ sender: Any) {
