@@ -81,7 +81,7 @@ final class MainViewController: UIViewController {
     @IBAction func favoriteButton(_ sender: Any) {
         let vc = R.storyboard.favorite.favoriteViewController()!
         vc.urlString = urlString
-        present(vc, animated: false, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func showServiceListsButton(_ sender: Any) {

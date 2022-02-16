@@ -9,15 +9,26 @@ import UIKit
 
 class FavoriteViewController: UIViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var urlLabel: UILabel!
+    
+    @IBOutlet weak var urlUnderLine: UIView!
+    @IBOutlet weak var favoriteNameUnderLine: UIView!
+    
+    @IBOutlet weak var urlMessageLabel: UILabel!
+    @IBOutlet weak var favoriteNameMessageLabel: UILabel!
+    
     @IBOutlet weak var favoriteTextSizeLabel: UILabel!
     @IBOutlet weak var favoriteNameTextField: UITextField!
+    
     @IBOutlet weak var isFirstViewSetting: UISwitch!
     @IBOutlet weak var registerButton: UIButton!
     
     public var urlString: String?
     private let dataManager = DataManager.singleton
     
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,10 +74,53 @@ class FavoriteViewController: UIViewController {
                                      canInitView: true)
         // 保存
         dataManager.addContentsMenuLists(menuItem: menuItem)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Private
+    
+    enum cursorType {
+        case normal
+        case forcas
+        case error
+    }
+    private func urlTextFieldCursorSetup(type: cursorType) {
+        switch type {
+                
+            case .normal:
+                urlUnderLine.backgroundColor = .lightGray
+                
+            case .forcas:
+                // カーソルの色
+                urlLabel.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                
+            case .error:
+                urlLabel.tintColor = .red
+                urlUnderLine.backgroundColor = .red
+        }
+    }
+    
+    private func favoriteNameTextFieldCursorSetup(type: cursorType) {
+        switch type {
+                
+            case .normal:
+                favoriteNameUnderLine.backgroundColor = .lightGray
+                
+            case .forcas:
+                favoriteNameTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                favoriteNameUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                
+            case .error:
+                favoriteNameTextField.tintColor = .red
+                favoriteNameUnderLine.backgroundColor = .red
+        }
     }
     
 }

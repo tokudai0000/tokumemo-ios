@@ -23,6 +23,15 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAF-ui-WO9">
                                         <rect key="frame" x="25" y="60" width="364" height="94"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ApB-JX-HRT">
+                                                <rect key="frame" x="0.0" y="73" width="364" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="eIP-WT-QMN"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Etp-TP-fdz">
                                                 <rect key="frame" x="0.0" y="71" width="364" height="2"/>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -51,10 +60,14 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="ApB-JX-HRT" secondAttribute="bottom" id="2tT-Ix-Ba5"/>
                                             <constraint firstItem="Etp-TP-fdz" firstAttribute="top" secondItem="iCE-PA-ggo" secondAttribute="bottom" id="4ol-G9-QQN"/>
                                             <constraint firstItem="iCE-PA-ggo" firstAttribute="leading" secondItem="eAF-ui-WO9" secondAttribute="leading" id="Blw-63-ga1"/>
+                                            <constraint firstAttribute="trailing" secondItem="ApB-JX-HRT" secondAttribute="trailing" id="M1n-Wf-VKU"/>
                                             <constraint firstItem="4fl-UL-q3b" firstAttribute="leading" secondItem="eAF-ui-WO9" secondAttribute="leading" id="NWh-gW-Jx1"/>
+                                            <constraint firstItem="ApB-JX-HRT" firstAttribute="leading" secondItem="eAF-ui-WO9" secondAttribute="leading" id="R8M-5Q-ie6"/>
                                             <constraint firstItem="4fl-UL-q3b" firstAttribute="top" secondItem="eAF-ui-WO9" secondAttribute="top" id="Rqc-Lx-3Eb"/>
+                                            <constraint firstItem="ApB-JX-HRT" firstAttribute="top" secondItem="Etp-TP-fdz" secondAttribute="bottom" id="hYZ-GT-ziZ"/>
                                             <constraint firstItem="Etp-TP-fdz" firstAttribute="leading" secondItem="eAF-ui-WO9" secondAttribute="leading" id="jE3-FS-yAm"/>
                                             <constraint firstAttribute="height" constant="94" id="qDn-36-djw"/>
                                             <constraint firstItem="iCE-PA-ggo" firstAttribute="top" secondItem="4fl-UL-q3b" secondAttribute="bottom" id="vPc-bt-cwn"/>
@@ -247,11 +260,15 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="favoriteNameMessageLabel" destination="iic-hg-GmH" id="KcD-Pf-Q6d"/>
                         <outlet property="favoriteNameTextField" destination="5Xk-VO-EPa" id="dJd-Ic-zVI"/>
+                        <outlet property="favoriteNameUnderLine" destination="Jid-tg-QCW" id="WMG-Hy-fws"/>
                         <outlet property="favoriteTextSizeLabel" destination="D0F-FD-3Tq" id="BR0-pO-cuO"/>
                         <outlet property="isFirstViewSetting" destination="PvH-ar-4pa" id="uOY-Rd-1gh"/>
                         <outlet property="registerButton" destination="5Cm-ol-8Gh" id="1Df-j4-hbO"/>
                         <outlet property="urlLabel" destination="iCE-PA-ggo" id="eLa-UT-GAr"/>
+                        <outlet property="urlMessageLabel" destination="ApB-JX-HRT" id="UBa-dX-QPh"/>
+                        <outlet property="urlUnderLine" destination="Etp-TP-fdz" id="AhT-05-mFj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
