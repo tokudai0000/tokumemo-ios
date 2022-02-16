@@ -32,11 +32,23 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let urlString = urlString else {
-            return
-        }
-
+        urlTextFieldCursorSetup(type: .normal)
+        favoriteNameTextFieldCursorSetup(type: .normal)
+        
+        favoriteNameTextField.borderStyle = .none
+        
+        favoriteNameTextField.delegate = self
+        
+        guard let urlString = urlString else { return }
         urlLabel.text = urlString
+        
+        favoriteTextSizeLabel.text = "0/10"
+        
+        urlMessageLabel.textColor = .red
+        favoriteNameMessageLabel.textColor = .red
+        
+        registerButton.layer.cornerRadius = 5.0
+        
         
         // 多分ここが通ることはないが念の為
         guard let _ = URL(string: urlString) else {

@@ -71,12 +71,17 @@ final class PasswordSettingsViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction func registrationButton(_ sender: Any) {
-        guard let cAccountText = cAccountTextField.text else {
+        // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
+        guard let cAccountText = cAccountTextField.text else { return }
+        guard let passwordText = passwordTextField.text else { return }
+        
+        if cAccountText.isEmpty {
             cAccountMessageLabel.text = "空欄です"
             cAccountTextFieldCursorSetup(type: .error)
             return
         }
-        guard let passwordText = passwordTextField.text else {
+        
+        if passwordText.isEmpty {
             passwordMessageLabel.text = "空欄です"
             passwordTextFieldCursorSetup(type: .error)
             return
