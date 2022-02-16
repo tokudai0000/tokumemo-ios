@@ -12,15 +12,15 @@ import KeychainAccess
 final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
-    private init() {
-        // インスタンスが1つであることを補償
-        menuLists = loadMenuLists()
-    }
     
     private var userDefaults = UserDefaults.standard
     
     // 毎回UserDefaultsから取ってきて保存する
     public var menuLists:[Constant.Menu] =  []
+    private init() {
+        // インスタンスが1つであることを補償
+        menuLists = loadMenuLists()
+    }
     
     // JavaScriptを実行するかどうか
     public var isExecuteJavascript = false

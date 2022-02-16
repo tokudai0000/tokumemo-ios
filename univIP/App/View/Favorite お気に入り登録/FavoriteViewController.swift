@@ -19,6 +19,7 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let url = urlString {
             urlLabel.text = url
         }
