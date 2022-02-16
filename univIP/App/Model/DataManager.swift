@@ -33,6 +33,14 @@ final class DataManager {
         saveMenuLists()
     }
     
+    /// MenuLists内の要素を削除する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    public func deleteContentsMenuLists(row: Int) {
+        menuLists.remove(at: row)
+        saveMenuLists()
+    }
+    
     /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
     /// - Parameters:
     ///   - row: index

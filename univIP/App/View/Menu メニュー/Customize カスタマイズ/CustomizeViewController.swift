@@ -194,6 +194,13 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
         if dataManager.menuLists[indexPath.row].id == .cellSort {
             return
         }
+        
+        //
+        if dataManager.menuLists[indexPath.row].id == .favorite {
+            dataManager.deleteContentsMenuLists(row: indexPath.row)
+            return
+        }
+            
         // 表示許可情報を更新
         dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
         dataManager.saveMenuLists()
