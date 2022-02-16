@@ -11,6 +11,7 @@ class FavoriteViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var urlLabel: UILabel!
+    @IBOutlet weak var favoriteNameTextField: UITextField!
     
     @IBOutlet weak var urlUnderLine: UIView!
     @IBOutlet weak var favoriteNameUnderLine: UIView!
@@ -19,7 +20,6 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var favoriteNameMessageLabel: UILabel!
     
     @IBOutlet weak var favoriteTextSizeLabel: UILabel!
-    @IBOutlet weak var favoriteNameTextField: UITextField!
     
     @IBOutlet weak var isFirstViewSetting: UISwitch!
     @IBOutlet weak var registerButton: UIButton!
@@ -32,9 +32,19 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let url = urlString {
-            urlLabel.text = url
+        guard let urlString = urlString else {
+            return
         }
+
+        urlLabel.text = urlString
+        
+        // 多分ここが通ることはないが念の為
+        guard let _ = URL(string: urlString) else {
+            urlMessageLabel.text = "不正なURLです"
+            urlTextFieldCursorSetup(type: .error)
+            return
+        }
+        
         
     }
     
@@ -52,8 +62,18 @@ class FavoriteViewController: UIViewController {
 
     // MARK: - IBAction
     @IBAction func registerButton(_ sender: Any) {
+        // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
+        guard let favoriteNameText = favoriteNameTextField.text else { return }
         
+        if favoriteNameText.isEmpty {
+            favoriteNameMessageLabel.text = "空欄です"
+            favoriteNameTextFieldCursorSetup(type: .error)
+            return
+        }
+        
+        // 初期画面に設定した場合
         if isFirstViewSetting.isOn {
+            // 既存のリストのisInitViewを全てfalseに(実際にはどれか1つのみのtrueをfalseにするだけ)
             var menuLists = dataManager.menuLists
             for i in 0..<menuLists.count {
                 menuLists[i].isInitView = false
@@ -63,11 +83,8 @@ class FavoriteViewController: UIViewController {
             dataManager.saveMenuLists()
         }
         
-        guard let text = favoriteNameTextField.text else {
-            return
-        }
-        
-        let menuItem = Constant.Menu(title: text,
+        // お気に入りの仕様を作成
+        let menuItem = Constant.Menu(title: favoriteNameText,
                                      id: .favorite,
                                      url: urlString,
                                      isInitView: isFirstViewSetting.isOn,
@@ -124,6 +141,27 @@ class FavoriteViewController: UIViewController {
     }
     
 }
+
+
+// MARK: - UITextFieldDelegate
+extension FavoriteViewController: UITextFieldDelegate {
+    
+    // textField編集前
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        favoriteNameTextFieldCursorSetup(type: .focus)
+    }
+    // textField編集後
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        favoriteNameTextFieldCursorSetup(type: .normal)
+    }
+    
+    // text内容が変更されるたびに
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        favoriteTextSizeLabel.text = "\(favoriteNameTextField.text?.count ?? 0)/10"
+    }
+    
+}
+
 
 // キーボード関連
 extension FavoriteViewController {
