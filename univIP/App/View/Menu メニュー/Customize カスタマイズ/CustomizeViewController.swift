@@ -190,7 +190,8 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if (dataManager.menuLists[indexPath.row].id == .cellSort) {
+        // カスタマイズは非表示にはしない
+        if dataManager.menuLists[indexPath.row].id == .cellSort {
             return
         }
         // 表示許可情報を更新
