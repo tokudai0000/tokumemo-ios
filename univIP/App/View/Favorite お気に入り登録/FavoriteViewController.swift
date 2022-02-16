@@ -14,15 +14,22 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var favoriteNameTextField: UITextField!
     @IBOutlet weak var isFirstViewSetting: UISwitch!
     
-    public var urlString = "nil"
+    public var urlString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        urlLabel.text = urlString
+        if let url = urlString {
+            urlLabel.text = url
+        }
+        
     }
 
     // MARK: - IBAction
     @IBAction func registerButton(_ sender: Any) {
+    }
+    
+    @IBAction func dismissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
 }

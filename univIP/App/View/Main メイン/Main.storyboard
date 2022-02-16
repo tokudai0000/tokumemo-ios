@@ -87,8 +87,7 @@
                                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                                         <state key="normal" image="star" catalog="system"/>
                                                         <connections>
-                                                            <action selector="faboriteButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tmp-1S-GCf"/>
-                                                            <action selector="showServiceListsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="09W-nm-mx1"/>
+                                                            <action selector="favoriteButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bN4-3T-ozs"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7E-8X-iXM">
