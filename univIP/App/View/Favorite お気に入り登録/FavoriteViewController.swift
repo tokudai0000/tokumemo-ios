@@ -16,6 +16,7 @@ class FavoriteViewController: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     
     public var urlString: String?
+    private let dataManager = DataManager.singleton
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,28 @@ class FavoriteViewController: UIViewController {
 
     // MARK: - IBAction
     @IBAction func registerButton(_ sender: Any) {
+        
+        if isFirstViewSetting.isOn {
+            var menuLists = dataManager.menuLists
+            for i in 0..<menuLists.count {
+                menuLists[i].isInitView = false
+            }
+            dataManager.menuLists = menuLists
+            // menuListsをUserDefaultsに保存
+            dataManager.saveMenuLists()
+        }
+        
+        guard let text = favoriteNameTextField.text else {
+            return
+        }
+        
+        let menuItem = Constant.Menu(title: text,
+                                     id: .favorite,
+                                     url: urlString,
+                                     isInitView: isFirstViewSetting.isOn,
+                                     canInitView: true)
+        // 保存
+        dataManager.addContentsMenuLists(menuItem: menuItem)
     }
     
     @IBAction func dismissButton(_ sender: Any) {

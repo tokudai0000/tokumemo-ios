@@ -52,13 +52,15 @@ final class Constant {
         case firstViewSetting               // 初期画面設定
         case password                       // パスワード
         case aboutThisApp                   // このアプリについて
+        
+        case favorite                       // お気に入り登録
     }
     
     struct Menu: Codable {
         var title: String             // 表示名ユーザーが変更することができる
         let id: MenuLists
         let url: String?
-        var isDisplay: Bool = true    // 初期値は全てfalse(ユーザー「常三島生、蔵本生」によって表示内容を変更させる)
+        var isDisplay: Bool = true    // 初期値は全てtrue(ユーザー「常三島生、蔵本生」によって表示内容を変更させる)
         var isInitView: Bool = false  // 初期値は「マナバPC版」のみtrue
         let canInitView: Bool         // 初期画面として設定可能か
     }

@@ -25,6 +25,13 @@ final class DataManager {
     // JavaScriptを実行するかどうか
     public var isExecuteJavascript = false
 
+    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - menuItem: 追加したいお気に入り設定
+    public func addContentsMenuLists(menuItem: Constant.Menu) {
+        menuLists.append(menuItem)
+        saveMenuLists()
+    }
     
     /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
     /// - Parameters:
@@ -33,7 +40,6 @@ final class DataManager {
     ///   - isDisplay: リストで表示する
     ///   - isInitView: 初期画面にする
     public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
-        
         if let title = title {
             menuLists[row].title = title
         }
@@ -46,7 +52,6 @@ final class DataManager {
             menuLists[row].isInitView = isInitView
         }
         saveMenuLists()
-        
     }
     
     /// MenuLists内の順番を変更する。その都度UserDefaultsに保存する
@@ -54,12 +59,10 @@ final class DataManager {
     ///   - sourceRow: 移動させたいcellのindex
     ///   - destinationRow: 挿入場所のindex
     public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
-        
         let todo = menuLists[sourceRow]
         menuLists.remove(at: sourceRow)
         menuLists.insert(todo, at: destinationRow)
         saveMenuLists()
-        
     }
     
     
@@ -228,6 +231,12 @@ final class DataManager {
                 newModelLists[index].isInitView = oldList.isInitView   // ユーザーが指定した初期画面
                 updateForLists.append(newModelLists[index])
                 newModelLists.remove(at: index)
+            }
+            
+            // お気に入りの場合、ユーザーによって変化するため、そのまま引き継ぐ
+            if oldList.id == .favorite {
+                // 引き継ぎ
+                updateForLists.append(oldList)
             }
         }
         
