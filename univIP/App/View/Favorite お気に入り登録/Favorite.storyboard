@@ -221,29 +221,29 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="＊必ずしも期待通りの動作が行われるとは限りません＊" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8a-NS-KIt">
-                                        <rect key="frame" x="25" y="429" width="364" height="16"/>
+                                        <rect key="frame" x="0.0" y="735" width="414" height="17"/>
                                         <color key="tintColor" systemColor="labelColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="o8a-NS-KIt" firstAttribute="leading" secondItem="1aZ-xt-7wZ" secondAttribute="leading" constant="25" id="08X-fQ-AF1"/>
+                                    <constraint firstItem="o8a-NS-KIt" firstAttribute="leading" secondItem="1aZ-xt-7wZ" secondAttribute="leading" id="08X-fQ-AF1"/>
                                     <constraint firstAttribute="bottom" secondItem="5Cm-ol-8Gh" secondAttribute="bottom" constant="20" id="34Y-vU-Ero"/>
                                     <constraint firstItem="eAF-ui-WO9" firstAttribute="top" secondItem="M7G-MF-Yl4" secondAttribute="bottom" constant="20" id="3j6-Xp-mMZ"/>
                                     <constraint firstItem="M7G-MF-Yl4" firstAttribute="top" secondItem="1aZ-xt-7wZ" secondAttribute="top" id="4OL-vN-Nin"/>
                                     <constraint firstAttribute="trailing" secondItem="M7G-MF-Yl4" secondAttribute="trailing" id="ICQ-1V-c8H"/>
-                                    <constraint firstItem="o8a-NS-KIt" firstAttribute="top" secondItem="Y0j-f5-BaF" secondAttribute="bottom" constant="50" id="MIA-Ab-Rmh"/>
                                     <constraint firstItem="Y0j-f5-BaF" firstAttribute="leading" secondItem="1aZ-xt-7wZ" secondAttribute="leading" constant="25" id="QCS-us-uTJ"/>
                                     <constraint firstItem="dha-4A-Vwo" firstAttribute="top" secondItem="eAF-ui-WO9" secondAttribute="bottom" constant="50" id="RVe-nl-gtf"/>
                                     <constraint firstAttribute="trailing" secondItem="5Cm-ol-8Gh" secondAttribute="trailing" constant="25" id="SUL-HQ-TmN"/>
+                                    <constraint firstItem="5Cm-ol-8Gh" firstAttribute="top" secondItem="o8a-NS-KIt" secondAttribute="bottom" constant="50" id="ZN8-oi-aYu"/>
                                     <constraint firstAttribute="trailing" secondItem="eAF-ui-WO9" secondAttribute="trailing" constant="25" id="Zb7-pQ-e3x"/>
                                     <constraint firstAttribute="trailing" secondItem="dha-4A-Vwo" secondAttribute="trailing" constant="25" id="ekT-Jv-ZSi"/>
                                     <constraint firstItem="eAF-ui-WO9" firstAttribute="leading" secondItem="1aZ-xt-7wZ" secondAttribute="leading" constant="25" id="fse-v0-Abd"/>
                                     <constraint firstItem="dha-4A-Vwo" firstAttribute="leading" secondItem="1aZ-xt-7wZ" secondAttribute="leading" constant="25" id="gsQ-1r-gU1"/>
-                                    <constraint firstAttribute="trailing" secondItem="o8a-NS-KIt" secondAttribute="trailing" constant="25" id="lRb-9h-8ft"/>
+                                    <constraint firstAttribute="trailing" secondItem="o8a-NS-KIt" secondAttribute="trailing" id="lRb-9h-8ft"/>
                                     <constraint firstItem="5Cm-ol-8Gh" firstAttribute="leading" secondItem="1aZ-xt-7wZ" secondAttribute="leading" constant="25" id="mkA-hn-Kbj"/>
                                     <constraint firstAttribute="trailing" secondItem="Y0j-f5-BaF" secondAttribute="trailing" constant="25" id="oUd-pq-4tQ"/>
                                     <constraint firstItem="Y0j-f5-BaF" firstAttribute="top" secondItem="dha-4A-Vwo" secondAttribute="bottom" constant="50" id="yCe-3U-UgT"/>
