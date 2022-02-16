@@ -78,13 +78,19 @@
                                                             <constraint firstAttribute="width" constant="50" id="4Rd-Bx-h0Q"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8M-sl-64i" userLabel="None">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-PM-oS5">
                                                         <rect key="frame" x="229" y="0.0" width="50" height="44"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="UBe-9J-Bh1"/>
+                                                            <constraint firstAttribute="width" constant="50" id="GTb-2B-mIa"/>
                                                         </constraints>
-                                                    </view>
+                                                        <color key="tintColor" systemColor="systemGrayColor"/>
+                                                        <state key="normal" image="star" catalog="system"/>
+                                                        <connections>
+                                                            <action selector="faboriteButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tmp-1S-GCf"/>
+                                                            <action selector="showServiceListsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="09W-nm-mx1"/>
+                                                        </connections>
+                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7E-8X-iXM">
                                                         <rect key="frame" x="305" y="0.0" width="50" height="44"/>
                                                         <color key="backgroundColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -150,6 +156,7 @@
         <image name="arrow.left" catalog="system" width="128" height="98"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
