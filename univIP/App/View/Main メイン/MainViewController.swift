@@ -20,6 +20,8 @@ final class MainViewController: UIViewController {
     
     private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
+    // Favorite画面へURLを渡すのに使用
+    private var urlString: String?
     
     
     // MARK: - LifeCycle
@@ -74,6 +76,12 @@ final class MainViewController: UIViewController {
     
     @IBAction func webViewGoForwardButton(_ sender: Any) {
         webView.goForward()
+    }
+    
+    @IBAction func favoriteButton(_ sender: Any) {
+        let vc = R.storyboard.favorite.favoriteViewController()!
+        vc.urlString = urlString
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func showServiceListsButton(_ sender: Any) {
@@ -282,6 +290,9 @@ extension MainViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
             return
         }
+        
+        // Favorite画面のためにURLを保持
+        urlString = url.absoluteString
         
         // タイムアウト(20分無操作)の場合
         if url.absoluteString == Url.universityServiceTimeOut.string() {

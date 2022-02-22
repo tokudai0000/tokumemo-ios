@@ -17,7 +17,7 @@ final class FirstViewSettingViewController: UIViewController {
     
     private let dataManager = DataManager.singleton
     private var pickerList: [Constant.Menu] = []
-
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -35,7 +35,7 @@ final class FirstViewSettingViewController: UIViewController {
                 pickerList.append(item)
             }
         }
-
+        
     }
     
     
@@ -63,10 +63,9 @@ final class FirstViewSettingViewController: UIViewController {
         
         textField.text = pickerList[pickerView.selectedRow(inComponent: 0)].title
         
-        // シュミレーターではAnalyticsを送信しない
-        #if !targetEnvironment(simulator)
-            Analytics.logEvent("FirstViewSetting", parameters: ["initViewName": pickerList[pickerView.selectedRow(inComponent: 0)].title])
-        #endif
+        // アナリティクスを送信
+        Analytics.logEvent("FirstViewSetting", parameters: ["initViewName": pickerList[pickerView.selectedRow(inComponent: 0)].title])
+        
     }
     
     // textfieldにpickerViewを埋め込む
@@ -104,5 +103,5 @@ extension FirstViewSettingViewController: UIPickerViewDelegate, UIPickerViewData
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerList[row].title
     }
-
+    
 }

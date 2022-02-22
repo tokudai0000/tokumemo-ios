@@ -82,7 +82,7 @@ class UrlTests: XCTestCase {
         XCTAssertEqual(libraryMyPage, Url.libraryMyPage.string())
         XCTAssertEqual(libraryBookLendingExtension, Url.libraryBookLendingExtension.string())
         XCTAssertEqual(libraryBookPurchaseRequest, Url.libraryBookPurchaseRequest.string())
-        XCTAssertEqual(outlookLogin, Url.outlookLogin.string())
+        XCTAssertEqual(outlookLogin, Url.outlookService.string())
         XCTAssertEqual(syllabus, Url.syllabus.string())
         XCTAssertEqual(tokudaiCareerCenter, Url.tokudaiCareerCenter.string())
         XCTAssertEqual(universityTransitionLogin, Url.universityTransitionLogin.string())

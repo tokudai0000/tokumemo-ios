@@ -1,49 +1,64 @@
 //
-//  SearchViewController.swift
+//  FavoriteViewController.swift
 //  univIP
 //
-//  Created by Akihiro Matsuyama on 2021/08/09.
-//  Copyright © 2021年　akidon0000
+//  Created by Akihiro Matsuyama on 2022/02/16.
 //
 
 import UIKit
+import Firebase
 
-final class SyllabusViewController: UIViewController {
+class FavoriteViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var subjectTextField: UITextField!
-    @IBOutlet weak var teacherTextField: UITextField!
+    @IBOutlet weak var urlLabel: UILabel!
+    @IBOutlet weak var favoriteNameTextField: UITextField!
     
-    @IBOutlet weak var subjectTextSizeLabel: UILabel!
-    @IBOutlet weak var teacherTextSizeLabel: UILabel!
+    @IBOutlet weak var urlUnderLine: UIView!
+    @IBOutlet weak var favoriteNameUnderLine: UIView!
     
-    @IBOutlet weak var subjectUnderLine: UIView!
-    @IBOutlet weak var teacherUnderLine: UIView!
+    @IBOutlet weak var urlMessageLabel: UILabel!
+    @IBOutlet weak var favoriteNameMessageLabel: UILabel!
     
-    @IBOutlet weak var viewTop: UIView!
-    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var favoriteTextSizeLabel: UILabel!
     
-    public var delegate : MainViewController?
+    @IBOutlet weak var isFirstViewSetting: UISwitch!
+    @IBOutlet weak var registerButton: UIButton!
     
+    public var urlString: String?
     private let dataManager = DataManager.singleton
     
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-        teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
         
-        subjectTextField.borderStyle = .none
-        teacherTextField.borderStyle = .none
+        urlTextFieldCursorSetup(type: .normal)
+        favoriteNameTextFieldCursorSetup(type: .normal)
         
-        subjectTextField.delegate = self
-        teacherTextField.delegate = self
+        favoriteNameTextField.borderStyle = .none
         
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
+        favoriteNameTextField.delegate = self
         
-        searchButton.layer.cornerRadius = 5.0
+        guard let urlString = urlString else { return }
+        urlLabel.text = urlString
+        
+        favoriteTextSizeLabel.text = "0/10"
+        
+        urlMessageLabel.textColor = .red
+        favoriteNameMessageLabel.textColor = .red
+        
+        registerButton.layer.cornerRadius = 5.0
+        
+        
+        // 多分ここが通ることはないが念の為
+        guard let _ = URL(string: urlString) else {
+            urlMessageLabel.text = "不正なURLです"
+            urlTextFieldCursorSetup(type: .error)
+            return
+        }
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,24 +72,45 @@ final class SyllabusViewController: UIViewController {
         notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)),
                                  name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    
+
     // MARK: - IBAction
-    @IBAction func searchButton(_ sender: Any) {
+    @IBAction func registerButton(_ sender: Any) {
+        // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
+        guard let favoriteNameText = favoriteNameTextField.text else { return }
         
-        guard let delegate = self.delegate else {
-            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
-            fatalError()
+        guard let urlString = urlString else { return }
+        
+        if favoriteNameText.isEmpty {
+            favoriteNameMessageLabel.text = "空欄です"
+            favoriteNameTextFieldCursorSetup(type: .error)
+            return
         }
         
-        let subjectText = subjectTextField.text ?? ""
-        let teacherText = teacherTextField.text ?? ""
+        // 初期画面に設定した場合
+        if isFirstViewSetting.isOn {
+            // 既存のリストのisInitViewを全てfalseに(実際にはどれか1つのみのtrueをfalseにするだけ)
+            var menuLists = dataManager.menuLists
+            for i in 0..<menuLists.count {
+                menuLists[i].isInitView = false
+            }
+            dataManager.menuLists = menuLists
+            // menuListsをUserDefaultsに保存
+            dataManager.saveMenuLists()
+        }
         
-        delegate.refreshSyllabus(subjectName: subjectText,
-                                 teacherName: teacherText)
+        // お気に入りの仕様を作成
+        let menuItem = Constant.Menu(title: favoriteNameText,
+                                     id: .favorite,
+                                     url: urlString,
+                                     isInitView: isFirstViewSetting.isOn,
+                                     canInitView: true)
+        // 保存
+        dataManager.addContentsMenuLists(menuItem: menuItem)
         
         dismiss(animated: true, completion: nil)
         
+        // Analytics
+        Analytics.logEvent("FavoriteView", parameters: ["url": urlString])
     }
     
     @IBAction func dismissButton(_ sender: Any) {
@@ -89,39 +125,36 @@ final class SyllabusViewController: UIViewController {
         case focus
         case error
     }
-    // 科目名フィールド
-    private func subjectTextFieldCursorSetup(type: cursorType) {
+    private func urlTextFieldCursorSetup(type: cursorType) {
         switch type {
+                
             case .normal:
-                // 非選択状態
-                subjectUnderLine.backgroundColor = .lightGray
+                urlUnderLine.backgroundColor = .lightGray
                 
             case .focus:
-                // 選択状態
                 // カーソルの色
-                subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                urlLabel.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 
             case .error:
-                subjectTextField.tintColor = .red
-                subjectUnderLine.backgroundColor = .red
+                urlLabel.tintColor = .red
+                urlUnderLine.backgroundColor = .red
         }
     }
-    // 教員名フィールド
-    private func teacherTextFieldCursorSetup(type: cursorType) {
+    
+    private func favoriteNameTextFieldCursorSetup(type: cursorType) {
         switch type {
+                
             case .normal:
-                // 非選択状態
-                teacherUnderLine.backgroundColor = .lightGray
+                favoriteNameUnderLine.backgroundColor = .lightGray
                 
             case .focus:
-                // 選択状態
-                teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                favoriteNameTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                favoriteNameUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 
             case .error:
-                teacherTextField.tintColor = .red
-                teacherUnderLine.backgroundColor = .red
+                favoriteNameTextField.tintColor = .red
+                favoriteNameUnderLine.backgroundColor = .red
         }
     }
     
@@ -129,46 +162,27 @@ final class SyllabusViewController: UIViewController {
 
 
 // MARK: - UITextFieldDelegate
-extension SyllabusViewController: UITextFieldDelegate {
+extension FavoriteViewController: UITextFieldDelegate {
     
-    enum TextFieldTag: Int {
-        case subject = 0
-        case teacher = 1
-    }
     // textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        let textFieldTag = TextFieldTag(rawValue: textField.tag)
-        
-        switch textFieldTag {
-            case .subject:
-                subjectTextFieldCursorSetup(type: .focus)
-                
-            case .teacher:
-                teacherTextFieldCursorSetup(type: .focus)
-                
-            case .none:
-                AKLog(level: .FATAL, message: "TextFieldTagが不正")
-                fatalError()
-        }
+        favoriteNameTextFieldCursorSetup(type: .focus)
     }
-    
     // textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
-        subjectTextFieldCursorSetup(type: .normal)
-        teacherTextFieldCursorSetup(type: .normal)
+        favoriteNameTextFieldCursorSetup(type: .normal)
     }
     
     // text内容が変更されるたびに
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
+        favoriteTextSizeLabel.text = "\(favoriteNameTextField.text?.count ?? 0)/10"
     }
-
+    
 }
 
 
 // キーボード関連
-extension SyllabusViewController {
+extension FavoriteViewController {
     // キーボードが現れる直前に呼ばれる
     @objc func keyboardWillShow(notification: Notification?) {
         // UIKeyboardWillShowNotification を取得
@@ -198,7 +212,7 @@ extension SyllabusViewController {
         
         UIView.animate(withDuration: duration + 0.2, animations: { () in
             let transform = CGAffineTransform(translationX: 0, y: hideY)
-            self.searchButton.transform = transform
+            self.registerButton.transform = transform
         })
     }
     
@@ -222,7 +236,7 @@ extension SyllabusViewController {
         }
         
         UIView.animate(withDuration: duration + 0.2, animations: { () in
-            self.searchButton.transform = CGAffineTransform.identity
+            self.registerButton.transform = CGAffineTransform.identity
         })
     }
     

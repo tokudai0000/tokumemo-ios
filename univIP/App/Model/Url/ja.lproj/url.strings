@@ -31,7 +31,8 @@
 "libraryBookLendingExtension" = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings";
 "libraryBookPurchaseRequest"  = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new";
 
-"outlookLogin"                = "https://outlook.office365.com/tokushima-u.ac.jp";
+"outlookService"              = "https://outlook.office365.com/tokushima-u.ac.jp"; // 複数回遷移したのち、outlookLoginFormへ行く
+"outlookLoginForm"            = "https://wa.tokushima-u.ac.jp/adfs/ls";            // ログイン画面
 
 "syllabus"                    = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/";
 

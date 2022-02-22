@@ -38,12 +38,8 @@ final class MenuViewModel {
     }
     
     public func analytics(_ temp: String) {
-        
-        // シュミレーターではAnalyticsを送信しない
-        #if !targetEnvironment(simulator)
-            Analytics.logEvent("MenuView", parameters: ["serviceName": temp])
-        #endif
-        
+        // Analytics
+        Analytics.logEvent("MenuView", parameters: ["serviceName": temp])
     }
     
 }

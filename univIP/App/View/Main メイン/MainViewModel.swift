@@ -74,7 +74,7 @@ final class MainViewModel {
             return .syllabusFirstTime
         }
         // outlook(メール) && 登録者判定
-        if urlString.contains(Url.outlookLogin.string()) && canLoggedInService {
+        if urlString.contains(Url.outlookLoginForm.string()) && canLoggedInService {
             return .outlookLogin
         }
         // 徳島大学キャリアセンター
@@ -113,7 +113,17 @@ final class MainViewModel {
             }
         }
         
-        // 必ず初期画面が設定されている
+        // お気に入り画面を初期画面に設定しており、カスタマイズから削除した場合ここを通る
+        for i in 0..<dataManager.menuLists.count {
+            // 初期設定はマナバ
+            if dataManager.menuLists[i].id == .manabaHomePC {
+                dataManager.menuLists[i].isInitView = true
+                dataManager.saveMenuLists()
+                let urlString = dataManager.menuLists[i].url! // fatalError **Constant.Menu(canInitView)を設定してる為、URLが存在することを保証している**
+                let url = URL(string: urlString)!             // fatalError
+                return URLRequest(url: url)
+            }
+        }
         fatalError()
     }
     
@@ -191,11 +201,9 @@ final class MainViewModel {
     
     public func analytics(_ url:URL) {
         
-        // シュミレーターではAnalyticsを送信しない
-        #if !targetEnvironment(simulator)
-            let urlString = url.absoluteString
-            Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
-        #endif
+        // Analytics
+        let urlString = url.absoluteString
+        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
         
     }
     
