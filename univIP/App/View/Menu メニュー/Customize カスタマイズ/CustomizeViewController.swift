@@ -26,10 +26,8 @@ final class CustomizeViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // シュミレーターではAnalyticsを送信しない
-        #if !targetEnvironment(simulator)
-            Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
-        #endif
+        // Analytics
+        Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
     }
     
     
@@ -99,10 +97,8 @@ final class CustomizeViewController: UIViewController {
                     self.dataManager.changeContentsMenuLists(row: indexPath, title: text)
                     self.dataManager.saveMenuLists()
                     self.tableView.reloadData()
-                    // シュミレーターではAnalyticsを送信しない
-                    #if !targetEnvironment(simulator)
-                        Analytics.logEvent("CustomizeText", parameters: ["changeName": text])
-                    #endif
+                    // Analytics
+                    Analytics.logEvent("CustomizeText", parameters: ["changeName": text])
                 }
                 
             }else{
@@ -190,9 +186,17 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if (dataManager.menuLists[indexPath.row].id == .cellSort) {
+        // カスタマイズは非表示にはしない
+        if dataManager.menuLists[indexPath.row].id == .cellSort {
             return
         }
+        
+        //
+        if dataManager.menuLists[indexPath.row].id == .favorite {
+            dataManager.deleteContentsMenuLists(row: indexPath.row)
+            return
+        }
+            
         // 表示許可情報を更新
         dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
         dataManager.saveMenuLists()

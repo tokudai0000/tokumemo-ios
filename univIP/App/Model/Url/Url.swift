@@ -34,7 +34,8 @@ enum Url: String {
     case libraryBookLendingExtension // 本貸出し期間延長
     case libraryBookPurchaseRequest  // 本購入リクエスト
     
-    case outlookLogin                // outlook(メール)
+    case outlookService              // outlook(メール) 複数回遷移したのち、outlookLoginFormへ行く
+    case outlookLoginForm            // ログイン画面
     
     case syllabus                    // シラバス
     
