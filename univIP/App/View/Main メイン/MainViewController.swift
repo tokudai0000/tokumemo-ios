@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import EAIntroView
 
 final class MainViewController: UIViewController {
     
@@ -18,55 +17,37 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var webViewGoForwardButton: UIButton!
     @IBOutlet weak var showServiceListsButton: UIButton!
     
-    private let viewModel = MainViewModel()
+    public let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
-    // Favorite画面へURLを渡すのに使用
-    private var urlString: String?
-    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // WKWebViewのDelegateとフォアグラウンド等の設定
         setUp()
+        // 大学サイトへのログイン
         login()
         
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        
         // **DEBUG**
-//        dataManager.isFinishedMainTutorial = false
-//        dataManager.isFinishedMenuTutorial = false
+        dataManager.shouldExecuteMainTutorial = true
+        dataManager.shouldExecuteMenuTutorial = true
         // *********
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if !viewModel.hasAgreedTermsOfUse {
-            // 規約 未同意者の場合
+        // 利用規約同意画面を表示するべきか(利用規約更新に伴い再度呼び出しされる)
+        if viewModel.shouldDisplayTermsAgreementView {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
         }
         
-        // ////チュートリアル////
-        // すでに利用者が40名いるため、初回起動時処理では行わない
-        if !dataManager.isFinishedMainTutorial {
-            // 未完了の場合
-            // ウォークスルーチュートリアル 完了後 -> スポットライトチュートリアル
-            walkThroughTutorial()
-            // チュートリアル完了とする(以降チュートリアルを表示しない)
-            dataManager.isFinishedMainTutorial = true
+        // メインチュートリアルを実行するべきか
+        if dataManager.shouldExecuteMainTutorial {
+            tutorialSpotlight()
             return
         }
-        if !dataManager.isFinishedMenuTutorial {
-            // Mainチュートリアルが終了した後、MenuViewを表示させ、Menuチュートリアルを実行する
-            let vc = R.storyboard.menu.menuViewController()!
-            self.present(vc, animated: true, completion: nil)
-        }
-        
     }
     
     // MARK: - IBAction
@@ -80,93 +61,18 @@ final class MainViewController: UIViewController {
     
     @IBAction func favoriteButton(_ sender: Any) {
         let vc = R.storyboard.favorite.favoriteViewController()!
-        vc.urlString = urlString
+        vc.urlString = viewModel.urlString
         present(vc, animated: true, completion: nil)
     }
     
     @IBAction func showServiceListsButton(_ sender: Any) {
         let vc = R.storyboard.menu.menuViewController()!
         vc.delegate = self
-        // アニメーションは表示しない
-        // トクメモはデザインよりもシンプル、速さを求める(Menuは頻繁に使用すると想定する)
+        // アニメーションは表示しない(Menuは頻繁に使用するから快適性の向上)
         present(vc, animated: false, completion: nil)
-        
     }
-    
     
     // MARK: - Public func
-    enum ModalViewType {
-        case libraryCalendar
-        case syllabus
-        case cellSort
-        case firstViewSetting
-        case password
-        case aboutThisApp
-    }
-    public func showModalView(type: ModalViewType) {
-        switch type {
-            case .libraryCalendar:
-                // MARK: - HACK 推奨されたAlertの使い方ではない
-                // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
-                var alert:UIAlertController!
-                //アラートコントローラーを作成する。
-                alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
-                
-                let alertAction = UIAlertAction(
-                    title: "常三島",
-                    style: UIAlertAction.Style.default,
-                    handler: { action in
-                        // 常三島のカレンダーURLを取得後、webView読み込み
-                        if let url = self.viewModel.fetchLibraryCalendarUrl(type: .main) {
-                            self.webView.load(url)
-                        }else{
-                            AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
-                        }
-                    })
-                
-                let alertAction2 = UIAlertAction(
-                    title: "蔵本",
-                    style: UIAlertAction.Style.default,
-                    handler: { action in
-                        // 蔵本のカレンダーURLを取得後、webView読み込み
-                        if let url = self.viewModel.fetchLibraryCalendarUrl(type: .kura) {
-                            self.webView.load(url)
-                        }else{
-                            AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
-                        }
-                    })
-                
-                //アラートアクションを追加する。
-                alert.addAction(alertAction)
-                alert.addAction(alertAction2)
-                self.present(alert, animated: true, completion:nil)
-                
-            case .syllabus:
-                let vc = R.storyboard.syllabus.syllabusViewController()!
-                vc.delegate = self
-                present(vc, animated: true, completion: nil)
-                
-            case .cellSort:
-                let vc = R.storyboard.cellSort.cellSort()!
-                present(vc, animated: true, completion: nil)
-                
-            case .firstViewSetting:
-                let vc = R.storyboard.firstViewSetting.firstViewSetting()!
-                present(vc, animated: true, completion: nil)
-                
-            case .password:
-                let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
-                vc.delegate = self
-                present(vc, animated: true, completion: nil)
-                
-                
-            case .aboutThisApp:
-                let vc = R.storyboard.aboutThisApp.aboutThisApp()!
-                present(vc, animated: true, completion: nil)
-        }
-        
-    }
-    
     /// シラバス検索ボタンを押された際
     public func refreshSyllabus(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
@@ -176,52 +82,35 @@ final class MainViewController: UIViewController {
         webView.load(URLRequest(url: url))
     }
     
-    
     // MARK: - Private func
+    /// WKWebViewのDelegateとフォアグラウンド等の設定
     private func setUp() {
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
         // フォアグラウンドの判定
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(foreground(notification:)),
                                                name: UIApplication.willEnterForegroundNotification,
-                                               object: nil
-        )
+                                               object: nil)
         // バックグラウンドの判定
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(background(notification:)),
                                                name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil
-        )
+                                               object: nil)
     }
     
-    // 最後にアプリ画面を離脱した時刻から、10分以上経っていれば再ログイン処理を行う
     @objc private func foreground(notification: Notification) {
-        // dataManagerのsaveTimeUsedLastTime(String型)をDateに変換する
-        let formatter: DateFormatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
-        if let lastTime = formatter.date(from: dataManager.saveTimeUsedLastTime) {
-            // 現在の時刻を取得
-            let f = DateFormatter()
-            f.setTemplate(.time)
-            let now = Date()
-            // 時刻の差分が30*60分以上であれば再ログインを行う
-            if now.timeIntervalSince(lastTime) > 30 * 60 {
-                login()
-            }
+        // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
+        if viewModel.shouldExecuteLogin() {
+            login()
         }
     }
-    // 最後にアプリ画面を離脱した時刻を保存
     @objc private func background(notification: Notification) {
-        // 現在の時刻を取得し保存
-        let f = DateFormatter()
-        f.setTemplate(.full)
-        let now = Date()
-        dataManager.saveTimeUsedLastTime = f.string(from: now)
+        // 最後にアプリ画面を離脱した時刻を保存
+        viewModel.saveTimeUsedLastTime()
     }
-    
-    
 
-    // 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
+    /// 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
     private func login() {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
         dataManager.isExecuteJavascript = true
@@ -232,38 +121,18 @@ final class MainViewController: UIViewController {
         let url = URL(string: urlString)! // fatalError
         webView.load(URLRequest(url: url))
     }
-    
-
-    // ウォークスルーチュートリアル、3枚の画像を表示する
-    private func walkThroughTutorial() {
         
-        let page1 = EAIntroPage()
-        page1.bgImage = UIImage(named: R.image.tutorialImage1.name)
-        
-        let page2 = EAIntroPage()
-        page2.bgImage = UIImage(named: R.image.tutorialImage2.name)
-        
-        let page3 = EAIntroPage()
-        page3.bgImage = UIImage(named: R.image.tutorialImage3.name)
-        
-        let introView = EAIntroView(frame: self.view.bounds, andPages: [page1, page2, page3])
-        introView?.delegate = self
-        // サイズを調整
-        introView?.bgViewContentMode = .scaleAspectFit
-        introView?.skipButton.setTitle("スキップ", for: UIControl.State.normal)
-        introView?.backgroundColor = UIColor(named: R.color.tokumemoColor.name)
-        introView?.show(in: self.view, animateDuration: 0)
-        
-    }
-    
     // スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
     private func tutorialSpotlight() {
         let spotlightViewController = MainTutorialSpotlightViewController()
-        // 絶対座標(画面左上X=0,Y=0からの座標)
-        let showServiceButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
-        // スポットする座標を渡す
-        spotlightViewController.uiLabels_frames.append(showServiceButtonFrame)
-        present(spotlightViewController, animated: true, completion: nil) // Menuでスポットライトチュートリアル起動
+        let menuButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view) // 絶対座標(画面左上X=0,Y=0からの座標)
+        spotlightViewController.uiLabels_frames.append(menuButtonFrame) // スポットする座標を渡す
+        spotlightViewController.mainViewController = self
+        present(spotlightViewController, animated: true, completion: nil)
+        
+        // チュートリアル完了とする(以降チュートリアルを表示しない)
+        dataManager.shouldExecuteMainTutorial = false
+//        dataManager.shouldExecuteMenuTutorial = true
     }
     
 }
@@ -292,7 +161,7 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // Favorite画面のためにURLを保持
-        urlString = url.absoluteString
+        viewModel.urlString = url.absoluteString
         
         // タイムアウト(20分無操作)の場合
         if url.absoluteString == Url.universityServiceTimeOut.string() {
@@ -443,15 +312,5 @@ extension MainViewController: WKUIDelegate {
         // 新しいタブで開くURLを取得し、読み込む
         webView.load(navigationAction.request)
         return nil
-    }
-}
-
-
-// MARK: - EAIntroDelegate
-extension MainViewController: EAIntroDelegate {
-    // ウォークスルーチュートリアルが終了したら呼ばれる
-    func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
-        // ウォークスルーチュートリアル後、スポットライトチュートリアルを実行する
-        tutorialSpotlight()
     }
 }

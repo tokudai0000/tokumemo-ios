@@ -14,6 +14,9 @@ final class MainViewModel {
     
     private let dataManager = DataManager.singleton
     
+    // Favorite画面へURLを渡すのに使用
+    public var urlString: String?
+    
     // シラバスをJavaScriptで自動入力する際、参照変数
     public var subjectName = ""
     public var teacherName = ""
@@ -22,8 +25,8 @@ final class MainViewModel {
     public var isInitFinishLogin = true
     
     // 利用規約同意者か判定
-    public var hasAgreedTermsOfUse: Bool {
-        get { return dataManager.agreementVersion == Constant.agreementVersion }
+    public var shouldDisplayTermsAgreementView: Bool {
+        get { return dataManager.agreementVersion != Constant.agreementVersion }
     }
     
     /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
@@ -209,4 +212,30 @@ final class MainViewModel {
     
     // cアカウント、パスワードを登録しているか判定
     private var canLoggedInService: Bool { get { return (!dataManager.cAccount.isEmpty && !dataManager.password.isEmpty) }}
+    
+    public func saveTimeUsedLastTime() {
+        // 現在の時刻を取得し保存
+        let f = DateFormatter()
+        f.setTemplate(.full)
+        let now = Date()
+        dataManager.saveTimeUsedLastTime = f.string(from: now)
+    }
+    
+    public func shouldExecuteLogin() -> Bool {
+        // dataManagerのsaveTimeUsedLastTime(String型)をDateに変換する
+        let formatter: DateFormatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
+        if let lastTime = formatter.date(from: dataManager.saveTimeUsedLastTime) {
+            // 現在の時刻を取得
+            let f = DateFormatter()
+            f.setTemplate(.time)
+            let now = Date()
+            // 時刻の差分が30*60分以上であれば再ログインを行う
+            if now.timeIntervalSince(lastTime) > 30 * 60 {
+                return true
+            }
+        }
+        return false
+    }
 }

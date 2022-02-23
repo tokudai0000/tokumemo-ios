@@ -173,14 +173,14 @@ final class DataManager {
     
     // チュートリアルを終了したかのフラグ
     private let KEY_isFinishedMainTutorial = "KEY_isFinishedMainTutorial"
-    public var isFinishedMainTutorial: Bool {
+    public var shouldExecuteMainTutorial: Bool {
         get { return getUserDefaultsBool(key: KEY_isFinishedMainTutorial) }
         set(v) { setUserDefaultsBool(key: KEY_isFinishedMainTutorial, value: v) }
     }
     
     // チュートリアルを終了したかのフラグ
     private let KEY_isFinishedMenuTutorial = "KEY_isFinishedMenuTutorial"
-    public var isFinishedMenuTutorial: Bool {
+    public var shouldExecuteMenuTutorial: Bool {
         get { return getUserDefaultsBool(key: KEY_isFinishedMenuTutorial) }
         set(v) { setUserDefaultsBool(key: KEY_isFinishedMenuTutorial, value: v) }
     }

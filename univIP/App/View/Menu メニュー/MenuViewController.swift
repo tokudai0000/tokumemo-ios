@@ -33,19 +33,19 @@ final class MenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !dataManager.isFinishedMenuTutorial {
+        if dataManager.shouldExecuteMenuTutorial {
             // 完了していない場合、チュートリアルを表示
             // スポットライトチュートリアル
             tutorialSpotlight()
             // チュートリアル完了とする(以降チュートリアルを表示しない)
-            dataManager.isFinishedMenuTutorial = true
+            dataManager.shouldExecuteMenuTutorial = false
         }
         
     }
     
     
     // MARK: - Private
-    private func tutorialSpotlight() {
+    public func tutorialSpotlight() {
         let spotlightViewController = MenuTutorialSpotlightViewController()
         
         // パスワードとカスタマイズのセルRowを取得する
@@ -125,7 +125,40 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             // どのセルが押されたか
             switch self.dataManager.menuLists[indexPath[1]].id {
                 case .libraryCalendar:                   // [図書館]開館カレンダー
-                    delegate.showModalView(type: .libraryCalendar)
+                    // MARK: - HACK 推奨されたAlertの使い方ではない
+                    // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
+                    var alert:UIAlertController!
+                    //アラートコントローラーを作成する。
+                    alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
+                    
+                    let alertAction = UIAlertAction(
+                        title: "常三島",
+                        style: UIAlertAction.Style.default,
+                        handler: { action in
+                            // 常三島のカレンダーURLを取得後、webView読み込み
+                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(type: .main) {
+                                delegate.webView.load(url)
+                            }else{
+                                AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
+                            }
+                        })
+                    
+                    let alertAction2 = UIAlertAction(
+                        title: "蔵本",
+                        style: UIAlertAction.Style.default,
+                        handler: { action in
+                            // 蔵本のカレンダーURLを取得後、webView読み込み
+                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(type: .kura) {
+                                delegate.webView.load(url)
+                            }else{
+                                AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                            }
+                        })
+                    
+                    //アラートアクションを追加する。
+                    alert.addAction(alertAction)
+                    alert.addAction(alertAction2)
+                    delegate.present(alert, animated: true, completion:nil)
                     
                 case .currentTermPerformance:            // 今年の成績
                     if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
@@ -133,19 +166,27 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     
                 case .syllabus:                          // シラバス
-                    delegate.showModalView(type: .syllabus)
+//                    delegate.showModalView(type: .syllabus)
+                    let vc = R.storyboard.syllabus.syllabusViewController()!
+                    vc.delegate = delegate
+                    delegate.present(vc, animated: true, completion: nil)
                     
                 case .cellSort:                          // カスタマイズ画面
-                    delegate.showModalView(type: .cellSort)
+                    let vc = R.storyboard.cellSort.cellSort()!
+                    delegate.present(vc, animated: true, completion: nil)
                     
                 case .firstViewSetting:                  // 初期画面の設定画面
-                    delegate.showModalView(type: .firstViewSetting)
+                    let vc = R.storyboard.firstViewSetting.firstViewSetting()!
+                    delegate.present(vc, animated: true, completion: nil)
                     
                 case .password:                          // パスワード設定
-                    delegate.showModalView(type: .password)
+                    let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+                    vc.delegate = delegate
+                    delegate.present(vc, animated: true, completion: nil)
                     
                 case .aboutThisApp:                      // このアプリについて
-                    delegate.showModalView(type: .aboutThisApp)
+                    let vc = R.storyboard.aboutThisApp.aboutThisApp()!
+                    delegate.present(vc, animated: true, completion: nil)
                     
                 default:
                     // 上記以外のCellをタップした場合

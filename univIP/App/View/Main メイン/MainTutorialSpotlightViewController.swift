@@ -14,6 +14,8 @@ final class MainTutorialSpotlightViewController: SpotlightViewController {
     
     private let label = UILabel()
     
+    public var mainViewController: MainViewController?
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -62,7 +64,11 @@ extension MainTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     
     //画面タップ時
     func spotlightViewControllerTapped(_ viewController: SpotlightViewController, tappedSpotlight: SpotlightType?) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            // メインスレッドで実行 UIの処理など
+            let vc = R.storyboard.menu.menuViewController()!
+            self.mainViewController?.present(vc, animated: true, completion: nil)
+        })
     }
     
     //画面が消える時
