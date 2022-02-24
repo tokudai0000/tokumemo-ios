@@ -124,8 +124,8 @@ final class MainViewModel {
                 }
                 // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
                 if str.contains("pub/pdf/calender/calender") {
-                    // PDFまでのURLを作成する
-                    let pdfUrlString = url.absoluteString + str
+                    // PDFまでのURLを作成する(本館のURLに付け加える)
+                    let pdfUrlString = Url.libraryHomePageMainPC.string() + str
                     
                     if let url = URL(string: pdfUrlString) {
                         return URLRequest(url: url)
