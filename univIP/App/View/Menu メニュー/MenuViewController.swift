@@ -111,6 +111,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
             return
         }
+        if menuLists[indexPath[1]].id == .buckToMenu {
+            menuLists = Constant.initMenuLists
+            tableView.reloadData()
+            return
+        }
         
         guard let delegate = self.delegate else {
             AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")

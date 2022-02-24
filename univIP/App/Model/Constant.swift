@@ -55,6 +55,7 @@ final class Constant {
         
         case favorite                       // お気に入り登録
         case setting
+        case buckToMenu
     }
     
     struct Menu: Codable {
@@ -225,6 +226,11 @@ final class Constant {
         
         Menu(title: "このアプリについて",
              id: .aboutThisApp,
+             url: nil,
+             canInitView: false),
+        
+        Menu(title: "＜ 戻る",
+             id: .buckToMenu,
              url: nil,
              canInitView: false),
     ]
