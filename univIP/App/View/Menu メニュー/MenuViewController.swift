@@ -15,19 +15,18 @@ final class MenuViewController: UIViewController {
     @IBOutlet var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    private let viewModel = MenuViewModel()
-    private let dataManager = DataManager.singleton
-    
     public var delegate : MainViewController?
     
+    private let viewModel = MenuViewModel()
+    private let dataManager = DataManager.singleton
+    private var menuLists:[Constant.Menu] = []
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        menuLists = dataManager.menuLists
         tableView.delegate = self
         tableView.reloadData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +43,11 @@ final class MenuViewController: UIViewController {
     // MARK: - Private
     public func tutorialSpotlight() {
         let spotlightViewController = MenuTutorialSpotlightViewController()
-        
         // パスワードとカスタマイズのセルRowを取得する
         var passwordRow:Int?
         var customizeRow:Int?
-        for i in 0..<Constant.initServiceLists.count {
-            let id = Constant.initServiceLists[i].id
+        for i in 0..<Constant.initMenuLists.count {
+            let id = Constant.initMenuLists[i].id
             if id == .password { passwordRow = i }
             if id == .cellSort { customizeRow = i }
         }
@@ -83,13 +81,13 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.menuLists.count
+        return menuLists.count
     }
     
     // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
-        tableCell.textLabel?.text = dataManager.menuLists[indexPath.item].title
+        tableCell.textLabel?.text = menuLists[indexPath.item].title
         // 「17」程度が文字が消えず、また見やすいサイズ
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
@@ -98,7 +96,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // 表示を許可されているCellの場合、高さを44とする
-        if dataManager.menuLists[indexPath.row].isDisplay {
+        if menuLists[indexPath.row].isDisplay {
             return 44
         }else{
             return 0
@@ -107,6 +105,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルを選択した時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if menuLists[indexPath[1]].id == .setting {
+            menuLists = Constant.initSettingLists
+            tableView.reloadData()
+            return
+        }
         
         guard let delegate = self.delegate else {
             AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
@@ -120,7 +124,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         // メニュー画面を消去後、画面を読み込む
         self.dismiss(animated: false, completion: { [self] in
             // どのセルが押されたか
-            switch self.dataManager.menuLists[indexPath[1]].id {
+            switch self.menuLists[indexPath[1]].id {
                 case .libraryCalendar:                   // [図書館]開館カレンダー
                     // MARK: - HACK 推奨されたAlertの使い方ではない
                     // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
@@ -192,12 +196,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 default:
                     // 上記以外のCellをタップした場合
                     // Constant.Menu(構造体)のURLを表示する
-                    let urlString = self.dataManager.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
+                    let urlString = self.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
                     let url = URL(string: urlString)!                               // fatalError
                     delegate.webView.load(URLRequest(url: url))
             }
             // アナリティクスを送信
-            self.viewModel.analytics("\(self.dataManager.menuLists[indexPath[1]].id)")
+            self.viewModel.analytics("\(self.menuLists[indexPath[1]].id)")
         })
     }
 }

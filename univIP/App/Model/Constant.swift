@@ -54,6 +54,7 @@ final class Constant {
         case aboutThisApp                   // このアプリについて
         
         case favorite                       // お気に入り登録
+        case setting
     }
     
     struct Menu: Codable {
@@ -66,8 +67,7 @@ final class Constant {
     }
     
     // サービスCell初期状態（更新確認、初回利用者はここを確認される）
-    static let initServiceLists = [
-        
+    static let initMenuLists = [
         Menu(title: "教務事務システム",
              id: .courseManagementHomeMobile,
              url: Url.courseManagementMobile.string(),
@@ -109,23 +109,8 @@ final class Constant {
              url: Url.outlookService.string(),
              canInitView: true),
         
-        Menu(title: "パスワード",
-             id: .password,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "カスタマイズ",
-             id: .cellSort,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "初期画面設定",
-             id: .firstViewSetting,
-             url: nil,
-             canInitView: false),
-        
-        Menu(title: "このアプリについて",
-             id: .aboutThisApp,
+        Menu(title: "設定",
+             id: .setting,
              url: nil,
              canInitView: false),
         
@@ -220,6 +205,28 @@ final class Constant {
              url: Url.universityHomePage.string(),
              isDisplay: false,
              canInitView: true)
+    ]
+    
+    static let initSettingLists = [
+        Menu(title: "パスワード",
+             id: .password,
+             url: nil,
+             canInitView: false),
+        
+        Menu(title: "カスタマイズ",
+             id: .cellSort,
+             url: nil,
+             canInitView: false),
+        
+        Menu(title: "初期画面設定",
+             id: .firstViewSetting,
+             url: nil,
+             canInitView: false),
+        
+        Menu(title: "このアプリについて",
+             id: .aboutThisApp,
+             url: nil,
+             canInitView: false),
     ]
     
 }

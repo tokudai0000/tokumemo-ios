@@ -223,11 +223,11 @@ final class DataManager {
         let data = getUserDefaultsData(key: KEY_menuLists)
         guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
             // 初回利用者は初期値を返す
-            return Constant.initServiceLists
+            return Constant.initMenuLists
         }
         
         // アップデートごとに機能追加等があるため、更新する
-        var newModelLists = Constant.initServiceLists
+        var newModelLists = Constant.initMenuLists
         var updateForLists:[Constant.Menu] = []
         
         for oldList in lists {
