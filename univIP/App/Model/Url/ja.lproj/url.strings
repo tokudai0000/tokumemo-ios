@@ -40,8 +40,9 @@
 
 "tokudaiCoop"                 = "https://tokudai.marucoop.com/#parts"; // #partsは画面下部の営業時間画面に移動する
 
-"universityTransitionLogin"   = "https://eweb.stud.tokushima-u.ac.jp/Portal/";
+"universityTransitionLogin"   = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html";
 "universityLogin"             = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=";
 "universityServiceTimeOut"    = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx";
+"universityServiceTimeOut2"   = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOutSub.aspx";
 "enqueteReminder"             = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx";
 "popupToYoutube"              = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon";

@@ -188,7 +188,11 @@ final class MainViewModel {
     /// - Parameter urlString: 現在表示しているURLの文字列
     /// - Returns: 結果
     public func isTimeOut(_ urlString: String) -> Bool {
-        return urlString == Url.universityServiceTimeOut.string()
+        if urlString == Url.universityServiceTimeOut.string() ||
+            urlString == Url.universityServiceTimeOut2.string() {
+            return true
+        }
+        return false
     }
     
     /// FireBaseアナリティクスを送信する

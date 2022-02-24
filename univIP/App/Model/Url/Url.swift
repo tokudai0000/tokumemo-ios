@@ -46,6 +46,7 @@ enum Url: String {
     case universityTransitionLogin   // ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityLogin             // 大学サイト、ログイン画面
     case universityServiceTimeOut    // タイムアウト(20分無操作)
+    case universityServiceTimeOut2   // タイムアウト2(20分無操作)
     case enqueteReminder             // アンケート催促画面(教務事務表示前に出現)
     case popupToYoutube              // マナバから授業動画[Youtube]を開く時
     
