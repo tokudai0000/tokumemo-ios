@@ -109,7 +109,7 @@ final class MainViewController: UIViewController {
         // 最後にアプリ画面を離脱した時刻を保存
         viewModel.saveTimeUsedLastTime()
     }
-
+    
     /// 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
     private func login() {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
@@ -121,7 +121,7 @@ final class MainViewController: UIViewController {
         let url = URL(string: urlString)! // fatalError
         webView.load(URLRequest(url: url))
     }
-        
+    
     // スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
     private func tutorialSpotlight() {
         let spotlightViewController = MainTutorialSpotlightViewController()
@@ -132,20 +132,16 @@ final class MainViewController: UIViewController {
         
         // チュートリアル完了とする(以降チュートリアルを表示しない)
         dataManager.shouldExecuteMainTutorial = false
-//        dataManager.shouldExecuteMenuTutorial = true
+        //        dataManager.shouldExecuteMenuTutorial = true
     }
-    
 }
-
 
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {
-    
     // MARK: - 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
         // 読み込み中のURLをアンラップ
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
@@ -153,7 +149,7 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // 読み込み中のURL(ドメイン)が許可されたドメインは判定
-        if !viewModel.isAllowedDomainCheck(url) {
+        if viewModel.isAllowedDomainCheck(url) == false {
             // 許可外のURLが来た場合は、Safariで開く
             UIApplication.shared.open(url)
             decisionHandler(.cancel)
@@ -164,7 +160,7 @@ extension MainViewController: WKNavigationDelegate {
         viewModel.urlString = url.absoluteString
         
         // タイムアウト(20分無操作)の場合
-        if url.absoluteString == Url.universityServiceTimeOut.string() {
+        if viewModel.isTimeOut(url.absoluteString) {
             login()
         }
         
@@ -172,10 +168,8 @@ extension MainViewController: WKNavigationDelegate {
         return
     }
     
-    
     // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
         let activeUrl = self.webView.url! // fatalError
         
         // アンケート催促画面(教務事務表示前に出現) ログイン失敗等の対策が必要なく、ログインの時点でisExecuteJavascriptがfalseになってしまうから
@@ -228,6 +222,7 @@ extension MainViewController: WKNavigationDelegate {
                 break
         }
         
+        // 戻る、進むボタンの表示を変更
         webViewGoBackButton.isEnabled = webView.canGoBack
         webViewGoBackButton.alpha = webView.canGoBack ? 1.0 : 0.4
         webViewGoForwardButton.isEnabled = webView.canGoForward
@@ -235,52 +230,38 @@ extension MainViewController: WKNavigationDelegate {
         
         // アナリティクスを送信
         viewModel.analytics(activeUrl)
-        
     }
-    
     
     // alert対応
     func webView(_ webView: WKWebView,
                  runJavaScriptAlertPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Void) {
-        
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        let otherAction = UIAlertAction(title: "OK", style: .default) {
-            action in completionHandler()
-        }
+        let otherAction = UIAlertAction(title: "OK", style: .default) { action in completionHandler() }
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
-        
     }
-    
     // confirm対応
     // 確認画面、イメージは「この内容で保存しますか？はい・いいえ」のようなもの
     func webView(_ webView: WKWebView,
                  runJavaScriptConfirmPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (Bool) -> Void) {
-        
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-            action in completionHandler(false)
-        }
-        let okAction = UIAlertAction(title: "OK", style: .default) {
-            action in completionHandler(true)
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in completionHandler(false) }
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in completionHandler(true) }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
-        
     }
-    
     // prompt対応
     // 入力ダイアログ、Alertのtext入力できる版
     func webView(_ webView: WKWebView,
                  runJavaScriptTextInputPanelWithPrompt prompt: String,
-                 defaultText: String?, initiatedByFrame frame: WKFrameInfo,
+                 defaultText: String?,
+                 initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
-        
         let alertController = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
         let okHandler: () -> Void = {
             if let textField = alertController.textFields?.first {
@@ -289,26 +270,22 @@ extension MainViewController: WKNavigationDelegate {
                 completionHandler("")
             }
         }
-        let okAction = UIAlertAction(title: "OK", style: .default) {
-            action in okHandler()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
-            action in completionHandler("")
-        }
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in okHandler() }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in completionHandler("") }
         alertController.addTextField() { $0.text = defaultText }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
-        
     }
-    
 }
-
 
 // MARK: - WKUIDelegate
 extension MainViewController: WKUIDelegate {
     // target="_blank"(新しいタブで開く) の処理
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
         // 新しいタブで開くURLを取得し、読み込む
         webView.load(navigationAction.request)
         return nil
