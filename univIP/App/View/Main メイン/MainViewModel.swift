@@ -20,7 +20,7 @@ final class MainViewModel {
     public var teacherName = ""
     
     // ログイン処理中かどうか
-    public var isLoginProcessing = true
+    public var isLoginProcessing = false
     
     private let dataManager = DataManager.singleton
     
@@ -91,7 +91,7 @@ final class MainViewModel {
             // ユーザーが指定した初期画面を探す
             if menuList.isInitView {
                 // パスワード登録しておらず、初期画面がマナバである時は大学のホームページを表示させる
-                if dataManager.shouldInputedPassword && (menuList.id == .manabaHomePC)  {
+                if dataManager.shouldInputedPassword && (menuList.id == .manabaHomePC) {
                     let url = URL(string: Url.universityHomePage.string())! // fatalError
                     return URLRequest(url: url)
                 }

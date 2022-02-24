@@ -112,8 +112,6 @@ final class MainViewController: UIViewController {
     private func login() {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
         dataManager.isExecuteJavascript = true
-        // ログイン処理中であるフラグを立てる
-        viewModel.isLoginProcessing = true
         
         let urlString = Url.universityTransitionLogin.string()
         let url = URL(string: urlString)! // fatalError
@@ -185,6 +183,8 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.isExecuteJavascript = false
+                // ログイン処理中であるフラグを立てる
+                viewModel.isLoginProcessing = true
                 
             case .syllabusFirstTime:
                 // シラバスの検索画面
