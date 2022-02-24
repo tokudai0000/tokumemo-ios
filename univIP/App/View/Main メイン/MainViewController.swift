@@ -112,8 +112,8 @@ final class MainViewController: UIViewController {
     private func login() {
         // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
         dataManager.isExecuteJavascript = true
-        
-        viewModel.isInitFinishLogin = true
+        // ログイン処理中であるフラグを立てる
+        viewModel.isLoginProcessing = true
         
         let urlString = Url.universityTransitionLogin.string()
         let url = URL(string: urlString)! // fatalError
@@ -168,13 +168,15 @@ extension MainViewController: WKNavigationDelegate {
         
         // アンケート催促画面(教務事務表示前に出現) ログイン失敗等の対策が必要なく、ログインの時点でisExecuteJavascriptがfalseになってしまうから
         // 4行下のコードよりも先に実行
-        if viewModel.isFinishLogin(activeUrl) {
+        if viewModel.shouldDisplayInitialWebPage(activeUrl.absoluteString) {
+            // フラグを立てる
+            dataManager.isExecuteJavascript = true
             // 初回起動時のログイン
             webView.load(viewModel.searchInitialViewUrl())
         }
         
         // 現在のURLがJavaScript
-        switch viewModel.anyJavaScriptExecute(activeUrl) {
+        switch viewModel.anyJavaScriptExecute(activeUrl.absoluteString) {
             case .universityLogin:
                 // 徳島大学　統合認証システムサイト(ログインサイト)
                 // 自動ログインを行う
@@ -223,7 +225,7 @@ extension MainViewController: WKNavigationDelegate {
         webViewGoForwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
         
         // アナリティクスを送信
-        viewModel.analytics(activeUrl)
+        viewModel.analytics(activeUrl.absoluteString)
     }
     
     // alert対応

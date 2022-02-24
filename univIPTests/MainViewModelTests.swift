@@ -98,24 +98,24 @@ class MainViewModelTests: XCTestCase {
     
     func testIsFinishLogin() {
         // 基本的なテスト
-        viewModel.isInitFinishLogin = true
+        viewModel.isLoginProcessing = true
         let url1 = URL(string: Url.enqueteReminder.string())! // fatalError
-        let test1 = viewModel.isFinishLogin(url1)
+        let test1 = viewModel.shouldDisplayInitialWebPage(url1)
         XCTAssertEqual(test1, true)
         
-        viewModel.isInitFinishLogin = true
+        viewModel.isLoginProcessing = true
         let url2 = URL(string: Url.courseManagementMobile.string())!
-        let test2 = viewModel.isFinishLogin(url2)
+        let test2 = viewModel.shouldDisplayInitialWebPage(url2)
         XCTAssertEqual(test2, true)
         
-        viewModel.isInitFinishLogin = false
+        viewModel.isLoginProcessing = false
         let url3 = URL(string: Url.enqueteReminder.string())!
-        let test3 = viewModel.isFinishLogin(url3)
+        let test3 = viewModel.shouldDisplayInitialWebPage(url3)
         XCTAssertEqual(test3, true)
         
-        viewModel.isInitFinishLogin = false
+        viewModel.isLoginProcessing = false
         let url4 = URL(string: Url.courseManagementMobile.string())!
-        let test4 = viewModel.isFinishLogin(url4)
+        let test4 = viewModel.shouldDisplayInitialWebPage(url4)
         XCTAssertEqual(test4, false)
         
     }

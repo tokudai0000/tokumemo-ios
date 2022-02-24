@@ -132,8 +132,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                         title: "常三島",
                         style: UIAlertAction.Style.default,
                         handler: { action in
+                            let urlString = Url.libraryHomePageMainPC.string()
+                            let url = URL(string: urlString)! // fatalError
                             // 常三島のカレンダーURLを取得後、webView読み込み
-                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(type: .main) {
+                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(url) {
                                 delegate.webView.load(url)
                             }else{
                                 AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
@@ -144,8 +146,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                         title: "蔵本",
                         style: UIAlertAction.Style.default,
                         handler: { action in
+                            let urlString = Url.libraryHomePageKuraPC.string()
+                            let url = URL(string: urlString)! // fatalError
                             // 蔵本のカレンダーURLを取得後、webView読み込み
-                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(type: .kura) {
+                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(url) {
                                 delegate.webView.load(url)
                             }else{
                                 AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")

@@ -41,7 +41,7 @@ final class AgreementViewController: UIViewController {
     
     @IBAction func agreementButton(_ sender: Any) {
         // 利用規約のバージョン更新
-        dataManager.agreementVersion = Constant.agreementVersion
+        dataManager.agreementVersion = Constant.latestTermsVersion
         dismiss(animated: true, completion: nil)
     }
     

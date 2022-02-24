@@ -11,7 +11,7 @@ import Foundation
 final class Constant {
     
     // 利用規約バージョン
-    static let agreementVersion = "1.0"
+    static let latestTermsVersion = "1.0"
     
     // WebViewで読み込みを許可するドメイン
     static let allowedDomains = ["tokushima-u.ac.jp",    // 大学サイト
