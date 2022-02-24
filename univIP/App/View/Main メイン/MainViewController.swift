@@ -29,8 +29,7 @@ final class MainViewController: UIViewController {
         login()
         
         // **DEBUG**
-        dataManager.shouldExecuteMainTutorial = true
-        dataManager.shouldExecuteMenuTutorial = true
+//        dataManager.shouldExecuteTutorial = true
         // *********
     }
     
@@ -43,8 +42,8 @@ final class MainViewController: UIViewController {
             return
         }
         
-        // メインチュートリアルを実行するべきか
-        if dataManager.shouldExecuteMainTutorial {
+        // チュートリアルを実行するべきか
+        if dataManager.shouldExecuteTutorial {
             tutorialSpotlight()
             return
         }
@@ -59,13 +58,13 @@ final class MainViewController: UIViewController {
         webView.goForward()
     }
     
-    @IBAction func favoriteButton(_ sender: Any) {
+    @IBAction func showFavoriteViewButton(_ sender: Any) {
         let vc = R.storyboard.favorite.favoriteViewController()!
         vc.urlString = viewModel.urlString
         present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func showServiceListsButton(_ sender: Any) {
+    @IBAction func showMenuViewButton(_ sender: Any) {
         let vc = R.storyboard.menu.menuViewController()!
         vc.delegate = self
         // アニメーションは表示しない(Menuは頻繁に使用するから快適性の向上)
@@ -98,7 +97,6 @@ final class MainViewController: UIViewController {
                                                name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
     }
-    
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
         if viewModel.shouldExecuteLogin() {
@@ -129,10 +127,6 @@ final class MainViewController: UIViewController {
         spotlightViewController.uiLabels_frames.append(menuButtonFrame) // スポットする座標を渡す
         spotlightViewController.mainViewController = self
         present(spotlightViewController, animated: true, completion: nil)
-        
-        // チュートリアル完了とする(以降チュートリアルを表示しない)
-        dataManager.shouldExecuteMainTutorial = false
-        //        dataManager.shouldExecuteMenuTutorial = true
     }
 }
 

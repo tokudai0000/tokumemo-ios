@@ -32,15 +32,12 @@ final class MenuViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if dataManager.shouldExecuteMenuTutorial {
-            // 完了していない場合、チュートリアルを表示
-            // スポットライトチュートリアル
+        // チュートリアルを実行するべきか
+        if dataManager.shouldExecuteTutorial {
             tutorialSpotlight()
             // チュートリアル完了とする(以降チュートリアルを表示しない)
-            dataManager.shouldExecuteMenuTutorial = false
+            dataManager.shouldExecuteTutorial = false
         }
-        
     }
     
     

@@ -87,7 +87,7 @@
                                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                                         <state key="normal" image="star" catalog="system"/>
                                                         <connections>
-                                                            <action selector="favoriteButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bN4-3T-ozs"/>
+                                                            <action selector="showFavoriteViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NMR-en-k2H"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7E-8X-iXM">
@@ -99,7 +99,7 @@
                                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                                         <state key="normal" image="ellipsis" catalog="system"/>
                                                         <connections>
-                                                            <action selector="showServiceListsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Rl-Eh-J9O"/>
+                                                            <action selector="showMenuViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QvG-tt-4ai"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
