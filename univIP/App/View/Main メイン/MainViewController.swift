@@ -16,6 +16,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var webViewGoBackButton: UIButton!
     @IBOutlet weak var webViewGoForwardButton: UIButton!
     @IBOutlet weak var showServiceListsButton: UIButton!
+    @IBOutlet weak var showFavoriteButton: UIButton!
     
     public let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
@@ -29,7 +30,7 @@ final class MainViewController: UIViewController {
         login()
         
         // **DEBUG**
-//        dataManager.shouldExecuteTutorial = true
+        dataManager.shouldExecuteTutorial = true
         // *********
     }
     
@@ -121,8 +122,18 @@ final class MainViewController: UIViewController {
     // スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
     private func tutorialSpotlight() {
         let spotlightViewController = MainTutorialSpotlightViewController()
-        let menuButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view) // 絶対座標(画面左上X=0,Y=0からの座標)
-        spotlightViewController.uiLabels_frames.append(menuButtonFrame) // スポットする座標を渡す
+        // お気に入りボタンの説明 -> メニュー画面の説明 -> メニュー画面へ遷移
+        let favoriteButtonFrame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view) // 絶対座標(画面左上X=0,Y=0からの座標)
+        // スポットする座標を渡す
+        spotlightViewController.uiLabels_frames.append(favoriteButtonFrame)
+        // 表示するテキストを渡す
+        spotlightViewController.textLabels.append("お気に入りの画面を記録し\nメニューに表示できるようにします")
+        
+        // メニュー画面も渡す
+        let menuButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
+        spotlightViewController.uiLabels_frames.append(menuButtonFrame)
+        spotlightViewController.textLabels.append("ここからメニューを\n表示できます")
+        
         spotlightViewController.mainViewController = self
         present(spotlightViewController, animated: true, completion: nil)
     }

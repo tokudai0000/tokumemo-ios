@@ -140,6 +140,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="showFavoriteButton" destination="LlM-PM-oS5" id="Yd4-Y0-4N9"/>
                         <outlet property="showServiceListsButton" destination="v7E-8X-iXM" id="gvQ-Zy-dSr"/>
                         <outlet property="webView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
                         <outlet property="webViewGoBackButton" destination="IUH-6M-2c4" id="efv-nw-gl7"/>

@@ -7,23 +7,22 @@
 //
 
 import UIKit
-import Gecco
 
 final class MenuViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     public var delegate : MainViewController?
-    
     private let viewModel = MenuViewModel()
     private let dataManager = DataManager.singleton
+    // TableCellの内容
     private var menuLists:[Constant.Menu] = []
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 初期内容を読み込む
         menuLists = dataManager.menuLists
         tableView.delegate = self
         tableView.reloadData()
@@ -39,15 +38,32 @@ final class MenuViewController: UIViewController {
         }
     }
     
+    public func changeToSettings() {
+        menuLists = Constant.initSettingLists
+        tableView.reloadData()
+    }
     
     // MARK: - Private
-    public func tutorialSpotlight() {
+    private func tutorialSpotlight() {
         let spotlightViewController = MenuTutorialSpotlightViewController()
+        // 設定のセルRowを取得する
+        var settingRow:Int?
+        for i in 0..<menuLists.count {
+            if menuLists[i].id == .setting {
+                settingRow = i
+                break
+            }
+        }
+        // 初期配列に設定が存在しないことはありえない
+        guard let settingRow = settingRow else {
+            AKLog(level: .FATAL, message: "初期配列に設定が存在しない")
+            fatalError()
+        }
         // パスワードとカスタマイズのセルRowを取得する
         var passwordRow:Int?
         var customizeRow:Int?
-        for i in 0..<Constant.initMenuLists.count {
-            let id = Constant.initMenuLists[i].id
+        for i in 0..<Constant.initSettingLists.count {
+            let id = Constant.initSettingLists[i].id
             if id == .password { passwordRow = i }
             if id == .cellSort { customizeRow = i }
         }
@@ -59,16 +75,19 @@ final class MenuViewController: UIViewController {
               }
         
         // 相対座標(tableViewの左上をX=0,Y=0とした座標)
+        let tableViewPos = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: settingRow, section: 0))! // fatalError
         let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: passR, section: 0))! // fatalError
         let tableViewPos2 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: cusR, section: 0))! // fatalError
         
         // 絶対座標(画面左上X=0,Y=0からの座標)に変換
+        let pos = tableView.convert(tableViewPos.frame, to: self.view)
         let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
         let pos2 = tableView.convert(tableViewPos2.frame, to: self.view)
-        
         // スポットする座標を渡す
+        spotlightViewController.uiLabels_frames.append(pos)
         spotlightViewController.uiLabels_frames.append(pos1)
         spotlightViewController.uiLabels_frames.append(pos2)
+        
         
         spotlightViewController.delegateMenu = self
         present(spotlightViewController, animated: true, completion: nil)
@@ -107,8 +126,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if menuLists[indexPath[1]].id == .setting {
-            menuLists = Constant.initSettingLists
-            tableView.reloadData()
+            changeToSettings()
             return
         }
         if menuLists[indexPath[1]].id == .buckToMenu {

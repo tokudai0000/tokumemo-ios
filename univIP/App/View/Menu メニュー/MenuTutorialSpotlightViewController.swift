@@ -34,8 +34,10 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
         
         switch updateIndex {
             case 0:
-                label.text = "パスワードを入力し、自動ログイン機能を活用しましよう"
+                label.text = "トクメモをさらに使いやすくするために、設定を行いましょう"
             case 1:
+                label.text = "パスワードを入力し、自動ログイン機能を活用しましよう"
+            case 2:
                 label.text = "他にも、さまざまなカスタマイズを試してみましょう"
             default:
                 break
@@ -65,6 +67,9 @@ final class MenuTutorialSpotlightViewController: SpotlightViewController {
             case 1:
                 posY = uiLabels_frames[1].midY - safeAreaTop
                 
+            case 2:
+                posY = uiLabels_frames[2].midY - safeAreaTop
+                
             default:
                 dismiss(animated: true, completion: nil)
                 return
@@ -89,6 +94,7 @@ extension MenuTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     }
     //画面タップ時
     func spotlightViewControllerTapped(_ viewController: SpotlightViewController, tappedSpotlight: SpotlightType?) {
+        delegateMenu?.changeToSettings()
         // 2個目のチュートリアル表示
         createLabels()
         createSpotlight()
