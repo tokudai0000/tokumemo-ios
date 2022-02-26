@@ -55,4 +55,12 @@ enum Url: String {
         // url.stringsからrowValueの値を返す
         return NSLocalizedString(rawValue, tableName: "url", comment: "")
     }
+    
+    // URLをURLRequestとして返す
+    func urlRequest() -> URLRequest {
+        // url.stringsからrowValueの値を返す
+        let urlString = NSLocalizedString(rawValue, tableName: "url", comment: "")
+        let url = URL(string: urlString)! // fatalError
+        return URLRequest(url: url)
+    }
 }

@@ -28,7 +28,7 @@ final class MainViewController: UIViewController {
         initSetup()
         
         #if DEBUG
-            dataManager.shouldShowTutorial = true
+        dataManager.shouldShowTutorial = true
         #endif
     }
     
@@ -81,13 +81,12 @@ final class MainViewController: UIViewController {
     public func loadSyllabusPage(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
         viewModel.teacherName = teacherName
-        
-        let url = URL(string: Url.syllabus.string())! // fatalError
-        webView.load(URLRequest(url: url))
+        // シラバスをwebViewに読み込む
+        webView.load(Url.syllabus.urlRequest())
     }
     
     // MARK: - Private func
-    /// WKWebViewのDelegateとフォアグラウンド等の設定
+    /// MainViewControllerの初期セットアップ
     private func initSetup() {
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -101,52 +100,60 @@ final class MainViewController: UIViewController {
                                                selector: #selector(background(notification:)),
                                                name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
-        //
+        // ログインページの読み込み
         loadLoginPage()
     }
+    /// フォアグラウンド時の処理
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
         if viewModel.canExecuteLogin() {
             loadLoginPage()
         }
     }
+    /// バックグラウンド時の処理
     @objc private func background(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻を保存
         viewModel.saveTimeUsedLastTime()
     }
     
-    /// 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
+    /// 大学統合認証システムのページを読み込む
+    ///
+    /// ログインの処理はWebViewのdidFinishより、以下2つの状態が認められたらログインの処理を行う
+    ///  1. 現在表示しているWebページが大学統合認証システムのページである
+    ///  2. isExecuteJavascriptがtrueである
     private func loadLoginPage() {
         // ログイン用
         dataManager.isExecuteJavascript = true
-        
-        let urlString = Url.universityTransitionLogin.string()
-        let url = URL(string: urlString)! // fatalError
-        webView.load(URLRequest(url: url))
+        // 大学統合認証システムのページを読み込む
+        webView.load(Url.universityTransitionLogin.urlRequest())
     }
     
-    /// スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
-    /// お気に入りボタンの説明 -> メニュー画面の説明 -> メニュー画面へ遷移
-    /// お気に入り画面とメニュー画面について
-    /// スポットする座標を渡す
-    /// 表示するテキストを渡す
+    /// チュートリアルを表示する
+    ///
+    /// 以下の順で疑似スポットライトで照らし、テキストと共に表示させる
+    ///  1. お気に入りボタン
+    ///  2. メニューボタン
+    /// 画面をタップすることで次のスポットライト座標へ遷移し、
+    /// メニューボタンの次はメニュー画面を表示させる
     private func showTutorial() {
         let vc = MainTutorialSpotlightViewController()
         
-        do { // 1. お気に入り画面
+        do { // 1. お気に入りボタン
+            // 絶対座標(画面左上X=0,Y=0からの座標)を取得
             let frame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view)
-            // 絶対座標(画面左上X=0,Y=0からの座標)を追加する
+            // スポットライトで照らす座標を追加する
             vc.uiLabels_frames.append(frame)
             // 表示テキストを追加する
             vc.textLabels.append("お気に入りの画面を記録し\nメニューに表示できるようにします")
         }
         
-        do { // 2. メニュー画面
+        do { // 2. メニューボタン
             let frame = showMenuButton.convert(showMenuButton.bounds, to: self.view)
             vc.uiLabels_frames.append(frame)
             vc.textLabels.append("ここからメニューを\n表示できます")
         }
-        
+        // メニューボタンをスポットした後、メニュー画面を表示させる為に
+        // インスタンス(のアドレス)を渡す
         vc.mainViewController = self
         present(vc, animated: true, completion: nil)
     }
@@ -155,17 +162,22 @@ final class MainViewController: UIViewController {
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {
     
-    /// Description
+    /// 読み込み設定（リクエスト前）
+    ///
+    /// 以下2つの状態が認められたら読み込みを許可する
+    ///  1.読み込み前のURLがnilでないこと
+    ///  2. 許可されたドメインであること
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        // 読み込み中のURLをアンラップ
+        // 読み込み前のURLをアンラップ
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
             return
         }
+        let urlString = url.absoluteString
         
-        // 読み込み中のURL(ドメイン)が許可されたドメインは判定
+        // 許可されたドメインか判定
         if viewModel.isAllowedDomainCheck(url) == false {
             // 許可外のURLが来た場合は、Safariで開く
             UIApplication.shared.open(url)
@@ -173,11 +185,12 @@ extension MainViewController: WKNavigationDelegate {
             return
         }
         
-        // Favorite画面のためにURLを保持
-        viewModel.urlString = url.absoluteString
+        // お気に入り画面のためにURLを保持
+        viewModel.urlString = urlString
         
-        // タイムアウト(20分無操作)の場合
-        if viewModel.isTimeOut(url.absoluteString) {
+        // タイムアウトした場合
+        if viewModel.isTimeOut(urlString) {
+            // ログイン処理を始める
             loadLoginPage()
         }
         
@@ -186,26 +199,32 @@ extension MainViewController: WKNavigationDelegate {
         return
     }
     
+    /// 読み込み完了
+    ///
+    /// 主に以下2つのことを処理する
+    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む
+    ///  2. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        // 現在表示中のURL
+        // 読み込み完了したURL
         let url = self.webView.url! // fatalError
+        let urlString = url.absoluteString
         
-        // アンケート催促画面(教務事務表示前に出現) ログイン失敗等の対策が必要なく、ログインの時点でisExecuteJavascriptがfalseになってしまうから
-        // 4行下のコードよりも先に実行
-        if viewModel.shouldDisplayInitialWebPage(url.absoluteString) {
-            // フラグを立てる
+        // 大学統合認証システムのログイン処理が終了した場合
+        if viewModel.shouldDisplayInitialWebPage(urlString) {
+            // 初期設定画面がメール(Outlook)の場合用
             dataManager.isExecuteJavascript = true
-            // 初回起動時のログイン
+            // ユーザが設定した初期画面を読み込む
             webView.load(viewModel.searchInitialViewUrl())
         }
         
-        // 現在のURLがJavaScript
-        switch viewModel.anyJavaScriptExecute(url.absoluteString) {
+        // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
+        switch viewModel.anyJavaScriptExecute(urlString) {
+                
             case .universityLogin:
                 // 徳島大学　統合認証システムサイト(ログインサイト)
                 // 自動ログインを行う
-                webView.evaluateJavaScript("document.getElementById('username').value= '\(DataManager.singleton.cAccount)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('password').value= '\(DataManager.singleton.password)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.isExecuteJavascript = false
@@ -241,6 +260,7 @@ extension MainViewController: WKNavigationDelegate {
                 dataManager.isExecuteJavascript = false
                 
             case .none:
+                // JavaScriptを動かす必要がなかったURLの場合
                 break
         }
         
@@ -251,10 +271,10 @@ extension MainViewController: WKNavigationDelegate {
         forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
         
         // アナリティクスを送信
-        viewModel.analytics(url.absoluteString)
+        viewModel.analytics(urlString)
     }
     
-    // alert対応
+    /// alert対応
     func webView(_ webView: WKWebView,
                  runJavaScriptAlertPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
@@ -264,8 +284,8 @@ extension MainViewController: WKNavigationDelegate {
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
     }
-    // confirm対応
-    // 確認画面、イメージは「この内容で保存しますか？はい・いいえ」のようなもの
+    /// confirm対応
+    /// 確認画面、イメージは「この内容で保存しますか？はい・いいえ」のようなもの
     func webView(_ webView: WKWebView,
                  runJavaScriptConfirmPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
@@ -277,8 +297,8 @@ extension MainViewController: WKNavigationDelegate {
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    // prompt対応
-    // 入力ダイアログ、Alertのtext入力できる版
+    /// prompt対応
+    /// 入力ダイアログ、Alertのtext入力できる版
     func webView(_ webView: WKWebView,
                  runJavaScriptTextInputPanelWithPrompt prompt: String,
                  defaultText: String?,
@@ -288,7 +308,7 @@ extension MainViewController: WKNavigationDelegate {
         let okHandler: () -> Void = {
             if let textField = alertController.textFields?.first {
                 completionHandler(textField.text)
-            } else {
+            }else{
                 completionHandler("")
             }
         }
@@ -303,7 +323,7 @@ extension MainViewController: WKNavigationDelegate {
 
 // MARK: - WKUIDelegate
 extension MainViewController: WKUIDelegate {
-    // target="_blank"(新しいタブで開く) の処理
+    /// target="_blank"(新しいタブで開く) の処理
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
                  for navigationAction: WKNavigationAction,
