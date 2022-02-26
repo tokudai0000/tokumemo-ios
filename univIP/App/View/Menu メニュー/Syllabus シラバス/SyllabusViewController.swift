@@ -70,7 +70,7 @@ final class SyllabusViewController: UIViewController {
         let subjectText = subjectTextField.text ?? ""
         let teacherText = teacherTextField.text ?? ""
         
-        delegate.refreshSyllabus(subjectName: subjectText,
+        delegate.loadSyllabusPage(subjectName: subjectText,
                                  teacherName: teacherText)
         
         dismiss(animated: true, completion: nil)

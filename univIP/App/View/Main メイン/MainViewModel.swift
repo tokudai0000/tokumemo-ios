@@ -166,7 +166,7 @@ final class MainViewModel {
     
     /// 再度ログイン処理を行うべきか
     /// - Returns: 行うべきならtrue
-    public func shouldExecuteLogin() -> Bool {
+    public func canExecuteLogin() -> Bool {
         // dataManagerのsaveTimeUsedLastTime(String型)をDateに変換する
         let formatter: DateFormatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)

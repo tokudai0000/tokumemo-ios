@@ -13,68 +13,72 @@ final class MainViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var webViewGoBackButton: UIButton!
-    @IBOutlet weak var webViewGoForwardButton: UIButton!
-    @IBOutlet weak var showServiceListsButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var forwardButton: UIButton!
+    @IBOutlet weak var showMenuButton: UIButton!
     @IBOutlet weak var showFavoriteButton: UIButton!
     
-    public let viewModel = MainViewModel()
+    private let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // WKWebViewのDelegateとフォアグラウンド等の設定
-        setUp()
-        // 大学サイトへのログイン
-        login()
         
-        // **DEBUG**
-        dataManager.shouldExecuteTutorial = true
-        // *********
+        initSetup()
+        
+        #if DEBUG
+            dataManager.shouldShowTutorial = true
+        #endif
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // 利用規約同意画面を表示するべきか(利用規約更新に伴い再度呼び出しされる)
+        // 利用規約同意画面を表示するべきか
         if viewModel.shouldDisplayTermsAgreementView {
+            // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
         }
         
-        // チュートリアルを実行するべきか
-        if dataManager.shouldExecuteTutorial {
-            tutorialSpotlight()
+        // チュートリアルを表示するべきか
+        if dataManager.shouldShowTutorial {
+            // チュートリアルを表示
+            showTutorial()
             return
         }
     }
     
     // MARK: - IBAction
-    @IBAction func webViewGoBackButton(_ sender: Any) {
+    @IBAction func backButton(_ sender: Any) {
         webView.goBack()
     }
     
-    @IBAction func webViewGoForwardButton(_ sender: Any) {
+    @IBAction func forwardButton(_ sender: Any) {
         webView.goForward()
     }
     
-    @IBAction func showFavoriteViewButton(_ sender: Any) {
+    @IBAction func showFavoriteButton(_ sender: Any) {
+        // お気に入り画面の表示
         let vc = R.storyboard.favorite.favoriteViewController()!
         vc.urlString = viewModel.urlString
         present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func showMenuViewButton(_ sender: Any) {
+    @IBAction func showMenuButton(_ sender: Any) {
+        // メニューを表示
         let vc = R.storyboard.menu.menuViewController()!
         vc.delegate = self
-        // アニメーションは表示しない(Menuは頻繁に使用するから快適性の向上)
-        present(vc, animated: false, completion: nil)
+        present(vc, animated: false, completion: nil) // アニメーションは表示しない(快適性の向上)
     }
     
     // MARK: - Public func
     /// シラバス検索ボタンを押された際
-    public func refreshSyllabus(subjectName: String, teacherName: String) {
+    /// - Parameters:
+    ///   - subjectName: <#subjectName description#>
+    ///   - teacherName: <#teacherName description#>
+    public func loadSyllabusPage(subjectName: String, teacherName: String) {
         viewModel.subjectName = subjectName
         viewModel.teacherName = teacherName
         
@@ -84,7 +88,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - Private func
     /// WKWebViewのDelegateとフォアグラウンド等の設定
-    private func setUp() {
+    private func initSetup() {
         webView.uiDelegate = self
         webView.navigationDelegate = self
         // フォアグラウンドの判定
@@ -97,11 +101,13 @@ final class MainViewController: UIViewController {
                                                selector: #selector(background(notification:)),
                                                name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
+        //
+        loadLoginPage()
     }
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
-        if viewModel.shouldExecuteLogin() {
-            login()
+        if viewModel.canExecuteLogin() {
+            loadLoginPage()
         }
     }
     @objc private func background(notification: Notification) {
@@ -110,8 +116,8 @@ final class MainViewController: UIViewController {
     }
     
     /// 教務事務システムのみ、別のログイン方法をとっている？ため、初回に教務事務システムにログインし、キャッシュで別のサイトもログインしていく
-    private func login() {
-        // 次に読み込まれるURLはJavaScriptを動かすことを許可する(ログイン用)
+    private func loadLoginPage() {
+        // ログイン用
         dataManager.isExecuteJavascript = true
         
         let urlString = Url.universityTransitionLogin.string()
@@ -119,29 +125,37 @@ final class MainViewController: UIViewController {
         webView.load(URLRequest(url: url))
     }
     
-    // スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
-    private func tutorialSpotlight() {
-        let spotlightViewController = MainTutorialSpotlightViewController()
-        // お気に入りボタンの説明 -> メニュー画面の説明 -> メニュー画面へ遷移
-        let favoriteButtonFrame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view) // 絶対座標(画面左上X=0,Y=0からの座標)
-        // スポットする座標を渡す
-        spotlightViewController.uiLabels_frames.append(favoriteButtonFrame)
-        // 表示するテキストを渡す
-        spotlightViewController.textLabels.append("お気に入りの画面を記録し\nメニューに表示できるようにします")
+    /// スポットライトチュートリアル、showServiceListsButtonにスポットを当てる
+    /// お気に入りボタンの説明 -> メニュー画面の説明 -> メニュー画面へ遷移
+    /// お気に入り画面とメニュー画面について
+    /// スポットする座標を渡す
+    /// 表示するテキストを渡す
+    private func showTutorial() {
+        let vc = MainTutorialSpotlightViewController()
         
-        // メニュー画面も渡す
-        let menuButtonFrame = showServiceListsButton.convert(showServiceListsButton.bounds, to: self.view)
-        spotlightViewController.uiLabels_frames.append(menuButtonFrame)
-        spotlightViewController.textLabels.append("ここからメニューを\n表示できます")
+        do { // 1. お気に入り画面
+            let frame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view)
+            // 絶対座標(画面左上X=0,Y=0からの座標)を追加する
+            vc.uiLabels_frames.append(frame)
+            // 表示テキストを追加する
+            vc.textLabels.append("お気に入りの画面を記録し\nメニューに表示できるようにします")
+        }
         
-        spotlightViewController.mainViewController = self
-        present(spotlightViewController, animated: true, completion: nil)
+        do { // 2. メニュー画面
+            let frame = showMenuButton.convert(showMenuButton.bounds, to: self.view)
+            vc.uiLabels_frames.append(frame)
+            vc.textLabels.append("ここからメニューを\n表示できます")
+        }
+        
+        vc.mainViewController = self
+        present(vc, animated: true, completion: nil)
     }
 }
 
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {
-    // MARK: - 読み込み設定（リクエスト前）
+    
+    /// Description
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -164,20 +178,21 @@ extension MainViewController: WKNavigationDelegate {
         
         // タイムアウト(20分無操作)の場合
         if viewModel.isTimeOut(url.absoluteString) {
-            login()
+            loadLoginPage()
         }
         
+        // 問題ない場合読み込みを許可
         decisionHandler(.allow)
         return
     }
     
-    // MARK: - 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let activeUrl = self.webView.url! // fatalError
+        // 現在表示中のURL
+        let url = self.webView.url! // fatalError
         
         // アンケート催促画面(教務事務表示前に出現) ログイン失敗等の対策が必要なく、ログインの時点でisExecuteJavascriptがfalseになってしまうから
         // 4行下のコードよりも先に実行
-        if viewModel.shouldDisplayInitialWebPage(activeUrl.absoluteString) {
+        if viewModel.shouldDisplayInitialWebPage(url.absoluteString) {
             // フラグを立てる
             dataManager.isExecuteJavascript = true
             // 初回起動時のログイン
@@ -185,7 +200,7 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // 現在のURLがJavaScript
-        switch viewModel.anyJavaScriptExecute(activeUrl.absoluteString) {
+        switch viewModel.anyJavaScriptExecute(url.absoluteString) {
             case .universityLogin:
                 // 徳島大学　統合認証システムサイト(ログインサイト)
                 // 自動ログインを行う
@@ -230,13 +245,13 @@ extension MainViewController: WKNavigationDelegate {
         }
         
         // 戻る、進むボタンの表示を変更
-        webViewGoBackButton.isEnabled = webView.canGoBack
-        webViewGoBackButton.alpha = webView.canGoBack ? 1.0 : 0.4
-        webViewGoForwardButton.isEnabled = webView.canGoForward
-        webViewGoForwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
+        backButton.isEnabled = webView.canGoBack
+        backButton.alpha = webView.canGoBack ? 1.0 : 0.4
+        forwardButton.isEnabled = webView.canGoForward
+        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
         
         // アナリティクスを送信
-        viewModel.analytics(activeUrl.absoluteString)
+        viewModel.analytics(url.absoluteString)
     }
     
     // alert対応

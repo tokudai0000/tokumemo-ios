@@ -22,7 +22,7 @@ final class DataManager {
         menuLists = loadMenuLists()
     }
     
-    // JavaScriptを実行するかどうか
+    // 次に読み込まれるURLはJavaScriptを動かすことを許可する
     public var isExecuteJavascript = false
 
     /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
@@ -173,7 +173,7 @@ final class DataManager {
     
     // チュートリアルを終了したかのフラグ
     private let KEY_isFinishedMainTutorial = "KEY_isFinishedMainTutorial"
-    public var shouldExecuteTutorial: Bool {
+    public var shouldShowTutorial: Bool {
         get { return getUserDefaultsBool(key: KEY_isFinishedMainTutorial) }
         set(v) { setUserDefaultsBool(key: KEY_isFinishedMainTutorial, value: v) }
     }
