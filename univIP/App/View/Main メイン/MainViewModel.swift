@@ -22,108 +22,161 @@ final class MainViewModel {
     // ログイン処理中かどうか
     public var isLoginProcessing = false
     
+    // 次に読み込まれるURLはJavaScriptを動かすことを許可する
+    public var canExecuteJavascript = false
+    
     private let dataManager = DataManager.singleton
     
     // 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
-    public var shouldDisplayTermsAgreementView: Bool {
+    public var shouldShowTermsAgreementView: Bool {
         get { return dataManager.agreementVersion != Constant.latestTermsVersion }
     }
     
-    /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
-    /// - Returns: 許可されているドメイン名ならtrueを返す
+    /// URLの読み込みを許可するか判定
+    /// ドメイン名が許可しているのと一致しているなら許可(ホワイトリスト制)
+    /// - Parameter url: 判定したいURL
+    /// - Returns: 判定結果、許可ならtrue
     public func isAllowedDomainCheck(_ url: URL) -> Bool {
-        // ホストを取得
-        guard let hostDomain = url.host else {
+        // ドメイン名を取得
+        guard let domain = url.host else {
             AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
             return false
         }
         // ドメインを検証
-        for domain in Constant.allowedDomains {
-            if hostDomain.contains(domain) {
-                // 許可されたドメインと一致している場合
+        for item in Constant.allowedDomains {
+            if domain.contains(item) {
+                // 一致したなら
                 return true
             }
         }
         return false
     }
     
+    /// JavaScriptを動かす種類
+    ///
+    /// - syllabus: シラバスの検索画面
+    /// - loginIAS: 大学統合認証システム(IAS)のログイン画面
+    /// - loginOutlook: メール(Outlook)のログイン画面
+    /// - loginCareerCenter: 徳島大学キャリアセンターのログイン画面
+    /// - none: JavaScriptを動かす必要がない場合
     enum JavaScriptType {
-        case universityLogin
-        case syllabusFirstTime
-        case outlookLogin
-        case tokudaiCareerCenter
+        case syllabus
+        case loginIAS
+        case loginOutlook
+        case loginCareerCenter
         case none
     }
-    /// JavaScriptを実行する場合かつ、URLと登録したJavaScriptを動かしたいURLと一致したら
-    /// - Parameter urlString: 現在、表示中のURLString
+    /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
+    ///
+    ///  以下2〜3つの状態が認められたらJavaScript実行を許可する
+    ///  1. JavaScriptを実行するフラグが立っていること
+    ///  2. 指定のURLであること
+    ///  3. **一部**ログイン関連であれば、パスワード等を登録したユーザーであること
+    ///  認められない場合は、JavaScriptを実行しない「.none」を返す
+    ///  - note:
+    ///    ログインに失敗した場合に再度ログインのURLが表示されることになる。
+    ///    canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
+    /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 動かすJavaScriptの種類
     public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
         // JavaScriptを実行するフラグが立っていない場合は抜ける
-        if !dataManager.isExecuteJavascript {
+        if canExecuteJavascript == false {
             return .none
         }
-        
-        // 大学サイト、ログイン画面 && cアカウント、パスワードを登録しているか
-        if urlString.contains(Url.universityLogin.string()) && hasRegisteredPassword {
-            return .universityLogin
-        }
-        // シラバス
+        // シラバスの検索画面
         if urlString == Url.syllabus.string() {
-            return .syllabusFirstTime
+            return .syllabus
         }
-        // outlook(メール) && 登録者判定
-        if urlString.contains(Url.outlookLoginForm.string()) && hasRegisteredPassword {
-            return .outlookLogin
+        // cアカウント、パスワードを登録しているか
+        if hasRegisteredPassword == false {
+            return .none
         }
-        // 徳島大学キャリアセンター
+        // 大学統合認証システム(IAS)のログイン画面
+        if urlString.contains(Url.universityLogin.string()) {
+            return .loginIAS
+        }
+        // メール(Outlook)のログイン画面
+        if urlString.contains(Url.outlookLoginForm.string()) {
+            return .loginOutlook
+        }
+        // 徳島大学キャリアセンターのログイン画面
         if urlString == Url.tokudaiCareerCenter.string() {
-            return .tokudaiCareerCenter
+            return .loginCareerCenter
         }
-        
+        // それ以外なら
         return .none
     }
-    
-    /// 設定した初期画面を探す
+
+    /// 初期画面に指定したWebページのURLを返す
+    ///
+    /// ログイン処理完了後に呼び出される。つまり、ログインが完了したユーザーのみが呼び出す。
+    /// structure Menu に存在するisInitViewがtrueであるのを探し、そのURLRequestを返す
+    /// 何も設定していないユーザーはマナバ(初期値)を表示させる。
+    /// - Note:
+    ///   isInitViewは以下の1つの事例を除き、必ずtrueは存在する。
+    ///   1. お気に入り登録内容を初期設定画面に登録し、カスタマイズから削除した場合
     /// - Returns: 設定した初期画面のURLRequest
-    public func searchInitialViewUrl() -> URLRequest {
+    public func searchInitPageUrl() -> URLRequest {
         // メニューリストの内1つだけ、isInitView=trueが存在するので探す
         for menuList in dataManager.menuLists {
-            // ユーザーが指定した初期画面を探す
+            // 初期画面を探す
             if menuList.isInitView {
-                // パスワード登録しておらず、初期画面がマナバである時は大学のホームページを表示させる
-                if dataManager.shouldInputedPassword && (menuList.id == .manabaHomePC) {
-                    let url = URL(string: Url.universityHomePage.string())! // fatalError
-                    return URLRequest(url: url)
-                }
                 let urlString = menuList.url!         // fatalError **Constant.Menu(canInitView)を設定してる為、URLが存在することを保証している**
                 let url = URL(string: urlString)!     // fatalError
                 return URLRequest(url: url)
             }
         }
         // 見つからなかった場合
-        // お気に入り画面を初期画面に設定しており、カスタマイズから削除した可能性がある
-        let urlString = Url.manabaPC.string()
-        let url = URL(string: urlString)!     // fatalError
-        return URLRequest(url: url)
+        // お気に入り画面を初期画面に設定しており、カスタマイズから削除した可能性がある為
+        // マナバを表示させる
+        return Url.manabaPC.urlRequest()
     }
     
-    /// 図書館の開館カレンダーをweb画面からスクレイピングする[常三島(本館Main) , 蔵本(分館Kura)]
-    /// - Parameter url: 図書館のwebページ
-    /// - Returns: 動的URL
-    public func fetchLibraryCalendarUrl(_ url: URL) -> URLRequest? {        
+    /// 大学図書館の種類
+    ///
+    /// - main: 常三島本館
+    /// - kura: 蔵本分館
+    enum LibraryType {
+        case main
+        case kura
+    }
+    /// 図書館の開館カレンダーPDFまでのURLRequestを作成する
+    ///
+    /// - Note:
+    ///   PDFへのURLは状況により変化する為、図書館ホームページからスクレイピングを行う
+    ///   例1：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021.pdf
+    ///   例2：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_syuusei1.pdf
+    ///   ==HTML==[常三島(本館Main) , 蔵本(分館Kura)でも同様]
+    ///   <body class="index">
+    ///     <ul>
+    ///       <li class="pos_r">
+    ///         <a href="pub/pdf/calender/calender_main_2021.pdf title="開館カレンダー">
+    ///   ========
+    ///   aタグのhref属性を抽出、"pub/pdf/calender/"と一致していれば、例1のURLを作成する。
+    /// - Parameter type: 常三島(本館Main) , 蔵本(分館Kura)のどちらの開館カレンダーを欲しいのかLibraryTypeから選択
+    /// - Returns: 図書館の開館カレンダーPDFまでのURLRequest
+    public func makeLibraryCalendarUrl(type: LibraryType) -> URLRequest? {
+        var urlString = ""
+        switch type {
+            case .main:
+                urlString = Url.libraryCalendarMain.string()
+            case .kura:
+                urlString = Url.libraryCalendarKura.string()
+        }
+        let url = URL(string: urlString)! // fatalError
         do {
-            // urlのHTMLデータを取得
-            let htmlData = NSData(contentsOf: url as URL)! as Data
-            let doc = try HTML(html: htmlData, encoding: String.Encoding.utf8)
-            // aタグを抽出
+            // URL先WebページのHTMLデータを取得
+            let data = NSData(contentsOf: url as URL)! as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            // aタグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
             for node in doc.xpath("//a") {
-                // href属性に設定されている文字列を出力
+                // href属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
                 guard let str = node["href"] else {
                     AKLog(level: .ERROR, message: "[href属性出力エラー]: href属性に設定されている文字列を出力する際のエラー")
                     return nil
                 }
                 // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-                if str.contains("pub/pdf/calender/calender") {
+                if str.contains("pub/pdf/calender/") {
                     // PDFまでのURLを作成する(本館のURLに付け加える)
                     let pdfUrlString = Url.libraryHomePageMainPC.string() + str
                     
@@ -142,21 +195,32 @@ final class MainViewModel {
         return nil
     }
     
-    /// 初期画面(マナバなど)を読み込むべきかどうか
+    /// 大学統合認証システム(IAS)へのログインが完了したかどうか
+    ///
+    /// 以下2つの状態が認められたら完了とする
+    ///  1. ログイン後のURLが指定したURLと一致していること
+    ///  2. ログイン処理中であるフラグが立っていること
+    ///  認められない場合は、falseとする
     /// - Parameter urlString: 現在表示しているURLString
-    /// - Returns: 判定結果
-    public func shouldDisplayInitialWebPage(_ urlString: String) -> Bool {
+    /// - Returns: 判定結果、許可ならtrue
+    public func isLoggedin(_ urlString: String) -> Bool {
+        // ログイン後のURLが指定したURLと一致しているかどうか
+        let check1 = urlString.contains(Url.enqueteReminder.string())
+        let check2 = urlString.contains(Url.courseManagementPC.string())
+        let check3 = urlString.contains(Url.courseManagementMobile.string())
+        // 上記から1つでもtrueがあれば、引き継ぐ
+        let result = check1 || check2 || check3
         // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
-        if isLoginProcessing && (urlString.contains(Url.universityLogin.string()) == false) {
-            // ログイン処理を終了する
+        if isLoginProcessing && result {
+            // ログイン処理を完了とする
             isLoginProcessing = false
             return true
         }
         return false
     }
     
-    /// 現在の時刻を記録する
-    public func saveTimeUsedLastTime() {
+    /// 現在の時刻を保存する
+    public func saveCurrentTime() {
         // 現在の時刻を取得し保存
         let f = DateFormatter()
         f.setTemplate(.full)
@@ -164,10 +228,11 @@ final class MainViewModel {
         dataManager.saveTimeUsedLastTime = f.string(from: now)
     }
     
-    /// 再度ログイン処理を行うべきか
-    /// - Returns: 行うべきならtrue
-    public func canExecuteLogin() -> Bool {
-        // dataManagerのsaveTimeUsedLastTime(String型)をDateに変換する
+    /// 再度ログイン処理を行うかどうか
+    ///
+    /// - Returns: 判定結果、行うべきならtrue
+    public func isExecuteLogin() -> Bool {
+        // dataManagerのsaveCurrentTime(String型)をDateに変換する
         let formatter: DateFormatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
@@ -185,9 +250,9 @@ final class MainViewModel {
     }
     
     /// タイムアウトのURLであるかどうかの判定
-    /// - Parameter urlString: 現在表示しているURLの文字列
+    /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 結果
-    public func isTimeOut(_ urlString: String) -> Bool {
+    public func isTimeout(_ urlString: String) -> Bool {
         if urlString == Url.universityServiceTimeOut.string() ||
             urlString == Url.universityServiceTimeOut2.string() {
             return true

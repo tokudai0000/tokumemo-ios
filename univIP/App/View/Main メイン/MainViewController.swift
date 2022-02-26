@@ -35,7 +35,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // 利用規約同意画面を表示するべきか
-        if viewModel.shouldDisplayTermsAgreementView {
+        if viewModel.shouldShowTermsAgreementView {
             // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
@@ -106,14 +106,14 @@ final class MainViewController: UIViewController {
     /// フォアグラウンド時の処理
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
-        if viewModel.canExecuteLogin() {
+        if viewModel.isExecuteLogin() {
             loadLoginPage()
         }
     }
     /// バックグラウンド時の処理
     @objc private func background(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻を保存
-        viewModel.saveTimeUsedLastTime()
+        viewModel.saveCurrentTime()
     }
     
     /// 大学統合認証システムのページを読み込む
@@ -123,7 +123,7 @@ final class MainViewController: UIViewController {
     ///  2. isExecuteJavascriptがtrueである
     private func loadLoginPage() {
         // ログイン用
-        dataManager.isExecuteJavascript = true
+        viewModel.canExecuteJavascript = true
         // 大学統合認証システムのページを読み込む
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
@@ -189,7 +189,7 @@ extension MainViewController: WKNavigationDelegate {
         viewModel.urlString = urlString
         
         // タイムアウトした場合
-        if viewModel.isTimeOut(urlString) {
+        if viewModel.isTimeout(urlString) {
             // ログイン処理を始める
             loadLoginPage()
         }
@@ -210,37 +210,37 @@ extension MainViewController: WKNavigationDelegate {
         let urlString = url.absoluteString
         
         // 大学統合認証システムのログイン処理が終了した場合
-        if viewModel.shouldDisplayInitialWebPage(urlString) {
+        if viewModel.isLoggedin(urlString) {
             // 初期設定画面がメール(Outlook)の場合用
-            dataManager.isExecuteJavascript = true
+            viewModel.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
-            webView.load(viewModel.searchInitialViewUrl())
+            webView.load(viewModel.searchInitPageUrl())
         }
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         switch viewModel.anyJavaScriptExecute(urlString) {
                 
-            case .universityLogin:
+            case .loginIAS:
                 // 徳島大学　統合認証システムサイト(ログインサイト)
                 // 自動ログインを行う
                 webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
                 // フラグを下ろす
-                dataManager.isExecuteJavascript = false
+                viewModel.canExecuteJavascript = false
                 // ログイン処理中であるフラグを立てる
                 viewModel.isLoginProcessing = true
                 
-            case .syllabusFirstTime:
+            case .syllabus:
                 // シラバスの検索画面
                 // ネイティブでの検索内容をWebに反映したのち、検索を行う
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
                 // フラグを下ろす
-                dataManager.isExecuteJavascript = false
+                viewModel.canExecuteJavascript = false
                 
-            case .outlookLogin:
+            case .loginOutlook:
                 // outlook(メール)へのログイン画面
                 // cアカウントを登録していなければ自動ログインは効果がないため
                 // 自動ログインを行う
@@ -248,16 +248,16 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
                 // フラグを下ろす
-                dataManager.isExecuteJavascript = false
+                viewModel.canExecuteJavascript = false
                 
-            case .tokudaiCareerCenter:
+            case .loginCareerCenter:
                 // 徳島大学キャリアセンター室
                 // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
                 // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
                 webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
                 // フラグを下ろす
-                dataManager.isExecuteJavascript = false
+                viewModel.canExecuteJavascript = false
                 
             case .none:
                 // JavaScriptを動かす必要がなかったURLの場合

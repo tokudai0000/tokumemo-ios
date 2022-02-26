@@ -21,9 +21,6 @@ final class DataManager {
         // インスタンスが1つであることを補償
         menuLists = loadMenuLists()
     }
-    
-    // 次に読み込まれるURLはJavaScriptを動かすことを許可する
-    public var isExecuteJavascript = false
 
     /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
     /// - Parameters:
