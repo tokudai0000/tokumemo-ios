@@ -15,6 +15,9 @@ final class DataManager {
     
     private var userDefaults = UserDefaults.standard
     
+    // 次に読み込まれるURLはJavaScriptを動かすことを許可する
+    public var canExecuteJavascript = false
+    
     // 毎回UserDefaultsから取ってきて保存する
     public var menuLists:[Constant.Menu] =  []
     private init() {
@@ -121,7 +124,7 @@ final class DataManager {
     
     
     /// GET (UserDefaults) String
-    private func getUserDefaultsString(key:String) -> String {
+    public func getUserDefaultsString(key:String) -> String {
         if let value = userDefaults.string(forKey: key) {
             return value
         }
@@ -129,12 +132,12 @@ final class DataManager {
     }
     
     /// SET (UserDefaults) String
-    private func setUserDefaultsString(key:String, value:String) {
+    public func setUserDefaultsString(key:String, value:String) {
         userDefaults.set(value ,forKey: key)
     }
     
     
-    // 利用規約のバージョン
+    // 利用規約のバージョン　agreement main
     private let KEY_AgreementVersion = "KEY_AgreementVersion" // KEY_agreementVersion にするべき(**注意** 変更すると再度利用規約が表示される)
     public var agreementVersion: String {
         get { return getUserDefaultsString(key: KEY_AgreementVersion) }
@@ -148,14 +151,6 @@ final class DataManager {
         set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
     }
     
-    // 前回利用した時間を保存
-    private let KEY_saveTimeUsedLastTime = "KEY_saveTimeUsedLastTime"
-    public var saveTimeUsedLastTime: String {
-        get { return getUserDefaultsString(key: KEY_saveTimeUsedLastTime) }
-        set(v) { setUserDefaultsString(key: KEY_saveTimeUsedLastTime, value: v) }
-    }
-    
-    
     /// GET (UserDefaults) Bool
     private func getUserDefaultsBool(key:String) -> Bool {
         // 非登録者(nilでも)はfalseを返す
@@ -168,7 +163,7 @@ final class DataManager {
         userDefaults.set(value ,forKey: key)
     }
     
-    // チュートリアルを終了したかのフラグ
+    // チュートリアルを終了したかのフラグ mainとmenuから
     private let KEY_isFinishedMainTutorial = "KEY_isFinishedMainTutorial"
     public var shouldShowTutorial: Bool {
         get { return getUserDefaultsBool(key: KEY_isFinishedMainTutorial) }

@@ -7,27 +7,20 @@
 
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
-import Kanna
-import FirebaseAnalytics
 
 final class MainViewModel {
     
-    // Favorite画面へURLを渡すのに使用
+    /// Favorite画面へURLを渡すのに使用
     public var urlString = ""
     
-    // シラバスをJavaScriptで自動入力する際、参照変数
+    /// シラバスをJavaScriptで自動入力する際、参照変数
     public var subjectName = ""
     public var teacherName = ""
     
-    // ログイン処理中かどうか
+    /// ログイン処理中かどうか
     public var isLoginProcessing = false
     
-    // 次に読み込まれるURLはJavaScriptを動かすことを許可する
-    public var canExecuteJavascript = false
-    
-    private let dataManager = DataManager.singleton
-    
-    // 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
+    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public var shouldShowTermsAgreementView: Bool {
         get { return dataManager.agreementVersion != Constant.latestTermsVersion }
     }
@@ -68,19 +61,14 @@ final class MainViewModel {
     }
     /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
     ///
-    ///  以下2〜3つの状態が認められたらJavaScript実行を許可する
-    ///  1. JavaScriptを実行するフラグが立っていること
-    ///  2. 指定のURLであること
-    ///  3. **一部**ログイン関連であれば、パスワード等を登録したユーザーであること
-    ///  認められない場合は、JavaScriptを実行しない「.none」を返す
-    ///  - note:
-    ///    ログインに失敗した場合に再度ログインのURLが表示されることになる。
-    ///    canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
+    /// - Note: canExecuteJavascriptが重要な理由
+    ///   ログインに失敗した場合に再度ログインのURLが表示されることになる。
+    ///   canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
     /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 動かすJavaScriptの種類
     public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
-        // JavaScriptを実行するフラグが立っていない場合は抜ける
-        if canExecuteJavascript == false {
+        // JavaScriptを実行するフラグが立っていない場合はnoneを返す
+        if dataManager.canExecuteJavascript == false {
             return .none
         }
         // シラバスの検索画面
@@ -120,9 +108,9 @@ final class MainViewModel {
         // メニューリストの内1つだけ、isInitView=trueが存在するので探す
         for menuList in dataManager.menuLists {
             // 初期画面を探す
-            if menuList.isInitView {
-                let urlString = menuList.url!         // fatalError **Constant.Menu(canInitView)を設定してる為、URLが存在することを保証している**
-                let url = URL(string: urlString)!     // fatalError
+            if menuList.isInitView,
+               let urlString = menuList.url,
+               let url = URL(string: urlString) {
                 return URLRequest(url: url)
             }
         }
@@ -132,77 +120,16 @@ final class MainViewModel {
         return Url.manabaPC.urlRequest()
     }
     
-    /// 大学図書館の種類
-    ///
-    /// - main: 常三島本館
-    /// - kura: 蔵本分館
-    enum LibraryType {
-        case main
-        case kura
-    }
-    /// 図書館の開館カレンダーPDFまでのURLRequestを作成する
-    ///
-    /// - Note:
-    ///   PDFへのURLは状況により変化する為、図書館ホームページからスクレイピングを行う
-    ///   例1：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021.pdf
-    ///   例2：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_syuusei1.pdf
-    ///   ==HTML==[常三島(本館Main) , 蔵本(分館Kura)でも同様]
-    ///   <body class="index">
-    ///     <ul>
-    ///       <li class="pos_r">
-    ///         <a href="pub/pdf/calender/calender_main_2021.pdf title="開館カレンダー">
-    ///   ========
-    ///   aタグのhref属性を抽出、"pub/pdf/calender/"と一致していれば、例1のURLを作成する。
-    /// - Parameter type: 常三島(本館Main) , 蔵本(分館Kura)のどちらの開館カレンダーを欲しいのかLibraryTypeから選択
-    /// - Returns: 図書館の開館カレンダーPDFまでのURLRequest
-    public func makeLibraryCalendarUrl(type: LibraryType) -> URLRequest? {
-        var urlString = ""
-        switch type {
-            case .main:
-                urlString = Url.libraryCalendarMain.string()
-            case .kura:
-                urlString = Url.libraryCalendarKura.string()
-        }
-        let url = URL(string: urlString)! // fatalError
-        do {
-            // URL先WebページのHTMLデータを取得
-            let data = NSData(contentsOf: url as URL)! as Data
-            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            // aタグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
-            for node in doc.xpath("//a") {
-                // href属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-                guard let str = node["href"] else {
-                    AKLog(level: .ERROR, message: "[href属性出力エラー]: href属性に設定されている文字列を出力する際のエラー")
-                    return nil
-                }
-                // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-                if str.contains("pub/pdf/calender/") {
-                    // PDFまでのURLを作成する(本館のURLに付け加える)
-                    let pdfUrlString = Url.libraryHomePageMainPC.string() + str
-                    
-                    if let url = URL(string: pdfUrlString) {
-                        return URLRequest(url: url)
-                    } else {
-                        AKLog(level: .ERROR, message: "[URLフォーマットエラー]: 図書館開館カレンダーURL取得エラー \n pdfUrlString:\(pdfUrlString)")
-                        return nil
-                    }
-                }
-            }
-            AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(url.absoluteString)")
-        } catch {
-            AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(url.absoluteString)")
-        }
-        return nil
-    }
-    
     /// 大学統合認証システム(IAS)へのログインが完了したかどうか
     ///
-    /// 以下2つの状態が認められたら完了とする
+    /// 以下2つの状態なら完了とする
     ///  1. ログイン後のURLが指定したURLと一致していること
     ///  2. ログイン処理中であるフラグが立っていること
     ///  認められない場合は、falseとする
+    /// - Note:
     /// - Parameter urlString: 現在表示しているURLString
     /// - Returns: 判定結果、許可ならtrue
+    /// hadLoggedin
     public func isLoggedin(_ urlString: String) -> Bool {
         // ログイン後のURLが指定したURLと一致しているかどうか
         let check1 = urlString.contains(Url.enqueteReminder.string())
@@ -211,7 +138,7 @@ final class MainViewModel {
         // 上記から1つでもtrueがあれば、引き継ぐ
         let result = check1 || check2 || check3
         // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
-        if isLoginProcessing && result {
+        if isLoginProcessing, result {
             // ログイン処理を完了とする
             isLoginProcessing = false
             return true
@@ -225,7 +152,7 @@ final class MainViewModel {
         let f = DateFormatter()
         f.setTemplate(.full)
         let now = Date()
-        dataManager.saveTimeUsedLastTime = f.string(from: now)
+        dataManager.setUserDefaultsString(key: KEY_saveCurrentTime, value: f.string(from: now))
     }
     
     /// 再度ログイン処理を行うかどうか
@@ -236,7 +163,7 @@ final class MainViewModel {
         let formatter: DateFormatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
-        if let lastTime = formatter.date(from: dataManager.saveTimeUsedLastTime) {
+        if let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime)) {
             // 現在の時刻を取得
             let f = DateFormatter()
             f.setTemplate(.time)
@@ -260,14 +187,13 @@ final class MainViewModel {
         return false
     }
     
-    /// FireBaseアナリティクスを送信する
-    /// - Parameter urlString: 読み込まれたURLの文字列
-    public func analytics(_ urlString: String) {
-        // Analytics
-        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
-    }
-    
     // MARK: - Private
+    
+    private let dataManager = DataManager.singleton
+    
     // cアカウント、パスワードを登録しているか判定
-    private var hasRegisteredPassword: Bool { get { return (!dataManager.cAccount.isEmpty && !dataManager.password.isEmpty) }}
+    private var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    
+    // 前回利用した時間を保存
+    private let KEY_saveCurrentTime = "KEY_saveCurrentTime"
 }

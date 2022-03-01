@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import FirebaseAnalytics
 
 final class MainViewController: UIViewController {
     
@@ -116,21 +117,19 @@ final class MainViewController: UIViewController {
         viewModel.saveCurrentTime()
     }
     
-    /// 大学統合認証システムのページを読み込む
+    /// 大学統合認証システム(IAS)のページを読み込む
     ///
-    /// ログインの処理はWebViewのdidFinishより、以下2つの状態が認められたらログインの処理を行う
-    ///  1. 現在表示しているWebページが大学統合認証システムのページである
-    ///  2. isExecuteJavascriptがtrueである
+    /// ログインの処理はWebViewのdidFinishで行う
     private func loadLoginPage() {
         // ログイン用
-        viewModel.canExecuteJavascript = true
+        dataManager.canExecuteJavascript = true
         // 大学統合認証システムのページを読み込む
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
     
     /// チュートリアルを表示する
     ///
-    /// 以下の順で疑似スポットライトで照らし、テキストと共に表示させる
+    /// 以下の順でボタンを疑似スポットライトをテキストと共に表示させる
     ///  1. お気に入りボタン
     ///  2. メニューボタン
     /// 画面をタップすることで次のスポットライト座標へ遷移し、
@@ -164,7 +163,7 @@ extension MainViewController: WKNavigationDelegate {
     
     /// 読み込み設定（リクエスト前）
     ///
-    /// 以下2つの状態が認められたら読み込みを許可する
+    /// 以下2つの状態であったら読み込みを開始する。
     ///  1.読み込み前のURLがnilでないこと
     ///  2. 許可されたドメインであること
     func webView(_ webView: WKWebView,
@@ -212,7 +211,7 @@ extension MainViewController: WKNavigationDelegate {
         // 大学統合認証システムのログイン処理が終了した場合
         if viewModel.isLoggedin(urlString) {
             // 初期設定画面がメール(Outlook)の場合用
-            viewModel.canExecuteJavascript = true
+            dataManager.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
             webView.load(viewModel.searchInitPageUrl())
         }
@@ -227,7 +226,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
                 // フラグを下ろす
-                viewModel.canExecuteJavascript = false
+                dataManager.canExecuteJavascript = false
                 // ログイン処理中であるフラグを立てる
                 viewModel.isLoginProcessing = true
                 
@@ -238,7 +237,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
                 // フラグを下ろす
-                viewModel.canExecuteJavascript = false
+                dataManager.canExecuteJavascript = false
                 
             case .loginOutlook:
                 // outlook(メール)へのログイン画面
@@ -248,7 +247,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
                 // フラグを下ろす
-                viewModel.canExecuteJavascript = false
+                dataManager.canExecuteJavascript = false
                 
             case .loginCareerCenter:
                 // 徳島大学キャリアセンター室
@@ -257,7 +256,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
                 // フラグを下ろす
-                viewModel.canExecuteJavascript = false
+                dataManager.canExecuteJavascript = false
                 
             case .none:
                 // JavaScriptを動かす必要がなかったURLの場合
@@ -271,7 +270,7 @@ extension MainViewController: WKNavigationDelegate {
         forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
         
         // アナリティクスを送信
-        viewModel.analytics(urlString)
+        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString]) // Analytics
     }
     
     /// alert対応

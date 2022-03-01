@@ -142,7 +142,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         
         // JavaScriptを動かすことを許可する
         // JavaScriptを動かす必要がないCellでも、trueにしてOK(1度きりしか動かさないを判定するフラグだから)
-        dataManager.isExecuteJavascript = true
+        dataManager.canExecuteJavascript = true
         
         // メニュー画面を消去後、画面を読み込む
         self.dismiss(animated: false, completion: { [self] in
@@ -162,7 +162,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                             let urlString = Url.libraryHomePageMainPC.string()
                             let url = URL(string: urlString)! // fatalError
                             // 常三島のカレンダーURLを取得後、webView読み込み
-                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(url) {
+                            if let url = viewModel.makeLibraryCalendarUrl(type: .main) {
                                 delegate.webView.load(url)
                             }else{
                                 AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
@@ -176,7 +176,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                             let urlString = Url.libraryHomePageKuraPC.string()
                             let url = URL(string: urlString)! // fatalError
                             // 蔵本のカレンダーURLを取得後、webView読み込み
-                            if let url = delegate.viewModel.fetchLibraryCalendarUrl(url) {
+                            if let url = viewModel.makeLibraryCalendarUrl(type: .kura) {
                                 delegate.webView.load(url)
                             }else{
                                 AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
