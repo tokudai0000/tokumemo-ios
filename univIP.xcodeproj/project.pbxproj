@@ -381,7 +381,7 @@
 				1ABE8BC927B10489001EEA79 /* MenuViewModel.swift */,
 				1ABE8BD527B10489001EEA79 /* MenuViewController.swift */,
 				1ABE8BCA27B10489001EEA79 /* Menu.storyboard */,
-				1ABE8BCB27B10489001EEA79 /* PasswordSettings パスワード登録 */,
+				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
 				1ABE8BCE27B10489001EEA79 /* Customize カスタマイズ */,
 				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
 			);
@@ -407,12 +407,13 @@
 			path = "Syllabus シラバス";
 			sourceTree = "<group>";
 		};
-		1ABE8BCB27B10489001EEA79 /* PasswordSettings パスワード登録 */ = {
+		1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */ = {
 			isa = PBXGroup;
 			children = (
 				1ABE8BCD27B10489001EEA79 /* PasswordSettingsViewController.swift */,
 				1ABE8BCC27B10489001EEA79 /* PasswordSettings.storyboard */,
 			);
+			name = "Password パスワード登録";
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};

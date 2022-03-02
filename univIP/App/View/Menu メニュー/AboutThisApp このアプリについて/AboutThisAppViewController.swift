@@ -13,7 +13,6 @@ final class AboutThisAppViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,20 +22,20 @@ final class AboutThisAppViewController: UIViewController {
         textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
-    
     // MARK: - IBAction
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
+    /// 利用規約ボタン
     @IBAction func termsOfServiceButton(_ sender: Any) {
         let vc = R.storyboard.termsOfService.termsOfService()!
         present(vc, animated: true, completion: nil)
     }
     
+    /// プライバシーポリシーボタン
     @IBAction func privacyPolicyButton(_ sender: Any) {
         let vc = R.storyboard.privacyPolicy.privacyPolicy()!
         present(vc, animated: true, completion: nil)
     }
-    
 }
