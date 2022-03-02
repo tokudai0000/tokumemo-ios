@@ -16,7 +16,7 @@ final class MenuViewController: UIViewController {
     
     public var mainViewController : MainViewController?
     
-    private let viewModel = MenuViewModel()
+    public let viewModel = MenuViewModel()
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle

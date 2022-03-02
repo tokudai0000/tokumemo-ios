@@ -94,7 +94,9 @@ extension MenuTutorialSpotlightViewController: SpotlightViewControllerDelegate {
     }
     //画面タップ時
     func spotlightViewControllerTapped(_ viewController: SpotlightViewController, tappedSpotlight: SpotlightType?) {
-        delegateMenu?.changeToSettings()
+        // メニューリストを設定用リストへ更新する
+        delegateMenu?.viewModel.menuLists = Constant.initSettingLists
+        delegateMenu?.tableView.reloadData()
         // 2個目のチュートリアル表示
         createLabels()
         createSpotlight()
