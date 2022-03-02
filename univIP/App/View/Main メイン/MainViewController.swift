@@ -70,7 +70,7 @@ final class MainViewController: UIViewController {
     @IBAction func showMenuButton(_ sender: Any) {
         // メニューを表示
         let vc = R.storyboard.menu.menuViewController()!
-        vc.delegate = self
+        vc.mainViewController = self
         present(vc, animated: false, completion: nil) // アニメーションは表示しない(快適性の向上)
     }
     
@@ -160,7 +160,6 @@ final class MainViewController: UIViewController {
 
 // MARK: - WKNavigationDelegate
 extension MainViewController: WKNavigationDelegate {
-    
     /// 読み込み設定（リクエスト前）
     ///
     /// 以下2つの状態であったら読み込みを開始する。

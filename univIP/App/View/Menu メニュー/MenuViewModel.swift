@@ -8,9 +8,11 @@
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
 import Kanna
-import FirebaseAnalytics
 
 final class MenuViewModel {
+    
+    // TableCellの内容
+    public var menuLists:[Constant.Menu] = []
     
     private let dataManager = DataManager.singleton
     
@@ -77,10 +79,13 @@ final class MenuViewModel {
     }
     
     /// 今年度の成績表のURLを作成する
+    ///
+    /// - Note:
+    ///   2020年4月〜2021年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2020
+    ///   2021年4月〜2022年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2021
+    ///   なので、2022年の1月から3月まではURLがyear=2021とする必要あり
     /// - Returns: 今年度の成績表のURL
     public func createCurrentTermPerformanceUrl() -> URLRequest? {
-        // 2020年4月〜2021年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2020
-        // 2021年4月〜2022年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2021
         
         var year = Calendar.current.component(.year, from: Date())
         let month = Calendar.current.component(.month, from: Date())
@@ -100,9 +105,16 @@ final class MenuViewModel {
         }
     }
     
-    public func analytics(_ temp: String) {
-        // Analytics
-        Analytics.logEvent("MenuView", parameters: ["serviceName": temp])
+    /// メニューリストにある特定のセルのインデックスを探す
+    /// - Parameter id: インデックスを特定したいセルのID
+    /// - Returns: インデックス番号
+    public func searchIndexCell(id: Constant.MenuLists) -> Int? {
+        for i in 0..<menuLists.count {
+            if menuLists[i].id == id {
+                return i
+            }
+        }
+        return nil
     }
     
 }
