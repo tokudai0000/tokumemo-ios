@@ -13,51 +13,100 @@ final class PasswordSettingsViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var cAccountTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     @IBOutlet weak var cAccountTextSizeLabel: UILabel!
     @IBOutlet weak var passwordTextSizeLabel: UILabel!
-    
     @IBOutlet weak var cAccountMessageLabel: UILabel!
     @IBOutlet weak var passwordMessageLabel: UILabel!
-    
     @IBOutlet weak var cAccountUnderLine: UIView!
     @IBOutlet weak var passwordUnderLine: UIView!
-    
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var passwordViewButton: UIButton!
     
     public var delegate : MainViewController?
     private let dataManager = DataManager.singleton
     
-    
     // MARK: - LifeCycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        cAccountTextFieldCursorSetup(type: .normal)
-        passwordTextFieldCursorSetup(type: .normal)
-        
-        cAccountTextField.borderStyle = .none
-        passwordTextField.borderStyle = .none
-        
-        cAccountTextField.delegate = self
-        passwordTextField.delegate = self
-        
-        cAccountTextField.text = dataManager.cAccount
-        passwordTextField.text = dataManager.password
-        
-        cAccountTextSizeLabel.text = "\(dataManager.cAccount.count)/10"
-        passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
-        
-        cAccountMessageLabel.textColor = .red
-        passwordMessageLabel.textColor = .red
-        
-        passwordTextField.isSecureTextEntry = true
-        registerButton.layer.cornerRadius = 5.0
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        initSetup()
+    }
+    
+    // MARK: - IBAction
+    @IBAction func dismissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    /// パスワードの表示、非表示モード
+    @IBAction func passwordViewChangeButton(_ sender: Any) {
+        passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
+        
+        if passwordTextField.isSecureTextEntry {
+            // 非表示モード
+            passwordViewButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        } else {
+            // 表示モード
+            passwordViewButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
+    }
+    
+    @IBAction func registrationButton(_ sender: Any) {
+        // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
+        guard let cAccountText = cAccountTextField.text else { return }
+        guard let passwordText = passwordTextField.text else { return }
+        
+        if cAccountText.isEmpty {
+            cAccountMessageLabel.text = "空欄です"
+            textFieldCursorSetup(fieldType: .cAccount, cursorType: .error)
+            return
+        }
+        
+        if passwordText.isEmpty {
+            passwordMessageLabel.text = "空欄です"
+            textFieldCursorSetup(fieldType: .password, cursorType: .error)
+            return
+        }
+        
+        if cAccountText.prefix(1) != "c" ||
+            cAccountText.count > 10 {
+            cAccountMessageLabel.text = "cアカウント例(c100100100)"
+            textFieldCursorSetup(fieldType: .cAccount, cursorType: .error)
+            return
+        }
+        // KeyChianに保存する
+        dataManager.cAccount = cAccountText
+        dataManager.password = passwordText
+        
+        if let delegate = delegate {
+            delegate.webView.load(Url.universityLogin.urlRequest())
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Private
+    /// PasswordSettingsViewControllerの初期セットアップ
+    private func initSetup() {
+        do { // 1. cアカウント
+            textFieldCursorSetup(fieldType: .cAccount, cursorType: .normal)
+            cAccountTextField.borderStyle = .none
+            cAccountTextField.delegate = self
+            cAccountTextField.text = dataManager.cAccount
+            cAccountTextSizeLabel.text = "\(dataManager.cAccount.count)/10"
+            cAccountMessageLabel.textColor = .red
+        }
+        
+        do { // 2. パスワード
+            textFieldCursorSetup(fieldType: .password, cursorType: .normal)
+            passwordTextField.borderStyle = .none
+            passwordTextField.delegate = self
+            passwordTextField.text = dataManager.password
+            passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
+            passwordMessageLabel.textColor = .red
+            passwordTextField.isSecureTextEntry = true
+        }
+        // 登録ボタンの角を丸める
+        registerButton.layer.cornerRadius = 5.0
+        
         // キーボードの通知セット
         let notification = NotificationCenter.default
         // キーボードが現れる直前呼び出す
@@ -68,141 +117,85 @@ final class PasswordSettingsViewController: UIViewController {
                                  name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    
-    // MARK: - IBAction
-    @IBAction func registrationButton(_ sender: Any) {
-        // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
-        guard let cAccountText = cAccountTextField.text else { return }
-        guard let passwordText = passwordTextField.text else { return }
-        
-        if cAccountText.isEmpty {
-            cAccountMessageLabel.text = "空欄です"
-            cAccountTextFieldCursorSetup(type: .error)
-            return
-        }
-        
-        if passwordText.isEmpty {
-            passwordMessageLabel.text = "空欄です"
-            passwordTextFieldCursorSetup(type: .error)
-            return
-        }
-        
-        if cAccountText.prefix(1) != "c" ||
-            cAccountText.count > 10 {
-            cAccountMessageLabel.text = "cアカウント例(c100100100)"
-            cAccountTextFieldCursorSetup(type: .error)
-            return
-        }
-        
-        dataManager.cAccount = cAccountText
-        dataManager.password = passwordText
-        
-        cAccountTextFieldCursorSetup(type: .normal)
-        passwordTextFieldCursorSetup(type: .normal)
-        
-        if let delegate = delegate {
-            guard let url = URL(string: Url.manabaPC.string()) else {fatalError()}
-            delegate.webView.load(URLRequest(url: url))
-            dismiss(animated: true, completion: nil)
-        }
+    /// TextFieldの種類
+    enum FieldType: Int {
+        case cAccount = 0 // 科目名
+        case password = 1 // 教員名
     }
-    
-    /// パスワードのシークレットモード
-    @IBAction func passwordViewChangeButton(_ sender: Any) {
-        passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-        
-        if passwordTextField.isSecureTextEntry {
-            // シークレットモード
-            passwordViewButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
-        } else {
-            passwordViewButton.setImage(UIImage(systemName: "eye"), for: .normal)
-        }
+    /// カーソルの表示種類
+    enum CursorType {
+        case normal // 非選択状態
+        case focus // 選択状態
+        case error // 入力エラー状態
     }
-    
-    @IBAction func dismissButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
-    // MARK: - Private
-    
-    enum cursorType {
-        case normal
-        case focus
-        case error
-    }
-    private func cAccountTextFieldCursorSetup(type: cursorType) {
-        switch type {
-            
-        case .normal:
-            cAccountUnderLine.backgroundColor = .lightGray
-            
-        case .focus:
-            // カーソルの色
-            cAccountTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            cAccountUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            
-        case .error:
-            cAccountTextField.tintColor = .red
-            cAccountUnderLine.backgroundColor = .red
-        }
-    }
-    
-    private func passwordTextFieldCursorSetup(type: cursorType) {
-        switch type {
-            
-        case .normal:
-            passwordUnderLine.backgroundColor = .lightGray
-            
-        case .focus:
-            passwordTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            passwordUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            
-        case .error:
-            passwordTextField.tintColor = .red
-            passwordUnderLine.backgroundColor = .red
+    /// TextFieldの状態を変化させる
+    /// - Parameters:
+    ///   - fieldType: 変化させたいTextFieldの種類
+    ///   - cursorType: 変化させたい状態
+    private func textFieldCursorSetup(fieldType: FieldType, cursorType: CursorType) {
+        switch fieldType {
+            case .cAccount:
+                switch cursorType {
+                    case .normal:
+                        // 非選択状態
+                        cAccountUnderLine.backgroundColor = .lightGray
+                        
+                    case .focus:
+                        // 選択状態
+                        // カーソルの色
+                        cAccountTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        cAccountUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        
+                    case .error:
+                        cAccountTextField.tintColor = .red
+                        cAccountUnderLine.backgroundColor = .red
+                }
+            case .password:
+                switch cursorType {
+                    case .normal:
+                        passwordUnderLine.backgroundColor = .lightGray
+                        
+                    case .focus:
+                        passwordTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        passwordUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        
+                    case .error:
+                        passwordTextField.tintColor = .red
+                        passwordUnderLine.backgroundColor = .red
+                }
         }
     }
 }
 
-
 // MARK: - UITextFieldDelegate
 extension PasswordSettingsViewController: UITextFieldDelegate {
-    
-    enum TextFieldTag: Int {
-        case cAccount = 0
-        case password = 1
-    }
     // textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        let textFieldTag = TextFieldTag(rawValue: textField.tag)
+        let textFieldTag = FieldType(rawValue: textField.tag)
         
         switch textFieldTag {
         case .cAccount:
-            cAccountTextFieldCursorSetup(type: .focus)
+                textFieldCursorSetup(fieldType: .cAccount, cursorType: .focus)
             
         case .password:
-            passwordTextFieldCursorSetup(type: .focus)
+                textFieldCursorSetup(fieldType: .password, cursorType: .focus)
             
         case .none:
             AKLog(level: .FATAL, message: "TextFieldTagが不正")
             fatalError()
         }
     }
-    // textField編集後
+    /// textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
-        cAccountTextFieldCursorSetup(type: .normal)
-        passwordTextFieldCursorSetup(type: .normal)
+        textFieldCursorSetup(fieldType: .cAccount, cursorType: .normal)
+        textFieldCursorSetup(fieldType: .password, cursorType: .normal)
     }
-    
-    // text内容が変更されるたびに
+    /// text内容が変更されるたびに
     func textFieldDidChangeSelection(_ textField: UITextField) {
         cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count ?? 0)/10"
         passwordTextSizeLabel.text = "\(passwordTextField.text?.count ?? 0)/100"
     }
-    
 }
-
 
 // キーボード関連
 extension PasswordSettingsViewController {

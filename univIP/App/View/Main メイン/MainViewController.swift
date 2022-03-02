@@ -29,7 +29,7 @@ final class MainViewController: UIViewController {
         initSetup()
         
         #if DEBUG
-        dataManager.shouldShowTutorial = true
+        //dataManager.shouldShowTutorial = true
         #endif
     }
     

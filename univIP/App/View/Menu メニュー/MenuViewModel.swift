@@ -111,6 +111,11 @@ final class MenuViewModel {
                 return i
             }
         }
+        for i in 0..<Constant.initSettingLists.count {
+            if Constant.initSettingLists[i].id == id {
+                return i
+            }
+        }
         return nil
     }
     

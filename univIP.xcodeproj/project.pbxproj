@@ -377,13 +377,13 @@
 			children = (
 				1ABE8BC327B10489001EEA79 /* FirstView 初期画面設定 */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
+				1ABE8BD427B10489001EEA79 /* MenuTutorialSpotlightViewController.swift */,
 				1ABE8BC927B10489001EEA79 /* MenuViewModel.swift */,
 				1ABE8BD527B10489001EEA79 /* MenuViewController.swift */,
 				1ABE8BCA27B10489001EEA79 /* Menu.storyboard */,
 				1ABE8BCB27B10489001EEA79 /* PasswordSettings パスワード登録 */,
 				1ABE8BCE27B10489001EEA79 /* Customize カスタマイズ */,
 				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
-				1ABE8BD427B10489001EEA79 /* MenuTutorialSpotlightViewController.swift */,
 			);
 			path = "Menu メニュー";
 			sourceTree = "<group>";
@@ -410,8 +410,8 @@
 		1ABE8BCB27B10489001EEA79 /* PasswordSettings パスワード登録 */ = {
 			isa = PBXGroup;
 			children = (
-				1ABE8BCC27B10489001EEA79 /* PasswordSettings.storyboard */,
 				1ABE8BCD27B10489001EEA79 /* PasswordSettingsViewController.swift */,
+				1ABE8BCC27B10489001EEA79 /* PasswordSettings.storyboard */,
 			);
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
