@@ -17,12 +17,9 @@ final class MenuViewModel {
     private let dataManager = DataManager.singleton
     
     /// 大学図書館の種類
-    ///
-    /// - main: 常三島本館
-    /// - kura: 蔵本分館
     enum LibraryType {
-        case main
-        case kura
+        case main // 常三島本館
+        case kura // 蔵本分館
     }
     /// 図書館の開館カレンダーPDFまでのURLRequestを作成する
     ///

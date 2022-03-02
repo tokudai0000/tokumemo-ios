@@ -46,18 +46,12 @@ final class MainViewModel {
     }
     
     /// JavaScriptを動かす種類
-    ///
-    /// - syllabus: シラバスの検索画面
-    /// - loginIAS: 大学統合認証システム(IAS)のログイン画面
-    /// - loginOutlook: メール(Outlook)のログイン画面
-    /// - loginCareerCenter: 徳島大学キャリアセンターのログイン画面
-    /// - none: JavaScriptを動かす必要がない場合
     enum JavaScriptType {
-        case syllabus
-        case loginIAS
-        case loginOutlook
-        case loginCareerCenter
-        case none
+        case syllabus // シラバスの検索画面
+        case loginIAS // 大学統合認証システム(IAS)のログイン画面
+        case loginOutlook // メール(Outlook)のログイン画面
+        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
+        case none // JavaScriptを動かす必要がない場合
     }
     /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
     ///

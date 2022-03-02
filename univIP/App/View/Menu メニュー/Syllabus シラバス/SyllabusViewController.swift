@@ -13,37 +13,21 @@ final class SyllabusViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var subjectTextField: UITextField!
     @IBOutlet weak var teacherTextField: UITextField!
-    
     @IBOutlet weak var subjectTextSizeLabel: UILabel!
     @IBOutlet weak var teacherTextSizeLabel: UILabel!
-    
     @IBOutlet weak var subjectUnderLine: UIView!
     @IBOutlet weak var teacherUnderLine: UIView!
-    
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var searchButton: UIButton!
     
     public var delegate : MainViewController?
-    
     private let dataManager = DataManager.singleton
-    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-        teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-        
-        subjectTextField.borderStyle = .none
-        teacherTextField.borderStyle = .none
-        
-        subjectTextField.delegate = self
-        teacherTextField.delegate = self
-        
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
-        
-        searchButton.layer.cornerRadius = 5.0
+
+        initSetup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,116 +44,122 @@ final class SyllabusViewController: UIViewController {
     
     
     // MARK: - IBAction
-    @IBAction func searchButton(_ sender: Any) {
-        
-        guard let delegate = self.delegate else {
-            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
-            fatalError()
-        }
-        
-        let subjectText = subjectTextField.text ?? ""
-        let teacherText = teacherTextField.text ?? ""
-        
-        delegate.loadSyllabusPage(subjectName: subjectText,
-                                 teacherName: teacherText)
-        
-        dismiss(animated: true, completion: nil)
-        
-    }
-    
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func searchButton(_ sender: Any) {
+        guard let delegate = self.delegate else {
+            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
+            fatalError()
+        }
+        // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
+        guard let subjectText = subjectTextField.text else { return }
+        guard let teacherText = teacherTextField.text else { return }
+        // シラバスを読み込み自動入力させる
+        delegate.viewModel.subjectName = subjectText
+        delegate.viewModel.teacherName = teacherText
+        delegate.webView.load(Url.syllabus.urlRequest())
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     // MARK: - Private
-    
-    enum cursorType {
-        case normal
-        case focus
-        case error
-    }
-    // 科目名フィールド
-    private func subjectTextFieldCursorSetup(type: cursorType) {
-        switch type {
-            case .normal:
-                // 非選択状態
-                subjectUnderLine.backgroundColor = .lightGray
-                
-            case .focus:
-                // 選択状態
-                // カーソルの色
-                subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                
-            case .error:
-                subjectTextField.tintColor = .red
-                subjectUnderLine.backgroundColor = .red
+    /// FirstViewSettingViewControllerの初期セットアップ
+    private func initSetup() {
+        do { // 1. 科目名
+            subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            subjectTextField.borderStyle = .none
+            subjectTextField.delegate = self
+            subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
         }
-    }
-    // 教員名フィールド
-    private func teacherTextFieldCursorSetup(type: cursorType) {
-        switch type {
-            case .normal:
-                // 非選択状態
-                teacherUnderLine.backgroundColor = .lightGray
-                
-            case .focus:
-                // 選択状態
-                teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                
-            case .error:
-                teacherTextField.tintColor = .red
-                teacherUnderLine.backgroundColor = .red
+        
+        do { // 2. 教員名
+            teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+            teacherTextField.borderStyle = .none
+            teacherTextField.delegate = self
+            teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
         }
+        // 検索ボタンの角を丸める
+        searchButton.layer.cornerRadius = 5.0
     }
     
+    /// TextFieldの種類
+    enum FieldType: Int {
+        case subject = 0 // 科目名
+        case teacher = 1 // 教員名
+    }
+    /// カーソルの表示種類
+    enum CursorType {
+        case normal // 非選択状態
+        case focus // 選択状態
+        case error // 入力エラー状態
+    }
+    /// TextFieldの状態を変化させる
+    /// - Parameters:
+    ///   - fieldType: 変化させたいTextFieldの種類
+    ///   - cursorType: 変化させたい状態
+    private func textFieldCursorSetup(fieldType: FieldType, cursorType: CursorType) {
+        switch fieldType {
+            case .subject:
+                switch cursorType {
+                    case .normal:
+                        // 非選択状態
+                        subjectUnderLine.backgroundColor = .lightGray
+                        
+                    case .focus:
+                        // 選択状態
+                        // カーソルの色
+                        subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        subjectUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        
+                    case .error:
+                        subjectTextField.tintColor = .red
+                        subjectUnderLine.backgroundColor = .red
+                }
+            case .teacher:
+                switch cursorType {
+                    case .normal:
+                        teacherUnderLine.backgroundColor = .lightGray
+                        
+                    case .focus:
+                        teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        teacherUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        
+                    case .error:
+                        teacherTextField.tintColor = .red
+                        teacherUnderLine.backgroundColor = .red
+                }
+        }
+    }
 }
 
 
 // MARK: - UITextFieldDelegate
 extension SyllabusViewController: UITextFieldDelegate {
-    
-    enum TextFieldTag: Int {
-        case subject = 0
-        case teacher = 1
-    }
-    // textField編集前
+    /// textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        let textFieldTag = TextFieldTag(rawValue: textField.tag)
-        
-        switch textFieldTag {
-            case .subject:
-                subjectTextFieldCursorSetup(type: .focus)
-                
-            case .teacher:
-                teacherTextFieldCursorSetup(type: .focus)
-                
-            case .none:
-                AKLog(level: .FATAL, message: "TextFieldTagが不正")
-                fatalError()
+        if let textFieldTag = FieldType(rawValue: textField.tag) {
+            textFieldCursorSetup(fieldType: textFieldTag, cursorType: .focus)
         }
     }
     
-    // textField編集後
+    /// textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
-        subjectTextFieldCursorSetup(type: .normal)
-        teacherTextFieldCursorSetup(type: .normal)
+        textFieldCursorSetup(fieldType: .subject, cursorType: .normal)
+        textFieldCursorSetup(fieldType: .teacher, cursorType: .normal)
     }
     
-    // text内容が変更されるたびに
+    /// text内容が変更されるたびに
     func textFieldDidChangeSelection(_ textField: UITextField) {
         subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
         teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
     }
-
 }
 
-
-// キーボード関連
+/// キーボード関連
 extension SyllabusViewController {
-    // キーボードが現れる直前に呼ばれる
+    /// キーボードが現れる直前に呼ばれる
     @objc func keyboardWillShow(notification: Notification?) {
         // UIKeyboardWillShowNotification を取得
         guard let notification = notification else {
@@ -202,7 +192,7 @@ extension SyllabusViewController {
         })
     }
     
-    // キーボードが隠れる直前呼ばれる
+    /// キーボードが隠れる直前呼ばれる
     @objc func keyboardWillHide(notification: Notification?) {
         // 画面全体を元に戻す
         // UIKeyboardWillShowNotification を取得
@@ -226,7 +216,7 @@ extension SyllabusViewController {
         })
     }
     
-    // キーボードを非表示
+    /// キーボードを非表示
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }

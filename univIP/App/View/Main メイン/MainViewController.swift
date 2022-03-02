@@ -19,7 +19,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var showMenuButton: UIButton!
     @IBOutlet weak var showFavoriteButton: UIButton!
     
-    private let viewModel = MainViewModel()
+    public let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
@@ -72,18 +72,6 @@ final class MainViewController: UIViewController {
         let vc = R.storyboard.menu.menuViewController()!
         vc.mainViewController = self
         present(vc, animated: false, completion: nil) // アニメーションは表示しない(快適性の向上)
-    }
-    
-    // MARK: - Public func
-    /// シラバス検索ボタンを押された際
-    /// - Parameters:
-    ///   - subjectName: <#subjectName description#>
-    ///   - teacherName: <#teacherName description#>
-    public func loadSyllabusPage(subjectName: String, teacherName: String) {
-        viewModel.subjectName = subjectName
-        viewModel.teacherName = teacherName
-        // シラバスをwebViewに読み込む
-        webView.load(Url.syllabus.urlRequest())
     }
     
     // MARK: - Private func

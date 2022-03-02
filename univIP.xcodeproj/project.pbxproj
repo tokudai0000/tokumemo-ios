@@ -401,8 +401,8 @@
 		1ABE8BC627B10489001EEA79 /* Syllabus シラバス */ = {
 			isa = PBXGroup;
 			children = (
-				1ABE8BC727B10489001EEA79 /* Syllabus.storyboard */,
 				1ABE8BC827B10489001EEA79 /* SyllabusViewController.swift */,
+				1ABE8BC727B10489001EEA79 /* Syllabus.storyboard */,
 			);
 			path = "Syllabus シラバス";
 			sourceTree = "<group>";
