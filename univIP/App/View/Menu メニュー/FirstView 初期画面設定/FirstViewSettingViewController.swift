@@ -13,29 +13,16 @@ final class FirstViewSettingViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var textField: UITextField!
     
+    public let viewModel = FirstViewModel()
+    
     private var pickerView: UIPickerView = UIPickerView()
-    
     private let dataManager = DataManager.singleton
-    private var pickerList: [Constant.Menu] = []
-    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pickerViewSetup()
-        
-        for item in dataManager.menuLists {
-            // 現在設定している初期画面を表示
-            if item.isInitView {
-                textField.placeholder = item.title
-            }
-            // 初期画面に許可しているCellを表示する配列に追加
-            if item.canInitView {
-                pickerList.append(item)
-            }
-        }
-        
+        initSetup()
     }
     
     
@@ -53,7 +40,7 @@ final class FirstViewSettingViewController: UIViewController {
         for i in 0..<menuLists.count {
             // 選択された内容とインデックス番号を照合
             let menuType = menuLists[i].id
-            let pickerType = pickerList[pickerView.selectedRow(inComponent: 0)].id
+            let pickerType = viewModel.pickerList[pickerView.selectedRow(inComponent: 0)].id
             
             menuLists[i].isInitView = (menuType == pickerType)
         }
@@ -61,15 +48,16 @@ final class FirstViewSettingViewController: UIViewController {
         // menuListsをUserDefaultsに保存
         dataManager.saveMenuLists()
         
-        textField.text = pickerList[pickerView.selectedRow(inComponent: 0)].title
+        textField.text = viewModel.pickerList[pickerView.selectedRow(inComponent: 0)].title
         
         // アナリティクスを送信
-        Analytics.logEvent("FirstViewSetting", parameters: ["initViewName": pickerList[pickerView.selectedRow(inComponent: 0)].title])
+        Analytics.logEvent("FirstViewSetting", parameters: ["initViewName": viewModel.pickerList[pickerView.selectedRow(inComponent: 0)].title])
         
     }
     
-    // textfieldにpickerViewを埋め込む
-    private func pickerViewSetup() {
+    // MARK: - Private func
+    /// FirstViewSettingViewControllerの初期セットアップ
+    private func initSetup() {
         pickerView.delegate = self
         pickerView.dataSource = self
         
@@ -82,26 +70,26 @@ final class FirstViewSettingViewController: UIViewController {
         // インプットビュー設定
         textField.inputView = pickerView
         textField.inputAccessoryView = toolbar
+        
+        textField.placeholder = viewModel.searchTitleCell()
     }
-    
 }
 
 
 // MARK: - UIPickerViewDelegate
 extension FirstViewSettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    // ドラムロールの列数
+    /// ドラムロールの列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    // ドラムロールの行数
+    /// ドラムロールの行数
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerList.count
+        return viewModel.pickerList.count
     }
     
-    // ドラムロールの各タイトル
+    /// ドラムロールの各タイトル
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerList[row].title
+        return viewModel.pickerList[row].title
     }
-    
 }

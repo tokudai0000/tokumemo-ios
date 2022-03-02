@@ -26,6 +26,7 @@
 		1A9E0E14273D7B2C00247F94 /* PrivacyPolicy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E13273D7B2C00247F94 /* PrivacyPolicy.storyboard */; };
 		1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E15273D848100247F94 /* Agreement.rtf */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
+		1AA19F9927CF48D5005F088A /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA19F9827CF48D5005F088A /* FirstViewModel.swift */; };
 		1AAF27022748587C0071B89F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF27012748587C0071B89F /* Settings.bundle */; };
 		1AB37B6526FDFC93008A2D2F /* PrivacyPolicy.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1AB37B6426FDFC93008A2D2F /* PrivacyPolicy.rtf */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
@@ -100,6 +101,7 @@
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1AA19F9827CF48D5005F088A /* FirstViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewModel.swift; sourceTree = "<group>"; };
 		1AAF27012748587C0071B89F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1AB37B6426FDFC93008A2D2F /* PrivacyPolicy.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = PrivacyPolicy.rtf; sourceTree = "<group>"; };
 		1AB37B6C26FDFCEA008A2D2F /* univIPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,7 +129,7 @@
 		1ABE8BD227B10489001EEA79 /* AboutThisAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutThisAppViewController.swift; sourceTree = "<group>"; };
 		1ABE8BD327B10489001EEA79 /* AboutThisApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AboutThisApp.storyboard; sourceTree = "<group>"; };
 		1ABE8BD427B10489001EEA79 /* MenuTutorialSpotlightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTutorialSpotlightViewController.swift; sourceTree = "<group>"; };
-		1ABE8BD527B10489001EEA79 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		1ABE8BD527B10489001EEA79 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "univIP/App/View/Menu メニュー/MenuViewController.swift"; sourceTree = SOURCE_ROOT; };
 		1ABE8BE427B10513001EEA79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
@@ -376,12 +378,12 @@
 				1ABE8BC327B10489001EEA79 /* FirstView 初期画面設定 */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
 				1ABE8BC927B10489001EEA79 /* MenuViewModel.swift */,
+				1ABE8BD527B10489001EEA79 /* MenuViewController.swift */,
 				1ABE8BCA27B10489001EEA79 /* Menu.storyboard */,
 				1ABE8BCB27B10489001EEA79 /* PasswordSettings パスワード登録 */,
 				1ABE8BCE27B10489001EEA79 /* Customize カスタマイズ */,
 				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
 				1ABE8BD427B10489001EEA79 /* MenuTutorialSpotlightViewController.swift */,
-				1ABE8BD527B10489001EEA79 /* MenuViewController.swift */,
 			);
 			path = "Menu メニュー";
 			sourceTree = "<group>";
@@ -389,6 +391,7 @@
 		1ABE8BC327B10489001EEA79 /* FirstView 初期画面設定 */ = {
 			isa = PBXGroup;
 			children = (
+				1AA19F9827CF48D5005F088A /* FirstViewModel.swift */,
 				1ABE8BC427B10489001EEA79 /* FirstViewSettingViewController.swift */,
 				1ABE8BC527B10489001EEA79 /* FirstViewSetting.storyboard */,
 			);
@@ -742,6 +745,7 @@
 				1ABE8BBF27B10402001EEA79 /* MainTutorialSpotlightViewController.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
+				1AA19F9927CF48D5005F088A /* FirstViewModel.swift in Sources */,
 				1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* ViewController.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
