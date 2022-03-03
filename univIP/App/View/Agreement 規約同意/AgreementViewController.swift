@@ -15,7 +15,6 @@ final class AgreementViewController: UIViewController {
     
     private let dataManager = DataManager.singleton
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +23,6 @@ final class AgreementViewController: UIViewController {
         let filePath = R.file.agreementRtf()!
         textView.attributedText = Common.loadRtfFileContents(filePath)
     }
-    
     
     // MARK: - IBAction
     /// 利用規約

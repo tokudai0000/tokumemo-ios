@@ -12,7 +12,6 @@ final class TermsViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +21,8 @@ final class TermsViewController: UIViewController {
         textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
-    
     // MARK: - IBAction
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
