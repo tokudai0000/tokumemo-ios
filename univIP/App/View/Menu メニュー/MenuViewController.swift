@@ -232,7 +232,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     mainVC.present(vc, animated: true, completion: nil)
                     
                 case .aboutThisApp: // このアプリについて
-                    let vc = R.storyboard.aboutThisApp.aboutThisApp()!
+                    let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
                     mainVC.present(vc, animated: true, completion: nil)
                     
                 case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター

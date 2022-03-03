@@ -443,8 +443,8 @@
 		1AFE73CB27BC7CD800BCC125 /* Favorite お気に入り登録 */ = {
 			isa = PBXGroup;
 			children = (
-				1AFE73CC27BC7D4100BCC125 /* Favorite.storyboard */,
 				1AFE73CE27BC7D5000BCC125 /* FavoriteViewController.swift */,
+				1AFE73CC27BC7D4100BCC125 /* Favorite.storyboard */,
 			);
 			path = "Favorite お気に入り登録";
 			sourceTree = "<group>";

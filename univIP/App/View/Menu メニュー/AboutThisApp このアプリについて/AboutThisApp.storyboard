@@ -12,7 +12,7 @@
         <!--About This App View Controller-->
         <scene sceneID="6rL-Gw-QWe">
             <objects>
-                <viewController storyboardIdentifier="AboutThisApp" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nM6-6p-iga" customClass="AboutThisAppViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutThisAppViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nM6-6p-iga" customClass="AboutThisAppViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hB7-0z-IAM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

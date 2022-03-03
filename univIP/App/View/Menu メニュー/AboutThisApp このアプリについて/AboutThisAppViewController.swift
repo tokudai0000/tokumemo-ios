@@ -35,7 +35,7 @@ final class AboutThisAppViewController: UIViewController {
     
     /// プライバシーポリシーボタン
     @IBAction func privacyPolicyButton(_ sender: Any) {
-        let vc = R.storyboard.privacyPolicy.privacyPolicy()!
+        let vc = R.storyboard.privacyPolicy.privacyPolicyViewController()!
         present(vc, animated: true, completion: nil)
     }
 }
