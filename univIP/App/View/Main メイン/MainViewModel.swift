@@ -126,7 +126,7 @@ final class MainViewModel {
     /// hadLoggedin
     public func isLoggedin(_ urlString: String) -> Bool {
         // ログイン後のURLが指定したURLと一致しているかどうか
-        let check1 = urlString.contains(Url.enqueteReminder.string())
+        let check1 = urlString.contains(Url.questionnaireReminder.string())
         let check2 = urlString.contains(Url.courseManagementPC.string())
         let check3 = urlString.contains(Url.courseManagementMobile.string())
         // 上記から1つでもtrueがあれば、引き継ぐ

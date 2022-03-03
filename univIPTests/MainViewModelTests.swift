@@ -99,7 +99,7 @@ class MainViewModelTests: XCTestCase {
     func testIsFinishLogin() {
         // 基本的なテスト
         viewModel.isLoginProcessing = true
-        let url1 = URL(string: Url.enqueteReminder.string())! // fatalError
+        let url1 = URL(string: Url.questionnaireReminder.string())! // fatalError
         let test1 = viewModel.shouldDisplayInitialWebPage(url1)
         XCTAssertEqual(test1, true)
         
@@ -109,7 +109,7 @@ class MainViewModelTests: XCTestCase {
         XCTAssertEqual(test2, true)
         
         viewModel.isLoginProcessing = false
-        let url3 = URL(string: Url.enqueteReminder.string())!
+        let url3 = URL(string: Url.questionnaireReminder.string())!
         let test3 = viewModel.shouldDisplayInitialWebPage(url3)
         XCTAssertEqual(test3, true)
         
