@@ -51,8 +51,8 @@ final class Constant {
         case setting                        // 設定
         
         case favorite                       // お気に入り登録
-        case cellSort                       // 並び替え
-        case firstViewSetting               // 初期画面設定
+        case customize                      // 並び替え
+        case initPageSetting                // 初期画面設定
         case password                       // パスワード
         case aboutThisApp                   // このアプリについて
         case buckToMenu                     // 戻る
@@ -217,12 +217,12 @@ final class Constant {
              canInitView: false),
         
         Menu(title: "カスタマイズ",
-             id: .cellSort,
+             id: .customize,
              url: nil,
              canInitView: false),
         
         Menu(title: "初期画面設定",
-             id: .firstViewSetting,
+             id: .initPageSetting,
              url: nil,
              canInitView: false),
         

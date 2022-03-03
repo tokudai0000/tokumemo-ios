@@ -222,7 +222,7 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         // カスタマイズは非表示にはしない
-        if dataManager.menuLists[indexPath.row].id == .cellSort {
+        if dataManager.menuLists[indexPath.row].id == .customize {
             return
         }
         

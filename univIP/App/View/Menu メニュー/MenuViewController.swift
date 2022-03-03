@@ -86,7 +86,7 @@ final class MenuViewController: UIViewController {
         }
 
         do { // 3. カスタマイズセル
-            let row = viewModel.searchIndexCell(id: .cellSort)
+            let row = viewModel.searchIndexCell(id: .customize)
             guard let row = row else {
                 AKLog(level: .FATAL, message: "初期配列にカスタマイズが存在しない")
                 fatalError()
@@ -218,11 +218,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     vc.delegate = mainVC
                     mainVC.present(vc, animated: true, completion: nil)
                     
-                case .cellSort: // カスタマイズ画面
+                case .customize: // カスタマイズ画面
                     let vc = R.storyboard.customize.customizeViewController()!
                     mainVC.present(vc, animated: true, completion: nil)
                     
-                case .firstViewSetting: // 初期画面の設定画面
+                case .initPageSetting: // 初期画面の設定画面
                     let vc = R.storyboard.initPageSetting.initPageSetting()!
                     mainVC.present(vc, animated: true, completion: nil)
                     
