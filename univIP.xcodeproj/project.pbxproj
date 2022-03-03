@@ -170,14 +170,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A00A4372750714C00EF3F99 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				1A00A4382750716C00EF3F99 /* Common.swift */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
 		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +203,7 @@
 			children = (
 				1A81A93026C12C8200CC56E2 /* Constant.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
+				1A00A4382750716C00EF3F99 /* Common.swift */,
 				1AFC67CC2732BFA80059A053 /* Url.swift */,
 			);
 			path = Model;
@@ -280,7 +273,6 @@
 			children = (
 				1A41EADF272914CC0064CDB7 /* AKLibrary */,
 				1AA056E526BD2D4900343005 /* etc */,
-				1A00A4372750714C00EF3F99 /* Common */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* View */,
 			);
