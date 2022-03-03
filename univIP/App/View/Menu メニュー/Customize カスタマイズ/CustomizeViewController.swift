@@ -16,7 +16,6 @@ final class CustomizeViewController: UIViewController {
     
     private let dataManager = DataManager.singleton
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,22 +23,17 @@ final class CustomizeViewController: UIViewController {
         editMode(isEditing: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Analytics
-        Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
+    // MARK: - IBAction
+    @IBAction func dismissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
-    
-    // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
         // 編集状態を反転する
         editMode(isEditing: !tableView.isEditing)
     }
     
-    @IBAction func dismissButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+    // MARK: - Private func
     
     private func editMode(isEditing: Bool) {
         cellSort()

@@ -53,6 +53,7 @@
 		1ABE8BE327B10489001EEA79 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BD527B10489001EEA79 /* MenuViewController.swift */; };
 		1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE427B10513001EEA79 /* Main.storyboard */; };
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
+		1AE1734427CF924800174A4F /* CustomizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE1734327CF924800174A4F /* CustomizeViewModel.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		1AFE73CD27BC7D4100BCC125 /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AFE73CC27BC7D4100BCC125 /* Favorite.storyboard */; };
 		1AFE73CF27BC7D5000BCC125 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE73CE27BC7D5000BCC125 /* FavoriteViewController.swift */; };
@@ -132,6 +133,7 @@
 		1ABE8BD527B10489001EEA79 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "univIP/App/View/Menu メニュー/MenuViewController.swift"; sourceTree = SOURCE_ROOT; };
 		1ABE8BE427B10513001EEA79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1AE1734327CF924800174A4F /* CustomizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomizeViewModel.swift; path = "univIP/App/View/Menu メニュー/Customize カスタマイズ/CustomizeViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		1AFE73CC27BC7D4100BCC125 /* Favorite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorite.storyboard; sourceTree = "<group>"; };
 		1AFE73CE27BC7D5000BCC125 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			children = (
 				1ABE8BCF27B10489001EEA79 /* CustomizeViewController.swift */,
 				1ABE8BD027B10489001EEA79 /* CellSort.storyboard */,
+				1AE1734327CF924800174A4F /* CustomizeViewModel.swift */,
 			);
 			path = "Customize カスタマイズ";
 			sourceTree = "<group>";
@@ -752,6 +755,7 @@
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1ABE8BE227B10489001EEA79 /* MenuTutorialSpotlightViewController.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsOfServiceViewController.swift in Sources */,
+				1AE1734427CF924800174A4F /* CustomizeViewModel.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
 				1A9E0E0A273CDAE800247F94 /* R.generated.swift in Sources */,
