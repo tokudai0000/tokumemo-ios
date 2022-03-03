@@ -10,10 +10,10 @@ import Foundation
 
 final class Constant {
     
-    // 利用規約バージョン
+    /// 現在の利用規約バージョン
     static let latestTermsVersion = "1.0"
     
-    // WebViewで読み込みを許可するドメイン
+    /// WebViewで読み込みを許可するドメイン
     static let allowedDomains = ["tokushima-u.ac.jp",    // 大学サイト
                                  "office365.com",        // outlook(メール) ログイン画面
                                  "microsoftonline.com",  // outlook(メール) ログイン画面表示前、1度だけ遷移されるその後"office365.com"へ遷移される
@@ -22,10 +22,11 @@ final class Constant {
                                  "tokudai.marucoop.com", // 徳島大学生活共同組合
                                  "youtube.com"]          // 大学サイトのインライン再生に対応させる為
     
+    /// メニューの種類
     enum MenuLists: Codable {
-        case courseManagementHomePC
+        case courseManagementHomePC         // 教務事務システム
         case courseManagementHomeMobile
-        case manabaHomePC
+        case manabaHomePC                   // マナバ
         case manabaHomeMobile
         case libraryWebHomePC               // 図書館Webサイト常三島
         case libraryWebHomeKuraPC           // 図書館Webサイト蔵本
@@ -47,27 +48,28 @@ final class Constant {
         case systemServiceList              // システムサービス一覧
         case eLearningList                  // Eラーニング一覧
         case universityWeb                  // 大学サイト
+        case setting                        // 設定
         
+        case favorite                       // お気に入り登録
         case cellSort                       // 並び替え
         case firstViewSetting               // 初期画面設定
         case password                       // パスワード
         case aboutThisApp                   // このアプリについて
-        
-        case favorite                       // お気に入り登録
-        case setting
-        case buckToMenu
+        case buckToMenu                     // 戻る
     }
-    
+    /// メニューリストの構造体
     struct Menu: Codable {
         var title: String             // 表示名ユーザーが変更することができる
-        let id: MenuLists
-        let url: String?
+        let id: MenuLists             // 識別しやすいようにIDを作成
+        let url: String?              // 関連したURLを保持
         var isDisplay: Bool = true    // 初期値は全てtrue(ユーザー「常三島生、蔵本生」によって表示内容を変更させる)
         var isInitView: Bool = false  // 初期値は「マナバPC版」のみtrue
         let canInitView: Bool         // 初期画面として設定可能か
     }
-    
-    // サービスCell初期状態（更新確認、初回利用者はここを確認される）
+    /// サービスCell初期状態
+    ///
+    /// - Note:
+    ///   更新確認、初回利用者はここを確認される
     static let initMenuLists = [
         Menu(title: "教務事務システム",
              id: .courseManagementHomeMobile,
@@ -207,7 +209,7 @@ final class Constant {
              isDisplay: false,
              canInitView: true)
     ]
-    
+    /// 設定リストの内容
     static let initSettingLists = [
         Menu(title: "パスワード",
              id: .password,
@@ -234,5 +236,4 @@ final class Constant {
              url: nil,
              canInitView: false),
     ]
-    
 }
