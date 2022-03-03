@@ -25,31 +25,21 @@ final class InitPageSettingViewController: UIViewController {
         initSetup()
     }
     
-    
     // MARK: - IBAction
     @IBAction func dismissButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    // pickerViewの決定ボタン
+    /// pickerViewの決定ボタン
     @objc func done() {
         // textFieldの編集終了
         textField.endEditing(true)
-        
-        var menuLists = dataManager.menuLists
-        for i in 0..<menuLists.count {
-            // 選択された内容とインデックス番号を照合
-            let menuType = menuLists[i].id
-            let pickerType = viewModel.pickerList[pickerView.selectedRow(inComponent: 0)].id
-            
-            menuLists[i].isInitView = (menuType == pickerType)
-        }
-        dataManager.menuLists = menuLists
-        // menuListsをUserDefaultsに保存
-        dataManager.saveMenuLists()
-        
-        textField.text = viewModel.pickerList[pickerView.selectedRow(inComponent: 0)].title
-        
+        // 選択されたセル
+        let cell = viewModel.pickerList[pickerView.selectedRow(inComponent: 0)]
+        // 初期画面の選択を保存する
+        viewModel.saveInitPage(cell.id)
+        // TextFieldに反映
+        textField.text = cell.title
         // アナリティクスを送信
         Analytics.logEvent("FirstViewSetting", parameters: ["initViewName": viewModel.pickerList[pickerView.selectedRow(inComponent: 0)].title])
         
@@ -75,19 +65,16 @@ final class InitPageSettingViewController: UIViewController {
     }
 }
 
-
 // MARK: - UIPickerViewDelegate
 extension InitPageSettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     /// ドラムロールの列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
     /// ドラムロールの行数
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return viewModel.pickerList.count
     }
-    
     /// ドラムロールの各タイトル
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return viewModel.pickerList[row].title

@@ -36,4 +36,18 @@ final class InitPageSettingModel {
         }
         return ""
     }
+    
+    /// 初期画面の設定を更新する
+    /// - Parameter pickerType: 初期画面に設定したいメニューID
+    public func saveInitPage(_ pickerType: Constant.MenuLists) {
+        var menuLists = dataManager.menuLists
+        for i in 0..<menuLists.count {
+            // 選択された内容とインデックス番号を照合
+            let result = (menuLists[i].id == pickerType)
+            menuLists[i].isInitView = result
+        }
+        dataManager.menuLists = menuLists
+        // menuListsをUserDefaultsに保存
+        dataManager.saveMenuLists()
+    }
 }
