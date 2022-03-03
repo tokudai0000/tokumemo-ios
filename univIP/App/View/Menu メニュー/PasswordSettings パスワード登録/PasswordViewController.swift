@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PasswordSettingsViewController: UIViewController {
+final class PasswordViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var cAccountTextField: UITextField!
@@ -168,7 +168,7 @@ final class PasswordSettingsViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
-extension PasswordSettingsViewController: UITextFieldDelegate {
+extension PasswordViewController: UITextFieldDelegate {
     // textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let textFieldTag = FieldType(rawValue: textField.tag)
@@ -198,7 +198,7 @@ extension PasswordSettingsViewController: UITextFieldDelegate {
 }
 
 // キーボード関連
-extension PasswordSettingsViewController {
+extension PasswordViewController {
     // キーボードが現れる直前に呼ばれる
     @objc func keyboardWillShow(notification: Notification?) {
         // UIKeyboardWillShowNotification を取得

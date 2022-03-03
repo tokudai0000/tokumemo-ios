@@ -123,7 +123,7 @@ final class MainViewController: UIViewController {
     /// 画面をタップすることで次のスポットライト座標へ遷移し、
     /// メニューボタンの次はメニュー画面を表示させる
     private func showTutorial() {
-        let vc = MainTutorialSpotlightViewController()
+        let vc = MainTutorialViewController()
         
         do { // 1. お気に入りボタン
             // 絶対座標(画面左上X=0,Y=0からの座標)を取得

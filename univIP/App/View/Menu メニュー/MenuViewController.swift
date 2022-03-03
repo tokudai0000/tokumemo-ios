@@ -55,7 +55,7 @@ final class MenuViewController: UIViewController {
     ///  3. カスタマイズセル
     /// 画面をタップすることで次のスポットライト座標へ遷移する
     private func showTutorial() {
-        let vc = MenuTutorialSpotlightViewController()
+        let vc = MenuTutorialViewController()
         
         do { // 1. 設定セル
             // 設定のセルRowを取得する
@@ -219,15 +219,15 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     mainVC.present(vc, animated: true, completion: nil)
                     
                 case .cellSort: // カスタマイズ画面
-                    let vc = R.storyboard.cellSort.cellSort()!
+                    let vc = R.storyboard.customize.customizeViewController()!
                     mainVC.present(vc, animated: true, completion: nil)
                     
                 case .firstViewSetting: // 初期画面の設定画面
-                    let vc = R.storyboard.firstViewSetting.firstViewSetting()!
+                    let vc = R.storyboard.initPageSetting.initPageSetting()!
                     mainVC.present(vc, animated: true, completion: nil)
                     
                 case .password: // パスワード設定
-                    let vc = R.storyboard.passwordSettings.passwordSettingsViewController()!
+                    let vc = R.storyboard.password.passwordViewController()!
                     vc.delegate = mainVC
                     mainVC.present(vc, animated: true, completion: nil)
                     

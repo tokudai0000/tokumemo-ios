@@ -29,7 +29,7 @@ final class AboutThisAppViewController: UIViewController {
     
     /// 利用規約ボタン
     @IBAction func termsOfServiceButton(_ sender: Any) {
-        let vc = R.storyboard.termsOfService.termsOfService()!
+        let vc = R.storyboard.terms.termsViewController()!
         present(vc, animated: true, completion: nil)
     }
     

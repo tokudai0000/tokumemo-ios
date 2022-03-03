@@ -8,7 +8,7 @@
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
 
-final class FirstViewModel {
+final class InitPageSettingModel {
     /// ピッカーリストの内容
     ///
     /// 初期設定に登録することができるリストを表示させる

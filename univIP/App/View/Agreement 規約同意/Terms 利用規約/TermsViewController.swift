@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TermsOfServiceViewController: UIViewController {
+final class TermsViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textView: UITextView!

@@ -8,12 +8,12 @@
 import UIKit
 import FirebaseAnalytics
 
-final class FirstViewSettingViewController: UIViewController {
+final class InitPageSettingViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var textField: UITextField!
     
-    public let viewModel = FirstViewModel()
+    public let viewModel = InitPageSettingModel()
     
     private var pickerView: UIPickerView = UIPickerView()
     private let dataManager = DataManager.singleton
@@ -77,7 +77,7 @@ final class FirstViewSettingViewController: UIViewController {
 
 
 // MARK: - UIPickerViewDelegate
-extension FirstViewSettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension InitPageSettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     /// ドラムロールの列数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
