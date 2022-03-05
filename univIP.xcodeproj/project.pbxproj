@@ -34,7 +34,7 @@
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABDE75926DE585300D4B04E /* TermsOfService.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75826DE585300D4B04E /* TermsOfService.rtf */; };
 		1ABE8BBE27B10402001EEA79 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BB927B10402001EEA79 /* MainViewController.swift */; };
-		1ABE8BBF27B10402001EEA79 /* MainTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BBA27B10402001EEA79 /* MainTutorialViewController.swift */; };
+		1ABE8BBF27B10402001EEA79 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BBA27B10402001EEA79 /* TutorialViewController.swift */; };
 		1ABE8BC127B10402001EEA79 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BBD27B10402001EEA79 /* MainViewModel.swift */; };
 		1ABE8BD627B10489001EEA79 /* InitPageSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BC427B10489001EEA79 /* InitPageSettingViewController.swift */; };
 		1ABE8BD727B10489001EEA79 /* InitPageSetting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BC527B10489001EEA79 /* InitPageSetting.storyboard */; };
@@ -48,7 +48,6 @@
 		1ABE8BDF27B10489001EEA79 /* Customize.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BD027B10489001EEA79 /* Customize.storyboard */; };
 		1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BD227B10489001EEA79 /* AboutThisAppViewController.swift */; };
 		1ABE8BE127B10489001EEA79 /* AboutThisApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BD327B10489001EEA79 /* AboutThisApp.storyboard */; };
-		1ABE8BE227B10489001EEA79 /* MenuTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BD427B10489001EEA79 /* MenuTutorialViewController.swift */; };
 		1ABE8BE327B10489001EEA79 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BD527B10489001EEA79 /* MenuViewController.swift */; };
 		1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE427B10513001EEA79 /* Main.storyboard */; };
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
@@ -113,7 +112,7 @@
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABDE75826DE585300D4B04E /* TermsOfService.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TermsOfService.rtf; sourceTree = "<group>"; };
 		1ABE8BB927B10402001EEA79 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		1ABE8BBA27B10402001EEA79 /* MainTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTutorialViewController.swift; sourceTree = "<group>"; };
+		1ABE8BBA27B10402001EEA79 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		1ABE8BBD27B10402001EEA79 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		1ABE8BC427B10489001EEA79 /* InitPageSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitPageSettingViewController.swift; sourceTree = "<group>"; };
 		1ABE8BC527B10489001EEA79 /* InitPageSetting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InitPageSetting.storyboard; sourceTree = "<group>"; };
@@ -127,7 +126,6 @@
 		1ABE8BD027B10489001EEA79 /* Customize.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Customize.storyboard; sourceTree = "<group>"; };
 		1ABE8BD227B10489001EEA79 /* AboutThisAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutThisAppViewController.swift; sourceTree = "<group>"; };
 		1ABE8BD327B10489001EEA79 /* AboutThisApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AboutThisApp.storyboard; sourceTree = "<group>"; };
-		1ABE8BD427B10489001EEA79 /* MenuTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTutorialViewController.swift; sourceTree = "<group>"; };
 		1ABE8BD527B10489001EEA79 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = "univIP/App/View/Menu メニュー/MenuViewController.swift"; sourceTree = SOURCE_ROOT; };
 		1ABE8BE427B10513001EEA79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -297,11 +295,20 @@
 			children = (
 				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
+				1AB28D3727D32FA300556E84 /* Tutorial チュートリアル */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
 				1AFE73CB27BC7CD800BCC125 /* Favorite お気に入り登録 */,
 				1ABE8BC227B10489001EEA79 /* Menu メニュー */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1AB28D3727D32FA300556E84 /* Tutorial チュートリアル */ = {
+			isa = PBXGroup;
+			children = (
+				1ABE8BBA27B10402001EEA79 /* TutorialViewController.swift */,
+			);
+			path = "Tutorial チュートリアル";
 			sourceTree = "<group>";
 		};
 		1AB37B6D26FDFCEA008A2D2F /* univIPTests */ = {
@@ -348,7 +355,6 @@
 		1ABE8BB827B10402001EEA79 /* Main メイン */ = {
 			isa = PBXGroup;
 			children = (
-				1ABE8BBA27B10402001EEA79 /* MainTutorialViewController.swift */,
 				1ABE8BBD27B10402001EEA79 /* MainViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* MainViewController.swift */,
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
@@ -359,7 +365,6 @@
 		1ABE8BC227B10489001EEA79 /* Menu メニュー */ = {
 			isa = PBXGroup;
 			children = (
-				1ABE8BD427B10489001EEA79 /* MenuTutorialViewController.swift */,
 				1ABE8BC927B10489001EEA79 /* MenuViewModel.swift */,
 				1ABE8BD527B10489001EEA79 /* MenuViewController.swift */,
 				1ABE8BCA27B10489001EEA79 /* Menu.storyboard */,
@@ -728,14 +733,13 @@
 				1A9E0E12273D7B1E00247F94 /* PrivacyPolicyViewController.swift in Sources */,
 				1ABE8BD627B10489001EEA79 /* InitPageSettingViewController.swift in Sources */,
 				1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */,
-				1ABE8BBF27B10402001EEA79 /* MainTutorialViewController.swift in Sources */,
+				1ABE8BBF27B10402001EEA79 /* TutorialViewController.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
 				1AA19F9927CF48D5005F088A /* InitPageSettingModel.swift in Sources */,
 				1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* ViewController.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
-				1ABE8BE227B10489001EEA79 /* MenuTutorialViewController.swift in Sources */,
 				1A9E0E0D273D67A400247F94 /* TermsViewController.swift in Sources */,
 				1AE1734427CF924800174A4F /* CustomizeViewModel.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,

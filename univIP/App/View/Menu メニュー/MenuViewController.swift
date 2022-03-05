@@ -71,7 +71,7 @@ final class MenuViewController: UIViewController {
             // スポットライトで照らす座標を追加する
             vc.uiLabels_frames.append(frame)
             // 表示テキストを追加する
-//            vc.textLabels.append("お気に入りの画面を記録し\nメニューに表示できるようにします")
+            vc.textLabels.append("トクメモをさらに使いやすくするために、設定を行いましょう")
         }
         
         do { // 2. パスワードセル
@@ -83,6 +83,7 @@ final class MenuViewController: UIViewController {
             let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: row, section: 0))! // fatalError
             let frame = tableView.convert(tableViewPos1.frame, to: self.view)
             vc.uiLabels_frames.append(frame)
+            vc.textLabels.append("パスワードを入力し、自動ログイン機能を活用しましよう")
         }
 
         do { // 3. カスタマイズセル
@@ -94,10 +95,11 @@ final class MenuViewController: UIViewController {
             let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: row, section: 0))! // fatalError
             let frame = tableView.convert(tableViewPos1.frame, to: self.view)
             vc.uiLabels_frames.append(frame)
+            vc.textLabels.append("他にも、さまざまなカスタマイズを試してみましょう")
         }
         // メニューボタンをスポットした後、メニュー画面を表示させる為に
         // インスタンス(のアドレス)を渡す
-        vc.delegateMenu = self
+        vc.menuViewController = self
         present(vc, animated: true, completion: nil)
     }
     
