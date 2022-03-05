@@ -153,19 +153,20 @@ final class MainViewModel {
     ///
     /// - Returns: 判定結果、行うべきならtrue
     public func isExecuteLogin() -> Bool {
-        // dataManagerのsaveCurrentTime(String型)をDateに変換する
+        
         let formatter: DateFormatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
-        if let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime)) {
-            // 現在の時刻を取得
-            let f = DateFormatter()
-            f.setTemplate(.time)
-            let now = Date()
-            // 時刻の差分が30*60分以上であれば再ログインを行う
-            if now.timeIntervalSince(lastTime) > 30 * 60 {
-                return true
-            }
+        let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime))
+        guard let lastTime = lastTime else {
+            return false
+        }
+        
+        // 現在の時刻を取得
+        let now = Date()
+        print(now.timeIntervalSince(lastTime))
+        // 時刻の差分が30*60秒以上であれば再ログインを行う
+        if now.timeIntervalSince(lastTime) > 30 * 60 {
+            return true
         }
         return false
     }

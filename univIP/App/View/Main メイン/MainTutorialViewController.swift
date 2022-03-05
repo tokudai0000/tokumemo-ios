@@ -9,16 +9,15 @@ import Gecco
 
 final class MainTutorialViewController: SpotlightViewController {
     
+    public var mainViewController: MainViewController?
     // 各UILabelの座標データ
     public var uiLabels_frames:[CGRect] = []
-    
     // 各TextLabelの文字列
     public var textLabels:[String] = []
     
     private var updateIndex = 0
     
-    public var mainViewController: MainViewController?
-    
+    private let label = UILabel()
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -30,10 +29,9 @@ final class MainTutorialViewController: SpotlightViewController {
     // MARK: - Private
     private func createLabels() {
         // Labelのサイズ
-        let width = CGFloat(200)
+        let width = CGFloat(230)
         let height = CGFloat(70)
         
-        let label = UILabel()
         label.text = textLabels[updateIndex]
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 20)

@@ -131,13 +131,13 @@ final class MainViewController: UIViewController {
             // スポットライトで照らす座標を追加する
             vc.uiLabels_frames.append(frame)
             // 表示テキストを追加する
-            vc.textLabels.append("お気に入りの画面を記録し\nメニューに表示できるようにします")
+            vc.textLabels.append("お気に入りの画面を登録し\nメニューに表示できます")
         }
         
         do { // 2. メニューボタン
             let frame = showMenuButton.convert(showMenuButton.bounds, to: self.view)
             vc.uiLabels_frames.append(frame)
-            vc.textLabels.append("ここからメニューを\n表示できます")
+            vc.textLabels.append("メニューを\n表示できます")
         }
         // メニューボタンをスポットした後、メニュー画面を表示させる為に
         // インスタンス(のアドレス)を渡す
