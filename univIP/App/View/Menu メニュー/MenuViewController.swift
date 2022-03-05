@@ -239,6 +239,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     
                 case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター
                     self.dataManager.canExecuteJavascript = true
+                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+                    let url = URL(string: urlString)! // fatalError
+                    mainVC.webView.load(URLRequest(url: url))
                     
                 default:
                     // それ以外はURLを読み込む
