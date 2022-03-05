@@ -43,10 +43,6 @@ enum Url: String {
     case libraryHomePageKuraPC = "https://www.lib.tokushima-u.ac.jp/kura.shtml"
     /// 図書館サイト(Mobile)
     case libraryHomeMobile = "https://opac.lib.tokushima-u.ac.jp/drupal/"
-    /// カレンダー(本館)
-    case libraryCalendarMain = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"
-    /// カレンダー(蔵本)
-    case libraryCalendarKura = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_"
     /// MyPage
     case libraryMyPage = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
     /// 本貸出し期間延長

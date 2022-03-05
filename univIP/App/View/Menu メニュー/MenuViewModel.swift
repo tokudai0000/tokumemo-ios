@@ -39,9 +39,9 @@ final class MenuViewModel {
         var urlString = ""
         switch type {
             case .main:
-                urlString = Url.libraryCalendarMain.string()
+                urlString = Url.libraryHomePageMainPC.string()
             case .kura:
-                urlString = Url.libraryCalendarKura.string()
+                urlString = Url.libraryHomePageKuraPC.string()
         }
         let url = URL(string: urlString)! // fatalError
         do {
