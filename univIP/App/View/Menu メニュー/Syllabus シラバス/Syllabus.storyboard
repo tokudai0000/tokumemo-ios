@@ -12,7 +12,7 @@
         <!--Syllabus View Controller-->
         <scene sceneID="dLv-rL-ZEd">
             <objects>
-                <viewController storyboardIdentifier="syllabusViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LeW-Iv-QPG" customClass="SyllabusViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SyllabusViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LeW-Iv-QPG" customClass="SyllabusViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYP-RN-77r">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

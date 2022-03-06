@@ -15,7 +15,6 @@ final class AgreementViewController: UIViewController {
     
     private let dataManager = DataManager.singleton
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,24 +24,23 @@ final class AgreementViewController: UIViewController {
         textView.attributedText = Common.loadRtfFileContents(filePath)
     }
     
-    
     // MARK: - IBAction
+    /// 利用規約
     @IBAction func termsOfServiceButton(_ sender: Any) {
-        // 利用規約
-        let vc = R.storyboard.termsOfService.termsOfService()!
+        let vc = R.storyboard.terms.termsViewController()!
         present(vc, animated: true, completion: nil)
     }
     
+    /// プライバシーポリシー
     @IBAction func privacyPolicyButton(_ sender: Any) {
-        // プライバシーポリシー
-        let vc = R.storyboard.privacyPolicy.privacyPolicy()!
+        let vc = R.storyboard.privacyPolicy.privacyPolicyViewController()!
         present(vc, animated: true, completion: nil)
     }
     
+    /// 同意ボタン
+    /// 利用規約のバージョン更新を行う
     @IBAction func agreementButton(_ sender: Any) {
-        // 利用規約のバージョン更新
-        dataManager.agreementVersion = Constant.agreementVersion
+        dataManager.agreementVersion = Constant.latestTermsVersion
         dismiss(animated: true, completion: nil)
     }
-    
 }

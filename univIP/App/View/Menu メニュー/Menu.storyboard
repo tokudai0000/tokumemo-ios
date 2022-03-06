@@ -45,7 +45,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.053807947019867547" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25188845198675497" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Ux-RB-lY5" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" multiplier="0.7" id="ANU-tL-XkL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="3Ux-RB-lY5" secondAttribute="trailing" constant="5" id="MwC-rj-fh4"/>

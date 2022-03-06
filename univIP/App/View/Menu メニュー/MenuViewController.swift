@@ -7,162 +7,258 @@
 //
 
 import UIKit
-import Gecco
+import FirebaseAnalytics
 
 final class MenuViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    private let viewModel = MenuViewModel()
+    public var mainViewController : MainViewController?
+    
+    public let viewModel = MenuViewModel()
     private let dataManager = DataManager.singleton
-    
-    public var delegate : MainViewController?
-    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.reloadData()
-        
+        initSetup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if !dataManager.isFinishedMenuTutorial {
-            // 完了していない場合、チュートリアルを表示
-            // スポットライトチュートリアル
-            tutorialSpotlight()
+        // チュートリアルを実行するべきか
+        if dataManager.shouldShowTutorial {
+            // チュートリアルを表示
+            showTutorial()
             // チュートリアル完了とする(以降チュートリアルを表示しない)
-            dataManager.isFinishedMenuTutorial = true
+            dataManager.shouldShowTutorial = false
+            return
         }
-        
     }
     
-    
-    // MARK: - Private
-    private func tutorialSpotlight() {
-        let spotlightViewController = MenuTutorialSpotlightViewController()
+    // MARK: - Private func
+    /// MenuViewControllerの初期セットアップ
+    private func initSetup() {
+        // 初期内容を読み込む
+        viewModel.menuLists = dataManager.menuLists
+        tableView.delegate = self
+        tableView.reloadData()
+    }
+
+    /// チュートリアルを表示する
+    ///
+    /// 以下の順でボタンを疑似スポットライトをテキストと共に表示させる
+    ///  1. 設定セル
+    ///  2. パスワードセル
+    ///  3. カスタマイズセル
+    /// 画面をタップすることで次のスポットライト座標へ遷移する
+    private func showTutorial() {
+        let vc = MenuTutorialViewController()
         
-        // パスワードとカスタマイズのセルRowを取得する
-        var passwordRow:Int?
-        var customizeRow:Int?
-        for i in 0..<Constant.initServiceLists.count {
-            let id = Constant.initServiceLists[i].id
-            if id == .password { passwordRow = i }
-            if id == .cellSort { customizeRow = i }
+        do { // 1. 設定セル
+            // 設定のセルRowを取得する
+            let row = viewModel.searchIndexCell(id: .setting)
+            guard let row = row else {
+                AKLog(level: .FATAL, message: "初期配列に設定が存在しない")
+                fatalError()
+            }
+            // 相対座標(tableViewの左上をX=0,Y=0とした座標)
+            let tableViewPos = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: row, section: 0))! // fatalError
+            // 絶対座標(画面左上X=0,Y=0からの座標)に変換
+            let frame = tableView.convert(tableViewPos.frame, to: self.view)
+            // スポットライトで照らす座標を追加する
+            vc.uiLabels_frames.append(frame)
+            // 表示テキストを追加する
+            vc.textLabels.append("トクメモの目玉機能を\n設定しよう")
         }
-        // 初期配列にパスワードかカスタマイズが存在しないことはありえない
-        guard let passR = passwordRow,
-              let cusR = customizeRow else {
-                  AKLog(level: .FATAL, message: "初期配列にパスワードかカスタマイズが存在しない")
-                  return
-              }
         
-        // 相対座標(tableViewの左上をX=0,Y=0とした座標)
-        let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: passR, section: 0))! // fatalError
-        let tableViewPos2 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: cusR, section: 0))! // fatalError
+        do { // 2. パスワードセル
+            let row = viewModel.searchIndexCell(id: .password)
+            guard let row = row else {
+                AKLog(level: .FATAL, message: "初期配列にパスワードが存在しない")
+                fatalError()
+            }
+            let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: row, section: 0))! // fatalError
+            let frame = tableView.convert(tableViewPos1.frame, to: self.view)
+            vc.uiLabels_frames.append(frame)
+            vc.textLabels.append("自動ログイン機能を\n有効にしよう")
+        }
+
+        do { // 3. カスタマイズセル
+            let row = viewModel.searchIndexCell(id: .customize)
+            guard let row = row else {
+                AKLog(level: .FATAL, message: "初期配列にカスタマイズが存在しない")
+                fatalError()
+            }
+            let tableViewPos1 = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: IndexPath(row: row, section: 0))! // fatalError
+            let frame = tableView.convert(tableViewPos1.frame, to: self.view)
+            vc.uiLabels_frames.append(frame)
+            vc.textLabels.append("自分好みの設定を\n試してみよう")
+        }
+        // メニューボタンをスポットした後、メニュー画面を表示させる為に
+        // インスタンス(のアドレス)を渡す
+        vc.menuViewController = self
+        present(vc, animated: true, completion: nil)
+    }
+    
+    /// 図書館開館カレンダーの所在を選択させるポップアップを表示させる。
+    ///
+    /// - Note:
+    ///   推奨されたAlertの使い方ではないので、今後修正する必要あり。
+    /// - Parameter mainVC: MainViewControllerのインスタンス
+    /// - Returns: 表示させるAlertの内容を返す
+    private func makeLibrarySelector(_ mainVC: MainViewController) -> UIAlertController {
+        var alert:UIAlertController!
+        alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
         
-        // 絶対座標(画面左上X=0,Y=0からの座標)に変換
-        let pos1 = tableView.convert(tableViewPos1.frame, to: self.view)
-        let pos2 = tableView.convert(tableViewPos2.frame, to: self.view)
+        let main = UIAlertAction(
+            title: "常三島",
+            style: UIAlertAction.Style.default,
+            handler: { action in
+                // 常三島のカレンダーURLを取得後、webView読み込み
+                if let url = self.viewModel.makeLibraryCalendarUrl(type: .main) {
+                    mainVC.webView.load(url)
+                }else{
+                    AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
+                }
+            })
+        alert.addAction(main)
         
-        // スポットする座標を渡す
-        spotlightViewController.uiLabels_frames.append(pos1)
-        spotlightViewController.uiLabels_frames.append(pos2)
-        
-        spotlightViewController.delegateMenu = self
-        present(spotlightViewController, animated: true, completion: nil)
+        let kura = UIAlertAction(
+            title: "蔵本",
+            style: UIAlertAction.Style.default,
+            handler: { action in
+                // 蔵本のカレンダーURLを取得後、webView読み込み
+                if let url = self.viewModel.makeLibraryCalendarUrl(type: .kura) {
+                    mainVC.webView.load(url)
+                }else{
+                    AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                }
+            })
+        alert.addAction(kura)
+        return alert
     }
 }
 
 
 // MARK: - TableView
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    // セクション内のセル数
+    /// セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.menuLists.count
+        return viewModel.menuLists.count
     }
     
-    // cellの中身
+    /// セルの中身
+    ///
+    /// - Note:
+    ///  フォントサイズは17
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
-        tableCell.textLabel?.text = dataManager.menuLists[indexPath.item].title
-        // 「17」程度が文字が消えず、また見やすいサイズ
-        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        return tableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
+        cell.textLabel?.text = viewModel.menuLists[indexPath.item].title
+        return cell
     }
     
-    // セルの高さ
+    /// セルの高さ
+    ///
+    /// - Note:
+    ///  表示を許可されているCellの場合、高さを44とする
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // 表示を許可されているCellの場合、高さを44とする
-        if dataManager.menuLists[indexPath.row].isDisplay {
+        if viewModel.menuLists[indexPath.row].isDisplay {
             return 44
-        }else{
-            return 0
         }
+        return 0
     }
     
-    // セルを選択した時のイベント
+    /// セルを選択時のイベント
+    ///
+    /// [設定]と[戻る]のセルでは、テーブルをリロードする。
+    /// それ以外では画面を消した後、それぞれ処理を行う
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let delegate = self.delegate else {
+        guard let mainVC = self.mainViewController else {
             AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
             fatalError()
         }
-        
-        // JavaScriptを動かすことを許可する
-        // JavaScriptを動かす必要がないCellでも、trueにしてOK(1度きりしか動かさないを判定するフラグだから)
-        dataManager.isExecuteJavascript = true
-        
+        // タップされたセルの内容
+        let cell = viewModel.menuLists[indexPath[1]]
+        // どのセルが押されたか
+        switch cell.id {
+            case .setting: // 設定
+                // メニューリストを設定用リストへ更新する
+                viewModel.menuLists = Constant.initSettingLists
+                tableView.reloadData()
+                return
+                
+            case .buckToMenu: // 戻る
+                // 設定用リストをメニューリストへ更新する
+                viewModel.menuLists = Constant.initMenuLists
+                tableView.reloadData()
+                return
+                
+            default:
+                break
+        }
         // メニュー画面を消去後、画面を読み込む
-        self.dismiss(animated: false, completion: { [self] in
-            // どのセルが押されたか
-            switch self.dataManager.menuLists[indexPath[1]].id {
-                case .libraryCalendar:                   // [図書館]開館カレンダー
-                    delegate.showModalView(type: .libraryCalendar)
+        self.dismiss(animated: false, completion: {
+            switch cell.id {
+                case .libraryCalendar: // [図書館]開館カレンダー
+                    let alert = self.makeLibrarySelector(mainVC)
+                    mainVC.present(alert, animated: true, completion:nil)
                     
-                case .currentTermPerformance:            // 今年の成績
+                case .currentTermPerformance: // 今年の成績
                     if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
-                        delegate.webView.load(urlRequest)
+                        mainVC.webView.load(urlRequest)
+                    }else{
+                        // トーストを表示したい
                     }
                     
-                case .syllabus:                          // シラバス
-                    delegate.showModalView(type: .syllabus)
+                case .syllabus: // シラバス
+                    self.dataManager.canExecuteJavascript = true
+                    let vc = R.storyboard.syllabus.syllabusViewController()!
+                    vc.delegate = mainVC
+                    mainVC.present(vc, animated: true, completion: nil)
                     
-                case .cellSort:                          // カスタマイズ画面
-                    delegate.showModalView(type: .cellSort)
+                case .customize: // カスタマイズ画面
+                    let vc = R.storyboard.customize.customizeViewController()!
+                    mainVC.present(vc, animated: true, completion: nil)
                     
-                case .firstViewSetting:                  // 初期画面の設定画面
-                    delegate.showModalView(type: .firstViewSetting)
+                case .initPageSetting: // 初期画面の設定画面
+                    let vc = R.storyboard.initPageSetting.initPageSetting()!
+                    mainVC.present(vc, animated: true, completion: nil)
                     
-                case .password:                          // パスワード設定
-                    delegate.showModalView(type: .password)
+                case .password: // パスワード設定
+                    let vc = R.storyboard.password.passwordViewController()!
+                    vc.delegate = mainVC
+                    mainVC.present(vc, animated: true, completion: nil)
                     
-                case .aboutThisApp:                      // このアプリについて
-                    delegate.showModalView(type: .aboutThisApp)
+                case .aboutThisApp: // このアプリについて
+                    let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+                    mainVC.present(vc, animated: true, completion: nil)
+                    
+                case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター
+                    self.dataManager.canExecuteJavascript = true
+                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+                    let url = URL(string: urlString)! // fatalError
+                    mainVC.webView.load(URLRequest(url: url))
                     
                 default:
-                    // 上記以外のCellをタップした場合
-                    // Constant.Menu(構造体)のURLを表示する
-                    let urlString = self.dataManager.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
-                    let url = URL(string: urlString)!                               // fatalError
-                    delegate.webView.load(URLRequest(url: url))
+                    // それ以外はURLを読み込む
+                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+                    let url = URL(string: urlString)! // fatalError
+                    mainVC.webView.load(URLRequest(url: url))
             }
             // アナリティクスを送信
-            self.viewModel.analytics("\(self.dataManager.menuLists[indexPath[1]].id)")
+            Analytics.logEvent("MenuView", parameters: ["serviceName": cell.id]) // Analytics
         })
     }
 }
 
-// MARK: - Override(Animate)
 extension MenuViewController {
-    // メニューエリア以外タップ時、画面をMainViewに戻す
+    /// 画面をタップされた時の処理
+    ///
+    /// メニューエリア以外タップ時、画面をMainViewに戻す
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         // 画面をタップした時

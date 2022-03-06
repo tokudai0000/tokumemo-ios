@@ -16,7 +16,6 @@ final class CustomizeViewController: UIViewController {
     
     private let dataManager = DataManager.singleton
     
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,22 +23,17 @@ final class CustomizeViewController: UIViewController {
         editMode(isEditing: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Analytics
-        Analytics.logEvent("CustomizeDisplay", parameters: ["items": dataManager.menuLists])
+    // MARK: - IBAction
+    @IBAction func dismissButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
-    
-    // MARK: - IBAction
     @IBAction func editButton(_ sender: Any) {
         // 編集状態を反転する
         editMode(isEditing: !tableView.isEditing)
     }
     
-    @IBAction func dismissButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+    // MARK: - Private func
     
     private func editMode(isEditing: Bool) {
         cellSort()
@@ -94,7 +88,7 @@ final class CustomizeViewController: UIViewController {
             if let textField = alert.textFields {
                 if let text = textField[0].text {
                     // 名前の更新
-                    self.dataManager.changeContentsMenuLists(row: indexPath, title: text)
+                    self.changeContentsMenuLists(row: indexPath, title: text)
                     self.dataManager.saveMenuLists()
                     self.tableView.reloadData()
                     // Analytics
@@ -118,6 +112,47 @@ final class CustomizeViewController: UIViewController {
         })
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    /// MenuLists内の要素を削除する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    private func deleteContentsMenuLists(row: Int) {
+        dataManager.menuLists.remove(at: row)
+        dataManager.saveMenuLists()
+    }
+    
+    /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    ///   - title: タイトルの変更
+    ///   - isDisplay: リストで表示する
+    ///   - isInitView: 初期画面にする
+    private func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
+        if let title = title {
+            dataManager.menuLists[row].title = title
+        }
+        if let isDisplay = isDisplay {
+            dataManager.menuLists[row].isDisplay = isDisplay
+        }
+        if let isInitView = isInitView {
+            // falseに初期化する
+            for i in 0..<dataManager.menuLists.count { dataManager.menuLists[i].isInitView = false }
+            dataManager.menuLists[row].isInitView = isInitView
+        }
+        dataManager.saveMenuLists()
+    }
+    
+    /// MenuLists内の順番を変更する。その都度UserDefaultsに保存する
+    /// CustomizeViewControllerとMenuTutorialから呼び出される
+    /// - Parameters:
+    ///   - sourceRow: 移動させたいcellのindex
+    ///   - destinationRow: 挿入場所のindex
+    private func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
+        let todo = dataManager.menuLists[sourceRow]
+        dataManager.menuLists.remove(at: sourceRow)
+        dataManager.menuLists.insert(todo, at: destinationRow)
+        dataManager.saveMenuLists()
     }
 }
 
@@ -150,7 +185,7 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     // 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // 並び替えを更新
-        dataManager.changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
+        changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
         dataManager.saveMenuLists()
     }
     
@@ -175,7 +210,7 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView.isEditing {
             // 表示許可情報を更新
             // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
-            dataManager.changeContentsMenuLists(row: indexPath.row, isDisplay: true)
+            changeContentsMenuLists(row: indexPath.row, isDisplay: true)
             dataManager.saveMenuLists()
             
         }else{
@@ -186,19 +221,19 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        // カスタマイズは非表示にはしない
-        if dataManager.menuLists[indexPath.row].id == .cellSort {
+        // 設定は非表示にはしない
+        if dataManager.menuLists[indexPath.row].id == .setting {
             return
         }
         
-        //
+        // お気に入りを非表示にした場合はリストから削除する
         if dataManager.menuLists[indexPath.row].id == .favorite {
-            dataManager.deleteContentsMenuLists(row: indexPath.row)
+            deleteContentsMenuLists(row: indexPath.row)
             return
         }
             
         // 表示許可情報を更新
-        dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
+        changeContentsMenuLists(row: indexPath.row,isDisplay: false)
         dataManager.saveMenuLists()
     }
 }

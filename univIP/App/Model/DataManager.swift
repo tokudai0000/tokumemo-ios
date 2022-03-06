@@ -13,89 +13,110 @@ final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
     
-    private var userDefaults = UserDefaults.standard
+    /// JavaScriptを動かすかどうかのフラグ
+    ///
+    /// 次に読み込まれるURLはJavaScriptを動かすことを許可する
+    /// これがないと、ログインに失敗した場合、永遠とログイン処理を行われてしまう
+    public var canExecuteJavascript = false
     
-    // 毎回UserDefaultsから取ってきて保存する
+    /// メニューリストの内容
+    ///
+    /// MenuViewControllerのメニューリストに表示させる内容
+    /// 参照するたびに、UserDefaultsから保存したデータを読み込む
     public var menuLists:[Constant.Menu] =  []
     private init() {
-        // インスタンスが1つであることを補償
         menuLists = loadMenuLists()
     }
     
-    // JavaScriptを実行するかどうか
-    public var isExecuteJavascript = false
-
-    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - menuItem: 追加したいお気に入り設定
-    public func addContentsMenuLists(menuItem: Constant.Menu) {
-        menuLists.append(menuItem)
-        saveMenuLists()
+    /// メニューリストを保存
+    ///
+    /// UserDefaultsに保存
+    /// 配列 -> Json -> Data にパースする必要がある
+    public func saveMenuLists() {
+        let jsonEncoder = JSONEncoder()
+        guard let data = try? jsonEncoder.encode(menuLists) else { return }
+        setUserDefaultsData(key: KEY_menuLists, value: data)
     }
     
-    /// MenuLists内の要素を削除する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - row: index
-    public func deleteContentsMenuLists(row: Int) {
-        menuLists.remove(at: row)
-        saveMenuLists()
+    /// cAccountの保存や読み取り
+    private let KEY_cAccount = "KEY_cAccount"
+    public var cAccount: String {
+        get { return getKeyChain(key: KEY_cAccount) }
+        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
     
-    /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - row: index
-    ///   - title: タイトルの変更
-    ///   - isDisplay: リストで表示する
-    ///   - isInitView: 初期画面にする
-    public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
-        if let title = title {
-            menuLists[row].title = title
-        }
-        if let isDisplay = isDisplay {
-            menuLists[row].isDisplay = isDisplay
-        }
-        if let isInitView = isInitView {
-            // falseに初期化する
-            for i in 0..<menuLists.count { menuLists[i].isInitView = false }
-            menuLists[row].isInitView = isInitView
-        }
-        saveMenuLists()
+    /// passwordの保存や読み取り
+    /// - Note:
+    ///   KEY_password にするべきだが変更するとユーザーは再度パスワードを登録しなければならないため注意
+    private let KEY_password = "KEY_passWord"
+    public var password: String {
+        get { return getKeyChain(key: KEY_password) }
+        set(v) { setKeyChain(key: KEY_password, value: v) }
     }
     
-    /// MenuLists内の順番を変更する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - sourceRow: 移動させたいcellのindex
-    ///   - destinationRow: 挿入場所のindex
-    public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
-        let todo = menuLists[sourceRow]
-        menuLists.remove(at: sourceRow)
-        menuLists.insert(todo, at: destinationRow)
-        saveMenuLists()
-    }
-    
+    private var userDefaults = UserDefaults.standard
     
     /// KeychainAccess インスタンス
-    public var keychain: Keychain {
+    private var keychain: Keychain {
         guard let identifier = Bundle.main.object(forInfoDictionaryKey: "CFBundleIdentifier") as? String else {
             return Keychain(service: "")
         }
         return Keychain(service: identifier)
     }
     
+    // MARK: - Private func
+    /// GET (UserDefaults) String
+    /// - Parameter key: 取得したい文字列のキー
+    /// - Returns: キーに対応する文字列
+    public func getUserDefaultsString(key:String) -> String {
+        if let value = userDefaults.string(forKey: key) {
+            return value
+        }
+        return "" // 非登録者の場合
+    }
+    
+    /// SET (UserDefaults) String
+    /// - Parameters:
+    ///   - key: 保存したい文字列のキー
+    ///   - value: 保存したい文字列
+    public func setUserDefaultsString(key:String, value:String) {
+        userDefaults.set(value ,forKey: key)
+    }
+    
+    
+    /// 利用規約のバージョン
+    private let KEY_AgreementVersion = "KEY_agreementVersion"
+    public var agreementVersion: String {
+        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
+        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
+    }
+    
+    /// チュートリアルを表示するべきかのフラグ
+    private let KEY_shouldShowTutorial = "KEY_shouldShowTutorial"
+    public var shouldShowTutorial: Bool {
+        get { return getUserDefaultsBool(key: KEY_shouldShowTutorial) }
+        set(v) { setUserDefaultsBool(key: KEY_shouldShowTutorial, value: v) }
+    }
+    
+    // MARK: - Private func
     /// GET (keyChain)
+    /// - Parameter key: 取得したい文字列のキー
+    /// - Returns: キーに対応する復号化した文字列
     private func getKeyChain(key:String) -> String {
         do {
             if let value = try keychain.get(key) {
                 return value
             }
-            return ""
         } catch {
             AKLog(level: .ERROR, message: "error: DataManager.getKeyChain catch")
-            return ""
         }
+        return ""
     }
     
     /// SET (keyChain)
+    /// - Parameters:
+    ///   - key: 保存したい文字列のキー
+    ///   - value: 暗号化し保存したい文字列
     private func setKeyChain(key:String, value:String) {
         do {
             try keychain
@@ -107,101 +128,9 @@ final class DataManager {
         }
     }
     
-    // cAccount
-    private let KEY_cAccount = "KEY_cAccount"
-    public var cAccount: String {
-        get { return getKeyChain(key: KEY_cAccount) }
-        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
-    }
-    
-    // password
-    private let KEY_password = "KEY_passWord" // KEY_password にするべき(**注意** 変更するとユーザーは再度パスワードを登録しなければならない)
-    public var password: String {
-        get { return getKeyChain(key: KEY_password) }
-        set(v) { setKeyChain(key: KEY_password, value: v) }
-    }
-    
-    
-    
-    /// GET (UserDefaults) String
-    private func getUserDefaultsString(key:String) -> String {
-        if let value = userDefaults.string(forKey: key) {
-            return value
-        }
-        return "" // 非登録者の場合
-    }
-    
-    /// SET (UserDefaults) String
-    private func setUserDefaultsString(key:String, value:String) {
-        userDefaults.set(value ,forKey: key)
-    }
-    
-    
-    // 利用規約のバージョン
-    private let KEY_AgreementVersion = "KEY_AgreementVersion" // KEY_agreementVersion にするべき(**注意** 変更すると再度利用規約が表示される)
-    public var agreementVersion: String {
-        get { return getUserDefaultsString(key: KEY_AgreementVersion) }
-        set(v) { setUserDefaultsString(key: KEY_AgreementVersion, value: v) }
-    }
-    
-    // 初期画面の設定
-    private let KEY_initialViewName = "KEY_initialViewName"
-    public var initialViewName: String {
-        get { return getUserDefaultsString(key: KEY_initialViewName) }
-        set(v) { setUserDefaultsString(key: KEY_initialViewName, value: v) }
-    }
-    
-    // 前回利用した時間を保存
-    private let KEY_saveTimeUsedLastTime = "KEY_saveTimeUsedLastTime"
-    public var saveTimeUsedLastTime: String {
-        get { return getUserDefaultsString(key: KEY_saveTimeUsedLastTime) }
-        set(v) { setUserDefaultsString(key: KEY_saveTimeUsedLastTime, value: v) }
-    }
-    
-    
-    /// GET (UserDefaults) Bool
-    private func getUserDefaultsBool(key:String) -> Bool {
-        // 非登録者(nilでも)はfalseを返す
-        let value = userDefaults.bool(forKey: key)
-        return value
-    }
-    
-    /// SET (UserDefaults) Bool
-    private func setUserDefaultsBool(key:String, value:Bool) {
-        userDefaults.set(value ,forKey: key)
-    }
-    
-    // チュートリアルを終了したかのフラグ
-    private let KEY_isFinishedMainTutorial = "KEY_isFinishedMainTutorial"
-    public var isFinishedMainTutorial: Bool {
-        get { return getUserDefaultsBool(key: KEY_isFinishedMainTutorial) }
-        set(v) { setUserDefaultsBool(key: KEY_isFinishedMainTutorial, value: v) }
-    }
-    
-    // チュートリアルを終了したかのフラグ
-    private let KEY_isFinishedMenuTutorial = "KEY_isFinishedMenuTutorial"
-    public var isFinishedMenuTutorial: Bool {
-        get { return getUserDefaultsBool(key: KEY_isFinishedMenuTutorial) }
-        set(v) { setUserDefaultsBool(key: KEY_isFinishedMenuTutorial, value: v) }
-    }
-    
-    // password入力催促のフラグ(falseの時passwordSettingViewが出てくる)
-    private let KEY_shouldInputedPassword = "KEY_shouldInputedPassword"
-    public var shouldInputedPassword: Bool {
-        get { return getUserDefaultsBool(key: KEY_shouldInputedPassword) }
-        set(v) { setUserDefaultsBool(key: KEY_shouldInputedPassword, value: v) }
-    }
-    
-    // メニューリストのカスタマイズ催促のフラグ
-    private let KEY_shouldShowCustomizeMenu = "KEY_shouldShowCustomizeMenu"
-    public var shouldShowCustomizeMenu: Bool {
-        get { return getUserDefaultsBool(key: KEY_shouldShowCustomizeMenu) }
-        set(v) { setUserDefaultsBool(key: KEY_shouldShowCustomizeMenu, value: v) }
-    }
-    
-    
-    
     /// GET (UserDefaults) Data
+    /// - Parameter key: 取得したいデータのキー
+    /// - Returns: キーに対応するデータ
     private func getUserDefaultsData(key:String) -> Data {
         if let value = userDefaults.data(forKey: key) {
             return value
@@ -210,11 +139,35 @@ final class DataManager {
     }
     
     /// SET (UserDefaults) Data
+    /// - Parameters:
+    ///   - key: 保存したいデータのキー
+    ///   - value: 保存したいデータ
     private func setUserDefaultsData(key:String, value:Data) {
         userDefaults.set(value ,forKey: key)
     }
     
+    /// GET (UserDefaults) Bool
+    /// - Parameter key: 取得したいフラグのキー
+    /// - Returns: キーに対応するフラグ
+    private func getUserDefaultsBool(key:String) -> Bool {
+        // 非登録者(nilでも)はfalseを返す
+        let value = userDefaults.bool(forKey: key)
+        return value
+    }
     
+    /// SET (UserDefaults) Bool
+    /// - Parameters:
+    ///   - key: 保存したいフラグのキー
+    ///   - value: 保存したいフラグ
+    private func setUserDefaultsBool(key:String, value:Bool) {
+        userDefaults.set(value ,forKey: key)
+    }
+    
+    /// 保存していたメニューリストを読み込む
+    ///
+    /// - Note:
+    ///   毎回更新を行う
+    /// - Returns: 更新したメニューリストの配列を返す
     private let KEY_menuLists = "KEY_menuLists"
     private func loadMenuLists() -> [Constant.Menu] {
         // UserDefaultsから読み込む
@@ -223,11 +176,11 @@ final class DataManager {
         let data = getUserDefaultsData(key: KEY_menuLists)
         guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
             // 初回利用者は初期値を返す
-            return Constant.initServiceLists
+            return Constant.initMenuLists
         }
         
         // アップデートごとに機能追加等があるため、更新する
-        var newModelLists = Constant.initServiceLists
+        var newModelLists = Constant.initMenuLists
         var updateForLists:[Constant.Menu] = []
         
         for oldList in lists {
@@ -253,13 +206,4 @@ final class DataManager {
         
         return updateForLists
     }
-
-    public func saveMenuLists() {
-        // UserDefaultsに保存
-        // 配列 -> Json -> Data にパースする必要がある
-        let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(menuLists) else { return }
-        setUserDefaultsData(key: KEY_menuLists, value: data)
-    }
-    
 }
