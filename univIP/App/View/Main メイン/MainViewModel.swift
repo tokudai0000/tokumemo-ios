@@ -7,206 +7,188 @@
 
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
-import Kanna
-import FirebaseAnalytics
 
 final class MainViewModel {
     
-    private let dataManager = DataManager.singleton
+    /// Favorite画面へURLを渡すのに使用
+    public var urlString = ""
     
-    // シラバスをJavaScriptで自動入力する際、参照変数
+    /// シラバスをJavaScriptで自動入力する際、参照変数
     public var subjectName = ""
     public var teacherName = ""
     
-    // ログイン用　アンケート催促が出ないユーザー用
-    public var isInitFinishLogin = true
+    /// ログイン処理中かどうか
+    public var isLoginProcessing = false
     
-    // 利用規約同意者か判定
-    public var hasAgreedTermsOfUse: Bool {
-        get { return dataManager.agreementVersion == Constant.agreementVersion }
+    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
+    public var shouldShowTermsAgreementView: Bool {
+        get { return dataManager.agreementVersion != Constant.latestTermsVersion }
     }
     
-    /// 現在読み込み中のURL(displayUrl)が許可されたドメインかどうか
-    /// - Returns: 許可されているドメイン名ならtrueを返す
+    /// URLの読み込みを許可するか判定
+    /// ドメイン名が許可しているのと一致しているなら許可(ホワイトリスト制)
+    /// - Parameter url: 判定したいURL
+    /// - Returns: 判定結果、許可ならtrue
     public func isAllowedDomainCheck(_ url: URL) -> Bool {
-        
-        guard let hostDomain = url.host else {
+        // ドメイン名を取得
+        guard let domain = url.host else {
             AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
             return false
         }
         // ドメインを検証
-        for domainString in Constant.allowedDomains {
-            if hostDomain.contains(domainString) {
-                // 許可されたdomainと一致している場合
+        for item in Constant.allowedDomains {
+            if domain.contains(item) {
+                // 一致したなら
                 return true
             }
         }
         return false
-        
     }
     
-    
+    /// JavaScriptを動かす種類
     enum JavaScriptType {
-        case universityLogin
-        case syllabusFirstTime
-        case outlookLogin
-        case tokudaiCareerCenter
-        case none
+        case syllabus // シラバスの検索画面
+        case loginIAS // 大学統合認証システム(IAS)のログイン画面
+        case loginOutlook // メール(Outlook)のログイン画面
+        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
+        case none // JavaScriptを動かす必要がない場合
     }
-    /// JavaScriptを実行する場合かつ、URLと登録したJavaScriptを動かしたいURLと一致したら
-    /// - Parameter url: 現在、表示中のURL
+    /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
+    ///
+    /// - Note: canExecuteJavascriptが重要な理由
+    ///   ログインに失敗した場合に再度ログインのURLが表示されることになる。
+    ///   canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
+    /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 動かすJavaScriptの種類
-    public func anyJavaScriptExecute(_ url: URL) -> JavaScriptType {
-        
-        let urlString = url.absoluteString
-        
-        // JavaScriptを実行するフラグが立っていない場合は抜ける
-        if !dataManager.isExecuteJavascript {
+    public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
+        // JavaScriptを実行するフラグが立っていない場合はnoneを返す
+        if dataManager.canExecuteJavascript == false {
             return .none
         }
-        
-        // 大学サイト、ログイン画面 && JavaScriptを動かしcアカウント、パスワードを自動入力する必要があるのか判定
-        if urlString.contains(Url.universityLogin.string()) && canLoggedInService {
-            return .universityLogin
-        }
-        // シラバス
+        // シラバスの検索画面
         if urlString == Url.syllabus.string() {
-            return .syllabusFirstTime
+            return .syllabus
         }
-        // outlook(メール) && 登録者判定
-        if urlString.contains(Url.outlookLoginForm.string()) && canLoggedInService {
-            return .outlookLogin
+        // cアカウント、パスワードを登録しているか
+        if hasRegisteredPassword == false {
+            return .none
         }
-        // 徳島大学キャリアセンター
+        // 大学統合認証システム(IAS)のログイン画面
+        if urlString.contains(Url.universityLogin.string()) {
+            return .loginIAS
+        }
+        // メール(Outlook)のログイン画面
+        if urlString.contains(Url.outlookLoginForm.string()) {
+            return .loginOutlook
+        }
+        // 徳島大学キャリアセンターのログイン画面
         if urlString == Url.tokudaiCareerCenter.string() {
-            return .tokudaiCareerCenter
+            return .loginCareerCenter
         }
-        
+        // それ以外なら
         return .none
-        
     }
-    
-    /// 設定した初期画面を探す
+
+    /// 初期画面に指定したWebページのURLを返す
+    ///
+    /// ログイン処理完了後に呼び出される。つまり、ログインが完了したユーザーのみが呼び出す。
+    /// structure Menu に存在するisInitViewがtrueであるのを探し、そのURLRequestを返す
+    /// 何も設定していないユーザーはマナバ(初期値)を表示させる。
+    /// - Note:
+    ///   isInitViewは以下の1つの事例を除き、必ずtrueは存在する。
+    ///   1. お気に入り登録内容を初期設定画面に登録し、カスタマイズから削除した場合
     /// - Returns: 設定した初期画面のURLRequest
-    public func searchInitialViewUrl() -> URLRequest {
-        // フラグを立てる
-        dataManager.isExecuteJavascript = true
-        
+    public func searchInitPageUrl() -> URLRequest {
+        // メニューリストの内1つだけ、isInitView=trueが存在するので探す
         for menuList in dataManager.menuLists {
-            // ユーザーが指定した初期画面を探す
-            if menuList.isInitView {
-                // メニューリストの内1つだけ、isInitView=trueが存在する
-                
-                // 登録者か非登録者か判定
-                if dataManager.shouldInputedPassword {
-                    // パスワードを登録していない場合
-                    if menuList.id == .manabaHomePC {
-                        // パスワード登録しておらず、初期画面がマナバである時は大学のホームページを表示させる
-                        let url = URL(string: Url.universityHomePage.string())! // fatalError
-                        return URLRequest(url: url)
-                    }
-                }
-                
-                let urlString = menuList.url!         // fatalError **Constant.Menu(canInitView)を設定してる為、URLが存在することを保証している**
-                let url = URL(string: urlString)!     // fatalError
+            // 初期画面を探す
+            if menuList.isInitView,
+               let urlString = menuList.url,
+               let url = URL(string: urlString) {
                 return URLRequest(url: url)
             }
         }
-        
-        // お気に入り画面を初期画面に設定しており、カスタマイズから削除した場合ここを通る
-        for i in 0..<dataManager.menuLists.count {
-            // 初期設定はマナバ
-            if dataManager.menuLists[i].id == .manabaHomePC {
-                dataManager.menuLists[i].isInitView = true
-                dataManager.saveMenuLists()
-                let urlString = dataManager.menuLists[i].url! // fatalError **Constant.Menu(canInitView)を設定してる為、URLが存在することを保証している**
-                let url = URL(string: urlString)!             // fatalError
-                return URLRequest(url: url)
-            }
-        }
-        fatalError()
+        // 見つからなかった場合
+        // お気に入り画面を初期画面に設定しており、カスタマイズから削除した可能性がある為
+        // マナバを表示させる
+        return Url.manabaPC.urlRequest()
     }
     
-    
-    // 図書館の所在[常三島(本館Main) , 蔵本(分館Kura)]
-    enum LibraryType {
-        case main
-        case kura
-    }
-    /// 図書館の開館カレンダーをweb画面からスクレイピングする
-    /// - Parameter type: 図書館の所在[常三島(本館Main) , 蔵本(分館Kura)]
-    /// - Returns: 動的URL
-    public func fetchLibraryCalendarUrl(type: LibraryType) -> URLRequest? {
-        var urlString = ""
-        switch type {
-            case .main:
-                urlString = Url.libraryHomePageMainPC.string()
-            case .kura:
-                urlString = Url.libraryHomePageKuraPC.string()
-        }
-        
-        let url = URL(string: urlString)! // fatalError
-        
-        do {
-            let htmlData = NSData(contentsOf: url as URL)! as Data
-            let doc = try HTML(html: htmlData, encoding: String.Encoding.utf8)
-            // aタグを抽出
-            for node in doc.xpath("//a") {
-                // href属性に設定されている文字列を出力
-                guard let str = node["href"] else {
-                    return nil
-                }
-                // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれているので、正しく読み取れたか
-                if str.contains("pub/pdf/calender/calender") {
-                    // PDFまでのURLを作成する
-                    let pdfUrlString = "https://www.lib.tokushima-u.ac.jp/" + str
-                    
-                    if let url = URL(string: pdfUrlString) {
-                        return URLRequest(url: url)
-                        
-                    } else {
-                        AKLog(level: .ERROR, message: "[URLフォーマットエラー]: 図書館開館カレンダーURL取得エラー \n pdfUrlString:\(pdfUrlString)")
-                        return nil
-                    }
-                }
-            }
-            AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(urlString)")
-            return nil
-        } catch {
-            AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(urlString)")
-            return nil
-        }
-    }
-    
-    /// 初回ログイン後すぐか判定
-    /// - Parameter url: 現在表示しているURL
-    /// - Returns: 判定結果
-    public func isFinishLogin(_ url: URL) -> Bool {
-        let urlString = url.absoluteString
-        
-        // アンケート催促画面が出た == ログイン後すぐ
-        if urlString.contains(Url.enqueteReminder.string()) {
-            isInitFinishLogin = false
+    /// 大学統合認証システム(IAS)へのログインが完了したかどうか
+    ///
+    /// 以下2つの状態なら完了とする
+    ///  1. ログイン後のURLが指定したURLと一致していること
+    ///  2. ログイン処理中であるフラグが立っていること
+    ///  認められない場合は、falseとする
+    /// - Note:
+    /// - Parameter urlString: 現在表示しているURLString
+    /// - Returns: 判定結果、許可ならtrue
+    /// hadLoggedin
+    public func isLoggedin(_ urlString: String) -> Bool {
+        // ログイン後のURLが指定したURLと一致しているかどうか
+        let check1 = urlString.contains(Url.questionnaireReminder.string())
+        let check2 = urlString.contains(Url.courseManagementPC.string())
+        let check3 = urlString.contains(Url.courseManagementMobile.string())
+        // 上記から1つでもtrueがあれば、引き継ぐ
+        let result = check1 || check2 || check3
+        // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
+        if isLoginProcessing, result {
+            // ログイン処理を完了とする
+            isLoginProcessing = false
             return true
         }
-        
-        // モバイル画面かつisInitFinishLoginがtrue つまり　アンケート催促が出ず(アンケート全て完了してるユーザー)そのままモバイル画面へ遷移した人
-        if urlString == Url.courseManagementMobile.string() && isInitFinishLogin {
-            isInitFinishLogin = false
-            return true
-        }
-        
         return false
     }
     
-    public func analytics(_ url:URL) {
-        
-        // Analytics
-        let urlString = url.absoluteString
-        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString])
-        
+    /// 現在の時刻を保存する
+    public func saveCurrentTime() {
+        // 現在の時刻を取得し保存
+        let f = DateFormatter()
+        f.setTemplate(.full)
+        let now = Date()
+        dataManager.setUserDefaultsString(key: KEY_saveCurrentTime, value: f.string(from: now))
     }
     
+    /// 再度ログイン処理を行うかどうか
+    ///
+    /// - Returns: 判定結果、行うべきならtrue
+    public func isExecuteLogin() -> Bool {
+        
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
+        let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime))
+        guard let lastTime = lastTime else {
+            return false
+        }
+        
+        // 現在の時刻を取得
+        let now = Date()
+        print(now.timeIntervalSince(lastTime))
+        // 時刻の差分が30*60秒以上であれば再ログインを行う
+        if now.timeIntervalSince(lastTime) > 30 * 60 {
+            return true
+        }
+        return false
+    }
+    
+    /// タイムアウトのURLであるかどうかの判定
+    /// - Parameter urlString: 読み込み完了したURLの文字列
+    /// - Returns: 結果
+    public func isTimeout(_ urlString: String) -> Bool {
+        if urlString == Url.universityServiceTimeOut.string() ||
+            urlString == Url.universityServiceTimeOut2.string() {
+            return true
+        }
+        return false
+    }
+    
+    // MARK: - Private
+    
+    private let dataManager = DataManager.singleton
+    
     // cアカウント、パスワードを登録しているか判定
-    private var canLoggedInService: Bool { get { return (!dataManager.cAccount.isEmpty && !dataManager.password.isEmpty) }}
+    private var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    
+    // 前回利用した時間を保存
+    private let KEY_saveCurrentTime = "KEY_saveCurrentTime"
 }

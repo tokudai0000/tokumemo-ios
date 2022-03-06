@@ -105,7 +105,7 @@ class FavoriteViewController: UIViewController {
                                      isInitView: isFirstViewSetting.isOn,
                                      canInitView: true)
         // 保存
-        dataManager.addContentsMenuLists(menuItem: menuItem)
+        addContentsMenuLists(menuItem: menuItem)
         
         dismiss(animated: true, completion: nil)
         
@@ -156,6 +156,14 @@ class FavoriteViewController: UIViewController {
                 favoriteNameTextField.tintColor = .red
                 favoriteNameUnderLine.backgroundColor = .red
         }
+    }
+    
+    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - menuItem: 追加したいお気に入り設定
+    private func addContentsMenuLists(menuItem: Constant.Menu) {
+        dataManager.menuLists.append(menuItem)
+        dataManager.saveMenuLists()
     }
     
 }
