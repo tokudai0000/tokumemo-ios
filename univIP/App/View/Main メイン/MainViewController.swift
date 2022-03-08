@@ -29,7 +29,7 @@ final class MainViewController: UIViewController {
         initSetup()
         
         #if DEBUG
-        //dataManager.shouldShowTutorial = true
+        //dataManager.hadDoneTutorial = false
         #endif
     }
     
@@ -43,8 +43,8 @@ final class MainViewController: UIViewController {
             return
         }
         
-        // チュートリアルを表示するべきか
-        if dataManager.shouldShowTutorial {
+        // チュートリアルを完了していない場合
+        if dataManager.hadDoneTutorial == false {
             // チュートリアルを表示
             showTutorial()
             return

@@ -27,7 +27,7 @@ class TutorialViewController: SpotlightViewController, SpotlightViewControllerDe
     public func createLabels(_ frame: CGRect) {
         label.text = textLabels[updateIndex]
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize:15)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.frame = frame
