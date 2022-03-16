@@ -92,10 +92,12 @@ final class DataManager {
     }
     
     /// チュートリアルを表示するべきかのフラグ
-    private let KEY_shouldShowTutorial = "KEY_shouldShowTutorial"
-    public var shouldShowTutorial: Bool {
-        get { return getUserDefaultsBool(key: KEY_shouldShowTutorial) }
-        set(v) { setUserDefaultsBool(key: KEY_shouldShowTutorial, value: v) }
+    /// - Note:
+    ///   初回ユーザーはUserDefaultsにデータが入っていないので、falseが帰ってくる
+    private let KEY_hadDoneTutorial = "KEY_hadDoneTutorial"
+    public var hadDoneTutorial: Bool {
+        get { return getUserDefaultsBool(key: KEY_hadDoneTutorial) }
+        set(v) { setUserDefaultsBool(key: KEY_hadDoneTutorial, value: v) }
     }
     
     // MARK: - Private func
