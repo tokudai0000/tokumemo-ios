@@ -43,8 +43,6 @@ class UrlTests: XCTestCase {
         let libraryHomePageMainPC = "https://www.lib.tokushima-u.ac.jp/"
         let libraryHomePageKuraPC = "https://www.lib.tokushima-u.ac.jp/kura.shtml"
         let libraryHomeMobile = "https://opac.lib.tokushima-u.ac.jp/drupal/"
-        let libraryCalendarMain = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_"
-        let libraryCalendarKura = "https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_kura_"
         let libraryMyPage = "https://opac.lib.tokushima-u.ac.jp/opac/user/top"
         let libraryBookLendingExtension = "https://opac.lib.tokushima-u.ac.jp/opac/user/holding-borrowings"
         let libraryBookPurchaseRequest = "https://opac.lib.tokushima-u.ac.jp/opac/user/purchase_requests/new"
@@ -55,7 +53,7 @@ class UrlTests: XCTestCase {
         
         let tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
         
-        let universityTransitionLogin = "https://eweb.stud.tokushima-u.ac.jp/Portal/"
+        let universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
         let universityLogin = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="
         let universityServiceTimeOut = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOut.aspx"
         let enqueteReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
@@ -77,8 +75,6 @@ class UrlTests: XCTestCase {
         XCTAssertEqual(libraryHomePageMainPC, Url.libraryHomePageMainPC.string())
         XCTAssertEqual(libraryHomePageKuraPC, Url.libraryHomePageKuraPC.string())
         XCTAssertEqual(libraryHomeMobile, Url.libraryHomeMobile.string())
-        XCTAssertEqual(libraryCalendarMain, Url.libraryCalendarMain.string())
-        XCTAssertEqual(libraryCalendarKura, Url.libraryCalendarKura.string())
         XCTAssertEqual(libraryMyPage, Url.libraryMyPage.string())
         XCTAssertEqual(libraryBookLendingExtension, Url.libraryBookLendingExtension.string())
         XCTAssertEqual(libraryBookPurchaseRequest, Url.libraryBookPurchaseRequest.string())

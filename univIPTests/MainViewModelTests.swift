@@ -96,29 +96,6 @@ class MainViewModelTests: XCTestCase {
         XCTAssertEqual(test208, true)
     }
     
-    func testIsFinishLogin() {
-        // 基本的なテスト
-        viewModel.isLoginProcessing = true
-        let url1 = URL(string: Url.questionnaireReminder.string())! // fatalError
-        let test1 = viewModel.shouldDisplayInitialWebPage(url1)
-        XCTAssertEqual(test1, true)
-        
-        viewModel.isLoginProcessing = true
-        let url2 = URL(string: Url.courseManagementMobile.string())!
-        let test2 = viewModel.shouldDisplayInitialWebPage(url2)
-        XCTAssertEqual(test2, true)
-        
-        viewModel.isLoginProcessing = false
-        let url3 = URL(string: Url.questionnaireReminder.string())!
-        let test3 = viewModel.shouldDisplayInitialWebPage(url3)
-        XCTAssertEqual(test3, true)
-        
-        viewModel.isLoginProcessing = false
-        let url4 = URL(string: Url.courseManagementMobile.string())!
-        let test4 = viewModel.shouldDisplayInitialWebPage(url4)
-        XCTAssertEqual(test4, false)
-        
-    }
     
 
     // dataManagerを内部で使用している為、モックか修正を行う
