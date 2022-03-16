@@ -112,7 +112,7 @@ final class Constant {
              url: Url.outlookService.string(),
              canInitView: true),
         
-        Menu(title: "設定",
+        Menu(title: "設定 >",
              id: .setting,
              url: nil,
              canInitView: false),

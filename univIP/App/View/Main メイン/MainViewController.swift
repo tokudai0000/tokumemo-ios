@@ -151,7 +151,7 @@ extension MainViewController: WKNavigationDelegate {
     /// 読み込み設定（リクエスト前）
     ///
     /// 以下2つの状態であったら読み込みを開始する。
-    ///  1.読み込み前のURLがnilでないこと
+    ///  1. 読み込み前のURLがnilでないこと
     ///  2. 許可されたドメインであること
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
