@@ -28,10 +28,6 @@
 
 ## スクリーンショット
 
-|WalkThroughTutorial1|WalkThroughTutorial2|WalkThroughTutorial3|
-|:--|:--|:--|
-|<img src="./univIP/App/etc/Assets.xcassets/TutorialImage1.imageset/TutorialImage1.jpg" width="207">|<img src="./univIP/App/etc/Assets.xcassets/TutorialImage2.imageset/TutorialImage2.jpg" width="207">|<img src="./univIP/App/etc/Assets.xcassets/TutorialImage3.imageset/TutorialImage3.jpg" width="207">|
-
 |SpotlightTutorial1|SpotlightTutorial2|SpotlightTutorial3|
 |:--|:--|:--|
 |<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial2.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial3.PNG" width="207">|
@@ -96,7 +92,6 @@
 - Firebase/Analytics
 - KeychainAccess // KeychainをUserDefautsのように操作する為に使用
 - Kanna // Webスクレイピングを行う為に使用
-- EAIntroView // ウォークスルー型チュートリアル生成の為に使用
 - Gecco // スポットライト型チュートリアル生成の為に使用
 
 
@@ -145,19 +140,6 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 |:--|
 |<img src="Docs/innovationFlyer.png" width="207">|
 
-## 今後していきたい事
-- 徳島大学イノベーションプラザのプロジェクト申請
-- 他学生が運営しているWebサイトとの連携
-- Android版の開発
-- お問合せフォームの作成(APIの作成)
-- iPadのサイズ対応
-- 単体テスト等の充実 
-
-
-## 統計
-
-[![Alt](https://repobeats.axiom.co/api/embed/6b954e548b883d3577fbb8019d0caac2bd1ca35a.svg "Repobeats analytics image")](https://github.com/tokudai0000/univIP)
-
 
 ## 募集中
 
@@ -167,20 +149,8 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 - [New pull request](https://github.com/tokudai0000/univIP/compare)
 
 
-## 自己評価
-リリース日(2021年9月2日)
-リリースから数ヶ月が経過した。
-初期に比べて、UI面ではシンプルなアプリに。
-コード面でもコードリーディングを意識し続けている為、わかりやすいコードになっているのではないかと考える。
-
-また、FireBase/Analyticsを導入した結果、アクティブユーザーが60人であり、
-使いやすいアプリとして認知されているのではないかと考える。
-
-今後も、ユーザーから意見を求めて積極的に改善していきたいと思う。
-
-
 ## ライセンス
 
-© 2021 akidon0000
+Copyright(c) 2022 tokudai0000
 
 トクメモは[MITライセンス](https://github.com/tokudai0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
