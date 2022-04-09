@@ -187,7 +187,7 @@ final class MainViewModel {
     private let dataManager = DataManager.singleton
     
     // cアカウント、パスワードを登録しているか判定
-    private var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    public var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
     
     // 前回利用した時間を保存
     private let KEY_saveCurrentTime = "KEY_saveCurrentTime"

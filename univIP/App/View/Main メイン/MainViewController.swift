@@ -49,6 +49,16 @@ final class MainViewController: UIViewController {
             showTutorial()
             return
         }
+        
+        // パスワードを登録していないユーザー
+        if viewModel.hasRegisteredPassword == false {
+            // パスワード入力画面の表示
+            let vc = R.storyboard.password.passwordViewController()!
+            present(vc, animated: true, completion: {
+                // おしらせアラートを表示
+                vc.makeLibrarySelector()
+            })
+        }
     }
     
     // MARK: - IBAction

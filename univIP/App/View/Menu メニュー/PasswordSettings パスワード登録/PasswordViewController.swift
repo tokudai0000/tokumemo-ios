@@ -83,6 +83,23 @@ final class PasswordViewController: UIViewController {
         }
     }
     
+    /// パスワード入力を推奨するポップアップを表示させる。
+    public func makeLibrarySelector() {
+        var alert:UIAlertController!
+        alert = UIAlertController(title: "", message: "パスワードの入力を行うと、\n自動でログインしてくれるようになります。", preferredStyle: UIAlertController.Style.alert)
+        
+        let main = UIAlertAction(
+            title: "OK",
+            style: UIAlertAction.Style.default,
+            handler: { action in
+
+            })
+        alert.addAction(main)
+
+        present(alert, animated: true, completion:nil)
+        
+    }
+    
     // MARK: - Private
     /// PasswordSettingsViewControllerの初期セットアップ
     private func initSetup() {
