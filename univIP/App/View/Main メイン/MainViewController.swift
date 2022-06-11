@@ -78,6 +78,8 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func showMenuButton(_ sender: Any) {
+        // JavaScriptを実行するフラグがを立てる(ユーザーがタイムアウト等をリロードしている可能性があるから)
+        dataManager.canExecuteJavascript = true
         // メニューを表示
         let vc = R.storyboard.menu.menuViewController()!
         vc.mainViewController = self
