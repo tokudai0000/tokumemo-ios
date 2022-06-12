@@ -47,6 +47,7 @@ final class MainViewModel {
     
     /// JavaScriptを動かす種類
     enum JavaScriptType {
+        case skipReminder // アンケート解答の催促画面
         case syllabus // シラバスの検索画面
         case loginIAS // 大学統合認証システム(IAS)のログイン画面
         case loginOutlook // メール(Outlook)のログイン画面
@@ -65,10 +66,13 @@ final class MainViewModel {
         if shouldShowTermsAgreementView {
             return .none
         }
-        
         // JavaScriptを実行するフラグが立っていない場合はnoneを返す
         if dataManager.canExecuteJavascript == false {
             return .none
+        }
+        // アンケート解答の催促画面
+        if urlString == Url.skipReminder.string() {
+            return .skipReminder
         }
         // シラバスの検索画面
         if urlString == Url.syllabus.string() {
@@ -131,7 +135,7 @@ final class MainViewModel {
     /// hadLoggedin
     public func isLoggedin(_ urlString: String) -> Bool {
         // ログイン後のURLが指定したURLと一致しているかどうか
-        let check1 = urlString.contains(Url.questionnaireReminder.string())
+        let check1 = urlString.contains(Url.skipReminder.string())
         let check2 = urlString.contains(Url.courseManagementPC.string())
         let check3 = urlString.contains(Url.courseManagementMobile.string())
         // 上記から1つでもtrueがあれば、引き継ぐ

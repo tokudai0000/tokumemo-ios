@@ -215,10 +215,14 @@ extension MainViewController: WKNavigationDelegate {
             dataManager.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
             webView.load(viewModel.searchInitPageUrl())
+            return
         }
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         switch viewModel.anyJavaScriptExecute(urlString) {
+            case .skipReminder:
+                // アンケート解答の催促画面
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
                 
             case .loginIAS:
                 // 徳島大学　統合認証システムサイト(ログインサイト)
