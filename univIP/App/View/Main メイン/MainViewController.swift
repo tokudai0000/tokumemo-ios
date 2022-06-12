@@ -123,6 +123,8 @@ final class MainViewController: UIViewController {
     private func loadLoginPage() {
         // ログイン用
         dataManager.canExecuteJavascript = true
+        // ログイン処理中であるフラグを立てる
+        viewModel.isLoginProcessing = true
         // 大学統合認証システムのページを読み込む
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
@@ -226,8 +228,6 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.canExecuteJavascript = false
-                // ログイン処理中であるフラグを立てる
-                viewModel.isLoginProcessing = true
                 
             case .syllabus:
                 // シラバスの検索画面
