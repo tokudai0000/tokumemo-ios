@@ -73,7 +73,7 @@ enum Url: String {
     /// タイムアウト2(20分無操作)
     case universityServiceTimeOut2 = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOutSub.aspx"
     /// アンケート催促画面(教務事務表示前に出現)
-    case questionnaireReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
+    case skipReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
     /// マナバから授業動画[Youtube]を開く時
     case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
     

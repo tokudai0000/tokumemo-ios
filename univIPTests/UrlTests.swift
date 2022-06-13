@@ -84,7 +84,7 @@ class UrlTests: XCTestCase {
         XCTAssertEqual(universityTransitionLogin, Url.universityTransitionLogin.string())
         XCTAssertEqual(universityLogin, Url.universityLogin.string())
         XCTAssertEqual(universityServiceTimeOut, Url.universityServiceTimeOut.string())
-        XCTAssertEqual(enqueteReminder, Url.questionnaireReminder.string())
+        XCTAssertEqual(enqueteReminder, Url.skipReminder.string())
         XCTAssertEqual(popupToYoutube, Url.popupToYoutube.string())
     }
 }

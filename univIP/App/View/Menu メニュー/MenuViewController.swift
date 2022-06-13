@@ -202,6 +202,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         }
         // メニュー画面を消去後、画面を読み込む
         self.dismiss(animated: false, completion: {
+            // ログイン処理中に別の読み込み作業が入れば処理中フラグを下ろす
+            mainVC.viewModel.isLoginProcessing = false
+            
             switch cell.id {
                 case .libraryCalendar: // [図書館]開館カレンダー
                     let alert = self.makeLibrarySelector(mainVC)
