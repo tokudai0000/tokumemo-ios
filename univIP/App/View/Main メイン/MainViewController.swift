@@ -166,7 +166,7 @@ extension MainViewController: WKNavigationDelegate {
     ///
     /// 以下2つの状態であったら読み込みを開始する。
     ///  1. 読み込み前のURLがnilでないこと
-    ///  2. 許可されたドメインであること
+    ///  2. 許可されたドメインであること// 削除予定
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -177,13 +177,13 @@ extension MainViewController: WKNavigationDelegate {
         }
         let urlString = url.absoluteString
         
-        // 許可されたドメインか判定
-        if viewModel.isAllowedDomainCheck(url) == false {
-            // 許可外のURLが来た場合は、Safariで開く
-            UIApplication.shared.open(url)
-            decisionHandler(.cancel)
-            return
-        }
+//        // 許可されたドメインか判定
+//        if viewModel.isAllowedDomainCheck(url) == false {
+//            // 許可外のURLが来た場合は、Safariで開く
+//            UIApplication.shared.open(url)
+//            decisionHandler(.cancel)
+//            return
+//        }
         
         // お気に入り画面のためにURLを保持
         viewModel.urlString = urlString
@@ -202,7 +202,7 @@ extension MainViewController: WKNavigationDelegate {
     /// 読み込み完了
     ///
     /// 主に以下2つのことを処理する
-    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む
+    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む // 削除予定
     ///  2. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
@@ -214,7 +214,9 @@ extension MainViewController: WKNavigationDelegate {
             // 初期設定画面がメール(Outlook)の場合用
             dataManager.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
-            webView.load(viewModel.searchInitPageUrl())
+//            webView.load(viewModel.searchInitPageUrl())
+            // アンケート解答の催促画面 緊急で記述
+            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
             return
         }
         
