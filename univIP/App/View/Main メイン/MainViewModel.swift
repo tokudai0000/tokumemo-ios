@@ -153,7 +153,6 @@ final class MainViewModel {
         if now.timeIntervalSince(lastTime) < 30 * 60 {
             return false
         }
-        isLoginProcessing = true
         return true
     }
     

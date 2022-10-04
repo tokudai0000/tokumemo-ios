@@ -106,6 +106,7 @@ final class MainViewController: UIViewController {
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
         if viewModel.isExecuteLogin() {
+            viewModel.isLoginProcessing = true
             loadLoginPage()
         }
     }
