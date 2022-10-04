@@ -141,6 +141,7 @@ final class MainViewModel {
         
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
+        // iPhoneSE 2世代目　より前？はnilになってる。要調査
         let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime))
         guard let lastTime = lastTime else {
             return false
@@ -148,8 +149,8 @@ final class MainViewModel {
         
         // 現在の時刻を取得
         let now = Date()
-        print(now.timeIntervalSince(lastTime))
-        // 時刻の差分が30*60秒未満であれば再ログインしない
+        AKLog(level: .DEBUG, message: "バックグラウンド移行後、時間 -> \(now.timeIntervalSince(lastTime)) (s)")
+        // 時刻の差分が30*60秒未満(1800s未満)であれば再ログインしない
         if now.timeIntervalSince(lastTime) < 30 * 60 {
             return false
         }
