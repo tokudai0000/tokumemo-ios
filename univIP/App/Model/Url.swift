@@ -61,8 +61,8 @@ enum Url: String {
     /// 徳島大学キャリアセンター
     case tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
     
-    /// 徳島大学生活共同組合
-    case tokudaiCoop = "https://tokudai.marucoop.com/#parts"
+    /// 徳島大学生活共同組合　旧"https://tokudai.marucoop.com/#parts"
+    case tokudaiCoop = "https://vsign.jp/tokudai/maruco#parts"
     
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
