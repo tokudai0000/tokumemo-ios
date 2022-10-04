@@ -50,6 +50,8 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         // 利用規約同意画面を表示するべきか
         if viewModel.shouldShowTermsAgreementView {
+            // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
+            dataManager.canExecuteJavascript = false
             // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)

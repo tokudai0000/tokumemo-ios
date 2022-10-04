@@ -42,10 +42,10 @@ final class MainViewModel {
     /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 動かすJavaScriptの種類
     public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
-        // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
-        if shouldShowTermsAgreementView {
-            return .none
-        }
+//        // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
+//        if shouldShowTermsAgreementView {
+//            return .none
+//        }
         // JavaScriptを実行するフラグが立っていない場合はnoneを返す
         if dataManager.canExecuteJavascript == false {
             return .none
