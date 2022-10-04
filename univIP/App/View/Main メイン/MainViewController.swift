@@ -173,14 +173,6 @@ extension MainViewController: WKNavigationDelegate {
         }
         let urlString = url.absoluteString
         
-//        // 許可されたドメインか判定
-//        if viewModel.isAllowedDomainCheck(url) == false {
-//            // 許可外のURLが来た場合は、Safariで開く
-//            UIApplication.shared.open(url)
-//            decisionHandler(.cancel)
-//            return
-//        }
-        
         // お気に入り画面のためにURLを保持
         viewModel.urlString = urlString
         

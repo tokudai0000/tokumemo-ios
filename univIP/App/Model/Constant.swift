@@ -13,15 +13,6 @@ final class Constant {
     /// 現在の利用規約バージョン
     static let latestTermsVersion = "1.0.2"
     
-    /// WebViewで読み込みを許可するドメイン
-    static let allowedDomains = ["tokushima-u.ac.jp",    // 大学サイト
-                                 "office365.com",        // outlook(メール) ログイン画面
-                                 "microsoftonline.com",  // outlook(メール) ログイン画面表示前、1度だけ遷移されるその後"office365.com"へ遷移される
-                                 "office.com",           // outlook(メール) メールボックス
-                                 "tokudai-syusyoku.com", // キャリア支援室
-                                 "tokudai.marucoop.com", // 徳島大学生活共同組合
-                                 "youtube.com"]          // 大学サイトのインライン再生に対応させる為
-    
     /// メニューの種類
     enum MenuLists: Codable {
         case courseManagementHomePC         // 教務事務システム
