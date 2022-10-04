@@ -74,12 +74,12 @@ final class Constant {
         Menu(title: "教務事務システム",
              id: .courseManagementHomeMobile,
              url: Url.courseManagementMobile.string(),
+             isInitView: true,         // デフォルトの初期画面
              canInitView: true),
         
         Menu(title: "マナバ",
              id: .manabaHomePC,
              url: Url.manabaPC.string(),
-             isInitView: true,         // デフォルトの初期画面
              canInitView: true),
         
         Menu(title: "図書貸し出し延長",

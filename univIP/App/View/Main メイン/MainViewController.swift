@@ -210,9 +210,7 @@ extension MainViewController: WKNavigationDelegate {
             // 初期設定画面がメール(Outlook)の場合用
             dataManager.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
-//            webView.load(viewModel.searchInitPageUrl())
-            // アンケート解答の催促画面 緊急で記述
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+            webView.load(viewModel.searchInitPageUrl())
             return
         }
         
