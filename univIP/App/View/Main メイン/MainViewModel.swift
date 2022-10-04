@@ -119,8 +119,8 @@ final class MainViewModel {
         }
         // 見つからなかった場合
         // お気に入り画面を初期画面に設定しており、カスタマイズから削除した可能性がある為
-        // マナバを表示させる
-        return Url.manabaPC.urlRequest()
+        // 教務事務システムを表示させる
+        return Url.courseManagementMobile.urlRequest()
     }
     
     /// 大学統合認証システム(IAS)へのログインが完了したかどうか
