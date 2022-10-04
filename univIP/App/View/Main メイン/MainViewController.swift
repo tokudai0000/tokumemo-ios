@@ -26,11 +26,24 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initSetup()
-        
         #if DEBUG
         //dataManager.hadDoneTutorial = false
         #endif
+        
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        // フォアグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(foreground(notification:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
+        // バックグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(background(notification:)),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
+        // ログインページの読み込み
+        loadLoginPage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,7 +69,7 @@ final class MainViewController: UIViewController {
             let vc = R.storyboard.password.passwordViewController()!
             present(vc, animated: true, completion: {
                 // おしらせアラートを表示
-                vc.makeLibrarySelector()
+                vc.makeReminderPassword()
             })
         }
     }
@@ -87,23 +100,6 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: - Private func
-    /// MainViewControllerの初期セットアップ
-    private func initSetup() {
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        // フォアグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(foreground(notification:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-        // バックグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(background(notification:)),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil)
-        // ログインページの読み込み
-        loadLoginPage()
-    }
     /// フォアグラウンド時の処理
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
@@ -123,9 +119,9 @@ final class MainViewController: UIViewController {
     private func loadLoginPage() {
         // ログイン用
         dataManager.canExecuteJavascript = true
-        // ログイン処理中であるフラグを立てる
+        // ログイン処理中
         viewModel.isLoginProcessing = true
-        // 大学統合認証システムのページを読み込む
+        // 大学統合認証システムのログインページを読み込む
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
     
