@@ -91,6 +91,8 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func showMenuButton(_ sender: Any) {
+        // アプリ起動してログイン中に他サイトを開きたいときを想定して
+        viewModel.isLoginProcessing = false
         // JavaScriptを実行するフラグがを立てる(ユーザーがタイムアウト等をリロードしている可能性があるから)
         dataManager.canExecuteJavascript = true
         // メニューを表示
