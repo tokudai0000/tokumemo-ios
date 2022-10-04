@@ -10,7 +10,6 @@ target 'univIP' do
   pod 'R.swift' , '~> 5'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
-  pod 'EAIntroView' , '~> 2'
   pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
     
