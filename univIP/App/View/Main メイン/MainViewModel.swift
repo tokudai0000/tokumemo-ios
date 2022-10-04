@@ -13,7 +13,7 @@ final class MainViewModel {
     /// Favorite画面へURLを渡すのに使用
     public var urlString = ""
     
-    /// シラバスをJavaScriptで自動入力する際、参照変数
+    /// シラバスをJavaScriptInjectionで自動入力する際、参照変数
     public var subjectName = ""
     public var teacherName = ""
     
@@ -23,26 +23,6 @@ final class MainViewModel {
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public var shouldShowTermsAgreementView: Bool {
         get { return dataManager.agreementVersion != Constant.latestTermsVersion }
-    }
-    
-    /// URLの読み込みを許可するか判定
-    /// ドメイン名が許可しているのと一致しているなら許可(ホワイトリスト制)
-    /// - Parameter url: 判定したいURL
-    /// - Returns: 判定結果、許可ならtrue
-    public func isAllowedDomainCheck(_ url: URL) -> Bool {
-        // ドメイン名を取得
-        guard let domain = url.host else {
-            AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
-            return false
-        }
-        // ドメインを検証
-        for item in Constant.allowedDomains {
-            if domain.contains(item) {
-                // 一致したなら
-                return true
-            }
-        }
-        return false
     }
     
     /// JavaScriptを動かす種類

@@ -160,9 +160,8 @@ final class MainViewController: UIViewController {
 extension MainViewController: WKNavigationDelegate {
     /// 読み込み設定（リクエスト前）
     ///
-    /// 以下2つの状態であったら読み込みを開始する。
+    /// 以下の状態であったら読み込みを開始する。
     ///  1. 読み込み前のURLがnilでないこと
-    ///  2. 許可されたドメインであること// 削除予定
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -190,7 +189,7 @@ extension MainViewController: WKNavigationDelegate {
     /// 読み込み完了
     ///
     /// 主に以下2つのことを処理する
-    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む // 削除予定
+    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む
     ///  2. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
