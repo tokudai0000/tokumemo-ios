@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 target 'univIP' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -10,7 +10,6 @@ target 'univIP' do
   pod 'R.swift' , '~> 5'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
-  pod 'EAIntroView' , '~> 2'
   pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
     

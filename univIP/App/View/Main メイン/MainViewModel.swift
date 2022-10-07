@@ -13,7 +13,7 @@ final class MainViewModel {
     /// Favorite画面へURLを渡すのに使用
     public var urlString = ""
     
-    /// シラバスをJavaScriptで自動入力する際、参照変数
+    /// シラバスをJavaScriptInjectionで自動入力する際、参照変数
     public var subjectName = ""
     public var teacherName = ""
     
@@ -23,26 +23,6 @@ final class MainViewModel {
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public var shouldShowTermsAgreementView: Bool {
         get { return dataManager.agreementVersion != Constant.latestTermsVersion }
-    }
-    
-    /// URLの読み込みを許可するか判定
-    /// ドメイン名が許可しているのと一致しているなら許可(ホワイトリスト制)
-    /// - Parameter url: 判定したいURL
-    /// - Returns: 判定結果、許可ならtrue
-    public func isAllowedDomainCheck(_ url: URL) -> Bool {
-        // ドメイン名を取得
-        guard let domain = url.host else {
-            AKLog(level: .ERROR, message: "[Domain取得エラー] \n url:\(url)")
-            return false
-        }
-        // ドメインを検証
-        for item in Constant.allowedDomains {
-            if domain.contains(item) {
-                // 一致したなら
-                return true
-            }
-        }
-        return false
     }
     
     /// JavaScriptを動かす種類
@@ -62,10 +42,6 @@ final class MainViewModel {
     /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 動かすJavaScriptの種類
     public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
-        // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
-        if shouldShowTermsAgreementView {
-            return .none
-        }
         // JavaScriptを実行するフラグが立っていない場合はnoneを返す
         if dataManager.canExecuteJavascript == false {
             return .none
@@ -102,7 +78,7 @@ final class MainViewModel {
     ///
     /// ログイン処理完了後に呼び出される。つまり、ログインが完了したユーザーのみが呼び出す。
     /// structure Menu に存在するisInitViewがtrueであるのを探し、そのURLRequestを返す
-    /// 何も設定していないユーザーはマナバ(初期値)を表示させる。
+    /// 何も設定していないユーザーは教務事務システム(初期値)を表示させる。
     /// - Note:
     ///   isInitViewは以下の1つの事例を除き、必ずtrueは存在する。
     ///   1. お気に入り登録内容を初期設定画面に登録し、カスタマイズから削除した場合
@@ -119,8 +95,8 @@ final class MainViewModel {
         }
         // 見つからなかった場合
         // お気に入り画面を初期画面に設定しており、カスタマイズから削除した可能性がある為
-        // マナバを表示させる
-        return Url.manabaPC.urlRequest()
+        // 教務事務システムを表示させる
+        return Url.courseManagementMobile.urlRequest()
     }
     
     /// 大学統合認証システム(IAS)へのログインが完了したかどうか
@@ -165,6 +141,7 @@ final class MainViewModel {
         
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
+        // iPhoneSE 2世代目　より前？はnilになってる。要調査
         let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime))
         guard let lastTime = lastTime else {
             return false
@@ -172,12 +149,11 @@ final class MainViewModel {
         
         // 現在の時刻を取得
         let now = Date()
-        print(now.timeIntervalSince(lastTime))
-        // 時刻の差分が30*60秒未満であれば再ログインしない
+        AKLog(level: .DEBUG, message: "バックグラウンド移行後、時間 -> \(now.timeIntervalSince(lastTime)) (s)")
+        // 時刻の差分が30*60秒未満(1800s未満)であれば再ログインしない
         if now.timeIntervalSince(lastTime) < 30 * 60 {
             return false
         }
-        isLoginProcessing = true
         return true
     }
     

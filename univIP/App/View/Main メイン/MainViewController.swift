@@ -26,17 +26,32 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initSetup()
-        
         #if DEBUG
         //dataManager.hadDoneTutorial = false
         #endif
+        
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        // フォアグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(foreground(notification:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
+        // バックグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(background(notification:)),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
+        // ログインページの読み込み
+        loadLoginPage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // 利用規約同意画面を表示するべきか
         if viewModel.shouldShowTermsAgreementView {
+            // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
+            dataManager.canExecuteJavascript = false
             // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
@@ -56,7 +71,7 @@ final class MainViewController: UIViewController {
             let vc = R.storyboard.password.passwordViewController()!
             present(vc, animated: true, completion: {
                 // おしらせアラートを表示
-                vc.makeLibrarySelector()
+                vc.makeReminderPassword()
             })
         }
     }
@@ -87,27 +102,11 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: - Private func
-    /// MainViewControllerの初期セットアップ
-    private func initSetup() {
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        // フォアグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(foreground(notification:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-        // バックグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(background(notification:)),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil)
-        // ログインページの読み込み
-        loadLoginPage()
-    }
     /// フォアグラウンド時の処理
     @objc private func foreground(notification: Notification) {
         // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
         if viewModel.isExecuteLogin() {
+            viewModel.isLoginProcessing = true
             loadLoginPage()
         }
     }
@@ -123,9 +122,9 @@ final class MainViewController: UIViewController {
     private func loadLoginPage() {
         // ログイン用
         dataManager.canExecuteJavascript = true
-        // ログイン処理中であるフラグを立てる
+        // ログイン処理中
         viewModel.isLoginProcessing = true
-        // 大学統合認証システムのページを読み込む
+        // 大学統合認証システムのログインページを読み込む
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
     
@@ -164,9 +163,8 @@ final class MainViewController: UIViewController {
 extension MainViewController: WKNavigationDelegate {
     /// 読み込み設定（リクエスト前）
     ///
-    /// 以下2つの状態であったら読み込みを開始する。
+    /// 以下の状態であったら読み込みを開始する。
     ///  1. 読み込み前のURLがnilでないこと
-    ///  2. 許可されたドメインであること// 削除予定
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -176,14 +174,6 @@ extension MainViewController: WKNavigationDelegate {
             return
         }
         let urlString = url.absoluteString
-        
-//        // 許可されたドメインか判定
-//        if viewModel.isAllowedDomainCheck(url) == false {
-//            // 許可外のURLが来た場合は、Safariで開く
-//            UIApplication.shared.open(url)
-//            decisionHandler(.cancel)
-//            return
-//        }
         
         // お気に入り画面のためにURLを保持
         viewModel.urlString = urlString
@@ -202,7 +192,7 @@ extension MainViewController: WKNavigationDelegate {
     /// 読み込み完了
     ///
     /// 主に以下2つのことを処理する
-    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む // 削除予定
+    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む
     ///  2. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
@@ -214,9 +204,7 @@ extension MainViewController: WKNavigationDelegate {
             // 初期設定画面がメール(Outlook)の場合用
             dataManager.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
-//            webView.load(viewModel.searchInitPageUrl())
-            // アンケート解答の催促画面 緊急で記述
-            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+            webView.load(viewModel.searchInitPageUrl())
             return
         }
         
