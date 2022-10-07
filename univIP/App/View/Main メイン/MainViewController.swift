@@ -325,3 +325,19 @@ extension MainViewController: WKUIDelegate {
         return nil
     }
 }
+
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 12
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //storyboard上のセルを生成　storyboardのIdentifierで付けたものをここで設定する
+        let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        
+        return cell
+    }
+    
+    
+}
