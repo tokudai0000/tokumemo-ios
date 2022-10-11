@@ -14,10 +14,6 @@ final class MainViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var forwardButton: UIButton!
-    @IBOutlet weak var showMenuButton: UIButton!
-    @IBOutlet weak var showFavoriteButton: UIButton!
     
     public let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
@@ -32,6 +28,7 @@ final class MainViewController: UIViewController {
         
         webView.uiDelegate = self
         webView.navigationDelegate = self
+        
         // フォアグラウンドの判定
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(foreground(notification:)),
@@ -101,6 +98,31 @@ final class MainViewController: UIViewController {
         present(vc, animated: false, completion: nil) // アニメーションは表示しない(快適性の向上)
     }
     
+    @IBAction func collectionButton(_ sender: Any) {
+        let tag = (sender as AnyObject).tag
+        // タップされたセルの内容
+        let cell = Constant.initMenuLists[tag!]
+        // どのセルが押されたか
+        switch cell.id {
+            case .setting: // 設定
+                // メニューリストを設定用リストへ更新する
+                //                viewModel.menuLists = Constant.initSettingLists
+                //                tableView.reloadData()
+                return
+                
+            case .buckToMenu: // 戻る
+                // 設定用リストをメニューリストへ更新する
+                //                viewModel.menuLists = Constant.initMenuLists
+                //                tableView.reloadData()
+                return
+                
+            default:
+                break
+        }
+        
+    }
+    
+    
     // MARK: - Private func
     /// フォアグラウンド時の処理
     @objc private func foreground(notification: Notification) {
@@ -138,20 +160,20 @@ final class MainViewController: UIViewController {
     private func showTutorial() {
         let vc = MainTutorialViewController()
         
-        do { // 1. お気に入りボタン
-            // 絶対座標(画面左上X=0,Y=0からの座標)を取得
-            let frame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view)
-            // スポットライトで照らす座標を追加する
-            vc.uiLabels_frames.append(frame)
-            // 表示テキストを追加する
-            vc.textLabels.append("お気に入りの画面を登録し\nメニューに表示しよう")
-        }
-        
-        do { // 2. メニューボタン
-            let frame = showMenuButton.convert(showMenuButton.bounds, to: self.view)
-            vc.uiLabels_frames.append(frame)
-            vc.textLabels.append("メニューを表示しよう")
-        }
+//        do { // 1. お気に入りボタン
+//            // 絶対座標(画面左上X=0,Y=0からの座標)を取得
+//            let frame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view)
+//            // スポットライトで照らす座標を追加する
+//            vc.uiLabels_frames.append(frame)
+//            // 表示テキストを追加する
+//            vc.textLabels.append("お気に入りの画面を登録し\nメニューに表示しよう")
+//        }
+//
+//        do { // 2. メニューボタン
+//            let frame = showMenuButton.convert(showMenuButton.bounds, to: self.view)
+//            vc.uiLabels_frames.append(frame)
+//            vc.textLabels.append("メニューを表示しよう")
+//        }
         // メニューボタンをスポットした後、メニュー画面を表示させる為に
         // インスタンス(のアドレス)を渡す
         vc.mainViewController = self
@@ -327,17 +349,199 @@ extension MainViewController: WKUIDelegate {
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    /// セクション内のセル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
     }
     
+    /// セルの中身
+    ///
+    /// - Note:
+    ///  フォントサイズは17
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //storyboard上のセルを生成　storyboardのIdentifierで付けたものをここで設定する
         let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
+
+        //セル上のTag(1)とつけたUILabelを生成
+        let button = cell.contentView.viewWithTag(1) as! UIButton
+
+        //今回は簡易的にセルの番号をラベルのテキストに反映させる
+        button.setTitle(String(Constant.initMenuLists[indexPath.row].title), for: .normal)
+        button.tag = indexPath.row
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // タップされたセルの内容
+        let cell = Constant.initMenuLists[indexPath.row]
+        // どのセルが押されたか
+        switch cell.id {
+            case .setting: // 設定
+                // メニューリストを設定用リストへ更新する
+//                viewModel.menuLists = Constant.initSettingLists
+//                tableView.reloadData()
+                return
+
+            case .buckToMenu: // 戻る
+                // 設定用リストをメニューリストへ更新する
+//                viewModel.menuLists = Constant.initMenuLists
+//                tableView.reloadData()
+                return
+
+            default:
+                break
+        }
+        // メニュー画面を消去後、画面を読み込む
+//        self.dismiss(animated: false, completion: {
+//            // ログイン処理中に別の読み込み作業が入れば処理中フラグを下ろす
+//            mainVC.viewModel.isLoginProcessing = false
+
+//        switch cell.id {
+//            case .libraryCalendar: // [図書館]開館カレンダー
+////                let alert = self.makeLibrarySelector(mainVC)
+////                mainVC.present(alert, animated: true, completion:nil)
+//
+//            case .currentTermPerformance: // 今年の成績
+////                if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
+////                    mainVC.webView.load(urlRequest)
+////                }else{
+////                    // トーストを表示したい
+////                }
+//
+//            case .syllabus: // シラバス
+////                self.dataManager.canExecuteJavascript = true
+////                let vc = R.storyboard.syllabus.syllabusViewController()!
+////                vc.delegate = mainVC
+////                mainVC.present(vc, animated: true, completion: nil)
+//
+//            case .customize: // カスタマイズ画面
+////                let vc = R.storyboard.customize.customizeViewController()!
+////                mainVC.present(vc, animated: true, completion: nil)
+//
+//            case .initPageSetting: // 初期画面の設定画面
+////                let vc = R.storyboard.initPageSetting.initPageSetting()!
+////                mainVC.present(vc, animated: true, completion: nil)
+//
+//            case .password: // パスワード設定
+////                let vc = R.storyboard.password.passwordViewController()!
+////                vc.delegate = mainVC
+////                mainVC.present(vc, animated: true, completion: nil)
+//
+//            case .aboutThisApp: // このアプリについて
+////                let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+////                mainVC.present(vc, animated: true, completion: nil)
+//
+//            case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター
+////                self.dataManager.canExecuteJavascript = true
+////                let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+////                let url = URL(string: urlString)! // fatalError
+////                mainVC.webView.load(URLRequest(url: url))
+//
+//            default:
+////                // それ以外はURLを読み込む
+////                let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+////                let url = URL(string: urlString)! // fatalError
+////                mainVC.webView.load(URLRequest(url: url))
+//        }
+        // アナリティクスを送信
+//        Analytics.logEvent("MenuView", parameters: ["serviceName": cell.id]) // Analytics
+//        })
+    }
+    /// セルの高さ
+    ///
+    /// - Note:
+    ///  表示を許可されているCellの場合、高さを44とする
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if viewModel.menuLists[indexPath.row].isDisplay {
+//            return 44
+//        }
+//        return 0
+//    }
+    
+    /// セルを選択時のイベント
+    ///
+    /// [設定]と[戻る]のセルでは、テーブルをリロードする。
+    /// それ以外では画面を消した後、それぞれ処理を行う
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let mainVC = self.mainViewController else {
+//            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
+//            fatalError()
+//        }
+//        // タップされたセルの内容
+//        let cell = viewModel.menuLists[indexPath[1]]
+//        // どのセルが押されたか
+//        switch cell.id {
+//            case .setting: // 設定
+//                // メニューリストを設定用リストへ更新する
+//                viewModel.menuLists = Constant.initSettingLists
+//                tableView.reloadData()
+//                return
+//
+//            case .buckToMenu: // 戻る
+//                // 設定用リストをメニューリストへ更新する
+//                viewModel.menuLists = Constant.initMenuLists
+//                tableView.reloadData()
+//                return
+//
+//            default:
+//                break
+//        }
+//        // メニュー画面を消去後、画面を読み込む
+//        self.dismiss(animated: false, completion: {
+//            // ログイン処理中に別の読み込み作業が入れば処理中フラグを下ろす
+//            mainVC.viewModel.isLoginProcessing = false
+//
+//            switch cell.id {
+//                case .libraryCalendar: // [図書館]開館カレンダー
+//                    let alert = self.makeLibrarySelector(mainVC)
+//                    mainVC.present(alert, animated: true, completion:nil)
+//
+//                case .currentTermPerformance: // 今年の成績
+//                    if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
+//                        mainVC.webView.load(urlRequest)
+//                    }else{
+//                        // トーストを表示したい
+//                    }
+//
+//                case .syllabus: // シラバス
+//                    self.dataManager.canExecuteJavascript = true
+//                    let vc = R.storyboard.syllabus.syllabusViewController()!
+//                    vc.delegate = mainVC
+//                    mainVC.present(vc, animated: true, completion: nil)
+//
+//                case .customize: // カスタマイズ画面
+//                    let vc = R.storyboard.customize.customizeViewController()!
+//                    mainVC.present(vc, animated: true, completion: nil)
+//
+//                case .initPageSetting: // 初期画面の設定画面
+//                    let vc = R.storyboard.initPageSetting.initPageSetting()!
+//                    mainVC.present(vc, animated: true, completion: nil)
+//
+//                case .password: // パスワード設定
+//                    let vc = R.storyboard.password.passwordViewController()!
+//                    vc.delegate = mainVC
+//                    mainVC.present(vc, animated: true, completion: nil)
+//
+//                case .aboutThisApp: // このアプリについて
+//                    let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+//                    mainVC.present(vc, animated: true, completion: nil)
+//
+//                case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター
+//                    self.dataManager.canExecuteJavascript = true
+//                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+//                    let url = URL(string: urlString)! // fatalError
+//                    mainVC.webView.load(URLRequest(url: url))
+//
+//                default:
+//                    // それ以外はURLを読み込む
+//                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
+//                    let url = URL(string: urlString)! // fatalError
+//                    mainVC.webView.load(URLRequest(url: url))
+//            }
+//            // アナリティクスを送信
+//            Analytics.logEvent("MenuView", parameters: ["serviceName": cell.id]) // Analytics
+//        })
+//    }
     
 }

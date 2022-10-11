@@ -13,7 +13,6 @@
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="MainViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -114,37 +113,49 @@
                                     <constraint firstAttribute="height" constant="150" id="vDe-Ux-Jjg"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="63t-3N-rVm">
-                                <rect key="frame" x="0.0" y="244" width="414" height="569"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eTS-Bf-tfa">
+                                <rect key="frame" x="10" y="244" width="394" height="549"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WOj-Nr-qcT">
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bOq-T4-Sud">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Cell" id="p9B-7V-xkm">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="eTk-Ng-AIk">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Dnl-JK-Ynp">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wVr-cm-3tr">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IcK-mm-92d">
-                                                    <rect key="frame" x="8" y="8" width="112" height="112"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PMY-35-ose">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="100" id="Ce5-e9-Vj8"/>
+                                                        <constraint firstAttribute="width" constant="100" id="HP7-iA-DUS"/>
+                                                    </constraints>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="教務事務"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                    <connections>
+                                                        <action selector="collectionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z22-eF-A1G"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="PMY-35-ose" firstAttribute="leading" secondItem="wVr-cm-3tr" secondAttribute="leading" id="C9t-az-80j"/>
+                                                <constraint firstAttribute="trailing" secondItem="PMY-35-ose" secondAttribute="trailing" id="m2H-l0-XlG"/>
+                                                <constraint firstItem="PMY-35-ose" firstAttribute="top" secondItem="wVr-cm-3tr" secondAttribute="top" id="tzV-si-t0U"/>
+                                                <constraint firstAttribute="bottom" secondItem="PMY-35-ose" secondAttribute="bottom" id="uKA-iw-eVi"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="o6g-Qp-Nzj"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="w4k-3n-aea"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="UTL-rg-UDY"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="2a8-e2-O0r"/>
                                 </connections>
                             </collectionView>
                         </subviews>
@@ -153,10 +164,10 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P6G-LK-c80" secondAttribute="trailing" id="5QF-ff-Eco"/>
                             <constraint firstItem="P6G-LK-c80" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7r1-Oz-tlw"/>
-                            <constraint firstItem="63t-3N-rVm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="O9y-Gr-kAM"/>
-                            <constraint firstItem="63t-3N-rVm" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="bottom" constant="50" id="WoR-QK-fKn"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="63t-3N-rVm" secondAttribute="trailing" id="uT0-MO-vfs"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="63t-3N-rVm" secondAttribute="bottom" id="xAp-C4-ekx"/>
+                            <constraint firstItem="eTS-Bf-tfa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Kq7-By-twC"/>
+                            <constraint firstItem="eTS-Bf-tfa" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="bottom" constant="50" id="QFn-T3-szx"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eTS-Bf-tfa" secondAttribute="trailing" constant="10" id="Xzb-9K-a6n"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eTS-Bf-tfa" secondAttribute="bottom" constant="20" id="iDa-hm-QgF"/>
                             <constraint firstItem="P6G-LK-c80" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yLx-x2-Ae9"/>
                         </constraints>
                     </view>
@@ -165,6 +176,7 @@
                         <outlet property="webView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="725" y="-695"/>
         </scene>
