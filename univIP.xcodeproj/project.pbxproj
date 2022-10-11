@@ -13,6 +13,8 @@
 		1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */; };
 		1A27270327D0EBAB00CE1DA5 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A27270227D0EBAB00CE1DA5 /* R.generated.swift */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
+		1A30D0A928F5BFB500C4012E /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0A728F5BFB500C4012E /* CustomCell.swift */; };
+		1A30D0AA28F5BFB500C4012E /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0A828F5BFB500C4012E /* CustomCell.xib */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
@@ -83,6 +85,8 @@
 		1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1A27270227D0EBAB00CE1DA5 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		1A30D0A728F5BFB500C4012E /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		1A30D0A828F5BFB500C4012E /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
@@ -176,6 +180,15 @@
 			);
 			name = "Splash スプラッシュ";
 			path = "Splash スプラッシュ";
+			sourceTree = "<group>";
+		};
+		1A30D0AB28F5BFBD00C4012E /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				1A30D0A728F5BFB500C4012E /* CustomCell.swift */,
+				1A30D0A828F5BFB500C4012E /* CustomCell.xib */,
+			);
+			path = CustomCell;
 			sourceTree = "<group>";
 		};
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
@@ -358,6 +371,7 @@
 				1ABE8BBD27B10402001EEA79 /* MainViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* MainViewController.swift */,
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
+				1A30D0AB28F5BFBD00C4012E /* CustomCell */,
 			);
 			path = "Main メイン";
 			sourceTree = "<group>";
@@ -576,6 +590,7 @@
 				1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */,
 				1ABE8BE127B10489001EEA79 /* AboutThisApp.storyboard in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
+				1A30D0AA28F5BFB500C4012E /* CustomCell.xib in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Password.storyboard in Resources */,
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
 				1ABE8BD827B10489001EEA79 /* Syllabus.storyboard in Resources */,
@@ -744,6 +759,7 @@
 				1AE1734427CF924800174A4F /* CustomizeViewModel.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
+				1A30D0A928F5BFB500C4012E /* CustomCell.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1ABE8BE327B10489001EEA79 /* MenuViewController.swift in Sources */,

@@ -13,6 +13,11 @@ import FirebaseAnalytics
 final class MainViewController: UIViewController {
     
     // MARK: - IBOutlet
+    @IBOutlet weak var adImageView: UIImageView!
+    @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    
     @IBOutlet weak var webView: WKWebView!
     
     public let viewModel = MainViewModel()

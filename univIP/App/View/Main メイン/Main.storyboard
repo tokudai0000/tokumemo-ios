@@ -18,21 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <wkWebView contentMode="scaleToFill" ambiguous="YES" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcY-Bk-hxx">
+                                <rect key="frame" x="44" y="373" width="325" height="150"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="325" id="9TD-GW-TbB"/>
+                                    <constraint firstAttribute="height" constant="150" id="sD5-EA-cb7"/>
+                                </constraints>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6G-LK-c80" userLabel="TopView">
                                 <rect key="frame" x="0.0" y="44" width="414" height="150"/>
                                 <subviews>
-                                    <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcY-Bk-hxx">
-                                        <rect key="frame" x="0.0" y="7" width="325" height="150"/>
-                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="325" id="9TD-GW-TbB"/>
-                                            <constraint firstAttribute="height" constant="150" id="sD5-EA-cb7"/>
-                                        </constraints>
-                                        <wkWebViewConfiguration key="configuration">
-                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                            <wkPreferences key="preferences"/>
-                                        </wkWebViewConfiguration>
-                                    </wkWebView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l1T-M7-Wwh">
                                         <rect key="frame" x="265" y="7" width="149" height="150"/>
                                         <subviews>
@@ -102,14 +102,19 @@
                                             <constraint firstAttribute="height" constant="150" id="5at-4Y-bgI"/>
                                         </constraints>
                                     </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-NK-VHH">
+                                        <rect key="frame" x="0.0" y="0.0" width="265" height="150"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="gcY-Bk-hxx" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="top" constant="7" id="HyN-QA-1TV"/>
                                     <constraint firstItem="l1T-M7-Wwh" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="top" constant="7" id="L3F-5W-4As"/>
                                     <constraint firstAttribute="trailing" secondItem="l1T-M7-Wwh" secondAttribute="trailing" id="O0p-ex-zOD"/>
+                                    <constraint firstItem="l1T-M7-Wwh" firstAttribute="leading" secondItem="Pjd-NK-VHH" secondAttribute="trailing" id="RN6-mv-ig7"/>
+                                    <constraint firstAttribute="bottom" secondItem="Pjd-NK-VHH" secondAttribute="bottom" id="S7T-b0-2ak"/>
+                                    <constraint firstItem="Pjd-NK-VHH" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="bSU-7u-vr7"/>
                                     <constraint firstItem="l1T-M7-Wwh" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" constant="265" id="gMv-AJ-clC"/>
-                                    <constraint firstItem="gcY-Bk-hxx" firstAttribute="leading" secondItem="P6G-LK-c80" secondAttribute="leading" id="u8A-Ug-uBB"/>
+                                    <constraint firstItem="Pjd-NK-VHH" firstAttribute="top" secondItem="P6G-LK-c80" secondAttribute="top" id="mJh-De-4wW"/>
                                     <constraint firstAttribute="height" constant="150" id="vDe-Ux-Jjg"/>
                                 </constraints>
                             </view>
@@ -173,12 +178,16 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="dHV-rw-6EJ"/>
                     <connections>
+                        <outlet property="adImageView" destination="Pjd-NK-VHH" id="X59-4A-4SV"/>
+                        <outlet property="temperatureLabel" destination="cFE-pt-ySO" id="bG7-TW-bPX"/>
+                        <outlet property="weatherImageView" destination="WxX-2h-SOt" id="feO-6Z-7nF"/>
+                        <outlet property="weatherLabel" destination="bDP-35-chq" id="60d-06-fcO"/>
                         <outlet property="webView" destination="gcY-Bk-hxx" id="nrv-eL-gWo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="-695"/>
+            <point key="canvasLocation" x="724.63768115942037" y="-695.08928571428567"/>
         </scene>
         <!--Review-->
         <scene sceneID="hQu-4q-5Td">
