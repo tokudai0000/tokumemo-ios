@@ -17,6 +17,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var webView: WKWebView!
     
@@ -27,9 +28,19 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.dataSource = self
+        
+        collectionView.register(UINib(nibName: "CustomCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
+        
+        // セルの大きさを設定
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 100)
+        collectionView.collectionViewLayout = layout
+        
         #if DEBUG
         //dataManager.hadDoneTutorial = false
         #endif
+        
         
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -59,7 +70,6 @@ final class MainViewController: UIViewController {
             present(vc, animated: false, completion: nil)
             return
         }
-        
         // チュートリアルを完了していない場合
         if dataManager.hadDoneTutorial == false {
             // チュートリアルを表示
@@ -364,15 +374,21 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     /// - Note:
     ///  フォントサイズは17
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath)
+        
+        if let cell = cell as? CustomCell {
+            cell.setupCell(string: Constant.initCustomCellLists[indexPath.row].title)
+        }
+        
         //storyboard上のセルを生成　storyboardのIdentifierで付けたものをここで設定する
-        let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+//        let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
 
         //セル上のTag(1)とつけたUILabelを生成
-        let button = cell.contentView.viewWithTag(1) as! UIButton
-
-        //今回は簡易的にセルの番号をラベルのテキストに反映させる
-        button.setTitle(String(Constant.initCustomCellLists[indexPath.row].title), for: .normal)
-        button.tag = indexPath.row
+//        let button = cell.contentView.viewWithTag(1) as! UIButton
+//
+//        //今回は簡易的にセルの番号をラベルのテキストに反映させる
+//        button.setTitle(String(Constant.initCustomCellLists[indexPath.row].title), for: .normal)
+//        button.tag = indexPath.row
         
         return cell
     }

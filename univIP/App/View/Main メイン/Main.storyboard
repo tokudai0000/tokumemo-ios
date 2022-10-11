@@ -102,8 +102,8 @@
                                             <constraint firstAttribute="height" constant="150" id="5at-4Y-bgI"/>
                                         </constraints>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-NK-VHH">
-                                        <rect key="frame" x="0.0" y="0.0" width="265" height="150"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filemenu.and.cursorarrow.rtl" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-NK-VHH">
+                                        <rect key="frame" x="0.0" y="1.5" width="265" height="148"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -128,34 +128,14 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="eTk-Ng-AIk">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="eTk-Ng-AIk">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wVr-cm-3tr">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PMY-35-ose">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="100" id="Ce5-e9-Vj8"/>
-                                                        <constraint firstAttribute="width" constant="100" id="HP7-iA-DUS"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                                    <connections>
-                                                        <action selector="collectionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z22-eF-A1G"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="PMY-35-ose" firstAttribute="leading" secondItem="wVr-cm-3tr" secondAttribute="leading" id="C9t-az-80j"/>
-                                                <constraint firstAttribute="trailing" secondItem="PMY-35-ose" secondAttribute="trailing" id="m2H-l0-XlG"/>
-                                                <constraint firstItem="PMY-35-ose" firstAttribute="top" secondItem="wVr-cm-3tr" secondAttribute="top" id="tzV-si-t0U"/>
-                                                <constraint firstAttribute="bottom" secondItem="PMY-35-ose" secondAttribute="bottom" id="uKA-iw-eVi"/>
-                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -179,6 +159,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="dHV-rw-6EJ"/>
                     <connections>
                         <outlet property="adImageView" destination="Pjd-NK-VHH" id="X59-4A-4SV"/>
+                        <outlet property="collectionView" destination="eTS-Bf-tfa" id="HW2-Ta-iJk"/>
                         <outlet property="temperatureLabel" destination="cFE-pt-ySO" id="bG7-TW-bPX"/>
                         <outlet property="weatherImageView" destination="WxX-2h-SOt" id="feO-6Z-7nF"/>
                         <outlet property="weatherLabel" destination="bDP-35-chq" id="60d-06-fcO"/>
@@ -196,14 +177,32 @@
                     <view key="view" contentMode="scaleToFill" id="D7T-L4-Jb0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKD-oI-7NR">
+                                <rect key="frame" x="78.5" y="428.5" width="257" height="39.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Coming Soon...">
+                                        <attributes>
+                                            <font key="NSFont" size="34" name="GillSans-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="fx5-uu-d6k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="DKD-oI-7NR" firstAttribute="centerY" secondItem="D7T-L4-Jb0" secondAttribute="centerY" id="IXv-fC-FUZ"/>
+                            <constraint firstItem="DKD-oI-7NR" firstAttribute="centerX" secondItem="D7T-L4-Jb0" secondAttribute="centerX" id="k31-RR-5CD"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Review" image="star" catalog="system" id="MSI-LB-FIl"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H5L-LJ-afS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="1233"/>
+            <point key="canvasLocation" x="725" y="596"/>
         </scene>
         <!--Others-->
         <scene sceneID="TCz-V3-ZKu">
@@ -212,14 +211,32 @@
                     <view key="view" contentMode="scaleToFill" id="GWx-a1-heY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze1-cQ-tmR">
+                                <rect key="frame" x="78.5" y="428.5" width="257" height="39.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Coming Soon...">
+                                        <attributes>
+                                            <font key="NSFont" size="34" name="GillSans-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="3Qi-T0-k5r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ze1-cQ-tmR" firstAttribute="centerY" secondItem="GWx-a1-heY" secondAttribute="centerY" id="FZz-Fs-Q2i"/>
+                            <constraint firstItem="Ze1-cQ-tmR" firstAttribute="centerX" secondItem="GWx-a1-heY" secondAttribute="centerX" id="S2m-qH-0Kn"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Others" image="person" catalog="system" id="DSl-9o-u5n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cz9-R0-pRc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="585"/>
+            <point key="canvasLocation" x="725" y="1244"/>
         </scene>
         <!--News-->
         <scene sceneID="gNK-HQ-har">
@@ -228,8 +245,26 @@
                     <view key="view" contentMode="scaleToFill" id="k6Y-gP-qSs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogC-b7-0RK">
+                                <rect key="frame" x="78.5" y="428.5" width="257" height="39.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Coming Soon...">
+                                        <attributes>
+                                            <font key="NSFont" size="34" name="GillSans-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="dUa-yh-ZbC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ogC-b7-0RK" firstAttribute="centerX" secondItem="k6Y-gP-qSs" secondAttribute="centerX" id="U4a-UD-BVu"/>
+                            <constraint firstItem="ogC-b7-0RK" firstAttribute="centerY" secondItem="k6Y-gP-qSs" secondAttribute="centerY" id="sSA-4E-2aU"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="News" image="newspaper" catalog="system" id="AbC-by-zbH"/>
                 </viewController>
@@ -259,10 +294,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="88"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="newspaper" catalog="system" width="128" height="111"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

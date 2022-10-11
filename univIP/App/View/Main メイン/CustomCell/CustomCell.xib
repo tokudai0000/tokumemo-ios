@@ -10,17 +10,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="CustomCell" id="gTV-IL-0wX" customClass="CustomCell" customModule="univIP" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="gTV-IL-0wX" customClass="CustomCell" customModule="univIP" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="101" height="101"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="101" height="101"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7w-oa-TaA">
-                        <rect key="frame" x="29" y="74" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7w-oa-TaA">
+                        <rect key="frame" x="0.0" y="85" width="101" height="11"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -31,7 +30,16 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="U7w-oa-TaA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="CRi-U7-giu"/>
+                <constraint firstAttribute="bottom" secondItem="U7w-oa-TaA" secondAttribute="bottom" constant="5" id="Z68-RB-7gD"/>
+                <constraint firstAttribute="trailing" secondItem="U7w-oa-TaA" secondAttribute="trailing" id="viN-B6-jhq"/>
+            </constraints>
             <size key="customSize" width="101" height="101"/>
+            <connections>
+                <outlet property="iconImageView" destination="sAQ-Y9-pfw" id="fAN-g2-cjr"/>
+                <outlet property="nameLabel" destination="U7w-oa-TaA" id="yNs-V9-8cB"/>
+            </connections>
             <point key="canvasLocation" x="168.84057971014494" y="112.83482142857142"/>
         </collectionViewCell>
     </objects>

@@ -9,9 +9,12 @@ import UIKit
 
 class CustomCell: UICollectionViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    func setupCell(string: String) {
+        nameLabel.text = string
+        
+        self.backgroundColor = .lightGray
     }
-
 }
