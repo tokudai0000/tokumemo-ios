@@ -22,8 +22,8 @@
                                 <rect key="frame" x="44" y="373" width="325" height="150"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="325" id="9TD-GW-TbB"/>
-                                    <constraint firstAttribute="height" constant="150" id="sD5-EA-cb7"/>
+                                    <constraint firstAttribute="width" id="9TD-GW-TbB"/>
+                                    <constraint firstAttribute="height" id="sD5-EA-cb7"/>
                                 </constraints>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>

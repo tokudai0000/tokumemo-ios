@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Rswift
+import UIKit
 
 final class Constant {
     
@@ -48,6 +50,60 @@ final class Constant {
         case aboutThisApp                   // このアプリについて
         case buckToMenu                     // 戻る
     }
+    
+    struct CustomCell: Codable {
+        var title: String             // 表示名ユーザーが変更することができる
+        let id: MenuLists             // 識別しやすいようにIDを作成
+//        let icon: UIImage?            // ImageData
+        let url: String?              // 関連したURLを保持
+        var isDisplay: Bool = true    // 初期値は全てtrue
+    }
+    
+    /// サービスCell初期状態
+    ///
+    /// - Note:
+    ///   更新確認、初回利用者はここを確認される
+    static let initCustomCellLists = [
+        CustomCell(title: "教務事務システム",
+                   id: .courseManagementHomeMobile,
+                   url: Url.courseManagementMobile.string()
+                  ),
+        
+        CustomCell(title: "マナバ",
+                   id: .manabaHomePC,
+                   url: Url.manabaPC.string()
+                  ),
+        
+        CustomCell(title: "図書貸し出し延長",
+                   id: .libraryBookLendingExtension,
+                   url: Url.libraryBookLendingExtension.string()
+                  ),
+        
+        CustomCell(title: "開館カレンダー",
+                   id: .libraryCalendar,
+                   url: nil
+                  ),
+        
+        CustomCell(title: "生協営業状況",
+                   id: .tokudaiCoop,
+                   url: Url.tokudaiCoop.string()
+                  ),
+        
+        CustomCell(title: "シラバス",
+                   id: .syllabus,
+                   url: Url.syllabus.string()
+                  ),
+        
+        CustomCell(title: "今期の成績",
+                   id: .currentTermPerformance,
+                   url: Url.currentTermPerformance.string()
+                  ),
+        
+        CustomCell(title: "メール",
+                   id: .mailService,
+                   url: Url.outlookService.string()
+                  )
+    ]
     /// メニューリストの構造体
     struct Menu: Codable {
         var title: String             // 表示名ユーザーが変更することができる

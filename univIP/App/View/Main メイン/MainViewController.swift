@@ -356,7 +356,7 @@ extension MainViewController: WKUIDelegate {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     /// セクション内のセル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
+        return Constant.initCustomCellLists.count
     }
     
     /// セルの中身
@@ -371,7 +371,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let button = cell.contentView.viewWithTag(1) as! UIButton
 
         //今回は簡易的にセルの番号をラベルのテキストに反映させる
-        button.setTitle(String(Constant.initMenuLists[indexPath.row].title), for: .normal)
+        button.setTitle(String(Constant.initCustomCellLists[indexPath.row].title), for: .normal)
         button.tag = indexPath.row
         
         return cell
