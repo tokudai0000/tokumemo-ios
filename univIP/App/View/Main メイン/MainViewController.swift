@@ -14,12 +14,12 @@ final class MainViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adImageView: UIImageView!
-    @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var weatherWebView: WKWebView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var forLoginWebView: WKWebView!
     
     public let viewModel = MainViewModel()
     private let dataManager = DataManager.singleton
@@ -28,131 +28,72 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // collectionViewの初期設定
         collectionView.dataSource = self
-        
         collectionView.register(UINib(nibName: "CustomCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
-        
         // セルの大きさを設定
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
         collectionView.collectionViewLayout = layout
+        
+        
         
         #if DEBUG
         //dataManager.hadDoneTutorial = false
         #endif
         
         
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        
-        // フォアグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(foreground(notification:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-        // バックグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(background(notification:)),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil)
+        forLoginWebView.uiDelegate = self
+        forLoginWebView.navigationDelegate = self
+        weatherWebView.load(URLRequest(url: URL(string: "https://www.jma.go.jp/bosai/forecast/img/201.svg")!))
+        weatherWebView.pageZoom = 3
+        weatherWebView.isUserInteractionEnabled = false
         // ログインページの読み込み
         loadLoginPage()
+        
+        
+//        showImage(imageView: weatherImageView, url: "https://www.jma.go.jp/bosai/forecast/img/200.svg")
     }
+    
+//    private func showImage(imageView: UIImageView, url: String) {
+//        let url = URL(string: url)
+//        do {
+//            let data = try Data(contentsOf: url!)
+//            let image = UIImage(data: data)
+//            imageView.image = image
+//        } catch let err {
+//            print("Error: \(err.localizedDescription)")
+//        }
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // 利用規約同意画面を表示するべきか
-        if viewModel.shouldShowTermsAgreementView {
-            // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
-            dataManager.canExecuteJavascript = false
-            // 利用規約同意画面を表示
-            let vc = R.storyboard.agreement.agreementViewController()!
-            present(vc, animated: false, completion: nil)
-            return
-        }
-        // チュートリアルを完了していない場合
-        if dataManager.hadDoneTutorial == false {
-            // チュートリアルを表示
-            showTutorial()
-            return
-        }
+//        // 利用規約同意画面を表示するべきか
+//        if viewModel.shouldShowTermsAgreementView {
+//            // パスワードが間違っていてかつ、利用規約同意画面が表示されるとクラッシュする(裏でアラートが表示されるから)対策
+//            dataManager.canExecuteJavascript = false
+//            // 利用規約同意画面を表示
+//            let vc = R.storyboard.agreement.agreementViewController()!
+//            present(vc, animated: false, completion: nil)
+//            return
+//        }
         
-        // パスワードを登録していないユーザー
-        if viewModel.hasRegisteredPassword == false {
-            // パスワード入力画面の表示
-            let vc = R.storyboard.password.passwordViewController()!
-            present(vc, animated: true, completion: {
-                // おしらせアラートを表示
-                vc.makeReminderPassword()
-            })
-        }
+//        // パスワードを登録していないユーザー
+//        if viewModel.hasRegisteredPassword == false {
+//            // パスワード入力画面の表示
+//            let vc = R.storyboard.password.passwordViewController()!
+//            present(vc, animated: true, completion: {
+//                // おしらせアラートを表示
+//                vc.makeReminderPassword()
+//            })
+//        }
     }
     
     // MARK: - IBAction
-    @IBAction func backButton(_ sender: Any) {
-        webView.goBack()
-    }
-    
-    @IBAction func forwardButton(_ sender: Any) {
-        webView.goForward()
-    }
-    
-    @IBAction func showFavoriteButton(_ sender: Any) {
-        // お気に入り画面の表示
-        let vc = R.storyboard.favorite.favoriteViewController()!
-        vc.urlString = viewModel.urlString
-        present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func showMenuButton(_ sender: Any) {
-        // JavaScriptを実行するフラグがを立てる(ユーザーがタイムアウト等をリロードしている可能性があるから)
-        dataManager.canExecuteJavascript = true
-        // メニューを表示
-        let vc = R.storyboard.menu.menuViewController()!
-        vc.mainViewController = self
-        present(vc, animated: false, completion: nil) // アニメーションは表示しない(快適性の向上)
-    }
-    
-    @IBAction func collectionButton(_ sender: Any) {
-        let tag = (sender as AnyObject).tag
-        // タップされたセルの内容
-        let cell = Constant.initMenuLists[tag!]
-        // どのセルが押されたか
-        switch cell.id {
-            case .setting: // 設定
-                // メニューリストを設定用リストへ更新する
-                //                viewModel.menuLists = Constant.initSettingLists
-                //                tableView.reloadData()
-                return
-                
-            case .buckToMenu: // 戻る
-                // 設定用リストをメニューリストへ更新する
-                //                viewModel.menuLists = Constant.initMenuLists
-                //                tableView.reloadData()
-                return
-                
-            default:
-                break
-        }
-        
-    }
+
     
     
     // MARK: - Private func
-    /// フォアグラウンド時の処理
-    @objc private func foreground(notification: Notification) {
-        // 最後にアプリ画面を離脱した時刻から、一定時間以上経っていれば再ログイン処理を行う
-        if viewModel.isExecuteLogin() {
-            viewModel.isLoginProcessing = true
-            loadLoginPage()
-        }
-    }
-    /// バックグラウンド時の処理
-    @objc private func background(notification: Notification) {
-        // 最後にアプリ画面を離脱した時刻を保存
-        viewModel.saveCurrentTime()
-    }
-    
     /// 大学統合認証システム(IAS)のページを読み込む
     ///
     /// ログインの処理はWebViewのdidFinishで行う
@@ -162,37 +103,8 @@ final class MainViewController: UIViewController {
         // ログイン処理中
         viewModel.isLoginProcessing = true
         // 大学統合認証システムのログインページを読み込む
-        webView.load(URLRequest(url:URL(string:"https://www.tokushima-u.ac.jp/#page")!))
-    }
-    
-    /// チュートリアルを表示する
-    ///
-    /// 以下の順でボタンを疑似スポットライトをテキストと共に表示させる
-    ///  1. お気に入りボタン
-    ///  2. メニューボタン
-    /// 画面をタップすることで次のスポットライト座標へ遷移し、
-    /// メニューボタンの次はメニュー画面を表示させる
-    private func showTutorial() {
-        let vc = MainTutorialViewController()
-        
-//        do { // 1. お気に入りボタン
-//            // 絶対座標(画面左上X=0,Y=0からの座標)を取得
-//            let frame = showFavoriteButton.convert(showFavoriteButton.bounds, to: self.view)
-//            // スポットライトで照らす座標を追加する
-//            vc.uiLabels_frames.append(frame)
-//            // 表示テキストを追加する
-//            vc.textLabels.append("お気に入りの画面を登録し\nメニューに表示しよう")
-//        }
-//
-//        do { // 2. メニューボタン
-//            let frame = showMenuButton.convert(showMenuButton.bounds, to: self.view)
-//            vc.uiLabels_frames.append(frame)
-//            vc.textLabels.append("メニューを表示しよう")
-//        }
-        // メニューボタンをスポットした後、メニュー画面を表示させる為に
-        // インスタンス(のアドレス)を渡す
-        vc.mainViewController = self
-        present(vc, animated: true, completion: nil)
+        forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
+//        webView.load(URLRequest(url:URL(string:"https://www.tokushima-u.ac.jp/#page")!))
     }
 }
 
@@ -233,7 +145,7 @@ extension MainViewController: WKNavigationDelegate {
     ///  2. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
-        let url = self.webView.url! // fatalError
+        let url = self.forLoginWebView.url! // fatalError
         let urlString = url.absoluteString
         
         // 大学統合認証システムのログイン処理が終了した場合
@@ -241,7 +153,7 @@ extension MainViewController: WKNavigationDelegate {
             // 初期設定画面がメール(Outlook)の場合用
             dataManager.canExecuteJavascript = true
             // ユーザが設定した初期画面を読み込む
-            webView.load(viewModel.searchInitPageUrl())
+//            webView.load(viewModel.searchInitPageUrl())
             return
         }
         
@@ -254,8 +166,8 @@ extension MainViewController: WKNavigationDelegate {
             case .loginIAS:
                 // 徳島大学　統合認証システムサイト(ログインサイト)
                 // 自動ログインを行う
-                webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('password').value= 'S7Nk9D9H2a'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.canExecuteJavascript = false
@@ -268,7 +180,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.canExecuteJavascript = false
-                
+
             case .loginOutlook:
                 // outlook(メール)へのログイン画面
                 // cアカウントを登録していなければ自動ログインは効果がないため
@@ -278,7 +190,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.canExecuteJavascript = false
-                
+
             case .loginCareerCenter:
                 // 徳島大学キャリアセンター室
                 // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
@@ -395,24 +307,23 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // タップされたセルの内容
-        let cell = Constant.initMenuLists[indexPath.row]
+        let cell = Constant.initCustomCellLists[indexPath.row]
         // どのセルが押されたか
         switch cell.id {
-            case .setting: // 設定
-                // メニューリストを設定用リストへ更新する
-//                viewModel.menuLists = Constant.initSettingLists
-//                tableView.reloadData()
-                return
+            case .syllabus:
+//                self.dataManager.canExecuteJavascript = true
+                let vc = R.storyboard.syllabus.syllabusViewController()!
+                present(vc, animated: true, completion: nil)
 
-            case .buckToMenu: // 戻る
-                // 設定用リストをメニューリストへ更新する
-//                viewModel.menuLists = Constant.initMenuLists
-//                tableView.reloadData()
+            case .libraryCalendar: // 戻る
                 return
 
             default:
                 break
         }
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = cell.url
+        present(vc, animated: true, completion: nil)
         // メニュー画面を消去後、画面を読み込む
 //        self.dismiss(animated: false, completion: {
 //            // ログイン処理中に別の読み込み作業が入れば処理中フラグを下ろす

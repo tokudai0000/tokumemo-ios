@@ -7,6 +7,7 @@
 
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
+import Kanna
 
 final class MainViewModel {
     

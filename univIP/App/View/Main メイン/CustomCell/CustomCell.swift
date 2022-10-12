@@ -13,8 +13,8 @@ class CustomCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     func setupCell(string: String) {
+        iconImageView.image = R.image.mainIconColor()//UIImage(named: R.image.mainIconColor)
         nameLabel.text = string
         
-        self.backgroundColor = .lightGray
     }
 }

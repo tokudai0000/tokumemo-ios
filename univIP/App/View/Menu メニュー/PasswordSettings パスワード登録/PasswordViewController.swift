@@ -78,7 +78,7 @@ final class PasswordViewController: UIViewController {
         dataManager.password = passwordText
         
         if let delegate = delegate {
-            delegate.webView.load(Url.universityLogin.urlRequest())
+            delegate.forLoginWebView.load(Url.universityLogin.urlRequest())
             dismiss(animated: true, completion: nil)
         }
     }

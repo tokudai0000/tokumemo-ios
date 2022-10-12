@@ -119,7 +119,7 @@ final class MenuViewController: UIViewController {
             handler: { action in
                 // 常三島のカレンダーURLを取得後、webView読み込み
                 if let url = self.viewModel.makeLibraryCalendarUrl(type: .main) {
-                    mainVC.webView.load(url)
+                    mainVC.forLoginWebView.load(url)
                 }else{
                     AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
                 }
@@ -132,7 +132,7 @@ final class MenuViewController: UIViewController {
             handler: { action in
                 // 蔵本のカレンダーURLを取得後、webView読み込み
                 if let url = self.viewModel.makeLibraryCalendarUrl(type: .kura) {
-                    mainVC.webView.load(url)
+                    mainVC.forLoginWebView.load(url)
                 }else{
                     AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
                 }
@@ -212,7 +212,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     
                 case .currentTermPerformance: // 今年の成績
                     if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
-                        mainVC.webView.load(urlRequest)
+                        mainVC.forLoginWebView.load(urlRequest)
                     }else{
                         // トーストを表示したい
                     }
@@ -244,13 +244,13 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     self.dataManager.canExecuteJavascript = true
                     let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
                     let url = URL(string: urlString)! // fatalError
-                    mainVC.webView.load(URLRequest(url: url))
+                    mainVC.forLoginWebView.load(URLRequest(url: url))
                     
                 default:
                     // それ以外はURLを読み込む
                     let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
                     let url = URL(string: urlString)! // fatalError
-                    mainVC.webView.load(URLRequest(url: url))
+                    mainVC.forLoginWebView.load(URLRequest(url: url))
             }
             // アナリティクスを送信
             Analytics.logEvent("MenuView", parameters: ["serviceName": cell.id]) // Analytics
