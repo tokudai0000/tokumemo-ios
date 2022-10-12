@@ -57,8 +57,8 @@ final class SyllabusViewController: UIViewController {
         guard let subjectText = subjectTextField.text else { return }
         guard let teacherText = teacherTextField.text else { return }
         // シラバスを読み込み自動入力させる
-        delegate.viewModel.subjectName = subjectText
-        delegate.viewModel.teacherName = teacherText
+//        delegate.viewModel.subjectName = subjectText
+//        delegate.viewModel.teacherName = teacherText
         delegate.forLoginWebView.load(Url.syllabus.urlRequest())
         
         dismiss(animated: true, completion: nil)

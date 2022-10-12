@@ -51,11 +51,11 @@ final class Constant {
         case buckToMenu                     // 戻る
     }
     
-    struct CustomCell: Codable {
-        var title: String             // 表示名ユーザーが変更することができる
-        let id: MenuLists             // 識別しやすいようにIDを作成
+    struct CollectionCell: Codable {
+        let title: String             // 表示名
+        let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
 //        let icon: UIImage?            // ImageData
-        let url: String?              // 関連したURLを保持
+        let url: String?              // 関連したURLを保持 URLRequestはDecodableになる為、不可
         var isDisplay: Bool = true    // 初期値は全てtrue
     }
     
@@ -64,45 +64,45 @@ final class Constant {
     /// - Note:
     ///   更新確認、初回利用者はここを確認される
     static let initCustomCellLists = [
-        CustomCell(title: "教務事務システム",
-                   id: .courseManagementHomeMobile,
-                   url: Url.courseManagementMobile.string()
-                  ),
+        CollectionCell(title: "教務事務システム",
+                       id: .courseManagementHomeMobile,
+                       url: Url.courseManagementMobile.string()
+                      ),
         
-        CustomCell(title: "マナバ",
-                   id: .manabaHomePC,
-                   url: Url.manabaPC.string()
-                  ),
+        CollectionCell(title: "マナバ",
+                       id: .manabaHomePC,
+                       url: Url.manabaPC.string()
+                      ),
         
-        CustomCell(title: "図書貸し出し延長",
-                   id: .libraryBookLendingExtension,
-                   url: Url.libraryBookLendingExtension.string()
-                  ),
+        CollectionCell(title: "図書貸し出し延長",
+                       id: .libraryBookLendingExtension,
+                       url: Url.libraryBookLendingExtension.string()
+                      ),
         
-        CustomCell(title: "開館カレンダー",
-                   id: .libraryCalendar,
-                   url: nil
-                  ),
+        CollectionCell(title: "開館カレンダー",
+                       id: .libraryCalendar,
+                       url: nil
+                      ),
         
-        CustomCell(title: "生協営業状況",
-                   id: .tokudaiCoop,
-                   url: Url.tokudaiCoop.string()
-                  ),
+        CollectionCell(title: "生協営業状況",
+                       id: .tokudaiCoop,
+                       url: Url.tokudaiCoop.string()
+                      ),
         
-        CustomCell(title: "シラバス",
-                   id: .syllabus,
-                   url: Url.syllabus.string()
-                  ),
+        CollectionCell(title: "シラバス",
+                       id: .syllabus,
+                       url: Url.syllabus.string()
+                      ),
         
-        CustomCell(title: "今期の成績",
-                   id: .currentTermPerformance,
-                   url: Url.currentTermPerformance.string()
-                  ),
+        CollectionCell(title: "今期の成績",
+                       id: .currentTermPerformance,
+                       url: Url.currentTermPerformance.string()
+                      ),
         
-        CustomCell(title: "メール",
-                   id: .mailService,
-                   url: Url.outlookService.string()
-                  )
+        CollectionCell(title: "メール",
+                       id: .mailService,
+                       url: Url.outlookService.string()
+                      )
     ]
     /// メニューリストの構造体
     struct Menu: Codable {

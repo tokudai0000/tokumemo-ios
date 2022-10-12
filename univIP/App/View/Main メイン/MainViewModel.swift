@@ -10,6 +10,8 @@ import Foundation
 import Kanna
 
 final class MainViewModel {
+    /// TableCellの内容
+    public var collectionLists:[Constant.Menu] = []
     
     /// Favorite画面へURLを渡すのに使用
     public var urlString = ""
@@ -28,11 +30,11 @@ final class MainViewModel {
     
     /// JavaScriptを動かす種類
     enum JavaScriptType {
-        case skipReminder // アンケート解答の催促画面
-        case syllabus // シラバスの検索画面
+//        case skipReminder // アンケート解答の催促画面
+//        case syllabus // シラバスの検索画面
         case loginIAS // 大学統合認証システム(IAS)のログイン画面
-        case loginOutlook // メール(Outlook)のログイン画面
-        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
+//        case loginOutlook // メール(Outlook)のログイン画面
+//        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
         case none // JavaScriptを動かす必要がない場合
     }
     /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
@@ -47,14 +49,14 @@ final class MainViewModel {
         if dataManager.canExecuteJavascript == false {
             return .none
         }
-        // アンケート解答の催促画面
-        if urlString == Url.skipReminder.string() {
-            return .skipReminder
-        }
-        // シラバスの検索画面
-        if urlString == Url.syllabus.string() {
-            return .syllabus
-        }
+//        // アンケート解答の催促画面
+//        if urlString == Url.skipReminder.string() {
+//            return .skipReminder
+//        }
+//        // シラバスの検索画面
+//        if urlString == Url.syllabus.string() {
+//            return .syllabus
+//        }
         // cアカウント、パスワードを登録しているか
         if hasRegisteredPassword == false {
             return .none
@@ -63,14 +65,14 @@ final class MainViewModel {
         if urlString.contains(Url.universityLogin.string()) {
             return .loginIAS
         }
-        // メール(Outlook)のログイン画面
-        if urlString.contains(Url.outlookLoginForm.string()) {
-            return .loginOutlook
-        }
-        // 徳島大学キャリアセンターのログイン画面
-        if urlString == Url.tokudaiCareerCenter.string() {
-            return .loginCareerCenter
-        }
+//        // メール(Outlook)のログイン画面
+//        if urlString.contains(Url.outlookLoginForm.string()) {
+//            return .loginOutlook
+//        }
+//        // 徳島大学キャリアセンターのログイン画面
+//        if urlString == Url.tokudaiCareerCenter.string() {
+//            return .loginCareerCenter
+//        }
         // それ以外なら
         return .none
     }
@@ -161,7 +163,7 @@ final class MainViewModel {
     /// タイムアウトのURLであるかどうかの判定
     /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 結果
-    public func isTimeout(_ urlString: String) -> Bool {
+    public func shouldReLogin(_ urlString: String) -> Bool {
         if urlString == Url.universityServiceTimeOut.string() ||
             urlString == Url.universityServiceTimeOut2.string() {
             return true
