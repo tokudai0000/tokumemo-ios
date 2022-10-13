@@ -13,8 +13,9 @@ final class MainViewModel {
     /// TableCellの内容
     public var collectionLists:[Constant.CollectionCell] = Constant.initCustomCellLists
     
-    /// ログイン処理中かどうか
-    public var isLoginProcessing = false
+    public var isLoginProcessing = false // ログイン処理中
+    public var isLoginComplete = false // ログイン完了
+    public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public var shouldShowTermsAgreementView: Bool {
@@ -60,21 +61,24 @@ final class MainViewModel {
     /// - Parameter urlString: 現在表示しているURLString
     /// - Returns: 判定結果、許可ならtrue
     /// hadLoggedin
-//    public func isLoggedin(_ urlString: String) -> Bool {
-//        // ログイン後のURLが指定したURLと一致しているかどうか
-//        let check1 = urlString.contains(Url.skipReminder.string())
-//        let check2 = urlString.contains(Url.courseManagementPC.string())
-//        let check3 = urlString.contains(Url.courseManagementMobile.string())
-//        // 上記から1つでもtrueがあれば、引き継ぐ
-//        let result = check1 || check2 || check3
-//        // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
-//        if isLoginProcessing, result {
-//            // ログイン処理を完了とする
-//            isLoginProcessing = false
-//            return true
-//        }
-//        return false
-//    }
+    public func isLoggedin(_ urlString: String) -> Bool {
+        // ログイン後のURLが指定したURLと一致しているかどうか
+        let check1 = urlString.contains(Url.skipReminder.string())
+        let check2 = urlString.contains(Url.courseManagementPC.string())
+        let check3 = urlString.contains(Url.courseManagementMobile.string())
+        // 上記から1つでもtrueがあれば、引き継ぐ
+        let result = check1 || check2 || check3
+        // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
+        if isLoginProcessing, result {
+            // ログインプロセスは終了
+            isLoginProcessing = false
+            isLoginCompleteImmediately = true
+            return true
+        }
+        // ログイン完了後に別画面開いてもtrueになるように
+        return isLoginComplete
+    }
+    
     
     /// 現在の時刻を保存する
 //    public func saveCurrentTime() {

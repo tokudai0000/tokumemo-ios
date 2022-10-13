@@ -132,6 +132,13 @@ extension MainViewController: WKNavigationDelegate {
                 // JavaScriptを動かす必要がなかったURLの場合
                 break
         }
+        // ログインが完了したか記録
+        viewModel.isLoginComplete = viewModel.isLoggedin(url.absoluteString)
+        // ログイン完了時にcollectionViewのCellデータを更新
+        if viewModel.isLoginCompleteImmediately {
+            viewModel.isLoginCompleteImmediately = false
+            collectionView.reloadData()
+        }
     }
 }
 
@@ -148,8 +155,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.customCell, for: indexPath)
         
         if let cell = cell {
-            cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                           image: R.image.mainIconColor())
+            if viewModel.isLoginComplete {
+                cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                               image: R.image.mainIconColor())
+            } else {
+                cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                               image: R.image.mainIconWhite())
+            }
             return cell
         }
         AKLog(level: .FATAL, message: "CustomCellが見当たりません")
