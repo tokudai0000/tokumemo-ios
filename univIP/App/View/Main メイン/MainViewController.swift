@@ -40,6 +40,7 @@ final class MainViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
         collectionView.collectionViewLayout = layout
+        collectionView.register(R.nib.customCell) // nibファイルを使うことを登録
         
         // forLoginWebViewの初期設定
         forLoginWebView.navigationDelegate = self
@@ -123,6 +124,7 @@ extension MainViewController: WKNavigationDelegate {
                 webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('password').value= 'S7Nk9D9H2a'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+                
                 // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
                 dataManager.canExecuteJavascript = false
                 
@@ -141,198 +143,53 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     /// セルの中身
-    ///
-    /// - Note:
-    ///  フォントサイズは17
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath)
+        // どのnibファイルに紐づけるか
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.customCell, for: indexPath)
         
-        if let cell = cell as? CustomCell {
-            cell.setupCell(string: Constant.initCustomCellLists[indexPath.row].title)
+        if let cell = cell {
+            cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                           image: R.image.mainIconColor())
+            return cell
         }
-        
-        //storyboard上のセルを生成　storyboardのIdentifierで付けたものをここで設定する
-//        let cell:UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-
-        //セル上のTag(1)とつけたUILabelを生成
-//        let button = cell.contentView.viewWithTag(1) as! UIButton
-//
-//        //今回は簡易的にセルの番号をラベルのテキストに反映させる
-//        button.setTitle(String(Constant.initCustomCellLists[indexPath.row].title), for: .normal)
-//        button.tag = indexPath.row
-        
-        return cell
+        AKLog(level: .FATAL, message: "CustomCellが見当たりません")
+        fatalError()
     }
     
+    /// セルがタップされた時
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // タップされたセルの内容
-        let cell = Constant.initCustomCellLists[indexPath.row]
-        // どのセルが押されたか
+        // タップされたセルの内容を取得
+        let cell = viewModel.collectionLists[indexPath.row]
+        // アナリティクスを送信
+        Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
+        
+        // 押されたセルによって場合分け
         switch cell.id {
             case .syllabus:
-//                self.dataManager.canExecuteJavascript = true
                 let vc = R.storyboard.syllabus.syllabusViewController()!
                 present(vc, animated: true, completion: nil)
 
-            case .libraryCalendar: // 戻る
+            case .currentTermPerformance: // 今年の成績
+                let vc = R.storyboard.web.webViewController()!
+                vc.loadUrlString = viewModel.createCurrentTermPerformanceUrl()
+                present(vc, animated: true, completion: nil)
                 return
-
+                
+            case .libraryCalendar:
+                if let urlString = viewModel.makeLibraryCalendarUrl(type: .main) {
+                    let vc = R.storyboard.web.webViewController()!
+                    vc.loadUrlString = urlString
+                    present(vc, animated: true, completion: nil)
+                    return
+                }
+            
+//            case .mailService:
+                
             default:
                 break
         }
         let vc = R.storyboard.web.webViewController()!
         vc.loadUrlString = cell.url
         present(vc, animated: true, completion: nil)
-        // メニュー画面を消去後、画面を読み込む
-//        self.dismiss(animated: false, completion: {
-//            // ログイン処理中に別の読み込み作業が入れば処理中フラグを下ろす
-//            mainVC.viewModel.isLoginProcessing = false
-
-//        switch cell.id {
-//            case .libraryCalendar: // [図書館]開館カレンダー
-////                let alert = self.makeLibrarySelector(mainVC)
-////                mainVC.present(alert, animated: true, completion:nil)
-//
-//            case .currentTermPerformance: // 今年の成績
-////                if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
-////                    mainVC.webView.load(urlRequest)
-////                }else{
-////                    // トーストを表示したい
-////                }
-//
-//            case .syllabus: // シラバス
-////                self.dataManager.canExecuteJavascript = true
-////                let vc = R.storyboard.syllabus.syllabusViewController()!
-////                vc.delegate = mainVC
-////                mainVC.present(vc, animated: true, completion: nil)
-//
-//            case .customize: // カスタマイズ画面
-////                let vc = R.storyboard.customize.customizeViewController()!
-////                mainVC.present(vc, animated: true, completion: nil)
-//
-//            case .initPageSetting: // 初期画面の設定画面
-////                let vc = R.storyboard.initPageSetting.initPageSetting()!
-////                mainVC.present(vc, animated: true, completion: nil)
-//
-//            case .password: // パスワード設定
-////                let vc = R.storyboard.password.passwordViewController()!
-////                vc.delegate = mainVC
-////                mainVC.present(vc, animated: true, completion: nil)
-//
-//            case .aboutThisApp: // このアプリについて
-////                let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-////                mainVC.present(vc, animated: true, completion: nil)
-//
-//            case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター
-////                self.dataManager.canExecuteJavascript = true
-////                let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
-////                let url = URL(string: urlString)! // fatalError
-////                mainVC.webView.load(URLRequest(url: url))
-//
-//            default:
-////                // それ以外はURLを読み込む
-////                let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
-////                let url = URL(string: urlString)! // fatalError
-////                mainVC.webView.load(URLRequest(url: url))
-//        }
-        // アナリティクスを送信
-//        Analytics.logEvent("MenuView", parameters: ["serviceName": cell.id]) // Analytics
-//        })
     }
-    /// セルの高さ
-    ///
-    /// - Note:
-    ///  表示を許可されているCellの場合、高さを44とする
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if viewModel.menuLists[indexPath.row].isDisplay {
-//            return 44
-//        }
-//        return 0
-//    }
-    
-    /// セルを選択時のイベント
-    ///
-    /// [設定]と[戻る]のセルでは、テーブルをリロードする。
-    /// それ以外では画面を消した後、それぞれ処理を行う
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let mainVC = self.mainViewController else {
-//            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
-//            fatalError()
-//        }
-//        // タップされたセルの内容
-//        let cell = viewModel.menuLists[indexPath[1]]
-//        // どのセルが押されたか
-//        switch cell.id {
-//            case .setting: // 設定
-//                // メニューリストを設定用リストへ更新する
-//                viewModel.menuLists = Constant.initSettingLists
-//                tableView.reloadData()
-//                return
-//
-//            case .buckToMenu: // 戻る
-//                // 設定用リストをメニューリストへ更新する
-//                viewModel.menuLists = Constant.initMenuLists
-//                tableView.reloadData()
-//                return
-//
-//            default:
-//                break
-//        }
-//        // メニュー画面を消去後、画面を読み込む
-//        self.dismiss(animated: false, completion: {
-//            // ログイン処理中に別の読み込み作業が入れば処理中フラグを下ろす
-//            mainVC.viewModel.isLoginProcessing = false
-//
-//            switch cell.id {
-//                case .libraryCalendar: // [図書館]開館カレンダー
-//                    let alert = self.makeLibrarySelector(mainVC)
-//                    mainVC.present(alert, animated: true, completion:nil)
-//
-//                case .currentTermPerformance: // 今年の成績
-//                    if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
-//                        mainVC.webView.load(urlRequest)
-//                    }else{
-//                        // トーストを表示したい
-//                    }
-//
-//                case .syllabus: // シラバス
-//                    self.dataManager.canExecuteJavascript = true
-//                    let vc = R.storyboard.syllabus.syllabusViewController()!
-//                    vc.delegate = mainVC
-//                    mainVC.present(vc, animated: true, completion: nil)
-//
-//                case .customize: // カスタマイズ画面
-//                    let vc = R.storyboard.customize.customizeViewController()!
-//                    mainVC.present(vc, animated: true, completion: nil)
-//
-//                case .initPageSetting: // 初期画面の設定画面
-//                    let vc = R.storyboard.initPageSetting.initPageSetting()!
-//                    mainVC.present(vc, animated: true, completion: nil)
-//
-//                case .password: // パスワード設定
-//                    let vc = R.storyboard.password.passwordViewController()!
-//                    vc.delegate = mainVC
-//                    mainVC.present(vc, animated: true, completion: nil)
-//
-//                case .aboutThisApp: // このアプリについて
-//                    let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-//                    mainVC.present(vc, animated: true, completion: nil)
-//
-//                case .mailService, .tokudaiCareerCenter: // メール(Outlook), キャリアセンター
-//                    self.dataManager.canExecuteJavascript = true
-//                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
-//                    let url = URL(string: urlString)! // fatalError
-//                    mainVC.webView.load(URLRequest(url: url))
-//
-//                default:
-//                    // それ以外はURLを読み込む
-//                    let urlString = cell.url!         // fatalError(url=nilは上記で網羅できているから)
-//                    let url = URL(string: urlString)! // fatalError
-//                    mainVC.webView.load(URLRequest(url: url))
-//            }
-//            // アナリティクスを送信
-//            Analytics.logEvent("MenuView", parameters: ["serviceName": cell.id]) // Analytics
-//        })
-//    }
-    
 }

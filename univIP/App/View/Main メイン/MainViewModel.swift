@@ -11,14 +11,7 @@ import Kanna
 
 final class MainViewModel {
     /// TableCellの内容
-    public var collectionLists:[Constant.Menu] = []
-    
-    /// Favorite画面へURLを渡すのに使用
-    public var urlString = ""
-    
-    /// シラバスをJavaScriptInjectionで自動入力する際、参照変数
-    public var subjectName = ""
-    public var teacherName = ""
+    public var collectionLists:[Constant.CollectionCell] = Constant.initCustomCellLists
     
     /// ログイン処理中かどうか
     public var isLoginProcessing = false
@@ -30,11 +23,7 @@ final class MainViewModel {
     
     /// JavaScriptを動かす種類
     enum JavaScriptType {
-//        case skipReminder // アンケート解答の催促画面
-//        case syllabus // シラバスの検索画面
         case loginIAS // 大学統合認証システム(IAS)のログイン画面
-//        case loginOutlook // メール(Outlook)のログイン画面
-//        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
         case none // JavaScriptを動かす必要がない場合
     }
     /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
@@ -49,14 +38,6 @@ final class MainViewModel {
         if dataManager.canExecuteJavascript == false {
             return .none
         }
-//        // アンケート解答の催促画面
-//        if urlString == Url.skipReminder.string() {
-//            return .skipReminder
-//        }
-//        // シラバスの検索画面
-//        if urlString == Url.syllabus.string() {
-//            return .syllabus
-//        }
         // cアカウント、パスワードを登録しているか
         if hasRegisteredPassword == false {
             return .none
@@ -65,41 +46,8 @@ final class MainViewModel {
         if urlString.contains(Url.universityLogin.string()) {
             return .loginIAS
         }
-//        // メール(Outlook)のログイン画面
-//        if urlString.contains(Url.outlookLoginForm.string()) {
-//            return .loginOutlook
-//        }
-//        // 徳島大学キャリアセンターのログイン画面
-//        if urlString == Url.tokudaiCareerCenter.string() {
-//            return .loginCareerCenter
-//        }
         // それ以外なら
         return .none
-    }
-
-    /// 初期画面に指定したWebページのURLを返す
-    ///
-    /// ログイン処理完了後に呼び出される。つまり、ログインが完了したユーザーのみが呼び出す。
-    /// structure Menu に存在するisInitViewがtrueであるのを探し、そのURLRequestを返す
-    /// 何も設定していないユーザーは教務事務システム(初期値)を表示させる。
-    /// - Note:
-    ///   isInitViewは以下の1つの事例を除き、必ずtrueは存在する。
-    ///   1. お気に入り登録内容を初期設定画面に登録し、カスタマイズから削除した場合
-    /// - Returns: 設定した初期画面のURLRequest
-    public func searchInitPageUrl() -> URLRequest {
-        // メニューリストの内1つだけ、isInitView=trueが存在するので探す
-        for menuList in dataManager.menuLists {
-            // 初期画面を探す
-            if menuList.isInitView,
-               let urlString = menuList.url,
-               let url = URL(string: urlString) {
-                return URLRequest(url: url)
-            }
-        }
-        // 見つからなかった場合
-        // お気に入り画面を初期画面に設定しており、カスタマイズから削除した可能性がある為
-        // 教務事務システムを表示させる
-        return Url.courseManagementMobile.urlRequest()
     }
     
     /// 大学統合認証システム(IAS)へのログインが完了したかどうか
@@ -112,30 +60,30 @@ final class MainViewModel {
     /// - Parameter urlString: 現在表示しているURLString
     /// - Returns: 判定結果、許可ならtrue
     /// hadLoggedin
-    public func isLoggedin(_ urlString: String) -> Bool {
-        // ログイン後のURLが指定したURLと一致しているかどうか
-        let check1 = urlString.contains(Url.skipReminder.string())
-        let check2 = urlString.contains(Url.courseManagementPC.string())
-        let check3 = urlString.contains(Url.courseManagementMobile.string())
-        // 上記から1つでもtrueがあれば、引き継ぐ
-        let result = check1 || check2 || check3
-        // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
-        if isLoginProcessing, result {
-            // ログイン処理を完了とする
-            isLoginProcessing = false
-            return true
-        }
-        return false
-    }
+//    public func isLoggedin(_ urlString: String) -> Bool {
+//        // ログイン後のURLが指定したURLと一致しているかどうか
+//        let check1 = urlString.contains(Url.skipReminder.string())
+//        let check2 = urlString.contains(Url.courseManagementPC.string())
+//        let check3 = urlString.contains(Url.courseManagementMobile.string())
+//        // 上記から1つでもtrueがあれば、引き継ぐ
+//        let result = check1 || check2 || check3
+//        // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
+//        if isLoginProcessing, result {
+//            // ログイン処理を完了とする
+//            isLoginProcessing = false
+//            return true
+//        }
+//        return false
+//    }
     
     /// 現在の時刻を保存する
-    public func saveCurrentTime() {
-        // 現在の時刻を取得し保存
-        let f = DateFormatter()
-        f.setTemplate(.full)
-        let now = Date()
-        dataManager.setUserDefaultsString(key: KEY_saveCurrentTime, value: f.string(from: now))
-    }
+//    public func saveCurrentTime() {
+//        // 現在の時刻を取得し保存
+//        let f = DateFormatter()
+//        f.setTemplate(.full)
+//        let now = Date()
+//        dataManager.setUserDefaultsString(key: KEY_saveCurrentTime, value: f.string(from: now))
+//    }
     
     /// 再度ログイン処理を行うかどうか
     ///
@@ -169,6 +117,78 @@ final class MainViewModel {
             return true
         }
         return false
+    }
+    
+    /// 大学図書館の種類
+    enum LibraryType {
+        case main // 常三島本館
+        case kura // 蔵本分館
+    }
+    /// 図書館の開館カレンダーPDFまでのURLRequestを作成する
+    ///
+    /// PDFへのURLは状況により変化する為、図書館ホームページからスクレイピングを行う
+    /// 例1：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021.pdf
+    /// 例2：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_syuusei1.pdf
+    /// ==HTML==[常三島(本館Main) , 蔵本(分館Kura)でも同様]
+    /// <body class="index">
+    ///   <ul>
+    ///       <li class="pos_r">
+    ///         <a href="pub/pdf/calender/calender_main_2021.pdf title="開館カレンダー">
+    ///   ========
+    ///   aタグのhref属性を抽出、"pub/pdf/calender/"と一致していれば、例1のURLを作成する。
+    /// - Parameter type: 常三島(本館Main) , 蔵本(分館Kura)のどちらの開館カレンダーを欲しいのかLibraryTypeから選択
+    /// - Returns: 図書館の開館カレンダーPDFまでのURLRequest
+    public func makeLibraryCalendarUrl(type: LibraryType) -> String? {
+        var urlString = ""
+        switch type {
+            case .main:
+                urlString = Url.libraryHomePageMainPC.string()
+            case .kura:
+                urlString = Url.libraryHomePageKuraPC.string()
+        }
+        let url = URL(string: urlString)! // fatalError
+        do {
+            // URL先WebページのHTMLデータを取得
+            let data = NSData(contentsOf: url as URL)! as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            // aタグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
+            for node in doc.xpath("//a") {
+                // href属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
+                guard let str = node["href"] else {
+                    AKLog(level: .ERROR, message: "[href属性出力エラー]: href属性に設定されている文字列を出力する際のエラー")
+                    return nil
+                }
+                // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
+                if str.contains("pub/pdf/calender/") {
+                    // PDFまでのURLを作成する(本館のURLに付け加える)
+                    return Url.libraryHomePageMainPC.string() + str
+                }
+            }
+            AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(url.absoluteString)")
+        } catch {
+            AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(url.absoluteString)")
+        }
+        return nil
+    }
+    
+    /// 今年度の成績表のURLを作成する
+    ///
+    /// - Note:
+    ///   2020年4月〜2021年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2020
+    ///   2021年4月〜2022年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2021
+    ///   なので、2022年の1月から3月まではURLがyear=2021とする必要あり
+    /// - Returns: 今年度の成績表のURL
+    public func createCurrentTermPerformanceUrl() -> String {
+        
+        var year = Calendar.current.component(.year, from: Date())
+        let month = Calendar.current.component(.month, from: Date())
+        
+        // 1月から3月までは前年の成績
+        if month <= 3 {
+            year -= 1
+        }
+        
+        return Url.currentTermPerformance.string() + String(year)
     }
     
     // MARK: - Private
