@@ -51,10 +51,11 @@ final class Constant {
         case buckToMenu                     // 戻る
     }
     
-    struct CollectionCell: Codable {
+    struct CollectionCell {
         let title: String             // 表示名
         let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
-//        let icon: UIImage?            // ImageData
+        let iconUnLock: UIImage?       // ImageData
+        let iconLock: UIImage?  // ImageData
         let url: String?              // 関連したURLを保持 URLRequestはDecodableになる為、不可
         var isDisplay: Bool = true    // 初期値は全てtrue
     }
@@ -66,41 +67,57 @@ final class Constant {
     static let initCustomCellLists = [
         CollectionCell(title: "教務事務システム",
                        id: .courseManagementHomeMobile,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: R.image.menuIcon(),
                        url: Url.courseManagementMobile.string()
                       ),
         
         CollectionCell(title: "マナバ",
                        id: .manabaHomePC,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: R.image.menuIcon(),
                        url: Url.manabaPC.string()
                       ),
         
         CollectionCell(title: "図書貸し出し延長",
                        id: .libraryBookLendingExtension,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: R.image.menuIcon(),
                        url: Url.libraryBookLendingExtension.string()
                       ),
         
         CollectionCell(title: "開館カレンダー",
                        id: .libraryCalendar,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: nil,
                        url: nil
                       ),
         
         CollectionCell(title: "生協営業状況",
                        id: .tokudaiCoop,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: nil,
                        url: Url.tokudaiCoop.string()
                       ),
         
         CollectionCell(title: "シラバス",
                        id: .syllabus,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: nil,
                        url: Url.syllabus.string()
                       ),
         
         CollectionCell(title: "今期の成績",
                        id: .currentTermPerformance,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: R.image.menuIcon(),
                        url: Url.currentTermPerformance.string()
                       ),
         
         CollectionCell(title: "メール",
                        id: .mailService,
+                       iconUnLock: R.image.pcIcon(),
+                       iconLock: nil,
                        url: Url.outlookService.string()
                       )
     ]

@@ -51,6 +51,12 @@ final class MainViewController: UIViewController {
         weatherWebView.load(URLRequest(url: URL(string: "https://www.jma.go.jp/bosai/forecast/img/201.svg")!)) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
         weatherWebView.pageZoom = 3
         weatherWebView.isUserInteractionEnabled = false
+        
+        // フォアグラウンドの判定
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(foreground(notification:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,7 +72,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
-        Analytics.logEvent("StudentCardButton", parameters: nil) // Analytics
+        Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
     }
     
     // MARK: - Private func
@@ -79,6 +85,13 @@ final class MainViewController: UIViewController {
         viewModel.isLoginProcessing = true
         // 大学統合認証システムのログインページを読み込む
         forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
+    }
+    
+    /// フォアグラウンド時の処理
+    @objc private func foreground(notification: Notification) {
+        viewModel.isLoginProcessing = true
+        viewModel.isLoginComplete = false
+        loadLoginPage()
     }
 }
 
@@ -155,12 +168,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.customCell, for: indexPath)
         
         if let cell = cell {
-            if viewModel.isLoginComplete {
-                cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                               image: R.image.mainIconColor())
-            } else {
-                cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                               image: R.image.mainIconWhite())
+
+            cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                            image: viewModel.collectionLists[indexPath.row].iconUnLock)
+            
+            if !viewModel.isLoginComplete {
+                if let img = viewModel.collectionLists[indexPath.row].iconLock {
+                    cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                                   image: img)
+                }
             }
             return cell
         }
