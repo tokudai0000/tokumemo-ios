@@ -74,7 +74,7 @@ final class Constant {
         
         CollectionCell(title: "マナバ",
                        id: .manabaHomePC,
-                       iconUnLock: R.image.pcIcon(),
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
                        iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.manabaPC.string()
                       ),
@@ -95,14 +95,14 @@ final class Constant {
         
         CollectionCell(title: "生協営業状況",
                        id: .tokudaiCoop,
-                       iconUnLock: R.image.pcIcon(),
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
                        iconLock: nil,
                        url: Url.tokudaiCoop.string()
                       ),
         
         CollectionCell(title: "シラバス",
                        id: .syllabus,
-                       iconUnLock: R.image.pcIcon(),
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
                        iconLock: nil,
                        url: Url.syllabus.string()
                       ),
@@ -121,6 +121,31 @@ final class Constant {
                        url: Url.outlookService.string()
                       )
     ]
+    
+    
+    struct MenuCell {
+        let title: String             // 表示名
+        let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
+    }
+    /// サービスCell初期状態
+    ///
+    /// - Note:
+    ///   更新確認、初回利用者はここを確認される
+    static let initMenuCellLists = [
+        MenuCell(title: "パスワード設定",
+                 id: .password),
+        MenuCell(title: "お問い合わせ",
+                 id: .courseManagementHomeMobile),
+        MenuCell(title: "プライバシーポリシー",
+                 id: .aboutThisApp),
+        MenuCell(title: "利用規約",
+                 id: .aboutThisApp),
+        MenuCell(title: "ライセンス",
+                 id: .aboutThisApp)
+        ]
+    
+    
+    
     /// メニューリストの構造体
     struct Menu: Codable {
         var title: String             // 表示名ユーザーが変更することができる

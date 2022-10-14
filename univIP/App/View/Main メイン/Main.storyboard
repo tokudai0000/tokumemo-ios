@@ -187,10 +187,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKD-oI-7NR">
-                                <rect key="frame" x="78.5" y="428.5" width="257" height="39.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKD-oI-7NR">
+                                <rect key="frame" x="78.5" y="408.5" width="257" height="79"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Coming Soon...">
+                                    <fragment content="Review Coming Soon...">
                                         <attributes>
                                             <font key="NSFont" size="34" name="GillSans-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -214,38 +214,50 @@
             <point key="canvasLocation" x="725" y="596"/>
         </scene>
         <!--Others-->
-        <scene sceneID="TCz-V3-ZKu">
+        <scene sceneID="mE2-9m-f5K">
             <objects>
-                <viewController id="08W-op-b4d" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="GWx-a1-heY">
+                <tableViewController id="LSR-dA-c8a" customClass="OthersViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="9VE-lo-Oi8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze1-cQ-tmR">
-                                <rect key="frame" x="78.5" y="428.5" width="257" height="39.5"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Coming Soon...">
-                                        <attributes>
-                                            <font key="NSFont" size="34" name="GillSans-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="3Qi-T0-k5r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Ze1-cQ-tmR" firstAttribute="centerY" secondItem="GWx-a1-heY" secondAttribute="centerY" id="FZz-Fs-Q2i"/>
-                            <constraint firstItem="Ze1-cQ-tmR" firstAttribute="centerX" secondItem="GWx-a1-heY" secondAttribute="centerX" id="S2m-qH-0Kn"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Others" image="person" catalog="system" id="DSl-9o-u5n"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cz9-R0-pRc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OthersCell" id="9oV-oJ-v57">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9oV-oJ-v57" id="3Td-Ub-SSE">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="LSR-dA-c8a" id="evf-Vk-FJs"/>
+                            <outlet property="delegate" destination="LSR-dA-c8a" id="JYO-xw-ZOD"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Others" id="oM9-rO-bBK"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jdf-Nh-Htb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="1244"/>
+            <point key="canvasLocation" x="1609" y="1298"/>
+        </scene>
+        <!--Others-->
+        <scene sceneID="GUA-tK-QNU">
+            <objects>
+                <navigationController id="cyb-ZV-ki2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Others" image="person" catalog="system" id="UfT-JZ-1Hj"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DZt-xJ-RZk">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="LSR-dA-c8a" kind="relationship" relationship="rootViewController" id="afF-bB-URV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ojz-N6-ugv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="725" y="1298"/>
         </scene>
         <!--News-->
         <scene sceneID="gNK-HQ-har">
@@ -255,13 +267,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogC-b7-0RK">
-                                <rect key="frame" x="78.5" y="428.5" width="257" height="39.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogC-b7-0RK">
+                                <rect key="frame" x="78.5" y="408.5" width="257" height="79"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Coming Soon...">
+                                    <fragment content="News Coming Soon... ">
                                         <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" size="34" name="GillSans-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
@@ -294,7 +307,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ilD-8v-y79"/>
                         <segue destination="JCL-3c-h6I" kind="relationship" relationship="viewControllers" id="vuN-EC-jsT"/>
                         <segue destination="CYt-5P-yc6" kind="relationship" relationship="viewControllers" id="xwP-cS-lMQ"/>
-                        <segue destination="08W-op-b4d" kind="relationship" relationship="viewControllers" id="Qf3-2s-2Mq"/>
+                        <segue destination="cyb-ZV-ki2" kind="relationship" relationship="viewControllers" id="SrR-rZ-h72"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YHV-ox-1BU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -17,41 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oW6-Pz-p5T">
-                                <rect key="frame" x="0.0" y="44" width="414" height="40"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="トクメモについて" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47h-TB-tL6">
-                                        <rect key="frame" x="125.5" y="0.0" width="163.5" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIx-b9-HYh">
-                                        <rect key="frame" x="359" y="0.0" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="YiT-pq-SUL"/>
-                                        </constraints>
-                                        <color key="tintColor" systemColor="labelColor"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title=" " image="xmark" catalog="system"/>
-                                        <connections>
-                                            <action selector="dismissButton:" destination="nM6-6p-iga" eventType="touchUpInside" id="jhc-Pw-l0W"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="vIx-b9-HYh" secondAttribute="bottom" id="7fC-jG-RNX"/>
-                                    <constraint firstItem="47h-TB-tL6" firstAttribute="centerX" secondItem="oW6-Pz-p5T" secondAttribute="centerX" id="EHJ-oN-k2z"/>
-                                    <constraint firstAttribute="trailing" secondItem="vIx-b9-HYh" secondAttribute="trailing" constant="15" id="FUf-th-tYG"/>
-                                    <constraint firstItem="vIx-b9-HYh" firstAttribute="top" secondItem="oW6-Pz-p5T" secondAttribute="top" id="Ujg-5T-chy"/>
-                                    <constraint firstItem="47h-TB-tL6" firstAttribute="top" secondItem="oW6-Pz-p5T" secondAttribute="top" id="gQg-ZK-CbM"/>
-                                    <constraint firstAttribute="height" constant="40" id="gvA-U1-S1s"/>
-                                    <constraint firstAttribute="bottom" secondItem="47h-TB-tL6" secondAttribute="bottom" id="pA0-Oo-hnm"/>
-                                </constraints>
-                            </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gcV-JG-Ywk">
-                                <rect key="frame" x="10" y="104" width="394" height="658"/>
+                                <rect key="frame" x="10" y="64" width="394" height="698"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -88,13 +55,10 @@
                         <constraints>
                             <constraint firstItem="nio-wZ-rX9" firstAttribute="leading" secondItem="y3E-ej-uw1" secondAttribute="leading" constant="10" id="1qm-pY-v9o"/>
                             <constraint firstItem="y3E-ej-uw1" firstAttribute="bottom" secondItem="nio-wZ-rX9" secondAttribute="bottom" constant="10" id="2Ss-iq-4Ri"/>
-                            <constraint firstItem="oW6-Pz-p5T" firstAttribute="top" secondItem="y3E-ej-uw1" secondAttribute="top" id="Swa-UG-RxA"/>
                             <constraint firstItem="y3E-ej-uw1" firstAttribute="trailing" secondItem="nio-wZ-rX9" secondAttribute="trailing" constant="10" id="TJz-Tx-y2j"/>
+                            <constraint firstItem="gcV-JG-Ywk" firstAttribute="top" secondItem="y3E-ej-uw1" secondAttribute="top" constant="20" id="U8K-EJ-gIK"/>
                             <constraint firstItem="gcV-JG-Ywk" firstAttribute="leading" secondItem="y3E-ej-uw1" secondAttribute="leading" constant="10" id="VPY-9n-CqB"/>
                             <constraint firstItem="y3E-ej-uw1" firstAttribute="trailing" secondItem="gcV-JG-Ywk" secondAttribute="trailing" constant="10" id="WNd-5J-npF"/>
-                            <constraint firstItem="oW6-Pz-p5T" firstAttribute="trailing" secondItem="y3E-ej-uw1" secondAttribute="trailing" id="aYZ-By-wcJ"/>
-                            <constraint firstItem="oW6-Pz-p5T" firstAttribute="leading" secondItem="y3E-ej-uw1" secondAttribute="leading" id="hUT-NQ-cDd"/>
-                            <constraint firstItem="gcV-JG-Ywk" firstAttribute="top" secondItem="oW6-Pz-p5T" secondAttribute="bottom" constant="20" id="nyu-U3-fTl"/>
                             <constraint firstItem="nio-wZ-rX9" firstAttribute="top" secondItem="gcV-JG-Ywk" secondAttribute="bottom" constant="10" id="wPe-2a-Aem"/>
                         </constraints>
                     </view>
@@ -108,7 +72,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

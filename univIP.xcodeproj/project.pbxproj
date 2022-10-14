@@ -19,6 +19,8 @@
 		1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0AF28F6D7BC00C4012E /* Web.storyboard */; };
 		1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B128F6ED2E00C4012E /* UIImage.swift */; };
 		1A30D0B628F87D4500C4012E /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B528F87D4500C4012E /* WeatherAPI.swift */; };
+		1A30D0BB28F9C14200C4012E /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BA28F9C14200C4012E /* OthersViewController.swift */; };
+		1A30D0BD28F9C1D300C4012E /* OthersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BC28F9C1D300C4012E /* OthersViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
@@ -95,6 +97,8 @@
 		1A30D0AF28F6D7BC00C4012E /* Web.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Web.storyboard; sourceTree = "<group>"; };
 		1A30D0B128F6ED2E00C4012E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		1A30D0B528F87D4500C4012E /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		1A30D0BA28F9C14200C4012E /* OthersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewController.swift; sourceTree = "<group>"; };
+		1A30D0BC28F9C1D300C4012E /* OthersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
@@ -207,6 +211,17 @@
 			);
 			name = "Web ウェブ画面 ";
 			path = "Web ウェブ画面 ";
+			sourceTree = "<group>";
+		};
+		1A30D0B728F9BED600C4012E /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				1A30D0BC28F9C1D300C4012E /* OthersViewModel.swift */,
+				1A30D0BA28F9C14200C4012E /* OthersViewController.swift */,
+				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
+				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
+			);
+			path = Others;
 			sourceTree = "<group>";
 		};
 		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
@@ -392,6 +407,7 @@
 				1ABE8BB927B10402001EEA79 /* MainViewController.swift */,
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A30D0AB28F5BFBD00C4012E /* CustomCell */,
+				1A30D0B728F9BED600C4012E /* Others */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 			);
 			path = "Main メイン";
@@ -405,9 +421,7 @@
 				1ABE8BCA27B10489001EEA79 /* Menu.storyboard */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
 				1ABE8BC327B10489001EEA79 /* InitPageSetting 初期画面設定 */,
-				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
 				1ABE8BCE27B10489001EEA79 /* Customize カスタマイズ */,
-				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
 			);
 			path = "Menu メニュー";
 			sourceTree = "<group>";
@@ -439,7 +453,7 @@
 				1ABE8BCC27B10489001EEA79 /* Password.storyboard */,
 			);
 			name = "Password パスワード登録";
-			path = "PasswordSettings パスワード登録";
+			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};
 		1ABE8BCE27B10489001EEA79 /* Customize カスタマイズ */ = {
@@ -458,7 +472,8 @@
 				1ABE8BD227B10489001EEA79 /* AboutThisAppViewController.swift */,
 				1ABE8BD327B10489001EEA79 /* AboutThisApp.storyboard */,
 			);
-			path = "AboutThisApp このアプリについて";
+			name = "AboutThisApp このアプリについて";
+			path = "AboutThisApp このアプリについて";
 			sourceTree = "<group>";
 		};
 		1AFE73CB27BC7CD800BCC125 /* Favorite お気に入り登録 */ = {
@@ -772,6 +787,7 @@
 				1ABE8BD627B10489001EEA79 /* InitPageSettingViewController.swift in Sources */,
 				1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */,
 				1ABE8BBF27B10402001EEA79 /* TutorialViewController.swift in Sources */,
+				1A30D0BB28F9C14200C4012E /* OthersViewController.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
 				1AA19F9927CF48D5005F088A /* InitPageSettingModel.swift in Sources */,
@@ -796,6 +812,7 @@
 				1ABE8BDD27B10489001EEA79 /* PasswordViewController.swift in Sources */,
 				1AFE73CF27BC7D5000BCC125 /* FavoriteViewController.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* MainViewModel.swift in Sources */,
+				1A30D0BD28F9C1D300C4012E /* OthersViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
