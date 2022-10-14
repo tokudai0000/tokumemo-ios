@@ -67,28 +67,28 @@ final class Constant {
     static let initCustomCellLists = [
         CollectionCell(title: "教務事務システム",
                        id: .courseManagementHomeMobile,
-                       iconUnLock: R.image.pcIcon(),
-                       iconLock: R.image.menuIcon(),
+                       iconUnLock: UIImage(systemName: "graduationcap"),
+                       iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.courseManagementMobile.string()
                       ),
         
         CollectionCell(title: "マナバ",
                        id: .manabaHomePC,
                        iconUnLock: R.image.pcIcon(),
-                       iconLock: R.image.menuIcon(),
+                       iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.manabaPC.string()
                       ),
         
         CollectionCell(title: "図書貸し出し延長",
                        id: .libraryBookLendingExtension,
-                       iconUnLock: R.image.pcIcon(),
-                       iconLock: R.image.menuIcon(),
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.libraryBookLendingExtension.string()
                       ),
         
         CollectionCell(title: "開館カレンダー",
                        id: .libraryCalendar,
-                       iconUnLock: R.image.pcIcon(),
+                       iconUnLock: UIImage(systemName: "calendar"),
                        iconLock: nil,
                        url: nil
                       ),
@@ -109,15 +109,15 @@ final class Constant {
         
         CollectionCell(title: "今期の成績",
                        id: .currentTermPerformance,
-                       iconUnLock: R.image.pcIcon(),
-                       iconLock: R.image.menuIcon(),
+                       iconUnLock: UIImage(systemName: "chart.line.uptrend.xyaxis"),
+                       iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.currentTermPerformance.string()
                       ),
         
         CollectionCell(title: "メール",
                        id: .mailService,
-                       iconUnLock: R.image.pcIcon(),
-                       iconLock: nil,
+                       iconUnLock: UIImage(systemName: "envelope.badge"),
+                       iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.outlookService.string()
                       )
     ]

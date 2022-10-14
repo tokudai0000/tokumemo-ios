@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VeN-sT-zma">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VeN-sT-zma">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -19,13 +19,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6G-LK-c80" userLabel="TopView">
-                                <rect key="frame" x="0.0" y="48" width="414" height="150"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="150"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l1T-M7-Wwh">
                                         <rect key="frame" x="265" y="7" width="149" height="150"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vA5-Fe-7BT">
-                                                <rect key="frame" x="0.0" y="0.0" width="149" height="115.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="149" height="119"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="徳島市の天気" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-mj-csE">
                                                         <rect key="frame" x="22.5" y="5" width="104" height="20.5"/>
@@ -34,7 +34,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOn-3E-CZm">
-                                                        <rect key="frame" x="39.5" y="89.5" width="70" height="21"/>
+                                                        <rect key="frame" x="39.5" y="93" width="70" height="21"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="雲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDP-35-chq">
                                                                 <rect key="frame" x="10" y="0.0" width="17.5" height="21"/>
@@ -62,7 +62,7 @@
                                                         </constraints>
                                                     </view>
                                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RZX-0e-j1G">
-                                                        <rect key="frame" x="37" y="33" width="75" height="50"/>
+                                                        <rect key="frame" x="37" y="34.5" width="75" height="50"/>
                                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="75" id="9kh-Yz-3jW"/>
@@ -85,7 +85,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwP-UM-dcS">
-                                                <rect key="frame" x="0.0" y="115.5" width="149" height="34.5"/>
+                                                <rect key="frame" x="0.0" y="119" width="149" height="31"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="学生証を表示"/>
@@ -98,8 +98,8 @@
                                             <constraint firstAttribute="height" constant="150" id="5at-4Y-bgI"/>
                                         </constraints>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filemenu.and.cursorarrow.rtl" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-NK-VHH">
-                                        <rect key="frame" x="0.0" y="1.5" width="265" height="148"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainIconColor" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-NK-VHH">
+                                        <rect key="frame" x="0.0" y="0.0" width="265" height="150"/>
                                     </imageView>
                                     <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcY-Bk-hxx">
                                         <rect key="frame" x="265" y="0.0" width="0.0" height="0.0"/>
@@ -129,7 +129,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eTS-Bf-tfa">
-                                <rect key="frame" x="10" y="248" width="394" height="545"/>
+                                <rect key="frame" x="10" y="244" width="394" height="549"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bOq-T4-Sud">
                                     <size key="itemSize" width="128" height="128"/>
@@ -303,10 +303,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="89"/>
-        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="MainIconColor" width="427" height="427"/>
+        <image name="house" catalog="system" width="128" height="106"/>
         <image name="newspaper" catalog="system" width="128" height="111"/>
-        <image name="person" catalog="system" width="128" height="121"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
