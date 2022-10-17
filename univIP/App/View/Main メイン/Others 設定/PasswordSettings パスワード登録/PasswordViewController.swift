@@ -22,7 +22,7 @@ final class PasswordViewController: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var passwordViewButton: UIButton!
     
-    public var delegate : MainViewController?
+//    public var delegate : OthersViewController?
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
@@ -77,10 +77,12 @@ final class PasswordViewController: UIViewController {
         dataManager.cAccount = cAccountText
         dataManager.password = passwordText
         
-        if let delegate = delegate {
-            delegate.forLoginWebView.load(Url.universityLogin.urlRequest())
-            dismiss(animated: true, completion: nil)
-        }
+        registerButton.setTitle("登録が完了しました", for: .normal)
+//        if let delegate = delegate {
+//            delegate.forLoginWebView.load(Url.universityLogin.urlRequest())
+//            dataManager.canExecuteJavascript = true
+//            dismiss(animated: true, completion: nil)
+//        }
     }
     
     /// パスワード入力を推奨するポップアップを表示させる。

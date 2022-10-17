@@ -44,8 +44,6 @@ final class MainViewController: UIViewController {
         
         // forLoginWebViewの初期設定
         forLoginWebView.navigationDelegate = self
-        // ログインページの読み込み
-        loadLoginPage()
         
         // weatherWebViewの初期設定
         // (滅多に出ない雹や雪などの天気アイコンを作るよりWebページを表示した方が早いし正確との判断から)
@@ -69,6 +67,8 @@ final class MainViewController: UIViewController {
             present(vc, animated: false, completion: nil)
             return
         }
+        // ログインページの読み込み
+        loadLoginPage()
     }
     
     // MARK: - IBAction
