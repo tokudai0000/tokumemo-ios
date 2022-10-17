@@ -18,7 +18,6 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
     
@@ -31,7 +30,7 @@ final class MainViewController: UIViewController {
         
         #if DEBUG
         // デバックの時にいじる部分
-//         dataManager.hadDoneTutorial = false
+         dataManager.hadDoneTutorial = false
         #endif
         
         // collectionViewの初期設定
@@ -62,7 +61,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // 利用規約同意画面を表示するべきか
-        if !viewModel.shouldShowTermsAgreementView {
+        if viewModel.shouldShowTermsAgreementView {
             // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)

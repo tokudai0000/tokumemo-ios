@@ -29,13 +29,13 @@ final class AboutThisAppViewController: UIViewController {
     
     /// 利用規約ボタン
     @IBAction func termsOfServiceButton(_ sender: Any) {
-        let vc = R.storyboard.terms.termsViewController()!
-        present(vc, animated: true, completion: nil)
+//        let vc = R.storyboard.terms.termsViewController()!
+//        present(vc, animated: true, completion: nil)
     }
     
     /// プライバシーポリシーボタン
     @IBAction func privacyPolicyButton(_ sender: Any) {
-        let vc = R.storyboard.privacyPolicy.privacyPolicyViewController()!
-        present(vc, animated: true, completion: nil)
+//        let vc = R.storyboard.privacyPolicy.privacyPolicyViewController()!
+//        present(vc, animated: true, completion: nil)
     }
 }
