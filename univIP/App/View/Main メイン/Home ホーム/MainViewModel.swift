@@ -22,33 +22,29 @@ final class MainViewModel {
         get { return dataManager.agreementVersion != Constant.latestTermsVersion }
     }
     
-    /// JavaScriptを動かす種類
-    enum JavaScriptType {
-        case loginIAS // 大学統合認証システム(IAS)のログイン画面
-        case none // JavaScriptを動かす必要がない場合
-    }
-    /// JavaScriptを動かしたい指定のURLかどうかを判定し、動かすJavaScriptの種類を返す
+
+    /// JavaScriptを動かしたい指定のURLかどうかを判定し可能ならTrueを返す
     ///
     /// - Note: canExecuteJavascriptが重要な理由
     ///   ログインに失敗した場合に再度ログインのURLが表示されることになる。
     ///   canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
     /// - Parameter urlString: 読み込み完了したURLの文字列
-    /// - Returns: 動かすJavaScriptの種類
-    public func anyJavaScriptExecute(_ urlString: String) -> JavaScriptType {
+    /// - Returns: 動かせるかどうか
+    public func canJavaScriptExecute(_ urlString: String) -> Bool {
         // JavaScriptを実行するフラグが立っていない場合はnoneを返す
         if dataManager.canExecuteJavascript == false {
-            return .none
+            return false
         }
         // cアカウント、パスワードを登録しているか
         if hasRegisteredPassword == false {
-            return .none
+            return false
         }
         // 大学統合認証システム(IAS)のログイン画面
         if urlString.contains(Url.universityLogin.string()) {
-            return .loginIAS
+            return true
         }
         // それ以外なら
-        return .none
+        return false
     }
     
     /// 大学統合認証システム(IAS)へのログインが完了したかどうか
@@ -79,15 +75,6 @@ final class MainViewModel {
         return isLoginComplete
     }
     
-    
-    /// 現在の時刻を保存する
-//    public func saveCurrentTime() {
-//        // 現在の時刻を取得し保存
-//        let f = DateFormatter()
-//        f.setTemplate(.full)
-//        let now = Date()
-//        dataManager.setUserDefaultsString(key: KEY_saveCurrentTime, value: f.string(from: now))
-//    }
     
     /// 再度ログイン処理を行うかどうか
     ///
@@ -195,12 +182,12 @@ final class MainViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
-    // MARK: - Private
-    
-    private let dataManager = DataManager.singleton
-    
     // cアカウント、パスワードを登録しているか判定
     public var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    
+    
+    // MARK: - Private
+    private let dataManager = DataManager.singleton
     
     // 前回利用した時間を保存
     private let KEY_saveCurrentTime = "KEY_saveCurrentTime"

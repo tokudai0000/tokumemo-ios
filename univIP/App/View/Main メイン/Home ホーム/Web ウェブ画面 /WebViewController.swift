@@ -16,6 +16,9 @@ final class WebViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
     
+    private let viewModel = WebViewModel()
+    private let dataManager = DataManager.singleton
+    
     var loadUrlString: String?
 
     override func viewDidLoad() {
@@ -63,15 +66,13 @@ extension WebViewController: WKNavigationDelegate {
                 urlLabel.text = domain
             }
         }
-//        // お気に入り画面のためにURLを保持
-//        viewModel.urlString = urlString
-//
-//        // タイムアウトした場合
-//        if viewModel.isTimeout(urlString) {
-//            // ログイン処理を始める
-//            loadLoginPage()
-//        }
-//
+        
+        // タイムアウトした場合
+        if viewModel.isTimeout(url.absoluteString) {
+            // ログイン処理を始める
+            webView.load(Url.universityTransitionLogin.urlRequest())
+        }
+
         // 問題ない場合読み込みを許可
         decisionHandler(.allow)
         return
@@ -85,73 +86,72 @@ extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.webView.url! // fatalError
-        let urlString = url.absoluteString
-//
-//        // 大学統合認証システムのログイン処理が終了した場合
-//        if viewModel.isLoggedin(urlString) {
-//            // 初期設定画面がメール(Outlook)の場合用
-//            dataManager.canExecuteJavascript = true
-//            // ユーザが設定した初期画面を読み込む
-//            webView.load(viewModel.searchInitPageUrl())
-//            return
-//        }
-//
-//        // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
-//        switch viewModel.anyJavaScriptExecute(urlString) {
-//            case .skipReminder:
-//                // アンケート解答の催促画面
-//                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
-//
-//            case .loginIAS:
-//                // 徳島大学　統合認証システムサイト(ログインサイト)
-//                // 自動ログインを行う
-//                webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-//                // フラグを下ろす
-//                dataManager.canExecuteJavascript = false
-//
-//            case .syllabus:
-//                // シラバスの検索画面
-//                // ネイティブでの検索内容をWebに反映したのち、検索を行う
-//                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(viewModel.subjectName)'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(viewModel.teacherName)'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-//                // フラグを下ろす
-//                dataManager.canExecuteJavascript = false
-//
-//            case .loginOutlook:
-//                // outlook(メール)へのログイン画面
-//                // cアカウントを登録していなければ自動ログインは効果がないため
-//                // 自動ログインを行う
-//                webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-//                // フラグを下ろす
-//                dataManager.canExecuteJavascript = false
-//
-//            case .loginCareerCenter:
-//                // 徳島大学キャリアセンター室
-//                // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
-//                // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
-//                webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
-//                webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
-//                // フラグを下ろす
-//                dataManager.canExecuteJavascript = false
-//
-//            case .none:
-//                // JavaScriptを動かす必要がなかったURLの場合
-//                break
-//        }
-//
+        
+        // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
+        switch viewModel.anyJavaScriptExecute(url.absoluteString) {
+            case .skipReminder:
+                // アンケート解答の催促画面
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+
+            case .loginIAS:
+                // 徳島大学　統合認証システムサイト(ログインサイト)
+                // 自動ログインを行う
+                webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.canExecuteJavascript = false
+
+            case .syllabus:
+                // 検索中は、画面を消すことにより、ユーザーの別操作を防ぐ
+                webView.isHidden = true
+                
+                // シラバスの検索画面
+                // ネイティブでの検索内容をWebに反映したのち、検索を行う
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(dataManager.subjectName)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(dataManager.teacherName)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.canExecuteJavascript = false
+
+            case .loginOutlook:
+                // outlook(メール)へのログイン画面
+                // cアカウントを登録していなければ自動ログインは効果がないため
+                // 自動ログインを行う
+                webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.canExecuteJavascript = false
+
+            case .loginCareerCenter:
+                // 徳島大学キャリアセンター室
+                // 自動入力を行う(cアカウントは同じ、パスワードは異なる可能性あり)
+                // ログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
+                webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+                // フラグを下ろす
+                dataManager.canExecuteJavascript = false
+
+            case .none:
+                // JavaScriptを動かす必要がなかったURLの場合
+                break
+        }
+        
+        // あとでModelに書き直す
+        // シラバス検索完了後のURLに変化していたらwebViewを表示
+        if url.absoluteString == "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx" {
+            webView.isHidden = false
+        }
         // 戻る、進むボタンの表示を変更
         backButton.isEnabled = webView.canGoBack
         backButton.alpha = webView.canGoBack ? 1.0 : 0.4
         forwardButton.isEnabled = webView.canGoForward
         forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
-//
+
 //        // アナリティクスを送信
 //        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString]) // Analytics
+        AKLog(level: .DEBUG, message: url.absoluteString)
     }
     
     /// alert対応

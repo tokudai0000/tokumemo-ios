@@ -49,19 +49,18 @@ final class SyllabusViewController: UIViewController {
     }
     
     @IBAction func searchButton(_ sender: Any) {
-        guard let delegate = self.delegate else {
-            AKLog(level: .FATAL, message: "[delegateエラー]: MainViewControllerから delegate=self を渡されていない")
-            fatalError()
-        }
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
-        guard let subjectText = subjectTextField.text else { return }
-        guard let teacherText = teacherTextField.text else { return }
+        let subjectText = subjectTextField.text ?? ""
+        let teacherText = teacherTextField.text ?? ""
         // シラバスを読み込み自動入力させる
-//        delegate.viewModel.subjectName = subjectText
-//        delegate.viewModel.teacherName = teacherText
-        delegate.forLoginWebView.load(Url.syllabus.urlRequest())
+        dataManager.subjectName = subjectText
+        dataManager.teacherName = teacherText
         
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: {
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = Url.syllabus.string()
+            self.delegate!.present(vc, animated: true, completion: nil)
+        })
     }
     
     // MARK: - Private

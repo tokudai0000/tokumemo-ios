@@ -28,6 +28,8 @@ final class AgreementViewController: UIViewController {
     /// 同意ボタン
     /// 利用規約のバージョン更新を行う
     @IBAction func agreementButton(_ sender: Any) {
+        // アプリ内に表示していた利用規約のバージョンを保存する。
+        // (アプリ起動毎に、前回同意した利用規約のバージョンを照らし合わせる)
         dataManager.agreementVersion = Constant.latestTermsVersion
         dismiss(animated: true, completion: nil)
     }

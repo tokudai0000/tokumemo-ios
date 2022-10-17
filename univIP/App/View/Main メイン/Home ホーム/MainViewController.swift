@@ -30,7 +30,8 @@ final class MainViewController: UIViewController {
         
         #if DEBUG
         // デバックの時にいじる部分
-         dataManager.hadDoneTutorial = false
+//        dataManager.hadDoneTutorial = false
+//        dataManager.agreementVersion = ""
         #endif
         
         // collectionViewの初期設定
@@ -46,7 +47,8 @@ final class MainViewController: UIViewController {
         // ログインページの読み込み
         loadLoginPage()
         
-        // weatherWebViewの初期設定(滅多に出ない雹や雪などの天気アイコンを作るよりWebページを表示した方が早いし正確との判断から)
+        // weatherWebViewの初期設定
+        // (滅多に出ない雹や雪などの天気アイコンを作るよりWebページを表示した方が早いし正確との判断から)
         weatherWebView.load(URLRequest(url: URL(string: "https://www.jma.go.jp/bosai/forecast/img/201.svg")!)) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
         weatherWebView.pageZoom = 3
         weatherWebView.isUserInteractionEnabled = false
@@ -128,22 +130,18 @@ extension MainViewController: WKNavigationDelegate {
         let url = self.forLoginWebView.url! // fatalError
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
-        switch viewModel.anyJavaScriptExecute(url.absoluteString) {
+        if viewModel.canJavaScriptExecute(url.absoluteString) {
+            // 徳島大学　統合認証システムサイト(ログインサイト)
+            // 自動ログインを行う。JavaScriptInjection
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            
+            // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+            dataManager.canExecuteJavascript = false
                 
-            case .loginIAS:
-                // 徳島大学　統合認証システムサイト(ログインサイト)
-                // 自動ログインを行う。JavaScriptInjection
-                webView.evaluateJavaScript("document.getElementById('username').value= 'c611821006'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('password').value= 'S7Nk9D9H2a'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-                
-                // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-                dataManager.canExecuteJavascript = false
-                
-            case .none:
-                // JavaScriptを動かす必要がなかったURLの場合
-                break
         }
+        
         // ログインが完了したか記録
         viewModel.isLoginComplete = viewModel.isLoggedin(url.absoluteString)
         // ログイン完了時にcollectionViewのCellデータを更新
@@ -190,10 +188,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // アナリティクスを送信
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
+        dataManager.canExecuteJavascript = true
+        
         // 押されたセルによって場合分け
         switch cell.id {
             case .syllabus:
                 let vc = R.storyboard.syllabus.syllabusViewController()!
+                vc.delegate = self
                 present(vc, animated: true, completion: nil)
 
             case .currentTermPerformance: // 今年の成績

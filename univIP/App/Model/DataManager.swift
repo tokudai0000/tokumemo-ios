@@ -13,6 +13,9 @@ final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
     
+    public var teacherName = ""
+    public var subjectName = ""
+    
     /// JavaScriptを動かすかどうかのフラグ
     ///
     /// 次に読み込まれるURLはJavaScriptを動かすことを許可する
