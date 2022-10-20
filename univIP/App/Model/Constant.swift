@@ -132,17 +132,36 @@ final class Constant {
     /// - Note:
     ///   更新確認、初回利用者はここを確認される
     static let initMenuCellLists = [
-        MenuCell(title: "パスワード設定",
-                 id: .password),
-        MenuCell(title: "お問い合わせ",
-                 id: .courseManagementHomeMobile),
-        MenuCell(title: "プライバシーポリシー",
-                 id: .aboutThisApp),
-        MenuCell(title: "利用規約",
-                 id: .aboutThisApp),
-        MenuCell(title: "ライセンス",
-                 id: .aboutThisApp)
-        ]
+        [
+            MenuCell(title: "パスワード設定",
+                     id: .password),
+            MenuCell(title: "カスタマイズ",
+                     id: .password)
+        ],[
+            MenuCell(title: "このアプリについて",
+                     id: .courseManagementHomeMobile),
+            MenuCell(title: "お問い合わせ",
+                     id: .courseManagementHomeMobile),
+            MenuCell(title: "公式SNS",
+                     id: .aboutThisApp),
+            MenuCell(title: "ホームページ",
+                     id: .aboutThisApp),
+        ],[
+            MenuCell(title: "利用規約",
+                     id: .aboutThisApp),
+            MenuCell(title: "プライバシーポリシー",
+                     id: .aboutThisApp),
+            MenuCell(title: "ライセンス",
+                     id: .aboutThisApp),
+            MenuCell(title: "謝辞",
+                     id: .aboutThisApp)
+        ]]
+    
+    static let initSectionLists = [
+    "",
+    "",
+    ""
+    ]
     
     
     
