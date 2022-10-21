@@ -8,9 +8,9 @@
 import UIKit
 import SafariServices
 
-class OthersViewController: UITableViewController {
+class SettingsViewController: UITableViewController {
 
-    private let viewModel = OthersViewModel()
+    private let viewModel = SettingsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

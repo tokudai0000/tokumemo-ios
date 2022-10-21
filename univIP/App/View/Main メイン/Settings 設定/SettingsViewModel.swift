@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class OthersViewModel {
+final class SettingsViewModel {
     /// TableCellの内容
     public var collectionLists:[[Constant.MenuCell]] = Constant.initMenuCellLists
 }
