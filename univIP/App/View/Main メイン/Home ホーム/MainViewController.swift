@@ -30,7 +30,7 @@ final class MainViewController: UIViewController {
         
         #if DEBUG
         // デバックの時にいじる部分
-//        dataManager.hadDoneTutorial = false 
+//        dataManager.hadDoneTutorial = false
 //        dataManager.agreementVersion = ""
         #endif
         
