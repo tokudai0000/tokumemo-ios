@@ -43,11 +43,23 @@ final class Constant {
         case universityWeb                  // 大学サイト
         case setting                        // 設定
         
-        case favorite                       // お気に入り登録
-        case customize                      // 並び替え
-        case initPageSetting                // 初期画面設定
+
         case password                       // パスワード
+        case customize                      // 並び替え
+        
         case aboutThisApp                   // このアプリについて
+        case contactUs                      // お問い合わせ
+        case officialSNS                    // 公式SNS
+        case homePage                       // ホームページ
+        
+        case termsOfService                     // 利用規約
+        case privacyPolicy                  // プライバシーポリシー
+        case license                        // ライセンス
+        case acknowledgments                // 謝辞
+        
+        
+        case favorite                       // お気に入り登録
+        case initPageSetting                // 初期画面設定
         case buckToMenu                     // 戻る
     }
     
@@ -136,32 +148,26 @@ final class Constant {
             MenuCell(title: "パスワード設定",
                      id: .password),
             MenuCell(title: "カスタマイズ",
-                     id: .password)
+                     id: .customize)
         ],[
             MenuCell(title: "このアプリについて",
-                     id: .courseManagementHomeMobile),
+                     id: .aboutThisApp),
             MenuCell(title: "お問い合わせ",
-                     id: .courseManagementHomeMobile),
+                     id: .contactUs),
             MenuCell(title: "公式SNS",
-                     id: .aboutThisApp),
+                     id: .officialSNS),
             MenuCell(title: "ホームページ",
-                     id: .aboutThisApp),
+                     id: .homePage),
         ],[
             MenuCell(title: "利用規約",
-                     id: .aboutThisApp),
+                     id: .termsOfService),
             MenuCell(title: "プライバシーポリシー",
-                     id: .aboutThisApp),
+                     id: .privacyPolicy),
             MenuCell(title: "ライセンス",
-                     id: .aboutThisApp),
+                     id: .license),
             MenuCell(title: "謝辞",
-                     id: .aboutThisApp)
+                     id: .acknowledgments)
         ]]
-    
-    static let initSectionLists = [
-    "",
-    "",
-    ""
-    ]
     
     
     

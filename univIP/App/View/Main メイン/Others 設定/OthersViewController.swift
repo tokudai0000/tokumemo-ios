@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class OthersViewController: UITableViewController {
 
@@ -42,7 +43,9 @@ class OthersViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.othersCell, for: indexPath)! // fatalError
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
+        
+
+//        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         cell.textLabel?.text = viewModel.collectionLists[indexPath.section][indexPath.item].title
 
         return cell
@@ -66,12 +69,62 @@ class OthersViewController: UITableViewController {
                 self.navigationController?.pushViewController(nextView, animated: true)//遷移する
                 return
                 
+            case .customize:
+                let storyboard: UIStoryboard = UIStoryboard(name: "Password", bundle: nil)//遷移先のStoryboardを設定
+                let nextView = storyboard.instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController//遷移先のViewControllerを設定
+                nextView.title = "パスワード"
+                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
+                return
+                
             case .aboutThisApp:
                 let storyboard: UIStoryboard = UIStoryboard(name: "AboutThisApp", bundle: nil)//遷移先のStoryboardを設定
                 let nextView = storyboard.instantiateViewController(withIdentifier: "AboutThisAppViewController") as! AboutThisAppViewController//遷移先のViewControllerを設定
                 nextView.title = "このアプリについて"
                 self.navigationController?.pushViewController(nextView, animated: true)//遷移する
                 return
+                
+            case .contactUs:
+                let webPage = "https://www.google.com/?hl=ja"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
+            case .officialSNS:
+                let webPage = "https://twitter.com/tokumemo0000"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
+            case .homePage:
+                let webPage = "https://lit.link/developers"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
+            case .termsOfService:
+                let webPage = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
+            case .privacyPolicy:
+                let webPage = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
+            case .license:
+                let webPage = "https://www.google.com/?hl=ja"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
+            case .acknowledgments:
+                let webPage = "https://www.google.com/?hl=ja"
+                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
+                present(safariVC, animated: true, completion: nil)
+                return
+                
                 
             default:
                 break
