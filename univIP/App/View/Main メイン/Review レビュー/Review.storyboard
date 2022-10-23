@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c8q-AA-dNK">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Review-->
+        <scene sceneID="vpG-Vn-O9W">
+            <objects>
+                <viewController id="c8q-AA-dNK" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fOP-Xx-bJm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sm5-Dw-fFH">
+                                <rect key="frame" x="78.5" y="408.5" width="257" height="79"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Review Coming Soon...">
+                                        <attributes>
+                                            <font key="NSFont" size="34" name="GillSans-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nUJ-6N-MRn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Sm5-Dw-fFH" firstAttribute="centerX" secondItem="fOP-Xx-bJm" secondAttribute="centerX" id="ni2-zE-rdP"/>
+                            <constraint firstItem="Sm5-Dw-fFH" firstAttribute="centerY" secondItem="fOP-Xx-bJm" secondAttribute="centerY" id="xcN-Nz-aIT"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Review" image="star" catalog="system" id="hMg-DG-2ck"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u9Z-EO-ZBO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="725" y="596"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

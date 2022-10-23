@@ -26,6 +26,10 @@
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
 		1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A5FD6832715305D0081F952 /* GoogleService-Info.plist */; };
+		1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51AF2904E82900A3E85A /* Home.storyboard */; };
+		1A6C51B22904EC2F00A3E85A /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51B12904EC2F00A3E85A /* News.storyboard */; };
+		1A6C51B42904ECCA00A3E85A /* Review.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51B32904ECCA00A3E85A /* Review.storyboard */; };
+		1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51B52904ED2400A3E85A /* Settings.storyboard */; };
 		1A6EF50F27BA5C63004D0B2C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6EF50E27BA5C63004D0B2C /* ViewController.swift */; };
 		1A81A93126C12C8200CC56E2 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* Constant.swift */; };
 		1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E15273D848100247F94 /* Agreement.rtf */; };
@@ -89,6 +93,10 @@
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
 		1A5FD6832715305D0081F952 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A6C51AF2904E82900A3E85A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		1A6C51B12904EC2F00A3E85A /* News.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
+		1A6C51B32904ECCA00A3E85A /* Review.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Review.storyboard; sourceTree = "<group>"; };
+		1A6C51B52904ED2400A3E85A /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A6EF50E27BA5C63004D0B2C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A93026C12C8200CC56E2 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -191,6 +199,7 @@
 				1A30D0BA28F9C14200C4012E /* SettingsViewController.swift */,
 				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
 				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
+				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
 			);
 			path = "Settings 設定";
 			sourceTree = "<group>";
@@ -200,7 +209,7 @@
 			children = (
 				1ABE8BBD27B10402001EEA79 /* MainViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* MainViewController.swift */,
-				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
+				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 			);
@@ -210,6 +219,7 @@
 		1A384F9128FD5D4E00A1F52E /* News ニュース */ = {
 			isa = PBXGroup;
 			children = (
+				1A6C51B12904EC2F00A3E85A /* News.storyboard */,
 			);
 			path = "News ニュース";
 			sourceTree = "<group>";
@@ -217,6 +227,7 @@
 		1A384F9228FD5D5C00A1F52E /* Review レビュー */ = {
 			isa = PBXGroup;
 			children = (
+				1A6C51B32904ECCA00A3E85A /* Review.storyboard */,
 			);
 			name = "Review レビュー";
 			path = "Review レビュー";
@@ -369,6 +380,7 @@
 		1ABE8BB827B10402001EEA79 /* Main メイン */ = {
 			isa = PBXGroup;
 			children = (
+				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
 				1A384F9228FD5D5C00A1F52E /* Review レビュー */,
@@ -544,6 +556,7 @@
 				1A0CC330274541B200851126 /* Property List.plist in Resources */,
 				1AAF27022748587C0071B89F /* Settings.bundle in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
+				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
 				1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */,
 				1ABE8BE127B10489001EEA79 /* AboutThisApp.storyboard in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
@@ -552,10 +565,13 @@
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
 				1ABE8BD827B10489001EEA79 /* Syllabus.storyboard in Resources */,
+				1A6C51B22904EC2F00A3E85A /* News.storyboard in Resources */,
 				1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */,
 				1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */,
+				1A6C51B42904ECCA00A3E85A /* Review.storyboard in Resources */,
 				1AB37B6526FDFC93008A2D2F /* PrivacyPolicy.rtf in Resources */,
 				1ABDE75926DE585300D4B04E /* TermsOfService.rtf in Resources */,
+				1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
