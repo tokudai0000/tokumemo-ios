@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Rswift
+import UIKit
 
 final class Constant {
     
@@ -41,13 +43,134 @@ final class Constant {
         case universityWeb                  // 大学サイト
         case setting                        // 設定
         
-        case favorite                       // お気に入り登録
-        case customize                      // 並び替え
-        case initPageSetting                // 初期画面設定
+
         case password                       // パスワード
+        case customize                      // 並び替え
+        
         case aboutThisApp                   // このアプリについて
+        case contactUs                      // お問い合わせ
+        case officialSNS                    // 公式SNS
+        case homePage                       // ホームページ
+        
+        case termsOfService                     // 利用規約
+        case privacyPolicy                  // プライバシーポリシー
+        case license                        // ライセンス
+        case acknowledgments                // 謝辞
+        
+        
+        case favorite                       // お気に入り登録
+        case initPageSetting                // 初期画面設定
         case buckToMenu                     // 戻る
     }
+    
+    struct CollectionCell {
+        let title: String             // 表示名
+        let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
+        let iconUnLock: UIImage?       // ImageData
+        let iconLock: UIImage?  // ImageData
+        let url: String?              // 関連したURLを保持 URLRequestはDecodableになる為、不可
+        var isDisplay: Bool = true    // 初期値は全てtrue
+    }
+    
+    /// サービスCell初期状態
+    ///
+    /// - Note:
+    ///   更新確認、初回利用者はここを確認される
+    static let initCustomCellLists = [
+        CollectionCell(title: "教務事務システム",
+                       id: .courseManagementHomeMobile,
+                       iconUnLock: UIImage(systemName: "graduationcap"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.courseManagementMobile.string()
+                      ),
+        
+        CollectionCell(title: "マナバ",
+                       id: .manabaHomePC,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.manabaPC.string()
+                      ),
+        
+        CollectionCell(title: "図書貸し出し延長",
+                       id: .libraryBookLendingExtension,
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.libraryBookLendingExtension.string()
+                      ),
+        
+        CollectionCell(title: "開館カレンダー",
+                       id: .libraryCalendar,
+                       iconUnLock: UIImage(systemName: "calendar"),
+                       iconLock: nil,
+                       url: nil
+                      ),
+        
+        CollectionCell(title: "生協営業状況",
+                       id: .tokudaiCoop,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: nil,
+                       url: Url.tokudaiCoop.string()
+                      ),
+        
+        CollectionCell(title: "シラバス",
+                       id: .syllabus,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: nil,
+                       url: Url.syllabus.string()
+                      ),
+        
+        CollectionCell(title: "今期の成績",
+                       id: .currentTermPerformance,
+                       iconUnLock: UIImage(systemName: "chart.line.uptrend.xyaxis"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.currentTermPerformance.string()
+                      ),
+        
+        CollectionCell(title: "メール",
+                       id: .mailService,
+                       iconUnLock: UIImage(systemName: "envelope.badge"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.outlookService.string()
+                      )
+    ]
+    
+    
+    struct MenuCell {
+        let title: String             // 表示名
+        let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
+    }
+    /// サービスCell初期状態
+    ///
+    /// - Note:
+    ///   更新確認、初回利用者はここを確認される
+    static let initMenuCellLists = [
+        [
+            MenuCell(title: "パスワード設定",
+                     id: .password),
+            MenuCell(title: "カスタマイズ",
+                     id: .customize)
+        ],[
+            MenuCell(title: "このアプリについて",
+                     id: .aboutThisApp),
+            MenuCell(title: "お問い合わせ",
+                     id: .contactUs),
+            MenuCell(title: "公式SNS",
+                     id: .officialSNS),
+            MenuCell(title: "ホームページ",
+                     id: .homePage),
+        ],[
+            MenuCell(title: "利用規約",
+                     id: .termsOfService),
+            MenuCell(title: "プライバシーポリシー",
+                     id: .privacyPolicy),
+            MenuCell(title: "ライセンス",
+                     id: .license),
+            MenuCell(title: "謝辞",
+                     id: .acknowledgments)
+        ]]
+    
+    
+    
     /// メニューリストの構造体
     struct Menu: Codable {
         var title: String             // 表示名ユーザーが変更することができる

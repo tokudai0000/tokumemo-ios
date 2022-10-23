@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--トクメモ2-->
+        <scene sceneID="ECa-mY-K2W">
+            <objects>
+                <viewController storyboardIdentifier="MainViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l6Y-J6-Sft" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="L9B-g3-Oj6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HbN-Rz-fL4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <navigationItem title="○○○アプリ" id="Udc-az-tsW"/>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t3x-iZ-niV" userLabel="Top View">
+                                <rect key="frame" x="10" y="57" width="357" height="150"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filemenu.and.cursorarrow.rtl" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
+                                        <rect key="frame" x="0.0" y="1.5" width="254" height="148"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3ua-3Z-6Mz" userLabel="Right View">
+                                        <rect key="frame" x="262" y="0.0" width="95" height="150"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh9-3r-Hsa">
+                                                <rect key="frame" x="2.5" y="0.0" width="90" height="99"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="徳島市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-88-Y2e">
+                                                        <rect key="frame" x="22" y="8.5" width="46" height="18"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p59-2C-vkM">
+                                                        <rect key="frame" x="10" y="24.5" width="70" height="50"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="do2-8U-erD"/>
+                                                            <constraint firstAttribute="width" constant="70" id="vUo-PY-b9V"/>
+                                                        </constraints>
+                                                        <wkWebViewConfiguration key="configuration">
+                                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                                            <wkPreferences key="preferences"/>
+                                                        </wkWebViewConfiguration>
+                                                    </wkWebView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-1l-47d" userLabel="Weather Detail View">
+                                                        <rect key="frame" x="18.5" y="70.5" width="53" height="18"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="雲 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-io-c4P">
+                                                                <rect key="frame" x="0.0" y="0.0" width="19.5" height="18"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21℃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-Nj-W5u">
+                                                                <rect key="frame" x="19.5" y="0.0" width="33.5" height="18"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="IHz-Xn-fSZ"/>
+                                                    <constraint firstItem="NPe-88-Y2e" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="cBb-eW-X2v"/>
+                                                    <constraint firstItem="p59-2C-vkM" firstAttribute="top" secondItem="NPe-88-Y2e" secondAttribute="bottom" constant="-2" id="fPq-uo-DiF"/>
+                                                    <constraint firstItem="p59-2C-vkM" firstAttribute="centerY" secondItem="Vh9-3r-Hsa" secondAttribute="centerY" id="gBk-KP-a9v"/>
+                                                    <constraint firstItem="p59-2C-vkM" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="o17-cl-oSX"/>
+                                                    <constraint firstItem="IWF-1l-47d" firstAttribute="top" secondItem="p59-2C-vkM" secondAttribute="bottom" constant="-4" id="qj5-fk-TOV"/>
+                                                    <constraint firstItem="IWF-1l-47d" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="vcd-TO-s4a"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J7-MJ-B9H">
+                                                <rect key="frame" x="2.5" y="110" width="90" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="9Le-CZ-LG5"/>
+                                                    <constraint firstAttribute="height" constant="40" id="B4k-0w-flN"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="学生証"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="95" id="AtT-ha-KM6"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="4oS-Bt-FFe"/>
+                                </constraints>
+                            </stackView>
+                            <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhg-Di-ZNi">
+                                <rect key="frame" x="187.5" y="333.5" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="TCL-y7-mo4"/>
+                                    <constraint firstAttribute="width" id="jlJ-PT-G9q"/>
+                                </constraints>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JKS-4Y-lAY">
+                                <rect key="frame" x="24" y="242" width="327" height="351"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ySv-Qo-UxF">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="PAq-m1-1OU">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="48V-lJ-VUL">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mUR-4y-9mi"/>
+                        <color key="backgroundColor" red="0.92156862750000001" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="HbN-Rz-fL4" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" id="ChO-GA-k2x"/>
+                            <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerX" secondItem="L9B-g3-Oj6" secondAttribute="centerX" id="EQO-zV-aar"/>
+                            <constraint firstItem="t3x-iZ-niV" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" constant="57" id="RFg-3p-zQa"/>
+                            <constraint firstAttribute="trailing" secondItem="t3x-iZ-niV" secondAttribute="trailing" constant="8" id="UN3-ME-CV2"/>
+                            <constraint firstItem="HbN-Rz-fL4" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" id="c8L-tL-Nke"/>
+                            <constraint firstItem="mUR-4y-9mi" firstAttribute="trailing" secondItem="JKS-4Y-lAY" secondAttribute="trailing" constant="24" id="cNk-j9-Fob"/>
+                            <constraint firstItem="HbN-Rz-fL4" firstAttribute="trailing" secondItem="mUR-4y-9mi" secondAttribute="trailing" id="eAq-qm-1WC"/>
+                            <constraint firstItem="t3x-iZ-niV" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="10" id="gpy-PE-vsH"/>
+                            <constraint firstItem="mUR-4y-9mi" firstAttribute="bottom" secondItem="JKS-4Y-lAY" secondAttribute="bottom" constant="25" id="kJq-0k-Gg1"/>
+                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="24" id="mbG-j8-gik"/>
+                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="top" secondItem="t3x-iZ-niV" secondAttribute="bottom" constant="35" id="vio-ei-BBF"/>
+                            <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerY" secondItem="L9B-g3-Oj6" secondAttribute="centerY" id="yui-I0-TaU"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="CfG-S9-hWz"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="adImageView" destination="v5T-GU-n4N" id="QoI-IB-MDZ"/>
+                        <outlet property="collectionView" destination="JKS-4Y-lAY" id="mWa-qW-0dp"/>
+                        <outlet property="forLoginWebView" destination="Yhg-Di-ZNi" id="lAj-E7-7Mv"/>
+                        <outlet property="temperatureLabel" destination="7xJ-Nj-W5u" id="U9b-zf-jxa"/>
+                        <outlet property="weatherLabel" destination="mC2-io-c4P" id="AOQ-o4-Kk2"/>
+                        <outlet property="weatherWebView" destination="p59-2C-vkM" id="Adw-eO-bVF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="724.63768115942037" y="-695.38043478260875"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="88"/>
+        <image name="house" catalog="system" width="128" height="106"/>
+    </resources>
+</document>
