@@ -20,7 +20,7 @@ final class SyllabusViewController: UIViewController {
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var searchButton: UIButton!
     
-    public var delegate : MainViewController?
+    public var delegate : HomeViewController?
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle

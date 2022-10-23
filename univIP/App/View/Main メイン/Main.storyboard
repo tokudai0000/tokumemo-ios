@@ -7,36 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
-        <scene sceneID="fOk-yx-6jm">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Home" id="38X-ba-OW8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="App-tW-ZCH"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pg2-Iu-B1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-487" y="690"/>
-        </scene>
-        <!--News-->
-        <scene sceneID="1wr-EK-Kgq">
-            <objects>
-                <viewControllerPlaceholder storyboardName="News" id="hqG-vB-ljW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="n2Q-AL-Dah"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DVJ-33-Wqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-332" y="690"/>
-        </scene>
-        <!--Review-->
-        <scene sceneID="QSo-Fp-geI">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Review" id="s6t-rW-HsF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="zkA-on-0Gg"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0Xb-LA-di8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-162" y="690"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Xp0-yT-0DH">
             <objects>
@@ -57,6 +27,36 @@
             </objects>
             <point key="canvasLocation" x="-236" y="248"/>
         </scene>
+        <!--Home-->
+        <scene sceneID="fOk-yx-6jm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" id="38X-ba-OW8" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Homess" image="house" catalog="system" id="App-tW-ZCH"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pg2-Iu-B1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-487" y="690"/>
+        </scene>
+        <!--News-->
+        <scene sceneID="1wr-EK-Kgq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="News" id="hqG-vB-ljW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="square.and.arrow.up" catalog="system" id="n2Q-AL-Dah"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DVJ-33-Wqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-332" y="690"/>
+        </scene>
+        <!--Review-->
+        <scene sceneID="QSo-Fp-geI">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Review" id="s6t-rW-HsF" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="zkA-on-0Gg"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Xb-LA-di8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-162" y="690"/>
+        </scene>
         <!--Settings-->
         <scene sceneID="Dv8-HU-mWF">
             <objects>
@@ -68,4 +68,8 @@
             <point key="canvasLocation" x="4" y="690"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="house" catalog="system" width="128" height="106"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+    </resources>
 </document>

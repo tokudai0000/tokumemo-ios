@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import FirebaseAnalytics
 
-final class MainViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adImageView: UIImageView!
@@ -21,7 +21,7 @@ final class MainViewController: UIViewController {
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
     
-    private let viewModel = MainViewModel()
+    private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
@@ -98,7 +98,7 @@ final class MainViewController: UIViewController {
 
 
 // MARK: - WKNavigationDelegate
-extension MainViewController: WKNavigationDelegate {
+extension HomeViewController: WKNavigationDelegate {
     /// 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
@@ -153,7 +153,7 @@ extension MainViewController: WKNavigationDelegate {
 }
 
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     /// セクション内のセル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Constant.initCustomCellLists.count

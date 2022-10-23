@@ -10,7 +10,7 @@ import XCTest
 
 class MainViewModelTests: XCTestCase {
     
-    var viewModel = MainViewModel()
+    var viewModel = HomeViewModel()
     
     override func setUp() {
         super.setUp()

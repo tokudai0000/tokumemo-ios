@@ -9,7 +9,7 @@
 import Foundation
 import Kanna
 
-final class MainViewModel {
+final class HomeViewModel {
     /// TableCellの内容
     public var collectionLists:[Constant.CollectionCell] = Constant.initCustomCellLists
     
