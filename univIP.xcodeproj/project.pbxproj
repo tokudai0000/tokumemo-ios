@@ -54,8 +54,8 @@
 		1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE427B10513001EEA79 /* Main.storyboard */; };
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
-		509381F26FAE698FBE4F53F4 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3F8BED9CAEF99CD66B615F /* Pods_univIPTests.framework */; };
-		ECD19C20B2F6629E841DA3BF /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1776F6A33ADC4A5363617FC /* Pods_univIP.framework */; };
+		DD6E21A67C66B1450D71E5B4 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */; };
+		EFA32B322A2CE5411673C240 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,12 +131,12 @@
 		1ABE8BE427B10513001EEA79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
-		324240FE5E6B4AEFD2C4922B /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
-		846F548F1EA4F2D8D7589A43 /* Pods-univIPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.debug.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.debug.xcconfig"; sourceTree = "<group>"; };
-		96922F0FD891CFB5632A8290 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
-		AE3F8BED9CAEF99CD66B615F /* Pods_univIPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1776F6A33ADC4A5363617FC /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8738544EDFC65E519A3C4D3 /* Pods-univIPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.release.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.release.xcconfig"; sourceTree = "<group>"; };
+		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
+		73BFB29EC8F8F1A3AAF12DDA /* Pods-univIPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.release.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.release.xcconfig"; sourceTree = "<group>"; };
+		B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F80E959A391DDEB1F3A83317 /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
+		FEF4AB1D0B8B45039BE2BCB7 /* Pods-univIPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.debug.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECD19C20B2F6629E841DA3BF /* Pods_univIP.framework in Frameworks */,
+				DD6E21A67C66B1450D71E5B4 /* Pods_univIP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				509381F26FAE698FBE4F53F4 /* Pods_univIPTests.framework in Frameworks */,
+				EFA32B322A2CE5411673C240 /* Pods_univIPTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +166,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
+		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
 			isa = PBXGroup;
 			children = (
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
@@ -185,7 +185,7 @@
 			path = CustomCell;
 			sourceTree = "<group>";
 		};
-		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
+		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
 			isa = PBXGroup;
 			children = (
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
@@ -202,8 +202,8 @@
 				1A30D0BC28F9C1D300C4012E /* SettingsViewModel.swift */,
 				1A30D0BA28F9C14200C4012E /* SettingsViewController.swift */,
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
-				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
-				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
+				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
+				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
 			);
 			path = "Settings 設定";
 			sourceTree = "<group>";
@@ -215,8 +215,8 @@
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
 				1A30D0AB28F5BFBD00C4012E /* CustomCell */,
-				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
-				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
+				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
+				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 			);
 			path = "Home ホーム";
 			sourceTree = "<group>";
@@ -230,7 +230,7 @@
 			path = "News ニュース";
 			sourceTree = "<group>";
 		};
-		1A384F9228FD5D5C00A1F52E /* Review レビュー */ = {
+		1A384F9228FD5D5C00A1F52E /* Review レビュー */ = {
 			isa = PBXGroup;
 			children = (
 				1A6C51B92905077E00A3E85A /* ReviewViewController.swift */,
@@ -338,7 +338,7 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
+				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
 			);
@@ -390,13 +390,13 @@
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
-				1A384F9228FD5D5C00A1F52E /* Review レビュー */,
+				1A384F9228FD5D5C00A1F52E /* Review レビュー */,
 				1A30D0B728F9BED600C4012E /* Settings 設定 */,
 			);
 			path = "Main メイン";
 			sourceTree = "<group>";
 		};
-		1ABE8BC627B10489001EEA79 /* Syllabus シラバス */ = {
+		1ABE8BC627B10489001EEA79 /* Syllabus シラバス */ = {
 			isa = PBXGroup;
 			children = (
 				1ABE8BC827B10489001EEA79 /* SyllabusViewController.swift */,
@@ -406,7 +406,7 @@
 			path = "Syllabus シラバス";
 			sourceTree = "<group>";
 		};
-		1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */ = {
+		1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */ = {
 			isa = PBXGroup;
 			children = (
 				1ABE8BCD27B10489001EEA79 /* PasswordViewController.swift */,
@@ -416,7 +416,7 @@
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};
-		1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */ = {
+		1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */ = {
 			isa = PBXGroup;
 			children = (
 				1ABE8BD227B10489001EEA79 /* AboutThisAppViewController.swift */,
@@ -431,8 +431,8 @@
 			children = (
 				1A72E30A26D65A6B00DB3179 /* PDFKit.framework */,
 				1A81A94126C15EAC00CC56E2 /* MessageUI.framework */,
-				D1776F6A33ADC4A5363617FC /* Pods_univIP.framework */,
-				AE3F8BED9CAEF99CD66B615F /* Pods_univIPTests.framework */,
+				27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */,
+				B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -440,10 +440,10 @@
 		CA749BD99662CD553A90D1AF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				324240FE5E6B4AEFD2C4922B /* Pods-univIP.debug.xcconfig */,
-				96922F0FD891CFB5632A8290 /* Pods-univIP.release.xcconfig */,
-				846F548F1EA4F2D8D7589A43 /* Pods-univIPTests.debug.xcconfig */,
-				E8738544EDFC65E519A3C4D3 /* Pods-univIPTests.release.xcconfig */,
+				F80E959A391DDEB1F3A83317 /* Pods-univIP.debug.xcconfig */,
+				294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */,
+				FEF4AB1D0B8B45039BE2BCB7 /* Pods-univIPTests.debug.xcconfig */,
+				73BFB29EC8F8F1A3AAF12DDA /* Pods-univIPTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -455,13 +455,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AA056DD26BD2AE500343005 /* Build configuration list for PBXNativeTarget "univIP" */;
 			buildPhases = (
-				2F704F3F01C4CDEC8E4D8125 /* [CP] Check Pods Manifest.lock */,
+				6BC3F9ADAE1ED57107C2EC77 /* [CP] Check Pods Manifest.lock */,
 				1AA056E026BD2CC300343005 /* Run Script R.Swift */,
 				1A69FB74276722DB006A34C0 /* Run Script Align Xcode Version */,
 				1AA056C526BD2AE100343005 /* Sources */,
 				1AA056C626BD2AE100343005 /* Frameworks */,
 				1AA056C726BD2AE100343005 /* Resources */,
-				F62F7122F026855F43C7450E /* [CP] Embed Pods Frameworks */,
+				60F61D0564C5C5FA71CDF927 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -476,11 +476,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AB37B7326FDFCEA008A2D2F /* Build configuration list for PBXNativeTarget "univIPTests" */;
 			buildPhases = (
-				293BD288788A1522883BFE62 /* [CP] Check Pods Manifest.lock */,
+				BF3749428C8EFCC88ED70373 /* [CP] Check Pods Manifest.lock */,
 				1AB37B6826FDFCEA008A2D2F /* Sources */,
 				1AB37B6926FDFCEA008A2D2F /* Frameworks */,
 				1AB37B6A26FDFCEA008A2D2F /* Resources */,
-				DFF465AE02AACEF72634B716 /* [CP] Embed Pods Frameworks */,
+				1EB4620F0CD841CB1175F835 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -630,35 +630,47 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/R.generated.swift,
+				"$SRCROOT/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
 		};
-		293BD288788A1522883BFE62 /* [CP] Check Pods Manifest.lock */ = {
+		1EB4620F0CD841CB1175F835 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-univIPTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2F704F3F01C4CDEC8E4D8125 /* [CP] Check Pods Manifest.lock */ = {
+		60F61D0564C5C5FA71CDF927 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BC3F9ADAE1ED57107C2EC77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -680,38 +692,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DFF465AE02AACEF72634B716 /* [CP] Embed Pods Frameworks */ = {
+		BF3749428C8EFCC88ED70373 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-univIPTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F62F7122F026855F43C7450E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -901,7 +901,7 @@
 		};
 		1AA056DE26BD2AE500343005 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 324240FE5E6B4AEFD2C4922B /* Pods-univIP.debug.xcconfig */;
+			baseConfigurationReference = F80E959A391DDEB1F3A83317 /* Pods-univIP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -937,7 +937,7 @@
 		};
 		1AA056DF26BD2AE500343005 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96922F0FD891CFB5632A8290 /* Pods-univIP.release.xcconfig */;
+			baseConfigurationReference = 294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -972,7 +972,7 @@
 		};
 		1AB37B7426FDFCEA008A2D2F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 846F548F1EA4F2D8D7589A43 /* Pods-univIPTests.debug.xcconfig */;
+			baseConfigurationReference = FEF4AB1D0B8B45039BE2BCB7 /* Pods-univIPTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -993,7 +993,7 @@
 		};
 		1AB37B7526FDFCEA008A2D2F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8738544EDFC65E519A3C4D3 /* Pods-univIPTests.release.xcconfig */;
+			baseConfigurationReference = 73BFB29EC8F8F1A3AAF12DDA /* Pods-univIPTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
