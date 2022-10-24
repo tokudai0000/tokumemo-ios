@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QFM-83-OSM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QFM-83-OSM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--News-->
         <scene sceneID="cYl-iR-8N1">
             <objects>
                 <viewController id="QFM-83-OSM" customClass="NewsViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,7 +38,7 @@
                             <constraint firstItem="nUv-z2-kji" firstAttribute="centerY" secondItem="XXo-Ah-Bva" secondAttribute="centerY" id="jZg-RD-VEU"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="pQO-b7-vuW"/>
+                    <tabBarItem key="tabBarItem" title="News" image="newspaper" catalog="system" id="pQO-b7-vuW"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TUj-qY-9Pg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -47,6 +47,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="newspaper" catalog="system" width="128" height="111"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
