@@ -12,7 +12,7 @@
         <scene sceneID="bWd-KW-fEt">
             <objects>
                 <navigationController id="boK-DK-3zY" userLabel="Settings" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Others" image="person" catalog="system" id="6pV-sJ-v8o"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="person" catalog="system" id="6pV-sJ-v8o"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LL8-OM-xtQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
