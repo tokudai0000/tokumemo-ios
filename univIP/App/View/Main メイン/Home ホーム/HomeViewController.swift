@@ -54,6 +54,14 @@ final class HomeViewController: UIViewController {
                                                selector: #selector(foreground(notification:)),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
+        
+        // ステータスバーの背景色を指定
+        configureView()
+    }
+    
+    // ステータスバーの背景色を指定(White)
+    private func configureView() {
+        setStatusBarBackgroundColor(.white)
     }
     
     override func viewDidAppear(_ animated: Bool) {
