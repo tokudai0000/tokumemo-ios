@@ -55,6 +55,9 @@
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		809DCF722906A63300593989 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809DCF712906A63300593989 /* UIView.swift */; };
+		80D3B6FE2909341000FF1AE3 /* UIViewController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */; };
+		80D3B7012909439100FF1AE3 /* StudentCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80D3B7002909439100FF1AE3 /* StudentCard.storyboard */; };
+		80D3B703290943AF00FF1AE3 /* StudentCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B702290943AF00FF1AE3 /* StudentCardViewController.swift */; };
 		DD6E21A67C66B1450D71E5B4 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */; };
 		EFA32B322A2CE5411673C240 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */; };
 /* End PBXBuildFile section */
@@ -136,6 +139,9 @@
 		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
 		73BFB29EC8F8F1A3AAF12DDA /* Pods-univIPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.release.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.release.xcconfig"; sourceTree = "<group>"; };
 		809DCF712906A63300593989 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+StatusBar.swift"; sourceTree = "<group>"; };
+		80D3B7002909439100FF1AE3 /* StudentCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StudentCard.storyboard; sourceTree = "<group>"; };
+		80D3B702290943AF00FF1AE3 /* StudentCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCardViewController.swift; sourceTree = "<group>"; };
 		B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIPTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80E959A391DDEB1F3A83317 /* Pods-univIP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.debug.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.debug.xcconfig"; sourceTree = "<group>"; };
 		FEF4AB1D0B8B45039BE2BCB7 /* Pods-univIPTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.debug.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
+				80D3B6FF2909435000FF1AE3 /* StudentCard 学生証 */,
 				1A30D0AB28F5BFBD00C4012E /* CustomCell */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
@@ -258,6 +265,7 @@
 				1A6EF50E27BA5C63004D0B2C /* ViewController.swift */,
 				1A30D0B128F6ED2E00C4012E /* UIImage.swift */,
 				809DCF712906A63300593989 /* UIView.swift */,
+				80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -440,6 +448,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		80D3B6FF2909435000FF1AE3 /* StudentCard 学生証 */ = {
+			isa = PBXGroup;
+			children = (
+				80D3B7002909439100FF1AE3 /* StudentCard.storyboard */,
+				80D3B702290943AF00FF1AE3 /* StudentCardViewController.swift */,
+			);
+			path = "StudentCard 学生証";
+			sourceTree = "<group>";
+		};
 		CA749BD99662CD553A90D1AF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -564,6 +581,7 @@
 				1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */,
 				1A0CC330274541B200851126 /* Property List.plist in Resources */,
 				1AAF27022748587C0071B89F /* Settings.bundle in Resources */,
+				80D3B7012909439100FF1AE3 /* StudentCard.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
 				1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */,
@@ -731,6 +749,7 @@
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
 				1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */,
+				80D3B703290943AF00FF1AE3 /* StudentCardViewController.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* ViewController.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1A30D0B628F87D4500C4012E /* WeatherAPI.swift in Sources */,
@@ -744,6 +763,7 @@
 				1A81A93126C12C8200CC56E2 /* Constant.swift in Sources */,
 				1A27270327D0EBAB00CE1DA5 /* R.generated.swift in Sources */,
 				1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */,
+				80D3B6FE2909341000FF1AE3 /* UIViewController+StatusBar.swift in Sources */,
 				809DCF722906A63300593989 /* UIView.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* PasswordViewController.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,

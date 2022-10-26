@@ -154,6 +154,9 @@
                                                         <size key="value" width="5" height="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="studentCardButton:" destination="l6Y-J6-Sft" eventType="touchUpInside" id="roW-zT-Kzj"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>

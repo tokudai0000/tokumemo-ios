@@ -80,6 +80,10 @@ final class HomeViewController: UIViewController {
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
+        
+        // ボタンが押されたときにStudentCard.storyboardに遷移する
+        let vc = R.storyboard.studentCard.studentCardViewController()!
+        present(vc, animated: true, completion: nil)
     }
     
     // MARK: - Private func
