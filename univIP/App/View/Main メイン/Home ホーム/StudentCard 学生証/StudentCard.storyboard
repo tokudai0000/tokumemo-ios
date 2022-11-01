@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
@@ -9,32 +9,45 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Student Card View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="StudentCardViewController" id="Y6W-OH-hqX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StudentCardViewController" id="Y6W-OH-hqX" customClass="StudentCardViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2D-SJ-5lq">
-                                <rect key="frame" x="174" y="411.66666666666669" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kve-kt-unW">
+                                <rect key="frame" x="165.5" y="368.5" width="44" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Ei-Nd-pN6">
+                                <rect key="frame" x="87.5" y="298.5" width="200" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Ytc-y4-pOw"/>
+                                    <constraint firstAttribute="width" constant="200" id="jij-Qf-588"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="q2D-SJ-5lq" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="TE2-1r-MhP"/>
-                            <constraint firstItem="q2D-SJ-5lq" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="azc-sY-BFZ"/>
+                            <constraint firstItem="8Ei-Nd-pN6" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="DtX-qY-1RC"/>
+                            <constraint firstItem="8Ei-Nd-pN6" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="HXD-Wc-Mfz"/>
+                            <constraint firstItem="kve-kt-unW" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="Ok6-PE-NCf"/>
+                            <constraint firstItem="kve-kt-unW" firstAttribute="top" secondItem="8Ei-Nd-pN6" secondAttribute="bottom" id="SF5-02-MXA"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="BarCodeImageView" destination="8Ei-Nd-pN6" id="YK0-bx-33Q"/>
+                        <outlet property="StudentNumberLabel" destination="kve-kt-unW" id="yK1-zY-1TH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="-34"/>
+            <point key="canvasLocation" x="131.8840579710145" y="-35.054347826086961"/>
         </scene>
     </scenes>
     <resources>

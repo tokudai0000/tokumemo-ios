@@ -54,6 +54,7 @@
 		1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE427B10513001EEA79 /* Main.storyboard */; };
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
+		80921099290FC717009D0ABD /* BarCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80921098290FC717009D0ABD /* BarCodeGenerator.swift */; };
 		809DCF722906A63300593989 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809DCF712906A63300593989 /* UIView.swift */; };
 		80D3B6FE2909341000FF1AE3 /* UIViewController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */; };
 		80D3B7012909439100FF1AE3 /* StudentCard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80D3B7002909439100FF1AE3 /* StudentCard.storyboard */; };
@@ -138,6 +139,7 @@
 		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
 		73BFB29EC8F8F1A3AAF12DDA /* Pods-univIPTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIPTests.release.xcconfig"; path = "Target Support Files/Pods-univIPTests/Pods-univIPTests.release.xcconfig"; sourceTree = "<group>"; };
+		80921098290FC717009D0ABD /* BarCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeGenerator.swift; sourceTree = "<group>"; };
 		809DCF712906A63300593989 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+StatusBar.swift"; sourceTree = "<group>"; };
 		80D3B7002909439100FF1AE3 /* StudentCard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StudentCard.storyboard; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 			children = (
 				80D3B7002909439100FF1AE3 /* StudentCard.storyboard */,
 				80D3B702290943AF00FF1AE3 /* StudentCardViewController.swift */,
+				80921098290FC717009D0ABD /* BarCodeGenerator.swift */,
 			);
 			path = "StudentCard 学生証";
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1A30D0B628F87D4500C4012E /* WeatherAPI.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */,
+				80921099290FC717009D0ABD /* BarCodeGenerator.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
 				1A30D0A928F5BFB500C4012E /* CustomCell.swift in Sources */,
