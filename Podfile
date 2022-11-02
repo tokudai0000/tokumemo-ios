@@ -12,6 +12,7 @@ target 'univIP' do
   pod 'Kanna' , '~> 5'
   pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
+  pod 'ZXingObjC', '~> 3.6.4'
     
   target  'univIPTests' do
     inherit! :search_paths

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
@@ -9,47 +9,59 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--トクメモ2-->
+        <!--Home-->
         <scene sceneID="ECa-mY-K2W">
             <objects>
-                <viewController storyboardIdentifier="MainViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l6Y-J6-Sft" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l6Y-J6-Sft" userLabel="Home" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L9B-g3-Oj6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HbN-Rz-fL4">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HbN-Rz-fL4">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <navigationItem title="○○○アプリ" id="Udc-az-tsW"/>
                                 </items>
                             </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t3x-iZ-niV" userLabel="Top View">
-                                <rect key="frame" x="10" y="57" width="357" height="150"/>
+                                <rect key="frame" x="10" y="65" width="396" height="150"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filemenu.and.cursorarrow.rtl" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
-                                        <rect key="frame" x="0.0" y="1.5" width="254" height="148"/>
-                                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="0.0" y="1.6666666666666714" width="293" height="147.66666666666669"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
+                                                <real key="value" value="0.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                <size key="value" width="5" height="5"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3ua-3Z-6Mz" userLabel="Right View">
-                                        <rect key="frame" x="262" y="0.0" width="95" height="150"/>
+                                        <rect key="frame" x="301" y="0.0" width="95" height="150"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh9-3r-Hsa">
-                                                <rect key="frame" x="2.5" y="0.0" width="90" height="99"/>
+                                                <rect key="frame" x="2.6666666666666856" y="0.0" width="90" height="99"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="徳島市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-88-Y2e">
-                                                        <rect key="frame" x="22" y="8.5" width="46" height="18"/>
+                                                        <rect key="frame" x="22" y="8.6666666666666714" width="46" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p59-2C-vkM">
-                                                        <rect key="frame" x="10" y="24.5" width="70" height="50"/>
+                                                        <rect key="frame" x="10" y="24.666666666666671" width="70" height="50"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="do2-8U-erD"/>
@@ -61,16 +73,16 @@
                                                         </wkWebViewConfiguration>
                                                     </wkWebView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-1l-47d" userLabel="Weather Detail View">
-                                                        <rect key="frame" x="18.5" y="70.5" width="53" height="18"/>
+                                                        <rect key="frame" x="18.666666666666625" y="70.666666666666657" width="52.666666666666657" height="18"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="雲 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-io-c4P">
-                                                                <rect key="frame" x="0.0" y="0.0" width="19.5" height="18"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="19.333333333333332" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21℃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-Nj-W5u">
-                                                                <rect key="frame" x="19.5" y="0.0" width="33.5" height="18"/>
+                                                                <rect key="frame" x="19.333333333333375" y="0.0" width="33.333333333333343" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -90,24 +102,48 @@
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="3"/>
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                        <size key="value" width="5" height="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J7-MJ-B9H">
-                                                <rect key="frame" x="2.5" y="110" width="90" height="40"/>
+                                                <rect key="frame" x="2.6666666666666856" y="110" width="90" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="90" id="9Le-CZ-LG5"/>
                                                     <constraint firstAttribute="height" constant="40" id="B4k-0w-flN"/>
                                                 </constraints>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="学生証"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="学生証">
+                                                    <fontDescription key="titleFontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="16"/>
+                                                </buttonConfiguration>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="3"/>
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                        <size key="value" width="5" height="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="studentCardButton:" destination="l6Y-J6-Sft" eventType="touchUpInside" id="roW-zT-Kzj"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -120,7 +156,7 @@
                                 </constraints>
                             </stackView>
                             <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhg-Di-ZNi">
-                                <rect key="frame" x="187.5" y="333.5" width="0.0" height="0.0"/>
+                                <rect key="frame" x="207" y="368" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="TCL-y7-mo4"/>
@@ -132,7 +168,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JKS-4Y-lAY">
-                                <rect key="frame" x="26" y="242" width="323" height="351"/>
+                                <rect key="frame" x="26" y="257.66666666666669" width="362" height="424.00000000000006"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ySv-Qo-UxF">
                                     <size key="itemSize" width="128" height="128"/>
@@ -156,29 +192,21 @@
                                     <outlet property="delegate" destination="l6Y-J6-Sft" id="PlX-NL-wim"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyg-sh-Hdd">
-                                <rect key="frame" x="16" y="220" width="343" height="0.5"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mUR-4y-9mi"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.94509803921568625" green="0.94901960784313721" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="mUR-4y-9mi" firstAttribute="bottom" secondItem="JKS-4Y-lAY" secondAttribute="bottom" constant="5.3333333333332575" id="4zp-nv-UJ8"/>
+                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="top" secondItem="t3x-iZ-niV" secondAttribute="bottom" constant="42.670000000000002" id="9NP-Ln-T9H"/>
                             <constraint firstItem="HbN-Rz-fL4" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" id="ChO-GA-k2x"/>
                             <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerX" secondItem="L9B-g3-Oj6" secondAttribute="centerX" id="EQO-zV-aar"/>
-                            <constraint firstItem="gyg-sh-Hdd" firstAttribute="top" secondItem="t3x-iZ-niV" secondAttribute="bottom" constant="13" id="OIH-GJ-Qde"/>
-                            <constraint firstItem="t3x-iZ-niV" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" constant="57" id="RFg-3p-zQa"/>
+                            <constraint firstItem="t3x-iZ-niV" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" constant="65" id="RFg-3p-zQa"/>
                             <constraint firstAttribute="trailing" secondItem="t3x-iZ-niV" secondAttribute="trailing" constant="8" id="UN3-ME-CV2"/>
                             <constraint firstItem="HbN-Rz-fL4" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" id="c8L-tL-Nke"/>
                             <constraint firstItem="mUR-4y-9mi" firstAttribute="trailing" secondItem="JKS-4Y-lAY" secondAttribute="trailing" constant="26" id="cNk-j9-Fob"/>
-                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="top" secondItem="gyg-sh-Hdd" secondAttribute="bottom" constant="21.5" id="dnm-JG-lLb"/>
                             <constraint firstItem="HbN-Rz-fL4" firstAttribute="trailing" secondItem="mUR-4y-9mi" secondAttribute="trailing" id="eAq-qm-1WC"/>
-                            <constraint firstItem="gyg-sh-Hdd" firstAttribute="leading" secondItem="L9B-g3-Oj6" secondAttribute="leadingMargin" id="fNe-K8-4cn"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gyg-sh-Hdd" secondAttribute="trailing" id="gIH-88-9th"/>
                             <constraint firstItem="t3x-iZ-niV" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="10" id="gpy-PE-vsH"/>
-                            <constraint firstItem="mUR-4y-9mi" firstAttribute="bottom" secondItem="JKS-4Y-lAY" secondAttribute="bottom" constant="25" id="kJq-0k-Gg1"/>
                             <constraint firstItem="JKS-4Y-lAY" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="26" id="mbG-j8-gik"/>
-                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="top" secondItem="t3x-iZ-niV" secondAttribute="bottom" constant="35" id="vio-ei-BBF"/>
                             <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerY" secondItem="L9B-g3-Oj6" secondAttribute="centerY" id="yui-I0-TaU"/>
                         </constraints>
                     </view>

@@ -54,6 +54,14 @@ final class HomeViewController: UIViewController {
                                                selector: #selector(foreground(notification:)),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
+        
+        // ステータスバーの背景色を指定
+        configureView()
+    }
+    
+    // ステータスバーの背景色を指定(White)
+    private func configureView() {
+        setStatusBarBackgroundColor(.white)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,6 +80,10 @@ final class HomeViewController: UIViewController {
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
+        
+        // ボタンが押されたときにStudentCard.storyboardに遷移する
+        let vc = R.storyboard.studentCard.studentCardViewController()!
+        present(vc, animated: true, completion: nil)
     }
     
     // MARK: - Private func
