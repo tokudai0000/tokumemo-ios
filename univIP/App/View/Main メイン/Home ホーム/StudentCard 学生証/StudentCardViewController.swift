@@ -12,18 +12,23 @@ class StudentCardViewController: UIViewController {
     @IBOutlet weak var BarCodeImageView: UIImageView!
     @IBOutlet weak var StudentNumberLabel: UILabel!
     
-    // バーコードを生成する
-    let GeneratedImage = BarCodeGenerator.generateBarCode(from: "1234567890")
-
+    private let dataManager = DataManager.singleton
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 画像を読み込む
+        // 学生番号を定義する
+//        let studentNumber = dataManager.cAccount
+        let studentNumber = "1234567890"
+
+        // バーコードを生成する
+        let GeneratedImage = BarCodeGenerator.generateBarCode(from: "\(studentNumber)0")
+
+        // 生成した画像を読み込む
         BarCodeImageView.image = GeneratedImage
-        
+
         // Labelを変更
-        StudentNumberLabel.text = "A1234567890A"
+        StudentNumberLabel.text = "A\(studentNumber)0A"
         
     }
 
