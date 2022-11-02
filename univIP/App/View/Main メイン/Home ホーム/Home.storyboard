@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,7 +19,7 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HbN-Rz-fL4">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <navigationItem title="○○○アプリ" id="Udc-az-tsW"/>
                                 </items>
@@ -29,7 +29,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filemenu.and.cursorarrow.rtl" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
                                         <rect key="frame" x="0.0" y="1.5" width="254" height="148"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="3"/>
@@ -132,8 +132,8 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JKS-4Y-lAY">
-                                <rect key="frame" x="24" y="242" width="327" height="351"/>
-                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="26" y="242" width="323" height="351"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ySv-Qo-UxF">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -148,7 +148,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -156,20 +156,28 @@
                                     <outlet property="delegate" destination="l6Y-J6-Sft" id="PlX-NL-wim"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyg-sh-Hdd">
+                                <rect key="frame" x="16" y="220" width="343" height="0.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mUR-4y-9mi"/>
-                        <color key="backgroundColor" red="0.92156862750000001" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="HbN-Rz-fL4" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" id="ChO-GA-k2x"/>
                             <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerX" secondItem="L9B-g3-Oj6" secondAttribute="centerX" id="EQO-zV-aar"/>
+                            <constraint firstItem="gyg-sh-Hdd" firstAttribute="top" secondItem="t3x-iZ-niV" secondAttribute="bottom" constant="13" id="OIH-GJ-Qde"/>
                             <constraint firstItem="t3x-iZ-niV" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" constant="57" id="RFg-3p-zQa"/>
                             <constraint firstAttribute="trailing" secondItem="t3x-iZ-niV" secondAttribute="trailing" constant="8" id="UN3-ME-CV2"/>
                             <constraint firstItem="HbN-Rz-fL4" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" id="c8L-tL-Nke"/>
-                            <constraint firstItem="mUR-4y-9mi" firstAttribute="trailing" secondItem="JKS-4Y-lAY" secondAttribute="trailing" constant="24" id="cNk-j9-Fob"/>
+                            <constraint firstItem="mUR-4y-9mi" firstAttribute="trailing" secondItem="JKS-4Y-lAY" secondAttribute="trailing" constant="26" id="cNk-j9-Fob"/>
+                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="top" secondItem="gyg-sh-Hdd" secondAttribute="bottom" constant="21.5" id="dnm-JG-lLb"/>
                             <constraint firstItem="HbN-Rz-fL4" firstAttribute="trailing" secondItem="mUR-4y-9mi" secondAttribute="trailing" id="eAq-qm-1WC"/>
+                            <constraint firstItem="gyg-sh-Hdd" firstAttribute="leading" secondItem="L9B-g3-Oj6" secondAttribute="leadingMargin" id="fNe-K8-4cn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gyg-sh-Hdd" secondAttribute="trailing" id="gIH-88-9th"/>
                             <constraint firstItem="t3x-iZ-niV" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="10" id="gpy-PE-vsH"/>
                             <constraint firstItem="mUR-4y-9mi" firstAttribute="bottom" secondItem="JKS-4Y-lAY" secondAttribute="bottom" constant="25" id="kJq-0k-Gg1"/>
-                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="24" id="mbG-j8-gik"/>
+                            <constraint firstItem="JKS-4Y-lAY" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="26" id="mbG-j8-gik"/>
                             <constraint firstItem="JKS-4Y-lAY" firstAttribute="top" secondItem="t3x-iZ-niV" secondAttribute="bottom" constant="35" id="vio-ei-BBF"/>
                             <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerY" secondItem="L9B-g3-Oj6" secondAttribute="centerY" id="yui-I0-TaU"/>
                         </constraints>
@@ -187,11 +195,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="724.63768115942037" y="-695.38043478260875"/>
+            <point key="canvasLocation" x="724" y="-695.80209895052474"/>
         </scene>
     </scenes>
     <resources>
-        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="88"/>
-        <image name="house" catalog="system" width="128" height="106"/>
+        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="89"/>
+        <image name="house" catalog="system" width="128" height="104"/>
     </resources>
 </document>

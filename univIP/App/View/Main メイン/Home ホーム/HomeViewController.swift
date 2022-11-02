@@ -30,17 +30,15 @@ final class HomeViewController: UIViewController {
         
         #if DEBUG
         // デバックの時にいじる部分
-//        dataManager.hadDoneTutorial = false
-//        dataManager.agreementVersion = ""
+//        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
+//        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
         #endif
         
         // collectionViewの初期設定
-        collectionView.dataSource = self
-        collectionView.register(UINib(nibName: "CustomCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.itemSize = CGSize(width: 100, height: 100) // Cell(xib)のサイズを変更
         collectionView.collectionViewLayout = layout
-        collectionView.register(R.nib.customCell) // nibファイルを使うことを登録
+        collectionView.register(R.nib.customCell) // xibファイルを使うことを登録
         
         // forLoginWebViewの初期設定
         forLoginWebView.navigationDelegate = self
@@ -84,14 +82,17 @@ final class HomeViewController: UIViewController {
         dataManager.canExecuteJavascript = true
         // ログイン処理中であるフラグ
         viewModel.isLoginProcessing = true
+        // ログインが完了したかのフラグ
+        viewModel.isLoginComplete = false
         // 大学統合認証システムのログインページを読み込む
         forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
     }
     
     /// フォアグラウンド時の処理
+    /// アプリを30分後などに再度開いて使用すると、ログアウトされている状態になっている。
+    /// 30分後であれば再ログインなど実装してみたものの、うまく動かなかった為、毎度ログインする様にしている。
+    /// しかし、トークンが有効な状態であれば、ログイン画面へは行かずに教務事務システムの画面へ遷移してくれる。(サーバー側の機能)
     @objc private func foreground(notification: Notification) {
-        viewModel.isLoginProcessing = true
-        viewModel.isLoginComplete = false
         loadLoginPage()
     }
 }
@@ -110,21 +111,26 @@ extension HomeViewController: WKNavigationDelegate {
             return
         }
         
-        // タイムアウトした場合
+        // 再度ログインを行う必要があるのか判定(タイムアウト)
         if viewModel.shouldReLogin(url.absoluteString) {
-            // 再度ログイン処理を行う
             loadLoginPage()
         }
         
-        // 問題ない場合読み込みを許可
+        // ログインが完了したか記録
+        viewModel.isLoginComplete = viewModel.isLoggedin(url.absoluteString)
+        
+        // ログイン完了時にcollectionViewのCellデータを更新
+        if viewModel.isLoginCompleteImmediately {
+            viewModel.isLoginCompleteImmediately = false
+            collectionView.reloadData()
+        }
+        
+        // 読み込みを許可
         decisionHandler(.allow)
         return
     }
     
     /// 読み込み完了
-    ///
-    /// 主に以下のことを処理する
-    ///  1. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.forLoginWebView.url! // fatalError
@@ -139,15 +145,8 @@ extension HomeViewController: WKNavigationDelegate {
             
             // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
             dataManager.canExecuteJavascript = false
-                
-        }
-        
-        // ログインが完了したか記録
-        viewModel.isLoginComplete = viewModel.isLoggedin(url.absoluteString)
-        // ログイン完了時にcollectionViewのCellデータを更新
-        if viewModel.isLoginCompleteImmediately {
-            viewModel.isLoginCompleteImmediately = false
-            collectionView.reloadData()
+            viewModel.isLoginProcessing = true
+            viewModel.isLoginComplete = false
         }
     }
 }
@@ -161,24 +160,23 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     /// セルの中身
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // どのnibファイルに紐づけるか
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.customCell, for: indexPath)
         
-        if let cell = cell {
-
-            cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                            image: viewModel.collectionLists[indexPath.row].iconUnLock)
-            
-            if !viewModel.isLoginComplete {
-                if let img = viewModel.collectionLists[indexPath.row].iconLock {
-                    cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                                   image: img)
-                }
-            }
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.customCell, for: indexPath) else {
+            AKLog(level: .FATAL, message: "CustomCellが見当たりません")
+            fatalError()
         }
-        AKLog(level: .FATAL, message: "CustomCellが見当たりません")
-        fatalError()
+        
+        cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                        image: viewModel.collectionLists[indexPath.row].iconUnLock)
+        
+        // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
+        if viewModel.isLoginComplete == false {
+            if let img = viewModel.collectionLists[indexPath.row].iconLock {
+                cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
+                               image: img)
+            }
+        }
+        return cell
     }
     
     /// セルがタップされた時
@@ -188,8 +186,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // アナリティクスを送信
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
+        // メールなどで再度入力したい場合がある
         dataManager.canExecuteJavascript = true
         
+        let vcWeb = R.storyboard.web.webViewController()!
+        var loadUrlString = cell.url
         // 押されたセルによって場合分け
         switch cell.id {
             case .syllabus:
@@ -198,26 +199,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 present(vc, animated: true, completion: nil)
 
             case .currentTermPerformance: // 今年の成績
-                let vc = R.storyboard.web.webViewController()!
-                vc.loadUrlString = viewModel.createCurrentTermPerformanceUrl()
-                present(vc, animated: true, completion: nil)
-                return
+                loadUrlString = viewModel.createCurrentTermPerformanceUrl()
                 
             case .libraryCalendar:
-                if let urlString = viewModel.makeLibraryCalendarUrl(type: .main) {
-                    let vc = R.storyboard.web.webViewController()!
-                    vc.loadUrlString = urlString
-                    present(vc, animated: true, completion: nil)
+                guard let urlString = viewModel.makeLibraryCalendarUrl(type: .main) else {
                     return
                 }
+                loadUrlString = urlString
+                
             
 //            case .mailService:
                 
             default:
                 break
         }
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = cell.url
-        present(vc, animated: true, completion: nil)
+        vcWeb.loadUrlString = loadUrlString
+        present(vcWeb, animated: true, completion: nil)
     }
 }

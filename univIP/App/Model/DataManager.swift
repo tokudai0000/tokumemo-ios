@@ -28,7 +28,7 @@ final class DataManager {
     /// 参照するたびに、UserDefaultsから保存したデータを読み込む
     public var menuLists:[Constant.Menu] =  []
     private init() {
-        menuLists = loadMenuLists()
+//        menuLists = loadMenuLists()
     }
     
     /// メニューリストを保存
@@ -36,9 +36,9 @@ final class DataManager {
     /// UserDefaultsに保存
     /// 配列 -> Json -> Data にパースする必要がある
     public func saveMenuLists() {
-        let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(menuLists) else { return }
-        setUserDefaultsData(key: KEY_menuLists, value: data)
+//        let jsonEncoder = JSONEncoder()
+//        guard let data = try? jsonEncoder.encode(menuLists) else { return }
+//        setUserDefaultsData(key: KEY_menuLists, value: data)
     }
     
     /// cAccountの保存や読み取り
@@ -174,41 +174,41 @@ final class DataManager {
     ///   毎回更新を行う
     /// - Returns: 更新したメニューリストの配列を返す
     private let KEY_menuLists = "KEY_menuLists"
-    private func loadMenuLists() -> [Constant.Menu] {
+//    private func loadMenuLists() -> [Constant.Menu] {
         // UserDefaultsから読み込む
         // Data -> Json -> 配列 にパースする必要がある
-        let jsonDecoder = JSONDecoder()
-        let data = getUserDefaultsData(key: KEY_menuLists)
-        guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
-            // 初回利用者は初期値を返す
-            return Constant.initMenuLists
-        }
+//        let jsonDecoder = JSONDecoder()
+//        let data = getUserDefaultsData(key: KEY_menuLists)
+//        guard let lists = try? jsonDecoder.decode([Constant.Menu].self, from: data) else {
+//            // 初回利用者は初期値を返す
+//            return Constant.initMenuLists
+//        }
         
-        // アップデートごとに機能追加等があるため、更新する
-        var newModelLists = Constant.initMenuLists
-        var updateForLists:[Constant.Menu] = []
+//        // アップデートごとに機能追加等があるため、更新する
+//        var newModelLists = Constant.initMenuLists
+//        var updateForLists:[Constant.Menu] = []
+//
+//        for oldList in lists {
+//            // 並び順を保持する
+//            if let index = newModelLists.firstIndex(where: {$0.id == oldList.id}) {
+//                // 引き継ぎ
+//                newModelLists[index].title = oldList.title             // ユーザーが指定した名前
+//                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
+//                newModelLists[index].isInitView = oldList.isInitView   // ユーザーが指定した初期画面
+//                updateForLists.append(newModelLists[index])
+//                newModelLists.remove(at: index)
+//            }
+//
+//            // お気に入りの場合、ユーザーによって変化するため、そのまま引き継ぐ
+//            if oldList.id == .favorite {
+//                // 引き継ぎ
+//                updateForLists.append(oldList)
+//            }
+//        }
+//
+//        // 新規実装があれば通る
+//        updateForLists.append(contentsOf: newModelLists)
         
-        for oldList in lists {
-            // 並び順を保持する
-            if let index = newModelLists.firstIndex(where: {$0.id == oldList.id}) {
-                // 引き継ぎ
-                newModelLists[index].title = oldList.title             // ユーザーが指定した名前
-                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
-                newModelLists[index].isInitView = oldList.isInitView   // ユーザーが指定した初期画面
-                updateForLists.append(newModelLists[index])
-                newModelLists.remove(at: index)
-            }
-            
-            // お気に入りの場合、ユーザーによって変化するため、そのまま引き継ぐ
-            if oldList.id == .favorite {
-                // 引き継ぎ
-                updateForLists.append(oldList)
-            }
-        }
-        
-        // 新規実装があれば通る
-        updateForLists.append(contentsOf: newModelLists)
-        
-        return updateForLists
-    }
+//        return updateForLists
+//    }
 }

@@ -16,7 +16,7 @@ final class Constant {
     static let latestTermsVersion = "1.0.2"
     
     /// メニューの種類
-    enum MenuLists: Codable {
+    enum MenuLists {
         case courseManagementHomePC         // 教務事務システム
         case courseManagementHomeMobile
         case manabaHomePC                   // マナバ
@@ -172,7 +172,7 @@ final class Constant {
     
     
     /// メニューリストの構造体
-    struct Menu: Codable {
+    struct Menu {
         var title: String             // 表示名ユーザーが変更することができる
         let id: MenuLists             // 識別しやすいようにIDを作成
         let url: String?              // 関連したURLを保持

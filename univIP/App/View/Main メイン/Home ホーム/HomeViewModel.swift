@@ -10,6 +10,15 @@ import Foundation
 import Kanna
 
 final class HomeViewModel {
+    
+    // MARK: - Private
+    private let dataManager = DataManager.singleton
+    
+    // cアカウント、パスワードを登録しているか判定 (読み取り専用)
+    private var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
+    
+    
+    // MARK: - Public
     /// TableCellの内容
     public var collectionLists:[Constant.CollectionCell] = Constant.initCustomCellLists
     
@@ -17,9 +26,17 @@ final class HomeViewModel {
     public var isLoginComplete = false // ログイン完了
     public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
-    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
+    
+    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定　(読み取り専用)
     public var shouldShowTermsAgreementView: Bool {
         get { return dataManager.agreementVersion != Constant.latestTermsVersion }
+    }
+    
+    /// タイムアウトのURLであるかどうかの判定
+    /// - Parameter urlString: 読み込み完了したURLの文字列
+    /// - Returns: 結果
+    public func shouldReLogin(_ url: String) -> Bool {
+        return url == Url.universityServiceTimeOut.string() || url == Url.universityServiceTimeOut2.string()
     }
     
 
@@ -56,7 +73,6 @@ final class HomeViewModel {
     /// - Note:
     /// - Parameter urlString: 現在表示しているURLString
     /// - Returns: 判定結果、許可ならtrue
-    /// hadLoggedin
     public func isLoggedin(_ urlString: String) -> Bool {
         // ログイン後のURLが指定したURLと一致しているかどうか
         let check1 = urlString.contains(Url.skipReminder.string())
@@ -73,41 +89,6 @@ final class HomeViewModel {
         }
         // ログイン完了後に別画面開いてもtrueになるように
         return isLoginComplete
-    }
-    
-    
-    /// 再度ログイン処理を行うかどうか
-    ///
-    /// - Returns: 判定結果、行うべきならtrue
-    public func isExecuteLogin() -> Bool {
-        
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy, HH:mm:ss"
-        // iPhoneSE 2世代目　より前？はnilになってる。要調査
-        let lastTime = formatter.date(from: dataManager.getUserDefaultsString(key: KEY_saveCurrentTime))
-        guard let lastTime = lastTime else {
-            return false
-        }
-        
-        // 現在の時刻を取得
-        let now = Date()
-        AKLog(level: .DEBUG, message: "バックグラウンド移行後、時間 -> \(now.timeIntervalSince(lastTime)) (s)")
-        // 時刻の差分が30*60秒未満(1800s未満)であれば再ログインしない
-        if now.timeIntervalSince(lastTime) < 30 * 60 {
-            return false
-        }
-        return true
-    }
-    
-    /// タイムアウトのURLであるかどうかの判定
-    /// - Parameter urlString: 読み込み完了したURLの文字列
-    /// - Returns: 結果
-    public func shouldReLogin(_ urlString: String) -> Bool {
-        if urlString == Url.universityServiceTimeOut.string() ||
-            urlString == Url.universityServiceTimeOut2.string() {
-            return true
-        }
-        return false
     }
     
     /// 大学図書館の種類
@@ -181,14 +162,4 @@ final class HomeViewModel {
         
         return Url.currentTermPerformance.string() + String(year)
     }
-    
-    // cアカウント、パスワードを登録しているか判定
-    public var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
-    
-    
-    // MARK: - Private
-    private let dataManager = DataManager.singleton
-    
-    // 前回利用した時間を保存
-    private let KEY_saveCurrentTime = "KEY_saveCurrentTime"
 }
