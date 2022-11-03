@@ -43,7 +43,7 @@ final class Constant {
         case universityWeb                  // 大学サイト
         case setting                        // 設定
         
-
+        
         case password                       // パスワード
         case customize                      // 並び替え
         
@@ -131,6 +131,111 @@ final class Constant {
                        iconUnLock: UIImage(systemName: "envelope.badge"),
                        iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.outlookService.string()
+                      ),
+        
+        CollectionCell(title: "キャリア支援室",
+                       id: .tokudaiCareerCenter,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: nil,
+                       url: Url.tokudaiCareerCenter.string()
+                      ),
+        
+        CollectionCell(title: "教務事務システム[PC]",
+                       id: .courseManagementHomePC,
+                       iconUnLock: UIImage(systemName: "graduationcap"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.courseManagementPC.string()
+                      ),
+        
+        CollectionCell(title: "マナバ[Mobile]",
+                       id: .manabaHomeMobile,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.manabaMobile.string()
+                      ),
+        
+        CollectionCell(title: "図書Web[常三島]",
+                       id: .libraryWebHomePC,
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: nil,
+                       url: Url.libraryHomePageMainPC.string()
+                      ),
+        
+        CollectionCell(title: "図書Web[蔵本]",
+                       id: .libraryWebHomePC,
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: nil,
+                       url: Url.libraryHomePageKuraPC.string()
+                      ),
+        
+        CollectionCell(title: "図書Web[Mobile]",
+                       id: .libraryWebHomeMobile,
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: nil,
+                       url: Url.libraryHomeMobile.string()
+                      ),
+        
+        CollectionCell(title: "図書MyPage",
+                       id: .libraryMyPage,
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.libraryMyPage.string()
+                      ),
+        
+        CollectionCell(title: "図書本購入リクエスト",
+                       id: .libraryBookPurchaseRequest,
+                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.libraryBookPurchaseRequest.string()
+                      ),
+        
+        CollectionCell(title: "時間割",
+                       id: .timeTable,
+                       iconUnLock: UIImage(systemName: "calendar"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.timeTable.string()
+                      ),
+        
+        CollectionCell(title: "成績参照",
+                       id: .termPerformance,
+                       iconUnLock: UIImage(systemName: "chart.line.uptrend.xyaxis"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.termPerformance.string()
+                      ),
+        
+        CollectionCell(title: "出欠記録",
+                       id: .presenceAbsenceRecord,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.presenceAbsenceRecord.string()
+                      ),
+        
+        CollectionCell(title: "授業アンケート",
+                       id: .classQuestionnaire,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: UIImage(systemName: "lock.fill"),
+                       url: Url.classQuestionnaire.string()
+                      ),
+        
+        CollectionCell(title: "システムサービス一覧",
+                       id: .systemServiceList,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: nil,
+                       url: Url.systemServiceList.string()
+                      ),
+        
+        CollectionCell(title: "Eラーニング(LMS)一覧",
+                       id: .eLearningList,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: nil,
+                       url: Url.eLearningList.string()
+                      ),
+        
+        CollectionCell(title: "大学サイト",
+                       id: .universityWeb,
+                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconLock: nil,
+                       url: Url.universityHomePage.string()
                       )
     ]
     
