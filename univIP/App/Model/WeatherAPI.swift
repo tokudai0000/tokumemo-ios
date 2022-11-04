@@ -9,266 +9,164 @@ import Foundation
 
 /*
  {
-    "publishingOffice": "徳島地方気象台",
-    "reportDatetime": "2022-10-13T17:00:00+09:00",
-    "timeSeries": [
-    {
-        "timeDefines":
-        [
-        "2022-10-13T17:00:00+09:00",
-        "2022-10-14T00:00:00+09:00",
-        "2022-10-15T00:00:00+09:00"
-        ],
-        "areas":
-        [
-            {
-            "area": {"name": "北部","code": "360010"},
-            "weatherCodes": ["101","101","201"],
-            "weathers": ["晴れ　夜のはじめ頃　くもり","晴れ　時々　くもり","くもり　時々　晴れ"],
-            "winds": ["北の風","北の風","北西の風　後　北東の風"],
-            "waves": ["１メートル","１メートル","１メートル"]},
-            {
-            "area": {"name": "南部","code": "360020"},
-            "weatherCodes": ["101","101","200"],
-            "weathers": ["晴れ　夜のはじめ頃　くもり","晴れ　時々　くもり","くもり"],
-            "winds": ["北東の風　やや強く","北東の風　後　西の風　海上　では　北東の風　やや強く","西の風　後　東の風"],
-            "waves": ["３メートル　うねり　を伴う","３メートル　後　２．５メートル　うねり　を伴う","２．５メートル　後　２メートル　うねり　を伴う"]
-            }
-        ]
-     },
-     {
-     "timeDefines": ["2022-10-13T18:00:00+09:00","2022-10-14T00:00:00+09:00","2022-10-14T06:00:00+09:00","2022-10-14T12:00:00+09:00","2022-10-14T18:00:00+09:00"],
-     "areas": [
-     {
-        "area": {
-            "name": "北部",
-            "code": "360010"
-        },
-     "pops": [
-     "0",
-     "0",
-     "0",
-     "0",
-     "0"
-     ]
-     },
-     {
-     "area": {
-     "name": "南部",
-     "code": "360020"
-     },
-     "pops": [
-     "0",
-     "0",
-     "10",
-     "10",
-     "10"
-     ]
-     }
-     ]
-     },
-     {
-     "timeDefines": [
-     "2022-10-14T00:00:00+09:00",
-     "2022-10-14T09:00:00+09:00"
-     ],
-     "areas": [
-     {
-     "area": {
-     "name": "徳島",
-     "code": "71106"
-     },
-     "temps": [
-     "17",
-     "25"
-     ]
-     },
-     {
-     "area": {
-     "name": "池田",
-     "code": "71066"
-     },
-     "temps": [
-     "13",
-     "25"
-     ]
-     },
-     {
-     "area": {
-     "name": "日和佐",
-     "code": "71266"
-     },
-     "temps": [
-     "19",
-     "27"
-     ]
-     }
-     ]
-     }
-     ]
-     },
-     {
-     "publishingOffice": "徳島地方気象台",
-     "reportDatetime": "2022-10-13T17:00:00+09:00",
-     "timeSeries": [
-     {
-     "timeDefines": [
-     "2022-10-14T00:00:00+09:00",
-     "2022-10-15T00:00:00+09:00",
-     "2022-10-16T00:00:00+09:00",
-     "2022-10-17T00:00:00+09:00",
-     "2022-10-18T00:00:00+09:00",
-     "2022-10-19T00:00:00+09:00",
-     "2022-10-20T00:00:00+09:00"
-     ],
-     "areas": [
-     {
-     "area": {
-     "name": "徳島県",
-     "code": "360000"
-     },
-     "weatherCodes": [
-     "101",
-     "201",
-     "202",
-     "203",
-     "202",
-     "201",
-     "101"
-     ],
-     "pops": [
-     "",
-     "20",
-     "60",
-     "80",
-     "50",
-     "30",
-     "20"
-     ],
-     "reliabilities": [
-     "",
-     "",
-     "B",
-     "A",
-     "C",
-     "A",
-     "A"
-     ]
-     }
-     ]
-     },
-     {
-     "timeDefines": [
-     "2022-10-14T00:00:00+09:00",
-     "2022-10-15T00:00:00+09:00",
-     "2022-10-16T00:00:00+09:00",
-     "2022-10-17T00:00:00+09:00",
-     "2022-10-18T00:00:00+09:00",
-     "2022-10-19T00:00:00+09:00",
-     "2022-10-20T00:00:00+09:00"
-     ],
-     "areas": [
-     {
-     "area": {
-     "name": "徳島",
-     "code": "71106"
-     },
-     "tempsMin": [
-     "",
-     "17",
-     "19",
-     "17",
-     "15",
-     "14",
-     "13"
-     ],
-     "tempsMinUpper": [
-     "",
-     "20",
-     "21",
-     "18",
-     "17",
-     "16",
-     "15"
-     ],
-     "tempsMinLower": [
-     "",
-     "16",
-     "17",
-     "15",
-     "14",
-     "12",
-     "11"
-     ],
-     "tempsMax": [
-     "",
-     "25",
-     "26",
-     "23",
-     "20",
-     "20",
-     "21"
-     ],
-     "tempsMaxUpper": [
-     "",
-     "28",
-     "27",
-     "27",
-     "22",
-     "23",
-     "23"
-     ],
-     "tempsMaxLower": [
-     "",
-     "24",
-     "24",
-     "22",
-     "18",
-     "18",
-     "18"
-     ]
-     }
-     ]
-     }
-     ],
-     "tempAverage": {
-     "areas": [
-     {
-     "area": {
-     "name": "徳島",
-     "code": "71106"
-     },
-     "min": "15.7",
-     "max": "23.0"
-     }
-     ]
-     },
-     "precipAverage": {
-     "areas": [
-     {
-     "area": {
-     "name": "徳島",
-     "code": "71106"
-     },
-     "min": "6.5",
-     "max": "46.3"
-     }
-     ]
-     }
+ "type": "",
+ "features": [
+ {
+ "type": "",
+ "properties": {},  　　//それぞれ違う
+ "id": "",  　　　　　　//Int型やString型、存在しない場合がある
+ "geometry": {}  　　　//一次元配列や三次元配列の場合がある
+ },
+ ],
+ "crs": {
+ "type": "",
+ "properties": {
+ "href": "",
+ "type": ""
+ }
+ }
  }
  */
-
-class TopNest: Codable {
-    class area: Codable{
-        var weatherCodes: [String]
-        var weathers: [String]
-    }
-    class tempAverage: Codable{
-        class areas: Codable{
-            var min: String
-            var max: String
+//Geometryのcoordinatesが一次元配列の時用
+class TopNest1: Codable {
+    var type:String?
+    var features:[Feature] = []
+    
+    class Feature: Codable{
+        var type: String?
+        var properties: Properties?
+        var geometry: Geometry?
+        //var id: Int型とString型が混在している
+        
+        class Properties: Codable{
+            //地図(地震計)
+            var floor: Int?
+        }
+        class Geometry: Codable{
+            var type: String?  //Point
+            var coordinates: [Double] = []  //一次配列
         }
     }
 }
+
+/*
+ {
+     "coord": {
+         "lon": 134.5616,
+         "lat": 34.0779
+     },
+     "weather": [
+         {
+             "id": 801,
+             "main": "Clouds",
+             "description": "薄い雲",
+             "icon": "02d"
+         }
+     ],
+ */
+
+struct Coord: Codable{
+    var lon: Int?  //Point
+    var lat: Int?  //一次配列
+}
+
+class TopNest: Codable {
+    var coord: Coord!
+    
+    var weather:[Weather] = []
+    
+    class Weather:Codable {
+        let id: Int?
+        let main: String?
+        let description: String?
+        let icon: String?
+    }
+    
+//    let base: String?
+    
+//    var main: Main?
+//
+//    class Main:Codable {
+//        let temp: Int?
+//        let feels_like: Int?
+//        let temp_min: Int?
+//        let temp_max: Int?
+//        let pressure: Int?
+//        let humidity: Int?
+//    }
+}
+
+
+//struct Weathers:Codable {
+//    let weather: [Weather]
+//}
+//
+//struct Weather:Codable {
+//    let id: String
+//    let main: String
+//    let description: String
+//    let icon: String
+//}
+
+
+//struct feels_like:
+/*
+ {
+ "coord": {
+ "lon": 134.5616,
+ "lat": 34.0779
+ },
+ "weather": [
+ {
+ "id": 801,
+ "main": "Clouds",
+ "description": "薄い雲",
+ "icon": "02d"
+ }
+ ],
+ "base": "stations",
+ "main": {
+ "temp": 21.97,
+ "feels_like": 21.79,
+ "temp_min": 21.97,
+ "temp_max": 22.45,
+ "pressure": 1013,
+ "humidity": 60
+ },
+ "visibility": 10000,
+ "wind": {
+ "speed": 2.57,
+ "deg": 60
+ },
+ "clouds": {
+ "all": 20
+ },
+ "dt": 1667456496,
+ "sys": {
+ "type": 1,
+ "id": 8027,
+ "country": "JP",
+ "sunrise": 1667424156,
+ "sunset": 1667462876
+ },
+ "timezone": 32400,
+ "id": 1857689,
+ "name": "万代町",
+ "cod": 200
+ }
+ */
+
+//class TopNest: Codable {
+//    class area: Codable{
+//        var weatherCodes: [String]
+//        var weathers: [String]
+//    }
+//    class tempAverage: Codable{
+//        class areas: Codable{
+//            var min: String
+//            var max: String
+//        }
+//    }
+//}
 
 

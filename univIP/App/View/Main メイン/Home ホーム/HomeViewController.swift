@@ -45,8 +45,10 @@ final class HomeViewController: UIViewController {
         
         // weatherWebViewの初期設定
         // (滅多に出ない雹や雪などの天気アイコンを作るよりWebページを表示した方が早いし正確との判断から)
-        weatherWebView.load(URLRequest(url: URL(string: "https://www.jma.go.jp/bosai/forecast/img/201.svg")!)) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
-        weatherWebView.pageZoom = 3
+        // https://openweathermap.org/img/wn/{天気コード}@2x.png
+        viewModel.getWetherData()
+        weatherWebView.load(URLRequest(url: URL(string: "https://openweathermap.org/img/wn/02d@2x.png")!)) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
+//        weatherWebView.pageZoom = 3
         weatherWebView.isUserInteractionEnabled = false
         
         // フォアグラウンドの判定

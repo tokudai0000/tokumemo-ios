@@ -13,6 +13,8 @@ target 'univIP' do
   pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
   pod 'ZXingObjC', '~> 3.6.4'
+  pod 'Alamofire', '~> 4'
+  pod 'SwiftyJSON', '~> 5'
     
   target  'univIPTests' do
     inherit! :search_paths
