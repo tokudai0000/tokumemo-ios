@@ -16,7 +16,9 @@ final class DataManager {
     public var teacherName = ""
     public var subjectName = ""
     
-    public var weatherDatas:[String] = ["","",""]
+    public var weatherDatas:[String] = ["error","","http://example.com"]
+    public var newsTitleDatas:[String] = []
+    public var newsDateDatas:[String] = []
     
     /// JavaScriptを動かすかどうかのフラグ
     ///
