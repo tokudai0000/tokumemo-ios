@@ -47,9 +47,12 @@ final class HomeViewController: UIViewController {
         // (滅多に出ない雹や雪などの天気アイコンを作るよりWebページを表示した方が早いし正確との判断から)
         // https://openweathermap.org/img/wn/{天気コード}@2x.png
         viewModel.getWetherData()
-        weatherWebView.load(URLRequest(url: URL(string: "https://openweathermap.org/img/wn/02d@2x.png")!)) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
+//        weatherWebView.load(viewModel.iconUrl!) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
 //        weatherWebView.pageZoom = 3
         weatherWebView.isUserInteractionEnabled = false
+        
+//        weatherLabel.text = weatherData[0]
+//        temperatureLabel.text = weatherData[2]
         
         // フォアグラウンドの判定
         NotificationCenter.default.addObserver(self,
@@ -59,11 +62,54 @@ final class HomeViewController: UIViewController {
         
         // ステータスバーの背景色を指定
         configureView()
+        
+        initViewModel()
     }
     
     // ステータスバーの背景色を指定(White)
     private func configureView() {
         setStatusBarBackgroundColor(.white)
+    }
+    
+    /// ViewModel初期化
+    private func initViewModel() {
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else {
+                return
+            }
+            DispatchQueue.mainThread {
+                switch state {
+                    case .busy: // インジケータ表示
+                        //                Indicator.show()
+                        break
+                        
+                    case .ready: // dataが更新された
+                        // View更新
+                        //self.viewRefresh()
+                        // インジケータ非表示
+                        //                Indicator.hide()
+                        break
+                        
+                        //                case .readyDone:
+                        //                    // 相性測定画面へ
+                        //                    if let vc = R.storyboard.result.resultViewController() {
+                        //                        vc.modalPresentationStyle = .fullScreen
+                        //                        vc.modalTransitionStyle = .flipHorizontal
+                        //                        self.present(vc, animated: true, completion: nil)
+                        //                    }
+                        
+                    case .error(let type): // エラーが発生した
+                        // View描画
+                        //self.viewRefresh()
+                        // インジケータ非表示
+                        //                Indicator.hide()
+                        // Baseエラー処理
+                        self.baseErrorProcessing(type: type)
+                        
+                }//end switch
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -165,101 +165,45 @@ final class HomeViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
+    //MARK: - STATE ステータス
+    enum State {
+        case busy           // 準備中 -->
+        case ready          // 準備完了 -->
+        case error          // エラー発生 -->
+    }
+    public var state: ((State) -> Void)?
+    
+    var description: String?
+    var iconUrl: URLRequest?
+    var feels_like: String
+    
     public func getWetherData() {
-//        let URL = SF_LOGIN_URL + "/services/oauth2/token"
-//        let parameters = [
-//            "grant_type":"password",
-//            "client_id":SF_CLIENT_ID,
-//            "client_secret":SF_CLIENT_SECRET,
-//            "username":SF_USERNAME,
-//            "password":SF_PASSWORD
-//        ]
-        let URL: String = "https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric"
-        Alamofire.request(URL, method: .get)
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric"
+
+        Alamofire.request(urlString, method: .get)
             .responseJSON { response in
                 guard let object = response.result.value else {
                     return
                 }
-                
                 let json = JSON(object)
-                print(json.description) // JSONのデータ値
-                print(json["cod"].int)
-                print(json["name"].string)
-                print(json["weather"][0]["description"].string)
-//                json.forEach { (_, json) in
-////                    let article: [String: String?] = [
-////                        "title": json["title"].string,
-////                        "userId": json["user"]["id"].string
-////                    ]
-//                }
-            }
-//        Alamofire.request(URL)
-//            .responseJSON { response in
-//                switch response.result {
-//                    case .Success(let value):
-//                        let json = JSON(value)
-//                        print(json)
-//
-//                        //let access_token = json["access_token"].string
-//                        //let instance_url = json["instance_url"].string
-//                        //let token_type = json["token_type"].string
-//
-//                    case .Failure(let error):
-//                        print("error")
-//                }
-//            }
-
-//        AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { response in
-//            switch response.result {
-//                case .success:
-//                    let json: JSON = JSON(response.result ?? kill)
-//                    print(json.rawValue)
-////                    self.showWeatherAlert(title: json["title"].stringValue, message: json["description"]["text"].stringValue)
-//                case .failure(let error):
-//                    print(error)
-//            }
-//        }
-        
-        
-        // AlamofireでAPIリクエストをする
-//        AF.request("https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric")
-//        // レスポンスをJSON形式で受け取る
-//            .responseJSON { response in
-//                guard let object = response.result.rawValue else {
-//                    return
-//                }
-//                let json = JSON(object)
-//                json.forEach { (_, json) in
-//                    print(json["weather"])
-//                    print(json["description"]) // jsonから"title"がキーのものを取得
-//                }
+//                print(json.description) // JSONのデータ値
+                self.description = json["weather"][0]["description"].string
+                if let icon = json["weather"][0]["icon"].string {
+                    let url = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
+                    self.iconUrl = URLRequest(url: URL(string: url)!)
+                }
+                self.feels_like = String(json["main"]["feels_like"].double ?? 404)
                 
-//                if let data = response.data {
-//                    do {
-////                        let articles: TopNest = try JSONDecoder().decode(TopNest.self, from: data)
-////
-////                        print(articles.weather[0].id!)
-////                        print(articles.weather[0].main!)
-////                        print(articles.weather[0].description!)
-////                        print(articles.weather[0].icon!)
-//
-//
-//                        let json = JSON(object)
-//
-////                        print(articles.main!.feels_like)
-////                        print(articles.main[0].temp_max!)
-////                        print(articles.main[0].temp_min!)
-////                        print(articles.main[0].feels_like!)
-//
-//
-//
-//                    } catch {
-//                        print("getDataBase 失敗")
-//                        print(error.localizedDescription)
-//                    }
-//                }else{
-//                    print("getDataBase  response.data = nil")
-//                }
-//            }
+            }
     }
+    //    メモ
+    //        let parameters = [
+    //            "lat":"34.0778755",
+    //            "lon":"134.5615651",
+    //            "appid":"e0578cd3fb0d436dd64d4d5d5a404f08",
+    //            "lang":"ja",
+    //            "units":"metric"
+    //        ]
+    //        let URL: String = "https://api.openweathermap.org/data/2.5/weather"
+    //        Alamofire.request(URL, method: .post, parameters: parameters)
 }
