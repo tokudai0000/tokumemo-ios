@@ -172,29 +172,54 @@ final class HomeViewModel {
         case error          // エラー発生 -->
     }
     public var state: ((State) -> Void)?
-    
-    var description: String?
-    var iconUrl: URLRequest?
-    var feels_like: String
-    
+    let apiManager = ApiManager.singleton
+//    var description: String?
+//    var iconUrl: URLRequest?
+//    var feels_like: String
+//
     public func getWetherData() {
+        state?(.busy) // 通信開始（通信中）
         let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric"
-
-        Alamofire.request(urlString, method: .get)
-            .responseJSON { response in
-                guard let object = response.result.value else {
-                    return
-                }
-                let json = JSON(object)
-//                print(json.description) // JSONのデータ値
-                self.description = json["weather"][0]["description"].string
-                if let icon = json["weather"][0]["icon"].string {
-                    let url = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
-                    self.iconUrl = URLRequest(url: URL(string: url)!)
-                }
-                self.feels_like = String(json["main"]["feels_like"].double ?? 404)
-                
+        
+        apiManager.download(urlString: urlString,
+                            success: { [weak self] (response) in
+            guard let self = self else { // SearchViewModelのself
+                AKLog(level: .FATAL, message: "[self] FatalError")
+                fatalError()
             }
+            
+            if let a = response["weather"][0]["description"].string {
+                self.dataManager.weatherDatas[0] = a
+            }
+            if let b = response["main"]["feels_like"].double {
+                self.dataManager.weatherDatas[1] = String(b)
+            }
+            if let c = response["weather"][0]["icon"].string {
+                let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
+                self.dataManager.weatherDatas[2] = url
+            }
+                
+            self.state?(.ready) // 通信完了
+        }, failure: { [weak self] (error) in
+            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+            self?.state?(.error) // エラー表示
+        })
+
+//        Alamofire.request(urlString, method: .get)
+//            .responseJSON { response in
+//                guard let object = response.result.value else {
+//                    return
+//                }
+//                let json = JSON(object)
+////                print(json.description) // JSONのデータ値
+//                self.description = json["weather"][0]["description"].string
+//                if let icon = json["weather"][0]["icon"].string {
+//                    let url = "https://openweathermap.org/img/wn/" + icon + "@2x.png"
+//                    self.iconUrl = URLRequest(url: URL(string: url)!)
+//                }
+//                self.feels_like = String(json["main"]["feels_like"].double ?? 404)
+//
+//            }
     }
     //    メモ
     //        let parameters = [

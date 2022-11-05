@@ -76,36 +76,22 @@ final class HomeViewController: UIViewController {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
             guard let self = self else {
-                return
+                fatalError()
             }
-            DispatchQueue.mainThread {
+            DispatchQueue.main.async {
                 switch state {
-                    case .busy: // インジケータ表示
-                        //                Indicator.show()
+                    case .busy: // 通信中
                         break
                         
-                    case .ready: // dataが更新された
-                        // View更新
-                        //self.viewRefresh()
-                        // インジケータ非表示
-                        //                Indicator.hide()
+                    case .ready: // 通信完了
+                        self.weatherLabel.text = self.dataManager.weatherDatas[0]
+                        self.temperatureLabel.text = self.dataManager.weatherDatas[1]
+                        self.weatherWebView.load(URLRequest(url: URL(string: self.dataManager.weatherDatas[2])!))
                         break
                         
-                        //                case .readyDone:
-                        //                    // 相性測定画面へ
-                        //                    if let vc = R.storyboard.result.resultViewController() {
-                        //                        vc.modalPresentationStyle = .fullScreen
-                        //                        vc.modalTransitionStyle = .flipHorizontal
-                        //                        self.present(vc, animated: true, completion: nil)
-                        //                    }
                         
-                    case .error(let type): // エラーが発生した
-                        // View描画
-                        //self.viewRefresh()
-                        // インジケータ非表示
-                        //                Indicator.hide()
-                        // Baseエラー処理
-                        self.baseErrorProcessing(type: type)
+                    case .error:
+                        break
                         
                 }//end switch
             }

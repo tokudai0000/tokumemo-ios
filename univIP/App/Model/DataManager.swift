@@ -16,6 +16,8 @@ final class DataManager {
     public var teacherName = ""
     public var subjectName = ""
     
+    public var weatherDatas:[String] = ["","",""]
+    
     /// JavaScriptを動かすかどうかのフラグ
     ///
     /// 次に読み込まれるURLはJavaScriptを動かすことを許可する
