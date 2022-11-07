@@ -18,7 +18,8 @@ class StudentCardViewController: UIViewController {
         super.viewDidLoad()
         
         // 学生番号を定義する
-        let studentNumber = dataManager.studentNumber
+//        let studentNumber = dataManager.cAccount
+        let studentNumber = "1234567890"
 
         // バーコードを生成する
         let GeneratedImage = BarCodeGenerator.generateBarCode(from: "\(studentNumber)0")
