@@ -24,6 +24,8 @@
 		1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A384F9728FD794200A1F52E /* WebViewModel.swift */; };
 		1A3A75FA2916792600069818 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* ApiManager.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
+		1A3A76022918993D00069818 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A76002918993D00069818 /* TableViewController.swift */; };
+		1A3A76032918993D00069818 /* TableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A3A76012918993D00069818 /* TableViewController.xib */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
@@ -100,6 +102,8 @@
 		1A384F9728FD794200A1F52E /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		1A3A75F92916792600069818 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
+		1A3A76002918993D00069818 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		1A3A76012918993D00069818 /* TableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewController.xib; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
@@ -242,6 +246,8 @@
 				1A3A75FE2916B43700069818 /* NewsViewModel.swift */,
 				1A6C51B72905072500A3E85A /* NewsViewController.swift */,
 				1A6C51B12904EC2F00A3E85A /* News.storyboard */,
+				1A3A76012918993D00069818 /* TableViewController.xib */,
+				1A3A76002918993D00069818 /* TableViewController.swift */,
 			);
 			path = "News ニュース";
 			sourceTree = "<group>";
@@ -610,6 +616,7 @@
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
 				1ABE8BD827B10489001EEA79 /* Syllabus.storyboard in Resources */,
 				1A6C51B22904EC2F00A3E85A /* News.storyboard in Resources */,
+				1A3A76032918993D00069818 /* TableViewController.xib in Resources */,
 				1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */,
 				1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */,
 				1A6C51B42904ECCA00A3E85A /* Review.storyboard in Resources */,
@@ -774,6 +781,7 @@
 				1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */,
 				80921099290FC717009D0ABD /* BarCodeGenerator.swift in Sources */,
 				1A3A75FA2916792600069818 /* ApiManager.swift in Sources */,
+				1A3A76022918993D00069818 /* TableViewController.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
 				1A30D0A928F5BFB500C4012E /* CustomCell.swift in Sources */,

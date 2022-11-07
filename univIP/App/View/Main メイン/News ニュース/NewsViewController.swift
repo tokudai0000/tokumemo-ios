@@ -19,6 +19,7 @@ class NewsViewController: UIViewController {
 
         initViewModel()
     }
+    
     /// ViewModel初期化
     private func initViewModel() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
@@ -32,7 +33,7 @@ class NewsViewController: UIViewController {
                         break
                         
                     case .ready: // 通信完了
-                        tableView.reloadData()
+                        self.tableView.reloadData()
                         break
                         
                         
@@ -69,7 +70,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         
         
         //        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        cell.textLabel?.text = dataManager.newsTitleDatas[indexPath.item]
+        cell.textLabel?.text = dataManager.newsTitleDatas[indexPath.section]
         
         return cell
     }
