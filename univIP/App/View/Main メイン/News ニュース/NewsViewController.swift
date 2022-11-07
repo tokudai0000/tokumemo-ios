@@ -58,8 +58,14 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         return dataManager.newsTitleDatas.count
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return CGFloat(100)
+//    }
+    /*
+     セルの高さを決めるメソッド
+     */
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(150)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -72,6 +78,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         
         //        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         cell.textLabel?.text = dataManager.newsTitleDatas[indexPath.section]
+        
         
         return cell
     }
