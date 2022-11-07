@@ -47,16 +47,18 @@ final class DataManager {
     }
     
     /// cAccountの保存や読み取り
-    private let KEY_cAccount = "KEY_cAccount"
+    private let KEY_studentNumber = "KEY_studentNumber"
+    public var studentNumber: String {
+        get { return getKeyChain(key: KEY_studentNumber) }
+        set(v) { setKeyChain(key: KEY_studentNumber, value: v) }
+    }
+    
     public var cAccount: String {
-        get { return getKeyChain(key: KEY_cAccount) }
-        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
+        get { return "c" + studentNumber.prefix(9)}
     }
     
     /// passwordの保存や読み取り
-    /// - Note:
-    ///   KEY_password にするべきだが変更するとユーザーは再度パスワードを登録しなければならないため注意
-    private let KEY_password = "KEY_passWord"
+    private let KEY_password = "KEY_password"
     public var password: String {
         get { return getKeyChain(key: KEY_password) }
         set(v) { setKeyChain(key: KEY_password, value: v) }
