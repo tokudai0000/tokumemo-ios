@@ -32,6 +32,10 @@ final class WebViewController: UIViewController {
                 webView.load(URLRequest(url: url))
             }
         }
+        
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(UIColor(red: 246/255, green: 248/255, blue: 248/255, alpha: 1.0))
+    
     }
     
     @IBAction func finishButton(_ sender: Any) {
