@@ -189,14 +189,12 @@ final class HomeViewModel {
                 self.dataManager.weatherDatas[0] = a
             }
             if let b = response["main"]["feels_like"].double {
-                self.dataManager.weatherDatas[1] = String(b)
+                let c = String(b)
+                self.dataManager.weatherDatas[1] = c.prefix(c.count - 1) + "℃"
             }
             if let c = response["weather"][0]["icon"].string {
                 let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
                 self.dataManager.weatherDatas[2] = url
-            }
-            if let d = response["dt"].string {
-                self.dataManager.weatherDatas[3] = d
             }
                 
             self.state?(.ready) // 通信完了

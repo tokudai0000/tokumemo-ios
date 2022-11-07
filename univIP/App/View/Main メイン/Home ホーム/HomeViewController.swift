@@ -17,6 +17,7 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var weatherWebView: WKWebView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
@@ -69,8 +70,18 @@ final class HomeViewController: UIViewController {
         }
         // ログインページの読み込み
         loadLoginPage()
+        
+        dateLabel.text = dateToday()
     }
-    
+    func dateToday () -> String {
+        let dt = Date()
+        let dateFormatter = DateFormatter()
+        
+        // DateFormatter を使用して書式とロケールを指定する
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "MMMd", options: 0, locale: Locale(identifier: "ja_JP"))
+        
+        return dateFormatter.string(from: dt)
+    }
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
