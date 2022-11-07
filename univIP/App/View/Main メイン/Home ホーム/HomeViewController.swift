@@ -43,10 +43,7 @@ final class HomeViewController: UIViewController {
         // forLoginWebViewの初期設定
         forLoginWebView.navigationDelegate = self
         
-        // weatherWebViewの初期設定
-        // (滅多に出ない雹や雪などの天気アイコンを作るよりWebページを表示した方が早いし正確との判断から)
-        weatherWebView.load(URLRequest(url: URL(string: "https://www.jma.go.jp/bosai/forecast/img/201.svg")!)) // 気象庁のAPIから天気アイコンのURLを変更できるようにする
-        weatherWebView.pageZoom = 3
+        viewModel.getWetherData()
         weatherWebView.isUserInteractionEnabled = false
         
         // フォアグラウンドの判定
@@ -56,12 +53,9 @@ final class HomeViewController: UIViewController {
                                                object: nil)
         
         // ステータスバーの背景色を指定
-        configureView()
-    }
-    
-    // ステータスバーの背景色を指定(White)
-    private func configureView() {
         setStatusBarBackgroundColor(.white)
+        
+        initViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -227,5 +221,34 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
+    }
+    
+    /// ViewModel初期化
+    private func initViewModel() {
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else {
+                fatalError()
+            }
+            DispatchQueue.main.async {
+                switch state {
+                    case .busy: // 通信中
+                        break
+                        
+                    case .ready: // 通信完了
+                        self.weatherLabel.text = self.dataManager.weatherDatas[0]
+                        self.temperatureLabel.text = self.dataManager.weatherDatas[1]
+                        if let url = URL(string: self.dataManager.weatherDatas[2]) {
+                            self.weatherWebView.load(URLRequest(url: url))
+                        }
+                        break
+                        
+                        
+                    case .error:
+                        break
+                        
+                }//end switch
+            }
+        }
     }
 }
