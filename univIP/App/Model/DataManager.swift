@@ -27,24 +27,15 @@ final class DataManager {
     /// これがないと、ログインに失敗した場合、永遠とログイン処理を行われてしまう
     public var canExecuteJavascript = false
     
-    /// メニューリストの内容
-    ///
-    /// MenuViewControllerのメニューリストに表示させる内容
-    /// 参照するたびに、UserDefaultsから保存したデータを読み込む
-    public var menuLists:[Constant.Menu] =  []
-    private init() {
-//        menuLists = loadMenuLists()
-    }
-    
     /// メニューリストを保存
     ///
     /// UserDefaultsに保存
     /// 配列 -> Json -> Data にパースする必要がある
-    public func saveMenuLists() {
+//    public func saveMenuLists() {
 //        let jsonEncoder = JSONEncoder()
 //        guard let data = try? jsonEncoder.encode(menuLists) else { return }
 //        setUserDefaultsData(key: KEY_menuLists, value: data)
-    }
+//    }
     
     /// cAccountの保存や読み取り
     private let KEY_studentNumber = "KEY_studentNumber"
