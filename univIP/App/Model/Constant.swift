@@ -252,8 +252,8 @@ final class Constant {
         [
             MenuCell(title: "パスワード設定",
                      id: .password),
-            MenuCell(title: "カスタマイズ",
-                     id: .customize)
+//            MenuCell(title: "カスタマイズ",
+//                     id: .customize)
         ],[
             MenuCell(title: "このアプリについて",
                      id: .aboutThisApp),
