@@ -10,11 +10,14 @@ import SafariServices
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet weak var discriptionLabel: UILabel!
+    
     private let viewModel = SettingsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        discriptionLabel.text = "このアプリでは、パスワードを保存することで毎日面倒だったmanabaなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
     }
 
     // MARK: - Table view data source
@@ -25,6 +28,9 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "このアプリでは、パスワードを保存することで毎日面倒だったmanabaなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
+        }
         return " "
     }
 
