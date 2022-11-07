@@ -195,6 +195,9 @@ final class HomeViewModel {
                 let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
                 self.dataManager.weatherDatas[2] = url
             }
+            if let d = response["dt"].string {
+                self.dataManager.weatherDatas[3] = d
+            }
                 
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in

@@ -231,7 +231,6 @@
 				80D3B6FF2909435000FF1AE3 /* StudentCard 学生証 */,
 				1A30D0AB28F5BFBD00C4012E /* CustomCell */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
-				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 			);
 			path = "Home ホーム";
 			sourceTree = "<group>";
@@ -414,6 +413,7 @@
 		1ABE8BB827B10402001EEA79 /* Main メイン */ = {
 			isa = PBXGroup;
 			children = (
+				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,

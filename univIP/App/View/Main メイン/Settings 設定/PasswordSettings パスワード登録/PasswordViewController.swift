@@ -11,18 +11,20 @@ import UIKit
 final class PasswordViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var cAccountTextField: UITextField!
+    @IBOutlet weak var studentNumberTextField: UITextField!
+    @IBOutlet weak var studentNumberTextSizeLabel: UILabel!
+    @IBOutlet weak var studentNumberMessageLabel: UILabel!
+    @IBOutlet weak var studentNumberUnderLine: UIView!
+    
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var cAccountTextSizeLabel: UILabel!
     @IBOutlet weak var passwordTextSizeLabel: UILabel!
-    @IBOutlet weak var cAccountMessageLabel: UILabel!
     @IBOutlet weak var passwordMessageLabel: UILabel!
-    @IBOutlet weak var cAccountUnderLine: UIView!
     @IBOutlet weak var passwordUnderLine: UIView!
-    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var passwordViewButton: UIButton!
     
-//    public var delegate : OthersViewController?
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
+    
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
@@ -33,9 +35,6 @@ final class PasswordViewController: UIViewController {
     }
     
     // MARK: - IBAction
-    @IBAction func dismissButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
     
     /// パスワードの表示、非表示モード
     @IBAction func passwordViewChangeButton(_ sender: Any) {
@@ -49,40 +48,62 @@ final class PasswordViewController: UIViewController {
             passwordViewButton.setImage(UIImage(systemName: "eye"), for: .normal)
         }
     }
+
+    @IBAction func resetButton(_ sender: Any) {
+        let alert: UIAlertController = UIAlertController(title: "アラート表示",
+                                                         message: "学生番号とパスワードの情報をこのスマホから消去しますか？",
+                                                         preferredStyle:  UIAlertController.Style.alert)
+        
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK",
+                                                         style: UIAlertAction.Style.default,
+                                                         handler:{ (action: UIAlertAction!) -> Void in
+            self.dataManager.studentNumber = ""
+            self.dataManager.password = ""
+            self.initSetup()
+        })
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル",
+                                                        style: UIAlertAction.Style.cancel,
+                                                        handler:{ (action: UIAlertAction!) -> Void in })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
     
     @IBAction func registrationButton(_ sender: Any) {
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
-        guard let cAccountText = cAccountTextField.text else { return }
+        guard let studentNumberText = studentNumberTextField.text else { return }
         guard let passwordText = passwordTextField.text else { return }
         
-        if cAccountText.isEmpty {
-            cAccountMessageLabel.text = "空欄です"
-            textFieldCursorSetup(fieldType: .cAccount, cursorType: .error)
+        // 学生番号が空欄の場合
+        if studentNumberText.isEmpty {
+            studentNumberMessageLabel.text = "空欄です"
+            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .error)
             return
         }
         
+        // パスワードが空欄の場合
         if passwordText.isEmpty {
             passwordMessageLabel.text = "空欄です"
             textFieldCursorSetup(fieldType: .password, cursorType: .error)
             return
         }
         
-        if cAccountText.prefix(1) != "c" ||
-            cAccountText.count > 10 {
-            cAccountMessageLabel.text = "cアカウント例(c100100100)"
-            textFieldCursorSetup(fieldType: .cAccount, cursorType: .error)
+        // 学生番号が10桁以上の場合
+        if 10 < studentNumberText.count {
+            studentNumberMessageLabel.text = "10桁の学生番号を入れてください"
+            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .error)
             return
         }
+        
         // KeyChianに保存する
-        dataManager.cAccount = cAccountText
+        dataManager.studentNumber = studentNumberText
         dataManager.password = passwordText
         
-        registerButton.setTitle("登録が完了しました", for: .normal)
-//        if let delegate = delegate {
-//            delegate.forLoginWebView.load(Url.universityLogin.urlRequest())
-//            dataManager.canExecuteJavascript = true
-//            dismiss(animated: true, completion: nil)
-//        }
+        alert(title: "♪ 登録完了 ♪",
+              message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
     }
     
     /// パスワード入力を推奨するポップアップを表示させる。
@@ -106,12 +127,12 @@ final class PasswordViewController: UIViewController {
     /// PasswordSettingsViewControllerの初期セットアップ
     private func initSetup() {
         do { // 1. cアカウント
-            textFieldCursorSetup(fieldType: .cAccount, cursorType: .normal)
-            cAccountTextField.borderStyle = .none
-            cAccountTextField.delegate = self
-            cAccountTextField.text = dataManager.cAccount
-            cAccountTextSizeLabel.text = "\(dataManager.cAccount.count)/10"
-            cAccountMessageLabel.textColor = .red
+            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .normal)
+            studentNumberTextField.borderStyle = .none
+            studentNumberTextField.delegate = self
+            studentNumberTextField.text = dataManager.studentNumber
+            studentNumberTextSizeLabel.text = "\(dataManager.studentNumber.count)/10"
+            studentNumberMessageLabel.textColor = .red
         }
         
         do { // 2. パスワード
@@ -123,6 +144,9 @@ final class PasswordViewController: UIViewController {
             passwordMessageLabel.textColor = .red
             passwordTextField.isSecureTextEntry = true
         }
+        
+        // 学生番号とパスワードのリセット
+        resetButton.layer.cornerRadius = 25.0
         // 登録ボタンの角を丸める
         registerButton.layer.cornerRadius = 5.0
         
@@ -136,9 +160,20 @@ final class PasswordViewController: UIViewController {
                                  name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private var alertController: UIAlertController!
+    private func alert(title:String, message:String) {
+        alertController = UIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default,
+                                                handler: nil))
+        present(alertController, animated: true)
+    }
+    
     /// TextFieldの種類
     enum FieldType: Int {
-        case cAccount = 0 // 科目名
+        case studentNumber = 0 // 科目名
         case password = 1 // 教員名
     }
     /// カーソルの表示種類
@@ -153,21 +188,21 @@ final class PasswordViewController: UIViewController {
     ///   - cursorType: 変化させたい状態
     private func textFieldCursorSetup(fieldType: FieldType, cursorType: CursorType) {
         switch fieldType {
-            case .cAccount:
+            case .studentNumber:
                 switch cursorType {
                     case .normal:
                         // 非選択状態
-                        cAccountUnderLine.backgroundColor = .lightGray
+                        studentNumberUnderLine.backgroundColor = .lightGray
                         
                     case .focus:
                         // 選択状態
                         // カーソルの色
-                        cAccountTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                        cAccountUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        studentNumberTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                        studentNumberUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                         
                     case .error:
-                        cAccountTextField.tintColor = .red
-                        cAccountUnderLine.backgroundColor = .red
+                        studentNumberTextField.tintColor = .red
+                        studentNumberUnderLine.backgroundColor = .red
                 }
             case .password:
                 switch cursorType {
@@ -193,8 +228,8 @@ extension PasswordViewController: UITextFieldDelegate {
         let textFieldTag = FieldType(rawValue: textField.tag)
         
         switch textFieldTag {
-        case .cAccount:
-                textFieldCursorSetup(fieldType: .cAccount, cursorType: .focus)
+        case .studentNumber:
+                textFieldCursorSetup(fieldType: .studentNumber, cursorType: .focus)
             
         case .password:
                 textFieldCursorSetup(fieldType: .password, cursorType: .focus)
@@ -206,12 +241,12 @@ extension PasswordViewController: UITextFieldDelegate {
     }
     /// textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textFieldCursorSetup(fieldType: .cAccount, cursorType: .normal)
+        textFieldCursorSetup(fieldType: .studentNumber, cursorType: .normal)
         textFieldCursorSetup(fieldType: .password, cursorType: .normal)
     }
     /// text内容が変更されるたびに
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        cAccountTextSizeLabel.text = "\(cAccountTextField.text?.count ?? 0)/10"
+        studentNumberTextSizeLabel.text = "\(studentNumberTextField.text?.count ?? 0)/10"
         passwordTextSizeLabel.text = "\(passwordTextField.text?.count ?? 0)/100"
     }
 }
