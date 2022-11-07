@@ -10,7 +10,7 @@ import UIKit
 class NewsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-
+    
     private let viewModel = NewsViewModel()
     private let dataManager = DataManager.singleton
     
@@ -18,6 +18,7 @@ class NewsViewController: UIViewController {
         super.viewDidLoad()
 
         initViewModel()
+        viewModel.getNewsData()
     }
     
     /// ViewModel初期化
@@ -81,7 +82,10 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     /// [設定]と[戻る]のセルでは、テーブルをリロードする。
     /// それ以外では画面を消した後、それぞれ処理を行う
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let vcWeb = R.storyboard.web.webViewController()!
+        let loadUrlString = dataManager.newsUrlDatas[indexPath[0]]
+        vcWeb.loadUrlString = loadUrlString
+        present(vcWeb, animated: true, completion: nil)
 //        // タップされたセルの内容
 //        let cell = viewModel.collectionLists[indexPath.section][indexPath[1]]
 //        // どのセルが押されたか
