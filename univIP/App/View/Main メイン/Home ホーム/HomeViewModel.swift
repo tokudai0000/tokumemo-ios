@@ -170,12 +170,6 @@ final class HomeViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
-//    struct WeatherData {
-//        var description: String
-//        var feelLike: String
-//        var iconUrl: URLRequest
-//    }
-//    var weatherData: WeatherData?
     
     //MARK: - STATE ステータス
     enum State {
