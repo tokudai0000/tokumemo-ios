@@ -166,38 +166,105 @@ final class HomeViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
+//    struct WeatherData {
+//        var description: String
+//        var feelLike: String
+//        var iconUrl: URLRequest
+//    }
+//    var weatherData: WeatherData?
+    
     //MARK: - STATE ステータス
     enum State {
-        case busy           // 準備中 -->
-        case ready          // 準備完了 -->
-        case error          // エラー発生 -->
+        case busy           // 準備中
+        case ready          // 準備完了
+        case error          // エラー発生
     }
     public var state: ((State) -> Void)?
     
+    /*
+     OpenWeatherMapというサービスを使用
+     
+     APIのURL
+     https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric
+     
+     {
+         "coord": {
+             "lon": 134.5616,
+             "lat": 34.0779
+         },
+         "weather": [
+             {
+                 "id": 801,
+                 "main": "Clouds",
+                 "description": "薄い雲",
+                 "icon": "02d"
+             }
+         ],
+         "base": "stations",
+         "main": {
+             "temp": 21.97,
+             "feels_like": 21.79,
+             "temp_min": 21.97,
+             "temp_max": 22.45,
+             "pressure": 1013,
+             "humidity": 60
+         },
+         "visibility": 10000,
+         "wind": {
+             "speed": 2.57,
+             "deg": 60
+         },
+         "clouds": {
+            "all": 20
+         },
+         "dt": 1667456496,
+         "sys": {
+             "type": 1,
+             "id": 8027,
+             "country": "JP",
+             "sunrise": 1667424156,
+             "sunset": 1667462876
+         },
+         "timezone": 32400,
+         "id": 1857689,
+         "name": "万代町",
+         "cod": 200
+     }
+     */
+    
     public func getWetherData() {
         state?(.busy) // 通信開始（通信中）
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric"
         
-        apiManager.download(urlString: urlString,
-                            success: { [weak self] (response) in
-            guard let self = self else { // SearchViewModelのself
+        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
+        let longitude = "134.5615651" // 経度
+        let API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+        
+        let urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
+        
+        apiManager.request(urlStr,
+                           success: { [weak self] (response) in
+            guard let self = self else { // HomeViewModelのself
                 AKLog(level: .FATAL, message: "[self] FatalError")
                 fatalError()
             }
             
             if let a = response["weather"][0]["description"].string {
                 self.dataManager.weatherDatas[0] = a
+                self.dataManager.weatherData? = WeatherData().description = a
             }
             if let b = response["main"]["feels_like"].double {
                 let c = String(b)
                 self.dataManager.weatherDatas[1] = c.prefix(c.count - 1) + "℃"
+                self.dataManager.weatherData?.feelLike = c.prefix(c.count - 1) + "℃"
             }
             if let c = response["weather"][0]["icon"].string {
                 let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
                 self.dataManager.weatherDatas[2] = url
+                self.dataManager.weatherData?.iconUrl = URLRequest(url: URL(string: url)!)
             }
-                
+            
             self.state?(.ready) // 通信完了
+            
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
             self?.state?(.error) // エラー表示

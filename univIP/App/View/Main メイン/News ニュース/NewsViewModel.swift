@@ -26,7 +26,7 @@ final class NewsViewModel {
         state?(.busy) // 通信開始（通信中）
         let urlString = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
         
-        apiManager.download(urlString: urlString,
+        apiManager.request(urlString,
                             success: { [weak self] (response) in
             guard let self = self else { // SearchViewModelのself
                 AKLog(level: .FATAL, message: "[self] FatalError")

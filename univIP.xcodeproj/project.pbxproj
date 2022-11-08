@@ -258,6 +258,7 @@
 		1A3A75FB291679C600069818 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				1A3A75F92916792600069818 /* ApiManager.swift */,
 				1A30D0B528F87D4500C4012E /* Weather.swift */,
 			);
 			path = API;
@@ -287,7 +288,6 @@
 		1A81A92626C0D52F00CC56E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1A3A75F92916792600069818 /* ApiManager.swift */,
 				1A3A75FB291679C600069818 /* API */,
 				1A81A93026C12C8200CC56E2 /* Constant.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,

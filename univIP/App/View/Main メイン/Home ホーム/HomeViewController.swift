@@ -247,11 +247,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         break
                         
                     case .ready: // 通信完了
-                        self.weatherLabel.text = self.dataManager.weatherDatas[0]
-                        self.temperatureLabel.text = self.dataManager.weatherDatas[1]
-                        if let url = URL(string: self.dataManager.weatherDatas[2]) {
-                            self.weatherWebView.load(URLRequest(url: url))
+                        guard let weatherData = self.dataManager.weatherData else {
+                            break
                         }
+                        self.weatherLabel.text = weatherData.description
+                        self.temperatureLabel.text = weatherData.feelLike
+                        self.weatherWebView.load(weatherData.iconUrl)
+//                        if let url = URL(string: self.dataManager.weatherDatas[2]) {
+//                            self.weatherWebView.load(URLRequest(url: url))
+//                        }
+//                        self.weatherLabel.text = self.dataManager.weatherDatas[0]
+//                        self.temperatureLabel.text = self.dataManager.weatherDatas[1]
+//                        if let url = URL(string: self.dataManager.weatherDatas[2]) {
+//                            self.weatherWebView.load(URLRequest(url: url))
+//                        }
                         break
                         
                         
