@@ -112,6 +112,17 @@ final class HomeViewController: UIViewController {
     @objc private func foreground(notification: Notification) {
         loadLoginPage()
     }
+    
+    private var alertController: UIAlertController!
+    private func alert(title:String, message:String) {
+        alertController = UIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default,
+                                                handler: nil))
+        present(alertController, animated: true)
+    }
 }
 
 
@@ -203,8 +214,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // アナリティクスを送信
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
-        // メールなどで再度入力したい場合がある
+        // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
+        
+        if viewModel.isLoginComplete == false, let a = cell.iconLock {
+            alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
+        }
         
         let vcWeb = R.storyboard.web.webViewController()!
         var loadUrlString = cell.url
@@ -219,10 +234,47 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 loadUrlString = viewModel.createCurrentTermPerformanceUrl()
                 
             case .libraryCalendar:
-                guard let urlString = viewModel.makeLibraryCalendarUrl(type: .main) else {
-                    return
-                }
-                loadUrlString = urlString
+                // MARK: - HACK 推奨されたAlertの使い方ではない
+                // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
+                var alert:UIAlertController!
+                //アラートコントローラーを作成する。
+                alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
+                
+                let alertAction = UIAlertAction(
+                    title: "常三島",
+                    style: UIAlertAction.Style.default,
+                    handler: { action in
+                        // 常三島のカレンダーURLを取得後、webView読み込み
+                        if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .main) {
+                            let vcWeb = R.storyboard.web.webViewController()!
+                            vcWeb.loadUrlString = urlStr
+                            self.present(vcWeb, animated: true, completion: nil)
+                        }else{
+                            AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
+                        }
+                    })
+                
+                let alertAction2 = UIAlertAction(
+                    title: "蔵本",
+                    style: UIAlertAction.Style.default,
+                    handler: { action in
+                        let urlString = Url.libraryHomePageKuraPC.string()
+                        let url = URL(string: urlString)! // fatalError
+                        // 蔵本のカレンダーURLを取得後、webView読み込み
+                        if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .kura) {
+                            let vcWeb = R.storyboard.web.webViewController()!
+                            vcWeb.loadUrlString = urlStr
+                            self.present(vcWeb, animated: true, completion: nil)
+                        }else{
+                            AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                        }
+                    })
+                
+                //アラートアクションを追加する。
+                alert.addAction(alertAction)
+                alert.addAction(alertAction2)
+                present(alert, animated: true, completion:nil)
+                return
                 
             
 //            case .mailService:
