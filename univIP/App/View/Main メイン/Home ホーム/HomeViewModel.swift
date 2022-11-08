@@ -29,6 +29,10 @@ final class HomeViewModel {
     public var isLoginComplete = false // ログイン完了
     public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
+    public var weatherDataDiscription = ""
+    public var weatherDataFeelLike = ""
+    public var weatherDataIconUrlStr = ""
+    
     
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定　(読み取り専用)
     public var shouldShowTermsAgreementView: Bool {
@@ -248,19 +252,20 @@ final class HomeViewModel {
                 fatalError()
             }
             
-            if let a = response["weather"][0]["description"].string {
-                self.dataManager.weatherDatas[0] = a
-                self.dataManager.weatherData? = WeatherData().description = a
+            // 天気の様子が返ってくる 例: 曇
+            self.weatherDataDiscription = response["weather"][0]["description"].string ?? ""
+            
+            // 体感気温がdoubleの形で返ってくる　例: 21.52
+            if let temp = response["main"]["feels_like"].double {
+                let tempStr_simo2keta = String(temp) // 例: "21.52"
+                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count - 1) // 例: "21.5"
+                self.weatherDataFeelLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
             }
-            if let b = response["main"]["feels_like"].double {
-                let c = String(b)
-                self.dataManager.weatherDatas[1] = c.prefix(c.count - 1) + "℃"
-                self.dataManager.weatherData?.feelLike = c.prefix(c.count - 1) + "℃"
-            }
-            if let c = response["weather"][0]["icon"].string {
-                let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
-                self.dataManager.weatherDatas[2] = url
-                self.dataManager.weatherData?.iconUrl = URLRequest(url: URL(string: url)!)
+            
+            // 天気を表すアイコンコードが返ってくる 例 "02d"
+            if let iconCode = response["weather"][0]["icon"].string {
+                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
+                self.weatherDataIconUrlStr = urlStr
             }
             
             self.state?(.ready) // 通信完了
