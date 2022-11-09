@@ -93,7 +93,7 @@ final class Constant {
         
         CollectionCell(title: "メール",
                        id: .mailService,
-                       iconUnLock: UIImage(systemName: "envelope.badge"),
+                       iconUnLock: UIImage(systemName: "envelope"),
                        iconLock: UIImage(systemName: "lock.fill"),
                        url: Url.outlookService.string()
                       ),
