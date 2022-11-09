@@ -217,8 +217,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
         
-        if viewModel.isLoginComplete == false, let a = cell.iconLock {
+        if viewModel.isLoginComplete == false, let _ = cell.iconLock {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
+            return
         }
         
         let vcWeb = R.storyboard.web.webViewController()!
@@ -258,8 +259,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     title: "蔵本",
                     style: UIAlertAction.Style.default,
                     handler: { action in
-                        let urlString = Url.libraryHomePageKuraPC.string()
-                        let url = URL(string: urlString)! // fatalError
                         // 蔵本のカレンダーURLを取得後、webView読み込み
                         if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .kura) {
                             let vcWeb = R.storyboard.web.webViewController()!
