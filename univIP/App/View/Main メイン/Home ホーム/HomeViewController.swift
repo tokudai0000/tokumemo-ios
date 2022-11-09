@@ -19,6 +19,7 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
     
@@ -311,6 +312,23 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         break
                         
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Override(Animate)
+extension HomeViewController {
+    // メニューエリア以外タップ時、画面をMainViewに戻す
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        // 画面をタップした時
+        for touch in touches {
+            // どの画面がタップされたかtagで判定
+            if touch.view?.tag == 1 {
+                let vcWeb = R.storyboard.web.webViewController()!
+                vcWeb.loadUrlString = "https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100"
+                present(vcWeb, animated: true, completion: nil)
             }
         }
     }
