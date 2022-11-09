@@ -60,7 +60,7 @@ class UrlTests: XCTestCase {
         let popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
         
         XCTAssertEqual(universityHomePage, Url.universityHomePage.string())
-        XCTAssertEqual(systemServiceList, Url.systemServiceList.string())
+        XCTAssertEqual(systemServiceList, Url.portal.string())
         XCTAssertEqual(eLearningList, Url.eLearningList.string())
         XCTAssertEqual(courseManagementPC, Url.courseManagementPC.string())
         XCTAssertEqual(courseManagementMobile, Url.courseManagementMobile.string())
