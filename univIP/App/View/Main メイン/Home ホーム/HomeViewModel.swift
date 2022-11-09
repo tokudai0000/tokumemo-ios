@@ -98,6 +98,17 @@ final class HomeViewModel {
         return isLoginComplete
     }
     
+    public func isMissLoggedin(_ urlString: String) -> Bool {
+        let check1 = urlString.contains(Url.universityLogin.string())
+        let check2 = (urlString.suffix(2) != "s1")
+        if isLoginProcessing, check1, check2 {
+            // ログインプロセスは終了
+            isLoginProcessing = false
+            return true
+        }
+        return false
+    }
+    
     /// 大学図書館の種類
     enum LibraryType {
         case main // 常三島本館

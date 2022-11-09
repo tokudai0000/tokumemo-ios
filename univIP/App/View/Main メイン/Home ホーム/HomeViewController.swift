@@ -163,6 +163,7 @@ extension HomeViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.forLoginWebView.url! // fatalError
+        AKLog(level: .DEBUG, message: url.absoluteString)
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         if viewModel.canJavaScriptExecute(url.absoluteString) {
@@ -176,6 +177,11 @@ extension HomeViewController: WKNavigationDelegate {
             dataManager.canExecuteJavascript = false
             viewModel.isLoginProcessing = true
             viewModel.isLoginComplete = false
+            return
+        }
+        
+        if viewModel.isMissLoggedin(url.absoluteString) {
+            alert(title: "自動ログインエラー", message: "学生番号もしくはパスワードが間違っている為、ログインできません")
         }
     }
 }
