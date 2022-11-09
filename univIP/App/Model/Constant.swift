@@ -53,11 +53,11 @@ final class Constant {
         case officialSNS                    // 公式SNS
         case homePage                       // ホームページ
         
-        case termsOfService                     // 利用規約
+        case termsOfService                 // 利用規約
         case privacyPolicy                  // プライバシーポリシー
         case license                        // ライセンス
         case acknowledgments                // 謝辞
-        
+        case sourceCode                     // ソースコード
         
         case favorite                       // お気に入り登録
         case initPageSetting                // 初期画面設定
@@ -272,7 +272,9 @@ final class Constant {
             MenuCell(title: "ライセンス",
                      id: .license),
             MenuCell(title: "謝辞",
-                     id: .acknowledgments)
+                     id: .acknowledgments),
+            MenuCell(title: "ソースコード",
+                     id: .sourceCode)
         ]]
 
 }
