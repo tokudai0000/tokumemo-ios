@@ -19,6 +19,9 @@ class NewsViewController: UIViewController {
 
         initViewModel()
         viewModel.getNewsData()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
     }
     
     /// ViewModel初期化
@@ -58,9 +61,6 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         return dataManager.newsTitleDatas.count
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return CGFloat(100)
-//    }
     /*
      セルの高さを決めるメソッド
      */
@@ -73,12 +73,10 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.newsCell, for: indexPath)! // fatalError
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
         
-        //        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        cell.textLabel?.text = dataManager.newsTitleDatas[indexPath.section]
-        
+        cell.setupCell(text: dataManager.newsTitleDatas[indexPath.section], date: dataManager.newsDateDatas[indexPath.section])
         
         return cell
     }
@@ -93,76 +91,5 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         let loadUrlString = dataManager.newsUrlDatas[indexPath[0]]
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
-//        // タップされたセルの内容
-//        let cell = viewModel.collectionLists[indexPath.section][indexPath[1]]
-//        // どのセルが押されたか
-//        switch cell.id {
-//            case .password:
-//                let storyboard: UIStoryboard = UIStoryboard(name: "Password", bundle: nil)//遷移先のStoryboardを設定
-//                let nextView = storyboard.instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController//遷移先のViewControllerを設定
-//                nextView.title = "パスワード"
-//                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
-//                return
-//
-//            case .customize:
-//                let storyboard: UIStoryboard = UIStoryboard(name: "Password", bundle: nil)//遷移先のStoryboardを設定
-//                let nextView = storyboard.instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController//遷移先のViewControllerを設定
-//                nextView.title = "パスワード"
-//                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
-//                return
-//
-//            case .aboutThisApp:
-//                let storyboard: UIStoryboard = UIStoryboard(name: "AboutThisApp", bundle: nil)//遷移先のStoryboardを設定
-//                let nextView = storyboard.instantiateViewController(withIdentifier: "AboutThisAppViewController") as! AboutThisAppViewController//遷移先のViewControllerを設定
-//                nextView.title = "このアプリについて"
-//                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
-//                return
-//
-//            case .contactUs:
-//                let webPage = "https://www.google.com/?hl=ja"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//            case .officialSNS:
-//                let webPage = "https://twitter.com/tokumemo0000"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//            case .homePage:
-//                let webPage = "https://lit.link/developers"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//            case .termsOfService:
-//                let webPage = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//            case .privacyPolicy:
-//                let webPage = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//            case .license:
-//                let webPage = "https://www.google.com/?hl=ja"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//            case .acknowledgments:
-//                let webPage = "https://www.google.com/?hl=ja"
-//                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-//                present(safariVC, animated: true, completion: nil)
-//                return
-//
-//
-//            default:
-//                break
-//        }
     }
 }
