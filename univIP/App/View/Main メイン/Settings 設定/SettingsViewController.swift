@@ -29,12 +29,15 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "このアプリでは、パスワードを保存することで毎日面倒だったmanabaなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
+            return "このアプリでは、パスワードを保存することで毎日面倒だったマナバなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
         }
         return " "
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 65
+        }
         return 30
     }
     
