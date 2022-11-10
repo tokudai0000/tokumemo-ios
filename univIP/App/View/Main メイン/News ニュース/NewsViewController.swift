@@ -87,9 +87,12 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     /// [設定]と[戻る]のセルでは、テーブルをリロードする。
     /// それ以外では画面を消した後、それぞれ処理を行う
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+        
         let vcWeb = R.storyboard.web.webViewController()!
         let loadUrlString = dataManager.newsUrlDatas[indexPath[0]]
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
+        
     }
 }
