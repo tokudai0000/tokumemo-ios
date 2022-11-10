@@ -16,7 +16,6 @@ final class DataManager {
     public var teacherName = ""
     public var subjectName = ""
     
-    public var weatherDatas:[String] = ["error","","http://example.com"]
     public var newsTitleDatas:[String] = []
     public var newsUrlDatas:[String] = []
     public var newsDateDatas:[String] = []

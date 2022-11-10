@@ -66,6 +66,8 @@ class SettingsViewController: UITableViewController {
 
         // タップされたセルの内容
         let cell = viewModel.collectionLists[indexPath.section][indexPath[1]]
+        let vcWeb = R.storyboard.web.webViewController()!
+
         // どのセルが押されたか
         switch cell.id {
             case .password:
@@ -90,50 +92,32 @@ class SettingsViewController: UITableViewController {
                 return
                 
             case .contactUs:
-                let webPage = "https://www.google.com/?hl=ja"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://forms.gle/ceBzS6TL3A1XuJsNA"
                 
             case .officialSNS:
-                let webPage = "https://twitter.com/tokumemo0000"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://twitter.com/tokumemo0000"
                 
             case .homePage:
-                let webPage = "https://lit.link/developers"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://lit.link/developers"
                 
             case .termsOfService:
-                let webPage = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt"
                 
             case .privacyPolicy:
-                let webPage = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt"
                 
             case .license:
-                let webPage = "https://www.google.com/?hl=ja"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
                 
             case .acknowledgments:
-                let webPage = "https://www.google.com/?hl=ja"
-                let safariVC = SFSafariViewController(url: NSURL(string: webPage)! as URL)
-                present(safariVC, animated: true, completion: nil)
-                return
+                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
                 
+            case .sourceCode:
+                vcWeb.loadUrlString = "https://github.com/tokudai0000/univIP"
                 
             default:
                 break
         }
+        present(vcWeb, animated: true, completion: nil)
     }
 }

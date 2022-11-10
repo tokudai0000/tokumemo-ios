@@ -26,6 +26,8 @@ final class WebViewController: UIViewController {
         
         webView.uiDelegate = self
         webView.navigationDelegate = self
+        // スワイプで進む、戻るを有効
+        webView.allowsBackForwardNavigationGestures = true
         
         if let urlString = loadUrlString {
             if let url = URL(string: urlString){
@@ -42,7 +44,11 @@ final class WebViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func backButton(_ sender: Any) {
-        webView.goBack()
+        if webView.canGoBack {
+            webView.goBack()
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     @IBAction func forwardButton(_ sender: Any) {
         webView.goForward()
@@ -148,8 +154,8 @@ extension WebViewController: WKNavigationDelegate {
             webView.isHidden = false
         }
         // 戻る、進むボタンの表示を変更
-        backButton.isEnabled = webView.canGoBack
-        backButton.alpha = webView.canGoBack ? 1.0 : 0.4
+//        backButton.isEnabled = webView.canGoBack
+//        backButton.alpha = webView.canGoBack ? 1.0 : 0.4
         forwardButton.isEnabled = webView.canGoForward
         forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
 

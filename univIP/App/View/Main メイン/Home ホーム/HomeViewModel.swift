@@ -29,6 +29,10 @@ final class HomeViewModel {
     public var isLoginComplete = false // ログイン完了
     public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
+    public var weatherDataDiscription = ""
+    public var weatherDataFeelLike = ""
+    public var weatherDataIconUrlStr = ""
+    
     
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定　(読み取り専用)
     public var shouldShowTermsAgreementView: Bool {
@@ -92,6 +96,17 @@ final class HomeViewModel {
         }
         // ログイン完了後に別画面開いてもtrueになるように
         return isLoginComplete
+    }
+    
+    public func isMissLoggedin(_ urlString: String) -> Bool {
+        let check1 = urlString.contains(Url.universityLogin.string())
+        let check2 = (urlString.suffix(2) != "s1")
+        if isLoginProcessing, check1, check2 {
+            // ログインプロセスは終了
+            isLoginProcessing = false
+            return true
+        }
+        return false
     }
     
     /// 大学図書館の種類
@@ -166,38 +181,100 @@ final class HomeViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
+    
     //MARK: - STATE ステータス
     enum State {
-        case busy           // 準備中 -->
-        case ready          // 準備完了 -->
-        case error          // エラー発生 -->
+        case busy           // 準備中
+        case ready          // 準備完了
+        case error          // エラー発生
     }
     public var state: ((State) -> Void)?
     
+    /*
+     OpenWeatherMapというサービスを使用
+     
+     APIのURL
+     https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric
+     
+     {
+         "coord": {
+             "lon": 134.5616,
+             "lat": 34.0779
+         },
+         "weather": [
+             {
+                 "id": 801,
+                 "main": "Clouds",
+                 "description": "薄い雲",
+                 "icon": "02d"
+             }
+         ],
+         "base": "stations",
+         "main": {
+             "temp": 21.97,
+             "feels_like": 21.79,
+             "temp_min": 21.97,
+             "temp_max": 22.45,
+             "pressure": 1013,
+             "humidity": 60
+         },
+         "visibility": 10000,
+         "wind": {
+             "speed": 2.57,
+             "deg": 60
+         },
+         "clouds": {
+            "all": 20
+         },
+         "dt": 1667456496,
+         "sys": {
+             "type": 1,
+             "id": 8027,
+             "country": "JP",
+             "sunrise": 1667424156,
+             "sunset": 1667462876
+         },
+         "timezone": 32400,
+         "id": 1857689,
+         "name": "万代町",
+         "cod": 200
+     }
+     */
+    
     public func getWetherData() {
         state?(.busy) // 通信開始（通信中）
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric"
         
-        apiManager.download(urlString: urlString,
-                            success: { [weak self] (response) in
-            guard let self = self else { // SearchViewModelのself
+        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
+        let longitude = "134.5615651" // 経度
+        let API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+        
+        let urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
+        
+        apiManager.request(urlStr,
+                           success: { [weak self] (response) in
+            guard let self = self else { // HomeViewModelのself
                 AKLog(level: .FATAL, message: "[self] FatalError")
                 fatalError()
             }
             
-            if let a = response["weather"][0]["description"].string {
-                self.dataManager.weatherDatas[0] = a
+            // 天気の様子が返ってくる 例: 曇
+            self.weatherDataDiscription = response["weather"][0]["description"].string ?? ""
+            
+            // 体感気温がdoubleの形で返ってくる　例: 21.52
+            if let temp = response["main"]["feels_like"].double {
+                let tempStr_simo2keta = String(temp) // 例: "21.52"
+                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count - 1) // 例: "21.5"
+                self.weatherDataFeelLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
             }
-            if let b = response["main"]["feels_like"].double {
-                let c = String(b)
-                self.dataManager.weatherDatas[1] = c.prefix(c.count - 1) + "℃"
+            
+            // 天気を表すアイコンコードが返ってくる 例 "02d"
+            if let iconCode = response["weather"][0]["icon"].string {
+                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
+                self.weatherDataIconUrlStr = urlStr
             }
-            if let c = response["weather"][0]["icon"].string {
-                let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
-                self.dataManager.weatherDatas[2] = url
-            }
-                
+            
             self.state?(.ready) // 通信完了
+            
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
             self?.state?(.error) // エラー表示

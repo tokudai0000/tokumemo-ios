@@ -50,7 +50,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3ua-3Z-6Mz" userLabel="Right View">
                                         <rect key="frame" x="301" y="0.0" width="95" height="150"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh9-3r-Hsa">
+                                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh9-3r-Hsa">
                                                 <rect key="frame" x="2.6666666666666856" y="0.0" width="90" height="99"/>
                                                 <subviews>
                                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p59-2C-vkM">

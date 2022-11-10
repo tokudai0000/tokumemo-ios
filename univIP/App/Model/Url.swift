@@ -10,8 +10,8 @@ import Foundation
 enum Url: String {
     /// 大学ホームページ
     case universityHomePage = "https://www.tokushima-u.ac.jp/"
-    /// システムサービス一覧
-    case systemServiceList = "https://www.ait.tokushima-u.ac.jp/service/list_out/"
+    /// 統合認証システム
+    case portal = "https://my.ait.tokushima-u.ac.jp/portal/"
     /// Eラーニング一覧
     case eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
     
@@ -76,6 +76,8 @@ enum Url: String {
     case skipReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
     /// マナバから授業動画[Youtube]を開く時
     case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
+    
+    
     
     /// URLを文字列として返す
     func string() -> String {

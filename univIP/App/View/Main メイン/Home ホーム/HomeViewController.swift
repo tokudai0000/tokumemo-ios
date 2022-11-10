@@ -19,6 +19,7 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
     
@@ -112,6 +113,17 @@ final class HomeViewController: UIViewController {
     @objc private func foreground(notification: Notification) {
         loadLoginPage()
     }
+    
+    private var alertController: UIAlertController!
+    private func alert(title:String, message:String) {
+        alertController = UIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default,
+                                                handler: nil))
+        present(alertController, animated: true)
+    }
 }
 
 
@@ -151,6 +163,7 @@ extension HomeViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.forLoginWebView.url! // fatalError
+        AKLog(level: .DEBUG, message: url.absoluteString)
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         if viewModel.canJavaScriptExecute(url.absoluteString) {
@@ -164,6 +177,11 @@ extension HomeViewController: WKNavigationDelegate {
             dataManager.canExecuteJavascript = false
             viewModel.isLoginProcessing = true
             viewModel.isLoginComplete = false
+            return
+        }
+        
+        if viewModel.isMissLoggedin(url.absoluteString) {
+            alert(title: "自動ログインエラー", message: "学生番号もしくはパスワードが間違っている為、ログインできません")
         }
     }
 }
@@ -203,8 +221,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // アナリティクスを送信
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
-        // メールなどで再度入力したい場合がある
+        // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
+        
+        if viewModel.isLoginComplete == false, let _ = cell.iconLock {
+            alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
+            return
+        }
         
         let vcWeb = R.storyboard.web.webViewController()!
         var loadUrlString = cell.url
@@ -219,10 +242,45 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 loadUrlString = viewModel.createCurrentTermPerformanceUrl()
                 
             case .libraryCalendar:
-                guard let urlString = viewModel.makeLibraryCalendarUrl(type: .main) else {
-                    return
-                }
-                loadUrlString = urlString
+                // MARK: - HACK 推奨されたAlertの使い方ではない
+                // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
+                var alert:UIAlertController!
+                //アラートコントローラーを作成する。
+                alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
+                
+                let alertAction = UIAlertAction(
+                    title: "常三島",
+                    style: UIAlertAction.Style.default,
+                    handler: { action in
+                        // 常三島のカレンダーURLを取得後、webView読み込み
+                        if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .main) {
+                            let vcWeb = R.storyboard.web.webViewController()!
+                            vcWeb.loadUrlString = urlStr
+                            self.present(vcWeb, animated: true, completion: nil)
+                        }else{
+                            AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
+                        }
+                    })
+                
+                let alertAction2 = UIAlertAction(
+                    title: "蔵本",
+                    style: UIAlertAction.Style.default,
+                    handler: { action in
+                        // 蔵本のカレンダーURLを取得後、webView読み込み
+                        if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .kura) {
+                            let vcWeb = R.storyboard.web.webViewController()!
+                            vcWeb.loadUrlString = urlStr
+                            self.present(vcWeb, animated: true, completion: nil)
+                        }else{
+                            AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                        }
+                    })
+                
+                //アラートアクションを追加する。
+                alert.addAction(alertAction)
+                alert.addAction(alertAction2)
+                present(alert, animated: true, completion:nil)
+                return
                 
             
 //            case .mailService:
@@ -247,18 +305,36 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         break
                         
                     case .ready: // 通信完了
-                        self.weatherLabel.text = self.dataManager.weatherDatas[0]
-                        self.temperatureLabel.text = self.dataManager.weatherDatas[1]
-                        if let url = URL(string: self.dataManager.weatherDatas[2]) {
+                        
+                        self.weatherLabel.text = self.viewModel.weatherDataDiscription
+                        self.temperatureLabel.text = self.viewModel.weatherDataFeelLike
+                        if let url = URL(string: self.viewModel.weatherDataIconUrlStr) {
                             self.weatherWebView.load(URLRequest(url: url))
                         }
-                        break
                         
+                        break
                         
                     case .error:
                         break
                         
-                }//end switch
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Override(Animate)
+extension HomeViewController {
+    // メニューエリア以外タップ時、画面をMainViewに戻す
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        // 画面をタップした時
+        for touch in touches {
+            // どの画面がタップされたかtagで判定
+            if touch.view?.tag == 1 {
+                let vcWeb = R.storyboard.web.webViewController()!
+                vcWeb.loadUrlString = "https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100"
+                present(vcWeb, animated: true, completion: nil)
             }
         }
     }
