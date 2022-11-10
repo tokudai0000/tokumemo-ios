@@ -28,7 +28,7 @@
                                     <color key="textShadowColor" systemColor="tertiarySystemBackgroundColor"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="○○○アプリ" id="Udc-az-tsW"/>
+                                    <navigationItem title="トクメモ＋" id="Udc-az-tsW"/>
                                 </items>
                             </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t3x-iZ-niV" userLabel="Top View">
@@ -62,7 +62,7 @@
                                                 <rect key="frame" x="2.6666666666666856" y="0.0" width="90" height="99"/>
                                                 <subviews>
                                                     <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p59-2C-vkM">
-                                                        <rect key="frame" x="10" y="15" width="70" height="50"/>
+                                                        <rect key="frame" x="10" y="25" width="70" height="50"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="do2-8U-erD"/>
@@ -74,44 +74,49 @@
                                                         </wkWebViewConfiguration>
                                                     </wkWebView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="徳島市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-88-Y2e">
-                                                        <rect key="frame" x="22" y="8.6666666666666714" width="46" height="18"/>
+                                                        <rect key="frame" x="22" y="25.666666666666671" width="46" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-1l-47d" userLabel="Weather Detail View">
-                                                        <rect key="frame" x="-2" y="72.666666666666657" width="94" height="20.333333333333329"/>
+                                                        <rect key="frame" x="19.999999999999996" y="72.666666666666657" width="49.666666666666657" height="25.333333333333329"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="雲 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-io-c4P">
-                                                                <rect key="frame" x="0.0" y="1.3333333333333428" width="19.333333333333332" height="18"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <rect key="frame" x="0.0" y="4.3333333333333428" width="18.333333333333332" height="17"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21℃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-Nj-W5u">
-                                                                <rect key="frame" x="19.333333333333318" y="1.3333333333333428" width="33.333333333333343" height="18"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zf-Pf-236">
-                                                                <rect key="frame" x="52.666666666666629" y="0.0" width="41.333333333333343" height="20.333333333333332"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <rect key="frame" x="18.333333333333314" y="4.3333333333333428" width="31.333333333333329" height="17"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                     </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00月00日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zf-Pf-236">
+                                                        <rect key="frame" x="13.333333333333318" y="4" width="63.333333333333343" height="20.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="90" id="IHz-Xn-fSZ"/>
+                                                    <constraint firstItem="7zf-Pf-236" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="ZZq-qi-SxD"/>
                                                     <constraint firstItem="NPe-88-Y2e" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="cBb-eW-X2v"/>
-                                                    <constraint firstItem="p59-2C-vkM" firstAttribute="centerY" secondItem="Vh9-3r-Hsa" secondAttribute="centerY" constant="-9.5" id="gBk-KP-a9v"/>
+                                                    <constraint firstItem="7zf-Pf-236" firstAttribute="top" secondItem="Vh9-3r-Hsa" secondAttribute="top" constant="4" id="cKa-E5-w9S"/>
+                                                    <constraint firstAttribute="bottom" secondItem="IWF-1l-47d" secondAttribute="bottom" constant="1" id="ctt-1H-HHo"/>
+                                                    <constraint firstItem="p59-2C-vkM" firstAttribute="centerY" secondItem="Vh9-3r-Hsa" secondAttribute="centerY" constant="0.5" id="gBk-KP-a9v"/>
+                                                    <constraint firstItem="7zf-Pf-236" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="mVf-3f-tfQ"/>
                                                     <constraint firstItem="p59-2C-vkM" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="o17-cl-oSX"/>
-                                                    <constraint firstItem="IWF-1l-47d" firstAttribute="top" secondItem="NPe-88-Y2e" secondAttribute="bottom" constant="45.999999999999986" id="olT-ZA-rSA"/>
-                                                    <constraint firstItem="IWF-1l-47d" firstAttribute="top" secondItem="p59-2C-vkM" secondAttribute="bottom" constant="7.6666666666666572" id="qj5-fk-TOV"/>
+                                                    <constraint firstItem="IWF-1l-47d" firstAttribute="top" secondItem="NPe-88-Y2e" secondAttribute="bottom" constant="28.999999999999993" id="olT-ZA-rSA"/>
+                                                    <constraint firstItem="IWF-1l-47d" firstAttribute="top" secondItem="p59-2C-vkM" secondAttribute="bottom" constant="-2.3333333333333428" id="qj5-fk-TOV"/>
                                                     <constraint firstItem="IWF-1l-47d" firstAttribute="centerX" secondItem="Vh9-3r-Hsa" secondAttribute="centerX" id="vcd-TO-s4a"/>
+                                                    <constraint firstItem="p59-2C-vkM" firstAttribute="top" secondItem="7zf-Pf-236" secondAttribute="bottom" constant="0.66666666666666785" id="wj9-0i-feR"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -237,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="724" y="-695.80209895052474"/>
+            <point key="canvasLocation" x="723.1884057971015" y="-696.19565217391312"/>
         </scene>
     </scenes>
     <resources>
