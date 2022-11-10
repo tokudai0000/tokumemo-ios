@@ -16,10 +16,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TokumemoPlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="k9B-W9-Cfq">
-                                <rect key="frame" x="132" y="373" width="150" height="150"/>
+                                <rect key="frame" x="119.5" y="360.5" width="175" height="175"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="UQc-Dl-9ds"/>
-                                    <constraint firstAttribute="height" constant="150" id="i3C-wz-kjg"/>
+                                    <constraint firstAttribute="width" constant="175" id="UQc-Dl-9ds"/>
+                                    <constraint firstAttribute="height" constant="175" id="i3C-wz-kjg"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -37,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="TokumemoPlusIcon" width="427" height="427"/>
+        <image name="TokumemoPlusIcon" width="512" height="512"/>
     </resources>
 </document>

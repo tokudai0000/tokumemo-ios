@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tokumemoPlusIcon@×1.jpg",
+      "filename" : "iTunesArtwork@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tokumemoPlusIcon@×2.jpg",
+      "filename" : "iTunesArtwork@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tokumemoPlusIcon@×3.jpg",
+      "filename" : "iTunesArtwork@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
