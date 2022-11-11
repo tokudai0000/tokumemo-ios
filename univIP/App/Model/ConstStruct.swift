@@ -226,40 +226,37 @@ struct ConstStruct {
     ]
     
     
-    struct MenuCell {
+    struct SettingsCell {
         let title: String             // 表示名
         let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
     }
     /// SettingsCell初期状態
-    ///
-    /// - Note:
-    ///   更新確認、初回利用者はここを確認される
-    static let initMenuCellLists = [
+    static let initSettingsCellLists = [
         [
-            MenuCell(title: "パスワード設定",
-                     id: .password),
+            SettingsCell(title: "パスワード設定",
+                         id: .password),
             //            MenuCell(title: "カスタマイズ",
             //                     id: .customize)
         ],[
-            MenuCell(title: "このアプリについて",
-                     id: .aboutThisApp),
-            MenuCell(title: "お問い合わせ",
-                     id: .contactUs),
-            MenuCell(title: "公式SNS",
-                     id: .officialSNS),
-            MenuCell(title: "ホームページ",
-                     id: .homePage),
+            SettingsCell(title: "このアプリについて",
+                         id: .aboutThisApp),
+            SettingsCell(title: "お問い合わせ",
+                         id: .contactUs),
+            SettingsCell(title: "公式SNS",
+                         id: .officialSNS),
+            SettingsCell(title: "ホームページ",
+                         id: .homePage),
         ],[
-            MenuCell(title: "利用規約",
-                     id: .termsOfService),
-            MenuCell(title: "プライバシーポリシー",
-                     id: .privacyPolicy),
+            SettingsCell(title: "利用規約",
+                         id: .termsOfService),
+            SettingsCell(title: "プライバシーポリシー",
+                         id: .privacyPolicy),
             //            MenuCell(title: "ライセンス",
             //                     id: .license),
             //            MenuCell(title: "謝辞",
             //                     id: .acknowledgments),
-            MenuCell(title: "ソースコード",
-                     id: .sourceCode)
+            SettingsCell(title: "ソースコード",
+                         id: .sourceCode)
         ]]
     
 }
