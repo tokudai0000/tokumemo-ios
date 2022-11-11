@@ -190,7 +190,7 @@ extension HomeViewController: WKNavigationDelegate {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     /// セクション内のセル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constant.initCustomCellLists.count
+        return ConstStruct.initCustomCellLists.count
     }
     
     /// セルの中身
@@ -202,12 +202,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                       image: UIImage(systemName: viewModel.collectionLists[indexPath.row].iconUnLock!))
+                       image: UIImage(systemName: viewModel.collectionLists[indexPath.row].iconSystemName!))
         
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
         if viewModel.isLoginComplete == false,
-           let img = viewModel.collectionLists[indexPath.row].iconLock {
+           let img = viewModel.collectionLists[indexPath.row].lockIconSystemName {
                 cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
                                image: UIImage(systemName: img))
             
@@ -225,7 +225,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
         
-        if viewModel.isLoginComplete == false, let _ = cell.iconLock {
+        if viewModel.isLoginComplete == false, let _ = cell.lockIconSystemName {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
         }

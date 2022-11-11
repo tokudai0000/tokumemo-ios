@@ -23,7 +23,7 @@ final class HomeViewModel {
     
     // MARK: - Public
     /// TableCellの内容
-    public var collectionLists:[Constant.CollectionCell] = Constant.initCustomCellLists
+    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginComplete = false // ログイン完了
@@ -36,7 +36,7 @@ final class HomeViewModel {
     
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定　(読み取り専用)
     public var shouldShowTermsAgreementView: Bool {
-        get { return dataManager.agreementVersion != Constant.latestTermsVersion }
+        get { return dataManager.agreementVersion != ConstStruct.latestTermsVersion }
     }
     
     /// タイムアウトのURLであるかどうかの判定
