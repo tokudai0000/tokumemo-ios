@@ -109,11 +109,11 @@ class SettingsViewController: UITableViewController {
             case .privacyPolicy:
                 vcWeb.loadUrlString = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt"
                 
-            case .license:
-                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
-                
-            case .acknowledgments:
-                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
+//            case .license:
+//                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
+//
+//            case .acknowledgments:
+//                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
                 
             case .sourceCode:
                 vcWeb.loadUrlString = "https://github.com/tokudai0000/univIP"

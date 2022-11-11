@@ -53,8 +53,8 @@ final class SyllabusViewController: UIViewController {
         let subjectText = subjectTextField.text ?? ""
         let teacherText = teacherTextField.text ?? ""
         // シラバスを読み込み自動入力させる
-        dataManager.subjectName = subjectText
-        dataManager.teacherName = teacherText
+        dataManager.syllabusSubjectName = subjectText
+        dataManager.syllabusTeacherName = teacherText
         
         dismiss(animated: false, completion: {
             let vc = R.storyboard.web.webViewController()!
