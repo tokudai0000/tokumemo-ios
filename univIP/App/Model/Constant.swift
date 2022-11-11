@@ -269,10 +269,10 @@ final class Constant {
                      id: .termsOfService),
             MenuCell(title: "プライバシーポリシー",
                      id: .privacyPolicy),
-            MenuCell(title: "ライセンス",
-                     id: .license),
-            MenuCell(title: "謝辞",
-                     id: .acknowledgments),
+//            MenuCell(title: "ライセンス",
+//                     id: .license),
+//            MenuCell(title: "謝辞",
+//                     id: .acknowledgments),
             MenuCell(title: "ソースコード",
                      id: .sourceCode)
         ]]
