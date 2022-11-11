@@ -202,14 +202,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                        image: viewModel.collectionLists[indexPath.row].iconUnLock)
+                       image: UIImage(systemName: viewModel.collectionLists[indexPath.row].iconUnLock!))
+        
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
-        if viewModel.isLoginComplete == false {
-            if let img = viewModel.collectionLists[indexPath.row].iconLock {
+        if viewModel.isLoginComplete == false,
+           let img = viewModel.collectionLists[indexPath.row].iconLock {
                 cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                               image: img)
-            }
+                               image: UIImage(systemName: img))
+            
         }
         return cell
     }

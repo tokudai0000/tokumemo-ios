@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Rswift
-import UIKit
+//import Rswift
+//import UIKit
 
 final class Constant {
     
@@ -67,8 +67,8 @@ final class Constant {
     struct CollectionCell {
         let title: String             // 表示名
         let id: MenuLists             // 識別しやすいようにIDを作成　タイポミスの軽減
-        let iconUnLock: UIImage?       // ImageData
-        let iconLock: UIImage?  // ImageData
+        let iconUnLock: String?       // ImageData
+        let iconLock: String?  // ImageData
         let url: String?              // 関連したURLを保持 URLRequestはDecodableになる為、不可
         var isDisplay: Bool = true    // 初期値は全てtrue
     }
@@ -80,161 +80,161 @@ final class Constant {
     static let initCustomCellLists = [
         CollectionCell(title: "教務システム",
                        id: .courseManagementHomeMobile,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.courseManagementMobile.string()
                       ),
         
         CollectionCell(title: "マナバ",
                        id: .manabaHomePC,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.manabaPC.string()
                       ),
         
         CollectionCell(title: "メール",
                        id: .mailService,
-                       iconUnLock: UIImage(systemName: "envelope"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "envelope",
+                       iconLock: "lock.fill",
                        url: Url.outlookService.string()
                       ),
         
         CollectionCell(title: "[図書]カレンダー",
                        id: .libraryCalendar,
-                       iconUnLock: UIImage(systemName: "calendar"),
+                       iconUnLock: "calendar",
                        iconLock: nil,
                        url: nil
                       ),
         
         CollectionCell(title: "[図書]本検索",
                        id: .libraryMyPage,
-                       iconUnLock: UIImage(systemName: "books.vertical"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "books.vertical",
+                       iconLock: "lock.fill",
                        url: Url.libraryMyPage.string()
                       ),
         
         CollectionCell(title: "[図書]本貸出延長",
                        id: .libraryBookLendingExtension,
-                       iconUnLock: UIImage(systemName: "books.vertical"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "books.vertical",
+                       iconLock: "lock.fill",
                        url: Url.libraryBookLendingExtension.string()
                       ),
         
         CollectionCell(title: "生協カレンダー",
                        id: .tokudaiCoop,
-                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconUnLock: "questionmark.folder",
                        iconLock: nil,
                        url: Url.tokudaiCoop.string()
                       ),
         
         CollectionCell(title: "時間割",
                        id: .timeTable,
-                       iconUnLock: UIImage(systemName: "calendar"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "calendar",
+                       iconLock: "lock.fill",
                        url: Url.timeTable.string()
                       ),
         
         CollectionCell(title: "統合認証ポータル",
                        id: .portal,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.portal.string()
                       ),
         
         CollectionCell(title: "今学期の成績",
                        id: .currentTermPerformance,
-                       iconUnLock: UIImage(systemName: "chart.line.uptrend.xyaxis"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "chart.line.uptrend.xyaxis",
+                       iconLock: "lock.fill",
                        url: Url.currentTermPerformance.string()
                       ),
         
         CollectionCell(title: "全学期の成績",
                        id: .termPerformance,
-                       iconUnLock: UIImage(systemName: "chart.line.uptrend.xyaxis"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "chart.line.uptrend.xyaxis",
+                       iconLock: "lock.fill",
                        url: Url.termPerformance.string()
                       ),
         
         CollectionCell(title: "シラバス",
                        id: .syllabus,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
+                       iconUnLock: "graduationcap",
                        iconLock: nil,
                        url: Url.syllabus.string()
                       ),
         
         CollectionCell(title: "キャリア支援室",
                        id: .tokudaiCareerCenter,
-                       iconUnLock: UIImage(systemName: "questionmark.folder"),
+                       iconUnLock: "questionmark.folder",
                        iconLock: nil,
                        url: Url.tokudaiCareerCenter.string()
                       ),
         
         CollectionCell(title: "大学サイト",
                        id: .universityWeb,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
+                       iconUnLock: "graduationcap",
                        iconLock: nil,
                        url: Url.universityHomePage.string()
                       ),
         
         CollectionCell(title: "教務システム_PC",
                        id: .courseManagementHomePC,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.courseManagementPC.string()
                       ),
         
         CollectionCell(title: "マナバ_Mob",
                        id: .manabaHomeMobile,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.manabaMobile.string()
                       ),
         
         CollectionCell(title: "図書館サイト",
                        id: .libraryWebHomeMobile,
-                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconUnLock: "books.vertical",
                        iconLock: nil,
                        url: Url.libraryHomeMobile.string()
                       ),
         
         CollectionCell(title: "[図書]本購入",
                        id: .libraryBookPurchaseRequest,
-                       iconUnLock: UIImage(systemName: "books.vertical"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "books.vertical",
+                       iconLock: "lock.fill",
                        url: Url.libraryBookPurchaseRequest.string()
                       ),
         
         CollectionCell(title: "出欠記録",
                        id: .presenceAbsenceRecord,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.presenceAbsenceRecord.string()
                       ),
         
         CollectionCell(title: "授業アンケート",
                        id: .classQuestionnaire,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
-                       iconLock: UIImage(systemName: "lock.fill"),
+                       iconUnLock: "graduationcap",
+                       iconLock: "lock.fill",
                        url: Url.classQuestionnaire.string()
                       ),
         
         CollectionCell(title: "LMS一覧",
                        id: .eLearningList,
-                       iconUnLock: UIImage(systemName: "graduationcap"),
+                       iconUnLock: "graduationcap",
                        iconLock: nil,
                        url: Url.eLearningList.string()
                       ),
         
         CollectionCell(title: "[図書]HP_常三島",
                        id: .libraryWebHomePC,
-                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconUnLock: "books.vertical",
                        iconLock: nil,
                        url: Url.libraryHomePageMainPC.string()
                       ),
         
         CollectionCell(title: "[図書]HP_蔵本",
                        id: .libraryWebHomePC,
-                       iconUnLock: UIImage(systemName: "books.vertical"),
+                       iconUnLock: "books.vertical",
                        iconLock: nil,
                        url: Url.libraryHomePageKuraPC.string()
                       ),
