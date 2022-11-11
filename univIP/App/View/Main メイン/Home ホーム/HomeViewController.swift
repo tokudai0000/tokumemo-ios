@@ -55,7 +55,7 @@ final class HomeViewController: UIViewController {
                                                object: nil)
         
         // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(.white)
+//        setStatusBarBackgroundColor(UIColor(red: 13, green: 58, blue: 151, alpha: 0))
         
         initViewModel()
     }
@@ -308,6 +308,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         
                         self.weatherLabel.text = self.viewModel.weatherDataDiscription
                         self.temperatureLabel.text = self.viewModel.weatherDataFeelLike
+//                        imageView.image = UIImage(url: "https://openweathermap.org/img/wn/02d@2x.png")
                         if let url = URL(string: self.viewModel.weatherDataIconUrlStr) {
                             self.weatherWebView.load(URLRequest(url: url))
                         }

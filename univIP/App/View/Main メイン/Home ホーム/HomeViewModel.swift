@@ -290,4 +290,5 @@ final class HomeViewModel {
     //        ]
     //        let URL: String = "https://api.openweathermap.org/data/2.5/weather"
     //        Alamofire.request(URL, method: .post, parameters: parameters)
+    //    https://openweathermap.org/img/wn/02d@2x.png
 }

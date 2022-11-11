@@ -8,9 +8,6 @@
 import UIKit
 
 extension UIView {
-
-  // MARK: Utility
-
   /// 枠線の色
   @IBInspectable var borderColor: UIColor? {
     get {
