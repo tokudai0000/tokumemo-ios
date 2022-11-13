@@ -98,6 +98,13 @@ final class PasswordViewController: UIViewController {
             return
         }
         
+        // 学生番号が10桁以上の場合
+        if studentNumberText.prefix(1) == "c" {
+            studentNumberMessageLabel.text = "cアカウントではなく、学生番号"
+            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .error)
+            return
+        }
+        
         // KeyChianに保存する
         dataManager.studentNumber = studentNumberText
         dataManager.password = passwordText
