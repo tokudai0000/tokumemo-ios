@@ -53,6 +53,16 @@ final class WebViewController: UIViewController {
     @IBAction func forwardButton(_ sender: Any) {
         webView.goForward()
     }
+    @IBAction func safariButton(_ sender: Any) {
+        let url = URL(string: viewModel.loadingUrlStr)!
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func reloadButton(_ sender: Any) {
+        webView.reload()
+    }
     
 }
 
@@ -96,6 +106,7 @@ extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.webView.url! // fatalError
+        viewModel.loadingUrlStr = url.absoluteString
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         switch viewModel.anyJavaScriptExecute(url.absoluteString) {

@@ -11,6 +11,8 @@ final class WebViewModel {
     
     private let dataManager = DataManager.singleton
     
+    public var loadingUrlStr = "https://www.google.com/?hl=ja"
+    
     /// タイムアウトのURLであるかどうかの判定
     /// - Parameter urlString: 読み込み完了したURLの文字列
     /// - Returns: 結果

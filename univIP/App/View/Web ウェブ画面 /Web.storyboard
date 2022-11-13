@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +19,8 @@
                                 <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cV4-O6-vDl">
-                                        <rect key="frame" x="0.0" y="0.0" width="78" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="99" height="44"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system" title=""/>
                                         <connections>
@@ -28,27 +28,27 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mig-mD-6Jb">
-                                        <rect key="frame" x="84" y="0.0" width="78" height="44"/>
+                                        <rect key="frame" x="105" y="0.0" width="99" height="44"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.forward" catalog="system" title=""/>
                                         <connections>
                                             <action selector="forwardButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="O4h-fB-UhO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJS-Fk-g94">
-                                        <rect key="frame" x="168" y="0.0" width="78" height="44"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title=""/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IiE-H2-KtA">
-                                        <rect key="frame" x="252" y="0.0" width="78" height="44"/>
+                                        <rect key="frame" x="210" y="0.0" width="99" height="44"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title=""/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3M5-Ov-TSx">
-                                        <rect key="frame" x="336" y="0.0" width="78" height="44"/>
+                                        <rect key="frame" x="315" y="0.0" width="99" height="44"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title=""/>
+                                        <buttonConfiguration key="configuration" style="plain" image="safari" catalog="system" title=""/>
+                                        <connections>
+                                            <action selector="safariButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="IGA-ap-ltU"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588450000005" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -57,36 +57,53 @@
                                     <constraint firstAttribute="height" constant="44" id="TkG-BC-3QG"/>
                                     <constraint firstItem="cV4-O6-vDl" firstAttribute="width" secondItem="3M5-Ov-TSx" secondAttribute="width" id="WCJ-Y2-9f5"/>
                                     <constraint firstItem="cV4-O6-vDl" firstAttribute="width" secondItem="IiE-H2-KtA" secondAttribute="width" id="eiA-vr-V3z"/>
-                                    <constraint firstItem="cV4-O6-vDl" firstAttribute="width" secondItem="HJS-Fk-g94" secondAttribute="width" id="mdK-nZ-fyX"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1qD-Nc-cTg">
-                                <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eec-eU-8pd">
-                                        <rect key="frame" x="15" y="5" width="59" height="34"/>
+                                        <rect key="frame" x="5" y="5" width="48" height="34"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="完了"/>
+                                        <buttonConfiguration key="configuration" style="plain">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="完了">
+                                                    <attributes>
+                                                        <font key="NSFont" size="12" name="HiraginoSans-W3"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </buttonConfiguration>
                                         <connections>
                                             <action selector="finishButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kcR-a4-hIq"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzv-K2-wm1">
-                                        <rect key="frame" x="191" y="5" width="32" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="193.5" y="5" width="27" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcE-tV-5mG">
+                                        <rect key="frame" x="367.5" y="5" width="41.5" height="34"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise" catalog="system"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588450000005" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="eec-eU-8pd" secondAttribute="bottom" constant="5" id="83A-Ku-g93"/>
                                     <constraint firstAttribute="bottom" secondItem="fzv-K2-wm1" secondAttribute="bottom" constant="5" id="BQF-gt-sWG"/>
                                     <constraint firstItem="fzv-K2-wm1" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="5" id="Ksa-C0-V9s"/>
+                                    <constraint firstAttribute="bottom" secondItem="BcE-tV-5mG" secondAttribute="bottom" constant="5" id="LGP-fa-daa"/>
                                     <constraint firstItem="fzv-K2-wm1" firstAttribute="centerX" secondItem="1qD-Nc-cTg" secondAttribute="centerX" id="Mxn-Zh-LTs"/>
                                     <constraint firstAttribute="height" constant="44" id="Ymt-Os-N6A"/>
                                     <constraint firstItem="eec-eU-8pd" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="5" id="acq-63-hDh"/>
-                                    <constraint firstItem="eec-eU-8pd" firstAttribute="leading" secondItem="1qD-Nc-cTg" secondAttribute="leading" constant="15" id="hBD-Er-oKt"/>
+                                    <constraint firstItem="eec-eU-8pd" firstAttribute="leading" secondItem="1qD-Nc-cTg" secondAttribute="leading" constant="5" id="hBD-Er-oKt"/>
+                                    <constraint firstAttribute="trailing" secondItem="BcE-tV-5mG" secondAttribute="trailing" constant="5" id="jev-7l-VM5"/>
+                                    <constraint firstItem="BcE-tV-5mG" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="5" id="l84-Eo-ZFi"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
@@ -95,7 +112,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wU7-49-cl9">
-                                <rect key="frame" x="0.0" y="92" width="414" height="726"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
                                 <color key="backgroundColor" red="0.99607843159999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -131,7 +148,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="chevron.forward" catalog="system" width="97" height="128"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="chevron.forward" catalog="system" width="96" height="128"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
     </resources>
 </document>
