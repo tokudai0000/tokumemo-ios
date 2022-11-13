@@ -14,12 +14,10 @@ final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adImageView: UIImageView!
-//    @IBOutlet weak var weatherWebView: WKWebView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var weatherIconImageView: UIImageView!
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
@@ -36,6 +34,7 @@ final class HomeViewController: UIViewController {
         // デバックの時にいじる部分
 //        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
 //        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
+//        forLoginWebView.isHidden = false
         #endif
         
         // collectionViewの初期設定
@@ -48,10 +47,6 @@ final class HomeViewController: UIViewController {
         forLoginWebView.navigationDelegate = self
         
         viewModel.getWetherData()
-//        weatherWebView.isUserInteractionEnabled = false
-        
-        // ステータスバーの背景色を指定
-//        setStatusBarBackgroundColor(UIColor(red: 13, green: 58, blue: 151, alpha: 0))
         
         initViewModel()
     }
