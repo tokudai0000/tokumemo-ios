@@ -200,7 +200,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
         
-        if viewModel.isLoginComplete == false, let _ = cell.lockIconSystemName {
+        // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
+        if viewModel.hasRegisteredPassword == false ,
+           let _ = cell.lockIconSystemName {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
         }
@@ -307,6 +309,7 @@ extension HomeViewController {
         for touch in touches {
             // どの画面がタップされたかtagで判定
             if touch.view?.tag == 1 {
+                Analytics.logEvent("Button[Weather]", parameters: nil) // Analytics
                 let vcWeb = R.storyboard.web.webViewController()!
                 vcWeb.loadUrlString = "https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100"
                 present(vcWeb, animated: true, completion: nil)

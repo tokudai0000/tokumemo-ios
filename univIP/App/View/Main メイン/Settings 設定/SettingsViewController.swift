@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import SafariServices
+import FirebaseAnalytics
+
 
 class SettingsViewController: UITableViewController {
 
@@ -70,6 +71,9 @@ class SettingsViewController: UITableViewController {
         // タップされたセルの内容
         let cell = viewModel.collectionLists[indexPath.section][indexPath[1]]
         let vcWeb = R.storyboard.web.webViewController()!
+        
+        // アナリティクスを送信
+        Analytics.logEvent("SettingsCell[\(cell.id)]", parameters: nil) // Analytics
 
         // どのセルが押されたか
         switch cell.id {

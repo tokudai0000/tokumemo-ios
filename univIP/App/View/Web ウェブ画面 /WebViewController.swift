@@ -7,11 +7,13 @@
 
 import UIKit
 import WebKit
+import FirebaseAnalytics
 
 final class WebViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var urlLabel: UILabel!
+    @IBOutlet weak var progressView: UIProgressView!
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
@@ -21,6 +23,15 @@ final class WebViewController: UIViewController {
     
     var loadUrlString: String?
 
+    private var observation: NSKeyValueObservation?
+    private var colorCnt = 0
+    private let colorArray: [UIColor] = [
+        .blue,
+        .green,
+        .yellow,
+        .red,
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,12 +49,45 @@ final class WebViewController: UIViewController {
         // ステータスバーの背景色を指定
 //        setStatusBarBackgroundColor(UIColor(red: 246/255, green: 248/255, blue: 248/255, alpha: 1.0))
     
+        progressView.progressTintColor = colorArray[colorCnt]
+        colorCnt = colorCnt + 1
+        
+        observation = webView.observe(\.estimatedProgress, options: .new){_, change in
+            print("progress=\(String(describing: change.newValue))")
+            self.progressView.setProgress(Float(change.newValue!), animated: true)
+            
+            if change.newValue! >= 1.0 {
+                UIView.animate(withDuration: 1.0,
+                               delay: 0.0,
+                               options: [.curveEaseIn],
+                               animations: {
+                    self.progressView.alpha = 0.0
+                    
+                }, completion: { (finished: Bool) in
+                    self.progressView.progressTintColor = self.colorArray[self.colorCnt]
+                    self.colorCnt = self.colorCnt + 1
+                    if self.colorCnt >= self.colorArray.count {
+                        self.colorCnt = 0
+                    }
+                    
+                    self.progressView.setProgress(0, animated: false)
+                })
+            }
+            else {
+                self.progressView.alpha = 1.0
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        forwardButton.alpha = 0.6
     }
     
     @IBAction func finishButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func backButton(_ sender: Any) {
+        Analytics.logEvent("WebView[backButton]", parameters: nil) // Analytics
         if webView.canGoBack {
             webView.goBack()
         } else {
@@ -51,7 +95,20 @@ final class WebViewController: UIViewController {
         }
     }
     @IBAction func forwardButton(_ sender: Any) {
+        Analytics.logEvent("WebView[forwardButton]", parameters: nil) // Analytics
         webView.goForward()
+    }
+    @IBAction func safariButton(_ sender: Any) {
+        Analytics.logEvent("WebView[safariButton]", parameters: nil) // Analytics
+        let url = URL(string: viewModel.loadingUrlStr)!
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func reloadButton(_ sender: Any) {
+        Analytics.logEvent("WebView[reload]", parameters: nil) // Analytics
+        webView.reload()
     }
     
 }
@@ -96,6 +153,7 @@ extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.webView.url! // fatalError
+        viewModel.loadingUrlStr = url.absoluteString
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         switch viewModel.anyJavaScriptExecute(url.absoluteString) {
@@ -154,13 +212,8 @@ extension WebViewController: WKNavigationDelegate {
             webView.isHidden = false
         }
         // 戻る、進むボタンの表示を変更
-//        backButton.isEnabled = webView.canGoBack
-//        backButton.alpha = webView.canGoBack ? 1.0 : 0.4
-        forwardButton.isEnabled = webView.canGoForward
-        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
+        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.6
 
-//        // アナリティクスを送信
-//        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString]) // Analytics
         AKLog(level: .DEBUG, message: url.absoluteString)
     }
     
