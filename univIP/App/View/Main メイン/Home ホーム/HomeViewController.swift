@@ -309,6 +309,7 @@ extension HomeViewController {
         for touch in touches {
             // どの画面がタップされたかtagで判定
             if touch.view?.tag == 1 {
+                Analytics.logEvent("Button[Weather]", parameters: nil) // Analytics
                 let vcWeb = R.storyboard.web.webViewController()!
                 vcWeb.loadUrlString = "https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100"
                 present(vcWeb, animated: true, completion: nil)

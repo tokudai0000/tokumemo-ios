@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import FirebaseAnalytics
 
 final class WebViewController: UIViewController {
     
@@ -48,6 +49,7 @@ final class WebViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func backButton(_ sender: Any) {
+        Analytics.logEvent("WebView[backButton]", parameters: nil) // Analytics
         if webView.canGoBack {
             webView.goBack()
         } else {
@@ -55,9 +57,11 @@ final class WebViewController: UIViewController {
         }
     }
     @IBAction func forwardButton(_ sender: Any) {
+        Analytics.logEvent("WebView[forwardButton]", parameters: nil) // Analytics
         webView.goForward()
     }
     @IBAction func safariButton(_ sender: Any) {
+        Analytics.logEvent("WebView[safariButton]", parameters: nil) // Analytics
         let url = URL(string: viewModel.loadingUrlStr)!
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
@@ -65,6 +69,7 @@ final class WebViewController: UIViewController {
     }
     
     @IBAction func reloadButton(_ sender: Any) {
+        Analytics.logEvent("WebView[reload]", parameters: nil) // Analytics
         webView.reload()
     }
     
@@ -171,8 +176,6 @@ extension WebViewController: WKNavigationDelegate {
         // 戻る、進むボタンの表示を変更
         forwardButton.alpha = webView.canGoForward ? 1.0 : 0.6
 
-//        // アナリティクスを送信
-//        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString]) // Analytics
         AKLog(level: .DEBUG, message: url.absoluteString)
     }
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class NewsViewController: UIViewController {
 
@@ -88,7 +89,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     /// それ以外では画面を消した後、それぞれ処理を行う
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        
+        Analytics.logEvent("NewsTable", parameters: nil) // Analytics
         let vcWeb = R.storyboard.web.webViewController()!
         let loadUrlString = dataManager.newsUrlDatas[indexPath[0]]
         vcWeb.loadUrlString = loadUrlString
