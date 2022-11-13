@@ -19,17 +19,17 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ck7-Iq-2oZ">
                         <rect key="frame" x="20" y="5" width="290" height="140"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yio-31-oXn">
-                                <rect key="frame" x="0.0" y="120" width="290" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="v9L-Um-mEK"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ContentsText" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyq-51-QxG">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="110"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ContentsText" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyq-51-QxG">
-                                <rect key="frame" x="0.0" y="0.0" width="290" height="120"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yio-31-oXn">
+                                <rect key="frame" x="0.0" y="110" width="290" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="v9L-Um-mEK"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cyq-51-QxG" secondAttribute="trailing" id="G8A-bO-fz8"/>
                             <constraint firstItem="cyq-51-QxG" firstAttribute="leading" secondItem="ck7-Iq-2oZ" secondAttribute="leading" id="Qgb-q5-YVc"/>
-                            <constraint firstAttribute="bottom" secondItem="Yio-31-oXn" secondAttribute="bottom" id="Qjh-YQ-ymd"/>
+                            <constraint firstAttribute="bottom" secondItem="Yio-31-oXn" secondAttribute="bottom" constant="5" id="Qjh-YQ-ymd"/>
                             <constraint firstAttribute="trailing" secondItem="Yio-31-oXn" secondAttribute="trailing" id="TdY-di-KSq"/>
                             <constraint firstItem="cyq-51-QxG" firstAttribute="top" secondItem="ck7-Iq-2oZ" secondAttribute="top" id="b68-RV-PnI"/>
                             <constraint firstItem="Yio-31-oXn" firstAttribute="top" secondItem="cyq-51-QxG" secondAttribute="bottom" id="v50-cX-CzC"/>
