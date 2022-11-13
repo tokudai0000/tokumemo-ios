@@ -288,7 +288,6 @@ final class HomeViewModel {
         return dateFormatter.string(from: dt)
     }
     
-    // MARK: - Private func
-    // cアカウント、パスワードを登録しているか判定 (読み取り専用)
-    private var hasRegisteredPassword: Bool { get { return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty) }}
+    // 学生番号、パスワードを登録しているか判定 (読み取り専用)
+    public var hasRegisteredPassword: Bool { get { return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty) }}
 }
