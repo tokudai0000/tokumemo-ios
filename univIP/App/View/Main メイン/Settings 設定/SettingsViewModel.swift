@@ -9,5 +9,5 @@ import Foundation
 
 final class SettingsViewModel {
     /// TableCellの内容
-    public var collectionLists:[[Constant.MenuCell]] = Constant.initMenuCellLists
+    public var collectionLists:[[ConstStruct.SettingsCell]] = ConstStruct.initSettingsCellLists
 }

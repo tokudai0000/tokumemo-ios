@@ -36,7 +36,7 @@ final class WebViewController: UIViewController {
         }
         
         // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(UIColor(red: 246/255, green: 248/255, blue: 248/255, alpha: 1.0))
+//        setStatusBarBackgroundColor(UIColor(red: 246/255, green: 248/255, blue: 248/255, alpha: 1.0))
     
     }
     
@@ -118,8 +118,8 @@ extension WebViewController: WKNavigationDelegate {
                 
                 // シラバスの検索画面
                 // ネイティブでの検索内容をWebに反映したのち、検索を行う
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(dataManager.subjectName)'", completionHandler:  nil)
-                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(dataManager.teacherName)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(dataManager.syllabusSubjectName)'", completionHandler:  nil)
+                webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(dataManager.syllabusTeacherName)'", completionHandler:  nil)
                 webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
                 // フラグを下ろす
                 dataManager.canExecuteJavascript = false

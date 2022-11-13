@@ -14,17 +14,17 @@ final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adImageView: UIImageView!
-    @IBOutlet weak var weatherWebView: WKWebView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var weatherIconImageView: UIImageView!
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
     
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -34,6 +34,7 @@ final class HomeViewController: UIViewController {
         // デバックの時にいじる部分
 //        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
 //        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
+//        forLoginWebView.isHidden = false
         #endif
         
         // collectionViewの初期設定
@@ -46,16 +47,6 @@ final class HomeViewController: UIViewController {
         forLoginWebView.navigationDelegate = self
         
         viewModel.getWetherData()
-        weatherWebView.isUserInteractionEnabled = false
-        
-        // フォアグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(foreground(notification:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-        
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(.white)
         
         initViewModel()
     }
@@ -72,17 +63,9 @@ final class HomeViewController: UIViewController {
         // ログインページの読み込み
         loadLoginPage()
         
-        dateLabel.text = dateToday()
+        dateLabel.text = viewModel.getDateNow()
     }
-    func dateToday () -> String {
-        let dt = Date()
-        let dateFormatter = DateFormatter()
-        
-        // DateFormatter を使用して書式とロケールを指定する
-        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "MMMd", options: 0, locale: Locale(identifier: "ja_JP"))
-        
-        return dateFormatter.string(from: dt)
-    }
+
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
@@ -104,14 +87,6 @@ final class HomeViewController: UIViewController {
         viewModel.isLoginComplete = false
         // 大学統合認証システムのログインページを読み込む
         forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
-    }
-    
-    /// フォアグラウンド時の処理
-    /// アプリを30分後などに再度開いて使用すると、ログアウトされている状態になっている。
-    /// 30分後であれば再ログインなど実装してみたものの、うまく動かなかった為、毎度ログインする様にしている。
-    /// しかし、トークンが有効な状態であれば、ログイン画面へは行かずに教務事務システムの画面へ遷移してくれる。(サーバー側の機能)
-    @objc private func foreground(notification: Notification) {
-        loadLoginPage()
     }
     
     private var alertController: UIAlertController!
@@ -190,7 +165,7 @@ extension HomeViewController: WKNavigationDelegate {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     /// セクション内のセル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constant.initCustomCellLists.count
+        return ConstStruct.initCustomCellLists.count
     }
     
     /// セルの中身
@@ -202,14 +177,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                        image: viewModel.collectionLists[indexPath.row].iconUnLock)
+                       image: UIImage(systemName: viewModel.collectionLists[indexPath.row].iconSystemName!))
+        
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
-        if viewModel.isLoginComplete == false {
-            if let img = viewModel.collectionLists[indexPath.row].iconLock {
+        if viewModel.isLoginComplete == false,
+           let img = viewModel.collectionLists[indexPath.row].lockIconSystemName {
                 cell.setupCell(string: viewModel.collectionLists[indexPath.row].title,
-                               image: img)
-            }
+                               image: UIImage(systemName: img))
+            
         }
         return cell
     }
@@ -224,7 +200,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
         
-        if viewModel.isLoginComplete == false, let _ = cell.iconLock {
+        if viewModel.isLoginComplete == false, let _ = cell.lockIconSystemName {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
         }
@@ -308,9 +284,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         
                         self.weatherLabel.text = self.viewModel.weatherDataDiscription
                         self.temperatureLabel.text = self.viewModel.weatherDataFeelLike
-                        if let url = URL(string: self.viewModel.weatherDataIconUrlStr) {
-                            self.weatherWebView.load(URLRequest(url: url))
-                        }
+                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherDataIconUrlStr)
+                        print(self.viewModel.weatherDataIconUrlStr)
                         
                         break
                         
