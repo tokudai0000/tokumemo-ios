@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c8q-AA-dNK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c8q-AA-dNK">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,10 +27,30 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZRM-2d-DCw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="レビュー" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-2f-tXU">
+                                        <rect key="frame" x="146.5" y="10" width="82" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.050980392159999999" green="0.2274509804" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="f8V-2f-tXU" firstAttribute="centerX" secondItem="ZRM-2d-DCw" secondAttribute="centerX" id="NhF-ek-Sm3"/>
+                                    <constraint firstAttribute="height" constant="44" id="PIY-LN-ZaF"/>
+                                    <constraint firstItem="f8V-2f-tXU" firstAttribute="centerY" secondItem="ZRM-2d-DCw" secondAttribute="centerY" id="Q55-el-rFb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nUJ-6N-MRn"/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.94901960784313721" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="ZRM-2d-DCw" firstAttribute="leading" secondItem="nUJ-6N-MRn" secondAttribute="leading" id="SbR-AW-BJr"/>
+                            <constraint firstItem="ZRM-2d-DCw" firstAttribute="top" secondItem="nUJ-6N-MRn" secondAttribute="top" id="TNw-3l-Hyl"/>
+                            <constraint firstAttribute="trailing" secondItem="ZRM-2d-DCw" secondAttribute="trailing" id="bCR-tK-GUk"/>
                             <constraint firstItem="Sm5-Dw-fFH" firstAttribute="centerX" secondItem="fOP-Xx-bJm" secondAttribute="centerX" id="ni2-zE-rdP"/>
                             <constraint firstItem="Sm5-Dw-fFH" firstAttribute="centerY" secondItem="fOP-Xx-bJm" secondAttribute="centerY" id="xcN-Nz-aIT"/>
                         </constraints>
