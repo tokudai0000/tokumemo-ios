@@ -263,7 +263,7 @@ final class HomeViewModel {
             // 体感気温がdoubleの形で返ってくる　例: 21.52
             if let temp = response["main"]["feels_like"].double {
                 let tempStr_simo2keta = String(temp) // 例: "21.52"
-                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count - 1) // 例: "21.5"
+                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count) // 例: "21.5"
                 self.weatherDataFeelLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
             }
             

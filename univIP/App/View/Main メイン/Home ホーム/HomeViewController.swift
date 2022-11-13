@@ -14,12 +14,13 @@ final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adImageView: UIImageView!
-    @IBOutlet weak var weatherWebView: WKWebView!
+//    @IBOutlet weak var weatherWebView: WKWebView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var weatherIconImageView: UIImageView!
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var forLoginWebView: WKWebView!
     
@@ -47,7 +48,7 @@ final class HomeViewController: UIViewController {
         forLoginWebView.navigationDelegate = self
         
         viewModel.getWetherData()
-        weatherWebView.isUserInteractionEnabled = false
+//        weatherWebView.isUserInteractionEnabled = false
         
         // ステータスバーの背景色を指定
 //        setStatusBarBackgroundColor(UIColor(red: 13, green: 58, blue: 151, alpha: 0))
@@ -288,10 +289,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         
                         self.weatherLabel.text = self.viewModel.weatherDataDiscription
                         self.temperatureLabel.text = self.viewModel.weatherDataFeelLike
-//                        imageView.image = UIImage(url: "https://openweathermap.org/img/wn/02d@2x.png")
-                        if let url = URL(string: self.viewModel.weatherDataIconUrlStr) {
-                            self.weatherWebView.load(URLRequest(url: url))
-                        }
+                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherDataIconUrlStr)
+                        print(self.viewModel.weatherDataIconUrlStr)
                         
                         break
                         
