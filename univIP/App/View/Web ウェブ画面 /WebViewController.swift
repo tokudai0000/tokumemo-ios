@@ -40,6 +40,10 @@ final class WebViewController: UIViewController {
     
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        forwardButton.alpha = 0.6
+    }
+    
     @IBAction func finishButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -165,10 +169,7 @@ extension WebViewController: WKNavigationDelegate {
             webView.isHidden = false
         }
         // 戻る、進むボタンの表示を変更
-//        backButton.isEnabled = webView.canGoBack
-//        backButton.alpha = webView.canGoBack ? 1.0 : 0.4
-        forwardButton.isEnabled = webView.canGoForward
-        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.4
+        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.6
 
 //        // アナリティクスを送信
 //        Analytics.logEvent("WebViewReload", parameters: ["pages": urlString]) // Analytics

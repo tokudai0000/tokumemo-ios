@@ -63,14 +63,14 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eec-eU-8pd">
-                                        <rect key="frame" x="5" y="5" width="48" height="34"/>
+                                        <rect key="frame" x="5" y="5" width="50" height="34"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="完了">
                                                     <attributes>
-                                                        <font key="NSFont" size="12" name="HiraginoSans-W3"/>
+                                                        <font key="NSFont" size="13" name="HiraginoSans-W3"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -86,10 +86,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BcE-tV-5mG">
-                                        <rect key="frame" x="367.5" y="5" width="41.5" height="34"/>
+                                        <rect key="frame" x="367.5" y="10" width="41.5" height="24"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise" catalog="system"/>
+                                        <connections>
+                                            <action selector="reloadButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Jin-f5-FHA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588450000005" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -97,13 +100,13 @@
                                     <constraint firstAttribute="bottom" secondItem="eec-eU-8pd" secondAttribute="bottom" constant="5" id="83A-Ku-g93"/>
                                     <constraint firstAttribute="bottom" secondItem="fzv-K2-wm1" secondAttribute="bottom" constant="5" id="BQF-gt-sWG"/>
                                     <constraint firstItem="fzv-K2-wm1" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="5" id="Ksa-C0-V9s"/>
-                                    <constraint firstAttribute="bottom" secondItem="BcE-tV-5mG" secondAttribute="bottom" constant="5" id="LGP-fa-daa"/>
+                                    <constraint firstAttribute="bottom" secondItem="BcE-tV-5mG" secondAttribute="bottom" constant="10" id="LGP-fa-daa"/>
                                     <constraint firstItem="fzv-K2-wm1" firstAttribute="centerX" secondItem="1qD-Nc-cTg" secondAttribute="centerX" id="Mxn-Zh-LTs"/>
                                     <constraint firstAttribute="height" constant="44" id="Ymt-Os-N6A"/>
                                     <constraint firstItem="eec-eU-8pd" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="5" id="acq-63-hDh"/>
                                     <constraint firstItem="eec-eU-8pd" firstAttribute="leading" secondItem="1qD-Nc-cTg" secondAttribute="leading" constant="5" id="hBD-Er-oKt"/>
                                     <constraint firstAttribute="trailing" secondItem="BcE-tV-5mG" secondAttribute="trailing" constant="5" id="jev-7l-VM5"/>
-                                    <constraint firstItem="BcE-tV-5mG" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="5" id="l84-Eo-ZFi"/>
+                                    <constraint firstItem="BcE-tV-5mG" firstAttribute="top" secondItem="1qD-Nc-cTg" secondAttribute="top" constant="10" id="l84-Eo-ZFi"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
