@@ -26,6 +26,7 @@ final class HomeViewController: UIViewController {
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
     
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +49,6 @@ final class HomeViewController: UIViewController {
         viewModel.getWetherData()
         weatherWebView.isUserInteractionEnabled = false
         
-        // フォアグラウンドの判定
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(foreground(notification:)),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-        
         // ステータスバーの背景色を指定
 //        setStatusBarBackgroundColor(UIColor(red: 13, green: 58, blue: 151, alpha: 0))
         
@@ -72,17 +67,9 @@ final class HomeViewController: UIViewController {
         // ログインページの読み込み
         loadLoginPage()
         
-        dateLabel.text = dateToday()
+        dateLabel.text = viewModel.getDateNow()
     }
-    func dateToday () -> String {
-        let dt = Date()
-        let dateFormatter = DateFormatter()
-        
-        // DateFormatter を使用して書式とロケールを指定する
-        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "MMMd", options: 0, locale: Locale(identifier: "ja_JP"))
-        
-        return dateFormatter.string(from: dt)
-    }
+
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
@@ -104,14 +91,6 @@ final class HomeViewController: UIViewController {
         viewModel.isLoginComplete = false
         // 大学統合認証システムのログインページを読み込む
         forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
-    }
-    
-    /// フォアグラウンド時の処理
-    /// アプリを30分後などに再度開いて使用すると、ログアウトされている状態になっている。
-    /// 30分後であれば再ログインなど実装してみたものの、うまく動かなかった為、毎度ログインする様にしている。
-    /// しかし、トークンが有効な状態であれば、ログイン画面へは行かずに教務事務システムの画面へ遷移してくれる。(サーバー側の機能)
-    @objc private func foreground(notification: Notification) {
-        loadLoginPage()
     }
     
     private var alertController: UIAlertController!

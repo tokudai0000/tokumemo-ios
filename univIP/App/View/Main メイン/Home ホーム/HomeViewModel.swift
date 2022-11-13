@@ -17,10 +17,7 @@ final class HomeViewModel {
     private let dataManager = DataManager.singleton
     private let apiManager = ApiManager.singleton
     
-    // cアカウント、パスワードを登録しているか判定 (読み取り専用)
-    private var hasRegisteredPassword: Bool { get { return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty) }}
-    
-    
+
     // MARK: - Public
     /// TableCellの内容
     public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
@@ -98,6 +95,7 @@ final class HomeViewModel {
         return isLoginComplete
     }
     
+    /// 大学統合認証システム(IAS)へのログインが失敗したかどうか
     public func isMissLoggedin(_ urlString: String) -> Bool {
         let check1 = urlString.contains(Url.universityLogin.string())
         let check2 = (urlString.suffix(2) != "s1")
@@ -177,7 +175,6 @@ final class HomeViewModel {
         if month <= 3 {
             year -= 1
         }
-        
         return Url.currentTermPerformance.string() + String(year)
     }
     
@@ -195,6 +192,9 @@ final class HomeViewModel {
      
      APIのURL
      https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric
+     
+     WeatherIconURL
+     https://openweathermap.org/img/wn/02d@2x.png
      
      {
          "coord": {
@@ -280,15 +280,15 @@ final class HomeViewModel {
             self?.state?(.error) // エラー表示
         })
     }
-    //    メモ
-    //        let parameters = [
-    //            "lat":"34.0778755",
-    //            "lon":"134.5615651",
-    //            "appid":"e0578cd3fb0d436dd64d4d5d5a404f08",
-    //            "lang":"ja",
-    //            "units":"metric"
-    //        ]
-    //        let URL: String = "https://api.openweathermap.org/data/2.5/weather"
-    //        Alamofire.request(URL, method: .post, parameters: parameters)
-    //    https://openweathermap.org/img/wn/02d@2x.png
+    
+    public func getDateNow () -> String {
+        let dt = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.setTemplate(.dateMonthDate)
+        return dateFormatter.string(from: dt)
+    }
+    
+    // MARK: - Private func
+    // cアカウント、パスワードを登録しているか判定 (読み取り専用)
+    private var hasRegisteredPassword: Bool { get { return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty) }}
 }

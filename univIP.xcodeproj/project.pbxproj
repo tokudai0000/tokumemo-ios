@@ -368,6 +368,7 @@
 				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
+				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -413,7 +414,6 @@
 			isa = PBXGroup;
 			children = (
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
-				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
 				1A384F9228FD5D5C00A1F52E /* Review レビュー */,
