@@ -200,6 +200,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // メールなどで再度入力したい場合があるため
         dataManager.canExecuteJavascript = true
         
+        // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
         if viewModel.hasRegisteredPassword == false ,
            let _ = cell.lockIconSystemName {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
