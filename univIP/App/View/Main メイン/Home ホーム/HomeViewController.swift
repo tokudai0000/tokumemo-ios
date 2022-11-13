@@ -70,9 +70,14 @@ final class HomeViewController: UIViewController {
     @IBAction func studentCardButton(_ sender: Any) {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
         
-        // ボタンが押されたときにStudentCard.storyboardに遷移する
-        let vc = R.storyboard.studentCard.studentCardViewController()!
-        present(vc, animated: true, completion: nil)
+        // 学生証表示画面に遷移する
+        if viewModel.isLoginComplete == false {
+            alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
+            return
+        } else {
+            let vc = R.storyboard.studentCard.studentCardViewController()!
+            present(vc, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Private func
