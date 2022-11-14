@@ -333,6 +333,7 @@
 		1AA056CB26BD2AE100343005 /* univIP */ = {
 			isa = PBXGroup;
 			children = (
+				1AAF27012748587C0071B89F /* Settings.bundle */,
 				1AA056E326BD2D3700343005 /* App */,
 			);
 			path = univIP;
@@ -356,7 +357,6 @@
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
 				1ABDE75A26DEF7A100D4B04E /* RTFfile */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
-				1AAF27012748587C0071B89F /* Settings.bundle */,
 				1A9E0E08273CBA8500247F94 /* FireBaseAnalytics */,
 			);
 			path = etc;
