@@ -316,7 +316,7 @@ extension HomeViewController {
             if touch.view?.tag == 1 {
                 Analytics.logEvent("Button[Weather]", parameters: nil) // Analytics
                 let vcWeb = R.storyboard.web.webViewController()!
-                vcWeb.loadUrlString = "https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100"
+                vcWeb.loadUrlString = "https://www.nhk.or.jp/kishou-saigai/city/weather/36201003620100/#anaten-area-name"
                 present(vcWeb, animated: true, completion: nil)
             }
         }
