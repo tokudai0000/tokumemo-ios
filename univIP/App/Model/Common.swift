@@ -12,6 +12,9 @@ final class Common {
     /// rtfファイルを読み込む
     /// - Parameter url: rtfFileまでのPATH
     /// - Returns: rtfFileの内容
+    /// 使用例
+    /// let filePath = R.file.aboutThisAppRtf()!
+    /// textView.attributedText = Common.loadRtfFileContents(filePath)
     static func loadRtfFileContents(_ filePath: URL) -> NSAttributedString {
         do {
             let terms = try Data(contentsOf: filePath)
