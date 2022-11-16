@@ -33,7 +33,7 @@ final class HomeViewController: UIViewController {
         #if DEBUG
         // デバックの時にいじる部分
 //        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
-//        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
+        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
 //        forLoginWebView.isHidden = false
         #endif
         
