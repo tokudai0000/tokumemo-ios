@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -24,24 +25,15 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NP9-XI-xKL">
                                         <rect key="frame" x="0.0" y="0.0" width="205.66666666666666" height="150"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filemenu.and.cursorarrow.rtl" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
-                                                <rect key="frame" x="0.0" y="1.6666666666666714" width="205.66666666666666" height="147.66666666666669"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tokumemoPlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
+                                                <rect key="frame" x="27.666666666666657" y="0.0" width="150" height="150"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="v5T-GU-n4N" secondAttribute="height" multiplier="1:1" id="kzv-VF-OaQ"/>
+                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="3"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
-                                                        <real key="value" value="0.5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                        <real key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                        <size key="value" width="5" height="5"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
@@ -54,15 +46,14 @@
                                                 </wkWebViewConfiguration>
                                             </wkWebView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" name="SubColor"/>
                                         <constraints>
                                             <constraint firstItem="Yhg-Di-ZNi" firstAttribute="leading" secondItem="NP9-XI-xKL" secondAttribute="leading" id="CZ3-j9-MAX"/>
                                             <constraint firstAttribute="bottom" secondItem="v5T-GU-n4N" secondAttribute="bottom" id="JnB-SF-GZa"/>
                                             <constraint firstItem="Yhg-Di-ZNi" firstAttribute="top" secondItem="NP9-XI-xKL" secondAttribute="top" id="MpP-CV-UOG"/>
+                                            <constraint firstItem="v5T-GU-n4N" firstAttribute="centerX" secondItem="NP9-XI-xKL" secondAttribute="centerX" id="S4G-ow-hWS"/>
                                             <constraint firstAttribute="bottom" secondItem="Yhg-Di-ZNi" secondAttribute="bottom" id="Xjt-MZ-qwj"/>
-                                            <constraint firstItem="v5T-GU-n4N" firstAttribute="leading" secondItem="NP9-XI-xKL" secondAttribute="leading" id="amO-xc-R0X"/>
                                             <constraint firstItem="v5T-GU-n4N" firstAttribute="top" secondItem="NP9-XI-xKL" secondAttribute="top" id="awe-t2-Szf"/>
-                                            <constraint firstAttribute="trailing" secondItem="v5T-GU-n4N" secondAttribute="trailing" id="f6q-ap-b7g"/>
                                             <constraint firstAttribute="trailing" secondItem="Yhg-Di-ZNi" secondAttribute="trailing" id="uoP-dB-Uqs"/>
                                         </constraints>
                                     </view>
@@ -264,8 +255,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="89"/>
         <image name="house" catalog="system" width="128" height="104"/>
+        <image name="tokumemoPlusIcon" width="512" height="512"/>
+        <namedColor name="SubColor">
+            <color red="1" green="0.75294117647058822" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
