@@ -76,7 +76,10 @@ enum Url: String {
     case skipReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
     /// マナバから授業動画[Youtube]を開く時
     case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
-    
+    /// トクメモ＋のプライバシーポリシーURL[GitHub]
+    case privacyPolicy = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt"
+    /// トクメモ＋の利用規約URL[GitHub]
+    case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
     
     
     /// URLを文字列として返す
