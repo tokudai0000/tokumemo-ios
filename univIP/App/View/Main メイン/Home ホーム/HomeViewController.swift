@@ -16,7 +16,6 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var adImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var weatherIconImageView: UIImageView!
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
@@ -62,8 +61,6 @@ final class HomeViewController: UIViewController {
         }
         // ログインページの読み込み
         loadLoginPage()
-        
-        dateLabel.text = viewModel.getDateNow()
     }
 
     // MARK: - IBAction
