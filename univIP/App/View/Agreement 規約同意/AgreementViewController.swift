@@ -20,7 +20,11 @@ final class AgreementViewController: UIViewController {
         super.viewDidLoad()
         // 登録ボタンの角を丸める
         agreementButton.layer.cornerRadius = 5.0
-        textView.text = "「快適になる」をタップすると、プライバシーポリシーを理解し、サービス利用規約に同意したことになります。"
+        let filePath = R.file.agreementRtf()!
+        textView.attributedText = Common.loadRtfFileContents(filePath)
+        textView.textColor = .white
+//        textView.font = UIFont.boldSystemFont(ofSize: 15)
+//        textView.text = "「快適になる」をタップすると、プライバシーポリシーを理解し、サービス利用規約に同意したことになります。"
     }
     
     // MARK: - IBAction

@@ -55,6 +55,7 @@
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
+		1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		80921099290FC717009D0ABD /* BarCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80921098290FC717009D0ABD /* BarCodeGenerator.swift */; };
 		809DCF722906A63300593989 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809DCF712906A63300593989 /* UIView.swift */; };
@@ -139,6 +140,7 @@
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
+		1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = StudentNumberDiscription.rtf; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 			children = (
 				1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */,
 				1A9E0E15273D848100247F94 /* Agreement.rtf */,
+				1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */,
 			);
 			path = RTFfile;
 			sourceTree = "<group>";
@@ -475,8 +478,8 @@
 		80D3B6FF2909435000FF1AE3 /* StudentCard 学生証 */ = {
 			isa = PBXGroup;
 			children = (
-				80D3B7002909439100FF1AE3 /* StudentCard.storyboard */,
 				80D3B702290943AF00FF1AE3 /* StudentCardViewController.swift */,
+				80D3B7002909439100FF1AE3 /* StudentCard.storyboard */,
 				80921098290FC717009D0ABD /* BarCodeGenerator.swift */,
 			);
 			path = "StudentCard 学生証";
@@ -614,6 +617,7 @@
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A30D0AA28F5BFB500C4012E /* CustomCell.xib in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Password.storyboard in Resources */,
+				1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */,
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
 				1ABE8BD827B10489001EEA79 /* Syllabus.storyboard in Resources */,
@@ -977,9 +981,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = XSC9AJPSP3;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 8H3M7HHBLW;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1001,6 +1006,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = pt3;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1014,9 +1020,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = XSC9AJPSP3;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 8H3M7HHBLW;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1037,6 +1044,7 @@
 				MARKETING_VERSION = 2.99.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = pt3;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

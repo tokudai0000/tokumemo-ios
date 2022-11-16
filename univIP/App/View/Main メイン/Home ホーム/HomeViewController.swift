@@ -33,7 +33,7 @@ final class HomeViewController: UIViewController {
         #if DEBUG
         // デバックの時にいじる部分
 //        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
-//        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
+        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
 //        forLoginWebView.isHidden = false
         #endif
         
@@ -316,7 +316,7 @@ extension HomeViewController {
             if touch.view?.tag == 1 {
                 Analytics.logEvent("Button[Weather]", parameters: nil) // Analytics
                 let vcWeb = R.storyboard.web.webViewController()!
-                vcWeb.loadUrlString = "https://www.jma.go.jp/bosai/forecast/#area_type=class20s&area_code=3620100"
+                vcWeb.loadUrlString = "https://www.nhk.or.jp/kishou-saigai/city/weather/36201003620100/#anaten-area-name"
                 present(vcWeb, animated: true, completion: nil)
             }
         }

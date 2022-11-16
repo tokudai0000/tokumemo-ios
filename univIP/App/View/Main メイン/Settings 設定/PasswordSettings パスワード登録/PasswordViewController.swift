@@ -92,18 +92,21 @@ final class PasswordViewController: UIViewController {
         }
         
         // 学生番号が10桁以上の場合
+        if studentNumberText.prefix(1) == "c" {
+            studentNumberMessageLabel.text = "cアカウントではなく、学生番号です"
+            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .error)
+            return
+        }
+        
+        // 学生番号が10桁以上の場合
         if 10 < studentNumberText.count {
             studentNumberMessageLabel.text = "10桁の学生番号を入れてください"
             textFieldCursorSetup(fieldType: .studentNumber, cursorType: .error)
             return
         }
         
-        // 学生番号が10桁以上の場合
-        if studentNumberText.prefix(1) == "c" {
-            studentNumberMessageLabel.text = "cアカウントではなく、学生番号"
-            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .error)
-            return
-        }
+        // 失敗した後、成功した場合にはエラー表示を初期化する
+        initSetup()
         
         // KeyChianに保存する
         dataManager.studentNumber = studentNumberText
@@ -140,6 +143,7 @@ final class PasswordViewController: UIViewController {
             studentNumberTextField.text = dataManager.studentNumber
             studentNumberTextSizeLabel.text = "\(dataManager.studentNumber.count)/10"
             studentNumberMessageLabel.textColor = .red
+            studentNumberMessageLabel.text = ""
         }
         
         do { // 2. パスワード
@@ -149,6 +153,7 @@ final class PasswordViewController: UIViewController {
             passwordTextField.text = dataManager.password
             passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
             passwordMessageLabel.textColor = .red
+            passwordMessageLabel.text = ""
             passwordTextField.isSecureTextEntry = true
         }
         
