@@ -24,6 +24,7 @@ final class HomeViewController: UIViewController {
     
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
+    private var timer = Timer()
     
     
     // MARK: - LifeCycle
@@ -33,7 +34,7 @@ final class HomeViewController: UIViewController {
         #if DEBUG
         // デバックの時にいじる部分
 //        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
-        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
+//        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
 //        forLoginWebView.isHidden = false
         #endif
         
@@ -49,6 +50,24 @@ final class HomeViewController: UIViewController {
         viewModel.getWetherData()
         
         initViewModel()
+        
+        // 1秒毎に処理を実行する
+        var time = 0
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+            // 一定時間ごとに実行したい処理を記載する
+            let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + String(time) + ".png"
+            let url = URL(string: checkUrl)
+            do {
+                let data = try Data(contentsOf: url!)
+                self.adImageView.image = UIImage(url: checkUrl)
+                time += 1
+                return
+            } catch let err {
+                let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"
+                self.adImageView.image = UIImage(url: checkUrl)
+                time = 1
+            }
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
