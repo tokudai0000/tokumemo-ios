@@ -13,6 +13,7 @@ import FirebaseAnalytics
 final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
+    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var adImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -121,6 +122,9 @@ final class HomeViewController: UIViewController {
                 self.adImageView.image = UIImage(url: imgUrlStr)
                 // 0.png -> 1.pngとしていく
                 loadingCount += 1
+                
+                self.adView.backgroundColor = .clear
+                self.adImageView.backgroundColor = .clear
                 
             } catch {
                 // URLから取得できなかった場合

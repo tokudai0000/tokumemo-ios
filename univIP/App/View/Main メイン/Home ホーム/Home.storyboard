@@ -249,6 +249,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="adImageView" destination="v5T-GU-n4N" id="QoI-IB-MDZ"/>
+                        <outlet property="adView" destination="NP9-XI-xKL" id="BKe-aN-kwM"/>
                         <outlet property="collectionView" destination="JKS-4Y-lAY" id="mWa-qW-0dp"/>
                         <outlet property="dateLabel" destination="7zf-Pf-236" id="GEF-h6-Khh"/>
                         <outlet property="forLoginWebView" destination="Yhg-Di-ZNi" id="lAj-E7-7Mv"/>
