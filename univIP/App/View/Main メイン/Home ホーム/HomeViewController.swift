@@ -51,23 +51,8 @@ final class HomeViewController: UIViewController {
         
         initViewModel()
         
-        // 1秒毎に処理を実行する
-        var time = 0
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-            // 一定時間ごとに実行したい処理を記載する
-            let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + String(time) + ".png"
-            let url = URL(string: checkUrl)
-            do {
-                let data = try Data(contentsOf: url!)
-                self.adImageView.image = UIImage(url: checkUrl)
-                time += 1
-                return
-            } catch let err {
-                let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"
-                self.adImageView.image = UIImage(url: checkUrl)
-                time = 1
-            }
-        })
+        adViewLoad()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -111,6 +96,41 @@ final class HomeViewController: UIViewController {
         viewModel.isLoginComplete = false
         // 大学統合認証システムのログインページを読み込む
         forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
+    }
+    
+    private func adViewLoad() {
+        let TIME_INTERVAL = 30.0
+        var loadingCount = 0
+        // GitHub上に0-2までのpngがある場合、ここでは
+        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
+        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+        
+        // TIME_INTERVAL秒毎に処理を実行する
+        timer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL, repeats: true, block: { (timer) in
+            // 一定時間ごとに実行したい処理を記載する
+            
+            let pngNumber = String(loadingCount) + ".png"
+            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber
+            let url = URL(string: imgUrlStr)
+            
+            
+            do {
+                // URLから画像Dataを取得できるか確認
+                let _ = try Data(contentsOf: url!) // 取得できないとここでエラーが起き、catchに移動する
+                
+                self.adImageView.image = UIImage(url: imgUrlStr)
+                // 0.png -> 1.pngとしていく
+                loadingCount += 1
+                
+            } catch {
+                // URLから取得できなかった場合
+
+                let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"
+                self.adImageView.image = UIImage(url: checkUrl)
+                // 0.png はすでに読み込まれているので次は1.pngから
+                loadingCount = 1
+            }
+        })
     }
     
     private var alertController: UIAlertController!
