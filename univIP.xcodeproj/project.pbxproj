@@ -41,6 +41,10 @@
 		1AAF27022748587C0071B89F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF27012748587C0071B89F /* Settings.bundle */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
 		1AB37B7D26FDFCF4008A2D2F /* univIPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */; };
+		1ABC42212926988C00D1361D /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC42202926988B00D1361D /* DispatchQueue.swift */; };
+		1ABC42232926998200D1361D /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC42222926998200D1361D /* Notification.Name.swift */; };
+		1ABC422629269D2000D1361D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC422529269D2000D1361D /* BaseViewController.swift */; };
+		1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC422729269D3A00D1361D /* BaseViewModel.swift */; };
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BB927B10402001EEA79 /* HomeViewController.swift */; };
@@ -126,6 +130,10 @@
 		1AB37B7A26FDFCF4008A2D2F /* univIPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = univIPUITests.swift; sourceTree = "<group>"; };
 		1AB37B7E26FDFCF4008A2D2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ABC42202926988B00D1361D /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
+		1ABC42222926998200D1361D /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
+		1ABC422529269D2000D1361D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		1ABC422729269D3A00D1361D /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABE8BB927B10402001EEA79 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +293,8 @@
 				809DCF712906A63300593989 /* UIView.swift */,
 				80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */,
 				1AA29EE3291E68470049A546 /* UIColor.swift */,
+				1ABC42202926988B00D1361D /* DispatchQueue.swift */,
+				1ABC42222926998200D1361D /* Notification.Name.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -344,6 +354,7 @@
 		1AA056E326BD2D3700343005 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1ABC422429269D0000D1361D /* Base */,
 				1A41EADF272914CC0064CDB7 /* AKLibrary */,
 				1AA056E526BD2D4900343005 /* etc */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
@@ -392,6 +403,15 @@
 				1AB37B7E26FDFCF4008A2D2F /* Info.plist */,
 			);
 			path = univIPUITests;
+			sourceTree = "<group>";
+		};
+		1ABC422429269D0000D1361D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				1ABC422729269D3A00D1361D /* BaseViewModel.swift */,
+				1ABC422529269D2000D1361D /* BaseViewController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		1ABDE75326DE530300D4B04E /* Agreement 規約同意 */ = {
@@ -793,6 +813,8 @@
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingsViewController.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
+				1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */,
+				1ABC422629269D2000D1361D /* BaseViewController.swift in Sources */,
 				1AA29EE4291E68470049A546 /* UIColor.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
@@ -800,6 +822,7 @@
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				80D3B703290943AF00FF1AE3 /* StudentCardViewController.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */,
+				1ABC42232926998200D1361D /* Notification.Name.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1A30D0B628F87D4500C4012E /* Weather.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */,
@@ -811,6 +834,7 @@
 				1A6C51BA2905077E00A3E85A /* ReviewViewController.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
+				1ABC42212926988C00D1361D /* DispatchQueue.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* ConstStruct.swift in Sources */,
 				1A27270327D0EBAB00CE1DA5 /* R.generated.swift in Sources */,
 				1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */,
