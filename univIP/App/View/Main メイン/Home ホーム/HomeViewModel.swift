@@ -137,7 +137,7 @@ final class HomeViewModel {
         let url = URL(string: urlString)! // fatalError
         do {
             // URL先WebページのHTMLデータを取得
-            let data = NSData(contentsOf: url as URL)! as Data
+            let data = try NSData(contentsOf: url) as Data
             let doc = try HTML(html: data, encoding: String.Encoding.utf8)
             // aタグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
             for node in doc.xpath("//a") {
