@@ -48,6 +48,9 @@ final class HomeViewController: UIViewController {
         viewModel.getWetherData()
         
         initViewModel()
+        
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,9 +64,11 @@ final class HomeViewController: UIViewController {
         }
         // ログインページの読み込み
         loadLoginPage()
-        
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
+    }
+    
+    // ステータスバーのスタイルを白に設定
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
     }
 
     // MARK: - IBAction

@@ -28,6 +28,11 @@ class NewsViewController: UIViewController {
         setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
     }
     
+    // ステータスバーのスタイルを白に設定
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+    }
+    
     /// ViewModel初期化
     private func initViewModel() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
