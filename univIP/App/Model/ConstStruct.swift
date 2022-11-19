@@ -70,7 +70,7 @@ struct ConstStruct {
                        url: Url.courseManagementMobile.string()
                       ),
         
-        CollectionCell(title: "マナバ",
+        CollectionCell(title: "manaba",
                        id: .manabaHomePC,
                        iconSystemName: "graduationcap",
                        lockIconSystemName: "lock.fill",
