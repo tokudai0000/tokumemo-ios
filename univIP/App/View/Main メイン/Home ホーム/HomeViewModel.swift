@@ -11,14 +11,18 @@ import Kanna
 import Alamofire
 import SwiftyJSON
 
-final class HomeViewModel {
-    
-    // MARK: - Private
-    private let dataManager = DataManager.singleton
-    private let apiManager = ApiManager.singleton
-    
+final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
-    // MARK: - Public
+    //MARK: - STATE ステータス
+    enum State {
+        case busy           // 準備中
+        case ready          // 準備完了
+        case error          // エラー発生
+    }
+    public var state: ((State) -> Void)?
+    
+    
+    //MARK: - MODEL モデル
     /// TableCellの内容
     public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
     
@@ -26,81 +30,124 @@ final class HomeViewModel {
     public var isLoginComplete = false // ログイン完了
     public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
-    public var weatherDataDiscription = ""
-    public var weatherDataFeelLike = ""
-    public var weatherDataIconUrlStr = ""
+    public var weatherDiscription = ""
+    public var weatherFeelsLike = ""
+    public var weatherIconUrlStr = ""
     
     
-    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定　(読み取り専用)
-    public var shouldShowTermsAgreementView: Bool {
-        get { return dataManager.agreementVersion != ConstStruct.latestTermsVersion }
+    // MARK: - Public 公開機能
+
+    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
+    public func shouldShowTermsAgreementView() -> Bool {
+        return dataManager.agreementVersion != ConstStruct.latestTermsVersion
     }
     
-    /// タイムアウトのURLであるかどうかの判定
-    /// - Parameter urlString: 読み込み完了したURLの文字列
-    /// - Returns: 結果
-    public func shouldReLogin(_ url: String) -> Bool {
-        return url == Url.universityServiceTimeOut.string() || url == Url.universityServiceTimeOut2.string()
+    // 学生番号、パスワードを登録しているか判定
+    public func hasRegisteredPassword() -> Bool {
+        return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
+    }
+    
+    //
+    public func getDateNow() -> String {
+        let dt = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.setTemplate(.dateMonthDate)
+        return dateFormatter.string(from: dt)
+    }
+    
+    // OpenWeatherMapのAPIから天気情報を取得
+    public func getWether() {
+        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
+        let longitude = "134.5615651" // 経度
+        let API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
+        let parameter = "lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
+        
+        let urlStr = "https://api.openweathermap.org/data/2.5/weather?" + parameter
+        
+        state?(.busy) // 通信開始（通信中）
+        apiManager.request(urlStr,
+                           success: { [weak self] (response) in
+            
+            guard let self = self else { // HomeViewModelのself
+                AKLog(level: .FATAL, message: "[self] FatalError")
+                fatalError()
+            }
+            
+            // 天気の様子が返ってくる 例: 曇
+            self.weatherDiscription = response["weather"][0]["description"].string ?? "Error"
+            
+            // 体感気温がdoubleの形で返ってくる　例: 21.52
+            if let temp = response["main"]["feels_like"].double {
+                let tempStr_simo2keta = String(temp) // 例: "21.52"
+                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count-1) // 例: "21.5"
+                self.weatherFeelsLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
+            }
+            
+            // 天気を表すアイコンコードが返ってくる 例 "02d"
+            if let iconCode = response["weather"][0]["icon"].string {
+                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
+                self.weatherIconUrlStr = urlStr
+            }
+            
+            self.state?(.ready) // 通信完了
+            
+        }, failure: { [weak self] (error) in
+            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+            self?.state?(.error) // エラー表示
+        })
+    }
+    
+    /// タイムアウトのURLであるか判定
+    public func isTimeOut(urlStr: String) -> Bool {
+        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
     
 
-    /// JavaScriptを動かしたい指定のURLかどうかを判定し可能ならTrueを返す
-    ///
-    /// - Note: canExecuteJavascriptが重要な理由
-    ///   ログインに失敗した場合に再度ログインのURLが表示されることになる。
-    ///   canExecuteJavascriptが存在しないと、再度ログインの為にJavaScriptが実行され続け無限ループとなってしまう。
-    /// - Parameter urlString: 読み込み完了したURLの文字列
-    /// - Returns: 動かせるかどうか
-    public func canJavaScriptExecute(_ urlString: String) -> Bool {
-        // JavaScriptを実行するフラグが立っていない場合はnoneを返す
-        if dataManager.canExecuteJavascript == false {
-            return false
-        }
-        // cアカウント、パスワードを登録しているか
-        if hasRegisteredPassword == false {
-            return false
-        }
-        // 大学統合認証システム(IAS)のログイン画面
-        if urlString.contains(Url.universityLogin.string()) {
-            return true
-        }
+    /// JavaScriptを動かしたい指定のURLか判定
+    public func canExecuteJS(_ urlString: String) -> Bool {
+        // JavaScriptを実行するフラグ
+        if dataManager.canExecuteJavascript == false { return false }
+        
+        // cアカウント、パスワードの登録確認
+        if hasRegisteredPassword() == false { return false }
+        
+        // 大学統合認証システム(IAS)のログイン画面の判定
+        if urlString.contains(Url.universityLogin.string()) { return true }
+        
         // それ以外なら
         return false
     }
     
-    /// 大学統合認証システム(IAS)へのログインが完了したかどうか
-    ///
-    /// 以下2つの状態なら完了とする
-    ///  1. ログイン後のURLが指定したURLと一致していること
-    ///  2. ログイン処理中であるフラグが立っていること
-    ///  認められない場合は、falseとする
-    /// - Note:
-    /// - Parameter urlString: 現在表示しているURLString
-    /// - Returns: 判定結果、許可ならtrue
-    public func isLoggedin(_ urlString: String) -> Bool {
-        // ログイン後のURLが指定したURLと一致しているかどうか
-        let check1 = urlString.contains(Url.skipReminder.string())
-        let check2 = urlString.contains(Url.courseManagementPC.string())
-        let check3 = urlString.contains(Url.courseManagementMobile.string())
-        // 上記から1つでもtrueがあれば、引き継ぐ
+    /// 大学統合認証システム(IAS)へのログインが完了したか判定
+    public func isLoginComplete(_ urlStr: String) -> Bool {
+        // ログイン後のURL
+        let check1 = urlStr.contains(Url.skipReminder.string())
+        let check2 = urlStr.contains(Url.courseManagementPC.string())
+        let check3 = urlStr.contains(Url.courseManagementMobile.string())
+        // 上記から1つでもtrueがあれば、result = true
         let result = check1 || check2 || check3
-        // ログイン処理中かつ、ログインURLと異なっている場合(URLが同じ場合はログイン失敗した状態)
+        
+        // ログイン処理中かつ、ログイン後のURL
         if isLoginProcessing, result {
-            // ログインプロセスは終了
             isLoginProcessing = false
             isLoginCompleteImmediately = true
             return true
         }
-        // ログイン完了後に別画面開いてもtrueになるように
+        
+        // マナバを開いてもtrueになる
         return isLoginComplete
     }
     
-    /// 大学統合認証システム(IAS)へのログインが失敗したかどうか
-    public func isMissLoggedin(_ urlString: String) -> Bool {
-        let check1 = urlString.contains(Url.universityLogin.string())
-        let check2 = (urlString.suffix(2) != "s1")
-        if isLoginProcessing, check1, check2 {
-            // ログインプロセスは終了
+    /// 大学統合認証システム(IAS)へのログインが失敗したか判定
+    public func isLoginFailure(_ urlStr: String) -> Bool {
+        // ログイン失敗した時のURL
+        let check1 = urlStr.contains(Url.universityLogin.string())
+        let check2 = (urlStr.suffix(2) != "s1")
+        // 上記からどちらもtrueであれば、result = true
+        let result = check1 && check2
+        
+        // ログイン処理中かつ、ログイン失敗した時のURL
+        if isLoginProcessing, result {
             isLoginProcessing = false
             return true
         }
@@ -179,14 +226,6 @@ final class HomeViewModel {
     }
     
     
-    //MARK: - STATE ステータス
-    enum State {
-        case busy           // 準備中
-        case ready          // 準備完了
-        case error          // エラー発生
-    }
-    public var state: ((State) -> Void)?
-    
     /*
      OpenWeatherMapというサービスを使用
      
@@ -240,54 +279,4 @@ final class HomeViewModel {
          "cod": 200
      }
      */
-    
-    public func getWetherData() {
-        state?(.busy) // 通信開始（通信中）
-        
-        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
-        let longitude = "134.5615651" // 経度
-        let API_KEY = "e0578cd3fb0d436dd64d4d5d5a404f08"
-        
-        let urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
-        
-        apiManager.request(urlStr,
-                           success: { [weak self] (response) in
-            guard let self = self else { // HomeViewModelのself
-                AKLog(level: .FATAL, message: "[self] FatalError")
-                fatalError()
-            }
-            
-            // 天気の様子が返ってくる 例: 曇
-            self.weatherDataDiscription = response["weather"][0]["description"].string ?? ""
-            
-            // 体感気温がdoubleの形で返ってくる　例: 21.52
-            if let temp = response["main"]["feels_like"].double {
-                let tempStr_simo2keta = String(temp) // 例: "21.52"
-                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count-1) // 例: "21.5"
-                self.weatherDataFeelLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
-            }
-            
-            // 天気を表すアイコンコードが返ってくる 例 "02d"
-            if let iconCode = response["weather"][0]["icon"].string {
-                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
-                self.weatherDataIconUrlStr = urlStr
-            }
-            
-            self.state?(.ready) // 通信完了
-            
-        }, failure: { [weak self] (error) in
-            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.error) // エラー表示
-        })
-    }
-    
-    public func getDateNow () -> String {
-        let dt = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.setTemplate(.dateMonthDate)
-        return dateFormatter.string(from: dt)
-    }
-    
-    // 学生番号、パスワードを登録しているか判定 (読み取り専用)
-    public var hasRegisteredPassword: Bool { get { return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty) }}
 }
