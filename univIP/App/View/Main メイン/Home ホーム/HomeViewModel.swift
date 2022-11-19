@@ -181,6 +181,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             case .kura:
                 urlString = Url.libraryHomePageKuraPC.string()
         }
+        
         let url = URL(string: urlString)! // fatalError
         do {
             // URL先WebページのHTMLデータを取得
@@ -227,6 +228,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     /*
+     メモ
      OpenWeatherMapというサービスを使用
      
      APIのURL

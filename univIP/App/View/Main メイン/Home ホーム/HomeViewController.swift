@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import FirebaseAnalytics
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adView: UIView!
@@ -39,34 +39,24 @@ final class HomeViewController: UIViewController {
 //        forLoginWebView.isHidden = false
         #endif
         
-        // collectionViewの初期設定
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100) // Cell(xib)のサイズを変更
-        collectionView.collectionViewLayout = layout
-        collectionView.register(R.nib.customCell) // xibファイルを使うことを登録
-        
-        // forLoginWebViewの初期設定
-        forLoginWebView.navigationDelegate = self
-        
-        viewModel.getWether()
-        
+        initSetup()
         initViewModel()
-        
         adViewLoad()
+        viewModel.getWether()
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // 利用規約同意画面を表示するべきか
+        // 利用規約同意画面を表示するか判定
         if viewModel.shouldShowTermsAgreementView() {
-            // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
         }
-        // ログインページの読み込み
-        loadLoginPage()
+        
+        // Home画面が表示される度に、ログインページの読み込み
+        relogin()
         
         dateLabel.text = viewModel.getDateNow()
     }
@@ -76,27 +66,24 @@ final class HomeViewController: UIViewController {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
         
         // 学生証表示画面に遷移する
-        if viewModel.isLoginComplete == false {
-            alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
-            return
-        } else {
+        if viewModel.isLoginComplete {
             let vc = R.storyboard.studentCard.studentCardViewController()!
             present(vc, animated: true, completion: nil)
+            
+        } else {
+            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう", interval: 5.0)
+            
         }
     }
     
     // MARK: - Private func
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
-    private func loadLoginPage() {
-        // ログイン用のJavaScriptを動かす為のフラグ
-        dataManager.canExecuteJavascript = true
-        // ログイン処理中であるフラグ
-        viewModel.isLoginProcessing = true
-        // ログインが完了したかのフラグ
-        viewModel.isLoginComplete = false
-        // 大学統合認証システムのログインページを読み込む
-        forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
+    private func relogin() {
+        dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
+        viewModel.isLoginProcessing = true // ログイン処理中であるフラグ
+        viewModel.isLoginComplete = false // ログインが完了したかのフラグ
+        forLoginWebView.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
     }
     
     private func adViewLoad() {
@@ -136,6 +123,17 @@ final class HomeViewController: UIViewController {
             }
         })
     }
+    private func initSetup() {
+        // collectionViewの初期設定
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 100) // Cell(xib)のサイズを変更
+        collectionView.collectionViewLayout = layout
+        collectionView.register(R.nib.customCell) // xibファイルを使うことを登録
+        
+        // forLoginWebViewの初期設定
+        forLoginWebView.navigationDelegate = self
+    }
     
     private var alertController: UIAlertController!
     private func alert(title:String, message:String) {
@@ -149,114 +147,7 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - Public func
-    public var isToastShow : Bool {
-        get {
-            return toastView == nil ? false : true
-        }
-    }
-    private var toastView:UIView?
-    private var toastShowFrame:CGRect = .zero
-    private var toastHideFrame:CGRect = .zero
-    private var toastInterval:TimeInterval = 3.0
-    /// トースト表示
-    ///
-    /// - Parameters:
-    ///   - message: メッセージ
-    ///   - interval: 表示時間（秒）デフォルト3秒
-    private func toast( message: String, type: String = "bottom", interval:TimeInterval = 3.0 ) {
-        guard self.toastView == nil else {
-            return // 既に表示準備中
-        }
-        self.toastView = UIView()
-        guard let toastView = self.toastView else { // アンラッピング
-            return
-        }
-        
-        toastInterval = interval
-        
-        switch type {
-            case "top":
-                toastShowFrame = CGRect(x: 15,
-                                        y: 8,
-                                        width: self.view.frame.width - 15 - 15,
-                                        height: 46)
-                
-                toastHideFrame = CGRect(x: toastShowFrame.origin.x,
-                                        y: 0 - toastShowFrame.height * 2,  // 上に隠す
-                                        width: toastShowFrame.width,
-                                        height: toastShowFrame.height)
-                
-            case "bottom":
-                toastShowFrame = CGRect(x: 15,
-                                        y: self.view.frame.height - 100,
-                                        width: self.view.frame.width - 15 - 15,
-                                        height: 46)
-                
-                toastHideFrame = CGRect(x: toastShowFrame.origin.x,
-                                        y: self.view.frame.height - toastShowFrame.height * 2,  // 上に隠す
-                                        width: toastShowFrame.width,
-                                        height: toastShowFrame.height)
-                
-            default:
-                return
-        }
-        
-        
-        toastView.frame = toastHideFrame  // 初期隠す位置
-        toastView.backgroundColor = UIColor.black
-        toastView.alpha = 0.8
-        toastView.layer.cornerRadius = 18
-        self.view.addSubview(toastView)
-        
-        let labelWidth:CGFloat = toastView.frame.width - 14 - 14
-        let labelHeight:CGFloat = 19.0
-        let label = UILabel()
-        // toastView内に配置
-        label.frame = CGRect(x: 14,
-                             y: 14,
-                             width: labelWidth,
-                             height: labelHeight)
-        toastView.addSubview(label)
-        // label属性
-        label.textColor = UIColor.white
-        label.textAlignment = .left
-        label.numberOfLines = 0 // 複数行対応
-        label.text = message
-        //"label.frame1: \(label.frame)")
-        // 幅を制約して高さを求める
-        label.frame.size = label.sizeThatFits(CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude))
-        //print("label.frame2: \(label.frame)")
-        // 複数行対応・高さ変化
-        if labelHeight < label.frame.height {
-            toastShowFrame.size.height += (label.frame.height - labelHeight)
-        }
-        
-        didHideIndicator()
-    }
-    
-    @objc private func didHideIndicator() {
-        guard let toastView = self.toastView else { // アンラッピング
-            return
-        }
-        DispatchQueue.main.async { // 非同期処理
-            UIView.animate(withDuration: 0.5, animations: { () in
-                // 出現
-                toastView.frame = self.toastShowFrame
-            }) { (result) in
-                // 出現後、interval(秒)待って、
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.toastInterval) {
-                    UIView.animate(withDuration: 0.5, animations: { () in
-                        // 消去
-                        toastView.frame = self.toastHideFrame
-                    }) { (result) in
-                        // 破棄
-                        toastView.removeFromSuperview()
-                        self.toastView = nil // 破棄
-                    }
-                }
-            }
-        }
-    }
+
 }
 
 
@@ -275,7 +166,7 @@ extension HomeViewController: WKNavigationDelegate {
         
         // 再度ログインを行う必要があるのか判定(タイムアウト)
         if viewModel.isTimeOut(urlStr: url.absoluteString) {
-            loadLoginPage()
+            relogin()
         }
         
         // ログインが完了したか記録
@@ -395,7 +286,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                             self.present(vcWeb, animated: true, completion: nil)
                         }else{
                             AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
-                            self.toast(message: "error")
+                            self.toast(message: "Error")
                         }
                     })
                 
@@ -410,6 +301,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                             self.present(vcWeb, animated: true, completion: nil)
                         }else{
                             AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                            self.toast(message: "Error")
                         }
                     })
                 
