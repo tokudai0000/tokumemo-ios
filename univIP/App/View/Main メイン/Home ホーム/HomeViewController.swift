@@ -432,7 +432,7 @@ extension HomeViewController {
             if touch.view?.tag == 1 {
                 Analytics.logEvent("Button[Weather]", parameters: nil) // Analytics
                 let vcWeb = R.storyboard.web.webViewController()!
-                vcWeb.loadUrlString = "https://www.nhk.or.jp/kishou-saigai/city/weather/36201003620100/#anaten-area-name"
+                vcWeb.loadUrlString = Url.weather.string()
                 present(vcWeb, animated: true, completion: nil)
             }
         }
