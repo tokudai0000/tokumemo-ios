@@ -48,7 +48,7 @@ final class HomeViewController: UIViewController {
         // forLoginWebViewの初期設定
         forLoginWebView.navigationDelegate = self
         
-        viewModel.getWetherData()
+        viewModel.getWether()
         
         initViewModel()
         
@@ -59,7 +59,7 @@ final class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // 利用規約同意画面を表示するべきか
-        if viewModel.shouldShowTermsAgreementView {
+        if viewModel.shouldShowTermsAgreementView() {
             // 利用規約同意画面を表示
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
@@ -274,12 +274,12 @@ extension HomeViewController: WKNavigationDelegate {
         }
         
         // 再度ログインを行う必要があるのか判定(タイムアウト)
-        if viewModel.shouldReLogin(url.absoluteString) {
+        if viewModel.isTimeOut(urlStr: url.absoluteString) {
             loadLoginPage()
         }
         
         // ログインが完了したか記録
-        viewModel.isLoginComplete = viewModel.isLoggedin(url.absoluteString)
+        viewModel.isLoginComplete = viewModel.isLoginComplete(url.absoluteString)
         
         // ログイン完了時にcollectionViewのCellデータを更新
         if viewModel.isLoginCompleteImmediately {
@@ -299,7 +299,7 @@ extension HomeViewController: WKNavigationDelegate {
         AKLog(level: .DEBUG, message: url.absoluteString)
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
-        if viewModel.canJavaScriptExecute(url.absoluteString) {
+        if viewModel.canExecuteJS(url.absoluteString) {
             // 徳島大学　統合認証システムサイト(ログインサイト)
             // 自動ログインを行う。JavaScriptInjection
             webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
@@ -313,7 +313,7 @@ extension HomeViewController: WKNavigationDelegate {
             return
         }
         
-        if viewModel.isMissLoggedin(url.absoluteString) {
+        if viewModel.isLoginFailure(url.absoluteString) {
             alert(title: "自動ログインエラー", message: "学生番号もしくはパスワードが間違っている為、ログインできません")
         }
     }
@@ -359,7 +359,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         dataManager.canExecuteJavascript = true
         
         // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
-        if viewModel.hasRegisteredPassword == false ,
+        if viewModel.hasRegisteredPassword() == false ,
            let _ = cell.lockIconSystemName {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
@@ -443,16 +443,16 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         
                     case .ready: // 通信完了
                         
-                        self.weatherLabel.text = self.viewModel.weatherDataDiscription
-                        self.temperatureLabel.text = self.viewModel.weatherDataFeelLike
-                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherDataIconUrlStr)
-                        print(self.viewModel.weatherDataIconUrlStr)
+                        self.weatherLabel.text = self.viewModel.weatherDiscription
+                        self.temperatureLabel.text = self.viewModel.weatherFeelsLike
+                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
                         
                         break
                         
-                    case .error:
-                        break
+                    case .error: // 通信失敗
                         
+                        self.toast(message: "天気の取得に失敗しました")
+                        break
                 }
             }
         }
