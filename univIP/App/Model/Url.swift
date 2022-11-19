@@ -88,6 +88,8 @@ enum Url: String {
     case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
     /// トクメモ＋のソースコード[GitHub]
     case sourceCode = "https://github.com/tokudai0000/univIP"
+    /// 気象庁の天気予報
+    case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
     
     
     /// URLを文字列として返す
