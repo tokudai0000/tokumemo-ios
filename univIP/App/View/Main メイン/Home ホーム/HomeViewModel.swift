@@ -10,7 +10,7 @@ import Foundation
 import Kanna
 import Alamofire
 import SwiftyJSON
-import UIKit
+import UIKit // adImagesで入ってしまっている。後日修正
 
 final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
