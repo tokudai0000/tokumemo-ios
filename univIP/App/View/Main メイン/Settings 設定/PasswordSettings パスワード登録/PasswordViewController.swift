@@ -105,12 +105,12 @@ final class PasswordViewController: UIViewController {
             return
         }
         
-        // 失敗した後、成功した場合にはエラー表示を初期化する
-        initSetup()
-        
         // KeyChianに保存する
         dataManager.studentNumber = studentNumberText
         dataManager.password = passwordText
+        
+        // 失敗した後、成功した場合にはエラー表示を初期化する
+        initSetup()
         
         alert(title: "♪ 登録完了 ♪",
               message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")

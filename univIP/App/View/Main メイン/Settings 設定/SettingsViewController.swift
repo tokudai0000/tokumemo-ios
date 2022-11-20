@@ -99,19 +99,19 @@ class SettingsViewController: UITableViewController {
                 return
                 
             case .contactUs:
-                vcWeb.loadUrlString = "https://forms.gle/ceBzS6TL3A1XuJsNA"
+                vcWeb.loadUrlString = Url.contactUs.string()
                 
             case .officialSNS:
-                vcWeb.loadUrlString = "https://twitter.com/tokumemo0000"
+                vcWeb.loadUrlString = Url.officialSNS.string()
                 
             case .homePage:
-                vcWeb.loadUrlString = "https://lit.link/developers"
+                vcWeb.loadUrlString = Url.homePage.string()
                 
             case .termsOfService:
-                vcWeb.loadUrlString = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/TermsOfService.txt"
+                vcWeb.loadUrlString = Url.termsOfService.string()
                 
             case .privacyPolicy:
-                vcWeb.loadUrlString = "https://github.com/tokudai0000/document/blob/main/tokumemo/terms/PrivacyPolicy.txt"
+                vcWeb.loadUrlString = Url.privacyPolicy.string()
                 
 //            case .license:
 //                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
@@ -120,7 +120,7 @@ class SettingsViewController: UITableViewController {
 //                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
                 
             case .sourceCode:
-                vcWeb.loadUrlString = "https://github.com/tokudai0000/univIP"
+                vcWeb.loadUrlString = Url.sourceCode.string()
                 
             default:
                 break

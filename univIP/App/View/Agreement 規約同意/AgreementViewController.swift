@@ -12,6 +12,9 @@ final class AgreementViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var agreementButton: UIButton!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var termsButton: UIButton!
+    @IBOutlet weak var privacyButton: UIButton!
     
     private let dataManager = DataManager.singleton
     
@@ -20,11 +23,14 @@ final class AgreementViewController: UIViewController {
         super.viewDidLoad()
         // 登録ボタンの角を丸める
         agreementButton.layer.cornerRadius = 5.0
+        termsButton.layer.cornerRadius = 10.0
+        privacyButton.layer.cornerRadius = 10.0
+        textView.layer.cornerRadius = 10.0
+        imageView.layer.cornerRadius = 100.0
+        
         let filePath = R.file.agreementRtf()!
         textView.attributedText = Common.loadRtfFileContents(filePath)
         textView.textColor = .white
-//        textView.font = UIFont.boldSystemFont(ofSize: 15)
-//        textView.text = "「快適になる」をタップすると、プライバシーポリシーを理解し、サービス利用規約に同意したことになります。"
     }
     
     // MARK: - IBAction
@@ -37,4 +43,18 @@ final class AgreementViewController: UIViewController {
         dataManager.agreementVersion = ConstStruct.latestTermsVersion
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func termsButton(_ sender: Any) {
+        let vcWeb = R.storyboard.web.webViewController()!
+        vcWeb.loadUrlString = Url.termsOfService.string()
+        present(vcWeb, animated: true, completion: nil)
+    }
+    
+    @IBAction func pribacyButton(_ sender: Any) {
+        let vcWeb = R.storyboard.web.webViewController()!
+        vcWeb.loadUrlString = Url.privacyPolicy.string()
+        present(vcWeb, animated: true, completion: nil)
+    }
+    
+    
 }

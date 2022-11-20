@@ -76,7 +76,20 @@ enum Url: String {
     case skipReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
     /// マナバから授業動画[Youtube]を開く時
     case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
-    
+    /// GoogleFormsでお問い合わせフォームを作成
+    case contactUs = "https://forms.gle/ceBzS6TL3A1XuJsNA"
+    /// TwitterのURL
+    case officialSNS = "https://twitter.com/tokumemo0000"
+    /// ホームページのURL
+    case homePage = "https://lit.link/developers"
+    /// トクメモ＋のプライバシーポリシーURL[GitHub]
+    case privacyPolicy = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt"
+    /// トクメモ＋の利用規約URL[GitHub]
+    case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
+    /// トクメモ＋のソースコード[GitHub]
+    case sourceCode = "https://github.com/tokudai0000/univIP"
+    /// 気象庁の天気予報
+    case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
     
     
     /// URLを文字列として返す

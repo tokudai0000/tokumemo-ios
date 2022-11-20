@@ -10,12 +10,14 @@ import UIKit
 import WebKit
 import FirebaseAnalytics
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     
     // MARK: - IBOutlet
+    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var adImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var weatherIconImageView: UIImageView!
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
@@ -23,6 +25,7 @@ final class HomeViewController: UIViewController {
     
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
+    private var timer = Timer()
     
     
     // MARK: - LifeCycle
@@ -36,31 +39,26 @@ final class HomeViewController: UIViewController {
 //        forLoginWebView.isHidden = false
         #endif
         
-        // collectionViewの初期設定
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100) // Cell(xib)のサイズを変更
-        collectionView.collectionViewLayout = layout
-        collectionView.register(R.nib.customCell) // xibファイルを使うことを登録
-        
-        // forLoginWebViewの初期設定
-        forLoginWebView.navigationDelegate = self
-        
-        viewModel.getWetherData()
-        
+        initSetup()
         initViewModel()
+        adViewLoad()
+        viewModel.getWether()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // 利用規約同意画面を表示するべきか
-        if viewModel.shouldShowTermsAgreementView {
-            // 利用規約同意画面を表示
+        // 利用規約同意画面を表示するか判定
+        if viewModel.shouldShowTermsAgreementView() {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
         }
-        // ログインページの読み込み
-        loadLoginPage()
+        
+        // Home画面が表示される度に、ログインページの読み込み
+        relogin()
+        
+        dateLabel.text = viewModel.getDateNow()
     }
 
     // MARK: - IBAction
@@ -68,27 +66,73 @@ final class HomeViewController: UIViewController {
         Analytics.logEvent("Button[StudentCard]", parameters: nil) // Analytics
         
         // 学生証表示画面に遷移する
-        if viewModel.isLoginComplete == false {
-            alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
-            return
-        } else {
+        if viewModel.isLoginComplete {
             let vc = R.storyboard.studentCard.studentCardViewController()!
             present(vc, animated: true, completion: nil)
+            
+        } else {
+            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう", interval: 5.0)
+            
         }
     }
     
     // MARK: - Private func
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
-    private func loadLoginPage() {
-        // ログイン用のJavaScriptを動かす為のフラグ
-        dataManager.canExecuteJavascript = true
-        // ログイン処理中であるフラグ
-        viewModel.isLoginProcessing = true
-        // ログインが完了したかのフラグ
-        viewModel.isLoginComplete = false
-        // 大学統合認証システムのログインページを読み込む
-        forLoginWebView.load(Url.universityTransitionLogin.urlRequest())
+    private func relogin() {
+        dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
+        viewModel.isLoginProcessing = true // ログイン処理中であるフラグ
+        viewModel.isLoginComplete = false // ログインが完了したかのフラグ
+        forLoginWebView.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
+    }
+    
+    private func adViewLoad() {
+        let TIME_INTERVAL = 30.0
+        var loadingCount = 0
+        // GitHub上に0-2までのpngがある場合、ここでは
+        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
+        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+        
+        // TIME_INTERVAL秒毎に処理を実行する
+        timer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL, repeats: true, block: { (timer) in
+            // 一定時間ごとに実行したい処理を記載する
+            
+            let pngNumber = String(loadingCount) + ".png"
+            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber
+            let url = URL(string: imgUrlStr)
+            
+            
+            do {
+                // URLから画像Dataを取得できるか確認
+                let _ = try Data(contentsOf: url!) // 取得できないとここでエラーが起き、catchに移動する
+                
+                self.adImageView.image = UIImage(url: imgUrlStr)
+                // 0.png -> 1.pngとしていく
+                loadingCount += 1
+                
+                self.adView.backgroundColor = .clear
+                self.adImageView.backgroundColor = .clear
+                
+            } catch {
+                // URLから取得できなかった場合
+
+                let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"
+                self.adImageView.image = UIImage(url: checkUrl)
+                // 0.png はすでに読み込まれているので次は1.pngから
+                loadingCount = 1
+            }
+        })
+    }
+    private func initSetup() {
+        // collectionViewの初期設定
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 100) // Cell(xib)のサイズを変更
+        collectionView.collectionViewLayout = layout
+        collectionView.register(R.nib.customCell) // xibファイルを使うことを登録
+        
+        // forLoginWebViewの初期設定
+        forLoginWebView.navigationDelegate = self
     }
     
     private var alertController: UIAlertController!
@@ -101,6 +145,9 @@ final class HomeViewController: UIViewController {
                                                 handler: nil))
         present(alertController, animated: true)
     }
+    
+    // MARK: - Public func
+
 }
 
 
@@ -118,12 +165,12 @@ extension HomeViewController: WKNavigationDelegate {
         }
         
         // 再度ログインを行う必要があるのか判定(タイムアウト)
-        if viewModel.shouldReLogin(url.absoluteString) {
-            loadLoginPage()
+        if viewModel.isTimeOut(urlStr: url.absoluteString) {
+            relogin()
         }
         
         // ログインが完了したか記録
-        viewModel.isLoginComplete = viewModel.isLoggedin(url.absoluteString)
+        viewModel.isLoginComplete = viewModel.isLoginComplete(url.absoluteString)
         
         // ログイン完了時にcollectionViewのCellデータを更新
         if viewModel.isLoginCompleteImmediately {
@@ -143,7 +190,7 @@ extension HomeViewController: WKNavigationDelegate {
         AKLog(level: .DEBUG, message: url.absoluteString)
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
-        if viewModel.canJavaScriptExecute(url.absoluteString) {
+        if viewModel.canExecuteJS(url.absoluteString) {
             // 徳島大学　統合認証システムサイト(ログインサイト)
             // 自動ログインを行う。JavaScriptInjection
             webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
@@ -157,7 +204,7 @@ extension HomeViewController: WKNavigationDelegate {
             return
         }
         
-        if viewModel.isMissLoggedin(url.absoluteString) {
+        if viewModel.isLoginFailure(url.absoluteString) {
             alert(title: "自動ログインエラー", message: "学生番号もしくはパスワードが間違っている為、ログインできません")
         }
     }
@@ -203,7 +250,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         dataManager.canExecuteJavascript = true
         
         // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
-        if viewModel.hasRegisteredPassword == false ,
+        if viewModel.hasRegisteredPassword() == false ,
            let _ = cell.lockIconSystemName {
             alert(title: "自動ログイン機能がOFFです", message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
@@ -239,6 +286,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                             self.present(vcWeb, animated: true, completion: nil)
                         }else{
                             AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
+                            self.toast(message: "Error")
                         }
                     })
                 
@@ -253,6 +301,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                             self.present(vcWeb, animated: true, completion: nil)
                         }else{
                             AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                            self.toast(message: "Error")
                         }
                     })
                 
@@ -286,16 +335,16 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         
                     case .ready: // 通信完了
                         
-                        self.weatherLabel.text = self.viewModel.weatherDataDiscription
-                        self.temperatureLabel.text = self.viewModel.weatherDataFeelLike
-                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherDataIconUrlStr)
-                        print(self.viewModel.weatherDataIconUrlStr)
+                        self.weatherLabel.text = self.viewModel.weatherDiscription
+                        self.temperatureLabel.text = self.viewModel.weatherFeelsLike
+                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
                         
                         break
                         
-                    case .error:
-                        break
+                    case .error: // 通信失敗
                         
+                        self.toast(message: "天気の取得に失敗しました")
+                        break
                 }
             }
         }
@@ -313,7 +362,7 @@ extension HomeViewController {
             if touch.view?.tag == 1 {
                 Analytics.logEvent("Button[Weather]", parameters: nil) // Analytics
                 let vcWeb = R.storyboard.web.webViewController()!
-                vcWeb.loadUrlString = "https://www.nhk.or.jp/kishou-saigai/city/weather/36201003620100/#anaten-area-name"
+                vcWeb.loadUrlString = Url.weather.string()
                 present(vcWeb, animated: true, completion: nil)
             }
         }
