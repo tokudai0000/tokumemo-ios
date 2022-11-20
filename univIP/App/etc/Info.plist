@@ -97,5 +97,7 @@
 	<string>Light</string>
 	<key>inter</key>
 	<string></string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

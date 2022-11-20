@@ -23,6 +23,14 @@ class NewsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
+        
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
+    }
+    
+    // ステータスバーのスタイルを白に設定
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
     }
     
     /// ViewModel初期化
