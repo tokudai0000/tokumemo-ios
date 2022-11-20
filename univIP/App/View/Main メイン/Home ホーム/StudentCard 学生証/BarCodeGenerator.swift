@@ -14,7 +14,7 @@ class BarCodeGenerator {
         do {
             let writer = ZXMultiFormatWriter()
             let hints = ZXEncodeHints() as ZXEncodeHints
-            let result = try writer.encode(string, format: kBarcodeFormatCodabar, width: 150, height: 45, hints: hints)
+            let result = try writer.encode(string, format: kBarcodeFormatCodabar, width: 200, height: 50, hints: hints)
 
             if let imageRef = ZXImage.init(matrix: result) {
                 if let image = imageRef.cgimage {
