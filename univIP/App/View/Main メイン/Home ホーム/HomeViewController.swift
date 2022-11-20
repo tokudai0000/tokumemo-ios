@@ -69,7 +69,7 @@ final class HomeViewController: BaseViewController {
             present(vc, animated: true, completion: nil)
             
         } else {
-            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう", interval: 5.0)
+            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             
         }
     }
@@ -203,7 +203,7 @@ extension HomeViewController: WKNavigationDelegate {
         }
         
         if viewModel.isLoginFailure(url.absoluteString) {
-            alert(title: "自動ログインエラー", message: "学生番号もしくはパスワードが間違っている為、ログインできません")
+            toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
         }
     }
 }

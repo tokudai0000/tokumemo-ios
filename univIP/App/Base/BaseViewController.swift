@@ -148,7 +148,7 @@ class BaseViewController: UIViewController {
     /// - Parameters:
     ///   - message: メッセージ
     ///   - interval: 表示時間（秒）デフォルト3秒
-    open func toast( message: String, type: String = "bottom", interval:TimeInterval = 3.0 ) {
+    open func toast( message: String, type: String = "highBottom", interval:TimeInterval = 3.0 ) {
         guard self.toastView == nil else {
             return // 既に表示準備中
         }
@@ -182,6 +182,16 @@ class BaseViewController: UIViewController {
                                         width: toastShowFrame.width,
                                         height: toastShowFrame.height)
                 
+            case "highBottom":
+                toastShowFrame = CGRect(x: 15,
+                                        y: self.view.frame.height - 180,
+                                        width: self.view.frame.width - 15 - 15,
+                                        height: 46)
+                
+                toastHideFrame = CGRect(x: toastShowFrame.origin.x,
+                                        y: self.view.frame.height - toastShowFrame.height * 2,  // 上に隠す
+                                        width: toastShowFrame.width,
+                                        height: toastShowFrame.height)
             default:
                 return
         }
