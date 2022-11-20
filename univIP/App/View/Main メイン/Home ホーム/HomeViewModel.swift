@@ -10,6 +10,7 @@ import Foundation
 import Kanna
 import Alamofire
 import SwiftyJSON
+import UIKit
 
 final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
@@ -25,6 +26,13 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     //MARK: - MODEL モデル
     /// TableCellの内容
     public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
+    
+    public var adImages:[UIImage] = [
+        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"),
+        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/1.png"),
+        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/2.png"),
+        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/3.png"),
+    ]
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginComplete = false // ログイン完了
