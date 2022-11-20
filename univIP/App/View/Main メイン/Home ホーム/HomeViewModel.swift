@@ -47,14 +47,6 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
     }
     
-    //
-    public func getDateNow() -> String {
-        let dt = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.setTemplate(.dateMonthDate)
-        return dateFormatter.string(from: dt)
-    }
-    
     // OpenWeatherMapのAPIから天気情報を取得
     public func getWether() {
         let latitude = "34.0778755" // 緯度 (徳島大学の座標)
