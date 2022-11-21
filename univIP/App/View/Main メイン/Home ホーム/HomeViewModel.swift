@@ -27,12 +27,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     /// TableCellの内容
     public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
     
-    public var adImages:[UIImage] = [
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"),
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/1.png"),
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/2.png"),
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/3.png"),
-    ]
+    public var adImages:[String] = []
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginComplete = false // ログイン完了
@@ -53,6 +48,34 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 学生番号、パスワードを登録しているか判定
     public func hasRegisteredPassword() -> Bool {
         return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
+    }
+    
+    public func getAdImages() {
+        var loadingCount = 0
+        // GitHub上に0-2までのpngがある場合、ここでは
+        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
+        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+        adImages.removeAll()
+        
+        while (loadingCount < 10) {
+            let pngNumber = String(loadingCount) + ".png"
+            
+            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
+//            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
+            
+            let url = URL(string: imgUrlStr)
+            
+            do {
+                // URLから画像Dataを取得できるか確認
+                let _ = try Data(contentsOf: url!) // 取得できないとここでエラー
+                
+                adImages.append(imgUrlStr)
+                
+                loadingCount += 1
+            } catch {
+                break
+            }
+        }
     }
     
     // OpenWeatherMapのAPIから天気情報を取得

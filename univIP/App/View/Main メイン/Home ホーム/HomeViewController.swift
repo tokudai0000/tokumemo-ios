@@ -85,40 +85,22 @@ final class HomeViewController: BaseViewController {
     }
     
     private func adViewLoad() {
-        let TIME_INTERVAL = 30.0
-        var loadingCount = 0
-        // GitHub上に0-2までのpngがある場合、ここでは
-        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
-        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+        
+        viewModel.getAdImages()
+        
+        let TIME_INTERVAL = 1.0
+        var imgCount = 0
         
         // TIME_INTERVAL秒毎に処理を実行する
         timer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL, repeats: true, block: { (timer) in
-            // 一定時間ごとに実行したい処理を記載する
-            
-            let pngNumber = String(loadingCount) + ".png"
-            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber
-            let url = URL(string: imgUrlStr)
-            
-            
-            do {
-                // URLから画像Dataを取得できるか確認
-                let _ = try Data(contentsOf: url!) // 取得できないとここでエラーが起き、catchに移動する
-                
-                self.adImageView.image = UIImage(url: imgUrlStr)
-                // 0.png -> 1.pngとしていく
-                loadingCount += 1
-                
-                self.adView.backgroundColor = .clear
-                self.adImageView.backgroundColor = .clear
-                
-            } catch {
-                // URLから取得できなかった場合
-
-                let checkUrl = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"
-                self.adImageView.image = UIImage(url: checkUrl)
-                // 0.png はすでに読み込まれているので次は1.pngから
-                loadingCount = 1
+            if self.viewModel.adImages.count != imgCount {
+                // 一定時間ごとに実行したい処理を記載する
+                self.adImageView.cacheImage(imageUrlString: self.viewModel.adImages[imgCount])
+                imgCount += 1
+            } else {
+                imgCount = 0
             }
+            
         })
     }
     private func initSetup() {
