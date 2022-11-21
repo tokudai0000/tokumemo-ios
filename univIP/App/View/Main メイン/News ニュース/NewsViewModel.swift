@@ -18,6 +18,7 @@ final class NewsViewModel {
     public var newsTitleDatas:[String] = []
     public var newsUrlDatas:[String] = []
     public var newsDateDatas:[String] = []
+    public var newsImageStr:[String] = []
     
     //MARK: - STATE ステータス
     enum State {
@@ -66,7 +67,8 @@ final class NewsViewModel {
                     let result = str.replacingOccurrences(of:"background-image: url(", with:"")
                     let result2 = result.replacingOccurrences(of:");", with:"")
                     let url = "https://www.tokushima-u.ac.jp/" + result2
-                    print(url)
+                    newsImageStr.append(url)
+                    
                 }
             }
         } catch {
