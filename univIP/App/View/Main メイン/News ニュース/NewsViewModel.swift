@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kanna
 import Alamofire
 import SwiftyJSON
 
@@ -13,6 +14,10 @@ final class NewsViewModel {
     // MARK: - Private
     private let dataManager = DataManager.singleton
     private let apiManager = ApiManager.singleton
+    
+    public var newsTitleDatas:[String] = []
+    public var newsUrlDatas:[String] = []
+    public var newsDateDatas:[String] = []
     
     //MARK: - STATE ステータス
     enum State {
@@ -32,28 +37,40 @@ final class NewsViewModel {
                 AKLog(level: .FATAL, message: "[self] FatalError")
                 fatalError()
             }
-//            print(response.description)
-            for i in 0..<10 {
-                self.dataManager.newsTitleDatas.append(response["items"][i]["title"].string!)
-                self.dataManager.newsUrlDatas.append(response["items"][i]["link"].string!)
-                self.dataManager.newsDateDatas.append(response["items"][i]["pubDate"].string!)
-            }
             
-//            if let a = response["weather"][0]["description"].string {
-//                self.dataManager.weatherDatas[0] = a
-//            }
-//            if let b = response["main"]["feels_like"].double {
-//                self.dataManager.weatherDatas[1] = String(b)
-//            }
-//            if let c = response["weather"][0]["icon"].string {
-//                let url = "https://openweathermap.org/img/wn/" + c + "@2x.png"
-//                self.dataManager.weatherDatas[2] = url
-//            }
+            for i in 0..<10 {
+                self.newsTitleDatas.append(response["items"][i]["title"].string!)
+                self.newsUrlDatas.append(response["items"][i]["link"].string!)
+                self.newsDateDatas.append(response["items"][i]["pubDate"].string!)
+            }
             
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
             self?.state?(.error) // エラー表示
         })
+    }
+    
+    public func getImage() {
+        let urlString = "https://www.tokushima-u.ac.jp/recent/"
+        let url = URL(string: urlString)! // fatalError
+        
+        do {
+            // URL先WebページのHTMLデータを取得
+            let data = try NSData(contentsOf: url) as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
+            for node in doc.xpath("//div") {
+                // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
+                if let str = node["style"] {
+                    let result = str.replacingOccurrences(of:"background-image: url(", with:"")
+                    let result2 = result.replacingOccurrences(of:");", with:"")
+                    let url = "https://www.tokushima-u.ac.jp/" + result2
+                    print(url)
+                }
+            }
+        } catch {
+            AKLog(level: .ERROR, message: "[Data取得エラー]: HTMLデータパースエラー\n urlString:\(url.absoluteString)")
+        }
     }
 }

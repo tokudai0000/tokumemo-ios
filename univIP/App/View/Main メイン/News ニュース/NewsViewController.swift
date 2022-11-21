@@ -84,7 +84,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataManager.newsTitleDatas.count
+        return viewModel.newsTitleDatas.count
     }
     
     /*
@@ -102,7 +102,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
         
-        cell.setupCell(text: dataManager.newsTitleDatas[indexPath.section], date: dataManager.newsDateDatas[indexPath.section])
+        cell.setupCell(text: viewModel.newsTitleDatas[indexPath.section], date: viewModel.newsDateDatas[indexPath.section])
         
         return cell
     }
@@ -116,7 +116,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         Analytics.logEvent("NewsTable", parameters: nil) // Analytics
         let vcWeb = R.storyboard.web.webViewController()!
-        let loadUrlString = dataManager.newsUrlDatas[indexPath[0]]
+        let loadUrlString = viewModel.newsUrlDatas[indexPath[0]]
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
         

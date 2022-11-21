@@ -210,17 +210,15 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             // URL先WebページのHTMLデータを取得
             let data = try NSData(contentsOf: url) as Data
             let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            // aタグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
+            // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
             for node in doc.xpath("//a") {
-                // href属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-                guard let str = node["href"] else {
-                    AKLog(level: .ERROR, message: "[href属性出力エラー]: href属性に設定されている文字列を出力する際のエラー")
-                    return nil
-                }
-                // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-                if str.contains("pub/pdf/calender/") {
-                    // PDFまでのURLを作成する(本館のURLに付け加える)
-                    return Url.libraryHomePageMainPC.string() + str
+                // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
+                if let str = node["href"] {
+                    // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
+                    if str.contains("pub/pdf/calender/") {
+                        // PDFまでのURLを作成する(本館のURLに付け加える)
+                        return Url.libraryHomePageMainPC.string() + str
+                    }
                 }
             }
             AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(url.absoluteString)")
