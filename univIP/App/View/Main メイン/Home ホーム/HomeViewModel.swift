@@ -51,14 +51,14 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     }
     
     public func getAdImages() {
-        var loadingCount = 0
+        var counter = 0
         // GitHub上に0-2までのpngがある場合、ここでは
         // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
         // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
         adImages.removeAll()
         
-        while (loadingCount < 10) {
-            let pngNumber = String(loadingCount) + ".png"
+        while (counter < 10) {
+            let pngNumber = String(counter) + ".png"
             
             let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
 //            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
@@ -71,7 +71,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 
                 adImages.append(imgUrlStr)
                 
-                loadingCount += 1
+                counter += 1
             } catch {
                 break
             }
