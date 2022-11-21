@@ -94,8 +94,11 @@ final class HomeViewController: BaseViewController {
         let TIME_INTERVAL = 30.0
         var counter = 0
         
-        adImageView.cacheImage(imageUrlString: self.viewModel.adImages[counter])
-        counter += 1
+        if viewModel.adImages.count != 0 {
+            adImageView.cacheImage(imageUrlString: self.viewModel.adImages[counter])
+            counter += 1
+            return
+        }
         
         // TIME_INTERVAL秒毎に処理を実行する
         timer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL, repeats: true, block: { (timer) in
