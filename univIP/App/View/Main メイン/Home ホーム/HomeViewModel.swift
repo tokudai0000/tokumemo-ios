@@ -101,9 +101,13 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             
             // 体感気温がdoubleの形で返ってくる　例: 21.52
             if let temp = response["main"]["feels_like"].double {
-                let tempStr_simo2keta = String(temp) // 例: "21.52"
-                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count-1) // 例: "21.5"
-                self.weatherFeelsLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
+                var tempStr = String(temp) // 例: "21.52"
+                
+                // "21.5"の時は4桁
+                if tempStr.count == 5 {
+                    tempStr = String(tempStr.prefix(tempStr.count-1)) // 例: "21.5"
+                }
+                self.weatherFeelsLike = tempStr + "℃" // 例: "21.5℃"
             }
             
             // 天気を表すアイコンコードが返ってくる 例 "02d"
