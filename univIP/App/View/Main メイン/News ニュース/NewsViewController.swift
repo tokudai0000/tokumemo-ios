@@ -101,7 +101,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
         
         cell.setupCell(text: viewModel.newsDatas[indexPath.section].title,
                        date: viewModel.newsDatas[indexPath.section].date,
