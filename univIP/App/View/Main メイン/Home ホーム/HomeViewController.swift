@@ -131,7 +131,7 @@ final class HomeViewController: BaseViewController {
         ActivityIndicator.hidesWhenStopped = true
         
         // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
         
         //Viewに追加
         self.weatherView.addSubview(ActivityIndicator)

@@ -70,7 +70,7 @@ class NewsViewController: UIViewController {
         ActivityIndicator.hidesWhenStopped = true
         
         // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
         
         //Viewに追加
         self.view.addSubview(ActivityIndicator)

@@ -32,7 +32,7 @@ extension UIImageView {
             
             //errorがnilじゃないということは、リクエストに失敗しているということ。returnで抜け出す。
             if error != nil {
-                print(error)
+                print(error!)
                 return
             }
             
