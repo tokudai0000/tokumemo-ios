@@ -15,10 +15,15 @@ class NewsViewController: UIViewController {
     private let viewModel = NewsViewModel()
     private let dataManager = DataManager.singleton
     
+    private var ActivityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initViewModel()
+        initActivityIndicator()
+        viewModel.getImage()
+        
         viewModel.getNewsData()
         tableView.dataSource = self
         tableView.delegate = self
@@ -35,9 +40,13 @@ class NewsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .busy: // 通信中
+                        // クルクルスタート
+                        self.ActivityIndicator.startAnimating()
                         break
                         
                     case .ready: // 通信完了
+                        // クルクルストップ
+                        self.ActivityIndicator.stopAnimating()
                         self.tableView.reloadData()
                         break
                         
@@ -48,6 +57,22 @@ class NewsViewController: UIViewController {
                 }//end switch
             }
         }
+    }
+    
+    private func initActivityIndicator() {
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+        
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        
+        //Viewに追加
+        self.view.addSubview(ActivityIndicator)
     }
 }
 

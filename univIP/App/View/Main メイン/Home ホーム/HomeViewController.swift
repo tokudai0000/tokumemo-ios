@@ -14,6 +14,7 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adView: UIView!
+    @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var adImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -25,6 +26,7 @@ final class HomeViewController: BaseViewController {
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
     private var timer = Timer()
+    private var ActivityIndicator: UIActivityIndicatorView!
     
     
     // MARK: - LifeCycle
@@ -40,6 +42,7 @@ final class HomeViewController: BaseViewController {
         
         initSetup()
         initViewModel()
+        initActivityIndicator()
         adViewLoad()
         viewModel.getWether()
 
@@ -113,6 +116,22 @@ final class HomeViewController: BaseViewController {
         
         // forLoginWebViewの初期設定
         forLoginWebView.navigationDelegate = self
+    }
+    
+    private func initActivityIndicator() {
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.weatherView.center
+        
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.gray
+        
+        //Viewに追加
+        self.weatherView.addSubview(ActivityIndicator)
     }
     
     private var alertController: UIAlertController!
@@ -311,19 +330,24 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             DispatchQueue.main.async {
                 switch state {
                     case .busy: // 通信中
+                        // クルクルスタート
+                        self.ActivityIndicator.startAnimating()
                         break
                         
                     case .ready: // 通信完了
+                        // クルクルストップ
+                        self.ActivityIndicator.stopAnimating()
                         
                         self.weatherLabel.text = self.viewModel.weatherDiscription
                         self.temperatureLabel.text = self.viewModel.weatherFeelsLike
                         self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
-                        
                         break
                         
                     case .error: // 通信失敗
-                        
-                        self.toast(message: "天気の取得に失敗しました")
+                        // クルクルストップ
+                        self.ActivityIndicator.stopAnimating()
+                        self.weatherIconImageView.image = UIImage(named: "NoImage")
+                        self.weatherLabel.text = "取得エラー"
                         break
                 }
             }
