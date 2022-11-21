@@ -15,10 +15,17 @@ final class NewsViewModel {
     private let dataManager = DataManager.singleton
     private let apiManager = ApiManager.singleton
     
-    public var newsTitleDatas:[String] = []
-    public var newsUrlDatas:[String] = []
-    public var newsDateDatas:[String] = []
-    public var newsImageStr:[String] = []
+    struct NewsData {
+        let title: String
+        let date: String
+        let urlStr: String
+    }
+    public var newsDatas = [
+        NewsData(title: "",
+                 date: "",
+                 urlStr: "")
+    ]
+    public var newsImgStr:[String] = []
     
     //MARK: - STATE ステータス
     enum State {
@@ -39,10 +46,13 @@ final class NewsViewModel {
                 fatalError()
             }
             
+            self.newsDatas.removeAll()
+            
             for i in 0..<10 {
-                self.newsTitleDatas.append(response["items"][i]["title"].string!)
-                self.newsUrlDatas.append(response["items"][i]["link"].string!)
-                self.newsDateDatas.append(response["items"][i]["pubDate"].string!)
+                let data = NewsData(title: response["items"][i]["title"].string!,
+                                    date: response["items"][i]["pubDate"].string!,
+                                    urlStr: response["items"][i]["link"].string!)
+                self.newsDatas.append(data)
             }
             
             self.state?(.ready) // 通信完了
@@ -60,6 +70,9 @@ final class NewsViewModel {
             // URL先WebページのHTMLデータを取得
             let data = try NSData(contentsOf: url) as Data
             let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            
+            newsImgStr.removeAll()
+            
             // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
             for node in doc.xpath("//div") {
                 // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
@@ -67,8 +80,7 @@ final class NewsViewModel {
                     let result = str.replacingOccurrences(of:"background-image: url(", with:"")
                     let result2 = result.replacingOccurrences(of:");", with:"")
                     let url = "https://www.tokushima-u.ac.jp/" + result2
-                    newsImageStr.append(url)
-                    
+                    newsImgStr.append(url)
                 }
             }
         } catch {

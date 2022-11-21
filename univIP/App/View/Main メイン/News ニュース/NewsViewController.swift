@@ -22,9 +22,10 @@ class NewsViewController: UIViewController {
 
         initViewModel()
         initActivityIndicator()
-        viewModel.getImage()
         
         viewModel.getNewsData()
+        viewModel.getImage()
+    
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
@@ -84,7 +85,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.newsTitleDatas.count
+        return viewModel.newsDatas.count
     }
     
     /*
@@ -102,9 +103,9 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
         
-        cell.setupCell(text: viewModel.newsTitleDatas[indexPath.section],
-                       date: viewModel.newsDateDatas[indexPath.section],
-                       urlStr: viewModel.newsImageStr[indexPath.section])
+        cell.setupCell(text: viewModel.newsDatas[indexPath.section].title,
+                       date: viewModel.newsDatas[indexPath.section].date,
+                       imgUrlStr: viewModel.newsImgStr[indexPath.section])
         
         return cell
     }
@@ -118,7 +119,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         Analytics.logEvent("NewsTable", parameters: nil) // Analytics
         let vcWeb = R.storyboard.web.webViewController()!
-        let loadUrlString = viewModel.newsUrlDatas[indexPath[0]]
+        let loadUrlString = viewModel.newsDatas[indexPath[0]].urlStr
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
         
