@@ -45,6 +45,9 @@ final class HomeViewController: BaseViewController {
         initActivityIndicator()
         adViewLoad()
         viewModel.getWether()
+        
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
 
     }
     
@@ -60,6 +63,11 @@ final class HomeViewController: BaseViewController {
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
         
+    }
+    
+    // ステータスバーのスタイルを白に設定
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
     }
 
     // MARK: - IBAction
