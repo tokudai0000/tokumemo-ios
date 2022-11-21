@@ -10,7 +10,7 @@ import Foundation
 import Kanna
 import Alamofire
 import SwiftyJSON
-import UIKit
+import UIKit // adImagesで入ってしまっている。後日修正
 
 final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
@@ -27,12 +27,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     /// TableCellの内容
     public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
     
-    public var adImages:[UIImage] = [
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/0.png"),
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/1.png"),
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/2.png"),
-        UIImage(url: "https://tokudai0000.github.io/hostingImage/tokumemoPlus/3.png"),
-    ]
+    public var adImages:[String] = []
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginComplete = false // ログイン完了
@@ -53,6 +48,34 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 学生番号、パスワードを登録しているか判定
     public func hasRegisteredPassword() -> Bool {
         return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
+    }
+    
+    public func getAdImages() {
+        var counter = 0
+        // GitHub上に0-2までのpngがある場合、ここでは
+        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
+        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+        adImages.removeAll()
+        
+        while (counter < 10) {
+            let pngNumber = String(counter) + ".png"
+            
+            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
+//            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
+            
+            let url = URL(string: imgUrlStr)
+            
+            do {
+                // URLから画像Dataを取得できるか確認
+                let _ = try Data(contentsOf: url!) // 取得できないとここでエラー
+                
+                adImages.append(imgUrlStr)
+                
+                counter += 1
+            } catch {
+                break
+            }
+        }
     }
     
     // OpenWeatherMapのAPIから天気情報を取得
@@ -78,9 +101,13 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             
             // 体感気温がdoubleの形で返ってくる　例: 21.52
             if let temp = response["main"]["feels_like"].double {
-                let tempStr_simo2keta = String(temp) // 例: "21.52"
-                let tempStr_simo1keta = tempStr_simo2keta.prefix(tempStr_simo2keta.count-1) // 例: "21.5"
-                self.weatherFeelsLike = tempStr_simo1keta + "℃" // 例: "21.5℃"
+                var tempStr = String(temp) // 例: "21.52"
+                
+                // "21.5"の時は4桁
+                if tempStr.count == 5 {
+                    tempStr = String(tempStr.prefix(tempStr.count-1)) // 例: "21.5"
+                }
+                self.weatherFeelsLike = tempStr + "℃" // 例: "21.5℃"
             }
             
             // 天気を表すアイコンコードが返ってくる 例 "02d"
@@ -186,17 +213,15 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             // URL先WebページのHTMLデータを取得
             let data = try NSData(contentsOf: url) as Data
             let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            // aタグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
+            // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
             for node in doc.xpath("//a") {
-                // href属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-                guard let str = node["href"] else {
-                    AKLog(level: .ERROR, message: "[href属性出力エラー]: href属性に設定されている文字列を出力する際のエラー")
-                    return nil
-                }
-                // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-                if str.contains("pub/pdf/calender/") {
-                    // PDFまでのURLを作成する(本館のURLに付け加える)
-                    return Url.libraryHomePageMainPC.string() + str
+                // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
+                if let str = node["href"] {
+                    // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
+                    if str.contains("pub/pdf/calender/") {
+                        // PDFまでのURLを作成する(本館のURLに付け加える)
+                        return Url.libraryHomePageMainPC.string() + str
+                    }
                 }
             }
             AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(url.absoluteString)")

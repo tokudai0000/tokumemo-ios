@@ -92,14 +92,14 @@
                                                             <constraint firstAttribute="height" constant="57" id="Blu-qi-ace"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="散らばった雲" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-io-c4P">
-                                                        <rect key="frame" x="5" y="65.666666666666671" width="79.666666666666671" height="15.666666666666671"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-io-c4P">
+                                                        <rect key="frame" x="45" y="98" width="0.0" height="0.0"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="00.0℃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-Nj-W5u">
-                                                        <rect key="frame" x="23.666666666666625" y="81.333333333333343" width="42.666666666666657" height="15.666666666666671"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-Nj-W5u">
+                                                        <rect key="frame" x="45" y="98" width="0.0" height="0.0"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -113,7 +113,7 @@
                                                     <constraint firstItem="7xJ-Nj-W5u" firstAttribute="centerX" secondItem="0e0-DA-C9Q" secondAttribute="centerX" id="LX5-vd-E6g"/>
                                                     <constraint firstItem="NPe-88-Y2e" firstAttribute="top" secondItem="0e0-DA-C9Q" secondAttribute="top" constant="3" id="TIe-fe-061"/>
                                                     <constraint firstItem="HJ5-Ek-c3Y" firstAttribute="top" secondItem="NPe-88-Y2e" secondAttribute="bottom" constant="-8" id="imJ-Co-Os3"/>
-                                                    <constraint firstAttribute="bottom" secondItem="7xJ-Nj-W5u" secondAttribute="bottom" constant="2" id="mU7-Aa-Abh"/>
+                                                    <constraint firstAttribute="bottom" secondItem="7xJ-Nj-W5u" secondAttribute="bottom" constant="1" id="mU7-Aa-Abh"/>
                                                     <constraint firstItem="HJ5-Ek-c3Y" firstAttribute="centerX" secondItem="0e0-DA-C9Q" secondAttribute="centerX" id="quJ-oK-GN1"/>
                                                     <constraint firstItem="NPe-88-Y2e" firstAttribute="centerX" secondItem="0e0-DA-C9Q" secondAttribute="centerX" id="zbp-kr-bdy"/>
                                                 </constraints>
@@ -182,7 +182,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="PAq-m1-1OU">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCell" id="PAq-m1-1OU">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="48V-lJ-VUL">
@@ -207,7 +207,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" name="MainColor"/>
+                                <color key="backgroundColor" red="0.050980392159999999" green="0.2274509804" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="0q4-iz-HjW"/>
                                     <constraint firstItem="5NB-q9-MVV" firstAttribute="centerY" secondItem="2Yi-0L-RdW" secondAttribute="centerY" id="1vT-mp-QEB"/>
@@ -241,6 +241,7 @@
                         <outlet property="temperatureLabel" destination="7xJ-Nj-W5u" id="U9b-zf-jxa"/>
                         <outlet property="weatherIconImageView" destination="HJ5-Ek-c3Y" id="jzF-PC-D0S"/>
                         <outlet property="weatherLabel" destination="mC2-io-c4P" id="AOQ-o4-Kk2"/>
+                        <outlet property="weatherView" destination="0e0-DA-C9Q" id="73w-WP-4gB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -251,9 +252,6 @@
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="tokumemoPlusIcon" width="512" height="512"/>
-        <namedColor name="MainColor">
-            <color red="0.050980392156862744" green="0.22745098039215686" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="SubColor">
             <color red="1" green="0.75294117647058822" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

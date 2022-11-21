@@ -18,10 +18,6 @@ final class DataManager {
     public var syllabusTeacherName = ""
     public var syllabusSubjectName = ""
     
-    public var newsTitleDatas:[String] = []
-    public var newsUrlDatas:[String] = []
-    public var newsDateDatas:[String] = []
-    
     /// JavaScriptを動かすかどうかのフラグ
     ///
     /// 次に読み込まれるURLはJavaScriptを動かすことを許可する

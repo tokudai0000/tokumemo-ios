@@ -15,11 +15,17 @@ class NewsViewController: UIViewController {
     private let viewModel = NewsViewModel()
     private let dataManager = DataManager.singleton
     
+    private var ActivityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initViewModel()
+        initActivityIndicator()
+        
         viewModel.getNewsData()
+        viewModel.getImage()
+    
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
@@ -43,9 +49,13 @@ class NewsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .busy: // 通信中
+                        // クルクルスタート
+                        self.ActivityIndicator.startAnimating()
                         break
                         
                     case .ready: // 通信完了
+                        // クルクルストップ
+                        self.ActivityIndicator.stopAnimating()
                         self.tableView.reloadData()
                         break
                         
@@ -57,6 +67,22 @@ class NewsViewController: UIViewController {
             }
         }
     }
+    
+    private func initActivityIndicator() {
+        // ActivityIndicatorを作成＆中央に配置
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.view.center
+        
+        // クルクルをストップした時に非表示する
+        ActivityIndicator.hidesWhenStopped = true
+        
+        // 色を設定
+        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
+        
+        //Viewに追加
+        self.view.addSubview(ActivityIndicator)
+    }
 }
 
 extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
@@ -67,7 +93,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataManager.newsTitleDatas.count
+        return viewModel.newsDatas.count
     }
     
     /*
@@ -83,9 +109,11 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as! NewsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
         
-        cell.setupCell(text: dataManager.newsTitleDatas[indexPath.section], date: dataManager.newsDateDatas[indexPath.section])
+        cell.setupCell(text: viewModel.newsDatas[indexPath.section].title,
+                       date: viewModel.newsDatas[indexPath.section].date,
+                       imgUrlStr: viewModel.newsImgStr[indexPath.section])
         
         return cell
     }
@@ -99,7 +127,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         Analytics.logEvent("NewsTable", parameters: nil) // Analytics
         let vcWeb = R.storyboard.web.webViewController()!
-        let loadUrlString = dataManager.newsUrlDatas[indexPath[0]]
+        let loadUrlString = viewModel.newsDatas[indexPath[0]].urlStr
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
         
