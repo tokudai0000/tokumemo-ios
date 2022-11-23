@@ -14,7 +14,7 @@ class NewsViewController: UIViewController {
     
     private let viewModel = NewsViewModel()
     private let dataManager = DataManager.singleton
-    
+    // 読み込み中のクルクル(ビジーカーソルともいう)
     private var ActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -26,19 +26,19 @@ class NewsViewController: UIViewController {
         viewModel.getNewsData()
         viewModel.getImage()
     
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
+        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil),
+                           forCellReuseIdentifier: "NewsTableViewCell")
         
         // ステータスバーの背景色を指定
         setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
     }
     
-    // ステータスバーのスタイルを白に設定
+    // ステータスバーの文字を白に設定
     override var preferredStatusBarStyle: UIStatusBarStyle {
             return .lightContent
     }
     
+    // MARK: - Private func
     /// ViewModel初期化
     private func initViewModel() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
@@ -49,21 +49,17 @@ class NewsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .busy: // 通信中
-                        // クルクルスタート
-                        self.ActivityIndicator.startAnimating()
+                        self.ActivityIndicator.startAnimating() // クルクルスタート
                         break
                         
                     case .ready: // 通信完了
-                        // クルクルストップ
-                        self.ActivityIndicator.stopAnimating()
+                        self.ActivityIndicator.stopAnimating() // クルクルストップ
                         self.tableView.reloadData()
                         break
                         
-                        
                     case .error:
                         break
-                        
-                }//end switch
+                }
             }
         }
     }
@@ -85,51 +81,62 @@ class NewsViewController: UIViewController {
     }
 }
 
+
 extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
+    // セクションの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    // MARK: - Table view data source
-    
+    // セルの数
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.newsDatas.count
+        // 取得数が1未満であれば、データ取得に失敗していると判定し0個を返す
+        if 1 < viewModel.newsDatas.count &&
+            1 < viewModel.newsImgStr.count {
+            return viewModel.newsDatas.count
+        } else {
+            return 0
+        }
+        
     }
     
-    /*
-     セルの高さを決めるメソッド
-     */
+    //セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(150)
     }
     
+    // セル背景色
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.white
     }
     
+    // セルの内容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
         
-        cell.setupCell(text: viewModel.newsDatas[indexPath.section].title,
-                       date: viewModel.newsDatas[indexPath.section].date,
-                       imgUrlStr: viewModel.newsImgStr[indexPath.section])
+        // タイトルや画像は別々で取得してくるため、配列内に必ずあるとは限らないため
+        if indexPath.section < viewModel.newsDatas.count &&
+            indexPath.section < viewModel.newsImgStr.count {
+            
+            cell.setupCell(text: viewModel.newsDatas[indexPath.section].title,
+                           date: viewModel.newsDatas[indexPath.section].date,
+                           imgUrlStr: viewModel.newsImgStr[indexPath.section])
+        }
         
         return cell
     }
     
     
     /// セルを選択時のイベント
-    ///
-    /// [設定]と[戻る]のセルでは、テーブルをリロードする。
-    /// それ以外では画面を消した後、それぞれ処理を行う
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         Analytics.logEvent("NewsTable", parameters: nil) // Analytics
+        // セルの選択状態を解除
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+        
         let vcWeb = R.storyboard.web.webViewController()!
         let loadUrlString = viewModel.newsDatas[indexPath[0]].urlStr
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
-        
     }
 }

@@ -11,21 +11,25 @@ import Alamofire
 import SwiftyJSON
 
 final class NewsViewModel {
-    // MARK: - Private
+    
     private let dataManager = DataManager.singleton
     private let apiManager = ApiManager.singleton
+    
     
     struct NewsData {
         let title: String
         let date: String
         let urlStr: String
     }
+    // Newsの基本データ情報を保存
     public var newsDatas = [
         NewsData(title: "",
                  date: "",
                  urlStr: "")
     ]
+    // Newsの写真データ情報を保存
     public var newsImgStr:[String] = []
+    
     
     //MARK: - STATE ステータス
     enum State {
@@ -54,7 +58,7 @@ final class NewsViewModel {
                                     urlStr: response["items"][i]["link"].string!)
                 self.newsDatas.append(data)
             }
-            
+            sleep(5)
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
@@ -63,6 +67,7 @@ final class NewsViewModel {
     }
     
     public func getImage() {
+        state?(.busy) // 通信開始（通信中）
         let urlString = "https://www.tokushima-u.ac.jp/recent/"
         let url = URL(string: urlString)! // fatalError
         
@@ -83,8 +88,11 @@ final class NewsViewModel {
                     newsImgStr.append(url)
                 }
             }
+            sleep(5)
+            self.state?(.ready) // 通信完了
         } catch {
             AKLog(level: .ERROR, message: "[Data取得エラー]: HTMLデータパースエラー\n urlString:\(url.absoluteString)")
+            self.state?(.error) // エラー表示
         }
     }
 }
