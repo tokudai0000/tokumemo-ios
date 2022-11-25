@@ -58,7 +58,6 @@ final class NewsViewModel {
                                     urlStr: response["items"][i]["link"].string!)
                 self.newsDatas.append(data)
             }
-            sleep(5)
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
@@ -84,11 +83,10 @@ final class NewsViewModel {
                 if let str = node["style"] {
                     let result = str.replacingOccurrences(of:"background-image: url(", with:"")
                     let result2 = result.replacingOccurrences(of:");", with:"")
-                    let url = "https://www.tokushima-u.ac.jp/" + result2
+                    let url = "https://www.tokushima-u.ac.jp" + result2
                     newsImgStr.append(url)
                 }
             }
-            sleep(5)
             self.state?(.ready) // 通信完了
         } catch {
             AKLog(level: .ERROR, message: "[Data取得エラー]: HTMLデータパースエラー\n urlString:\(url.absoluteString)")

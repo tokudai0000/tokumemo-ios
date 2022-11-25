@@ -15,6 +15,12 @@ extension UIImageView {
     //読み込むURLのstringを引数にする。
     func cacheImage(imageUrlString: String) {
         
+        if imageUrlString == "NoImage" {
+            let imageToCache = UIImage(resource: R.image.noImage)
+            self.image = imageToCache
+            return
+        }
+        
         //引数のimageUrlStringをURLに型変換する。
         let url = URL(string: imageUrlString)
         

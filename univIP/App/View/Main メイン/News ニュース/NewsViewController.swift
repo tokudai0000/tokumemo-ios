@@ -116,12 +116,22 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
         
         // タイトルや画像は別々で取得してくるため、配列内に必ずあるとは限らないため
-        if indexPath.section < viewModel.newsDatas.count &&
-            indexPath.section < viewModel.newsImgStr.count {
+        if 1 < viewModel.newsDatas.count {
+            let text = viewModel.newsDatas[indexPath.section].title
+            let date = viewModel.newsDatas[indexPath.section].date
+            var imgUrlStr = "NoImage"
             
-            cell.setupCell(text: viewModel.newsDatas[indexPath.section].title,
-                           date: viewModel.newsDatas[indexPath.section].date,
-                           imgUrlStr: viewModel.newsImgStr[indexPath.section])
+            if indexPath.section < viewModel.newsImgStr.count {
+                imgUrlStr = viewModel.newsImgStr[indexPath.section]
+            }
+            
+            if imgUrlStr == "https://www.tokushima-u.ac.jp/assets/img/dummy.png" {
+                imgUrlStr = "NoImage"
+            }
+                
+            cell.setupCell(text: text,
+                           date: date,
+                           imgUrlStr: imgUrlStr)
         }
         
         return cell
