@@ -164,15 +164,24 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return false
     }
     
+    enum loginType {
+        case loginFromNow
+        case executedJavaScript
+    }
     // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-    public func loginFlag(flag: Bool) {
-        if flag {
-            // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-            dataManager.canExecuteJavascript = false
-            isLoginProcessing = true
-            isLoginComplete = false
-        } else {
-            
+    public func loginFlag(type: loginType) {
+        
+        switch type {
+            case .loginFromNow:
+                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
+                isLoginProcessing = true // ログイン処理中であるフラグ
+                isLoginComplete = false // ログインが完了したかのフラグ
+                
+            case .executedJavaScript:
+                // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = true
+                isLoginComplete = false
         }
     }
     

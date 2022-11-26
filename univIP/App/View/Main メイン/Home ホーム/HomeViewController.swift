@@ -181,9 +181,7 @@ final class HomeViewController: BaseViewController {
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
     private func relogin() {
-        dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
-        viewModel.isLoginProcessing = true // ログイン処理中であるフラグ
-        viewModel.isLoginComplete = false // ログインが完了したかのフラグ
+        viewModel.loginFlag(type: .loginFromNow)
         webViewForLogin.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
     }
     
@@ -262,7 +260,7 @@ extension HomeViewController: WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             
             // フラグ管理
-            viewModel.loginFlag(flag: true)
+            viewModel.loginFlag(type: .executedJavaScript)
             return
         }
     }
