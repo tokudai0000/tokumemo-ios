@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -18,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-ZW-3cG">
-                        <rect key="frame" x="15.666666666666664" y="1" width="70" height="70"/>
+                        <rect key="frame" x="15.5" y="1" width="70" height="70"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="OwN-jG-hQu"/>
@@ -49,7 +48,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sAQ-Y9-pfw">
-                        <rect key="frame" x="20.666666666666671" y="6" width="60" height="60"/>
+                        <rect key="frame" x="20.5" y="6" width="60" height="60"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.050980392159999999" green="0.2274509804" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -58,7 +57,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7w-oa-TaA">
-                        <rect key="frame" x="35" y="69.666666666666671" width="31" height="26.333333333333329"/>
+                        <rect key="frame" x="35" y="69.5" width="31" height="26.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -78,7 +77,7 @@
             <size key="customSize" width="101" height="101"/>
             <connections>
                 <outlet property="iconImageView" destination="sAQ-Y9-pfw" id="fAN-g2-cjr"/>
-                <outlet property="nameLabel" destination="U7w-oa-TaA" id="yNs-V9-8cB"/>
+                <outlet property="titleLabel" destination="U7w-oa-TaA" id="yNs-V9-8cB"/>
             </connections>
             <point key="canvasLocation" x="168.84057971014494" y="112.83482142857142"/>
         </collectionViewCell>
