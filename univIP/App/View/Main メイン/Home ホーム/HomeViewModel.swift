@@ -1,5 +1,5 @@
 //
-//  MainViewModel.swift
+//  HomeViewModel.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/10/27.
@@ -10,7 +10,6 @@ import Foundation
 import Kanna
 import Alamofire
 import SwiftyJSON
-import UIKit // adImagesで入ってしまっている。後日修正
 
 final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
@@ -28,9 +27,9 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     //MARK: - MODEL モデル
-    /// TableCellの内容
+    // TableCellの内容
     public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCollectionCellLists
-    
+    // 広告のURL
     public var adImages:[String] = []
     
     public var isLoginProcessing = false // ログイン処理中
@@ -54,32 +53,26 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
     }
     
-    public func getAdImages() {
-        var counter = 0
-        // GitHub上に0-2までのpngがある場合、ここでは
-        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
-        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+    // GitHub上に0-2までのpngがある場合、ここでは
+    // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
+    // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+    public func refleshAdImages() {
         adImages.removeAll()
         
-        while (counter < 10) {
-            let pngNumber = String(counter) + ".png"
-            
-            var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
+        // 広告数は最大でも10件に設定
+        for i in 0 ..< 10 {
+            let png = String(i) + ".png"
+            var urlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + png
             
             #if STUB // テスト環境
-            imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber
+            urlStr = "https://tokudai0000.github.io/hostingImage/test/" + png
             #endif
-
             
-            let url = URL(string: imgUrlStr)
-            
+            let url = URL(string: urlStr)
             do {
-                // URLから画像Dataを取得できるか確認
-                let _ = try Data(contentsOf: url!) // 取得できないとここでエラー
+                let _ = try Data(contentsOf: url!) // URLから画像を取得できないとここでエラー
+                adImages.append(urlStr)
                 
-                adImages.append(imgUrlStr)
-                
-                counter += 1
             } catch {
                 state?(.adReady)
                 break
@@ -92,9 +85,8 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         if let img = adImages.randomElement() {
             return img
         }
-        
         // 広告画像が存在しない場合
-        return "NoImage"
+        return R.image.tokumemoPlusIcon.name
     }
     
     // OpenWeatherMapのAPIから天気情報を取得
