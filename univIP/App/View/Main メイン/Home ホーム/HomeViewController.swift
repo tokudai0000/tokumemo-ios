@@ -48,7 +48,7 @@ final class HomeViewController: BaseViewController {
         initSetup()
         initViewModel()
         initActivityIndicator()
-        viewModel.getAdImages()
+        viewModel.refleshAdImages()
         viewModel.getWether()
     }
     
