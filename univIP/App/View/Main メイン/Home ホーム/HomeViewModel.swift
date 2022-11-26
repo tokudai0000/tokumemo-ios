@@ -1,5 +1,5 @@
 //
-//  MainViewModel.swift
+//  HomeViewModel.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/10/27.
@@ -10,23 +10,26 @@ import Foundation
 import Kanna
 import Alamofire
 import SwiftyJSON
-import UIKit // adImagesで入ってしまっている。後日修正
 
 final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
     //MARK: - STATE ステータス
     enum State {
-        case busy           // 準備中
-        case ready          // 準備完了
-        case error          // エラー発生
+        case weatherBusy           // 準備中
+        case weatherReady          // 準備完了
+        case weatherError          // エラー発生
+        
+        case adBusy
+        case adReady
+        case adError
     }
     public var state: ((State) -> Void)?
     
     
     //MARK: - MODEL モデル
-    /// TableCellの内容
-    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
-    
+    // TableCellの内容
+    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCollectionCellLists
+    // 広告のURL
     public var adImages:[String] = []
     
     public var isLoginProcessing = false // ログイン処理中
@@ -50,32 +53,40 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
     }
     
-    public func getAdImages() {
-        var counter = 0
-        // GitHub上に0-2までのpngがある場合、ここでは
-        // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
-        // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+    // GitHub上に0-2までのpngがある場合、ここでは
+    // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
+    // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
+    public func refleshAdImages() {
         adImages.removeAll()
         
-        while (counter < 10) {
-            let pngNumber = String(counter) + ".png"
+        // 広告数は最大でも10件に設定
+        for i in 0 ..< 10 {
+            let png = String(i) + ".png"
+            var urlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + png
             
-            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
-//            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
+            #if STUB // テスト環境
+            urlStr = "https://tokudai0000.github.io/hostingImage/test/" + png
+            #endif
             
-            let url = URL(string: imgUrlStr)
-            
+            let url = URL(string: urlStr)
             do {
-                // URLから画像Dataを取得できるか確認
-                let _ = try Data(contentsOf: url!) // 取得できないとここでエラー
+                let _ = try Data(contentsOf: url!) // URLから画像を取得できないとここでエラー
+                adImages.append(urlStr)
                 
-                adImages.append(imgUrlStr)
-                
-                counter += 1
             } catch {
+                state?(.adReady)
                 break
             }
         }
+    }
+    
+    public func adImage() -> String {
+        // 広告画像が存在すればランダムで返す
+        if let img = adImages.randomElement() {
+            return img
+        }
+        // 広告画像が存在しない場合
+        return R.image.tokumemoPlusIcon.name
     }
     
     // OpenWeatherMapのAPIから天気情報を取得
@@ -87,7 +98,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         
         let urlStr = "https://api.openweathermap.org/data/2.5/weather?" + parameter
         
-        state?(.busy) // 通信開始（通信中）
+        state?(.weatherBusy) // 通信開始（通信中）
         apiManager.request(urlStr,
                            success: { [weak self] (response) in
             
@@ -116,11 +127,11 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 self.weatherIconUrlStr = urlStr
             }
             
-            self.state?(.ready) // 通信完了
+            self.state?(.weatherReady) // 通信完了
             
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.error) // エラー表示
+            self?.state?(.weatherError) // エラー表示
         })
     }
     
@@ -145,8 +156,29 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return false
     }
     
+    enum loginType {
+        case loginFromNow
+        case executedJavaScript
+    }
+    // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+    public func loginFlag(type: loginType) {
+        
+        switch type {
+            case .loginFromNow:
+                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
+                isLoginProcessing = true // ログイン処理中であるフラグ
+                isLoginComplete = false // ログインが完了したかのフラグ
+                
+            case .executedJavaScript:
+                // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = true
+                isLoginComplete = false
+        }
+    }
+    
     /// 大学統合認証システム(IAS)へのログインが完了したか判定
-    public func isLoginComplete(_ urlStr: String) -> Bool {
+    public func checkLoginComplete(_ urlStr: String) {
         // ログイン後のURL
         let check1 = urlStr.contains(Url.skipReminder.string())
         let check2 = urlStr.contains(Url.courseManagementPC.string())
@@ -158,11 +190,10 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         if isLoginProcessing, result {
             isLoginProcessing = false
             isLoginCompleteImmediately = true
-            return true
+            isLoginComplete = true
+            return
         }
-        
-        // マナバを開いてもtrueになる
-        return isLoginComplete
+        return
     }
     
     /// 大学統合認証システム(IAS)へのログインが失敗したか判定

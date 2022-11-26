@@ -62,7 +62,7 @@ struct ConstStruct {
     }
     
     /// CollectionCell初期状態
-    static let initCustomCellLists = [
+    static let initCollectionCellLists = [
         CollectionCell(title: "教務システム",
                        id: .courseManagementHomeMobile,
                        iconSystemName: "graduationcap",
