@@ -29,7 +29,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     //MARK: - MODEL モデル
     /// TableCellの内容
-    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCustomCellLists
+    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCollectionCellLists
     
     public var adImages:[String] = []
     
@@ -64,8 +64,12 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         while (counter < 10) {
             let pngNumber = String(counter) + ".png"
             
-//            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
-            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
+            var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
+            
+            #if STUB // テスト環境
+            imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber
+            #endif
+
             
             let url = URL(string: imgUrlStr)
             
@@ -160,8 +164,20 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return false
     }
     
+    // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+    public func loginFlag(flag: Bool) {
+        if flag {
+            // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+            dataManager.canExecuteJavascript = false
+            isLoginProcessing = true
+            isLoginComplete = false
+        } else {
+            
+        }
+    }
+    
     /// 大学統合認証システム(IAS)へのログインが完了したか判定
-    public func isLoginComplete(_ urlStr: String) -> Bool {
+    public func checkLoginComplete(_ urlStr: String) {
         // ログイン後のURL
         let check1 = urlStr.contains(Url.skipReminder.string())
         let check2 = urlStr.contains(Url.courseManagementPC.string())
@@ -173,11 +189,10 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         if isLoginProcessing, result {
             isLoginProcessing = false
             isLoginCompleteImmediately = true
-            return true
+            isLoginComplete = true
+            return
         }
-        
-        // マナバを開いてもtrueになる
-        return isLoginComplete
+        return
     }
     
     /// 大学統合認証システム(IAS)へのログインが失敗したか判定

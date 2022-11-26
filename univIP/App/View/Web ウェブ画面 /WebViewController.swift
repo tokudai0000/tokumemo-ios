@@ -40,6 +40,8 @@ final class WebViewController: UIViewController {
         // スワイプで進む、戻るを有効
         webView.allowsBackForwardNavigationGestures = true
         
+        dataManager.canExecuteJavascript = true
+        
         if let urlString = loadUrlString {
             if let url = URL(string: urlString){
                 webView.load(URLRequest(url: url))
