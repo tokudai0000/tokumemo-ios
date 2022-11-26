@@ -31,7 +31,7 @@ final class HomeViewController: BaseViewController {
     private let dataManager = DataManager.singleton
     
     private var adTimer = Timer()
-    private var activityIndicator: UIActivityIndicatorView!
+    private var ActivityIndicator: UIActivityIndicatorView! // 先頭大文字でないといけないようだ
     
     
     // MARK: - LifeCycle
@@ -130,18 +130,18 @@ final class HomeViewController: BaseViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .weatherBusy: // 通信中
-                        self.activityIndicator.startAnimating() // クルクルスタート
+                        self.ActivityIndicator.startAnimating() // クルクルスタート
                         break
                         
                     case .weatherReady: // 通信完了
-                        self.activityIndicator.stopAnimating() // クルクルストップ
+                        self.ActivityIndicator.stopAnimating() // クルクルストップ
                         self.weatherViewLoad(discription: self.viewModel.weatherDiscription,
                                              feelsLike: self.viewModel.weatherFeelsLike,
                                              icon: UIImage(url: self.viewModel.weatherIconUrlStr))
                         break
                         
                     case .weatherError: // 通信失敗
-                        self.activityIndicator.stopAnimating()
+                        self.ActivityIndicator.stopAnimating()
                         self.weatherViewLoad(discription: "取得エラー",
                                              feelsLike: "",
                                              icon: UIImage(resource: R.image.noImage)!)
@@ -164,18 +164,18 @@ final class HomeViewController: BaseViewController {
     
     /// クルクル(読み込み中の表示)の初期設定
     private func initActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView()
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        activityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
+        ActivityIndicator = UIActivityIndicatorView()
+        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        ActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
         
         // クルクルをストップした時に非表示する
-        activityIndicator.hidesWhenStopped = true
+        ActivityIndicator.hidesWhenStopped = true
         
         // 色を設定
-        activityIndicator.style = UIActivityIndicatorView.Style.medium
+        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
         
         //Viewに追加
-        self.weatherView.addSubview(activityIndicator)
+        self.weatherView.addSubview(ActivityIndicator)
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
