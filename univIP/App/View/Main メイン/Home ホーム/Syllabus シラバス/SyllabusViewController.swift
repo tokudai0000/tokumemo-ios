@@ -11,13 +11,16 @@ import UIKit
 final class SyllabusViewController: UIViewController {
     
     // MARK: - IBOutlet
+//    @IBOutlet weak var viewTop: UIView!
+    
     @IBOutlet weak var subjectTextField: UITextField!
-    @IBOutlet weak var teacherTextField: UITextField!
     @IBOutlet weak var subjectTextSizeLabel: UILabel!
-    @IBOutlet weak var teacherTextSizeLabel: UILabel!
     @IBOutlet weak var subjectUnderLine: UIView!
+    
+    @IBOutlet weak var teacherTextField: UITextField!
+    @IBOutlet weak var teacherTextSizeLabel: UILabel!
     @IBOutlet weak var teacherUnderLine: UIView!
-    @IBOutlet weak var viewTop: UIView!
+    
     @IBOutlet weak var searchButton: UIButton!
     
     public var delegate : HomeViewController?
@@ -50,12 +53,10 @@ final class SyllabusViewController: UIViewController {
     
     @IBAction func searchButton(_ sender: Any) {
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
-        let subjectText = subjectTextField.text ?? ""
-        let teacherText = teacherTextField.text ?? ""
-        // シラバスを読み込み自動入力させる
-        dataManager.syllabusSubjectName = subjectText
-        dataManager.syllabusTeacherName = teacherText
+        dataManager.syllabusSubjectName = subjectTextField.text!
+        dataManager.syllabusTeacherName = teacherTextField.text!
         
+        // シラバス画面を消去後、Web画面を表示
         dismiss(animated: false, completion: {
             let vc = R.storyboard.web.webViewController()!
             vc.loadUrlString = Url.syllabus.string()
@@ -66,24 +67,23 @@ final class SyllabusViewController: UIViewController {
     // MARK: - Private
     /// FirstViewSettingViewControllerの初期セットアップ
     private func initSetup() {
-        do { // 1. 科目名
-            subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            subjectTextField.borderStyle = .none
-            subjectTextField.delegate = self
-            subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
-        }
+        // 1. 科目名
+        subjectTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+        subjectTextField.borderStyle = .none
+        subjectTextField.delegate = self
+        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
         
-        do { // 2. 教員名
-            teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-            teacherTextField.borderStyle = .none
-            teacherTextField.delegate = self
-            teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
-        }
+        // 2. 教員名
+        teacherTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+        teacherTextField.borderStyle = .none
+        teacherTextField.delegate = self
+        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
+        
         // 検索ボタンの角を丸める
         searchButton.layer.cornerRadius = 5.0
     }
     
-    /// TextFieldの種類
+    /// TextFieldの種類(TextFieldのtagで判断するため、Int型)
     enum FieldType: Int {
         case subject = 0 // 科目名
         case teacher = 1 // 教員名
@@ -138,21 +138,25 @@ final class SyllabusViewController: UIViewController {
 extension SyllabusViewController: UITextFieldDelegate {
     /// textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        // textFieldTag = 0はfieldType = .subject
         if let textFieldTag = FieldType(rawValue: textField.tag) {
+            // 選択したTextFieldの色を変更する
             textFieldCursorSetup(fieldType: textFieldTag, cursorType: .focus)
         }
     }
     
     /// textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
+        // 非選択時の色へ変更する
         textFieldCursorSetup(fieldType: .subject, cursorType: .normal)
         textFieldCursorSetup(fieldType: .teacher, cursorType: .normal)
     }
     
-    /// text内容が変更されるたびに
+    /// text内容が変更されるたび
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 1)/20"
-        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 1)/20"
+        // 文字数カウントを表示
+        subjectTextSizeLabel.text = "\(subjectTextField.text?.count ?? 0)/20"
+        teacherTextSizeLabel.text = "\(teacherTextField.text?.count ?? 0)/20"
     }
 }
 
