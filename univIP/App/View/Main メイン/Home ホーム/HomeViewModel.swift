@@ -84,11 +84,6 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     }
     
     public func adImage() -> String {
-        // 広告画像が存在しなければ
-//        if adImages.count == 0 {
-//            return "NoImage"
-//        }
-        
         // 広告画像が存在すればランダムで返す
         if let img = adImages.randomElement() {
             return img

@@ -143,8 +143,6 @@ final class HomeViewController: BaseViewController {
                         break
                     
                     case .adReady:
-                        // タイマーを開始する
-                        self.adTimerOn()
                         break
                     
                     case .adError:
@@ -193,9 +191,7 @@ final class HomeViewController: BaseViewController {
                                        repeats: true, block: { (timer) in
             // 広告画像の表示
             self.adImageView.cacheImage(imageUrlString: self.viewModel.adImage())
-            
         })
-//        RunLoop.main.add(self.adTimer, forMode: .defaultRunLoopMode)
     }
     
     private var alertController: UIAlertController!
