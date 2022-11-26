@@ -10,24 +10,25 @@ import UIKit
 final class AgreementViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var agreementButton: UIButton!
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var termsButton: UIButton!
     @IBOutlet weak var privacyButton: UIButton!
+    @IBOutlet weak var agreementButton: UIButton!
     
     private let dataManager = DataManager.singleton
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 登録ボタンの角を丸める
+        // ボタンの角を丸める
         agreementButton.layer.cornerRadius = 5.0
         termsButton.layer.cornerRadius = 10.0
         privacyButton.layer.cornerRadius = 10.0
         textView.layer.cornerRadius = 10.0
         imageView.layer.cornerRadius = 100.0
         
+        // 文章を表示
         let filePath = R.file.agreementRtf()!
         textView.attributedText = Common.loadRtfFileContents(filePath)
         textView.textColor = .white
@@ -35,11 +36,9 @@ final class AgreementViewController: UIViewController {
     
     // MARK: - IBAction
     
-    /// 同意ボタン
-    /// 利用規約のバージョン更新を行う
+    /// 同意ボタン  利用規約のバージョン更新も行う
     @IBAction func agreementButton(_ sender: Any) {
         // アプリ内に表示していた利用規約のバージョンを保存する。
-        // (アプリ起動毎に、前回同意した利用規約のバージョンを照らし合わせる)
         dataManager.agreementVersion = ConstStruct.latestTermsVersion
         dismiss(animated: true, completion: nil)
     }
@@ -55,6 +54,4 @@ final class AgreementViewController: UIViewController {
         vcWeb.loadUrlString = Url.privacyPolicy.string()
         present(vcWeb, animated: true, completion: nil)
     }
-    
-    
 }
