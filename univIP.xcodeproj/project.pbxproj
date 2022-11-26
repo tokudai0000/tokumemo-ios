@@ -12,8 +12,8 @@
 		1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */; };
 		1A27270327D0EBAB00CE1DA5 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A27270227D0EBAB00CE1DA5 /* R.generated.swift */; };
 		1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B2F6426C2170F00414A54 /* DataManager.swift */; };
-		1A30D0A928F5BFB500C4012E /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0A728F5BFB500C4012E /* CustomCell.swift */; };
-		1A30D0AA28F5BFB500C4012E /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0A828F5BFB500C4012E /* CustomCell.xib */; };
+		1A30D0A928F5BFB500C4012E /* HomeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */; };
+		1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */; };
 		1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0AD28F6D79800C4012E /* WebViewController.swift */; };
 		1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0AF28F6D7BC00C4012E /* Web.storyboard */; };
 		1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B128F6ED2E00C4012E /* UIImage.swift */; };
@@ -94,8 +94,8 @@
 		1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1A27270227D0EBAB00CE1DA5 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		1A2B2F6426C2170F00414A54 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		1A30D0A728F5BFB500C4012E /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		1A30D0A828F5BFB500C4012E /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionCell.swift; sourceTree = "<group>"; };
+		1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionCell.xib; sourceTree = "<group>"; };
 		1A30D0AD28F6D79800C4012E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A30D0AF28F6D7BC00C4012E /* Web.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Web.storyboard; sourceTree = "<group>"; };
 		1A30D0B128F6ED2E00C4012E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -202,13 +202,13 @@
 			path = "Splash スプラッシュ";
 			sourceTree = "<group>";
 		};
-		1A30D0AB28F5BFBD00C4012E /* CustomCell */ = {
+		1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
-				1A30D0A728F5BFB500C4012E /* CustomCell.swift */,
-				1A30D0A828F5BFB500C4012E /* CustomCell.xib */,
+				1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */,
+				1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */,
 			);
-			path = CustomCell;
+			path = HomeCollectionCell;
 			sourceTree = "<group>";
 		};
 		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
@@ -241,7 +241,7 @@
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
 				80D3B6FF2909435000FF1AE3 /* StudentCard 学生証 */,
-				1A30D0AB28F5BFBD00C4012E /* CustomCell */,
+				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 				1ABE8BC627B10489001EEA79 /* Syllabus シラバス */,
 			);
 			path = "Home ホーム";
@@ -638,7 +638,7 @@
 				1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */,
 				1ABE8BE127B10489001EEA79 /* AboutThisApp.storyboard in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
-				1A30D0AA28F5BFB500C4012E /* CustomCell.xib in Resources */,
+				1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Password.storyboard in Resources */,
 				1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */,
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
@@ -833,7 +833,7 @@
 				1A3A75FA2916792600069818 /* ApiManager.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1ABE8BE027B10489001EEA79 /* AboutThisAppViewController.swift in Sources */,
-				1A30D0A928F5BFB500C4012E /* CustomCell.swift in Sources */,
+				1A30D0A928F5BFB500C4012E /* HomeCollectionCell.swift in Sources */,
 				1A6C51BA2905077E00A3E85A /* ReviewViewController.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,

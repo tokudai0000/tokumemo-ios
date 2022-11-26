@@ -16,9 +16,13 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
     //MARK: - STATE ステータス
     enum State {
-        case busy           // 準備中
-        case ready          // 準備完了
-        case error          // エラー発生
+        case weatherBusy           // 準備中
+        case weatherReady          // 準備完了
+        case weatherError          // エラー発生
+        
+        case adBusy
+        case adReady
+        case adError
     }
     public var state: ((State) -> Void)?
     
@@ -60,8 +64,8 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         while (counter < 10) {
             let pngNumber = String(counter) + ".png"
             
-            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
-//            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
+//            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + pngNumber // 本番用
+            let imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/" + pngNumber // テスト環境
             
             let url = URL(string: imgUrlStr)
             
@@ -73,9 +77,25 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 
                 counter += 1
             } catch {
+                state?(.adReady)
                 break
             }
         }
+    }
+    
+    public func adImage() -> String {
+        // 広告画像が存在しなければ
+//        if adImages.count == 0 {
+//            return "NoImage"
+//        }
+        
+        // 広告画像が存在すればランダムで返す
+        if let img = adImages.randomElement() {
+            return img
+        }
+        
+        // 広告画像が存在しない場合
+        return "NoImage"
     }
     
     // OpenWeatherMapのAPIから天気情報を取得
@@ -87,7 +107,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         
         let urlStr = "https://api.openweathermap.org/data/2.5/weather?" + parameter
         
-        state?(.busy) // 通信開始（通信中）
+        state?(.weatherBusy) // 通信開始（通信中）
         apiManager.request(urlStr,
                            success: { [weak self] (response) in
             
@@ -116,11 +136,11 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 self.weatherIconUrlStr = urlStr
             }
             
-            self.state?(.ready) // 通信完了
+            self.state?(.weatherReady) // 通信完了
             
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.error) // エラー表示
+            self?.state?(.weatherError) // エラー表示
         })
     }
     

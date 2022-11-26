@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,17 +14,17 @@
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l6Y-J6-Sft" userLabel="Home" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L9B-g3-Oj6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t3x-iZ-niV" userLabel="Top View">
-                                <rect key="frame" x="12" y="62" width="392" height="150"/>
+                                <rect key="frame" x="12" y="62" width="578" height="150"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NP9-XI-xKL" userLabel="Left View">
-                                        <rect key="frame" x="0.0" y="0.0" width="289" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="475" height="150"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tokumemoPlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
-                                                <rect key="frame" x="69.666666666666686" y="0.0" width="150" height="150"/>
+                                                <rect key="frame" x="162.5" y="0.0" width="150" height="150"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="v5T-GU-n4N" secondAttribute="height" multiplier="1:1" id="kzv-VF-OaQ"/>
@@ -38,7 +36,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <wkWebView hidden="YES" contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhg-Di-ZNi">
-                                                <rect key="frame" x="0.0" y="0.0" width="289" height="150"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="475" height="150"/>
                                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -72,13 +70,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3ua-3Z-6Mz" userLabel="Right View">
-                                        <rect key="frame" x="297" y="0.0" width="95" height="150"/>
+                                        <rect key="frame" x="483" y="0.0" width="95" height="150"/>
                                         <subviews>
                                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0e0-DA-C9Q">
-                                                <rect key="frame" x="2.6666666666666856" y="0.0" width="90" height="99"/>
+                                                <rect key="frame" x="2.5" y="0.0" width="90" height="99"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在の徳島市" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-88-Y2e">
-                                                        <rect key="frame" x="5" y="3" width="79.666666666666671" height="20"/>
+                                                        <rect key="frame" x="5" y="3" width="80" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="Y9y-Lc-na9"/>
                                                         </constraints>
@@ -87,7 +85,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HJ5-Ek-c3Y">
-                                                        <rect key="frame" x="16.333333333333314" y="15" width="57" height="57"/>
+                                                        <rect key="frame" x="16.5" y="15" width="57" height="57"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="57" id="8eF-ab-7v6"/>
                                                             <constraint firstAttribute="height" constant="57" id="Blu-qi-ace"/>
@@ -134,7 +132,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J7-MJ-B9H">
-                                                <rect key="frame" x="2.6666666666666856" y="110" width="90" height="40"/>
+                                                <rect key="frame" x="2.5" y="110" width="90" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="90" id="1J8-Wj-y9d"/>
@@ -174,7 +172,7 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JKS-4Y-lAY">
-                                <rect key="frame" x="26" y="232" width="362" height="455"/>
+                                <rect key="frame" x="26" y="232" width="548" height="319"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ySv-Qo-UxF">
                                     <size key="itemSize" width="128" height="128"/>
@@ -199,10 +197,10 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Yi-0L-RdW">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="トクメモ＋" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5NB-q9-MVV">
-                                        <rect key="frame" x="156" y="10" width="102" height="24"/>
+                                        <rect key="frame" x="249" y="10" width="102" height="24"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -238,11 +236,11 @@
                         <outlet property="adImageView" destination="v5T-GU-n4N" id="QoI-IB-MDZ"/>
                         <outlet property="adView" destination="NP9-XI-xKL" id="Bnu-8I-mwH"/>
                         <outlet property="collectionView" destination="JKS-4Y-lAY" id="mWa-qW-0dp"/>
-                        <outlet property="forLoginWebView" destination="Yhg-Di-ZNi" id="lAj-E7-7Mv"/>
                         <outlet property="temperatureLabel" destination="7xJ-Nj-W5u" id="U9b-zf-jxa"/>
                         <outlet property="weatherIconImageView" destination="HJ5-Ek-c3Y" id="jzF-PC-D0S"/>
                         <outlet property="weatherLabel" destination="mC2-io-c4P" id="AOQ-o4-Kk2"/>
                         <outlet property="weatherView" destination="0e0-DA-C9Q" id="73w-WP-4gB"/>
+                        <outlet property="webViewForLogin" destination="Yhg-Di-ZNi" id="lAj-E7-7Mv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -251,7 +249,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="house" catalog="system" width="128" height="106"/>
         <image name="tokumemoPlusIcon" width="512" height="512"/>
         <namedColor name="MainColor">
             <color red="0.050980392156862744" green="0.22745098039215686" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

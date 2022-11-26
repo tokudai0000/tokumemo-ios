@@ -14,18 +14,23 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var adView: UIView!
-    @IBOutlet weak var weatherView: UIView!
     @IBOutlet weak var adImageView: UIImageView!
-    @IBOutlet weak var weatherLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var weatherIconImageView: UIImageView!
+    
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
-    @IBOutlet weak var forLoginWebView: WKWebView!
+    @IBOutlet weak var webViewForLogin: WKWebView!
+    
+    @IBOutlet weak var weatherView: UIView!
+    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var weatherIconImageView: UIImageView!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
-    private var timer = Timer()
+    
+    private var adTimer = Timer()
     private var ActivityIndicator: UIActivityIndicatorView!
     
     
@@ -43,14 +48,11 @@ final class HomeViewController: BaseViewController {
         initSetup()
         initViewModel()
         initActivityIndicator()
-        adViewLoad()
+        viewModel.getAdImages()
         viewModel.getWether()
-        
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
-
     }
     
+    /// 画面が表示される直前
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // 利用規約同意画面を表示するか判定
@@ -63,6 +65,15 @@ final class HomeViewController: BaseViewController {
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
         
+        // タイマーを開始する
+        adTimerOn()
+    }
+    
+    /// 画面が閉じる直前
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // タイマーを停止する(メモリの開放)
+        adTimer.invalidate()
     }
     
     // ステータスバーのスタイルを白に設定
@@ -86,57 +97,68 @@ final class HomeViewController: BaseViewController {
     }
     
     // MARK: - Private func
-    /// 大学統合認証システム(IAS)のページを読み込む
-    /// ログインの処理はWebViewのdidFinishで行う
-    private func relogin() {
-        dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
-        viewModel.isLoginProcessing = true // ログイン処理中であるフラグ
-        viewModel.isLoginComplete = false // ログインが完了したかのフラグ
-        forLoginWebView.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
-    }
-    
-    private func adViewLoad() {
-        
-        viewModel.getAdImages()
-        
-        let TIME_INTERVAL = 30.0
-        var counter = 0
-        
-        if viewModel.adImages.count != 0 {
-            adImageView.cacheImage(imageUrlString: self.viewModel.adImages[counter])
-            counter += 1
-            return
-        }
-        
-        // TIME_INTERVAL秒毎に処理を実行する
-        timer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL, repeats: true, block: { (timer) in
-            if self.viewModel.adImages.count != counter {
-                // 一定時間ごとに実行したい処理を記載する
-                self.adImageView.cacheImage(imageUrlString: self.viewModel.adImages[counter])
-                counter += 1
-            } else {
-                counter = 0
-            }
-            
-        })
-    }
+    /// 初期セットアップ
     private func initSetup() {
         // collectionViewの初期設定
-        
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100) // Cell(xib)のサイズを変更
+        layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
         collectionView.collectionViewLayout = layout
-        collectionView.register(R.nib.customCell) // xibファイルを使うことを登録
+        collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
         
-        // forLoginWebViewの初期設定
-        forLoginWebView.navigationDelegate = self
+        // webViewForLoginの初期設定
+        webViewForLogin.navigationDelegate = self
+        
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(R.color.mainColor())
     }
     
+    /// ViewModel初期化
+    private func initViewModel() {
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            
+            guard let self = self else { fatalError() }
+            
+            DispatchQueue.main.async {
+                switch state {
+                    case .weatherBusy: // 通信中
+                        self.ActivityIndicator.startAnimating() // クルクルスタート
+                        break
+                        
+                    case .weatherReady: // 通信完了
+                        self.ActivityIndicator.stopAnimating() // クルクルストップ
+                        self.weatherViewLoad(discription: self.viewModel.weatherDiscription,
+                                             feelsLike: self.viewModel.weatherFeelsLike,
+                                             icon: UIImage(url: self.viewModel.weatherIconUrlStr))
+                        break
+                        
+                    case .weatherError: // 通信失敗
+                        self.ActivityIndicator.stopAnimating()
+                        self.weatherViewLoad(discription: "取得エラー",
+                                             feelsLike: "",
+                                             icon: UIImage(resource: R.image.noImage)!)
+                        break
+                    
+                    case .adBusy:
+                        break
+                    
+                    case .adReady:
+                        // タイマーを開始する
+                        self.adTimerOn()
+                        break
+                    
+                    case .adError:
+                        break
+                }
+            }
+        }
+    }
+    
+    /// クルクル(読み込み中の表示)の初期設定
     private func initActivityIndicator() {
-        // ActivityIndicatorを作成＆中央に配置
         ActivityIndicator = UIActivityIndicatorView()
         ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        ActivityIndicator.center = self.weatherView.center
+        ActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
         
         // クルクルをストップした時に非表示する
         ActivityIndicator.hidesWhenStopped = true
@@ -146,6 +168,34 @@ final class HomeViewController: BaseViewController {
         
         //Viewに追加
         self.weatherView.addSubview(ActivityIndicator)
+    }
+    
+    /// 大学統合認証システム(IAS)のページを読み込む
+    /// ログインの処理はWebViewのdidFinishで行う
+    private func relogin() {
+        dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
+        viewModel.isLoginProcessing = true // ログイン処理中であるフラグ
+        viewModel.isLoginComplete = false // ログインが完了したかのフラグ
+        webViewForLogin.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
+    }
+    
+    private func weatherViewLoad(discription: String, feelsLike: String, icon: UIImage) {
+        weatherLabel.text = discription
+        temperatureLabel.text = feelsLike
+        weatherIconImageView.image = icon
+    }
+    
+    private func adTimerOn() {
+        let TIME_INTERVAL = 5.0 // 広告を表示させる秒数
+                
+        // TIME_INTERVAL秒毎に処理を実行する
+        adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
+                                       repeats: true, block: { (timer) in
+            // 広告画像の表示
+            self.adImageView.cacheImage(imageUrlString: self.viewModel.adImage())
+            
+        })
+//        RunLoop.main.add(self.adTimer, forMode: .defaultRunLoopMode)
     }
     
     private var alertController: UIAlertController!
@@ -199,7 +249,7 @@ extension HomeViewController: WKNavigationDelegate {
     /// 読み込み完了
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
-        let url = self.forLoginWebView.url! // fatalError
+        let url = self.webViewForLogin.url! // fatalError
         AKLog(level: .DEBUG, message: url.absoluteString)
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
@@ -233,7 +283,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     /// セルの中身
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.customCell, for: indexPath) else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath) else {
             AKLog(level: .FATAL, message: "CustomCellが見当たりません")
             fatalError()
         }
@@ -332,40 +382,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         vcWeb.loadUrlString = loadUrlString
         present(vcWeb, animated: true, completion: nil)
-    }
-    
-    /// ViewModel初期化
-    private func initViewModel() {
-        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
-        self.viewModel.state = { [weak self] (state) in
-            guard let self = self else {
-                fatalError()
-            }
-            DispatchQueue.main.async {
-                switch state {
-                    case .busy: // 通信中
-                        // クルクルスタート
-                        self.ActivityIndicator.startAnimating()
-                        break
-                        
-                    case .ready: // 通信完了
-                        // クルクルストップ
-                        self.ActivityIndicator.stopAnimating()
-                        
-                        self.weatherLabel.text = self.viewModel.weatherDiscription
-                        self.temperatureLabel.text = self.viewModel.weatherFeelsLike
-                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
-                        break
-                        
-                    case .error: // 通信失敗
-                        // クルクルストップ
-                        self.ActivityIndicator.stopAnimating()
-                        self.weatherIconImageView.image = UIImage(named: "NoImage")
-                        self.weatherLabel.text = "取得エラー"
-                        break
-                }
-            }
-        }
     }
 }
 
