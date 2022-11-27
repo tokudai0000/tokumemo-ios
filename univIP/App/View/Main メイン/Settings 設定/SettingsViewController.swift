@@ -10,31 +10,25 @@ import FirebaseAnalytics
 
 
 class SettingsViewController: UITableViewController {
-
-    @IBOutlet weak var discriptionLabel: UILabel!
     
-    private let viewModel = SettingsViewModel()
+    /// TableCellの内容
+    private var collectionLists:[[ConstStruct.SettingsCell]] = ConstStruct.initSettingsCellLists
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        discriptionLabel.text = "このアプリでは、パスワードを保存することで毎日面倒だったmanabaなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
-    }
-
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.collectionLists.count
+        return collectionLists.count
     }
     
     override func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
+        // パスワードのセクションに説明文を追加
         if section == 0 {
             return "このアプリでは、パスワードを保存することで毎日面倒だったマナバなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
         }
         return " "
     }
 
+    /// セクションの高さ
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 65
@@ -42,8 +36,9 @@ class SettingsViewController: UITableViewController {
         return 30
     }
     
+    /// セルの数
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.collectionLists[section].count
+        return collectionLists[section].count
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -54,22 +49,17 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.othersCell, for: indexPath)! // fatalError
         
-
-//        cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        cell.textLabel?.text = viewModel.collectionLists[indexPath.section][indexPath.item].title
+        cell.textLabel?.text = collectionLists[indexPath.section][indexPath.item].title
 
         return cell
     }
     
     
     /// セルを選択時のイベント
-    ///
-    /// [設定]と[戻る]のセルでは、テーブルをリロードする。
-    /// それ以外では画面を消した後、それぞれ処理を行う
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         // タップされたセルの内容
-        let cell = viewModel.collectionLists[indexPath.section][indexPath[1]]
+        let cell = collectionLists[indexPath.section][indexPath[1]]
         let vcWeb = R.storyboard.web.webViewController()!
         
         // アナリティクスを送信
@@ -78,24 +68,15 @@ class SettingsViewController: UITableViewController {
         // どのセルが押されたか
         switch cell.id {
             case .password:
-                let storyboard: UIStoryboard = UIStoryboard(name: "Password", bundle: nil)//遷移先のStoryboardを設定
-                let nextView = storyboard.instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController//遷移先のViewControllerを設定
-                nextView.title = "パスワード"
-                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
-                return
-                
-            case .customize:
-                let storyboard: UIStoryboard = UIStoryboard(name: "Password", bundle: nil)//遷移先のStoryboardを設定
-                let nextView = storyboard.instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController//遷移先のViewControllerを設定
-                nextView.title = "パスワード"
-                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
+                let vc = R.storyboard.password.passwordViewController()!
+                vc.title = "パスワード"
+                navigationController?.pushViewController(vc, animated: true)
                 return
                 
             case .aboutThisApp:
-                let storyboard: UIStoryboard = UIStoryboard(name: "AboutThisApp", bundle: nil)//遷移先のStoryboardを設定
-                let nextView = storyboard.instantiateViewController(withIdentifier: "AboutThisAppViewController") as! AboutThisAppViewController//遷移先のViewControllerを設定
-                nextView.title = "このアプリについて"
-                self.navigationController?.pushViewController(nextView, animated: true)//遷移する
+                let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
+                vc.title = "このアプリについて"
+                navigationController?.pushViewController(vc, animated: true)
                 return
                 
             case .contactUs:
@@ -112,12 +93,6 @@ class SettingsViewController: UITableViewController {
                 
             case .privacyPolicy:
                 vcWeb.loadUrlString = Url.privacyPolicy.string()
-                
-//            case .license:
-//                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
-//
-//            case .acknowledgments:
-//                vcWeb.loadUrlString = "https://www.google.com/?hl=ja"
                 
             case .sourceCode:
                 vcWeb.loadUrlString = Url.sourceCode.string()

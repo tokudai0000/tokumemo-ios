@@ -92,8 +92,8 @@ final class WebViewController: UIViewController {
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
     private func relogin() {
-        viewModel.loginFlag(type: .loginFromNow)
-        webViewForLogin.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
+//        viewModel.loginFlag(type: .loginFromNow)
+        webView.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
     }
     
     private func initProgressSetup() {
