@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  SyllabusViewController.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/09.
@@ -11,8 +11,6 @@ import UIKit
 final class SyllabusViewController: UIViewController {
     
     // MARK: - IBOutlet
-//    @IBOutlet weak var viewTop: UIView!
-    
     @IBOutlet weak var subjectTextField: UITextField!
     @IBOutlet weak var subjectTextSizeLabel: UILabel!
     @IBOutlet weak var subjectUnderLine: UIView!
