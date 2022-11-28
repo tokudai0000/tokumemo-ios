@@ -224,7 +224,7 @@ extension HomeViewController: WKNavigationDelegate {
         }
         
         // タイムアウトの判定
-        if viewModel.isTimeOut(urlStr: url.absoluteString) {
+        if viewModel.isTimeout(urlStr: url.absoluteString) {
             relogin()
         }
         
@@ -291,7 +291,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             icon = img
         }
         
-        cell.setupCell(string: title, image: UIImage(systemName:icon))
+        cell.setupCell(title: title, image: icon)
         return cell
     }
     

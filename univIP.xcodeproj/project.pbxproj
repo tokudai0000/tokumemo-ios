@@ -19,7 +19,6 @@
 		1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B128F6ED2E00C4012E /* UIImage.swift */; };
 		1A30D0B628F87D4500C4012E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B528F87D4500C4012E /* Weather.swift */; };
 		1A30D0BB28F9C14200C4012E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BA28F9C14200C4012E /* SettingsViewController.swift */; };
-		1A30D0BD28F9C1D300C4012E /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BC28F9C1D300C4012E /* SettingsViewModel.swift */; };
 		1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A384F9728FD794200A1F52E /* WebViewModel.swift */; };
 		1A3A75FA2916792600069818 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* ApiManager.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
@@ -101,7 +100,6 @@
 		1A30D0B128F6ED2E00C4012E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		1A30D0B528F87D4500C4012E /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		1A30D0BA28F9C14200C4012E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		1A30D0BC28F9C1D300C4012E /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		1A384F9728FD794200A1F52E /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		1A3A75F92916792600069818 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
@@ -227,7 +225,6 @@
 		1A30D0B728F9BED600C4012E /* Settings 設定 */ = {
 			isa = PBXGroup;
 			children = (
-				1A30D0BC28F9C1D300C4012E /* SettingsViewModel.swift */,
 				1A30D0BA28F9C14200C4012E /* SettingsViewController.swift */,
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
 				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
@@ -851,7 +848,6 @@
 				1ABE8BDD27B10489001EEA79 /* PasswordViewController.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */,
-				1A30D0BD28F9C1D300C4012E /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -960,7 +956,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8H3M7HHBLW;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -1160,7 +1156,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8H3M7HHBLW;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -1202,7 +1198,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8H3M7HHBLW;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;

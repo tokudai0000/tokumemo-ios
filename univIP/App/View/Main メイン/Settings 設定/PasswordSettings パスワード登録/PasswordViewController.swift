@@ -48,15 +48,15 @@ final class PasswordViewController: UIViewController {
             passwordViewButton.setImage(UIImage(systemName: "eye"), for: .normal)
         }
     }
-
+    
     @IBAction func resetButton(_ sender: Any) {
-        let alert: UIAlertController = UIAlertController(title: "アラート表示",
-                                                         message: "学生番号とパスワードの情報をこのスマホから消去しますか？",
-                                                         preferredStyle:  UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "アラート表示",
+                                      message: "学生番号とパスワードの情報をこのスマホから消去しますか？",
+                                      preferredStyle:  UIAlertController.Style.alert)
         
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK",
-                                                         style: UIAlertAction.Style.default,
-                                                         handler:{ (action: UIAlertAction!) -> Void in
+        let defaultAction = UIAlertAction(title: "OK",
+                                          style: UIAlertAction.Style.default,
+                                          handler:{ (action: UIAlertAction!) -> Void in
             self.dataManager.studentNumber = ""
             self.dataManager.password = ""
             self.initSetup()
@@ -125,10 +125,10 @@ final class PasswordViewController: UIViewController {
             title: "OK",
             style: UIAlertAction.Style.default,
             handler: { action in
-
+                
             })
         alert.addAction(main)
-
+        
         present(alert, animated: true, completion:nil)
         
     }
@@ -136,26 +136,25 @@ final class PasswordViewController: UIViewController {
     // MARK: - Private
     /// PasswordSettingsViewControllerの初期セットアップ
     private func initSetup() {
-        do { // 1. cアカウント
-            textFieldCursorSetup(fieldType: .studentNumber, cursorType: .normal)
-            studentNumberTextField.borderStyle = .none
-            studentNumberTextField.delegate = self
-            studentNumberTextField.text = dataManager.studentNumber
-            studentNumberTextSizeLabel.text = "\(dataManager.studentNumber.count)/10"
-            studentNumberMessageLabel.textColor = .red
-            studentNumberMessageLabel.text = ""
-        }
+        // 1. cアカウント
+        textFieldCursorSetup(fieldType: .studentNumber, cursorType: .normal)
+        studentNumberTextField.borderStyle = .none
+        studentNumberTextField.delegate = self
+        studentNumberTextField.text = dataManager.studentNumber
+        studentNumberTextSizeLabel.text = "\(dataManager.studentNumber.count)/10"
+        studentNumberMessageLabel.textColor = .red
+        studentNumberMessageLabel.text = ""
         
-        do { // 2. パスワード
-            textFieldCursorSetup(fieldType: .password, cursorType: .normal)
-            passwordTextField.borderStyle = .none
-            passwordTextField.delegate = self
-            passwordTextField.text = dataManager.password
-            passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
-            passwordMessageLabel.textColor = .red
-            passwordMessageLabel.text = ""
-            passwordTextField.isSecureTextEntry = true
-        }
+        // 2. パスワード
+        textFieldCursorSetup(fieldType: .password, cursorType: .normal)
+        passwordTextField.borderStyle = .none
+        passwordTextField.delegate = self
+        passwordTextField.text = dataManager.password
+        passwordTextSizeLabel.text = "\(dataManager.password.count)/100"
+        passwordMessageLabel.textColor = .red
+        passwordMessageLabel.text = ""
+        passwordTextField.isSecureTextEntry = true
+        
         
         // 学生番号とパスワードのリセット
         resetButton.layer.cornerRadius = 25.0
@@ -240,15 +239,15 @@ extension PasswordViewController: UITextFieldDelegate {
         let textFieldTag = FieldType(rawValue: textField.tag)
         
         switch textFieldTag {
-        case .studentNumber:
+            case .studentNumber:
                 textFieldCursorSetup(fieldType: .studentNumber, cursorType: .focus)
-            
-        case .password:
+                
+            case .password:
                 textFieldCursorSetup(fieldType: .password, cursorType: .focus)
-            
-        case .none:
-            AKLog(level: .FATAL, message: "TextFieldTagが不正")
-            fatalError()
+                
+            case .none:
+                AKLog(level: .FATAL, message: "TextFieldTagが不正")
+                fatalError()
         }
     }
     /// textField編集後

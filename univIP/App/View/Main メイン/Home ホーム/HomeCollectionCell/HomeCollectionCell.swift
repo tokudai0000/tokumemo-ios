@@ -10,10 +10,10 @@ import UIKit
 class HomeCollectionCell: UICollectionViewCell {
 
     @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
-    func setupCell(string: String, image: UIImage?) {
-        nameLabel.text = string
-        iconImageView.image = image
+    func setupCell(title: String, image: String) {
+        titleLabel.text = title
+        iconImageView.image = UIImage(systemName: image)
     }
 }

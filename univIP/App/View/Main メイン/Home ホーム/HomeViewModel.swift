@@ -136,7 +136,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     }
     
     /// タイムアウトのURLであるか判定
-    public func isTimeOut(urlStr: String) -> Bool {
+    public func isTimeout(urlStr: String) -> Bool {
         return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
     

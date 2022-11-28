@@ -8,20 +8,14 @@
 import Foundation
 
 final class WebViewModel {
+    // Safariで開く用として、現在表示しているURLを保存する
+    public var loadingUrlStr = "https://www.google.com/?hl=ja"
     
     private let dataManager = DataManager.singleton
     
-    public var loadingUrlStr = "https://www.google.com/?hl=ja"
-    
-    /// タイムアウトのURLであるかどうかの判定
-    /// - Parameter urlString: 読み込み完了したURLの文字列
-    /// - Returns: 結果
-    public func isTimeout(_ urlString: String) -> Bool {
-        if urlString == Url.universityServiceTimeOut.string() ||
-            urlString == Url.universityServiceTimeOut2.string() {
-            return true
-        }
-        return false
+    /// タイムアウトのURLであるか判定
+    public func isTimeout(urlStr: String) -> Bool {
+        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
     
     /// JavaScriptを動かす種類
@@ -46,20 +40,16 @@ final class WebViewModel {
             return .none
         }
         // アンケート解答の催促画面
-        if urlString == Url.skipReminder.string() {
-            return .skipReminder
-        }
+        //        if urlString == Url.skipReminder.string() {
+        //            return .skipReminder
+        //        }
+        // 大学統合認証システム(IAS)のログイン画面
+        //        if urlString.contains(Url.universityLogin.string()) {
+        //            return .loginIAS
+        //        }
         // シラバスの検索画面
         if urlString == Url.syllabus.string() {
             return .syllabus
-        }
-//        // cアカウント、パスワードを登録しているか
-//        if hasRegisteredPassword == false {
-//            return .none
-//        }
-        // 大学統合認証システム(IAS)のログイン画面
-        if urlString.contains(Url.universityLogin.string()) {
-            return .loginIAS
         }
         // メール(Outlook)のログイン画面
         if urlString.contains(Url.outlookLoginForm.string()) {

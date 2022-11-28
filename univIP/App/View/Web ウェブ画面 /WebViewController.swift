@@ -11,17 +11,18 @@ import FirebaseAnalytics
 
 final class WebViewController: UIViewController {
     
-    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var urlLabel: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var webView: WKWebView!
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
     
+    // webを表示した時になのをロードするのかを表示下から保持
+    public var loadUrlString: String?
+    
     private let viewModel = WebViewModel()
     private let dataManager = DataManager.singleton
-    
-    var loadUrlString: String?
 
     private var observation: NSKeyValueObservation?
     private var colorCnt = 0
@@ -35,10 +36,49 @@ final class WebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // 最初は戻るボタンはグレー色にする
+        forwardButton.alpha = 0.6
+    }
+    
+    @IBAction func finishButton(_ sender: Any) {
+        Analytics.logEvent("WebView[finishButton]", parameters: nil) // Analytics
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func backButton(_ sender: Any) {
+        Analytics.logEvent("WebView[backButton]", parameters: nil) // Analytics
+        if webView.canGoBack {
+            webView.goBack()
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    @IBAction func forwardButton(_ sender: Any) {
+        Analytics.logEvent("WebView[forwardButton]", parameters: nil) // Analytics
+        webView.goForward()
+    }
+    
+    @IBAction func safariButton(_ sender: Any) {
+        Analytics.logEvent("WebView[safariButton]", parameters: nil) // Analytics
+        let url = URL(string: viewModel.loadingUrlStr)!
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func reloadButton(_ sender: Any) {
+        Analytics.logEvent("WebView[reload]", parameters: nil) // Analytics
+        webView.reload()
+    }
+    
+    private func initSetup() {
         webView.uiDelegate = self
         webView.navigationDelegate = self
-        // スワイプで進む、戻るを有効
-        webView.allowsBackForwardNavigationGestures = true
+        webView.allowsBackForwardNavigationGestures = true // スワイプで進む、戻るを有効
         
         dataManager.canExecuteJavascript = true
         
@@ -47,10 +87,16 @@ final class WebViewController: UIViewController {
                 webView.load(URLRequest(url: url))
             }
         }
-        
-        // ステータスバーの背景色を指定
-//        setStatusBarBackgroundColor(UIColor(red: 246/255, green: 248/255, blue: 248/255, alpha: 1.0))
+    }
     
+    /// 大学統合認証システム(IAS)のページを読み込む
+    /// ログインの処理はWebViewのdidFinishで行う
+    private func relogin() {
+//        viewModel.loginFlag(type: .loginFromNow)
+        webView.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
+    }
+    
+    private func initProgressSetup() {
         progressView.progressTintColor = colorArray[colorCnt]
         colorCnt = colorCnt + 1
         
@@ -80,52 +126,17 @@ final class WebViewController: UIViewController {
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        forwardButton.alpha = 0.6
-    }
-    
-    @IBAction func finishButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    @IBAction func backButton(_ sender: Any) {
-        Analytics.logEvent("WebView[backButton]", parameters: nil) // Analytics
-        if webView.canGoBack {
-            webView.goBack()
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
-    }
-    @IBAction func forwardButton(_ sender: Any) {
-        Analytics.logEvent("WebView[forwardButton]", parameters: nil) // Analytics
-        webView.goForward()
-    }
-    @IBAction func safariButton(_ sender: Any) {
-        Analytics.logEvent("WebView[safariButton]", parameters: nil) // Analytics
-        let url = URL(string: viewModel.loadingUrlStr)!
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    @IBAction func reloadButton(_ sender: Any) {
-        Analytics.logEvent("WebView[reload]", parameters: nil) // Analytics
-        webView.reload()
-    }
-    
 }
 
 // MARK: - WKNavigationDelegate
 extension WebViewController: WKNavigationDelegate {
     /// 読み込み設定（リクエスト前）
-    ///
-    /// 以下の状態であったら読み込みを開始する。
-    ///  1. 読み込み前のURLがnilでないこと
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        // 読み込み前のURLをアンラップ
+        
         guard let url = navigationAction.request.url else {
+            AKLog(level: .FATAL, message: "読み込み前のURLがnil")
             decisionHandler(.cancel)
             return
         }
@@ -136,10 +147,9 @@ extension WebViewController: WKNavigationDelegate {
             }
         }
         
-        // タイムアウトした場合
-        if viewModel.isTimeout(url.absoluteString) {
-            // ログイン処理を始める
-            webView.load(Url.universityTransitionLogin.urlRequest())
+        // タイムアウトの判定
+        if viewModel.isTimeout(urlStr: url.absoluteString) {
+            relogin()
         }
 
         // 問題ない場合読み込みを許可
@@ -148,14 +158,12 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     /// 読み込み完了
-    ///
-    /// 主に以下2つのことを処理する
-    ///  1. 大学統合認証システムのログイン処理が終了した場合、ユーザが設定した初期画面を読み込む
-    ///  2. JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // 読み込み完了したURL
         let url = self.webView.url! // fatalError
-        viewModel.loadingUrlStr = url.absoluteString
+        AKLog(level: .DEBUG, message: url.absoluteString)
+        
+        viewModel.loadingUrlStr = url.absoluteString // Safari用にデータ保持
         
         // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
         switch viewModel.anyJavaScriptExecute(url.absoluteString) {
@@ -213,10 +221,9 @@ extension WebViewController: WKNavigationDelegate {
         if url.absoluteString == "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx" {
             webView.isHidden = false
         }
+        
         // 戻る、進むボタンの表示を変更
         forwardButton.alpha = webView.canGoForward ? 1.0 : 0.6
-
-        AKLog(level: .DEBUG, message: url.absoluteString)
     }
     
     /// alert対応

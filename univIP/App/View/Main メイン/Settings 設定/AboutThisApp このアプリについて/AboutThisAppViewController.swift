@@ -21,7 +21,4 @@ final class AboutThisAppViewController: UIViewController {
         let filePath = R.file.aboutThisAppRtf()!
         textView.attributedText = Common.loadRtfFileContents(filePath)
     }
-    
-    // MARK: - IBAction
-    
 }
