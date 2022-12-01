@@ -37,6 +37,7 @@ final class WebViewController: UIViewController {
         super.viewDidLoad()
         
         initSetup()
+        initProgressSetup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
