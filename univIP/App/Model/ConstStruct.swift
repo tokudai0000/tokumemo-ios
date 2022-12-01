@@ -41,6 +41,7 @@ struct ConstStruct {
         case universityWeb                  // 大学サイト
         
         case password                       // パスワード
+        case favorite                       // お気に入り登録
         case customize                      // 並び替え
         
         case aboutThisApp                   // このアプリについて
@@ -235,6 +236,8 @@ struct ConstStruct {
         [
             SettingsCell(title: "パスワード設定",
                          id: .password),
+            SettingsCell(title: "お気に入り登録",
+                         id: .favorite),
             SettingsCell(title: "カスタマイズ",
                          id: .customize)
         ],[

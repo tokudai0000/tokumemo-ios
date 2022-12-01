@@ -73,6 +73,12 @@ class SettingsViewController: UITableViewController {
                 navigationController?.pushViewController(vc, animated: true)
                 return
                 
+            case .favorite:
+                let vc = R.storyboard.favorite.favoriteViewController()!
+                vc.title = "お気に入り登録"
+                navigationController?.pushViewController(vc, animated: true)
+                return
+                
             case .customize:
                 let vc = R.storyboard.customize.customizeViewController()!
                 vc.title = "カスタマイズ"
