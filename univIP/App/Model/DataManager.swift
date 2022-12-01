@@ -160,9 +160,9 @@ final class DataManager {
     ///   - isDisplay: リストで表示する
     ///   - isInitView: 初期画面にする
     public func changeContentsMenuLists(row: Int, isDisplay: Bool? = nil) {
-//        if let isDisplay = isDisplay {
-//            menuLists[row].isDisplay = isDisplay
-//        }
+        if let isDisplay = isDisplay {
+            serviceLists[row].isDisplay = isDisplay
+        }
         saveMenuLists()
     }
     
@@ -209,7 +209,7 @@ final class DataManager {
             // 並び順を保持する
             if let index = newModelLists.firstIndex(where: {$0.id == oldList.id}) {
                 // 引き継ぎ
-//                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
+                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
                 updateForLists.append(newModelLists[index])
                 newModelLists.remove(at: index)
             }

@@ -60,6 +60,7 @@ struct ConstStruct {
         let iconSystemName: String?     //
         let lockIconSystemName: String? //
         let url: String?                // 関連したURLを保持 URLRequestはDecodableになる為、不可
+        var isDisplay: Bool = true
     }
     
     /// CollectionCell初期状態
