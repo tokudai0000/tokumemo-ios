@@ -62,6 +62,9 @@ final class HomeViewController: BaseViewController {
             return
         }
         
+        // cellの内容を決定
+        
+        
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
         
@@ -272,7 +275,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     /// セル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataManager.serviceLists.count
+        return viewModel.collectionLists.count
     }
     
     /// セルの中身
@@ -280,7 +283,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)! // fatalError
         
-        let collectionList = dataManager.serviceLists[indexPath.row]
+        let collectionList = viewModel.collectionLists[indexPath.row]
         
         let title = collectionList.title
         var icon = collectionList.iconSystemName! // fatalError
@@ -298,7 +301,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     /// セルがタップされた時
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // タップされたセルの内容を取得
-        let cell = dataManager.serviceLists[indexPath.row]
+        let cell = viewModel.collectionLists[indexPath.row]
         
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         

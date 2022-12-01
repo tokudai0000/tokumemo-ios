@@ -44,7 +44,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        // 表示を許可されているCellの場合、高さを44とする
+        if dataManager.serviceLists[indexPath.row].isDisplay {
+            return 44
+        }else{
+            return 0
+        }
     }
     
     // セルを選択した時のイベント

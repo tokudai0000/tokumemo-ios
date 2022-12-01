@@ -27,8 +27,6 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     //MARK: - MODEL モデル
-    // TableCellの内容
-    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCollectionCellLists
     // 広告のURL
     public var adImages:[String] = []
     
@@ -42,6 +40,18 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     // MARK: - Public 公開機能
+    // TableCellの内容
+    public var collectionLists: [ConstStruct.CollectionCell] {
+        get{
+            var displayLists:[ConstStruct.CollectionCell] = []
+            for item in dataManager.serviceLists {
+                if item.isDisplay {
+                    displayLists.append(item)
+                }
+            }
+            return displayLists
+        }
+    }
 
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public func shouldShowTermsAgreementView() -> Bool {
