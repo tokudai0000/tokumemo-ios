@@ -11,13 +11,12 @@ import Firebase
 class FavoriteViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var urlLabel: UILabel!
+    
+    @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var favoriteNameTextField: UITextField!
     
-    @IBOutlet weak var urlUnderLine: UIView!
     @IBOutlet weak var favoriteNameUnderLine: UIView!
     
-    @IBOutlet weak var urlMessageLabel: UILabel!
     @IBOutlet weak var favoriteNameMessageLabel: UILabel!
     
     @IBOutlet weak var favoriteTextSizeLabel: UILabel!
@@ -36,26 +35,19 @@ class FavoriteViewController: UIViewController {
         favoriteNameTextFieldCursorSetup(type: .normal)
         
         favoriteNameTextField.borderStyle = .none
+        urlTextField.borderStyle = .none
         
         favoriteNameTextField.delegate = self
+        urlTextField.delegate = self
         
         guard let urlString = urlString else { return }
-        urlLabel.text = urlString
         
         favoriteTextSizeLabel.text = "0/10"
         
-        urlMessageLabel.textColor = .red
         favoriteNameMessageLabel.textColor = .red
         
         registerButton.layer.cornerRadius = 5.0
         
-        
-        // 多分ここが通ることはないが念の為
-        guard let _ = URL(string: urlString) else {
-            urlMessageLabel.text = "不正なURLです"
-            urlTextFieldCursorSetup(type: .error)
-            return
-        }
         
         
     }
@@ -77,7 +69,7 @@ class FavoriteViewController: UIViewController {
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
         guard let favoriteNameText = favoriteNameTextField.text else { return }
         
-        guard let urlString = urlString else { return }
+        let urlString = urlTextField.text
         
         if favoriteNameText.isEmpty {
             favoriteNameMessageLabel.text = "空欄です"
@@ -86,13 +78,14 @@ class FavoriteViewController: UIViewController {
         }
         
         // お気に入りの仕様を作成
-//        let menuItem = Constant.Menu(title: favoriteNameText,
-//                                     id: .favorite,
-//                                     url: urlString,
-//                                     isInitView: isFirstViewSetting.isOn,
-//                                     canInitView: true)
-//        // 保存
-//        dataManager.addContentsMenuLists(menuItem: menuItem)
+        let serviceItem = ConstStruct.CollectionCell(title: favoriteNameText,
+                                                     id: .favorite,
+                                                     iconSystemName: "questionmark.folder",
+                                                     lockIconSystemName: nil,
+                                                     url: urlString)
+        
+        // 保存
+        dataManager.addContentsMenuLists(menuItem: serviceItem)
         
         dismiss(animated: true, completion: nil)
         
@@ -113,20 +106,20 @@ class FavoriteViewController: UIViewController {
         case error
     }
     private func urlTextFieldCursorSetup(type: cursorType) {
-        switch type {
-                
-            case .normal:
-                urlUnderLine.backgroundColor = .lightGray
-                
-            case .focus:
-                // カーソルの色
-                urlLabel.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                
-            case .error:
-                urlLabel.tintColor = .red
-                urlUnderLine.backgroundColor = .red
-        }
+//        switch type {
+//
+//            case .normal:
+//                urlUnderLine.backgroundColor = .lightGray
+//
+//            case .focus:
+//                // カーソルの色
+//                urlLabel.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+//                urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+//
+//            case .error:
+//                urlLabel.tintColor = .red
+//                urlUnderLine.backgroundColor = .red
+//        }
     }
     
     private func favoriteNameTextFieldCursorSetup(type: cursorType) {
