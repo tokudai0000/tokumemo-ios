@@ -125,4 +125,123 @@ final class DataManager {
     private func setUserDefaultsBool(key:String, value:Bool) {
         userDefaults.set(value ,forKey: key)
     }
+    
+    
+    
+    /////////////////// menuについて
+    
+    // 毎回UserDefaultsから取ってきて保存する
+    public var serviceLists:[ConstStruct.CollectionCell] =  []
+    private init() {
+        // インスタンスが1つであることを補償
+        serviceLists = loadMenuLists()
+    }
+    
+    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - menuItem: 追加したいお気に入り設定
+    public func addContentsMenuLists(menuItem: ConstStruct.CollectionCell) {
+        serviceLists.append(menuItem)
+        saveMenuLists()
+    }
+    
+    /// MenuLists内の要素を削除する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    public func deleteContentsMenuLists(row: Int) {
+        serviceLists.remove(at: row)
+        saveMenuLists()
+    }
+    
+    /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    ///   - title: タイトルの変更
+    ///   - isDisplay: リストで表示する
+    ///   - isInitView: 初期画面にする
+    public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
+        if let title = title {
+//            menuLists[row].title = title
+        }
+        if let isDisplay = isDisplay {
+//            menuLists[row].isDisplay = isDisplay
+        }
+        if let isInitView = isInitView {
+            // falseに初期化する
+//            for i in 0..<menuLists.count { menuLists[i].isInitView = false }
+//            menuLists[row].isInitView = isInitView
+        }
+        saveMenuLists()
+    }
+    
+    /// MenuLists内の順番を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - sourceRow: 移動させたいcellのindex
+    ///   - destinationRow: 挿入場所のindex
+    public func changeSortOderMenuLists(sourceRow: Int, destinationRow: Int) {
+        let todo = serviceLists[sourceRow]
+        serviceLists.remove(at: sourceRow)
+        serviceLists.insert(todo, at: destinationRow)
+        saveMenuLists()
+    }
+    /// GET (UserDefaults) Data
+    private func getUserDefaultsData(key:String) -> Data {
+        if let value = userDefaults.data(forKey: key) {
+            return value
+        }
+        return Data() // 非登録者の場合
+    }
+    
+    /// SET (UserDefaults) Data
+    private func setUserDefaultsData(key:String, value:Data) {
+        userDefaults.set(value ,forKey: key)
+    }
+    
+    
+    private let KEY_menuLists = "KEY_ServiceLists"
+    private func loadMenuLists() -> [ConstStruct.CollectionCell] {
+        // UserDefaultsから読み込む
+        // Data -> Json -> 配列 にパースする必要がある
+        let jsonDecoder = JSONDecoder()
+        let data = getUserDefaultsData(key: KEY_menuLists)
+        guard let lists = try? jsonDecoder.decode([ConstStruct.CollectionCell].self, from: data) else {
+            // 初回利用者は初期値を返す
+            return ConstStruct.initCollectionCellLists
+        }
+        
+        // アップデートごとに機能追加等があるため、更新する
+        var newModelLists = ConstStruct.initCollectionCellLists
+        var updateForLists:[ConstStruct.CollectionCell] = []
+        
+        for oldList in lists {
+            // 並び順を保持する
+            if let index = newModelLists.firstIndex(where: {$0.id == oldList.id}) {
+                // 引き継ぎ
+                newModelLists[index].title = oldList.title             // ユーザーが指定した名前
+                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
+                newModelLists[index].isInitView = oldList.isInitView   // ユーザーが指定した初期画面
+                updateForLists.append(newModelLists[index])
+                newModelLists.remove(at: index)
+            }
+            
+            // お気に入りの場合、ユーザーによって変化するため、そのまま引き継ぐ
+            if oldList.id == .favorite {
+                // 引き継ぎ
+                updateForLists.append(oldList)
+            }
+        }
+        
+        // 新規実装があれば通る
+        updateForLists.append(contentsOf: newModelLists)
+        
+        return updateForLists
+    }
+    
+    public func saveMenuLists() {
+        // UserDefaultsに保存
+        // 配列 -> Json -> Data にパースする必要がある
+        let jsonEncoder = JSONEncoder()
+        guard let data = try? jsonEncoder.encode(menuLists) else { return }
+        setUserDefaultsData(key: KEY_menuLists, value: data)
+    }
 }
