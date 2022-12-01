@@ -52,6 +52,11 @@ final class HomeViewController: BaseViewController {
         viewModel.getWether()
     }
     
+    // ステータスバーの文字を白に設定
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+    }
+    
     /// 画面が表示される直前
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
