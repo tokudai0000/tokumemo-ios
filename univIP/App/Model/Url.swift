@@ -10,8 +10,8 @@ import Foundation
 enum Url: String {
     /// 大学ホームページ
     case universityHomePage = "https://www.tokushima-u.ac.jp/"
-    /// システムサービス一覧
-    case systemServiceList = "https://www.ait.tokushima-u.ac.jp/service/list_out/"
+    /// 統合認証システム
+    case portal = "https://my.ait.tokushima-u.ac.jp/portal/"
     /// Eラーニング一覧
     case eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
     
@@ -61,8 +61,8 @@ enum Url: String {
     /// 徳島大学キャリアセンター
     case tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
     
-    /// 徳島大学生活共同組合
-    case tokudaiCoop = "https://tokudai.marucoop.com/#parts"
+    /// 徳島大学生活共同組合　旧"https://tokudai.marucoop.com/#parts"
+    case tokudaiCoop = "https://vsign.jp/tokudai/maruco#parts"
     
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
@@ -73,9 +73,24 @@ enum Url: String {
     /// タイムアウト2(20分無操作)
     case universityServiceTimeOut2 = "https://eweb.stud.tokushima-u.ac.jp/Portal/RichTimeOutSub.aspx"
     /// アンケート催促画面(教務事務表示前に出現)
-    case questionnaireReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
+    case skipReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
     /// マナバから授業動画[Youtube]を開く時
     case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
+    /// GoogleFormsでお問い合わせフォームを作成
+    case contactUs = "https://forms.gle/ceBzS6TL3A1XuJsNA"
+    /// TwitterのURL
+    case officialSNS = "https://twitter.com/tokumemo0000"
+    /// ホームページのURL
+    case homePage = "https://lit.link/developers"
+    /// トクメモ＋のプライバシーポリシーURL[GitHub]
+    case privacyPolicy = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt"
+    /// トクメモ＋の利用規約URL[GitHub]
+    case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
+    /// トクメモ＋のソースコード[GitHub]
+    case sourceCode = "https://github.com/tokudai0000/univIP"
+    /// 気象庁の天気予報
+    case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
+    
     
     /// URLを文字列として返す
     func string() -> String {
