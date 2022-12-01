@@ -236,7 +236,8 @@ struct ConstStruct {
     static let initSettingsCellLists = [
         [
             SettingsCell(title: "パスワード設定",
-                         id: .password),
+                         id: .password)
+        ],[
             SettingsCell(title: "お気に入り登録",
                          id: .favorite),
             SettingsCell(title: "カスタマイズ",
