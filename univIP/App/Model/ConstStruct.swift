@@ -235,8 +235,8 @@ struct ConstStruct {
         [
             SettingsCell(title: "パスワード設定",
                          id: .password),
-            //            MenuCell(title: "カスタマイズ",
-            //                     id: .customize)
+            SettingsCell(title: "カスタマイズ",
+                         id: .customize)
         ],[
             SettingsCell(title: "このアプリについて",
                          id: .aboutThisApp),
