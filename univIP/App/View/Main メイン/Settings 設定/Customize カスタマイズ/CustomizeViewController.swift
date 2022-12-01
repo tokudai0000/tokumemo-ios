@@ -11,7 +11,6 @@ import FirebaseAnalytics
 final class CustomizeViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     private let dataManager = DataManager.singleton
@@ -60,7 +59,7 @@ final class CustomizeViewController: UIViewController {
     
     // 表示を許可したCellを配列の前方にソートする
     private func cellSort() {
-//        var oldLists:[Constant.Menu] = dataManager.menuLists
+//        var oldLists:[Constant.Menu] = dataManager.serviceLists
 //        var newLists:[Constant.Menu] = []
 //        var counter = 0
 //        for i in 0..<dataManager.menuLists.count {
@@ -120,13 +119,13 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ConstStruct.initCollectionCellLists.count
+        return dataManager.serviceLists.count
     }
     
     // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.customizeTableCell, for: indexPath)! // fatalError
-        tableCell.textLabel?.text = ConstStruct.initCollectionCellLists[indexPath.row].title
+        tableCell.textLabel?.text = dataManager.serviceLists[indexPath.row].title
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
@@ -143,8 +142,8 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     // 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // 並び替えを更新
-//        dataManager.changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
-//        dataManager.saveMenuLists()
+        dataManager.changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
+        dataManager.saveMenuLists()
     }
     
     // セルの高さ

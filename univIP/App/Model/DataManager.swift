@@ -159,18 +159,10 @@ final class DataManager {
     ///   - title: タイトルの変更
     ///   - isDisplay: リストで表示する
     ///   - isInitView: 初期画面にする
-    public func changeContentsMenuLists(row: Int, title: String? = nil, isDisplay: Bool? = nil, isInitView: Bool? = nil) {
-        if let title = title {
-//            menuLists[row].title = title
-        }
-        if let isDisplay = isDisplay {
+    public func changeContentsMenuLists(row: Int, isDisplay: Bool? = nil) {
+//        if let isDisplay = isDisplay {
 //            menuLists[row].isDisplay = isDisplay
-        }
-        if let isInitView = isInitView {
-            // falseに初期化する
-//            for i in 0..<menuLists.count { menuLists[i].isInitView = false }
-//            menuLists[row].isInitView = isInitView
-        }
+//        }
         saveMenuLists()
     }
     
@@ -217,9 +209,7 @@ final class DataManager {
             // 並び順を保持する
             if let index = newModelLists.firstIndex(where: {$0.id == oldList.id}) {
                 // 引き継ぎ
-                newModelLists[index].title = oldList.title             // ユーザーが指定した名前
-                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
-                newModelLists[index].isInitView = oldList.isInitView   // ユーザーが指定した初期画面
+//                newModelLists[index].isDisplay = oldList.isDisplay     // ユーザーが指定した表示
                 updateForLists.append(newModelLists[index])
                 newModelLists.remove(at: index)
             }
@@ -241,7 +231,7 @@ final class DataManager {
         // UserDefaultsに保存
         // 配列 -> Json -> Data にパースする必要がある
         let jsonEncoder = JSONEncoder()
-        guard let data = try? jsonEncoder.encode(menuLists) else { return }
+        guard let data = try? jsonEncoder.encode(serviceLists) else { return }
         setUserDefaultsData(key: KEY_menuLists, value: data)
     }
 }

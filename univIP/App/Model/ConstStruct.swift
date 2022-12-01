@@ -13,7 +13,7 @@ struct ConstStruct {
     static let latestTermsVersion = "2.0"
     
     /// メニューの種類
-    enum MenuLists {
+    enum MenuLists: Codable{
         case courseManagementHomePC         // 教務事務システム
         case courseManagementHomeMobile
         case manabaHomePC                   // マナバ
@@ -54,7 +54,7 @@ struct ConstStruct {
         case sourceCode                     // ソースコード
     }
     
-    struct CollectionCell {
+    struct CollectionCell: Codable{
         let title: String               // 表示名
         let id: MenuLists               // 識別しやすいようにIDを作成　タイポミスの軽減
         let iconSystemName: String?     //
