@@ -166,18 +166,37 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return false
     }
     
-    enum loginType {
-        case loginFromNow
+    enum flagType {
+        case notStart
+        case loginStart
+        case loginSuccess
+        case loginMiss
         case executedJavaScript
     }
     // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-    public func loginFlag(type: loginType) {
+    public func updateLoginFlag(type: flagType) {
         
         switch type {
-            case .loginFromNow:
-                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
-                isLoginProcessing = true // ログイン処理中であるフラグ
-                isLoginComplete = false // ログインが完了したかのフラグ
+            case .notStart:
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = false
+                isLoginComplete = false
+                
+            case .loginStart:
+                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす
+                isLoginProcessing = true // ログイン処理中
+                isLoginComplete = false // ログインが完了していない
+            
+            case .loginSuccess:
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = false
+                isLoginComplete = true
+                isLoginCompleteImmediately = false
+                
+            case .loginMiss:
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = false
+                isLoginComplete = false
                 
             case .executedJavaScript:
                 // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす

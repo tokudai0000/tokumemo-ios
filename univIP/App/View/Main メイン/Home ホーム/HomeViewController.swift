@@ -146,7 +146,7 @@ final class HomeViewController: BaseViewController {
                         break
                         
                     case .weatherError: // 通信失敗
-//                        self.weatherActivityIndicator.stopAnimating()
+                        self.weatherActivityIndicator.stopAnimating()
                         self.weatherViewLoad(discription: "取得エラー",
                                              feelsLike: "",
                                              icon: UIImage(resource: R.image.noImage)!)
@@ -208,7 +208,7 @@ final class HomeViewController: BaseViewController {
     private func relogin() {
         viewActivityIndicator.startAnimating() // クルクルスタート
         loginGrayBackGroundView.isHidden = false
-        viewModel.loginFlag(type: .loginFromNow)
+        viewModel.updateLoginFlag(type: .loginStart)
         webViewForLogin.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
     }
     
@@ -246,8 +246,17 @@ extension HomeViewController: WKNavigationDelegate {
         
         guard let url = navigationAction.request.url else {
             AKLog(level: .FATAL, message: "読み込み前のURLがnil")
+            viewActivityIndicator.stopAnimating() // クルクルストップ
+            loginGrayBackGroundView.isHidden = true
             decisionHandler(.cancel)
             return
+        }
+        
+        // ログインが完了しているか
+        viewModel.checkLoginComplete(url.absoluteString)
+        
+        if !viewModel.hasRegisteredPassword() {
+            viewModel.updateLoginFlag(type: .notStart)
         }
         
         // タイムアウトの判定
@@ -255,22 +264,21 @@ extension HomeViewController: WKNavigationDelegate {
             relogin()
         }
         
-        // ログイン状況のチェック
-        viewModel.checkLoginComplete(url.absoluteString)
-        
         // ログインに失敗していた場合、通知
         if viewModel.isLoginFailure(url.absoluteString) {
-            viewActivityIndicator.stopAnimating() // クルクルストップ
-            loginGrayBackGroundView.isHidden = true
+            viewModel.updateLoginFlag(type: .loginMiss)
             toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
         }
         
         // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
         if viewModel.isLoginCompleteImmediately {
+            viewModel.updateLoginFlag(type: .loginSuccess)
+            collectionView.reloadData()
+        }
+        
+        if !viewModel.isLoginProcessing {
             viewActivityIndicator.stopAnimating() // クルクルストップ
             loginGrayBackGroundView.isHidden = true
-            viewModel.isLoginCompleteImmediately = false
-            collectionView.reloadData()
         }
         
         decisionHandler(.allow)
@@ -291,7 +299,7 @@ extension HomeViewController: WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             
             // フラグ管理
-            viewModel.loginFlag(type: .executedJavaScript)
+            viewModel.updateLoginFlag(type: .executedJavaScript)
             return
         }
     }
