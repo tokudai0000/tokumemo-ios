@@ -31,7 +31,9 @@ final class HomeViewController: BaseViewController {
     private let dataManager = DataManager.singleton
     
     private var adTimer = Timer()
-    private var ActivityIndicator: UIActivityIndicatorView! // 先頭大文字でないといけないようだ
+    private var loginGrayBackGroundView: UIView!
+    private var weatherActivityIndicator: UIActivityIndicatorView!
+    private var viewActivityIndicator: UIActivityIndicatorView!
     
     
     // MARK: - LifeCycle
@@ -133,18 +135,18 @@ final class HomeViewController: BaseViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .weatherBusy: // 通信中
-                        self.ActivityIndicator.startAnimating() // クルクルスタート
+                        self.weatherActivityIndicator.startAnimating() // クルクルスタート
                         break
                         
                     case .weatherReady: // 通信完了
-                        self.ActivityIndicator.stopAnimating() // クルクルストップ
+                        self.weatherActivityIndicator.stopAnimating() // クルクルストップ
                         self.weatherViewLoad(discription: self.viewModel.weatherDiscription,
                                              feelsLike: self.viewModel.weatherFeelsLike,
                                              icon: UIImage(url: self.viewModel.weatherIconUrlStr))
                         break
                         
                     case .weatherError: // 通信失敗
-                        self.ActivityIndicator.stopAnimating()
+                        self.weatherActivityIndicator.stopAnimating()
                         self.weatherViewLoad(discription: "取得エラー",
                                              feelsLike: "",
                                              icon: UIImage(resource: R.image.noImage)!)
@@ -167,24 +169,46 @@ final class HomeViewController: BaseViewController {
     
     /// クルクル(読み込み中の表示)の初期設定
     private func initActivityIndicator() {
-        ActivityIndicator = UIActivityIndicatorView()
-        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        ActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
+        weatherActivityIndicator = UIActivityIndicatorView()
+        weatherActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        weatherActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
+
+        // クルクルをストップした時に非表示する
+        weatherActivityIndicator.hidesWhenStopped = true
+
+        // 色を設定
+        weatherActivityIndicator.style = UIActivityIndicatorView.Style.medium
+
+        //Viewに追加
+        self.weatherView.addSubview(weatherActivityIndicator)
+        
+        
+        loginGrayBackGroundView = UIView()
+        loginGrayBackGroundView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        loginGrayBackGroundView.backgroundColor = .gray.withAlphaComponent(0.25)
+        //Viewに追加
+        self.view.addSubview(loginGrayBackGroundView)
+        
+        
+        viewActivityIndicator = UIActivityIndicatorView(style: .large)
         
         // クルクルをストップした時に非表示する
-        ActivityIndicator.hidesWhenStopped = true
+        viewActivityIndicator.hidesWhenStopped = true
+        viewActivityIndicator.center = self.view.center
         
         // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
+        viewActivityIndicator.color =  R.color.mainColor()
         
         //Viewに追加
-        self.weatherView.addSubview(ActivityIndicator)
+        self.view.addSubview(viewActivityIndicator)
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
     private func relogin() {
-        viewModel.loginFlag(type: .loginFromNow)
+        viewActivityIndicator.startAnimating() // クルクルスタート
+        loginGrayBackGroundView.isHidden = false
+        viewModel.updateLoginFlag(type: .loginStart)
         webViewForLogin.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
     }
     
@@ -222,8 +246,17 @@ extension HomeViewController: WKNavigationDelegate {
         
         guard let url = navigationAction.request.url else {
             AKLog(level: .FATAL, message: "読み込み前のURLがnil")
+            viewActivityIndicator.stopAnimating() // クルクルストップ
+            loginGrayBackGroundView.isHidden = true
             decisionHandler(.cancel)
             return
+        }
+        
+        // ログインが完了しているか
+        viewModel.checkLoginComplete(url.absoluteString)
+        
+        if viewModel.hasRegisteredPassword() == false {
+            viewModel.updateLoginFlag(type: .notStart)
         }
         
         // タイムアウトの判定
@@ -231,18 +264,20 @@ extension HomeViewController: WKNavigationDelegate {
             relogin()
         }
         
-        // ログイン状況のチェック
-        viewModel.checkLoginComplete(url.absoluteString)
-        
         // ログインに失敗していた場合、通知
         if viewModel.isLoginFailure(url.absoluteString) {
+            viewModel.updateLoginFlag(type: .loginFailure)
             toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
         }
         
         // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
         if viewModel.isLoginCompleteImmediately {
-            viewModel.isLoginCompleteImmediately = false
             collectionView.reloadData()
+        }
+        
+        if viewModel.isLoginProcessing == false {
+            viewActivityIndicator.stopAnimating() // クルクルストップ
+            loginGrayBackGroundView.isHidden = true
         }
         
         decisionHandler(.allow)
@@ -263,7 +298,7 @@ extension HomeViewController: WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             
             // フラグ管理
-            viewModel.loginFlag(type: .executedJavaScript)
+            viewModel.updateLoginFlag(type: .executedJavaScript)
             return
         }
     }
