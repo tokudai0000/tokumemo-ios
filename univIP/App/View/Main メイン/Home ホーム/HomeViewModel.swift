@@ -170,7 +170,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         case notStart
         case loginStart
         case loginSuccess
-        case loginMiss
+        case loginFailure
         case executedJavaScript
     }
     // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
@@ -191,9 +191,9 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 dataManager.canExecuteJavascript = false
                 isLoginProcessing = false
                 isLoginComplete = true
-                isLoginCompleteImmediately = false
+                isLoginCompleteImmediately = true
                 
-            case .loginMiss:
+            case .loginFailure:
                 dataManager.canExecuteJavascript = false
                 isLoginProcessing = false
                 isLoginComplete = false
@@ -217,9 +217,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         
         // ログイン処理中かつ、ログイン後のURL
         if isLoginProcessing, result {
-            isLoginProcessing = false
-            isLoginCompleteImmediately = true
-            isLoginComplete = true
+            updateLoginFlag(type: .loginSuccess)
             return
         }
         return

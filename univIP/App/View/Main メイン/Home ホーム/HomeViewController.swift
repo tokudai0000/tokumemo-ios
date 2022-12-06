@@ -255,7 +255,7 @@ extension HomeViewController: WKNavigationDelegate {
         // ログインが完了しているか
         viewModel.checkLoginComplete(url.absoluteString)
         
-        if !viewModel.hasRegisteredPassword() {
+        if viewModel.hasRegisteredPassword() == false {
             viewModel.updateLoginFlag(type: .notStart)
         }
         
@@ -266,17 +266,16 @@ extension HomeViewController: WKNavigationDelegate {
         
         // ログインに失敗していた場合、通知
         if viewModel.isLoginFailure(url.absoluteString) {
-            viewModel.updateLoginFlag(type: .loginMiss)
+            viewModel.updateLoginFlag(type: .loginFailure)
             toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
         }
         
         // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
         if viewModel.isLoginCompleteImmediately {
-            viewModel.updateLoginFlag(type: .loginSuccess)
             collectionView.reloadData()
         }
         
-        if !viewModel.isLoginProcessing {
+        if viewModel.isLoginProcessing == false {
             viewActivityIndicator.stopAnimating() // クルクルストップ
             loginGrayBackGroundView.isHidden = true
         }
