@@ -13,12 +13,13 @@ class FavoriteViewController: UIViewController {
     // MARK: - IBOutlet
     
     @IBOutlet weak var urlTextField: UITextField!
-    @IBOutlet weak var favoriteNameTextField: UITextField!
+    @IBOutlet weak var urlUnderLine: UIView!
+    @IBOutlet weak var urlMessageLabel: UILabel!
+    @IBOutlet weak var urlTextSizeLabel: UILabel!
     
-    @IBOutlet weak var favoriteNameUnderLine: UIView!
-    
-    @IBOutlet weak var favoriteNameMessageLabel: UILabel!
-    
+    @IBOutlet weak var favoriteTextField: UITextField!
+    @IBOutlet weak var favoriteUnderLine: UIView!
+    @IBOutlet weak var favoriteMessageLabel: UILabel!
     @IBOutlet weak var favoriteTextSizeLabel: UILabel!
     
     @IBOutlet weak var registerButton: UIButton!
@@ -34,22 +35,19 @@ class FavoriteViewController: UIViewController {
         urlTextFieldCursorSetup(type: .normal)
         favoriteNameTextFieldCursorSetup(type: .normal)
         
-        favoriteNameTextField.borderStyle = .none
         urlTextField.borderStyle = .none
+        favoriteTextField.borderStyle = .none
         
-        favoriteNameTextField.delegate = self
         urlTextField.delegate = self
+        favoriteTextField.delegate = self
         
-        guard let urlString = urlString else { return }
-        
+        urlTextSizeLabel.text = "0/100"
         favoriteTextSizeLabel.text = "0/10"
         
-        favoriteNameMessageLabel.textColor = .red
+        urlMessageLabel.textColor = .red
+        favoriteMessageLabel.textColor = .red
         
         registerButton.layer.cornerRadius = 5.0
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,18 +65,25 @@ class FavoriteViewController: UIViewController {
     // MARK: - IBAction
     @IBAction func registerButton(_ sender: Any) {
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
-        guard let favoriteNameText = favoriteNameTextField.text else { return }
+        guard let urlText = favoriteTextField.text else { return }
+        guard let favoriteText = favoriteTextField.text else { return }
         
         let urlString = urlTextField.text
         
-        if favoriteNameText.isEmpty {
-            favoriteNameMessageLabel.text = "空欄です"
+        if urlText.isEmpty {
+            urlMessageLabel.text = "空欄です"
+            urlTextFieldCursorSetup(type: .error)
+            return
+        }
+        
+        if favoriteText.isEmpty {
+            favoriteMessageLabel.text = "空欄です"
             favoriteNameTextFieldCursorSetup(type: .error)
             return
         }
         
         // お気に入りの仕様を作成
-        let serviceItem = ConstStruct.CollectionCell(title: favoriteNameText,
+        let serviceItem = ConstStruct.CollectionCell(title: favoriteText,
                                                      id: .favorite,
                                                      iconSystemName: "questionmark.folder",
                                                      lockIconSystemName: nil,
@@ -93,48 +98,46 @@ class FavoriteViewController: UIViewController {
         Analytics.logEvent("FavoriteView", parameters: ["url": urlString])
     }
     
-    @IBAction func dismissButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
     // MARK: - Private
-    
+    /// TextFieldの種類(TextFieldのtagで判断するため、Int型)
+    enum FieldType: Int {
+        case url = 0
+        case favorite = 1
+    }
     enum cursorType {
         case normal
         case focus
         case error
     }
     private func urlTextFieldCursorSetup(type: cursorType) {
-//        switch type {
-//
-//            case .normal:
-//                urlUnderLine.backgroundColor = .lightGray
-//
-//            case .focus:
-//                // カーソルの色
-//                urlLabel.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-//                urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-//
-//            case .error:
-//                urlLabel.tintColor = .red
-//                urlUnderLine.backgroundColor = .red
-//        }
+        switch type {
+            case .normal:
+                urlUnderLine.backgroundColor = .lightGray
+
+            case .focus:
+                // カーソルの色
+                urlTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                urlUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+
+            case .error:
+                urlTextField.tintColor = .red
+                urlUnderLine.backgroundColor = .red
+        }
     }
     
     private func favoriteNameTextFieldCursorSetup(type: cursorType) {
         switch type {
                 
             case .normal:
-                favoriteNameUnderLine.backgroundColor = .lightGray
+                favoriteUnderLine.backgroundColor = .lightGray
                 
             case .focus:
-                favoriteNameTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
-                favoriteNameUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                favoriteTextField.tintColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
+                favoriteUnderLine.backgroundColor = UIColor(red: 13/255, green: 169/255, blue: 251/255, alpha: 1.0)
                 
             case .error:
-                favoriteNameTextField.tintColor = .red
-                favoriteNameUnderLine.backgroundColor = .red
+                favoriteTextField.tintColor = .red
+                favoriteUnderLine.backgroundColor = .red
         }
     }
     
@@ -146,16 +149,23 @@ extension FavoriteViewController: UITextFieldDelegate {
     
     // textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        favoriteNameTextFieldCursorSetup(type: .focus)
+        // textFieldTag = 0はfieldType = .url
+        if textField.tag == 0 {
+            urlTextFieldCursorSetup(type: .focus)
+        } else {
+            favoriteNameTextFieldCursorSetup(type: .focus)
+        }
     }
     // textField編集後
     func textFieldDidEndEditing(_ textField: UITextField) {
+        urlTextFieldCursorSetup(type: .normal)
         favoriteNameTextFieldCursorSetup(type: .normal)
     }
     
     // text内容が変更されるたびに
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        favoriteTextSizeLabel.text = "\(favoriteNameTextField.text?.count ?? 0)/10"
+        urlTextSizeLabel.text = "\(urlTextField.text?.count ?? 0)/100"
+        favoriteTextSizeLabel.text = "\(favoriteTextField.text?.count ?? 0)/10"
     }
     
 }
