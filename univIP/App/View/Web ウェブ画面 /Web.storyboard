@@ -36,18 +36,22 @@
                                             <action selector="forwardButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="O4h-fB-UhO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IiE-H2-KtA">
-                                        <rect key="frame" x="210" y="0.0" width="99" height="44"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title=""/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3M5-Ov-TSx">
-                                        <rect key="frame" x="315" y="0.0" width="99" height="44"/>
+                                        <rect key="frame" x="210" y="0.0" width="99" height="44"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="safari" catalog="system" title=""/>
                                         <connections>
                                             <action selector="safariButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="IGA-ap-ltU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IiE-H2-KtA">
+                                        <rect key="frame" x="315" y="0.0" width="99" height="44"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system" title=""/>
+                                        <connections>
+                                            <action selector="menuButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="FOq-Eu-Yo5"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -164,6 +168,7 @@
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.forward" catalog="system" width="96" height="128"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="safari" catalog="system" width="128" height="121"/>
     </resources>
 </document>
