@@ -24,6 +24,13 @@
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
+		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
+		1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698BF2938CA96003906DB /* MenuViewController.swift */; };
+		1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C12938CA9F003906DB /* MenuViewModel.swift */; };
+		1A5698C52938CE0F003906DB /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C42938CE0F003906DB /* CustomizeViewController.swift */; };
+		1A5698C72938CE18003906DB /* Customize.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698C62938CE18003906DB /* Customize.storyboard */; };
+		1A5698CA2938D0EF003906DB /* Favorite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698C92938D0EF003906DB /* Favorite.storyboard */; };
+		1A5698CC2938D0F8003906DB /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698CB2938D0F8003906DB /* FavoriteViewController.swift */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
 		1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A5FD6832715305D0081F952 /* GoogleService-Info.plist */; };
 		1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51AF2904E82900A3E85A /* Home.storyboard */; };
@@ -105,6 +112,13 @@
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
+		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
+		1A5698BF2938CA96003906DB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		1A5698C12938CA9F003906DB /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		1A5698C42938CE0F003906DB /* CustomizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
+		1A5698C62938CE18003906DB /* Customize.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Customize.storyboard; sourceTree = "<group>"; };
+		1A5698C92938D0EF003906DB /* Favorite.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Favorite.storyboard; sourceTree = "<group>"; };
+		1A5698CB2938D0F8003906DB /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
 		1A5FD6832715305D0081F952 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A6C51AF2904E82900A3E85A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
@@ -217,6 +231,7 @@
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
 				1A30D0AD28F6D79800C4012E /* WebViewController.swift */,
 				1A30D0AF28F6D7BC00C4012E /* Web.storyboard */,
+				1A5698BC2938CA09003906DB /* Menu メニュー */,
 			);
 			name = "Web ウェブ画面 ";
 			path = "Web ウェブ画面 ";
@@ -229,6 +244,8 @@
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
 				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
 				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
+				1A5698C82938D0B4003906DB /* Favorite お気に入り */,
+				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
 			);
 			path = "Settings 設定";
 			sourceTree = "<group>";
@@ -285,6 +302,35 @@
 			name = AKLibrary;
 			path = univIP/App/AKLibrary;
 			sourceTree = SOURCE_ROOT;
+		};
+		1A5698BC2938CA09003906DB /* Menu メニュー */ = {
+			isa = PBXGroup;
+			children = (
+				1A5698C12938CA9F003906DB /* MenuViewModel.swift */,
+				1A5698BF2938CA96003906DB /* MenuViewController.swift */,
+				1A5698BD2938CA8D003906DB /* Menu.storyboard */,
+			);
+			path = "Menu メニュー";
+			sourceTree = "<group>";
+		};
+		1A5698C32938CDC8003906DB /* Customize カスタマイズ */ = {
+			isa = PBXGroup;
+			children = (
+				1A5698C42938CE0F003906DB /* CustomizeViewController.swift */,
+				1A5698C62938CE18003906DB /* Customize.storyboard */,
+			);
+			name = "Customize カスタマイズ";
+			path = "Customize カスタマイズ";
+			sourceTree = "<group>";
+		};
+		1A5698C82938D0B4003906DB /* Favorite お気に入り */ = {
+			isa = PBXGroup;
+			children = (
+				1A5698CB2938D0F8003906DB /* FavoriteViewController.swift */,
+				1A5698C92938D0EF003906DB /* Favorite.storyboard */,
+			);
+			path = "Favorite お気に入り";
+			sourceTree = "<group>";
 		};
 		1A6EF50D27BA5C43004D0B2C /* Extension */ = {
 			isa = PBXGroup;
@@ -631,6 +677,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */,
 				1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */,
 				1AAF27022748587C0071B89F /* Settings.bundle in Resources */,
 				80D3B7012909439100FF1AE3 /* StudentCard.storyboard in Resources */,
@@ -638,8 +685,10 @@
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
 				1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */,
 				1ABE8BE127B10489001EEA79 /* AboutThisApp.storyboard in Resources */,
+				1A5698C72938CE18003906DB /* Customize.storyboard in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */,
+				1A5698CA2938D0EF003906DB /* Favorite.storyboard in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Password.storyboard in Resources */,
 				1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */,
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
@@ -814,7 +863,9 @@
 			files = (
 				1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */,
 				1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */,
+				1A5698C52938CE0F003906DB /* CustomizeViewController.swift in Sources */,
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
+				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingsViewController.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */,
@@ -824,6 +875,7 @@
 				1ABE8BD927B10489001EEA79 /* SyllabusViewController.swift in Sources */,
 				1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
+				1A5698CC2938D0F8003906DB /* FavoriteViewController.swift in Sources */,
 				80D3B703290943AF00FF1AE3 /* StudentCardViewController.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */,
 				1ABC42232926998200D1361D /* Notification.Name.swift in Sources */,
@@ -838,6 +890,7 @@
 				1A6C51BA2905077E00A3E85A /* ReviewViewController.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
+				1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */,
 				1AB10B8D292A1A640071E876 /* UIImageView.swift in Sources */,
 				1ABC42212926988C00D1361D /* DispatchQueue.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* ConstStruct.swift in Sources */,

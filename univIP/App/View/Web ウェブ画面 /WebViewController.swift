@@ -71,6 +71,14 @@ final class WebViewController: UIViewController {
         }
     }
     
+    @IBAction func menuButton(_ sender: Any) {
+        Analytics.logEvent("WebView[safariButton]", parameters: nil) // Analytics
+        let vc = R.storyboard.menu.menuViewController()!
+        vc.delegate = self
+        present(vc, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func reloadButton(_ sender: Any) {
         Analytics.logEvent("WebView[reload]", parameters: nil) // Analytics
         webView.reload()

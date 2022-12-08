@@ -27,8 +27,6 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     //MARK: - MODEL モデル
-    // TableCellの内容
-    public var collectionLists:[ConstStruct.CollectionCell] = ConstStruct.initCollectionCellLists
     // 広告のURL
     public var adImages:[String] = []
     
@@ -42,6 +40,18 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     // MARK: - Public 公開機能
+    // TableCellの内容
+    public var collectionLists: [ConstStruct.CollectionCell] {
+        get{
+            var displayLists:[ConstStruct.CollectionCell] = []
+            for item in dataManager.serviceLists {
+                if item.isDisplay {
+                    displayLists.append(item)
+                }
+            }
+            return displayLists
+        }
+    }
 
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public func shouldShowTermsAgreementView() -> Bool {
@@ -156,18 +166,37 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return false
     }
     
-    enum loginType {
-        case loginFromNow
+    enum flagType {
+        case notStart
+        case loginStart
+        case loginSuccess
+        case loginFailure
         case executedJavaScript
     }
     // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-    public func loginFlag(type: loginType) {
+    public func updateLoginFlag(type: flagType) {
         
         switch type {
-            case .loginFromNow:
-                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす為のフラグ
-                isLoginProcessing = true // ログイン処理中であるフラグ
-                isLoginComplete = false // ログインが完了したかのフラグ
+            case .notStart:
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = false
+                isLoginComplete = false
+                
+            case .loginStart:
+                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす
+                isLoginProcessing = true // ログイン処理中
+                isLoginComplete = false // ログインが完了していない
+            
+            case .loginSuccess:
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = false
+                isLoginComplete = true
+                isLoginCompleteImmediately = true
+                
+            case .loginFailure:
+                dataManager.canExecuteJavascript = false
+                isLoginProcessing = false
+                isLoginComplete = false
                 
             case .executedJavaScript:
                 // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
@@ -188,9 +217,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         
         // ログイン処理中かつ、ログイン後のURL
         if isLoginProcessing, result {
-            isLoginProcessing = false
-            isLoginCompleteImmediately = true
-            isLoginComplete = true
+            updateLoginFlag(type: .loginSuccess)
             return
         }
         return

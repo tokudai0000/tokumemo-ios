@@ -13,7 +13,7 @@ struct ConstStruct {
     static let latestTermsVersion = "2.0"
     
     /// メニューの種類
-    enum MenuLists {
+    enum MenuLists: Codable{
         case courseManagementHomePC         // 教務事務システム
         case courseManagementHomeMobile
         case manabaHomePC                   // マナバ
@@ -41,6 +41,7 @@ struct ConstStruct {
         case universityWeb                  // 大学サイト
         
         case password                       // パスワード
+        case favorite                       // お気に入り登録
         case customize                      // 並び替え
         
         case aboutThisApp                   // このアプリについて
@@ -53,12 +54,13 @@ struct ConstStruct {
         case sourceCode                     // ソースコード
     }
     
-    struct CollectionCell {
+    struct CollectionCell: Codable{
         let title: String               // 表示名
         let id: MenuLists               // 識別しやすいようにIDを作成　タイポミスの軽減
         let iconSystemName: String?     //
         let lockIconSystemName: String? //
         let url: String?                // 関連したURLを保持 URLRequestはDecodableになる為、不可
+        var isDisplay: Bool = true
     }
     
     /// CollectionCell初期状態
@@ -234,9 +236,12 @@ struct ConstStruct {
     static let initSettingsCellLists = [
         [
             SettingsCell(title: "パスワード設定",
-                         id: .password),
-            //            MenuCell(title: "カスタマイズ",
-            //                     id: .customize)
+                         id: .password)
+        ],[
+            SettingsCell(title: "お気に入り登録",
+                         id: .favorite),
+            SettingsCell(title: "カスタマイズ",
+                         id: .customize)
         ],[
             SettingsCell(title: "このアプリについて",
                          id: .aboutThisApp),
