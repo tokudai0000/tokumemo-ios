@@ -145,7 +145,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="afS-32-dFy">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="afS-32-dFy">
                                                 <rect key="frame" x="0.0" y="21" width="325" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="a5u-jC-VHK"/>
@@ -201,12 +201,15 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="favoriteNameMessageLabel" destination="iic-hg-GmH" id="KcD-Pf-Q6d"/>
-                        <outlet property="favoriteNameTextField" destination="5Xk-VO-EPa" id="dJd-Ic-zVI"/>
-                        <outlet property="favoriteNameUnderLine" destination="Jid-tg-QCW" id="WMG-Hy-fws"/>
+                        <outlet property="favoriteMessageLabel" destination="iic-hg-GmH" id="KcD-Pf-Q6d"/>
+                        <outlet property="favoriteTextField" destination="5Xk-VO-EPa" id="dJd-Ic-zVI"/>
                         <outlet property="favoriteTextSizeLabel" destination="D0F-FD-3Tq" id="BR0-pO-cuO"/>
+                        <outlet property="favoriteUnderLine" destination="Jid-tg-QCW" id="WMG-Hy-fws"/>
                         <outlet property="registerButton" destination="5Cm-ol-8Gh" id="1Df-j4-hbO"/>
+                        <outlet property="urlMessageLabel" destination="6UN-Kj-QTl" id="jla-b4-Wa0"/>
                         <outlet property="urlTextField" destination="afS-32-dFy" id="zMJ-Sm-TLc"/>
+                        <outlet property="urlTextSizeLabel" destination="P7u-0s-n2l" id="fjg-nG-vRp"/>
+                        <outlet property="urlUnderLine" destination="yOQ-fs-mQN" id="MH1-oP-vBH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
