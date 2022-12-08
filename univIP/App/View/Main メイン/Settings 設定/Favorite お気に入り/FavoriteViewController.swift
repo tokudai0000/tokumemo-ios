@@ -27,6 +27,16 @@ class FavoriteViewController: UIViewController {
     public var urlString: String?
     private let dataManager = DataManager.singleton
     
+    private var alertController: UIAlertController!
+    private func alert(title:String, message:String) {
+        alertController = UIAlertController(title: title,
+                                            message: message,
+                                            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default,
+                                                handler: nil))
+        present(alertController, animated: true)
+    }
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -92,7 +102,14 @@ class FavoriteViewController: UIViewController {
         // 保存
         dataManager.addContentsMenuLists(menuItem: serviceItem)
         
-        dismiss(animated: true, completion: nil)
+        urlTextFieldCursorSetup(type: .normal)
+        favoriteNameTextFieldCursorSetup(type: .normal)
+        
+        urlTextField.text = ""
+        favoriteTextField.text = ""
+        
+        alert(title: "♪ 登録完了 ♪",
+              message: "以降、メニューにこの機能が表示されます。")
         
         // Analytics
         Analytics.logEvent("FavoriteView", parameters: ["url": urlString])
