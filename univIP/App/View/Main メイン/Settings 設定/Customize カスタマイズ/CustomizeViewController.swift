@@ -37,6 +37,15 @@ final class CustomizeViewController: UIViewController {
             }
         }
     }
+    
+    /// MenuLists内の要素を削除する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    private func deleteMenuContents(row: Int) {
+        var lists:[MenuListItem] = dataManager.loadMenu()
+        lists.remove(at: row)
+        dataManager.saveMenu(lists)
+    }
 }
 
 
@@ -69,7 +78,6 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // 並び替えを更新
         dataManager.sortMenu(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
-//        dataManager.saveMenu()
     }
     
     // セルの高さ
@@ -81,21 +89,19 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 表示許可情報を更新
         // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
-        dataManager.changeMenuIsHiddon(row: indexPath.row, isDisplay: false)
-//        dataManager.saveMenu()
+        dataManager.changeMenuIsHiddon(row: indexPath.row, isHiddon: false)
     }
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         // お気に入りであれば、非表示ではなく削除する
         if dataManager.loadMenu()[indexPath.row].id == .favorite {
-            dataManager.deleteMenuContents(row: indexPath.row)
+            deleteMenuContents(row: indexPath.row)
             reload()
             return
         }
 
         // 表示許可情報を更新
-        dataManager.changeMenuIsHiddon(row: indexPath.row, isDisplay: true)
-//        dataManager.saveMenu()
+        dataManager.changeMenuIsHiddon(row: indexPath.row, isHiddon: true)
     }
 }

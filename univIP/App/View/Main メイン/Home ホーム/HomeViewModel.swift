@@ -41,9 +41,15 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     // MARK: - Public 公開機能
     // TableCellの内容
-    public var collectionLists: [MenuListItem] {
+    public var menuLists: [MenuListItem] {
         get{
-            return dataManager.loadMenu()
+            var displayLists:[MenuListItem] = []
+            for item in dataManager.loadMenu() {
+                if !item.isHiddon {
+                    displayLists.append(item)
+                }
+            }
+            return displayLists
         }
     }
 

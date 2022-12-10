@@ -137,32 +137,15 @@ final class DataManager {
 //        serviceLists = loadMenu()
 //    }
     
-    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - menuItem: 追加したいお気に入り設定
-    public func addMenuContents(_ menuItem: MenuListItem) {
-        var lists:[MenuListItem] = loadMenu()
-        lists.append(menuItem)
-        saveMenu(lists)
-    }
-    
-    /// MenuLists内の要素を削除する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - row: index
-    public func deleteMenuContents(row: Int) {
-        var lists:[MenuListItem] = loadMenu()
-        lists.remove(at: row)
-        saveMenu(lists)
-    }
     
     /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
     /// - Parameters:
     ///   - row: index
     ///   - title: タイトルの変更
     ///   - isDisplay: リストで表示する
-    public func changeMenuIsHiddon(row: Int, isDisplay: Bool) {
+    public func changeMenuIsHiddon(row: Int, isHiddon: Bool) {
         var lists:[MenuListItem] = loadMenu()
-        lists[row].isHiddon = isDisplay
+        lists[row].isHiddon = isHiddon
         saveMenu(lists)
     }
     
@@ -192,7 +175,7 @@ final class DataManager {
     }
     
     
-    private let KEY_menuLists = "KEY_ServiceLists"
+    private let KEY_menuLists = "KEY_MenuLists"
     /// 配列をUserDefaultsには保存できないので 配列 -> Json -> Data にパースし、保存する
     public func saveMenu(_ lists: [MenuListItem]) {
         let jsonEncoder = JSONEncoder()

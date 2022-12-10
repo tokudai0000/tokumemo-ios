@@ -310,7 +310,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     /// セル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.collectionLists.count
+        return viewModel.menuLists.count
     }
     
     /// セルの中身
@@ -318,7 +318,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)! // fatalError
         
-        let collectionList = dataManager.loadMenu()[indexPath.row]//viewModel.collectionLists[indexPath.row]
+        let collectionList = viewModel.menuLists[indexPath.row]//viewModel.collectionLists[indexPath.row]
         
         let title = collectionList.title
         var icon = collectionList.image // fatalError
@@ -335,7 +335,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     /// セルがタップされた時
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // タップされたセルの内容を取得
-        let cell = dataManager.loadMenu()[indexPath.row]
+        let cell = viewModel.menuLists[indexPath.row]
         
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         

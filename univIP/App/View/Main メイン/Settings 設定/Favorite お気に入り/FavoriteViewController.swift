@@ -78,7 +78,7 @@ class FavoriteViewController: UIViewController {
         }
         
         let item = MenuListItem(title: title, id: .favorite, image: "questionmark.folder", url: urlString, isLockIconExists: false, isHiddon: false)
-        dataManager.addMenuContents(item)
+        addMenuContents(item)
         
         dismiss(animated: true, completion: nil)
         
@@ -130,7 +130,14 @@ class FavoriteViewController: UIViewController {
                 favoriteNameUnderLine.backgroundColor = .red
         }
     }
-    
+    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - menuItem: 追加したいお気に入り設定
+    private func addMenuContents(_ menuItem: MenuListItem) {
+        var lists:[MenuListItem] = dataManager.loadMenu()
+        lists.append(menuItem)
+        dataManager.saveMenu(lists)
+    }
 }
 
 
