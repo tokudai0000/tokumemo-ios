@@ -318,15 +318,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)! // fatalError
         
-        let collectionList = viewModel.collectionLists[indexPath.row]
+        let collectionList = dataManager.loadMenu()[indexPath.row]//viewModel.collectionLists[indexPath.row]
         
         let title = collectionList.title
-        var icon = collectionList.iconSystemName! // fatalError
+        var icon = collectionList.image // fatalError
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
-        if viewModel.isLoginComplete == false,
-           let img = collectionList.lockIconSystemName {
-            icon = img
+        if viewModel.isLoginComplete == false, collectionList.isLockIconExists {
+            icon = "lock.fill"
         }
         
         cell.setupCell(title: title, image: icon)
@@ -336,13 +335,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     /// セルがタップされた時
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // タップされたセルの内容を取得
-        let cell = viewModel.collectionLists[indexPath.row]
+        let cell = dataManager.loadMenu()[indexPath.row]
         
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
         // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
-        if viewModel.hasRegisteredPassword() == false ,
-           let _ = cell.lockIconSystemName {
+        if viewModel.hasRegisteredPassword() == false , cell.isLockIconExists {
             toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
         }

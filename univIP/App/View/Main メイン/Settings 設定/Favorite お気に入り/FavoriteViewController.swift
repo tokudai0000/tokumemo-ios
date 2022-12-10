@@ -67,25 +67,18 @@ class FavoriteViewController: UIViewController {
     // MARK: - IBAction
     @IBAction func registerButton(_ sender: Any) {
         // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
-        guard let favoriteNameText = favoriteNameTextField.text else { return }
+        guard let title = favoriteNameTextField.text else { return }
         
         let urlString = urlTextField.text
         
-        if favoriteNameText.isEmpty {
+        if title.isEmpty {
             favoriteNameMessageLabel.text = "空欄です"
             favoriteNameTextFieldCursorSetup(type: .error)
             return
         }
         
-        // お気に入りの仕様を作成
-        let serviceItem = ConstStruct.CollectionCell(title: favoriteNameText,
-                                                     id: .favorite,
-                                                     iconSystemName: "questionmark.folder",
-                                                     lockIconSystemName: nil,
-                                                     url: urlString)
-        
-        // 保存
-        dataManager.addContentsMenuLists(menuItem: serviceItem)
+        let item = MenuListItem(title: title, id: .favorite, image: "questionmark.folder", url: urlString, isLockIconExists: false, isHiddon: false)
+        dataManager.addMenuContents(item)
         
         dismiss(animated: true, completion: nil)
         

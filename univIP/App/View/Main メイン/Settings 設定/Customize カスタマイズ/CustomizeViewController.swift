@@ -29,8 +29,8 @@ final class CustomizeViewController: UIViewController {
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.reloadData()
         
-        for i in 0 ..< dataManager.serviceLists.count {
-            if dataManager.serviceLists[i].isDisplay {
+        for i in 0 ..< dataManager.loadMenu().count {
+            if !dataManager.loadMenu()[i].isHiddon {
                 // display=true のセルを選択状態にする
                 // animatiedを有効にすると画面が選択cellの最下部へフォーカスする　**false推奨**
                 tableView.selectRow(at: [0,i], animated: false, scrollPosition: .none)
@@ -45,13 +45,13 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.serviceLists.count
+        return dataManager.loadMenu().count
     }
     
     // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.customizeTableCell, for: indexPath)! // fatalError
-        tableCell.textLabel?.text = dataManager.serviceLists[indexPath.row].title
+        tableCell.textLabel?.text = dataManager.loadMenu()[indexPath.row].title
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
@@ -68,8 +68,8 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     // 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // 並び替えを更新
-        dataManager.changeSortOderMenuLists(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
-        dataManager.saveMenuLists()
+        dataManager.sortMenu(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
+//        dataManager.saveMenu()
     }
     
     // セルの高さ
@@ -81,21 +81,21 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 表示許可情報を更新
         // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
-        dataManager.changeContentsMenuLists(row: indexPath.row, isDisplay: true)
-        dataManager.saveMenuLists()
+        dataManager.changeMenuIsHiddon(row: indexPath.row, isDisplay: false)
+//        dataManager.saveMenu()
     }
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         // お気に入りであれば、非表示ではなく削除する
-        if dataManager.serviceLists[indexPath.row].id == .favorite {
-            dataManager.deleteContentsMenuLists(row: indexPath.row)
+        if dataManager.loadMenu()[indexPath.row].id == .favorite {
+            dataManager.deleteMenuContents(row: indexPath.row)
             reload()
             return
         }
 
         // 表示許可情報を更新
-        dataManager.changeContentsMenuLists(row: indexPath.row,isDisplay: false)
-        dataManager.saveMenuLists()
+        dataManager.changeMenuIsHiddon(row: indexPath.row, isDisplay: true)
+//        dataManager.saveMenu()
     }
 }

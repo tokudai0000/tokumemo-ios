@@ -24,223 +24,66 @@ public enum MenuListItemType: Codable {
     case systemServiceList              // システムサービス一覧
     case eLearningList                  // Eラーニング一覧
     case universityWeb                  // 大学サイト
+    
+    case favorite
 }
 
 public struct MenuListItem: Codable {
     public let title: String
-    public let iconSources: String
+    public let id: MenuListItemType
+    public let image: String
     public let url: String?
-    public let showLockIcon: Bool
-    public var showItem: Bool
-    public let type: MenuListItemType
-
-//    enum CodingKeys: String, CodingKey {
-//        case title
-//        case iconSources
-//        case url
-//        case showLockIcon
-//        case showItem
-//        case type
-//    }
-
-    public init(title: String, iconSources: String, url: String?, showLockIcon: Bool, showItem: Bool, type: MenuListItemType) {
-        self.title = title
-        self.iconSources = iconSources
-        self.url = url
-        self.showLockIcon = showLockIcon
-        self.showItem = showItem
-        self.type = type
-    }
-    
+    public let isLockIconExists: Bool
+    public var isHiddon: Bool
 }
 
 
-public struct MenuList: Codable {
-    public let items: [MenuListItem]
-
-    public init(items: [MenuListItem]) {
-        self.items = items
-    }
-    
-    // This failable initializer is used for a single-image MediaList, given via a URL.
-//    public init?(from url: URL?) {
-//        guard let imageURL = url,
-//              let imageName = WMFParseUnescapedNormalizedImageNameFromSourceURL(imageURL) else {
-//                  return nil
-//              }
-//        let filename = "File:" + imageName
-//        let urlString = imageURL.absoluteString
-//
-//        let mediaListItem = MenuListItem(title: filename,
-//                                         iconSources: "",
-//                                         url: "",
-//                                         showLockIcon: true,
-//                                         showItem: true,
-//                                         type: "")
-//        self = MenuList(items: [mediaListItem])
-//    }
-}
 /// CollectionCell初期状態
-let initCollectionCellLists = [
-    MenuListItem(title: "教務システム",
-                 iconSources: "graduationcap",
-                 url: Url.courseManagementMobile.string(),
-                 showLockIcon: true,
-                 showItem: true,
-                 type: .courseManagementHomeMobile)
+let initMenuLists = [
+    MenuListItem(title: "教務システム", id: .courseManagementHomeMobile, image: "graduationcap", url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: true),
     
-//    CollectionCell(title: "manaba",
-//                   id: .manabaHomePC,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.manabaPC.string()
-//                  ),
-//
-//    CollectionCell(title: "メール",
-//                   id: .mailService,
-//                   iconSystemName: "envelope",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.outlookService.string()
-//                  ),
-//
-//    CollectionCell(title: "[図書]カレンダー",
-//                   id: .libraryCalendar,
-//                   iconSystemName: "calendar",
-//                   lockIconSystemName: nil,
-//                   url: nil
-//                  ),
-//
-//    CollectionCell(title: "[図書]本検索",
-//                   id: .libraryMyPage,
-//                   iconSystemName: "books.vertical",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.libraryMyPage.string()
-//                  ),
-//
-//    CollectionCell(title: "[図書]本貸出延長",
-//                   id: .libraryBookLendingExtension,
-//                   iconSystemName: "books.vertical",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.libraryBookLendingExtension.string()
-//                  ),
-//
-//    CollectionCell(title: "生協カレンダー",
-//                   id: .tokudaiCoop,
-//                   iconSystemName: "questionmark.folder",
-//                   lockIconSystemName: nil,
-//                   url: Url.tokudaiCoop.string()
-//                  ),
-//
-//    CollectionCell(title: "時間割",
-//                   id: .timeTable,
-//                   iconSystemName: "calendar",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.timeTable.string()
-//                  ),
-//
-//    CollectionCell(title: "統合認証ポータル",
-//                   id: .portal,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.portal.string()
-//                  ),
-//
-//    CollectionCell(title: "今学期の成績",
-//                   id: .currentTermPerformance,
-//                   iconSystemName: "chart.line.uptrend.xyaxis",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.currentTermPerformance.string()
-//                  ),
-//
-//    CollectionCell(title: "全学期の成績",
-//                   id: .termPerformance,
-//                   iconSystemName: "chart.line.uptrend.xyaxis",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.termPerformance.string()
-//                  ),
-//
-//    CollectionCell(title: "シラバス",
-//                   id: .syllabus,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: nil,
-//                   url: Url.syllabus.string()
-//                  ),
-//
-//    CollectionCell(title: "キャリア支援室",
-//                   id: .tokudaiCareerCenter,
-//                   iconSystemName: "questionmark.folder",
-//                   lockIconSystemName: nil,
-//                   url: Url.tokudaiCareerCenter.string()
-//                  ),
-//
-//    CollectionCell(title: "大学サイト",
-//                   id: .universityWeb,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: nil,
-//                   url: Url.universityHomePage.string()
-//                  ),
-//
-//    CollectionCell(title: "教務システム_PC",
-//                   id: .courseManagementHomePC,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.courseManagementPC.string()
-//                  ),
-//
-//    CollectionCell(title: "マナバ_Mob",
-//                   id: .manabaHomeMobile,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.manabaMobile.string()
-//                  ),
-//
-//    CollectionCell(title: "図書館サイト",
-//                   id: .libraryWebHomeMobile,
-//                   iconSystemName: "books.vertical",
-//                   lockIconSystemName: nil,
-//                   url: Url.libraryHomeMobile.string()
-//                  ),
-//
-//    CollectionCell(title: "[図書]本購入",
-//                   id: .libraryBookPurchaseRequest,
-//                   iconSystemName: "books.vertical",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.libraryBookPurchaseRequest.string()
-//                  ),
-//
-//    CollectionCell(title: "出欠記録",
-//                   id: .presenceAbsenceRecord,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.presenceAbsenceRecord.string()
-//                  ),
-//
-//    CollectionCell(title: "授業アンケート",
-//                   id: .classQuestionnaire,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: "lock.fill",
-//                   url: Url.classQuestionnaire.string()
-//                  ),
-//
-//    CollectionCell(title: "LMS一覧",
-//                   id: .eLearningList,
-//                   iconSystemName: "graduationcap",
-//                   lockIconSystemName: nil,
-//                   url: Url.eLearningList.string()
-//                  ),
-//
-//    CollectionCell(title: "[図書]HP_常三島",
-//                   id: .libraryWebHomePC,
-//                   iconSystemName: "books.vertical",
-//                   lockIconSystemName: nil,
-//                   url: Url.libraryHomePageMainPC.string()
-//                  ),
-//
-//    CollectionCell(title: "[図書]HP_蔵本",
-//                   id: .libraryWebHomePC,
-//                   iconSystemName: "books.vertical",
-//                   lockIconSystemName: nil,
-//                   url: Url.libraryHomePageKuraPC.string()
-//                  ),
-    ]
+    MenuListItem(title: "manaba", id: .manabaHomePC, image: "graduationcap", url: Url.manabaPC.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "メール", id: .mailService, image: "envelope", url: Url.outlookService.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "[図書]カレンダー", id: .libraryCalendar, image: "calendar", url: nil, isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "[図書]本検索", id: .libraryMyPage, image: "books.vertical", url: Url.libraryMyPage.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "[図書]本貸出延長", id: .libraryBookLendingExtension, image: "books.vertical", url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: "questionmark.folder", url: Url.tokudaiCoop.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "時間割", id: .timeTable, image: "calendar", url: Url.timeTable.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "統合認証ポータル", id: .portal, image: "graduationcap", url: Url.portal.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "今学期の成績", id: .currentTermPerformance, image: "chart.line.uptrend.xyaxis", url: Url.currentTermPerformance.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "全学期の成績", id: .termPerformance, image: "chart.line.uptrend.xyaxis", url: Url.termPerformance.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "シラバス", id: .syllabus, image: "graduationcap", url: Url.syllabus.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "キャリア支援室", id: .tokudaiCareerCenter, image: "questionmark.folder", url: Url.tokudaiCareerCenter.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "大学サイト", id: .universityWeb, image: "graduationcap", url: Url.universityHomePage.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "教務システム_PC", id: .courseManagementHomePC, image: "graduationcap", url: Url.courseManagementPC.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "マナバ_Mob", id: .manabaHomeMobile, image: "graduationcap", url: Url.manabaMobile.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "図書館サイト", id: .libraryWebHomeMobile, image: "books.vertical", url: Url.libraryHomeMobile.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "[図書]本購入", id: .libraryBookPurchaseRequest, image: "books.vertical", url: Url.libraryBookPurchaseRequest.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "出欠記録", id: .presenceAbsenceRecord, image: "graduationcap", url: Url.presenceAbsenceRecord.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "授業アンケート", id: .classQuestionnaire, image: "graduationcap", url: Url.classQuestionnaire.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "LMS一覧", id: .eLearningList, image: "graduationcap", url: Url.eLearningList.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "[図書]HP_常三島", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageMainPC.string(), isLockIconExists: true, isHiddon: true),
+    
+    MenuListItem(title: "[図書]HP_蔵本", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageKuraPC.string(), isLockIconExists: true, isHiddon: true),
+]
 
