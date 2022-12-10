@@ -134,9 +134,9 @@ class FavoriteViewController: UIViewController {
     /// - Parameters:
     ///   - menuItem: 追加したいお気に入り設定
     private func addMenuContents(_ menuItem: MenuListItem) {
-        var lists:[MenuListItem] = dataManager.loadMenu()
+        var lists:[MenuListItem] = dataManager.menuLists
         lists.append(menuItem)
-        dataManager.saveMenu(lists)
+        dataManager.menuLists = lists
     }
 }
 

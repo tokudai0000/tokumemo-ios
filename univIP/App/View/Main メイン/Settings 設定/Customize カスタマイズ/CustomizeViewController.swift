@@ -29,8 +29,8 @@ final class CustomizeViewController: UIViewController {
         tableView.allowsMultipleSelectionDuringEditing = true
         tableView.reloadData()
         
-        for i in 0 ..< dataManager.loadMenu().count {
-            if !dataManager.loadMenu()[i].isHiddon {
+        for i in 0 ..< dataManager.menuLists.count {
+            if !dataManager.menuLists[i].isHiddon {
                 // display=true のセルを選択状態にする
                 // animatiedを有効にすると画面が選択cellの最下部へフォーカスする　**false推奨**
                 tableView.selectRow(at: [0,i], animated: false, scrollPosition: .none)
@@ -42,9 +42,32 @@ final class CustomizeViewController: UIViewController {
     /// - Parameters:
     ///   - row: index
     private func deleteMenuContents(row: Int) {
-        var lists:[MenuListItem] = dataManager.loadMenu()
+        var lists:[MenuListItem] = dataManager.menuLists
         lists.remove(at: row)
-        dataManager.saveMenu(lists)
+        dataManager.menuLists = lists
+    }
+    
+    /// MenuLists内の要素を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - row: index
+    ///   - title: タイトルの変更
+    ///   - isDisplay: リストで表示する
+    private func changeMenuIsHiddon(row: Int, isHiddon: Bool) {
+        var lists:[MenuListItem] = dataManager.menuLists
+        lists[row].isHiddon = isHiddon
+        dataManager.menuLists = lists
+    }
+    
+    /// MenuLists内の順番を変更する。その都度UserDefaultsに保存する
+    /// - Parameters:
+    ///   - sourceRow: 移動させたいcellのindex
+    ///   - destinationRow: 挿入場所のindex
+    public func sortMenu(sourceRow: Int, destinationRow: Int) {
+        var lists:[MenuListItem] = dataManager.menuLists
+        let todo = lists[sourceRow]
+        lists.remove(at: sourceRow)
+        lists.insert(todo, at: destinationRow)
+        dataManager.menuLists = lists
     }
 }
 
@@ -54,13 +77,13 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.loadMenu().count
+        return dataManager.menuLists.count
     }
     
     // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.customizeTableCell, for: indexPath)! // fatalError
-        tableCell.textLabel?.text = dataManager.loadMenu()[indexPath.row].title
+        tableCell.textLabel?.text = dataManager.menuLists[indexPath.row].title
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
@@ -77,7 +100,7 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     // 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // 並び替えを更新
-        dataManager.sortMenu(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
+        sortMenu(sourceRow: sourceIndexPath.row, destinationRow: destinationIndexPath.row)
     }
     
     // セルの高さ
@@ -89,19 +112,19 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 表示許可情報を更新
         // チェックボックスTrueの際、ここを通る。Falseの時didDeselectRowAtを通る
-        dataManager.changeMenuIsHiddon(row: indexPath.row, isHiddon: false)
+        changeMenuIsHiddon(row: indexPath.row, isHiddon: false)
     }
     
     // 編集モード時、チェックが外された時
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         // お気に入りであれば、非表示ではなく削除する
-        if dataManager.loadMenu()[indexPath.row].id == .favorite {
+        if dataManager.menuLists[indexPath.row].id == .favorite {
             deleteMenuContents(row: indexPath.row)
             reload()
             return
         }
 
         // 表示許可情報を更新
-        dataManager.changeMenuIsHiddon(row: indexPath.row, isHiddon: true)
+        changeMenuIsHiddon(row: indexPath.row, isHiddon: true)
     }
 }

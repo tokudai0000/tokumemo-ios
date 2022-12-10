@@ -44,7 +44,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var menuLists: [MenuListItem] {
         get{
             var displayLists:[MenuListItem] = []
-            for item in dataManager.loadMenu() {
+            for item in dataManager.menuLists {
                 if !item.isHiddon {
                     displayLists.append(item)
                 }
