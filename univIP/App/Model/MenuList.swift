@@ -37,8 +37,7 @@ public struct MenuListItem: Codable {
     public var isHiddon: Bool
 }
 
-
-/// CollectionCell初期状態
+/// 初期状態
 let initMenuLists = [
     MenuListItem(title: "教務システム", id: .courseManagementHomeMobile, image: "graduationcap", url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: false),
     
@@ -86,4 +85,3 @@ let initMenuLists = [
     
     MenuListItem(title: "[図書]HP_蔵本", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageKuraPC.string(), isLockIconExists: false, isHiddon: false),
 ]
-
