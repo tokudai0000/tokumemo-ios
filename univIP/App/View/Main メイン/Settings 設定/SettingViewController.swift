@@ -65,11 +65,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 vc.title = "カスタマイズ"
                 navigationController?.pushViewController(vc, animated: true)
                 
-            case .aboutThisApp:
-                let vc = R.storyboard.aboutThisApp.aboutThisAppViewController()!
-                vc.title = "このアプリについて"
-                navigationController?.pushViewController(vc, animated: true)
-                
             default:
                 let vc = R.storyboard.web.webViewController()!
                 vc.loadUrlString =  cell.url!
