@@ -350,9 +350,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         switch cell.id {
             case .syllabus:
-                let vc = R.storyboard.syllabus.syllabusViewController()!
-                vc.delegate = self
-                present(vc, animated: true, completion: nil)
+                let vc = R.storyboard.password.passwordViewController()!
+                vc.type = .syllabus
+                present(vc, animated: true)
                 
             case .currentTermPerformance: // 今年の成績
                 loadUrlString = viewModel.createCurrentTermPerformanceUrl()

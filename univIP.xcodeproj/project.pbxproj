@@ -247,7 +247,6 @@
 				1A63062B2944B48600205C7C /* SettingViewModel.swift */,
 				1A30D0BA28F9C14200C4012E /* SettingViewController.swift */,
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
-				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
 				1ABE8BD127B10489001EEA79 /* AboutThisApp このアプリについて */,
 				1A5698C82938D0B4003906DB /* Favorite お気に入り */,
 				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
@@ -436,6 +435,7 @@
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
+				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
 			);
 			path = View;
 			sourceTree = "<group>";
