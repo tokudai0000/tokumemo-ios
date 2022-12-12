@@ -350,7 +350,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         switch cell.id {
             case .syllabus:
-                let vc = R.storyboard.password.passwordViewController()!
+                let vc = R.storyboard.input.inputViewController()!
                 vc.type = .syllabus
                 present(vc, animated: true)
                 

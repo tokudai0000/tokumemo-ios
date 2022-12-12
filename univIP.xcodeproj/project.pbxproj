@@ -56,8 +56,8 @@
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BB927B10402001EEA79 /* HomeViewController.swift */; };
 		1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */; };
-		1ABE8BDC27B10489001EEA79 /* Password.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BCC27B10489001EEA79 /* Password.storyboard */; };
-		1ABE8BDD27B10489001EEA79 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BCD27B10489001EEA79 /* PasswordViewController.swift */; };
+		1ABE8BDC27B10489001EEA79 /* Input.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BCC27B10489001EEA79 /* Input.storyboard */; };
+		1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BCD27B10489001EEA79 /* InputViewController.swift */; };
 		1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE427B10513001EEA79 /* Main.storyboard */; };
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
@@ -148,8 +148,8 @@
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABE8BB927B10402001EEA79 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		1ABE8BCC27B10489001EEA79 /* Password.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Password.storyboard; sourceTree = "<group>"; };
-		1ABE8BCD27B10489001EEA79 /* PasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		1ABE8BCC27B10489001EEA79 /* Input.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Input.storyboard; sourceTree = "<group>"; };
+		1ABE8BCD27B10489001EEA79 /* InputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		1ABE8BE427B10513001EEA79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -478,8 +478,8 @@
 		1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */ = {
 			isa = PBXGroup;
 			children = (
-				1ABE8BCD27B10489001EEA79 /* PasswordViewController.swift */,
-				1ABE8BCC27B10489001EEA79 /* Password.storyboard */,
+				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
+				1ABE8BCC27B10489001EEA79 /* Input.storyboard */,
 			);
 			name = "Password パスワード登録";
 			path = "PasswordSettings パスワード登録";
@@ -649,7 +649,7 @@
 				1A5698C72938CE18003906DB /* Customize.storyboard in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */,
-				1ABE8BDC27B10489001EEA79 /* Password.storyboard in Resources */,
+				1ABE8BDC27B10489001EEA79 /* Input.storyboard in Resources */,
 				1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */,
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
@@ -856,7 +856,7 @@
 				1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */,
 				80D3B6FE2909341000FF1AE3 /* UIViewController+StatusBar.swift in Sources */,
 				809DCF722906A63300593989 /* UIView.swift in Sources */,
-				1ABE8BDD27B10489001EEA79 /* PasswordViewController.swift in Sources */,
+				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */,
 			);

@@ -51,12 +51,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = viewModel.settingLists[indexPath.section][indexPath[1]]
         switch cell.id {
             case .password:
-                let vc = R.storyboard.password.passwordViewController()!
+                let vc = R.storyboard.input.inputViewController()!
                 vc.type = .password
                 navigationController?.pushViewController(vc, animated: true)
                 
             case .favorite:
-                let vc = R.storyboard.password.passwordViewController()!
+                let vc = R.storyboard.input.inputViewController()!
                 vc.type = .favorite
                 navigationController?.pushViewController(vc, animated: true)
 //                let vc = R.storyboard.favorite.favoriteViewController()!

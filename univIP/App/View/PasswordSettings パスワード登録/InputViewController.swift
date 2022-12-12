@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PasswordViewController: UIViewController {
+final class InputViewController: UIViewController {
     
     // MARK: - IBOutlet
     @IBOutlet weak var titleLabel1: UILabel!
@@ -247,7 +247,7 @@ final class PasswordViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
-extension PasswordViewController: UITextFieldDelegate {
+extension InputViewController: UITextFieldDelegate {
     // textField編集前
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let textFieldTag = FieldType(rawValue: textField.tag)
