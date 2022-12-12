@@ -12,6 +12,16 @@ final class SettingViewController: UIViewController {
     
     private let viewModel = SettingViewModel()
     
+    @IBOutlet var tableView: UITableView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // カスタマイズ画面から戻ってきた場合、選択状態を解除する
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {

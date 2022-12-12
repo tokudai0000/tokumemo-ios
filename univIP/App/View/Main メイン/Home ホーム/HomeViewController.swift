@@ -64,11 +64,10 @@ final class HomeViewController: BaseViewController {
             return
         }
         
-        // cellの内容を決定
-        
-        
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
+        
+        collectionView.reloadData()
         
         // タイマーを開始する
         adTimerOn()

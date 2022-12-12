@@ -58,6 +58,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="OiL-Bk-Br9"/>
+                    <connections>
+                        <outlet property="tableView" destination="bW4-Bk-uzv" id="vCa-JQ-iea"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oHG-Tb-wry" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

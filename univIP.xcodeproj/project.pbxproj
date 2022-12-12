@@ -411,7 +411,7 @@
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
-				1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */,
+				1ABE8BCB27B10489001EEA79 /* InputView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -475,13 +475,13 @@
 			path = "Main メイン";
 			sourceTree = "<group>";
 		};
-		1ABE8BCB27B10489001EEA79 /* Password パスワード登録 */ = {
+		1ABE8BCB27B10489001EEA79 /* InputView */ = {
 			isa = PBXGroup;
 			children = (
 				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
 				1ABE8BCC27B10489001EEA79 /* Input.storyboard */,
 			);
-			name = "Password パスワード登録";
+			name = InputView;
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};
