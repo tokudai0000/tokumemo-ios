@@ -70,7 +70,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 
             default:
                 let vc = R.storyboard.web.webViewController()!
-                vc.loadUrlString =  cell.url!
+                vc.loadUrlString = cell.url!
                 present(vc, animated: true, completion: nil)
         }
         Analytics.logEvent("SettingCell[\(cell.id)]", parameters: nil) // Analytics

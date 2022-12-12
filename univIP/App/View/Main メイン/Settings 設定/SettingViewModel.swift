@@ -44,7 +44,7 @@ final class SettingViewModel {
     ],[
         SettingListItem(title: "このアプリについて",
                         id: .aboutThisApp,
-                        url: nil),
+                        url: Url.appIntroduction.string()),
         SettingListItem(title: "お問い合わせ",
                         id: .contactUs,
                         url: Url.contactUs.string()),
