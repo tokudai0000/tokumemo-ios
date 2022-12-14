@@ -27,8 +27,6 @@ final class InputViewController: UIViewController {
     
     @IBOutlet weak var registerButton: UIButton!
     
-    public var delegate : HomeViewController?
-    
     private let dataManager = DataManager.singleton
     
     enum DisplayType {
@@ -82,6 +80,15 @@ final class InputViewController: UIViewController {
         guard let text1 = TextField1.text else { return }
         guard let text2 = TextField2.text else { return }
         
+        if type == .syllabus {
+            dataManager.syllabusSubjectName = text1
+            dataManager.syllabusTeacherName = text2
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = Url.syllabus.string()
+            present(vc, animated: true, completion: nil)
+            return
+        }
+        
         if text1.isEmpty {
             MessageLabel1.text = "空欄です"
             textFieldCursorSetup(fieldType: .one, cursorType: .error)
@@ -116,16 +123,6 @@ final class InputViewController: UIViewController {
                 alert(title: "♪ 登録完了 ♪",
                       message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
                 
-            case .syllabus:
-                dataManager.syllabusSubjectName = text1
-                dataManager.syllabusTeacherName = text2
-                // シラバス画面を消去後、Web画面を表示
-                dismiss(animated: false, completion: {
-                    let vc = R.storyboard.web.webViewController()!
-                    vc.loadUrlString = Url.syllabus.string()
-                    self.delegate!.present(vc, animated: true, completion: nil)
-                })
-                
             default:
                 fatalError()
         }
@@ -157,22 +154,31 @@ final class InputViewController: UIViewController {
                 TextSizeLabel2.text = "\(dataManager.password.count)/100"
                 TextField2.isSecureTextEntry = true
                 resetButton.layer.cornerRadius = 25.0
+                registerButton.setTitle("登録", for: .normal)
                 
             case .favorite:
-                titleLabel1.text = ""
-                titleLabel2.text = ""
+                title = "お気に入り登録"
+                titleLabel1.text = "登録したいURL"
+                titleLabel2.text = "タイトル"
                 TextField1.text = ""
                 TextField2.text = ""
                 TextSizeLabel1.text = "0/100"
                 TextSizeLabel2.text = "0/100"
+                passwordViewButton.isHidden = true
+                resetButton.isHidden = true
+                registerButton.setTitle("登録", for: .normal)
             
             case .syllabus:
-                titleLabel1.text = ""
-                titleLabel2.text = ""
+                title = "シラバス"
+                titleLabel1.text = "教員名"
+                titleLabel2.text = "科目名"
                 TextField1.text = ""
                 TextField2.text = ""
                 TextSizeLabel1.text = "0/100"
                 TextSizeLabel2.text = "0/100"
+                passwordViewButton.isHidden = true
+                resetButton.isHidden = true
+                registerButton.setTitle("検索", for: .normal)
         }
     }
     
