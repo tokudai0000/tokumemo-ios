@@ -29,6 +29,8 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     //MARK: - MODEL モデル
     // 広告のURL
     public var adImages:[String] = []
+    public var adUrls:[String] = []
+    public var adDisplayUrl:String = ""
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginComplete = false // ログイン完了
@@ -90,11 +92,47 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         }
     }
     
+    public func refleshAdUrls() {
+        adUrls.removeAll()
+        
+        // 広告数は最大でも10件に設定
+        for i in 0 ..< 10 {
+            let txt = String(i) + ".txt"
+            var urlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+            
+            #if STUB // テスト環境
+            urlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+            #endif
+            
+            let url = URL(string: urlStr)!
+            do {
+                // URL先WebページのHTMLデータを取得
+                let data = try NSData(contentsOf: url) as Data
+                let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+                if let tx = doc.body?.text {
+                    adUrls.append(tx)
+                    continue
+                }
+                AKLog(level: .ERROR, message: "[URL抽出エラー]: GitHubHostingImageURLの抽出エラー \n urlString:\(url.absoluteString)")
+            } catch {
+                AKLog(level: .ERROR, message: "[Data取得エラー]: GitHubHostingImageURLHTMLデータパースエラー\n urlString:\(url.absoluteString)")
+            }
+        }
+    }
+    
     public func adImage() -> String {
         // 広告画像が存在すればランダムで返す
-        if let img = adImages.randomElement() {
-            return img
+        if adImages.count != 0 {
+            let num = Int.random(in: 0..<adImages.count)
+            if num < adUrls.count {
+                adDisplayUrl = adUrls[num]
+            } else {
+                adDisplayUrl = ""
+            }
+            
+            return adImages[num]
         }
+        adDisplayUrl = ""
         // 広告画像が存在しない場合
         return R.image.tokumemoPlusIcon.name
     }

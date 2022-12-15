@@ -51,6 +51,7 @@ final class HomeViewController: BaseViewController {
         initViewModel()
         initActivityIndicator()
         viewModel.refleshAdImages()
+        viewModel.refleshAdUrls()
         viewModel.getWether()
     }
     
@@ -108,6 +109,14 @@ final class HomeViewController: BaseViewController {
         }
     }
     
+    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        if viewModel.adDisplayUrl != "" {
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = viewModel.adDisplayUrl
+            present(vc, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Private func
     /// 初期セットアップ
     private func initSetup() {
@@ -122,6 +131,9 @@ final class HomeViewController: BaseViewController {
         
         // ステータスバーの背景色を指定
         setStatusBarBackgroundColor(R.color.mainColor())
+        
+        adImageView.isUserInteractionEnabled = true
+        adImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped(_:))))
     }
     
     /// ViewModel初期化
