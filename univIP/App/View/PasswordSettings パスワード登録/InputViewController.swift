@@ -1,5 +1,5 @@
 //
-//  PassWordSettingsViewController.swift
+//  InputViewController.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/09.
@@ -115,13 +115,16 @@ final class InputViewController: UIViewController {
                 // KeyChianに保存する
                 dataManager.studentNumber = text1
                 dataManager.password = text2
+                initSetup(.password)
+                alert(title: "♪ 登録完了 ♪",
+                      message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
            
             case .favorite:
                 let item = MenuListItem(title: text2, id: .favorite, image: "questionmark.folder", url: text1, isLockIconExists: false, isHiddon: false)
                 addMenuContents(item)
                 
                 alert(title: "♪ 登録完了 ♪",
-                      message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
+                      message: "以降、メニュー画面に設定したお気に入り画面が表示される様になりました。")
                 
             default:
                 fatalError()
