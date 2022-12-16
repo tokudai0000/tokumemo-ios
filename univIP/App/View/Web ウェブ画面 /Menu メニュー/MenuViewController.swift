@@ -30,13 +30,14 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     // セクション内のセル数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.serviceLists.count
+        return viewModel.menuLists.count
     }
     
     // cellの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
-        tableCell.textLabel?.text = dataManager.serviceLists[indexPath.item].title
+        let menuLists = viewModel.menuLists
+        tableCell.textLabel?.text = menuLists[indexPath.item].title
         // 「17」程度が文字が消えず、また見やすいサイズ
         tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
@@ -45,10 +46,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     // セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // 表示を許可されているCellの場合、高さを44とする
-        if dataManager.serviceLists[indexPath.row].isDisplay {
-            return 44
-        }else{
+        if viewModel.menuLists[indexPath.row].isHiddon {
             return 0
+        }else{
+            return 44
         }
     }
     
@@ -67,7 +68,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         // メニュー画面を消去後、画面を読み込む
         self.dismiss(animated: false, completion: { [self] in
             // どのセルが押されたか
-            switch self.dataManager.serviceLists[indexPath[1]].id {
+            switch self.viewModel.menuLists[indexPath[1]].id {
                 case .currentTermPerformance:            // 今年の成績
                     if let urlRequest = self.viewModel.createCurrentTermPerformanceUrl() {
                         delegate.webView.load(urlRequest)
@@ -76,12 +77,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 default:
                     // 上記以外のCellをタップした場合
                     // Constant.Menu(構造体)のURLを表示する
-                    let urlString = self.dataManager.serviceLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
+                    let urlString = self.viewModel.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
                     let url = URL(string: urlString)!                               // fatalError
                     delegate.webView.load(URLRequest(url: url))
             }
-            // アナリティクスを送信
-            self.viewModel.analytics("\(self.dataManager.serviceLists[indexPath[1]].id)")
         })
     }
 }

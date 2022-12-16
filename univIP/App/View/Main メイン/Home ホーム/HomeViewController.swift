@@ -50,7 +50,7 @@ final class HomeViewController: BaseViewController {
         initSetup()
         initViewModel()
         initActivityIndicator()
-        viewModel.refleshAdImages()
+        viewModel.getAdItems()
         viewModel.getWether()
     }
     
@@ -69,11 +69,10 @@ final class HomeViewController: BaseViewController {
             return
         }
         
-        // cellの内容を決定
-        
-        
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
+        
+        collectionView.reloadData()
         
         // タイマーを開始する
         adTimerOn()
@@ -114,6 +113,15 @@ final class HomeViewController: BaseViewController {
         }
     }
     
+    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        if viewModel.adDisplayUrl != "" {
+            let vc = R.storyboard.ad.adViewController()!
+            vc.imageUrlStr = viewModel.adImage()
+            vc.urlStr = viewModel.adDisplayUrl
+            present(vc, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Private func
     /// 初期セットアップ
     private func initSetup() {
@@ -128,6 +136,9 @@ final class HomeViewController: BaseViewController {
         
         // ステータスバーの背景色を指定
         setStatusBarBackgroundColor(R.color.mainColor())
+        
+        adImageView.isUserInteractionEnabled = true
+        adImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped(_:))))
     }
     
     /// ViewModel初期化
@@ -315,7 +326,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     /// セル数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.collectionLists.count
+        return viewModel.menuLists.count
     }
     
     /// セルの中身
@@ -323,15 +334,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)! // fatalError
         
-        let collectionList = viewModel.collectionLists[indexPath.row]
+        let collectionList = viewModel.menuLists[indexPath.row]//viewModel.collectionLists[indexPath.row]
         
         let title = collectionList.title
-        var icon = collectionList.iconSystemName! // fatalError
+        var icon = collectionList.image // fatalError
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
-        if viewModel.isLoginComplete == false,
-           let img = collectionList.lockIconSystemName {
-            icon = img
+        if viewModel.isLoginComplete == false, collectionList.isLockIconExists {
+            icon = "lock.fill"
         }
         
         cell.setupCell(title: title, image: icon)
@@ -341,13 +351,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     /// セルがタップされた時
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // タップされたセルの内容を取得
-        let cell = viewModel.collectionLists[indexPath.row]
+        let cell = viewModel.menuLists[indexPath.row]
         
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
         // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
-        if viewModel.hasRegisteredPassword() == false ,
-           let _ = cell.lockIconSystemName {
+        if viewModel.hasRegisteredPassword() == false , cell.isLockIconExists {
             toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
         }
@@ -357,9 +366,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         switch cell.id {
             case .syllabus:
-                let vc = R.storyboard.syllabus.syllabusViewController()!
-                vc.delegate = self
-                present(vc, animated: true, completion: nil)
+                let vc = R.storyboard.input.inputViewController()!
+                vc.type = .syllabus
+                present(vc, animated: true)
                 
             case .currentTermPerformance: // 今年の成績
                 loadUrlString = viewModel.createCurrentTermPerformanceUrl()

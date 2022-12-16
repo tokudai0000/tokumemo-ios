@@ -110,7 +110,6 @@ final class WebViewController: UIViewController {
         colorCnt = colorCnt + 1
         
         observation = webView.observe(\.estimatedProgress, options: .new){_, change in
-            print("progress=\(String(describing: change.newValue))")
             self.progressView.setProgress(Float(change.newValue!), animated: true)
             
             if change.newValue! >= 1.0 {

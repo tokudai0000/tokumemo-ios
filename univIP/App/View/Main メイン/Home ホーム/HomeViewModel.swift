@@ -29,6 +29,8 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     //MARK: - MODEL モデル
     // 広告のURL
     public var adImages:[String] = []
+    public var adUrls:[String] = []
+    public var adDisplayUrl:String = ""
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginComplete = false // ログイン完了
@@ -41,11 +43,11 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     // MARK: - Public 公開機能
     // TableCellの内容
-    public var collectionLists: [ConstStruct.CollectionCell] {
+    public var menuLists: [MenuListItem] {
         get{
-            var displayLists:[ConstStruct.CollectionCell] = []
-            for item in dataManager.serviceLists {
-                if item.isDisplay {
+            var displayLists:[MenuListItem] = []
+            for item in dataManager.menuLists {
+                if !item.isHiddon {
                     displayLists.append(item)
                 }
             }
@@ -66,23 +68,37 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // GitHub上に0-2までのpngがある場合、ここでは
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
-    public func refleshAdImages() {
+    public func getAdItems() {
         adImages.removeAll()
+        adUrls.removeAll()
         
         // 広告数は最大でも10件に設定
         for i in 0 ..< 10 {
             let png = String(i) + ".png"
-            var urlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + png
+            let txt = String(i) + ".txt"
+            var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + png
+            var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + txt
             
             #if STUB // テスト環境
-            urlStr = "https://tokudai0000.github.io/hostingImage/test/" + png
+            imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
+            textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
             #endif
             
-            let url = URL(string: urlStr)
+            let imgUrl = URL(string: imgUrlStr)
+            let textUrl = URL(string: textUrlStr)
             do {
-                let _ = try Data(contentsOf: url!) // URLから画像を取得できないとここでエラー
-                adImages.append(urlStr)
-                
+                let _ = try Data(contentsOf: imgUrl!) // URLから画像を取得できないとここでエラー
+                adImages.append(imgUrlStr)
+            } catch {
+//                state?(.adReady)
+            }
+            do {
+                // URL先WebページのHTMLデータを取得
+                let data = try NSData(contentsOf: textUrl!) as Data
+                let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+                if let tx = doc.body?.text {
+                    adUrls.append(tx)
+                }
             } catch {
                 state?(.adReady)
                 break
@@ -92,9 +108,17 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     public func adImage() -> String {
         // 広告画像が存在すればランダムで返す
-        if let img = adImages.randomElement() {
-            return img
+        if adImages.count != 0 {
+            let num = Int.random(in: 0..<adImages.count)
+            if num < adUrls.count {
+                adDisplayUrl = adUrls[num]
+            } else {
+                adDisplayUrl = ""
+            }
+            
+            return adImages[num]
         }
+        adDisplayUrl = ""
         // 広告画像が存在しない場合
         return R.image.tokumemoPlusIcon.name
     }
