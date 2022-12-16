@@ -68,54 +68,39 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // GitHub上に0-2までのpngがある場合、ここでは
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
-    public func refleshAdImages() {
+    public func getAdItems() {
         adImages.removeAll()
-        
-        // 広告数は最大でも10件に設定
-        for i in 0 ..< 10 {
-            let png = String(i) + ".png"
-            var urlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/" + png
-            
-            #if STUB // テスト環境
-            urlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
-            #endif
-            
-            let url = URL(string: urlStr)
-            do {
-                let _ = try Data(contentsOf: url!) // URLから画像を取得できないとここでエラー
-                adImages.append(urlStr)
-                
-            } catch {
-                state?(.adReady)
-                break
-            }
-        }
-    }
-    
-    public func refleshAdUrls() {
         adUrls.removeAll()
         
         // 広告数は最大でも10件に設定
         for i in 0 ..< 10 {
+            let png = String(i) + ".png"
             let txt = String(i) + ".txt"
-            var urlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+            var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + png
+            var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + txt
             
             #if STUB // テスト環境
-            urlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+            imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
+            textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
             #endif
             
-            let url = URL(string: urlStr)!
+            let imgUrl = URL(string: imgUrlStr)
+            let textUrl = URL(string: textUrlStr)
+            do {
+                let _ = try Data(contentsOf: imgUrl!) // URLから画像を取得できないとここでエラー
+                adImages.append(imgUrlStr)
+            } catch {
+//                state?(.adReady)
+            }
             do {
                 // URL先WebページのHTMLデータを取得
-                let data = try NSData(contentsOf: url) as Data
+                let data = try NSData(contentsOf: textUrl!) as Data
                 let doc = try HTML(html: data, encoding: String.Encoding.utf8)
                 if let tx = doc.body?.text {
                     adUrls.append(tx)
-                    continue
                 }
-                AKLog(level: .ERROR, message: "[URL抽出エラー]: GitHubHostingImageURLの抽出エラー \n urlString:\(url.absoluteString)")
             } catch {
-                AKLog(level: .ERROR, message: "[Data取得エラー]: GitHubHostingImageURLHTMLデータパースエラー\n urlString:\(url.absoluteString)")
+                state?(.adReady)
             }
         }
     }
