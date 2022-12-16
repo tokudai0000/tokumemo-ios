@@ -42,7 +42,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     // MARK: - Public 公開機能
-    // TableCellの内容
+    // TableCellの内容 isHiddon=trueを除く
     public var menuLists: [MenuListItem] {
         get{
             var displayLists:[MenuListItem] = []
