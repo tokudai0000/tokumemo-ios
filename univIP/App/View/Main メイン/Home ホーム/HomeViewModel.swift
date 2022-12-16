@@ -42,7 +42,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     
     // MARK: - Public 公開機能
-    // TableCellの内容
+    // TableCellの内容 isHiddon=trueを除く
     public var menuLists: [MenuListItem] {
         get{
             var displayLists:[MenuListItem] = []
@@ -146,13 +146,9 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             
             // 体感気温がdoubleの形で返ってくる　例: 21.52
             if let temp = response["main"]["feels_like"].double {
-                var tempStr = String(temp) // 例: "21.52"
-                
-                // "21.5"の時は4桁
-                if tempStr.count == 5 {
-                    tempStr = String(tempStr.prefix(tempStr.count-1)) // 例: "21.5"
-                }
-                self.weatherFeelsLike = tempStr + "℃" // 例: "21.5℃"
+                // 215.2を四捨五入 => 215 , 215/10 = 21.5
+                let num = round(temp * 10) / 10
+                self.weatherFeelsLike = String(num) + "℃" // 例: "21.5℃"
             }
             
             // 天気を表すアイコンコードが返ってくる 例 "02d"
