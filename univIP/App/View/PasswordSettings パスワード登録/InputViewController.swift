@@ -131,6 +131,10 @@ final class InputViewController: UIViewController {
         }
     }
         
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
+    
     // MARK: - Private
     /// PasswordSettingsViewControllerの初期セットアップ
     private func initSetup(_ type: DisplayType) {
@@ -145,6 +149,10 @@ final class InputViewController: UIViewController {
         MessageLabel1.text = ""
         MessageLabel2.text = ""
         registerButton.layer.cornerRadius = 5.0
+        
+        let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGR.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGR)
         
         switch type {
             case .password:
