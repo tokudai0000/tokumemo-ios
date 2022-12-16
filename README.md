@@ -15,7 +15,7 @@
 
 
 <p align="center" >
-  <img src="./Docs/TokumemoPlusIcon.PNG" width=300px>
+  <img src="./Docs/TokumemoPlusIcon.png" width=300px>
 </p>
 
 
