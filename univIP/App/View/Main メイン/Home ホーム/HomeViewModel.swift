@@ -101,6 +101,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 }
             } catch {
                 state?(.adReady)
+                break
             }
         }
     }
