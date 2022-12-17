@@ -19,7 +19,7 @@ final class HomeViewController: BaseViewController {
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var webViewForLogin: WKWebView!
     
-    @IBOutlet weak var weatherView: UIView!
+    @IBOutlet weak var weatherView: UIStackView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
