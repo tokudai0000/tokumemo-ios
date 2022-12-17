@@ -235,10 +235,10 @@ final class HomeViewController: BaseViewController {
     }
     
     private func adTimerOn() {
-        var TIME_INTERVAL = 15.0 // 広告を表示させる秒数
+        var TIME_INTERVAL = 10.0 // 広告を表示させる秒数
         
-        #if STUB // テスト時は5秒で表示が変わる様にする
-        TIME_INTERVAL = 5.0
+        #if STUB // テスト時は2秒で表示が変わる様にする
+        TIME_INTERVAL = 2.0
         #endif
         
         // TIME_INTERVAL秒毎に処理を実行する
