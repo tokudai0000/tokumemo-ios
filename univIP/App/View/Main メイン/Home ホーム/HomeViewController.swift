@@ -116,7 +116,7 @@ final class HomeViewController: BaseViewController {
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
         if viewModel.adDisplayUrl != "" {
             let vc = R.storyboard.ad.adViewController()!
-            vc.imageUrlStr = viewModel.adImage()
+            vc.imageUrlStr = viewModel.adDisplayImages
             vc.urlStr = viewModel.adDisplayUrl
             present(vc, animated: true, completion: nil)
         }

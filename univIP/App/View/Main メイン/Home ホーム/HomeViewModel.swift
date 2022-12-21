@@ -30,6 +30,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 広告のURL
     public var adImages:[String] = []
     public var adUrls:[String] = []
+    public var adDisplayImages:String = ""
     public var adDisplayUrl:String = ""
     
     public var isLoginProcessing = false // ログイン処理中
@@ -115,7 +116,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             } else {
                 adDisplayUrl = ""
             }
-            
+            adDisplayImages = adImages[num]
             return adImages[num]
         }
         adDisplayUrl = ""
