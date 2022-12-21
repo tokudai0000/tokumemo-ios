@@ -19,7 +19,7 @@ final class HomeViewController: BaseViewController {
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var webViewForLogin: WKWebView!
     
-    @IBOutlet weak var weatherView: UIView!
+    @IBOutlet weak var weatherView: UIStackView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -116,7 +116,7 @@ final class HomeViewController: BaseViewController {
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
         if viewModel.adDisplayUrl != "" {
             let vc = R.storyboard.ad.adViewController()!
-            vc.imageUrlStr = viewModel.adImage()
+            vc.imageUrlStr = viewModel.adDisplayImages
             vc.urlStr = viewModel.adDisplayUrl
             present(vc, animated: true, completion: nil)
         }
@@ -235,10 +235,10 @@ final class HomeViewController: BaseViewController {
     }
     
     private func adTimerOn() {
-        var TIME_INTERVAL = 15.0 // 広告を表示させる秒数
+        var TIME_INTERVAL = 10.0 // 広告を表示させる秒数
         
-        #if STUB // テスト時は5秒で表示が変わる様にする
-        TIME_INTERVAL = 5.0
+        #if STUB // テスト時は2秒で表示が変わる様にする
+        TIME_INTERVAL = 2.0
         #endif
         
         // TIME_INTERVAL秒毎に処理を実行する
