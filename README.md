@@ -15,45 +15,36 @@
 
 
 <p align="center" >
-  <img src="/univIP/App/etc/Assets.xcassets/AppIcon.appiconset/1024.png" width=300px>
+  <img src="./Docs/TokumemoPlusIcon.png" width=300px>
 </p>
 
 
 ## 概要
-トクメモは日々のパスワード入力、煩雑なボタンクリックを自動化する、徳島大学専用の学修サポートアプリです。
-画面タップ回数をログイン時は3回->0回、成績参照時は11回->2回にまで減少させるなど学生の視点からあったらいいなを実現したアプリです。
-現在、徳島大学イノベーションプロジェクトにエントリー準備中で、アプリ開発チームに参加していただける方を募集しています。
-オープンソースのため、開発に参加することができます！
+「トクメモ＋」は徳島大学イノベーションプロジェクトの『アプリ開発プロジェクト』が企画、設計、制作を行いました。
+徳島大学生達が他の徳島大学生のためを想い開発した『学習サポートアプリ』です。
+
+日々学業や部活動で忙しい徳島大学生のために、パスワード入力を省く自動ログイン技術を開発しました。「トクメモ＋」の自動ログイン機能を使うためには、学生番号やパスワードの入力が必要ですが、個人を特定できる情報は一切収集しません。詳しくはプライバシーポリシーをご覧ください。
 
 
 ## スクリーンショット
 
-|SpotlightTutorial1|SpotlightTutorial2|SpotlightTutorial3|
+|ホーム画面|ニュース画面|設定画面|
 |:--|:--|:--|
-|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial1.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial2.PNG" width="207">|<img src="./Docs/Screenshots/Tutorial/SpotlightTutorial3.PNG" width="207">|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_home.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_news.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_settings.png" width="207">|
 
 |教務事務システム|マナバ|Outlookメールサービス|
 |:--|:--|:--|
 |<img src="Docs/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_mail.png" width="207">|
 
-|図書館マイページ|図書館開館カレンダー|キャリア支援室|
-|:--|:--|:--|
-|<img src="Docs/Screenshots/5.5inch/5.5inch_library.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_libraryCalendar.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_career.png" width="207">|
-
-|シラバス検索画面|パスワード入力画面|
+|パスワード画面|カスタマイズ画面|
 |:--|:--|
-|<img src="Docs/Screenshots/5.5inch/5.5inch_syllabus.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|
-
-|提供サービス一覧1|提供サービス一覧2|
-|:--|:--|
-|<img src="Docs/Screenshots/5.5inch/5.5inch_setting1.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_setting2.png" width="207">|
-
+|<img src="Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_customize.png" width="207">|
 
 
 ## 環境
-
+動作確認環境
 - [Xcode](https://apps.apple.com/jp/app/xcode/id497799835): 13.2.1
-- [cocoaPods](https://cocoapods.org/): 1.11.2
+- [cocoaPods](https://cocoapods.org/): 1.11.3
 
 
 ## プロジェクト構成
@@ -89,20 +80,57 @@
 
 ## ライブラリ
 - R.swift 
+- Alamofire
+- SwiftyJSON
 - Firebase/Analytics
-- KeychainAccess // KeychainをUserDefautsのように操作する為に使用
-- Kanna // Webスクレイピングを行う為に使用
-- Gecco // スポットライト型チュートリアル生成の為に使用
+- KeychainAccess // KeychainをUserDefautsのように操作する為
+- Kanna // Webスクレイピングを行う為
+- ZXingObjC // 学生証のバーコード生成の為
 
 
 ## 機能一覧
-- 教務事務システム、マナバ、outlookへの自動ログイン機能
-- 時間制限による強制ログアウト対応
-- カスタマイズメニューから大学のWebサービスへ遷移
-- 図書館開館カレンダー、今期の成績について、動的URLをWebスクレイピング等をすることで取得し、表示
-- シラバスの簡略検索
-- メニューのカスタマイズ
-- チュートリアルの表示
+・主な機能
+◇大学webサービス(manaba、教務システムなど)の自動ログイン化
+◇大学webページ（18種類）をボタン一つで移動可能
+◇徳島市の天気予報
+◇徳大News
+
+・機能説明
+◇大学webサービス(manaba、教務システムなど)の自動ログイン化
+manabaをすぐさま開きたい！でも検索する、お気に入りから探すことがめんどうくさい！トクメモなら2秒でmanabaなどの大学webサービスをログインした状態で開くことができます。
+
+◇大学webページをボタン一つで移動可能
+忙しい朝に教務、manaba、メールを開いて大学からのメッセージを確認しないといけない…、切り替えがめんどうくさい時にもトクメモが活躍します。システム間の移動もボタン一つでスムーズにできます。
+
+◇徳島市の天気予報
+朝、アプリを開いて徳島の天気を知り、傘が必要かどうかわかる！
+
+◇徳大News
+徳島大学のホームページに掲載されているNewsがこのアプリでわかる！これで徳大の情報も完璧！
+
+＝＝＝＝自動ログイン可能・利用できる大学Webサービス一覧＝＝＝＝
+・教務事務システム
+・マナバ
+・図書館Webサイト
+・図書館MyPage
+・図書館本貸し出し期間延長
+・図書館本購入リクエスト
+・図書館開館カレンダー
+・シラバス
+・時間割
+・今年の成績表
+・出欠記録
+・授業アンケート
+・メール
+・キャリアセンター
+・生協の営業時間
+・履修登録
+・システムサービス一覧
+・Eラーニング一覧
+・大学サイト
+今後も更新予定
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
 
 
 ## 工夫点
@@ -138,7 +166,7 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 
 |ビラ|
 |:--|
-|<img src="Docs/innovationFlyer.png" width="207">|
+|<img src="Docs/その他.png" width="207">|
 
 
 ## 募集中
@@ -151,6 +179,6 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 
 ## ライセンス
 
-Copyright(c) 2022 tokudai0000
+Copyright(c) 2022 AppDevelopmentProject
 
 トクメモは[MITライセンス](https://github.com/tokudai0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。

@@ -13,6 +13,18 @@ final class MenuViewModel {
     
     private let dataManager = DataManager.singleton
     
+    public var menuLists:[MenuListItem] {
+        get {
+            var lists:[MenuListItem] = []
+            for item in dataManager.menuLists {
+                if item.id != .libraryCalendar , item.id != .syllabus {
+                    lists.append(item)
+                }
+            }
+            return lists
+        }
+    }
+    
     /// 今年度の成績表のURLを作成する
     /// - Returns: 今年度の成績表のURL
     public func createCurrentTermPerformanceUrl() -> URLRequest? {
@@ -35,11 +47,6 @@ final class MenuViewModel {
             AKLog(level: .ERROR, message: "[URLフォーマットエラー]: 今年度の成績表URL生成エラー urlString:\(urlString)")
             return nil
         }
-    }
-    
-    public func analytics(_ temp: String) {
-        // Analytics
-        Analytics.logEvent("MenuView", parameters: ["serviceName": temp])
     }
     
 }

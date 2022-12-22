@@ -10,7 +10,6 @@ target 'univIP' do
   pod 'R.swift' , '~> 5'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
-#  pod 'Gecco', '~> 2'
   pod 'Firebase/Analytics' , '~> 8'
   pod 'ZXingObjC', '~> 3.6.4'
   pod 'Alamofire', '~> 4'
