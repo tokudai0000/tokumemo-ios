@@ -27,9 +27,9 @@ func AKLog(file: String = #file,
            line: Int = #line,
            function: String = #function,
            level: AKLogLevel,
-           message: String ){
+           message: Any ){
     
-    #if DEBUG // デバック時のみ実行
+    #if DEBUG || Stub
         let levelString: String
         switch level {
             case .FATAL:    levelString = "FATAL"

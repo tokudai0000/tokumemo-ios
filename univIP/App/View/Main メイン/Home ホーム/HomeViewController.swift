@@ -173,7 +173,7 @@ final class HomeViewController: BaseViewController {
                         
                     case .adReady:
                         // 広告画像の表示
-                        self.adImageView.cacheImage(imageUrlString: self.viewModel.adImage())
+                        self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
                         break
                         
                     case .adError:
@@ -245,7 +245,7 @@ final class HomeViewController: BaseViewController {
         adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
                                        repeats: true, block: { (timer) in
             // 広告画像の表示
-            self.adImageView.cacheImage(imageUrlString: self.viewModel.adImage())
+            self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
         })
     }
 }

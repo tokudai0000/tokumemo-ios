@@ -87,7 +87,7 @@ enum Url: String {
     /// トクメモ＋の利用規約URL[GitHub]
     case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
     /// アプリ紹介文
-    case appIntroduction = "https://raw.githubusercontent.com/tokudai0000/univIP/feature/fixCode/AppIntroduction.txt"
+    case appIntroduction = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TokumemoExplanation.txt"
     /// トクメモ＋のソースコード[GitHub]
     case sourceCode = "https://github.com/tokudai0000/univIP"
     /// 気象庁の天気予報

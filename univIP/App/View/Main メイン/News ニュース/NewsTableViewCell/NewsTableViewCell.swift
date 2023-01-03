@@ -16,7 +16,7 @@ class NewsTableViewCell: UITableViewCell {
     func setupCell(text: String, date: String, imgUrlStr: String) {
         contentsLabel.text = text
         dateLabel.text = date
-        newsImageView.cacheImage(imageUrlString: imgUrlStr)
+        newsImageView.loadCacheImage(urlStr: imgUrlStr)
     }
     
 }
