@@ -159,6 +159,16 @@ extension WebViewController: WKNavigationDelegate {
         if viewModel.isTimeout(urlStr: url.absoluteString) {
             relogin()
         }
+        
+        // TeamsのURL
+        if viewModel.shouldOpenSafari(urlStr: url.absoluteString) {
+            let url = URL(string: viewModel.loadingUrlStr)!
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+            decisionHandler(.cancel)
+            return
+        }
 
         // 問題ない場合読み込みを許可
         decisionHandler(.allow)
