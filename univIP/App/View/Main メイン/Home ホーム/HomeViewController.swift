@@ -51,7 +51,6 @@ final class HomeViewController: BaseViewController {
         initViewModel()
         initActivityIndicator()
         viewModel.getAdItems()
-        viewModel.getWether()
     }
     
     // ステータスバーの文字を白に設定
@@ -71,9 +70,10 @@ final class HomeViewController: BaseViewController {
         
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
-        
+         
         collectionView.reloadData()
         
+        viewModel.getWether()
         // タイマーを開始する
         adTimerOn()
     }
