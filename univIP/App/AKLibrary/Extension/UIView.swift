@@ -5,7 +5,7 @@
 //  Created by Keita Miyake on 2022/10/24.
 //
 
-import UIKit
+import UIKit.UIView
 
 extension UIView {
   /// 枠線の色

@@ -5,7 +5,7 @@
 //  Created by Keita Miyake on 2022/10/26.
 //
 
-import UIKit
+import UIKit.UIViewController
 
 extension UIViewController {
     private final class StatusBarView: UIView { }

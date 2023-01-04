@@ -17,7 +17,7 @@ class AdViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.cacheImage(imageUrlString: imageUrlStr)
+        imageView.loadCacheImage(urlStr: imageUrlStr)
     }
     
     @IBAction func dismissButton(_ sender: Any) {

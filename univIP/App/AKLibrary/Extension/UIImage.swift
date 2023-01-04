@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2022/10/12.
 //
 
-import UIKit
+import UIKit.UIImage
 
 extension UIImage {
     // URL画像を表示できる。

@@ -51,7 +51,6 @@ final class HomeViewController: BaseViewController {
         initViewModel()
         initActivityIndicator()
         viewModel.getAdItems()
-        viewModel.getWether()
     }
     
     // ステータスバーの文字を白に設定
@@ -71,9 +70,10 @@ final class HomeViewController: BaseViewController {
         
         // Home画面が表示される度に、ログインページの読み込み
         relogin()
-        
+         
         collectionView.reloadData()
         
+        viewModel.getWether()
         // タイマーを開始する
         adTimerOn()
     }
@@ -173,7 +173,7 @@ final class HomeViewController: BaseViewController {
                         
                     case .adReady:
                         // 広告画像の表示
-                        self.adImageView.cacheImage(imageUrlString: self.viewModel.adImage())
+                        self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
                         break
                         
                     case .adError:
@@ -245,7 +245,7 @@ final class HomeViewController: BaseViewController {
         adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
                                        repeats: true, block: { (timer) in
             // 広告画像の表示
-            self.adImageView.cacheImage(imageUrlString: self.viewModel.adImage())
+            self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
         })
     }
 }

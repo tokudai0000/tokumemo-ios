@@ -5,11 +5,11 @@
 //  Created by Akihiro Matsuyama on 2022/11/11.
 //
 
-import UIKit
+import UIKit.UIColor
 
 extension UIColor {
     // UIColorを16進数で表記可能
-    // UIColor(hex: #FFFFFF)
+    // 例: UIColor(hex: #FFFFFF)
     convenience init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
@@ -39,6 +39,7 @@ extension UIColor {
         self.init(red: r, green: g, blue: b, alpha: a)
     }
     
+    // 16進数表記をUIColorへ変換
     func toHexString() -> String {
         var red: CGFloat     = 1.0
         var green: CGFloat   = 1.0
@@ -53,17 +54,5 @@ extension UIColor {
         
         let result = String(r, radix: 16).leftPadding(toLength: 2, withPad: "0") + String(g, radix: 16).leftPadding(toLength: 2, withPad: "0") + String(b, radix: 16).leftPadding(toLength: 2, withPad: "0") + String(a, radix: 16).leftPadding(toLength: 2, withPad: "0")
         return result
-    }
-}
-
-extension String {
-    // 左から文字埋めする
-    func leftPadding(toLength: Int, withPad character: Character) -> String {
-        let stringLength = self.count
-        if stringLength < toLength {
-            return String(repeatElement(character, count: toLength - stringLength)) + self
-        } else {
-            return String(self.suffix(toLength))
-        }
     }
 }

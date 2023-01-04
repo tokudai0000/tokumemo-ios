@@ -25,6 +25,7 @@
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A4D14CD2740DFB7009D6CD2 /* AboutThisApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */; };
+		1A556D922963BD4B00A650B2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A556D912963BD4B00A650B2 /* String.swift */; };
 		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
 		1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698BF2938CA96003906DB /* MenuViewController.swift */; };
 		1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C12938CA9F003906DB /* MenuViewModel.swift */; };
@@ -48,8 +49,6 @@
 		1AB10B8D292A1A640071E876 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB10B8C292A1A640071E876 /* UIImageView.swift */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
 		1AB37B7D26FDFCF4008A2D2F /* univIPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */; };
-		1ABC42212926988C00D1361D /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC42202926988B00D1361D /* DispatchQueue.swift */; };
-		1ABC42232926998200D1361D /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC42222926998200D1361D /* Notification.Name.swift */; };
 		1ABC422629269D2000D1361D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC422529269D2000D1361D /* BaseViewController.swift */; };
 		1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC422729269D3A00D1361D /* BaseViewModel.swift */; };
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
@@ -111,6 +110,7 @@
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A4D14CC2740DFB7009D6CD2 /* AboutThisApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutThisApp.rtf; sourceTree = "<group>"; };
+		1A556D912963BD4B00A650B2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		1A5698BF2938CA96003906DB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1A5698C12938CA9F003906DB /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
@@ -142,8 +142,6 @@
 		1AB37B7A26FDFCF4008A2D2F /* univIPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = univIPUITests.swift; sourceTree = "<group>"; };
 		1AB37B7E26FDFCF4008A2D2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1ABC42202926988B00D1361D /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
-		1ABC42222926998200D1361D /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		1ABC422529269D2000D1361D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1ABC422729269D3A00D1361D /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
@@ -252,7 +250,7 @@
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
 				80D3B6FF2909435000FF1AE3 /* StudentCard 学生証 */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
-				1AC1332B294C2D1000E3DC16 /* Ad */,
+				1AC1332B294C2D1000E3DC16 /* Ad 広告 */,
 			);
 			path = "Home ホーム";
 			sourceTree = "<group>";
@@ -326,8 +324,7 @@
 				809DCF712906A63300593989 /* UIView.swift */,
 				80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */,
 				1AA29EE3291E68470049A546 /* UIColor.swift */,
-				1ABC42202926988B00D1361D /* DispatchQueue.swift */,
-				1ABC42222926998200D1361D /* Notification.Name.swift */,
+				1A556D912963BD4B00A650B2 /* String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -490,13 +487,13 @@
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};
-		1AC1332B294C2D1000E3DC16 /* Ad */ = {
+		1AC1332B294C2D1000E3DC16 /* Ad 広告 */ = {
 			isa = PBXGroup;
 			children = (
 				1AC1332C294C2D4D00E3DC16 /* AdViewController.swift */,
 				1AC1332E294C2D5D00E3DC16 /* Ad.storyboard */,
 			);
-			path = Ad;
+			path = "Ad 広告";
 			sourceTree = "<group>";
 		};
 		1ACB59AB291D11A8005A90BE /* NewsTableViewCell */ = {
@@ -837,6 +834,7 @@
 			files = (
 				1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */,
 				1A63062C2944B48600205C7C /* SettingViewModel.swift in Sources */,
+				1A556D922963BD4B00A650B2 /* String.swift in Sources */,
 				1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */,
 				1A1709B8293F95D6005B4CE8 /* MenuList.swift in Sources */,
 				1A5698C52938CE0F003906DB /* CustomizeViewController.swift in Sources */,
@@ -852,7 +850,6 @@
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				80D3B703290943AF00FF1AE3 /* StudentCardViewController.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */,
-				1ABC42232926998200D1361D /* Notification.Name.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1A30D0B628F87D4500C4012E /* Weather.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */,
@@ -866,7 +863,6 @@
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */,
 				1AB10B8D292A1A640071E876 /* UIImageView.swift in Sources */,
-				1ABC42212926988C00D1361D /* DispatchQueue.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* ConstStruct.swift in Sources */,
 				1A27270327D0EBAB00CE1DA5 /* R.generated.swift in Sources */,
 				1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */,
