@@ -12,7 +12,7 @@
         <!--ClubList-->
         <scene sceneID="vpG-Vn-O9W">
             <objects>
-                <viewController id="c8q-AA-dNK" customClass="ReviewViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c8q-AA-dNK" customClass="ClubListViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fOP-Xx-bJm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
