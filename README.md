@@ -1,4 +1,4 @@
-# Tokumemo-iOS
+# トクメモ＋ (TokumemoPlus) for iOS
 
 <!-- [![Release](https://img.shields.io/github/v/release/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/release/latest) -->
 
@@ -20,11 +20,14 @@
 
 
 ## 概要
-「トクメモ＋」は徳島大学イノベーションプロジェクトの『アプリ開発プロジェクト』が企画、設計、制作を行いました。
-徳島大学生達が他の徳島大学生のためを想い開発した『学習サポートアプリ』です。
+「トクメモ＋」は徳島大学イノベーションプロジェクトの『アプリ開発プロジェクト』が企画、設計、制作を行いました。徳島大学生達が他の徳島大学生のためを想い開発した『学習サポートアプリ』です。
 
-日々学業や部活動で忙しい徳島大学生のために、パスワード入力を省く自動ログイン技術を開発しました。「トクメモ＋」の自動ログイン機能を使うためには、学生番号やパスワードの入力が必要ですが、個人を特定できる情報は一切収集しません。詳しくはプライバシーポリシーをご覧ください。
+日々学業や部活動で忙しい徳島大学生のために、パスワード入力を省く自動ログイン技術を開発しました。「トクメモ＋」の自動ログイン機能を使うためには、学生番号やパスワードの入力が必要ですが、個人を特定できる情報は一切収集しません。詳しくは[プライバシーポリシー](https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt)をご覧ください。
 
+## 紹介動画
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/6OzZH7vLxBI/0.jpg)](http://www.youtube.com/watch?v=6OzZH7vLxBI)
+※Youtubeへ遷移します
 
 ## スクリーンショット
 
@@ -79,7 +82,7 @@
 
 
 ## ライブラリ
-- R.swift 
+- R.swift
 - Alamofire
 - SwiftyJSON
 - Firebase/Analytics
@@ -147,18 +150,18 @@ manabaをすぐさま開きたい！でも検索する、お気に入りから�
 アプリの透明性をアピールする為、また同じ大学の仲間からアドバイスが受けられる様に、GitHubで公開した。
 また、徳島大学イノベーションプラザの大学公認プロジェクトとして、広めれるよう現在調整中。
 
-### 4, CI(継続的インテグレーション)の構築
-GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュされるたびに実行するように環境を整えた。
+<!-- ### 4, CI(継続的インテグレーション)の構築
+GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュされるたびに実行するように環境を整えた。 -->
 
-### 5, 保守性の向上
+### 4, 保守性の向上
 オープンソース、チーム開発をする上で、
 コードの読みやすさ、言語やフレームワークの文化に沿ったコーディングスタイルを意識した。
 また、適度にコメントを増やし3ヶ月後の自分でもわかる様、可読性を意識した。
 
-### 6, コミットの粒度
+### 5, コミットの粒度
 正解の粒度はわからないが、自分自身がGitTreeを見た時に、何を変更したのかを理解できることを意識してコミットを行った。
 
-### 7, 広報
+### 6, 広報
 認知度を広める為に、Twitterアカウントを稼働させた。
 稼働後からの「トクメモ」ダウンロード数はこれにより向上した。
 それ以外にも、ビラを作成し学内掲示板への掲示を行う予定。
@@ -181,4 +184,4 @@ GitHubActionsを使用し、XcodeのUnitTestを「main,develop」へプッシュ
 
 Copyright(c) 2022 AppDevelopmentProject
 
-トクメモは[MITライセンス](https://github.com/tokudai0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。
+トクメモ＋は[MITライセンス](https://github.com/tokudai0000/univIP/blob/main/LICENSE)のオープンソースプロジェクトです。

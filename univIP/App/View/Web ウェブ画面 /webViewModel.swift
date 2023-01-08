@@ -13,9 +13,21 @@ final class WebViewModel {
     
     private let dataManager = DataManager.singleton
     
+    private let safariUrls = ["https://teams.microsoft.com/l/meetup-join", "https://zoom.us/meeting/register/","https://join.skype.com/"]
+    
     /// タイムアウトのURLであるか判定
     public func isTimeout(urlStr: String) -> Bool {
         return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
+    }
+    
+    /// Safariで開きたいURLであるか判定
+    public func shouldOpenSafari(urlStr: String) -> Bool {
+        for url in safariUrls {
+            if urlStr.contains(url) {
+                return true
+            }
+        }
+        return false
     }
     
     /// JavaScriptを動かす種類
