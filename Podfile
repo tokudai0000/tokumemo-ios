@@ -7,7 +7,7 @@ target 'univIP' do
   inhibit_all_warnings!
   
   # Pods for univIP
-  pod 'R.swift' , '~> 5'
+  pod 'R.swift' , '~> 7.2'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
   pod 'Firebase/Analytics' , '~> 8'
