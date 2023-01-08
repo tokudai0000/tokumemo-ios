@@ -12,7 +12,7 @@ target 'univIP' do
   pod 'Kanna' , '~> 5'
   pod 'Firebase/Analytics' , '~> 10.3'
   pod 'ZXingObjC', '~> 3'
-  pod 'Alamofire', '~> 4'
+  pod 'Alamofire', '~> 4' // いずれAlamofire 5系へ
   pod 'SwiftyJSON', '~> 5'
     
   target  'univIPTests' do
