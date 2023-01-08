@@ -93,6 +93,8 @@ enum Url: String {
     /// 気象庁の天気予報
     case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
     
+    /// 徳大学生活動リスト
+    case clubList = "https://tokudai0000.github.io/club-list/"
     
     /// URLを文字列として返す
     func string() -> String {
