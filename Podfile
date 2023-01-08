@@ -7,12 +7,12 @@ target 'univIP' do
   inhibit_all_warnings!
   
   # Pods for univIP
-  pod 'R.swift' , '~> 5'
+  pod 'R.swift' , '~> 7.2'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
-  pod 'Firebase/Analytics' , '~> 8'
-  pod 'ZXingObjC', '~> 3.6.4'
-  pod 'Alamofire', '~> 4'
+  pod 'Firebase/Analytics' , '~> 10.3'
+  pod 'ZXingObjC', '~> 3'
+  pod 'Alamofire', '~> 4' # いずれAlamofire 5系へ
   pod 'SwiftyJSON', '~> 5'
     
   target  'univIPTests' do
@@ -33,7 +33,7 @@ post_install do | installer |
   # The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 8.0, but the range of supported deployment target versions is 9.0 to 15.0.99.
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
     end
   end  
 end

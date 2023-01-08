@@ -200,7 +200,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
+		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
 			isa = PBXGroup;
 			children = (
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
@@ -219,7 +219,7 @@
 			path = HomeCollectionCell;
 			sourceTree = "<group>";
 		};
-		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
+		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
 			isa = PBXGroup;
 			children = (
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
@@ -237,7 +237,7 @@
 				1A63062B2944B48600205C7C /* SettingViewModel.swift */,
 				1A30D0BA28F9C14200C4012E /* SettingViewController.swift */,
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
-				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
+				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
 			);
 			path = "Settings 設定";
 			sourceTree = "<group>";
@@ -266,7 +266,7 @@
 			path = "News ニュース";
 			sourceTree = "<group>";
 		};
-		1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */ = {
+		1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */ = {
 			isa = PBXGroup;
 			children = (
 				1A6C51B92905077E00A3E85A /* ClubListViewController.swift */,
@@ -305,7 +305,7 @@
 			path = "Menu メニュー";
 			sourceTree = "<group>";
 		};
-		1A5698C32938CDC8003906DB /* Customize カスタマイズ */ = {
+		1A5698C32938CDC8003906DB /* Customize カスタマイズ */ = {
 			isa = PBXGroup;
 			children = (
 				1A5698C42938CE0F003906DB /* CustomizeViewController.swift */,
@@ -409,10 +409,10 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
+				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
-				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
+				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 				1ABE8BCB27B10489001EEA79 /* InputView */,
 			);
 			path = View;
@@ -471,7 +471,7 @@
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
-				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
+				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
 				1A30D0B728F9BED600C4012E /* Settings 設定 */,
 			);
 			path = "Main メイン";
@@ -551,9 +551,9 @@
 				1AA056C526BD2AE100343005 /* Sources */,
 				1AA056C626BD2AE100343005 /* Frameworks */,
 				1AA056C726BD2AE100343005 /* Resources */,
-				60F61D0564C5C5FA71CDF927 /* [CP] Embed Pods Frameworks */,
 				1AA29EE2291E56090049A546 /* Build Version To Settings */,
 				1A69FB74276722DB006A34C0 /* Run Script Align Xcode Version */,
+				0CDD3BFE913BFE4F6BCDA491 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -691,6 +691,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0CDD3BFE913BFE4F6BCDA491 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1A69FB74276722DB006A34C0 /* Run Script Align Xcode Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -723,7 +740,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/R.generated.swift,
+				"$SRCROOT/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -762,23 +779,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIPTests/Pods-univIPTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		60F61D0564C5C5FA71CDF927 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6BC3F9ADAE1ED57107C2EC77 /* [CP] Check Pods Manifest.lock */ = {
