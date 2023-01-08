@@ -10,7 +10,7 @@ target 'univIP' do
   pod 'R.swift' , '~> 7.2'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
-  pod 'Firebase/Analytics' , '~> 8'
+  pod 'Firebase/Analytics' , '~> 10.3'
   pod 'ZXingObjC', '~> 3.6.4'
   pod 'Alamofire', '~> 4'
   pod 'SwiftyJSON', '~> 5'
