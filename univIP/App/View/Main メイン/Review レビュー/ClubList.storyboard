@@ -55,7 +55,7 @@
                             <constraint firstItem="LMj-0H-bht" firstAttribute="top" secondItem="ZRM-2d-DCw" secondAttribute="bottom" id="nie-lC-KQo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="ClubList" image="star" catalog="system" id="kdD-Fy-TXF"/>
+                    <tabBarItem key="tabBarItem" title="ClubList" image="figure.disc.sports" catalog="system" id="kdD-Fy-TXF"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="LMj-0H-bht" id="pyL-N4-DCm"/>
@@ -67,7 +67,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="figure.disc.sports" catalog="system" width="128" height="108"/>
         <namedColor name="MainColor">
             <color red="0.050980392156862744" green="0.22745098039215686" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
