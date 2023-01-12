@@ -1,39 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c8q-AA-dNK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="c8q-AA-dNK">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Review-->
+        <!--ClubList-->
         <scene sceneID="vpG-Vn-O9W">
             <objects>
-                <viewController id="c8q-AA-dNK" customClass="ReviewViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c8q-AA-dNK" customClass="ClubListViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fOP-Xx-bJm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sm5-Dw-fFH">
-                                <rect key="frame" x="59" y="294" width="257" height="79"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Review Coming Soon...">
-                                        <attributes>
-                                            <font key="NSFont" size="34" name="GillSans-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZRM-2d-DCw">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="レビュー" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-2f-tXU">
-                                        <rect key="frame" x="146.5" y="10" width="82" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="部活・サークル紹介" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8V-2f-tXU">
+                                        <rect key="frame" x="95.5" y="10" width="184" height="24"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -46,27 +34,40 @@
                                     <constraint firstItem="f8V-2f-tXU" firstAttribute="centerY" secondItem="ZRM-2d-DCw" secondAttribute="centerY" id="Q55-el-rFb"/>
                                 </constraints>
                             </view>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LMj-0H-bht">
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nUJ-6N-MRn"/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.94901960784313721" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="LMj-0H-bht" firstAttribute="bottom" secondItem="nUJ-6N-MRn" secondAttribute="bottom" id="542-DH-Bw6"/>
+                            <constraint firstItem="LMj-0H-bht" firstAttribute="leading" secondItem="nUJ-6N-MRn" secondAttribute="leading" id="8tb-F0-6OA"/>
                             <constraint firstItem="ZRM-2d-DCw" firstAttribute="leading" secondItem="nUJ-6N-MRn" secondAttribute="leading" id="SbR-AW-BJr"/>
                             <constraint firstItem="ZRM-2d-DCw" firstAttribute="top" secondItem="nUJ-6N-MRn" secondAttribute="top" id="TNw-3l-Hyl"/>
                             <constraint firstAttribute="trailing" secondItem="ZRM-2d-DCw" secondAttribute="trailing" id="bCR-tK-GUk"/>
-                            <constraint firstItem="Sm5-Dw-fFH" firstAttribute="centerX" secondItem="fOP-Xx-bJm" secondAttribute="centerX" id="ni2-zE-rdP"/>
-                            <constraint firstItem="Sm5-Dw-fFH" firstAttribute="centerY" secondItem="fOP-Xx-bJm" secondAttribute="centerY" id="xcN-Nz-aIT"/>
+                            <constraint firstItem="LMj-0H-bht" firstAttribute="trailing" secondItem="nUJ-6N-MRn" secondAttribute="trailing" id="hbd-DC-ZU5"/>
+                            <constraint firstItem="LMj-0H-bht" firstAttribute="top" secondItem="ZRM-2d-DCw" secondAttribute="bottom" id="nie-lC-KQo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Review" image="star" catalog="system" id="kdD-Fy-TXF"/>
+                    <tabBarItem key="tabBarItem" title="ClubList" image="figure.disc.sports" catalog="system" id="kdD-Fy-TXF"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="webView" destination="LMj-0H-bht" id="pyL-N4-DCm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u9Z-EO-ZBO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="725" y="596"/>
+            <point key="canvasLocation" x="724" y="595.95202398800609"/>
         </scene>
     </scenes>
     <resources>
-        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="figure.disc.sports" catalog="system" width="128" height="108"/>
         <namedColor name="MainColor">
             <color red="0.050980392156862744" green="0.22745098039215686" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
