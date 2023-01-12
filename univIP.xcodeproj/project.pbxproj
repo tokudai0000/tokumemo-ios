@@ -200,7 +200,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
+		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
 			isa = PBXGroup;
 			children = (
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
@@ -219,7 +219,7 @@
 			path = HomeCollectionCell;
 			sourceTree = "<group>";
 		};
-		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
+		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
 			isa = PBXGroup;
 			children = (
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
@@ -237,7 +237,7 @@
 				1A63062B2944B48600205C7C /* SettingViewModel.swift */,
 				1A30D0BA28F9C14200C4012E /* SettingViewController.swift */,
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
-				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
+				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
 			);
 			path = "Settings 設定";
 			sourceTree = "<group>";
@@ -266,7 +266,7 @@
 			path = "News ニュース";
 			sourceTree = "<group>";
 		};
-		1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */ = {
+		1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */ = {
 			isa = PBXGroup;
 			children = (
 				1A6C51B92905077E00A3E85A /* ClubListViewController.swift */,
@@ -305,7 +305,7 @@
 			path = "Menu メニュー";
 			sourceTree = "<group>";
 		};
-		1A5698C32938CDC8003906DB /* Customize カスタマイズ */ = {
+		1A5698C32938CDC8003906DB /* Customize カスタマイズ */ = {
 			isa = PBXGroup;
 			children = (
 				1A5698C42938CE0F003906DB /* CustomizeViewController.swift */,
@@ -409,10 +409,10 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
+				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
-				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
+				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 				1ABE8BCB27B10489001EEA79 /* InputView */,
 			);
 			path = View;
@@ -471,7 +471,7 @@
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
-				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
+				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
 				1A30D0B728F9BED600C4012E /* Settings 設定 */,
 			);
 			path = "Main メイン";
@@ -740,7 +740,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$SRCROOT/R.generated.swift",
+				$SRCROOT/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1001,7 +1001,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 3.2.2;
+				MARKETING_VERSION = 3.3.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1203,7 +1203,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 3.2.2;
+				MARKETING_VERSION = 3.3.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1247,7 +1247,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 3.2.2;
+				MARKETING_VERSION = 3.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
