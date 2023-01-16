@@ -50,7 +50,6 @@ final class HomeViewController: BaseViewController {
         initSetup()
         initViewModel()
         initActivityIndicator()
-        viewModel.getAdItems()
     }
     
     // ステータスバーの文字を白に設定
@@ -74,15 +73,10 @@ final class HomeViewController: BaseViewController {
         collectionView.reloadData()
         
         viewModel.getWether()
-        // タイマーを開始する
-        adTimerOn()
-    }
-    
-    /// 画面が閉じる直前
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // タイマーを停止する(メモリの開放)
-        adTimer.invalidate()
+        
+        // 広告画像について
+        viewModel.getAdItems()
+        adImageView.image = UIImage(url: viewModel.adImage())
     }
     
     /// Viewがタップされた時
@@ -232,21 +226,6 @@ final class HomeViewController: BaseViewController {
         weatherLabel.text = discription
         temperatureLabel.text = feelsLike
         weatherIconImageView.image = icon
-    }
-    
-    private func adTimerOn() {
-        var TIME_INTERVAL = 10.0 // 広告を表示させる秒数
-        
-        #if STUB // テスト時は2秒で表示が変わる様にする
-        TIME_INTERVAL = 2.0
-        #endif
-        
-        // TIME_INTERVAL秒毎に処理を実行する
-        adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
-                                       repeats: true, block: { (timer) in
-            // 広告画像の表示
-            self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
-        })
     }
 }
 
