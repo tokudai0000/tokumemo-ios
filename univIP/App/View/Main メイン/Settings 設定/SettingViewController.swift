@@ -36,13 +36,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "このアプリでは、パスワードを保存することで毎日面倒だったマナバなどへのログインを自動化します。パスワード設定から機能をオンにしてみましょう。"
+            return "毎日面倒だったマナバなどへのログインを自動化します"
         }
         return " "
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 { return 65 }
         return 30
     }
     
