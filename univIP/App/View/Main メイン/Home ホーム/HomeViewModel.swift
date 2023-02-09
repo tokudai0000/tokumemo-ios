@@ -63,7 +63,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     
     // 学生番号、パスワードを登録しているか判定
     public func hasRegisteredPassword() -> Bool {
-        return !(dataManager.studentNumber.isEmpty || dataManager.password.isEmpty)
+        return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty)
     }
     
     // GitHub上に0-2までのpngがある場合、ここでは

@@ -42,16 +42,11 @@ final class DataManager {
             userDefaults.set(data ,forKey: KEY_menuLists)
         }
     }
-    
-    /// cアカウントは学生番号の最後の桁を削除し、先頭に"c"をつける
+        
+    private let KEY_cAccount = "KEY_cAccount"
     public var cAccount: String {
-        get { return "c" + studentNumber.prefix(studentNumber.count - 1) }
-    }
-    
-    private let KEY_studentNumber = "KEY_studentNumber"
-    public var studentNumber: String {
-        get { return getKeyChain(key: KEY_studentNumber) }
-        set(v) { setKeyChain(key: KEY_studentNumber, value: v) }
+        get { return getKeyChain(key: KEY_cAccount) }
+        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
     
     private let KEY_password = "KEY_password"

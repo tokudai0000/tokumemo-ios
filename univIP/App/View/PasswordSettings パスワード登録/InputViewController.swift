@@ -60,7 +60,7 @@ final class InputViewController: UIViewController {
         let defaultAction = UIAlertAction(title: "OK",
                                           style: UIAlertAction.Style.default,
                                           handler:{ (action: UIAlertAction!) -> Void in
-            self.dataManager.studentNumber = ""
+            self.dataManager.cAccount = ""
             self.dataManager.password = ""
             self.initSetup(self.type)
         })
@@ -92,19 +92,16 @@ final class InputViewController: UIViewController {
         if text1.isEmpty {
             MessageLabel1.text = "空欄です"
             textFieldCursorSetup(fieldType: .one, cursorType: .error)
-            return
         }
         
         if text2.isEmpty {
             MessageLabel2.text = "空欄です"
             textFieldCursorSetup(fieldType: .two, cursorType: .error)
-            return
         }
         
-        if type == .password, text1.prefix(1) == "c" {
-            MessageLabel1.text = "cアカウントではなく、学生番号です"
+        if type == .password, text1.prefix(1) != "c" {
+            MessageLabel1.text = "cアカウントを入力してください"
             textFieldCursorSetup(fieldType: .one, cursorType: .error)
-            return
         }
         
         // エラー表示が出ていた場合、画面を初期化
@@ -113,7 +110,7 @@ final class InputViewController: UIViewController {
         switch type {
             case .password:
                 // KeyChianに保存する
-                dataManager.studentNumber = text1
+                dataManager.cAccount = text1
                 dataManager.password = text2
                 initSetup(.password)
                 alert(title: "♪ 登録完了 ♪",
@@ -159,9 +156,9 @@ final class InputViewController: UIViewController {
                 title = "パスワード"
                 titleLabel1.text = "学生番号"
                 titleLabel2.text = "パスワード"
-                TextField1.text = dataManager.studentNumber
+                TextField1.text = dataManager.cAccount
                 TextField2.text = dataManager.password
-                TextSizeLabel1.text = "\(dataManager.studentNumber.count)/10"
+                TextSizeLabel1.text = "\(dataManager.cAccount.count)/10"
                 TextSizeLabel2.text = "\(dataManager.password.count)/100"
                 TextField2.isSecureTextEntry = true
                 resetButton.layer.cornerRadius = 25.0
