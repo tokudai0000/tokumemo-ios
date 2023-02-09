@@ -68,9 +68,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 let vc = R.storyboard.input.inputViewController()!
                 vc.type = .favorite
                 navigationController?.pushViewController(vc, animated: true)
-//                let vc = R.storyboard.favorite.favoriteViewController()!
-//                vc.title = "お気に入り登録"
-//                navigationController?.pushViewController(vc, animated: true)
                 
             case .customize:
                 let vc = R.storyboard.customize.customizeViewController()!
