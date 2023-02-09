@@ -51,7 +51,7 @@ let initMenuLists = [
     
     MenuListItem(title: "[図書]本貸出延長", id: .libraryBookLendingExtension, image: "books.vertical", url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: "questionmark.folder", url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: "calendar", url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
     
     MenuListItem(title: "時間割", id: .timeTable, image: "calendar", url: Url.timeTable.string(), isLockIconExists: true, isHiddon: false),
     
@@ -65,23 +65,23 @@ let initMenuLists = [
     
     MenuListItem(title: "キャリア支援室", id: .tokudaiCareerCenter, image: "questionmark.folder", url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "大学サイト", id: .universityWeb, image: "graduationcap", url: Url.universityHomePage.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "大学サイト", id: .universityWeb, image: "graduationcap", url: Url.universityHomePage.string(), isLockIconExists: false, isHiddon: true),
     
-    MenuListItem(title: "教務システム_PC", id: .courseManagementHomePC, image: "graduationcap", url: Url.courseManagementPC.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "教務システム_PC", id: .courseManagementHomePC, image: "graduationcap", url: Url.courseManagementPC.string(), isLockIconExists: true, isHiddon: true),
     
-    MenuListItem(title: "マナバ_Mob", id: .manabaHomeMobile, image: "graduationcap", url: Url.manabaMobile.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "マナバ_Mob", id: .manabaHomeMobile, image: "graduationcap", url: Url.manabaMobile.string(), isLockIconExists: true, isHiddon: true),
     
-    MenuListItem(title: "図書館サイト", id: .libraryWebHomeMobile, image: "books.vertical", url: Url.libraryHomeMobile.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "図書館サイト", id: .libraryWebHomeMobile, image: "books.vertical", url: Url.libraryHomeMobile.string(), isLockIconExists: true, isHiddon: true),
     
     MenuListItem(title: "[図書]本購入", id: .libraryBookPurchaseRequest, image: "books.vertical", url: Url.libraryBookPurchaseRequest.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "出欠記録", id: .presenceAbsenceRecord, image: "graduationcap", url: Url.presenceAbsenceRecord.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "出欠記録", id: .presenceAbsenceRecord, image: "graduationcap", url: Url.presenceAbsenceRecord.string(), isLockIconExists: true, isHiddon: true),
     
-    MenuListItem(title: "授業アンケート", id: .classQuestionnaire, image: "graduationcap", url: Url.classQuestionnaire.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "授業アンケート", id: .classQuestionnaire, image: "graduationcap", url: Url.classQuestionnaire.string(), isLockIconExists: true, isHiddon: true),
     
-    MenuListItem(title: "LMS一覧", id: .eLearningList, image: "graduationcap", url: Url.eLearningList.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "LMS一覧", id: .eLearningList, image: "graduationcap", url: Url.eLearningList.string(), isLockIconExists: false, isHiddon: true),
     
-    MenuListItem(title: "[図書]HP_常三島", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageMainPC.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "[図書]HP_常三島", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageMainPC.string(), isLockIconExists: false, isHiddon: true),
     
-    MenuListItem(title: "[図書]HP_蔵本", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageKuraPC.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "[図書]HP_蔵本", id: .libraryWebHomePC, image: "books.vertical", url: Url.libraryHomePageKuraPC.string(), isLockIconExists: false, isHiddon: true),
 ]
