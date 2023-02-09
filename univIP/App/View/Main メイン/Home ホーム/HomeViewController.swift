@@ -71,11 +71,10 @@ final class HomeViewController: BaseViewController {
         // Home画面が表示される度に、ログインページの読み込み
         if viewModel.shouldRelogin() {
             relogin()
+            viewModel.getWether()
         }
          
         collectionView.reloadData()
-        
-        viewModel.getWether()
         
         // タイマーを開始する
         adTimerOn()
