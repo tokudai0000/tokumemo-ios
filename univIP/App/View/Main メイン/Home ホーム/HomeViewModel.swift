@@ -166,6 +166,19 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         })
     }
     
+    public var lastLoginTime = Date().secondBefore(500)
+    public func shouldRelogin() -> Bool {
+        // パスワード更新等をした時に再ログイン
+        if dataManager.shouldRelogin {
+            dataManager.shouldRelogin = false
+            return true
+        }
+        
+        let distance = abs(lastLoginTime.timeIntervalSinceNow)
+        // 300秒 = 5分
+        return 300 < distance
+    }
+    
     /// タイムアウトのURLであるか判定
     public func isTimeout(urlStr: String) -> Bool {
         return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
@@ -213,6 +226,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 isLoginProcessing = false
                 isLoginComplete = true
                 isLoginCompleteImmediately = true
+                lastLoginTime = Date() // 最終ログイン時刻の記録
                 
             case .loginFailure:
                 dataManager.canExecuteJavascript = false

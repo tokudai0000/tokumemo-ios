@@ -64,6 +64,7 @@
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
 		1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */; };
+		1AE7096729955170004F5435 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7096629955170004F5435 /* Date.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		80921099290FC717009D0ABD /* BarCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80921098290FC717009D0ABD /* BarCodeGenerator.swift */; };
 		809DCF722906A63300593989 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809DCF712906A63300593989 /* UIView.swift */; };
@@ -157,6 +158,7 @@
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = StudentNumberDiscription.rtf; sourceTree = "<group>"; };
+		1AE7096629955170004F5435 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				80D3B6FD2909341000FF1AE3 /* UIViewController+StatusBar.swift */,
 				1AA29EE3291E68470049A546 /* UIColor.swift */,
 				1A556D912963BD4B00A650B2 /* String.swift */,
+				1AE7096629955170004F5435 /* Date.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -843,6 +846,7 @@
 				1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */,
+				1AE7096729955170004F5435 /* Date.swift in Sources */,
 				1ABC422629269D2000D1361D /* BaseViewController.swift in Sources */,
 				1AA29EE4291E68470049A546 /* UIColor.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,

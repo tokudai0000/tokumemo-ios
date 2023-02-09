@@ -112,6 +112,8 @@ final class InputViewController: UIViewController {
         
         switch type {
             case .password:
+                // 再ログインをする
+                dataManager.shouldRelogin = true
                 // KeyChianに保存する
                 dataManager.cAccount = text1
                 dataManager.password = text2

@@ -69,7 +69,9 @@ final class HomeViewController: BaseViewController {
         }
         
         // Home画面が表示される度に、ログインページの読み込み
-        relogin()
+        if viewModel.shouldRelogin() {
+            relogin()
+        }
          
         collectionView.reloadData()
         
