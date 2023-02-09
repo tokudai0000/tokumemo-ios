@@ -81,8 +81,8 @@ final class InputViewController: UIViewController {
         guard let text2 = TextField2.text else { return }
         
         if type == .syllabus {
-            dataManager.syllabusSubjectName = text1
-            dataManager.syllabusTeacherName = text2
+            dataManager.syllabusTeacherName = text1
+            dataManager.syllabusSubjectName = text2
             let vc = R.storyboard.web.webViewController()!
             vc.loadUrlString = Url.syllabus.string()
             present(vc, animated: true, completion: nil)
