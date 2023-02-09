@@ -41,8 +41,14 @@ extension UIImageView {
                 let imageToCache = UIImage(data:data!)
                 self.image = imageToCache
                 
-                //keyをurlStrとして、imageToCacheをキャッシュとして保存する。
-                UIImageView.imageCache.setObject(imageToCache!, forKey: urlStr as AnyObject)
+                let dt = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.setTemplate(.dateMonthDate)
+                
+                let key = urlStr + dateFormatter.string(from: dt)
+                
+                // keyをurlStr + 日付 として、imageToCacheをキャッシュとして保存する。
+                UIImageView.imageCache.setObject(imageToCache!, forKey: key as AnyObject)
             }
         }.resume()
     }
