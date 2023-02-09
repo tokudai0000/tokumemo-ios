@@ -92,16 +92,19 @@ final class InputViewController: UIViewController {
         if text1.isEmpty {
             MessageLabel1.text = "空欄です"
             textFieldCursorSetup(fieldType: .one, cursorType: .error)
+            return
         }
         
         if text2.isEmpty {
             MessageLabel2.text = "空欄です"
             textFieldCursorSetup(fieldType: .two, cursorType: .error)
+            return
         }
         
         if type == .password, text1.prefix(1) != "c" {
             MessageLabel1.text = "cアカウントを入力してください"
             textFieldCursorSetup(fieldType: .one, cursorType: .error)
+            return
         }
         
         // エラー表示が出ていた場合、画面を初期化
@@ -154,7 +157,7 @@ final class InputViewController: UIViewController {
         switch type {
             case .password:
                 title = "パスワード"
-                titleLabel1.text = "学生番号"
+                titleLabel1.text = "cアカウント"
                 titleLabel2.text = "パスワード"
                 TextField1.text = dataManager.cAccount
                 TextField2.text = dataManager.password
