@@ -18,6 +18,7 @@ final class DataManager {
     public var syllabusSubjectName = ""
     
     public var shouldRelogin = true
+    public var isWebLoginCompleted = false // ログイン完了
     
     /// 次に読み込まれるURLはJavaScriptを動かすことを許可する
     /// これがないと、ログインに失敗した場合、永遠とログイン処理を行われてしまう

@@ -34,7 +34,6 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var adDisplayUrl:String = ""
     
     public var isLoginProcessing = false // ログイン処理中
-    public var isLoginComplete = false // ログイン完了
     public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
     public var weatherDiscription = ""
@@ -167,7 +166,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     }
     
     public var lastLoginTime = Date().secondBefore(500)
-    public func shouldRelogin() -> Bool {
+    public func shouldWebViewRelogin() -> Bool {
         // パスワード更新等をした時に再ログイン
         if dataManager.shouldRelogin {
             dataManager.shouldRelogin = false
@@ -211,33 +210,33 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public func updateLoginFlag(type: flagType) {
         
         switch type {
-            case .notStart:
-                dataManager.canExecuteJavascript = false
-                isLoginProcessing = false
-                isLoginComplete = false
-                
-            case .loginStart:
-                dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす
-                isLoginProcessing = true // ログイン処理中
-                isLoginComplete = false // ログインが完了していない
+        case .notStart:
+            dataManager.canExecuteJavascript = false
+            isLoginProcessing = false
+            dataManager.isWebLoginCompleted = false
             
-            case .loginSuccess:
-                dataManager.canExecuteJavascript = false
-                isLoginProcessing = false
-                isLoginComplete = true
-                isLoginCompleteImmediately = true
-                lastLoginTime = Date() // 最終ログイン時刻の記録
-                
-            case .loginFailure:
-                dataManager.canExecuteJavascript = false
-                isLoginProcessing = false
-                isLoginComplete = false
-                
-            case .executedJavaScript:
-                // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
-                dataManager.canExecuteJavascript = false
-                isLoginProcessing = true
-                isLoginComplete = false
+        case .loginStart:
+            dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす
+            isLoginProcessing = true // ログイン処理中
+            dataManager.isWebLoginCompleted = false // ログインが完了していない
+            
+        case .loginSuccess:
+            dataManager.canExecuteJavascript = false
+            isLoginProcessing = false
+            dataManager.isWebLoginCompleted = true
+            isLoginCompleteImmediately = true
+            lastLoginTime = Date() // 最終ログイン時刻の記録
+            
+        case .loginFailure:
+            dataManager.canExecuteJavascript = false
+            isLoginProcessing = false
+            dataManager.isWebLoginCompleted = false
+            
+        case .executedJavaScript:
+            // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
+            dataManager.canExecuteJavascript = false
+            isLoginProcessing = true
+            dataManager.isWebLoginCompleted = false
         }
     }
     
