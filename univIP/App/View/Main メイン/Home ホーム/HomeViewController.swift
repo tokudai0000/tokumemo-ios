@@ -36,26 +36,22 @@ final class HomeViewController: BaseViewController {
     private var viewActivityIndicator: UIActivityIndicatorView!
     
     
+    // ステータスバーの文字を白に設定
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         #if DEBUG || STUB
         // デバックの時にいじる部分
-        //        dataManager.hadDoneTutorial = false // 毎回、チュートリアルを出現可能
-        //        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
-        //        forLoginWebView.isHidden = false
+//        dataManager.agreementVersion = ""   // 毎回、利用規約同意画面を出現可能
         #endif
         
         initSetup()
-        initViewModel()
-        initActivityIndicator()
-        viewModel.getAdItems()
-    }
-    
-    // ステータスバーの文字を白に設定
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+
     }
     
     /// 画面が表示される直前
@@ -127,6 +123,13 @@ final class HomeViewController: BaseViewController {
     // MARK: - Private func
     /// 初期セットアップ
     private func initSetup() {
+        
+        initViewModel()
+        
+        initActivityIndicator()
+        
+        viewModel.getAdItems()
+        
         // collectionViewの初期設定
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
