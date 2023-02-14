@@ -18,11 +18,12 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         case weatherBusy           // 準備中
         case weatherReady          // 準備完了
         case weatherError          // エラー発生
-        
+
         case adBusy
         case adReady
         case adError
     }
+    
     public var state: ((State) -> Void)?
     
     

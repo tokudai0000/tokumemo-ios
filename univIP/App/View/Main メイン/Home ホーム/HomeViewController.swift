@@ -140,54 +140,42 @@ final class HomeViewController: BaseViewController {
     }
     
     private func layoutInitSetting() {
-        // collectionViewの初期設定
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(R.color.mainColor())
+        
+        // collectionView
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
         collectionView.collectionViewLayout = layout
         collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
         
-        // webViewForLoginの初期設定
+        // webViewForLogin
         webViewForLogin.navigationDelegate = self
         
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(R.color.mainColor())
-        
-        adImageView.isUserInteractionEnabled = true
+        // adImageView
+        adImageView.isUserInteractionEnabled = true // タップ無効
         adImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
-        
-        // クルクル(読み込み中の表示)の初期設定
-        weatherActivityIndicator = UIActivityIndicatorView()
-        weatherActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        weatherActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
-        
-        // クルクルをストップした時に非表示する
-        weatherActivityIndicator.hidesWhenStopped = true
-        
-        // 色を設定
-        weatherActivityIndicator.style = UIActivityIndicatorView.Style.medium
-        
-        //Viewに追加
-        self.weatherView.addSubview(weatherActivityIndicator)
-        
-        
+                
+        // loginGrayBackGroundView(ログイン中の不透明画面表示)
         loginGrayBackGroundView = UIView()
         loginGrayBackGroundView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         loginGrayBackGroundView.backgroundColor = .gray.withAlphaComponent(0.25)
-        //Viewに追加
         self.view.addSubview(loginGrayBackGroundView)
         
-        
+        // viewActivityIndicator(ログイン中のクルクル)
         viewActivityIndicator = UIActivityIndicatorView(style: .large)
-        
-        // クルクルをストップした時に非表示する
-        viewActivityIndicator.hidesWhenStopped = true
+        viewActivityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
         viewActivityIndicator.center = self.view.center
-        
-        // 色を設定
-        viewActivityIndicator.color =  R.color.mainColor()
-        
-        //Viewに追加
+        viewActivityIndicator.color =  R.color.mainColor() // 色を設定
         self.view.addSubview(viewActivityIndicator)
+        
+        // weatherActivityIndicator(クルクル)
+        weatherActivityIndicator = UIActivityIndicatorView()
+        weatherActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        weatherActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
+        weatherActivityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
+        weatherActivityIndicator.style = UIActivityIndicatorView.Style.medium // 色を設定
+        self.weatherView.addSubview(weatherActivityIndicator)
     }
     
     private func apiCommunicatingInitSeting() {
