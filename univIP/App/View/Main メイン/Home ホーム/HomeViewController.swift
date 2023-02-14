@@ -41,11 +41,11 @@ final class HomeViewController: BaseViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         layoutInitSetting()
-        adImagesInitSetting()
         apiCommunicatingInitSeting()
-
+        viewModel.getAdItems()
+        
         #if DEBUG
 //        dataManager.agreementVersion = ""   // 利用規約同意画面を出現させたい場合
         #endif
@@ -63,15 +63,15 @@ final class HomeViewController: BaseViewController {
         if viewModel.shouldWebViewRelogin() {
             relogin() // 大学サイトへのログイン状況がタイムアウトになってるから
         }
-         
+        
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
-        adRotationTimer(true)
+        adImagesRotationTimer(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        adRotationTimer(false) // メモリの解放
+        adImagesRotationTimer(false) // メモリの解放
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -114,38 +114,31 @@ final class HomeViewController: BaseViewController {
         viewActivityIndicator.startAnimating() // クルクルスタート
         loginGrayBackGroundView.isHidden = false
         viewModel.updateLoginFlag(type: .loginStart)
-        webViewForLogin.load(Url.universityTransitionLogin.urlRequest()) // 大学統合認証システムのログインページを読み込む
+        webViewForLogin.load(Url.universityTransitionLogin.urlRequest())
     }
+    
     
     // MARK: - Private func
-                
-    private func weatherViewLoad(discription: String, feelsLike: String, icon: UIImage) {
-        weatherLabel.text = discription
-        temperatureLabel.text = feelsLike
-        weatherIconImageView.image = icon
-    }
-    
-    private func adRotationTimer(_ type: Bool) {
+    private func adImagesRotationTimer(_ type: Bool) {
         if type {
-            // タイマーを開始する
             var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
-            
-            #if DEBUG // テスト時は2秒で表示が変わる様にする
+            #if DEBUG
             TIME_INTERVAL = 2.0
             #endif
             
             // TIME_INTERVAL秒毎に処理を実行する
             adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
-                                           repeats: true, block: { (timer) in
-                // 広告画像の表示
+                                           repeats: true,
+                                           block: { (timer) in
                 self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
             })
+            
         }else{
             adTimer.invalidate()
+            
         }
     }
     
-    /// 初期セットアップ
     private func layoutInitSetting() {
         // collectionViewの初期設定
         let layout = UICollectionViewFlowLayout()
@@ -166,13 +159,13 @@ final class HomeViewController: BaseViewController {
         weatherActivityIndicator = UIActivityIndicatorView()
         weatherActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         weatherActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
-
+        
         // クルクルをストップした時に非表示する
         weatherActivityIndicator.hidesWhenStopped = true
-
+        
         // 色を設定
         weatherActivityIndicator.style = UIActivityIndicatorView.Style.medium
-
+        
         //Viewに追加
         self.weatherView.addSubview(weatherActivityIndicator)
         
@@ -196,8 +189,7 @@ final class HomeViewController: BaseViewController {
         //Viewに追加
         self.view.addSubview(viewActivityIndicator)
     }
-
-    /// ViewModel初期化
+    
     private func apiCommunicatingInitSeting() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
@@ -206,40 +198,36 @@ final class HomeViewController: BaseViewController {
             
             DispatchQueue.main.async {
                 switch state {
-                    case .weatherBusy: // 通信中
-                        self.weatherActivityIndicator.startAnimating() // クルクルスタート
-                        break
-                        
-                    case .weatherReady: // 通信完了
-                        self.weatherActivityIndicator.stopAnimating() // クルクルストップ
-                        self.weatherViewLoad(discription: self.viewModel.weatherDiscription,
-                                             feelsLike: self.viewModel.weatherFeelsLike,
-                                             icon: UIImage(url: self.viewModel.weatherIconUrlStr))
-                        break
-                        
-                    case .weatherError: // 通信失敗
-                        self.weatherActivityIndicator.stopAnimating()
-                        self.weatherViewLoad(discription: "取得エラー",
-                                             feelsLike: "",
-                                             icon: UIImage(resource: R.image.noImage)!)
-                        break
-                        
-                    case .adBusy:
-                        break
-                        
-                    case .adReady:
-                        // 広告画像の表示
-                        self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
-                        break
-                        
-                    case .adError:
-                        break
+                case .weatherBusy: // 通信中
+                    self.weatherActivityIndicator.startAnimating() // クルクルスタート
+                    break
+                    
+                case .weatherReady: // 通信完了
+                    self.weatherActivityIndicator.stopAnimating() // クルクルストップ
+                    self.weatherLabel.text = self.viewModel.weatherDiscription
+                    self.temperatureLabel.text = self.viewModel.weatherFeelsLike
+                    self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
+                    break
+                    
+                case .weatherError: // 通信失敗
+                    self.weatherActivityIndicator.stopAnimating()
+                    self.weatherLabel.text = "取得エラー"
+                    self.temperatureLabel.text = ""
+                    self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
+                    break
+                    
+                case .adBusy:
+                    break
+                    
+                case .adReady:
+                    // 広告画像の表示
+                    self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
+                    break
+                    
+                case .adError:
+                    break
                 }
             }
         }
-    }
-    
-    private func adImagesInitSetting() {
-        viewModel.getAdItems()
     }
 }
