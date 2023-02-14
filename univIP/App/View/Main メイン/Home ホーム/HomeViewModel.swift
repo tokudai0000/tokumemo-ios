@@ -13,6 +13,26 @@ import SwiftyJSON
 
 final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
+    //MARK: - MODEL モデル
+    // 広告のURL
+    struct Advertisement {
+        public var image:String?
+        public var url:String?
+    }
+    public var adImages:[Advertisement] = []
+    public var displayAdImagesNumber: Int?
+//    public var adImages:[String] = []
+//    public var adUrls:[String] = []
+//    public var adDisplayImages:String = ""
+//    public var adDisplayUrl:String = ""
+    
+    public var isLoginProcessing = false // ログイン処理中
+    public var isLoginCompleteImmediately = false // ログイン完了後すぐ
+    
+    public var weatherDiscription = ""
+    public var weatherFeelsLike = ""
+    public var weatherIconUrlStr = ""
+    
     //MARK: - STATE ステータス
     enum State {
         case weatherBusy           // 準備中
@@ -25,22 +45,6 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     }
     
     public var state: ((State) -> Void)?
-    
-    
-    //MARK: - MODEL モデル
-    // 広告のURL
-    public var adImages:[String] = []
-    public var adUrls:[String] = []
-    public var adDisplayImages:String = ""
-    public var adDisplayUrl:String = ""
-    
-    public var isLoginProcessing = false // ログイン処理中
-    public var isLoginCompleteImmediately = false // ログイン完了後すぐ
-    
-    public var weatherDiscription = ""
-    public var weatherFeelsLike = ""
-    public var weatherIconUrlStr = ""
-    
     
     // MARK: - Public 公開機能
     // TableCellの内容 isHiddon=trueを除く
@@ -70,8 +74,9 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
     public func getAdItems() {
+//        adImages.removeAll()
+//        adUrls.removeAll()
         adImages.removeAll()
-        adUrls.removeAll()
         
         // 広告数は最大でも10件に設定
         for i in 0 ..< 10 {
@@ -87,42 +92,72 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             
             let imgUrl = URL(string: imgUrlStr)
             let textUrl = URL(string: textUrlStr)
+            
+            var image: String?
+            var url: String?
+            var check = false
             do {
                 let _ = try Data(contentsOf: imgUrl!) // URLから画像を取得できないとここでエラー
-                adImages.append(imgUrlStr)
+//                adImages.append(imgUrlStr)
+                image = imgUrlStr
             } catch {
 //                state?(.adReady)
+                check = true
             }
             do {
                 // URL先WebページのHTMLデータを取得
                 let data = try NSData(contentsOf: textUrl!) as Data
                 let doc = try HTML(html: data, encoding: String.Encoding.utf8)
                 if let tx = doc.body?.text {
-                    adUrls.append(tx)
+//                    adUrls.append(tx)
+                    url = tx
                 }
             } catch {
+                check = true
+//                break
+            }
+            
+            
+            if check {
                 state?(.adReady)
                 break
             }
+            adImages.append(Advertisement(image: image, url: url))
         }
     }
-    
-    public func adImage() -> String {
-        // 広告画像が存在すればランダムで返す
-        if adImages.count != 0 {
-            let num = Int.random(in: 0..<adImages.count)
-            if num < adUrls.count {
-                adDisplayUrl = adUrls[num]
-            } else {
-                adDisplayUrl = ""
+    public func selectAdImageNumber() -> Int? {
+        
+        if adImages.count == 0 {
+            return nil
+        } else if adImages.count == 1 {
+            return 0
+        }
+        
+        while true {
+            let randomNum = Int.random(in: 0..<adImages.count)
+            if randomNum != displayAdImagesNumber {
+                return randomNum
             }
-            adDisplayImages = adImages[num]
-            return adImages[num]
         }
-        adDisplayUrl = ""
-        // 広告画像が存在しない場合
-        return R.image.tokumemoPlusIcon.name
+        
     }
+//    public func adImage() -> String {
+//        // 広告画像が存在すればランダムで返す
+//        if adImages.count != 0 {
+//            let num = Int.random(in: 0..<adImages.count)
+//            if num < adUrls.count {
+//                adDisplayUrl = adUrls[num]
+//            } else {
+//                adDisplayUrl = ""
+//            }
+//            adDisplayImages = adImages[num]
+//            return adImages[num]
+//        }
+//        adDisplayUrl = ""
+        // 広告画像が存在しない場合
+//        return R.image.tokumemoPlusIcon.name
+//    }
+    
     
     // OpenWeatherMapのAPIから天気情報を取得
     public func getWether() {

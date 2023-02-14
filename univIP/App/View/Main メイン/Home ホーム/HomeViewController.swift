@@ -45,6 +45,7 @@ final class HomeViewController: BaseViewController {
         layoutInitSetting()
         apiCommunicatingInitSeting()
         viewModel.getAdItems()
+        viewModel.getWether()
         
         #if DEBUG
 //        dataManager.agreementVersion = ""   // 利用規約同意画面を出現させたい場合
@@ -97,13 +98,19 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
-        guard viewModel.adDisplayUrl == "" else {
+        guard let num = viewModel.displayAdImagesNumber else {
+            return
+        }
+        guard let image = viewModel.adImages[num].image else {
+            return
+        }
+        guard let url = viewModel.adImages[num].url else {
             return
         }
         
         let vc = R.storyboard.ad.adViewController()!
-        vc.imageUrlStr = viewModel.adDisplayImages
-        vc.urlStr = viewModel.adDisplayUrl
+        vc.imageUrlStr = image
+        vc.urlStr = url
         present(vc, animated: true, completion: nil)
     }
     
@@ -130,7 +137,13 @@ final class HomeViewController: BaseViewController {
             adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
                                            repeats: true,
                                            block: { (timer) in
-                self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
+                guard let num = self.viewModel.selectAdImageNumber() else {
+                    return
+                }
+                guard let image = self.viewModel.adImages[num].image else {
+                    return
+                }
+                self.adImageView.loadCacheImage(urlStr: image)
             })
             
         }else{
@@ -168,14 +181,6 @@ final class HomeViewController: BaseViewController {
         viewActivityIndicator.center = self.view.center
         viewActivityIndicator.color =  R.color.mainColor() // 色を設定
         self.view.addSubview(viewActivityIndicator)
-        
-        // weatherActivityIndicator(クルクル)
-        weatherActivityIndicator = UIActivityIndicatorView()
-        weatherActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        weatherActivityIndicator.center = self.weatherView.center // 天気情報を読み込む際に表示させる為
-        weatherActivityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
-        weatherActivityIndicator.style = UIActivityIndicatorView.Style.medium // 色を設定
-        self.weatherView.addSubview(weatherActivityIndicator)
     }
     
     private func apiCommunicatingInitSeting() {
@@ -187,18 +192,15 @@ final class HomeViewController: BaseViewController {
             DispatchQueue.main.async {
                 switch state {
                 case .weatherBusy: // 通信中
-                    self.weatherActivityIndicator.startAnimating() // クルクルスタート
                     break
                     
                 case .weatherReady: // 通信完了
-                    self.weatherActivityIndicator.stopAnimating() // クルクルストップ
                     self.weatherLabel.text = self.viewModel.weatherDiscription
                     self.temperatureLabel.text = self.viewModel.weatherFeelsLike
                     self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
                     break
                     
                 case .weatherError: // 通信失敗
-                    self.weatherActivityIndicator.stopAnimating()
                     self.weatherLabel.text = "取得エラー"
                     self.temperatureLabel.text = ""
                     self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
@@ -208,8 +210,14 @@ final class HomeViewController: BaseViewController {
                     break
                     
                 case .adReady:
+                    guard let num = self.viewModel.displayAdImagesNumber else {
+                        return
+                    }
+                    guard let image = self.viewModel.adImages[num].image else {
+                        return
+                    }
                     // 広告画像の表示
-                    self.adImageView.loadCacheImage(urlStr: self.viewModel.adImage())
+                    self.adImageView.loadCacheImage(urlStr: image)
                     break
                     
                 case .adError:
