@@ -143,6 +143,7 @@ final class HomeViewController: BaseViewController {
                 guard let image = self.viewModel.adImages[num].image else {
                     return
                 }
+                self.viewModel.displayAdImagesNumber = num // 表示させてる広告の配列番号を覚える
                 self.adImageView.loadCacheImage(urlStr: image)
             })
             
