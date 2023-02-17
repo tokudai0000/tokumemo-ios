@@ -19,12 +19,8 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         public var image:String?
         public var url:String?
     }
-    public var adImages:[Advertisement] = []
+    public var adItems:[Advertisement] = []
     public var displayAdImagesNumber: Int?
-//    public var adImages:[String] = []
-//    public var adUrls:[String] = []
-//    public var adDisplayImages:String = ""
-//    public var adDisplayUrl:String = ""
     
     public var isLoginProcessing = false // ログイン処理中
     public var isLoginCompleteImmediately = false // ログイン完了後すぐ
@@ -47,7 +43,7 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var state: ((State) -> Void)?
     
     // MARK: - Public 公開機能
-    // TableCellの内容 isHiddon=trueを除く
+    /// TableCellの内容(isHiddon=trueを除く)
     public var menuLists: [MenuListItem] {
         get{
             var displayLists:[MenuListItem] = []
@@ -74,90 +70,73 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
     public func getAdItems() {
-//        adImages.removeAll()
-//        adUrls.removeAll()
-        adImages.removeAll()
+        adItems.removeAll()
         
-        // 広告数は最大でも10件に設定
-        for i in 0 ..< 10 {
-            let png = String(i) + ".png"
-            let txt = String(i) + ".txt"
-            var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + png
-            var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + txt
-            
-            #if STUB // テスト環境
-            imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
-            textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
-            #endif
-            
-            let imgUrl = URL(string: imgUrlStr)
-            let textUrl = URL(string: textUrlStr)
-            
-            var image: String?
-            var url: String?
-            var check = false
-            do {
-                let _ = try Data(contentsOf: imgUrl!) // URLから画像を取得できないとここでエラー
-//                adImages.append(imgUrlStr)
-                image = imgUrlStr
-            } catch {
-//                state?(.adReady)
-                check = true
-            }
-            do {
-                // URL先WebページのHTMLデータを取得
-                let data = try NSData(contentsOf: textUrl!) as Data
-                let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-                if let tx = doc.body?.text {
-//                    adUrls.append(tx)
-                    url = tx
+        DispatchQueue.main.async {
+            // 広告数は最大でも10件に設定
+            for i in 0 ..< 10 {
+                let png = String(i) + ".png"
+                let txt = String(i) + ".txt"
+                
+                var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + png
+                var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + txt
+                
+                #if DEBUG // テスト環境
+                imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
+                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+                #endif
+                
+                let imgUrl = URL(string: imgUrlStr)
+                let textUrl = URL(string: textUrlStr)
+                
+                var image: String?
+                var url: String?
+                var check = false
+                
+                do {
+                    let _ = try Data(contentsOf: imgUrl!) // URLから画像を取得できないとここでエラー
+                    image = imgUrlStr
+                } catch {
+                    check = true
                 }
-            } catch {
-                check = true
-//                break
+                
+                
+                do {
+                    // URL先WebページのHTMLデータを取得
+                    let data = try NSData(contentsOf: textUrl!) as Data
+                    let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+                    if let tx = doc.body?.text {
+                        url = tx
+                    }
+                } catch {
+                    check = true
+                }
+                
+                
+                if check {
+                    self.state?(.adReady)
+                    break
+                }
+                self.adItems.append(Advertisement(image: image, url: url))
             }
-            
-            
-            if check {
-                state?(.adReady)
-                break
-            }
-            adImages.append(Advertisement(image: image, url: url))
         }
     }
     public func selectAdImageNumber() -> Int? {
         
-        if adImages.count == 0 {
+        if adItems.count == 0 {
             return nil
-        } else if adImages.count == 1 {
+        } else if adItems.count == 1 {
             return 0
         }
         
         while true {
-            let randomNum = Int.random(in: 0..<adImages.count)
+            let randomNum = Int.random(in: 0..<adItems.count)
             if randomNum != displayAdImagesNumber {
                 return randomNum
             }
         }
         
     }
-//    public func adImage() -> String {
-//        // 広告画像が存在すればランダムで返す
-//        if adImages.count != 0 {
-//            let num = Int.random(in: 0..<adImages.count)
-//            if num < adUrls.count {
-//                adDisplayUrl = adUrls[num]
-//            } else {
-//                adDisplayUrl = ""
-//            }
-//            adDisplayImages = adImages[num]
-//            return adImages[num]
-//        }
-//        adDisplayUrl = ""
-        // 広告画像が存在しない場合
-//        return R.image.tokumemoPlusIcon.name
-//    }
-    
     
     // OpenWeatherMapのAPIから天気情報を取得
     public func getWether() {

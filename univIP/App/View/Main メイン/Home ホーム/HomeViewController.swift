@@ -101,10 +101,10 @@ final class HomeViewController: BaseViewController {
         guard let num = viewModel.displayAdImagesNumber else {
             return
         }
-        guard let image = viewModel.adImages[num].image else {
+        guard let image = viewModel.adItems[num].image else {
             return
         }
-        guard let url = viewModel.adImages[num].url else {
+        guard let url = viewModel.adItems[num].url else {
             return
         }
         
@@ -140,7 +140,7 @@ final class HomeViewController: BaseViewController {
                 guard let num = self.viewModel.selectAdImageNumber() else {
                     return
                 }
-                guard let image = self.viewModel.adImages[num].image else {
+                guard let image = self.viewModel.adItems[num].image else {
                     return
                 }
                 self.viewModel.displayAdImagesNumber = num // 表示させてる広告の配列番号を覚える
@@ -214,7 +214,7 @@ final class HomeViewController: BaseViewController {
                     guard let num = self.viewModel.displayAdImagesNumber else {
                         return
                     }
-                    guard let image = self.viewModel.adImages[num].image else {
+                    guard let image = self.viewModel.adItems[num].image else {
                         return
                     }
                     // 広告画像の表示
