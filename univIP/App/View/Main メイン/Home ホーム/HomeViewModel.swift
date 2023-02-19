@@ -66,61 +66,115 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty)
     }
     
+    // GitHubからtxtデータを取得する
+    private func getTxtDataFromGitHub(url: URL) -> String? {
+        do {
+            // URL先WebページのHTMLデータを取得
+            let data = try NSData(contentsOf: url) as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            if let tx = doc.body?.text {
+                return tx
+            }
+            AKLog(level: .ERROR, message: "txtファイル内にデータなし")
+            return nil
+        } catch {
+            AKLog(level: .ERROR, message: "txtファイル存在せず")
+            return nil
+        }
+    }
+    
+    private func getAdImgUrlStr(num: Int) -> String? {
+        let png = String(num) + ".png"
+        var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + png
+    
+        #if DEBUG // テスト環境
+        imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
+        #endif
+        
+        let imgUrl = URL(string: imgUrlStr)
+        
+        do {
+            let _ = try Data(contentsOf: imgUrl!)
+            return imgUrlStr
+        } catch {
+            AKLog(level: .ERROR, message: "URLから画像を取得できませんでした。")
+            return nil
+        }
+    }
+    
     // GitHub上に0-2までのpngがある場合、ここでは
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる
     public func getAdItems() {
         adItems.removeAll()
         
-        DispatchQueue.main.async {
-            // 広告数は最大でも10件に設定
-            for i in 0 ..< 10 {
-                let png = String(i) + ".png"
-                let txt = String(i) + ".txt"
-                
-                var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + png
-                var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + txt
-                
+        var adItemsCount: Int?
+        
+        let adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")!
+        do {
+            // URL先WebページのHTMLデータを取得
+            let data = try NSData(contentsOf: adNumberUrl) as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            if let tx = doc.body?.text {
+                adItemsCount = Int(tx)
+            }
+            AKLog(level: .ERROR, message: "txtファイル内にデータなし")
+            return
+        } catch {
+            AKLog(level: .ERROR, message: "txtファイル存在せず")
+            return
+        }
+        
+        guard let count = adItemsCount else {
+            AKLog(level: .ERROR, message: "アンラップエラー")
+            return
+        }
+
+        for i in 0 ..< count {
+                        
+            var image: String?
+            var url: String?
+            
+            // 非同期のグループ作るよ！！！
+            let dispatchGroup = DispatchGroup()
+            // 並列で実行できるよ〜
+            let dispatchQueue = DispatchQueue(label: "queue", attributes: .concurrent)
+
+            // 1つ目の並列処理
+            dispatchGroup.enter()
+            dispatchQueue.async {
+                image = self.getAdImgUrlStr(num: i)
+                dispatchGroup.leave() // 1つ目の終了
+            }
+            
+            // 2つ目の並列処理
+            dispatchGroup.enter()
+            dispatchQueue.async {
+                var textUrlStr = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + String(i) + ".txt")
                 #if DEBUG // テスト環境
+<<<<<<< Updated upstream
 //                imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
 //                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+=======
+                textUrlStr = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + String(i) + ".txt")
+>>>>>>> Stashed changes
                 #endif
-                
-                let imgUrl = URL(string: imgUrlStr)
-                let textUrl = URL(string: textUrlStr)
-                
-                var image: String?
-                var url: String?
-                var check = false
-                
-                do {
-                    let _ = try Data(contentsOf: imgUrl!) // URLから画像を取得できないとここでエラー
-                    image = imgUrlStr
-                } catch {
-                    check = true
-                }
-                
-                
-                do {
-                    // URL先WebページのHTMLデータを取得
-                    let data = try NSData(contentsOf: textUrl!) as Data
-                    let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-                    if let tx = doc.body?.text {
-                        url = tx
-                    }
-                } catch {
-                    check = true
-                }
-                
-                
-                if check {
+                url = self.getTxtDataFromGitHub(url: textUrlStr!)
+                dispatchGroup.leave() // 2つ目終了
+            }
+
+            // 上の二つの処理が終わった時（両方の dispatchGroup.leave() が呼ばれた時）実行される
+            dispatchGroup.notify(queue: .main) {
+                if let img = image, let ul = url {
+                    self.adItems.append(Advertisement(image: img, url: ul))
+                    
+                }else{
                     self.state?(.adReady)
-                    break
                 }
-                self.adItems.append(Advertisement(image: image, url: url))
             }
         }
     }
+    
     public func selectAdImageNumber() -> Int? {
         
         if adItems.count == 0 {
