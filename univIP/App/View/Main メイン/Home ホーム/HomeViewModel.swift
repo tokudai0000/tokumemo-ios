@@ -82,8 +82,8 @@ final class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + txt
                 
                 #if DEBUG // テスト環境
-                imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
-                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
+//                imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + png
+//                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + txt
                 #endif
                 
                 let imgUrl = URL(string: imgUrlStr)

@@ -129,8 +129,9 @@ final class HomeViewController: BaseViewController {
     private func adImagesRotationTimer(_ type: Bool) {
         if type {
             var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
-            #if DEBUG
-            TIME_INTERVAL = 2.0
+            #if STUB
+            TIME_INTERVAL = 100.0
+            AKLog(level: .DEBUG, message: "test")
             #endif
             
             // TIME_INTERVAL秒毎に処理を実行する
