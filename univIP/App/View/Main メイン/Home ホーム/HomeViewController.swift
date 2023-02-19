@@ -43,7 +43,7 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         
         layoutInitSetting()
-        apiCommunicatingInitSeting()
+        apiCommunicatingInitSetting()
         viewModel.getAdItems()
         viewModel.getWether()
         
@@ -129,6 +129,7 @@ final class HomeViewController: BaseViewController {
     private func adImagesRotationTimer(_ type: Bool) {
         if type {
             var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
+            
             #if STUB
             TIME_INTERVAL = 2.0
             #endif
@@ -144,12 +145,11 @@ final class HomeViewController: BaseViewController {
                     return
                 }
                 self.viewModel.displayAdImagesNumber = num // 表示させてる広告の配列番号を覚える
-                self.adImageView.loadCacheImage(urlStr: image)
+                self.adImageView.loadCacheImage(urlStr: image) // 広告画像の表示
             })
             
         }else{
-            adTimer.invalidate()
-            
+            adTimer.invalidate() // タイマー停止
         }
     }
     
@@ -184,7 +184,7 @@ final class HomeViewController: BaseViewController {
         self.view.addSubview(viewActivityIndicator)
     }
     
-    private func apiCommunicatingInitSeting() {
+    private func apiCommunicatingInitSetting() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
             
@@ -192,37 +192,37 @@ final class HomeViewController: BaseViewController {
             
             DispatchQueue.main.async {
                 switch state {
-                case .weatherBusy: // 通信中
-                    break
-                    
-                case .weatherReady: // 通信完了
-                    self.weatherLabel.text = self.viewModel.weatherDiscription
-                    self.temperatureLabel.text = self.viewModel.weatherFeelsLike
-                    self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherIconUrlStr)
-                    break
-                    
-                case .weatherError: // 通信失敗
-                    self.weatherLabel.text = "取得エラー"
-                    self.temperatureLabel.text = ""
-                    self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
-                    break
-                    
-                case .adBusy:
-                    break
-                    
-                case .adReady:
-                    guard let num = self.viewModel.displayAdImagesNumber else {
-                        return
-                    }
-                    guard let image = self.viewModel.adItems[num].image else {
-                        return
-                    }
-                    // 広告画像の表示
-                    self.adImageView.loadCacheImage(urlStr: image)
-                    break
-                    
-                case .adError:
-                    break
+                    case .weatherBusy: // 通信中
+                        break
+                        
+                    case .weatherReady: // 通信完了
+                        self.weatherLabel.text = self.viewModel.weatherData.description
+                        self.temperatureLabel.text = self.viewModel.weatherData.feelsLike
+                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherData.iconUrlStr)
+                        break
+                        
+                    case .weatherError: // 通信失敗
+                        self.weatherLabel.text = "取得エラー"
+                        self.temperatureLabel.text = ""
+                        self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
+                        break
+                        
+                    case .adBusy:
+                        break
+                        
+                    case .adReady:
+                        guard let num = self.viewModel.displayAdImagesNumber else {
+                            return
+                        }
+                        guard let image = self.viewModel.adItems[num].image else {
+                            return
+                        }
+                        // 広告画像の表示
+                        self.adImageView.loadCacheImage(urlStr: image)
+                        break
+                        
+                    case .adError:
+                        break
                 }
             }
         }
