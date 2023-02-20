@@ -43,31 +43,31 @@ extension HomeViewModel {
         switch type {
             case .notStart:
                 dataManager.canExecuteJavascript = false
-                isLoginProcessing = false
-                dataManager.isWebLoginCompleted = false
+                dataManager.loginState.isProgress = false
+                dataManager.loginState.completed = false
                 
             case .loginStart:
                 dataManager.canExecuteJavascript = true // ログイン用のJavaScriptを動かす
-                isLoginProcessing = true // ログイン処理中
-                dataManager.isWebLoginCompleted = false // ログインが完了していない
+                dataManager.loginState.isProgress = true // ログイン処理中
+                dataManager.loginState.completed = false // ログインが完了していない
                 
             case .loginSuccess:
                 dataManager.canExecuteJavascript = false
-                isLoginProcessing = false
-                dataManager.isWebLoginCompleted = true
-                isLoginCompleteImmediately = true
+                dataManager.loginState.isProgress = false
+                dataManager.loginState.completeImmediately = true
+                dataManager.loginState.completed = true
                 lastLoginTime = Date() // 最終ログイン時刻の記録
                 
             case .loginFailure:
                 dataManager.canExecuteJavascript = false
-                isLoginProcessing = false
-                dataManager.isWebLoginCompleted = false
+                dataManager.loginState.isProgress = false
+                dataManager.loginState.completed = false
                 
             case .executedJavaScript:
                 // Dos攻撃を防ぐ為、1度ログインに失敗したら、JavaScriptを動かすフラグを下ろす
                 dataManager.canExecuteJavascript = false
-                isLoginProcessing = true
-                dataManager.isWebLoginCompleted = false
+                dataManager.loginState.isProgress = true
+                dataManager.loginState.completed = false
         }
     }
     
@@ -81,7 +81,7 @@ extension HomeViewModel {
         let result = check1 || check2 || check3
         
         // ログイン処理中かつ、ログイン後のURL
-        if isLoginProcessing, result {
+        if dataManager.loginState.isProgress, result {
             updateLoginFlag(type: .loginSuccess)
             return
         }
@@ -97,8 +97,8 @@ extension HomeViewModel {
         let result = check1 && check2
         
         // ログイン処理中かつ、ログイン失敗した時のURL
-        if isLoginProcessing, result {
-            isLoginProcessing = false
+        if dataManager.loginState.isProgress, result {
+            dataManager.loginState.isProgress = false
             return true
         }
         return false

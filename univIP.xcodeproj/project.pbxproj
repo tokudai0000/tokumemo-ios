@@ -759,7 +759,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\nAPP_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" $PRODUCT_SETTINGS_PATH)\n/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:1:DefaultValue ${MARKETING_VERSION}(${CURRENT_PROJECT_VERSION})\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Settings.bundle/Root.plist\"\n";
+			shellScript = "#\n#APP_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" $PRODUCT_SETTINGS_PATH)\n#/usr/libexec/PlistBuddy -c \"Set :PreferenceSpecifiers:1:DefaultValue ${MARKETING_VERSION}(${CURRENT_PROJECT_VERSION})\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Settings.bundle/Root.plist\"\n";
 		};
 		1EB4620F0CD841CB1175F835 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

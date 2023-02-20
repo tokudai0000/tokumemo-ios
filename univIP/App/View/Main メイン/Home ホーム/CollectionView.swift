@@ -27,7 +27,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         var icon = collectionList.image // fatalError
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
-        if dataManager.isWebLoginCompleted == false, collectionList.isLockIconExists {
+        if dataManager.loginState.completed == false, collectionList.isLockIconExists {
             icon = "lock.fill"
         }
         

@@ -89,7 +89,7 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
-        if dataManager.isWebLoginCompleted {
+        if dataManager.loginState.completed {
             let vc = R.storyboard.studentCard.studentCardViewController()!
             present(vc, animated: true, completion: nil)
         } else {

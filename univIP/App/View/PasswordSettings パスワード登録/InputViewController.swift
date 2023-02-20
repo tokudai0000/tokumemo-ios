@@ -118,7 +118,7 @@ final class InputViewController: UIViewController {
                 dataManager.cAccount = text1
                 dataManager.password = text2
                 initSetup(.password)
-            dataManager.isWebLoginCompleted = false
+                dataManager.loginState.completed = false
                 alert(title: "♪ 登録完了 ♪",
                       message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
            

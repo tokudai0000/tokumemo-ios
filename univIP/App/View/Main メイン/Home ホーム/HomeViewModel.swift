@@ -22,8 +22,8 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var adItems:[Advertisement] = []
     public var displayAdImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
     
-    public var isLoginProcessing = false // ログイン処理中
-    public var isLoginCompleteImmediately = false // ログイン完了後すぐ
+//    public var isLoginProcessing = false // ログイン処理中
+//    public var isLoginCompleteImmediately = false // ログイン完了後すぐ
     
     struct Weather {
         public var description: String?
@@ -45,18 +45,6 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var state: ((State) -> Void)?
     
     // MARK: - Public 公開機能
-    /// TableCellの内容(isHiddon=trueを除く)
-    public var menuLists: [MenuListItem] {
-        get{
-            var displayLists:[MenuListItem] = []
-            for item in dataManager.menuLists {
-                if !item.isHiddon {
-                    displayLists.append(item)
-                }
-            }
-            return displayLists
-        }
-    }
 
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public func shouldShowTermsAgreementView() -> Bool {
@@ -251,5 +239,18 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             return ""
         }
         return pl[key] as! String
+    }
+    
+    /// TableCellの内容(isHiddon=trueを除く)
+    public var menuLists: [MenuListItem] {
+        get{
+            var displayLists:[MenuListItem] = []
+            for item in dataManager.menuLists {
+                if !item.isHiddon {
+                    displayLists.append(item)
+                }
+            }
+            return displayLists
+        }
     }
 }

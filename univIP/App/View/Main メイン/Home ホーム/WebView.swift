@@ -44,11 +44,11 @@ extension HomeViewController: WKNavigationDelegate {
         }
         
         // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
-        if viewModel.isLoginCompleteImmediately {
+        if dataManager.loginState.completeImmediately {
             collectionView.reloadData()
         }
         
-        if viewModel.isLoginProcessing == false {
+        if dataManager.loginState.isProgress == false {
             viewActivityIndicator.stopAnimating() // クルクルストップ
             loginGrayBackGroundView.isHidden = true
         }

@@ -18,7 +18,12 @@ final class DataManager {
     public var syllabusSubjectName = ""
     
     public var shouldRelogin = true
-    public var isWebLoginCompleted = false // ログイン完了
+    struct LoginState {
+        public var isProgress = false          // 進行中
+        public var completeImmediately = false // 完了してすぐ
+        public var completed = false           // ログイン完了
+    }
+    public var loginState:LoginState = LoginState()
     
     /// 次に読み込まれるURLはJavaScriptを動かすことを許可する
     /// これがないと、ログインに失敗した場合、永遠とログイン処理を行われてしまう
