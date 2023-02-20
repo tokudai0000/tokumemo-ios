@@ -67,6 +67,8 @@ enum Url: String {
     /// 徳島大学生協食堂メニュー
     case tokudaiCoopDinigMenu = "https://tokudaicoop.jp/food2.html"
     
+    case studySupportSpace = "https://www.lib.tokushima-u.ac.jp/support/sss/index.html"
+    
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
     /// 大学サイト、ログイン画面

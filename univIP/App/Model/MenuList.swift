@@ -24,6 +24,7 @@ public enum MenuListItemType: Codable {
     case systemServiceList              // システムサービス一覧
     case eLearningList                  // Eラーニング一覧
     case universityWeb                  // 大学サイト
+    case sss                            // 学びサポート企画部(Study Support Space)
     
     case favorite
 }
@@ -64,6 +65,8 @@ let initMenuLists = [
     MenuListItem(title: "キャリア支援室", id: .tokudaiCareerCenter, image: "questionmark.folder", url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false),
     
     MenuListItem(title: "[図書]本購入", id: .libraryBookPurchaseRequest, image: "books.vertical", url: Url.libraryBookPurchaseRequest.string(), isLockIconExists: true, isHiddon: false),
+    
+    MenuListItem(title: "SSS時間割", id: .sss, image: "calendar", url: Url.studySupportSpace.string(), isLockIconExists: false, isHiddon: false),
     
     // Hiddon
     
