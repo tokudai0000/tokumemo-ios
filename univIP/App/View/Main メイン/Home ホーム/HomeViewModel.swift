@@ -22,21 +22,18 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var adItems:[Advertisement] = []
     public var displayAdImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
     
-//    public var isLoginProcessing = false // ログイン処理中
-//    public var isLoginCompleteImmediately = false // ログイン完了後すぐ
-    
     struct Weather {
-        public var description: String?
-        public var feelsLike: String?
-        public var iconUrlStr: String = "noImage"
+        public var description: String = ""
+        public var feelsLike: String = ""
+        public var iconUrlStr: String = ""
     }
-    public var weatherData:Weather = Weather(description: "", feelsLike: "", iconUrlStr: "")
+    public var weatherData:Weather = Weather()
     
     //MARK: - STATE ステータス
     enum State {
-        case weatherBusy           // 準備中
-        case weatherReady          // 準備完了
-        case weatherError          // エラー発生
+        case weatherBusy  // 準備中
+        case weatherReady // 準備完了
+        case weatherError // エラー発生
 
         case adBusy
         case adReady
