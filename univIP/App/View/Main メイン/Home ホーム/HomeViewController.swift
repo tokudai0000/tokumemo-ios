@@ -89,12 +89,12 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
-        if dataManager.loginState.completed {
+//        if dataManager.loginState.completed {
             let vc = R.storyboard.studentCard.studentCardViewController()!
             present(vc, animated: true, completion: nil)
-        } else {
-            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
-        }
+//        } else {
+//            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
+//        }
     }
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
