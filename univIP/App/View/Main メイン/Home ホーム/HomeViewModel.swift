@@ -80,7 +80,11 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         let dispatchQueue = DispatchQueue(label: "queue") // 直列
         
         var adItemsCount: Int?
-        let adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")!
+        var adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")!
+        
+        #if STUB // テスト環境
+        adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/adNumber.txt")!
+        #endif
         
         do {
             // URL先WebページのHTMLデータを取得
