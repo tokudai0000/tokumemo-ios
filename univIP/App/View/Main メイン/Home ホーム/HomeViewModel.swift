@@ -81,42 +81,38 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         
         var adItemsCount: Int?
         let adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")!
-        // 1つ目の並列処理
-        dispatchGroup.enter()
-        dispatchQueue.async {
-            do {
-                // URL先WebページのHTMLデータを取得
-                let data = try NSData(contentsOf: adNumberUrl) as Data
-                let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-                if let tx = doc.body?.text {
-                    adItemsCount = Int(tx)
-                }
-                AKLog(level: .ERROR, message: "txtファイル内にデータなし")
-                return
-            } catch {
-                AKLog(level: .ERROR, message: "txtファイル存在せず")
-                return
-            }
-        }
         
-        guard let count = adItemsCount else {
-            AKLog(level: .ERROR, message: "アンラップエラー")
+        do {
+            // URL先WebページのHTMLデータを取得
+            let data = try NSData(contentsOf: adNumberUrl) as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            if let tx = doc.body?.text {
+                adItemsCount = Int(tx)
+            }
+        } catch {
+            AKLog(level: .ERROR, message: "txtファイル存在せず")
             return
         }
-
+    
+        guard let count = adItemsCount else {
+            AKLog(level: .DEBUG, message: "GitHubに指定された広告数がゼロ")
+            return
+        }
+        
+        
         for i in 0 ..< count {
-                        
+            
             var adImageUrlStrForGitHub: String?
             var adClientWebsiteUrlStr: String?
-
+            
             // 1つ目の並列処理
             dispatchGroup.enter()
             dispatchQueue.async {
                 var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + String(i) + ".png"
                 
-                #if STUB // テスト環境
+#if STUB // テスト環境
                 imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + String(i) + ".png"
-                #endif
+#endif
                 
                 let imgUrl = URL(string: imgUrlStr)
                 
@@ -134,15 +130,15 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             dispatchGroup.enter()
             dispatchQueue.async {
                 var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + String(i) + ".txt"
-                #if STUB // テスト環境
+#if STUB // テスト環境
                 textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + String(i) + ".txt"
-                #endif
+#endif
                 if let textUrl = URL(string: textUrlStr) {
                     adClientWebsiteUrlStr = self.getTxtDataFromGitHub(url: textUrl)
                 }
                 dispatchGroup.leave() // 2つ目終了
             }
-
+            
             // 上の二つの処理が終わった時（両方の dispatchGroup.leave() が呼ばれた時）実行される
             dispatchGroup.notify(queue: .main) {
                 if let img = adImageUrlStrForGitHub, let ul = adClientWebsiteUrlStr {
