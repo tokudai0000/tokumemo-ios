@@ -242,10 +242,20 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public var menuLists: [MenuListItem] {
         get{
             var displayLists:[MenuListItem] = []
-            for item in dataManager.menuLists {
-                if !item.isHiddon {
-                    displayLists.append(item)
+            var menuSumple = initMenuLists
+            for oldItem in dataManager.menuLists {
+                for i in 0..<menuSumple.count {
+                    if oldItem.id == menuSumple[i].id {
+                        if !oldItem.isHiddon {
+                            displayLists.append(oldItem)
+                        }
+                        menuSumple.remove(at: i)
+                        break
+                    }
                 }
+            }
+            for item in menuSumple {
+                displayLists.append(item)
             }
             return displayLists
         }
