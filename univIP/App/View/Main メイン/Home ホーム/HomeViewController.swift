@@ -89,12 +89,9 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - IBAction
     @IBAction func studentCardButton(_ sender: Any) {
-//        if dataManager.loginState.completed {
-            let vc = R.storyboard.studentCard.studentCardViewController()!
-            present(vc, animated: true, completion: nil)
-//        } else {
-//            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
-//        }
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = Url.contactUs.string()
+        present(vc, animated: true, completion: nil)
     }
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
