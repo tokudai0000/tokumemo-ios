@@ -115,4 +115,29 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         alert.addAction(alertAction2)
         present(alert, animated: true, completion:nil)
     }
+    
+    // 長押しタップ時に並び替え
+    @objc func longTap(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = dataManager.menuLists.remove(at: sourceIndexPath.row)
+        dataManager.menuLists.insert(item, at: destinationIndexPath.row)
+    }
+    
 }
