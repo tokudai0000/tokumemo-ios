@@ -24,19 +24,11 @@ final class HomeViewController: BaseViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // extensionで別ファイルから呼び出し
     let viewModel = HomeViewModel()
     let dataManager = DataManager.singleton
-    var loginGrayBackGroundView: UIView!
-    var viewActivityIndicator: UIActivityIndicatorView!
-    
-    private var adTimer = Timer()
-    private var weatherActivityIndicator: UIActivityIndicatorView!
-    
-    
-    // ステータスバーの文字を白に設定
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    var loginGrayBackGroundView: UIView! // ログイン中のグレー背景
+    var viewActivityIndicator: UIActivityIndicatorView! // ログイン中のクルクル
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -95,16 +87,11 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
-        guard let num = viewModel.displayAdImagesNumber else {
+        guard let num = viewModel.displayAdImagesNumber,
+              let image = viewModel.adItems[num].image,
+              let url = viewModel.adItems[num].url else {
             return
         }
-        guard let image = viewModel.adItems[num].image else {
-            return
-        }
-        guard let url = viewModel.adItems[num].url else {
-            return
-        }
-        
         let vc = R.storyboard.ad.adViewController()!
         vc.imageUrlStr = image
         vc.urlStr = url
@@ -123,8 +110,11 @@ final class HomeViewController: BaseViewController {
     
     
     // MARK: - Private func
+    /// 広告を一定時間ごとに読み込ませる処理のスイッチ
     private func adImagesRotationTimer(_ type: Bool) {
-        if type {
+        var adTimer = Timer()
+        
+        if type { // ローテーション開始
             var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
             
             #if STUB
@@ -135,13 +125,11 @@ final class HomeViewController: BaseViewController {
             adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
                                            repeats: true,
                                            block: { (timer) in
-                guard let num = self.viewModel.selectAdImageNumber() else {
+                guard let num = self.viewModel.selectAdImageNumber(),
+                      let image = self.viewModel.adItems[num].image else {
                     return
                 }
-                guard let image = self.viewModel.adItems[num].image else {
-                    return
-                }
-                self.viewModel.displayAdImagesNumber = num // 表示させてる広告の配列番号を覚える
+                self.viewModel.displayAdImagesNumber = num // これから表示させる広告の配列番号を覚える
                 self.adImageView.loadCacheImage(urlStr: image) // 広告画像の表示
             })
             
@@ -150,23 +138,16 @@ final class HomeViewController: BaseViewController {
         }
     }
     
+    /// レイアウト初期設定
     private func layoutInitSetting() {
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(R.color.mainColor())
-        
-        // collectionView
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
-        collectionView.collectionViewLayout = layout
-        collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
-        
-        // webViewForLogin
-        webViewForLogin.navigationDelegate = self
         
         // adImageView
         adImageView.isUserInteractionEnabled = true // タップ無効
         adImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
-                
+        
+        // webViewForLogin
+        webViewForLogin.navigationDelegate = self
+        
         // loginGrayBackGroundView(ログイン中の不透明画面表示)
         loginGrayBackGroundView = UIView()
         loginGrayBackGroundView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -179,8 +160,15 @@ final class HomeViewController: BaseViewController {
         viewActivityIndicator.center = self.view.center
         viewActivityIndicator.color =  R.color.mainColor() // 色を設定
         self.view.addSubview(viewActivityIndicator)
+        
+        // collectionView
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
+        collectionView.collectionViewLayout = layout
+        collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
     }
     
+    /// 通信初期設定
     private func apiCommunicatingInitSetting() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
@@ -189,37 +177,35 @@ final class HomeViewController: BaseViewController {
             
             DispatchQueue.main.async {
                 switch state {
-                    case .weatherBusy: // 通信中
-                        break
-                        
-                    case .weatherReady: // 通信完了
-                        self.weatherLabel.text = self.viewModel.weatherData.description
-                        self.temperatureLabel.text = self.viewModel.weatherData.feelsLike
-                        self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherData.iconUrlStr)
-                        break
-                        
-                    case .weatherError: // 通信失敗
-                        self.weatherLabel.text = "取得エラー"
-                        self.temperatureLabel.text = ""
-                        self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
-                        break
-                        
-                    case .adBusy:
-                        break
-                        
-                    case .adReady:
-                        guard let num = self.viewModel.displayAdImagesNumber else {
-                            return
-                        }
-                        guard let image = self.viewModel.adItems[num].image else {
-                            return
-                        }
-                        // 広告画像の表示
-                        self.adImageView.loadCacheImage(urlStr: image)
-                        break
-                        
-                    case .adError:
-                        break
+                case .weatherBusy: // 通信中
+                    break
+                    
+                case .weatherReady: // 通信完了
+                    self.weatherLabel.text = self.viewModel.weatherData.description
+                    self.temperatureLabel.text = self.viewModel.weatherData.feelsLike
+                    self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherData.iconUrlStr)
+                    break
+                    
+                case .weatherError: // 通信失敗
+                    self.weatherLabel.text = "取得エラー"
+                    self.temperatureLabel.text = ""
+                    self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
+                    break
+                    
+                case .adBusy:
+                    break
+                    
+                case .adReady:
+                    guard let num = self.viewModel.displayAdImagesNumber,
+                          let image = self.viewModel.adItems[num].image else {
+                        return
+                    }
+                    // 広告画像の表示
+                    self.adImageView.loadCacheImage(urlStr: image)
+                    break
+                    
+                case .adError:
+                    break
                 }
             }
         }
