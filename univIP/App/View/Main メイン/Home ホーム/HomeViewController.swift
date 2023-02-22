@@ -59,12 +59,12 @@ final class HomeViewController: BaseViewController {
         
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
-        adImagesRotationTimer(true)
+        adImagesRotationTimerON()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        adImagesRotationTimer(false) // メモリの解放
+        adTimer.invalidate() // タイマー停止
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -110,32 +110,26 @@ final class HomeViewController: BaseViewController {
     
     
     // MARK: - Private func
+    private var adTimer = Timer()
     /// 広告を一定時間ごとに読み込ませる処理のスイッチ
-    private func adImagesRotationTimer(_ type: Bool) {
-        var adTimer = Timer()
+    private func adImagesRotationTimerON() {
+        var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
         
-        if type { // ローテーション開始
-            var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
-            
-            #if STUB
-            TIME_INTERVAL = 2.0
-            #endif
-            
-            // TIME_INTERVAL秒毎に処理を実行する
-            adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
-                                           repeats: true,
-                                           block: { (timer) in
-                guard let num = self.viewModel.selectAdImageNumber(),
-                      let image = self.viewModel.adItems[num].image else {
-                    return
-                }
-                self.viewModel.displayAdImagesNumber = num // これから表示させる広告の配列番号を覚える
-                self.adImageView.loadCacheImage(urlStr: image) // 広告画像の表示
-            })
-            
-        }else{
-            adTimer.invalidate() // タイマー停止
-        }
+        #if STUB
+        TIME_INTERVAL = 2.0
+        #endif
+        
+        // TIME_INTERVAL秒毎に処理を実行する
+        adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
+                                       repeats: true,
+                                       block: { (timer) in
+            guard let num = self.viewModel.selectAdImageNumber(),
+                  let image = self.viewModel.adItems[num].image else {
+                return
+            }
+            self.viewModel.displayAdImagesNumber = num // これから表示させる広告の配列番号を覚える
+            self.adImageView.loadCacheImage(urlStr: image) // 広告画像の表示
+        })
     }
     
     /// レイアウト初期設定
