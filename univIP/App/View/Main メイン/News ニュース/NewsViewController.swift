@@ -15,22 +15,16 @@ class NewsViewController: UIViewController {
     private let viewModel = NewsViewModel()
     private let dataManager = DataManager.singleton
     // 読み込み中のクルクル(ビジーカーソルともいう)
-    private var ActivityIndicator: UIActivityIndicatorView!
+    private var viewActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initViewModel()
-        initActivityIndicator()
+        layoutInitSetting()
         
         viewModel.getNewsData()
         viewModel.getImage()
-    
-        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil),
-                           forCellReuseIdentifier: "NewsTableViewCell")
-        
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
     }
     
     // ステータスバーの文字を白に設定
@@ -49,11 +43,11 @@ class NewsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .busy: // 通信中
-                        self.ActivityIndicator.startAnimating() // クルクルスタート
+                        self.viewActivityIndicator.startAnimating() // クルクルスタート
                         break
                         
                     case .ready: // 通信完了
-                        self.ActivityIndicator.stopAnimating() // クルクルストップ
+                        self.viewActivityIndicator.stopAnimating() // クルクルストップ
                         self.tableView.reloadData()
                         break
                         
@@ -64,20 +58,21 @@ class NewsViewController: UIViewController {
         }
     }
     
-    private func initActivityIndicator() {
-        // ActivityIndicatorを作成＆中央に配置
-        ActivityIndicator = UIActivityIndicatorView()
-        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        ActivityIndicator.center = self.view.center
+    private func layoutInitSetting() {
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
         
-        // クルクルをストップした時に非表示する
-        ActivityIndicator.hidesWhenStopped = true
+        // ActivityIndicator
+        viewActivityIndicator = UIActivityIndicatorView()
+        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        viewActivityIndicator.center = self.view.center
+        viewActivityIndicator.hidesWhenStopped = true
+        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
+        self.view.addSubview(viewActivityIndicator)
         
-        // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
-        
-        //Viewに追加
-        self.view.addSubview(ActivityIndicator)
+        // TableView
+        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil),
+                           forCellReuseIdentifier: "NewsTableViewCell")
     }
 }
 
