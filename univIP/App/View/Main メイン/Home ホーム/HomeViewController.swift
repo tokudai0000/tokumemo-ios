@@ -93,11 +93,13 @@ final class HomeViewController: UIViewController {
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
         guard let num = viewModel.displayAdImagesNumber,
               let image = viewModel.adItems[num].image,
+              let txt = viewModel.adItems[num].intro,
               let url = viewModel.adItems[num].url else {
             return
         }
         let vc = R.storyboard.ad.adViewController()!
         vc.imageUrlStr = image
+        vc.introductionText = txt
         vc.urlStr = url
         present(vc, animated: true, completion: nil)
     }

@@ -17,6 +17,7 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 広告のURL
     struct Advertisement {
         public var image:String?
+        public var intro:String?
         public var url:String?
     }
     public var adItems:[Advertisement] = []
@@ -91,6 +92,7 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             
             var adImageUrlStrForGitHub: String?
             var adClientWebsiteUrlStr: String?
+            var adClientIntroductionText: String?
             
             // 1つ目の並列処理
             dispatchGroup.enter()
@@ -116,6 +118,19 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             // 2つ目の並列処理
             dispatchGroup.enter()
             dispatchQueue.async {
+                var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Introduction/" + String(i) + ".txt"
+                #if STUB // テスト環境
+                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Introduction/" + String(i) + ".txt"
+                #endif
+                if let textUrl = URL(string: textUrlStr) {
+                    adClientIntroductionText = self.getTxtDataFromGitHub(url: textUrl)
+                }
+                dispatchGroup.leave() // 2つ目終了
+            }
+            
+            // 3つ目の並列処理
+            dispatchGroup.enter()
+            dispatchQueue.async {
                 var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + String(i) + ".txt"
                 #if STUB // テスト環境
                 textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + String(i) + ".txt"
@@ -128,8 +143,10 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             
             // 上の二つの処理が終わった時（両方の dispatchGroup.leave() が呼ばれた時）実行される
             dispatchGroup.notify(queue: .main) {
-                if let img = adImageUrlStrForGitHub, let ul = adClientWebsiteUrlStr {
-                    self.adItems.append(Advertisement(image: img, url: ul))
+                if let img = adImageUrlStrForGitHub,
+                   let txt = adClientIntroductionText,
+                   let ul = adClientWebsiteUrlStr {
+                    self.adItems.append(Advertisement(image: img, intro: txt, url: ul))
                     
                 }else{
                     self.state?(.adReady)
