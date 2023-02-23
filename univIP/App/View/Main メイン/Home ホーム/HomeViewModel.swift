@@ -244,6 +244,7 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             for item in menuSumple {
                 displayLists.append(item)
             }
+            dataManager.menuLists = displayLists
             return displayLists
         }
     }
