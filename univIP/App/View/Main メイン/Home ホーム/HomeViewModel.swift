@@ -193,8 +193,8 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             // 天気の様子が返ってくる 例: 曇
             self.weatherData.description = response["weather"][0]["description"].string ?? "Error"
             
-            // 体感気温がdoubleの形で返ってくる　例: 21.52
-            if let temp = response["main"]["feels_like"].double {
+            // 気温がdoubleの形で返ってくる　例: 21.52
+            if let temp = response["main"]["temp"].double {
                 // 215.2を四捨五入 => 215 , 215/10 = 21.5
                 let num = round(temp * 10) / 10
                 self.weatherData.feelsLike = String(num) + "℃" // 例: "21.5℃"
@@ -280,3 +280,58 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return pl[key] as! String
     }
 }
+
+
+/*
+ OpenWeatherMapというサービスを使用
+ 
+ APIのURL
+ https://api.openweathermap.org/data/2.5/weather?lat=34.0778755&lon=134.5615651&appid=e0578cd3fb0d436dd64d4d5d5a404f08&lang=ja&units=metric
+ 
+ WeatherIconURL
+ https://openweathermap.org/img/wn/02d@2x.png
+ 
+ {
+     "coord": {
+         "lon": 134.5616,
+         "lat": 34.0779
+     },
+     "weather": [
+     {
+         "id": 801,
+         "main": "Clouds",
+         "description": "薄い雲",
+         "icon": "02d"
+     }
+     ],
+     "base": "stations",
+     "main": {
+         "temp": 21.97,
+         "feels_like": 21.79,
+         "temp_min": 21.97,
+         "temp_max": 22.45,
+         "pressure": 1013,
+         "humidity": 60
+     },
+     "visibility": 10000,
+     "wind": {
+         "speed": 2.57,
+         "deg": 60
+     },
+     "clouds": {
+        "all": 20
+     },
+     "dt": 1667456496,
+     "sys": {
+         "type": 1,
+         "id": 8027,
+         "country": "JP",
+         "sunrise": 1667424156,
+         "sunset": 1667462876
+     },
+     "timezone": 32400,
+     "id": 1857689,
+     "name": "万代町",
+     "cod": 200
+ }
+ */
