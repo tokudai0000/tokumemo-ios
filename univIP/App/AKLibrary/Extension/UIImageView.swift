@@ -20,11 +20,16 @@ extension UIImageView {
             self.image = UIImage(resource: R.image.noImage)
             return
         }
+        let dt = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.setTemplate(.dateMonthDate)
+        
+        let key = urlStr + dateFormatter.string(from: dt)
         
         let url = URL(string: urlStr)
         
         //　引数で渡されたurlStrがすでにキャッシュとして保存されている場合は、キャッシュからそのimageを取り出す
-        if let imageFromCache = UIImageView.imageCache.object(forKey: urlStr as AnyObject) as? UIImage {
+        if let imageFromCache = UIImageView.imageCache.object(forKey: key as AnyObject) as? UIImage {
             self.image = imageFromCache
             return
         }
