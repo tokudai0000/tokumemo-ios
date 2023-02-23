@@ -41,7 +41,7 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     }
     public var state: ((State) -> Void)?
     
-    // MARK: - Public 公開機能
+    // MARK: - Public func
 
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public func shouldShowTermsAgreementView() -> Bool {
@@ -51,23 +51,6 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // 学生番号、パスワードを登録しているか判定
     public func hasRegisteredPassword() -> Bool {
         return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty)
-    }
-    
-    // GitHubからtxtデータを取得する
-    private func getTxtDataFromGitHub(url: URL) -> String? {
-        do {
-            // URL先WebページのHTMLデータを取得
-            let data = try NSData(contentsOf: url) as Data
-            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            if let tx = doc.body?.text {
-                return tx
-            }
-            AKLog(level: .ERROR, message: "txtファイル内にデータなし")
-            return nil
-        } catch {
-            AKLog(level: .ERROR, message: "txtファイル存在せず")
-            return nil
-        }
     }
     
     // GitHub上に0-2までのpngがある場合、ここでは
@@ -114,9 +97,9 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             dispatchQueue.async {
                 var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + String(i) + ".png"
                 
-#if STUB // テスト環境
+                #if STUB // テスト環境
                 imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + String(i) + ".png"
-#endif
+                #endif
                 
                 let imgUrl = URL(string: imgUrlStr)
                 
@@ -134,9 +117,9 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             dispatchGroup.enter()
             dispatchQueue.async {
                 var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + String(i) + ".txt"
-#if STUB // テスト環境
+                #if STUB // テスト環境
                 textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + String(i) + ".txt"
-#endif
+                #endif
                 if let textUrl = URL(string: textUrlStr) {
                     adClientWebsiteUrlStr = self.getTxtDataFromGitHub(url: textUrl)
                 }
@@ -225,19 +208,6 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         return 300 < distance
     }
     
-
-    /// plistを読み込み
-    private func loadPlist(path: String, key: String) -> String{
-        let filePath = Bundle.main.path(forResource: path, ofType:"plist")
-        let plist = NSDictionary(contentsOfFile: filePath!)
-        
-        guard let pl = plist else{
-            AKLog(level: .ERROR, message: "plistが存在しません")
-            return ""
-        }
-        return pl[key] as! String
-    }
-    
     /// TableCellの内容(isHiddon=trueを除く)
     public var menuLists: [MenuListItem] {
         get{
@@ -259,5 +229,36 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             }
             return displayLists
         }
+    }
+    
+
+    // MARK: - Private func
+    // GitHubからtxtデータを取得する
+    private func getTxtDataFromGitHub(url: URL) -> String? {
+        do {
+            // URL先WebページのHTMLデータを取得
+            let data = try NSData(contentsOf: url) as Data
+            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+            if let tx = doc.body?.text {
+                return tx
+            }
+            AKLog(level: .ERROR, message: "txtファイル内にデータなし")
+            return nil
+        } catch {
+            AKLog(level: .ERROR, message: "txtファイル存在せず")
+            return nil
+        }
+    }
+    
+    /// plistを読み込み
+    private func loadPlist(path: String, key: String) -> String{
+        let filePath = Bundle.main.path(forResource: path, ofType:"plist")
+        let plist = NSDictionary(contentsOfFile: filePath!)
+        
+        guard let pl = plist else{
+            AKLog(level: .ERROR, message: "plistが存在しません")
+            return ""
+        }
+        return pl[key] as! String
     }
 }

@@ -10,10 +10,10 @@ import UIKit
 import WebKit
 import FirebaseAnalytics
 
-final class HomeViewController: BaseViewController {
+final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var adView: UIView!
+    @IBOutlet weak var adContainerView: UIView!
     @IBOutlet weak var adImageView: UIImageView!
     
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
@@ -30,7 +30,11 @@ final class HomeViewController: BaseViewController {
     var loginGrayBackGroundView: UIView! // ログイン中のグレー背景
     var viewActivityIndicator: UIActivityIndicatorView! // ログイン中のクルクル
     
-    // MARK: - LifeCycle
+    // MARK: - Override
+    // キーボード非表示
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,6 +102,125 @@ final class HomeViewController: BaseViewController {
         present(vc, animated: true, completion: nil)
     }
     
+    // MARK: - Public func
+    public var isToastShow : Bool {
+        get {
+            return toastView == nil ? false : true
+        }
+    }
+    private var toastView:UIView?
+    private var toastShowFrame:CGRect = .zero
+    private var toastHideFrame:CGRect = .zero
+    private var toastInterval:TimeInterval = 3.0
+    /// トースト表示
+    ///
+    /// - Parameters:
+    ///   - message: メッセージ
+    ///   - interval: 表示時間（秒）デフォルト3秒
+    public func toast( message: String, type: String = "highBottom", interval:TimeInterval = 3.0 ) {
+        guard self.toastView == nil else {
+            return // 既に表示準備中
+        }
+        self.toastView = UIView()
+        guard let toastView = self.toastView else { // アンラッピング
+            return
+        }
+        
+        toastInterval = interval
+        
+        switch type {
+        case "top":
+            toastShowFrame = CGRect(x: 15,
+                                    y: 8,
+                                    width: self.view.frame.width - 15 - 15,
+                                    height: 46)
+            
+            toastHideFrame = CGRect(x: toastShowFrame.origin.x,
+                                    y: 0 - toastShowFrame.height * 2,  // 上に隠す
+                                    width: toastShowFrame.width,
+                                    height: toastShowFrame.height)
+            
+        case "bottom":
+            toastShowFrame = CGRect(x: 15,
+                                    y: self.view.frame.height - 100,
+                                    width: self.view.frame.width - 15 - 15,
+                                    height: 46)
+            
+            toastHideFrame = CGRect(x: toastShowFrame.origin.x,
+                                    y: self.view.frame.height - toastShowFrame.height * 2,  // 上に隠す
+                                    width: toastShowFrame.width,
+                                    height: toastShowFrame.height)
+            
+        case "highBottom":
+            toastShowFrame = CGRect(x: 15,
+                                    y: self.view.frame.height - 180,
+                                    width: self.view.frame.width - 15 - 15,
+                                    height: 46)
+            
+            toastHideFrame = CGRect(x: toastShowFrame.origin.x,
+                                    y: self.view.frame.height - toastShowFrame.height * 2,  // 上に隠す
+                                    width: toastShowFrame.width,
+                                    height: toastShowFrame.height)
+        default:
+            return
+        }
+        
+        
+        toastView.frame = toastHideFrame  // 初期隠す位置
+        toastView.backgroundColor = UIColor.black
+        toastView.alpha = 0.8
+        toastView.layer.cornerRadius = 18
+        self.view.addSubview(toastView)
+        
+        let labelWidth:CGFloat = toastView.frame.width - 14 - 14
+        let labelHeight:CGFloat = 19.0
+        let label = UILabel()
+        // toastView内に配置
+        label.frame = CGRect(x: 14,
+                             y: 14,
+                             width: labelWidth,
+                             height: labelHeight)
+        toastView.addSubview(label)
+        // label属性
+        label.textColor = UIColor.white
+        label.textAlignment = .left
+        label.numberOfLines = 0 // 複数行対応
+        label.text = message
+        //"label.frame1: \(label.frame)")
+        // 幅を制約して高さを求める
+        label.frame.size = label.sizeThatFits(CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude))
+        //print("label.frame2: \(label.frame)")
+        // 複数行対応・高さ変化
+        if labelHeight < label.frame.height {
+            toastShowFrame.size.height += (label.frame.height - labelHeight)
+        }
+        
+        didHideIndicator()
+    }
+    
+    @objc private func didHideIndicator() {
+        guard let toastView = self.toastView else { // アンラッピング
+            return
+        }
+        DispatchQueue.main.async { // 非同期処理
+            UIView.animate(withDuration: 0.5, animations: { () in
+                // 出現
+                toastView.frame = self.toastShowFrame
+            }) { (result) in
+                // 出現後、interval(秒)待って、
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.toastInterval) {
+                    UIView.animate(withDuration: 0.5, animations: { () in
+                        // 消去
+                        toastView.frame = self.toastHideFrame
+                    }) { (result) in
+                        // 破棄
+                        toastView.removeFromSuperview()
+                        self.toastView = nil // 破棄
+                    }
+                }
+            }
+        }
+    }
     
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う

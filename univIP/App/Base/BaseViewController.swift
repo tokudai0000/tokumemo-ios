@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BasViewController: UIViewController {
     
     // MARK: - Public property
     
@@ -257,7 +257,5 @@ class BaseViewController: UIViewController {
     // キーボード非表示
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-    }
-    
+    }    
 }
-
