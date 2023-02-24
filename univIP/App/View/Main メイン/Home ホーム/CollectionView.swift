@@ -28,7 +28,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
         if dataManager.loginState.completed == false, collectionList.isLockIconExists {
-            icon = "lock.fill"
+            icon = R.image.menuIcon.manaba.name
         }
         
         cell.setupCell(title: title, image: icon)

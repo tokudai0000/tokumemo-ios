@@ -39,32 +39,32 @@ public struct MenuListItem: Codable {
 }
 
 /// 初期状態
-let initMenuLists = [
-    MenuListItem(title: "教務システム", id: .courseManagementHomeMobile, image: "graduationcap", url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: false),
+let initMenuLists:[MenuListItem] = [
+    MenuListItem(title: "教務システム", id: .courseManagementHomeMobile, image: R.image.menuIcon.教務システム.name, url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "manaba", id: .manabaHomePC, image: "graduationcap", url: Url.manabaPC.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "manaba", id: .manabaHomePC, image: R.image.menuIcon.manaba.name, url: Url.manabaPC.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "メール", id: .mailService, image: "envelope", url: Url.outlookService.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "メール", id: .mailService, image: R.image.menuIcon.メール.name, url: Url.outlookService.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "[図書]本貸出延長", id: .libraryBookLendingExtension, image: "books.vertical", url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "[図書]本貸出延長", id: .libraryBookLendingExtension, image: R.image.menuIcon.本貸出延長.name, url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: false),
         
-    MenuListItem(title: "時間割", id: .timeTable, image: "calendar", url: Url.timeTable.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "時間割", id: .timeTable, image: R.image.menuIcon.時間割.name, url: Url.timeTable.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "今学期の成績", id: .currentTermPerformance, image: "chart.line.uptrend.xyaxis", url: Url.currentTermPerformance.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "今学期の成績", id: .currentTermPerformance, image: R.image.menuIcon.今学期の成績.name, url: Url.currentTermPerformance.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "シラバス", id: .syllabus, image: "graduationcap", url: Url.syllabus.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "シラバス", id: .syllabus, image: R.image.menuIcon.シラバス.name, url: Url.syllabus.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: "calendar", url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: R.image.menuIcon.生協カレンダー.name, url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "今月の食堂メニュー", id: .tokudaiCoop, image: "questionmark.folder", url: Url.tokudaiCoopDinigMenu.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "今月の食堂メニュー", id: .tokudaiCoop, image: R.image.menuIcon.生協食堂.name, url: Url.tokudaiCoopDinigMenu.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "[図書]カレンダー", id: .libraryCalendar, image: "calendar", url: nil, isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "[図書]カレンダー", id: .libraryCalendar, image: R.image.menuIcon.図書カレンダー.name, url: nil, isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "[図書]本検索", id: .libraryMyPage, image: "books.vertical", url: Url.libraryMyPage.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "[図書]本検索", id: .libraryMyPage, image: R.image.menuIcon.本検索.name, url: Url.libraryMyPage.string(), isLockIconExists: true, isHiddon: false),
         
-    MenuListItem(title: "キャリア支援室", id: .tokudaiCareerCenter, image: "questionmark.folder", url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "キャリア支援室", id: .tokudaiCareerCenter, image: R.image.menuIcon.キャリア支援室.name, url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "[図書]本購入", id: .libraryBookPurchaseRequest, image: "books.vertical", url: Url.libraryBookPurchaseRequest.string(), isLockIconExists: true, isHiddon: false),
+    MenuListItem(title: "[図書]本購入", id: .libraryBookPurchaseRequest, image: R.image.menuIcon.本購入.name, url: Url.libraryBookPurchaseRequest.string(), isLockIconExists: true, isHiddon: false),
     
     MenuListItem(title: "SSS時間割", id: .sss, image: "calendar", url: Url.studySupportSpace.string(), isLockIconExists: false, isHiddon: false),
     

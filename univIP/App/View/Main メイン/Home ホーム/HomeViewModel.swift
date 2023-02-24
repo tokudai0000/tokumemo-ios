@@ -228,13 +228,25 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     /// TableCellの内容(isHiddon=trueを除く)
     public var menuLists: [MenuListItem] {
         get{
+            // コレクションビューに表示させる配列(ここに入れていく)
             var displayLists:[MenuListItem] = []
+            // menuSumpleを参照して、追加できたものを削除していく
             var menuSumple = initMenuLists
-            for oldItem in dataManager.menuLists {
+            
+            for oldItem in dataManager.menuLists { // ユーザーがカスタマイズして保存していたmenuLists
+                // 順番にmenuSumpleと照らし合わせて、名称の変更や画像の変更、URLの変更があれば反映する
                 for i in 0..<menuSumple.count {
                     if oldItem.id == menuSumple[i].id {
-                        if !oldItem.isHiddon {
-                            displayLists.append(oldItem)
+                        // 新規initMenuListと変更点がないかを照らし合わせる
+                        var item = MenuListItem(title: menuSumple[i].title,
+                                                id: menuSumple[i].id,
+                                                image: menuSumple[i].image,
+                                                url: menuSumple[i].url,
+                                                isLockIconExists: menuSumple[i].isLockIconExists,
+                                                isHiddon: menuSumple[i].isHiddon)
+                        
+                        if !oldItem.isHiddon { // Hiddonだったら表示しない
+                            displayLists.append(item)
                         }
                         menuSumple.remove(at: i)
                         break
@@ -244,7 +256,7 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
             for item in menuSumple {
                 displayLists.append(item)
             }
-            dataManager.menuLists = displayLists
+//            dataManager.menuLists = displayLists
             return displayLists
         }
     }
