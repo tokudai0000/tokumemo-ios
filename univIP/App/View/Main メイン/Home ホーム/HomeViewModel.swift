@@ -14,16 +14,16 @@ import SwiftyJSON
 class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
 
     //MARK: - MODEL モデル
-    // 広告のURL
-    struct Advertisement {
+    // 宣伝のURL
+    struct PublicRelations {
         public var imageURL:String?
         public var introduction:String?
         public var tappedURL:String?
         public var organization_name:String?
         public var description:String?
     }
-    public var adItems:[Advertisement] = []
-    public var displayAdImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
+    public var prItems:[PublicRelations] = []
+    public var displayPRImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
     
     struct Weather {
         public var description: String = ""
@@ -38,9 +38,9 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
         case weatherReady // 準備完了
         case weatherError // エラー発生
 
-        case adBusy
-        case adReady
-        case adError
+        case prBusy
+        case prReady
+        case prError
     }
     public var state: ((State) -> Void)?
     
@@ -59,10 +59,10 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     // GitHub上に0-2までのpngがある場合、ここでは
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる　PR画像
-    public func getAdItems() {
-        adItems.removeAll()
+    public func getPRItems() {
+        prItems.removeAll()
         
-        let urlStr = "https://raw.githubusercontent.com/tokudai0000/pr_image_storing_location/main/info.json"
+        let urlStr = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
         
         apiManager.request(urlStr,
                            success: { [weak self] (response) in
@@ -71,39 +71,37 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 AKLog(level: .FATAL, message: "[self] FatalError")
                 fatalError()
             }
-            print(response["itemCounts"])
-            print(response["items"][0]["imageURL"].string)
             let itemCounts = response["itemCounts"].int ?? 0
             
             for i in 0 ..< itemCounts {
                 let item = response["items"][i]
-                let prItem = Advertisement(imageURL: item["imageURL"].string,
+                let prItem = PublicRelations(imageURL: item["imageURL"].string,
                                            introduction: item["introduction"].string,
                                            tappedURL: item["tappedURL"].string,
                                            organization_name: item["organization_name"].string,
                                            description: item["description"].string)
-                self.adItems.append(prItem)
+                self.prItems.append(prItem)
             }
-            self.state?(.adReady) // 通信完了
+            self.state?(.prReady) // 通信完了
             
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.adError) // エラー表示
+            self?.state?(.prError) // エラー表示
         })
     }
     
-    public func selectAdImageNumber() -> Int? {
+    public func selectPRImageNumber() -> Int? {
         // 広告数が0か1の場合はローテーションする必要がない
-        if adItems.count == 0 {
+        if prItems.count == 0 {
             return nil
-        } else if adItems.count == 1 {
+        } else if prItems.count == 1 {
             return 0
         }
         
         while true {
-            let randomNum = Int.random(in: 0..<adItems.count)
+            let randomNum = Int.random(in: 0..<prItems.count)
             // 前回の画像表示番号と同じであれば、再度繰り返す
-            if randomNum != displayAdImagesNumber {
+            if randomNum != displayPRImagesNumber {
                 return randomNum
             }
         }
@@ -175,7 +173,7 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
                 for i in 0..<menuSumple.count {
                     if oldItem.id == menuSumple[i].id {
                         // 新規initMenuListと変更点がないかを照らし合わせる
-                        var item = MenuListItem(title: menuSumple[i].title,
+                        let item = MenuListItem(title: menuSumple[i].title,
                                                 id: menuSumple[i].id,
                                                 image: menuSumple[i].image,
                                                 url: menuSumple[i].url,

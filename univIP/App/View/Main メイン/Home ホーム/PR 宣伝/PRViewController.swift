@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AdViewController: UIViewController {
+class PRViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!

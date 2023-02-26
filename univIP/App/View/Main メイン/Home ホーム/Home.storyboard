@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l6Y-J6-Sft">
-    <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -16,11 +14,11 @@
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l6Y-J6-Sft" userLabel="Home" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L9B-g3-Oj6">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView hidden="YES" contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhg-Di-ZNi">
-                                <rect key="frame" x="215" y="466" width="0.0" height="0.0"/>
+                                <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="LjL-by-wfa"/>
@@ -32,17 +30,17 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t3x-iZ-niV" userLabel="Top View">
-                                <rect key="frame" x="12" y="68.999999999999986" width="406" height="177.66666666666663"/>
+                                <rect key="frame" x="12" y="10" width="576" height="298"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pzS-NI-c0n">
-                                        <rect key="frame" x="0.0" y="7.3333333333333286" width="0.0" height="163.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="67.333333333333329" width="0.0" height="163.33333333333337"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                     <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="NP9-XI-xKL" userLabel="Left View">
-                                        <rect key="frame" x="8.0000000000000142" y="0.0" width="251.33333333333337" height="177.66666666666666"/>
+                                        <rect key="frame" x="8" y="0.0" width="421.33333333333331" height="298"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tokumemoPlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="v5T-GU-n4N">
-                                                <rect key="frame" x="0.0" y="0.0" width="251.33333333333334" height="177.66666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="421.33333333333331" height="298"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -75,32 +73,32 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGW-Aw-EzV">
-                                        <rect key="frame" x="267.33333333333331" y="7.3333333333333286" width="0.0" height="163.33333333333337"/>
+                                        <rect key="frame" x="437.33333333333331" y="67.333333333333329" width="0.0" height="163.33333333333337"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3ua-3Z-6Mz" userLabel="Right View">
-                                        <rect key="frame" x="275.33333333333331" y="0.0" width="130.66666666666669" height="177.66666666666666"/>
+                                        <rect key="frame" x="445.33333333333331" y="0.0" width="130.66666666666669" height="298"/>
                                         <subviews>
                                             <stackView opaque="NO" tag="1" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="BXK-Ui-WVR">
-                                                <rect key="frame" x="0.0" y="0.0" width="130.66666666666666" height="125"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="130.66666666666666" height="215.33333333333334"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在の徳島市" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPe-88-Y2e">
-                                                        <rect key="frame" x="0.0" y="0.0" width="130.66666666666666" height="31.333333333333332"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="130.66666666666666" height="53.666666666666664"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HJ5-Ek-c3Y">
-                                                        <rect key="frame" x="0.0" y="31.333333333333329" width="130.66666666666666" height="31.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="53.666666666666657" width="130.66666666666666" height="54"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mC2-io-c4P">
-                                                        <rect key="frame" x="0.0" y="62.666666666666657" width="130.66666666666666" height="31"/>
+                                                        <rect key="frame" x="0.0" y="107.66666666666667" width="130.66666666666666" height="53.666666666666671"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-Nj-W5u">
-                                                        <rect key="frame" x="0.0" y="93.666666666666657" width="130.66666666666666" height="31.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="161.33333333333334" width="130.66666666666666" height="54"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -123,7 +121,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J7-MJ-B9H">
-                                                <rect key="frame" x="0.0" y="136" width="130.66666666666666" height="41.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="226.33333333333334" width="130.66666666666666" height="71.666666666666657"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
@@ -170,7 +168,7 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JKS-4Y-lAY">
-                                <rect key="frame" x="26" y="266.66666666666669" width="378" height="582.33333333333326"/>
+                                <rect key="frame" x="26" y="328" width="548" height="223"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ySv-Qo-UxF">
                                     <size key="itemSize" width="128" height="128"/>
@@ -212,9 +210,9 @@
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="CfG-S9-hWz"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="adContainerView" destination="NP9-XI-xKL" id="Bnu-8I-mwH"/>
-                        <outlet property="adImageView" destination="v5T-GU-n4N" id="QoI-IB-MDZ"/>
                         <outlet property="collectionView" destination="JKS-4Y-lAY" id="mWa-qW-0dp"/>
+                        <outlet property="prContainerView" destination="NP9-XI-xKL" id="Bnu-8I-mwH"/>
+                        <outlet property="prImageView" destination="v5T-GU-n4N" id="QoI-IB-MDZ"/>
                         <outlet property="temperatureLabel" destination="7xJ-Nj-W5u" id="U9b-zf-jxa"/>
                         <outlet property="weatherIconImageView" destination="HJ5-Ek-c3Y" id="jzF-PC-D0S"/>
                         <outlet property="weatherLabel" destination="mC2-io-c4P" id="AOQ-o4-Kk2"/>
@@ -228,7 +226,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="house" catalog="system" width="32" height="32"/>
         <image name="tokumemoPlusIcon" width="512" height="512"/>
         <namedColor name="SubColor">
             <color red="1" green="0.75294117647058822" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

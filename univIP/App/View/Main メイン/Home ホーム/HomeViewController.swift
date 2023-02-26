@@ -13,8 +13,8 @@ import FirebaseAnalytics
 final class HomeViewController: UIViewController {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var adContainerView: UIView!
-    @IBOutlet weak var adImageView: UIImageView!
+    @IBOutlet weak var prContainerView: UIView!
+    @IBOutlet weak var prImageView: UIImageView!
     
     // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
     @IBOutlet weak var webViewForLogin: WKWebView!
@@ -40,7 +40,7 @@ final class HomeViewController: UIViewController {
         
         layoutInitSetting()
         apiCommunicatingInitSetting()
-        viewModel.getAdItems()
+        viewModel.getPRItems()
         viewModel.getWether()
         
         #if DEBUG
@@ -91,13 +91,13 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
-        guard let num = viewModel.displayAdImagesNumber,
-              let image = viewModel.adItems[num].imageURL,
-              let txt = viewModel.adItems[num].introduction,
-              let url = viewModel.adItems[num].tappedURL else {
+        guard let num = viewModel.displayPRImagesNumber,
+              let image = viewModel.prItems[num].imageURL,
+              let txt = viewModel.prItems[num].introduction,
+              let url = viewModel.prItems[num].tappedURL else {
             return
         }
-        let vc = R.storyboard.ad.adViewController()!
+        let vc = R.storyboard.pR.prViewController()!
         vc.imageUrlStr = image
         vc.introductionText = txt
         vc.urlStr = url
@@ -248,12 +248,12 @@ final class HomeViewController: UIViewController {
         adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
                                        repeats: true,
                                        block: { (timer) in
-            guard let num = self.viewModel.selectAdImageNumber(),
-                  let image = self.viewModel.adItems[num].imageURL else {
+            guard let num = self.viewModel.selectPRImageNumber(),
+                  let image = self.viewModel.prItems[num].imageURL else {
                 return
             }
-            self.viewModel.displayAdImagesNumber = num // これから表示させる広告の配列番号を覚える
-            self.adImageView.loadCacheImage(urlStr: image) // 広告画像の表示
+            self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
+            self.prImageView.loadCacheImage(urlStr: image) // 広告画像の表示
         })
     }
     
@@ -261,8 +261,8 @@ final class HomeViewController: UIViewController {
     private func layoutInitSetting() {
         
         // adImageView
-        adImageView.isUserInteractionEnabled = true // タップ無効
-        adImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
+        prImageView.isUserInteractionEnabled = true // タップ無効
+        prImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
         
         // webViewForLogin
         webViewForLogin.navigationDelegate = self
@@ -313,19 +313,19 @@ final class HomeViewController: UIViewController {
                     self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
                     break
                     
-                case .adBusy:
+                case .prBusy:
                     break
                     
-                case .adReady:
-                    guard let num = self.viewModel.displayAdImagesNumber,
-                          let image = self.viewModel.adItems[num].imageURL else {
+                case .prReady:
+                    guard let num = self.viewModel.displayPRImagesNumber,
+                          let image = self.viewModel.prItems[num].imageURL else {
                         return
                     }
                     // 広告画像の表示
-                    self.adImageView.loadCacheImage(urlStr: image)
+                    self.prImageView.loadCacheImage(urlStr: image)
                     break
                     
-                case .adError:
+                case .prError:
                     break
                 }
             }
