@@ -16,9 +16,11 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     //MARK: - MODEL モデル
     // 広告のURL
     struct Advertisement {
-        public var image:String?
-        public var intro:String?
-        public var url:String?
+        public var imageURL:String?
+        public var introduction:String?
+        public var tappedURL:String?
+        public var organization_name:String?
+        public var description:String?
     }
     public var adItems:[Advertisement] = []
     public var displayAdImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
@@ -60,99 +62,34 @@ class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
     public func getAdItems() {
         adItems.removeAll()
         
-        let dispatchGroup = DispatchGroup()
-        let dispatchQueue = DispatchQueue(label: "queue") // 直列
+        let urlStr = "https://raw.githubusercontent.com/tokudai0000/pr_image_storing_location/main/info.json"
         
-        var adItemsCount: Int?
-        var adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/adNumber.txt")!
-        
-        #if STUB // テスト環境
-        adNumberUrl = URL(string: "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/adNumber.txt")!
-        #endif
-        
-        do {
-            // URL先WebページのHTMLデータを取得
-            let data = try NSData(contentsOf: adNumberUrl) as Data
-            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            if let tx = doc.body?.text {
-                adItemsCount = Int(tx)
-            }
-        } catch {
-            AKLog(level: .ERROR, message: "txtファイル存在せず")
-            return
-        }
-    
-        guard let count = adItemsCount else {
-            AKLog(level: .DEBUG, message: "GitHubに指定された広告数がゼロ")
-            return
-        }
-        
-        
-        for i in 0 ..< count {
+        apiManager.request(urlStr,
+                           success: { [weak self] (response) in
             
-            var adImageUrlStrForGitHub: String?
-            var adClientWebsiteUrlStr: String?
-            var adClientIntroductionText: String?
-            
-            // 1つ目の並列処理
-            dispatchGroup.enter()
-            dispatchQueue.async {
-                var imgUrlStr = "https://tokudai0000.github.io/hostingImage/tokumemoPlus/Image/" + String(i) + ".png"
-                
-                #if STUB // テスト環境
-                imgUrlStr = "https://tokudai0000.github.io/hostingImage/test/Image/" + String(i) + ".png"
-                #endif
-                
-                let imgUrl = URL(string: imgUrlStr)
-                
-                do {
-                    // GitHubから画像データの取得を判定
-                    let _ = try Data(contentsOf: imgUrl!)
-                    adImageUrlStrForGitHub = imgUrlStr
-                } catch {
-                    AKLog(level: .ERROR, message: "URLから画像を取得できませんでした。")
-                }
-                dispatchGroup.leave() // 1つ目の終了
+            guard let self = self else { // HomeViewModelのself
+                AKLog(level: .FATAL, message: "[self] FatalError")
+                fatalError()
             }
+            print(response["itemCounts"])
+            print(response["items"][0]["imageURL"].string)
+            let itemCounts = response["itemCounts"].int ?? 0
             
-            // 2つ目の並列処理
-            dispatchGroup.enter()
-            dispatchQueue.async {
-                var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Introduction/" + String(i) + ".txt"
-                #if STUB // テスト環境
-                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Introduction/" + String(i) + ".txt"
-                #endif
-                if let textUrl = URL(string: textUrlStr) {
-                    adClientIntroductionText = self.getTxtDataFromGitHub(url: textUrl)
-                }
-                dispatchGroup.leave() // 2つ目終了
+            for i in 0 ..< itemCounts {
+                let item = response["items"][i]
+                let prItem = Advertisement(imageURL: item["imageURL"].string,
+                                           introduction: item["introduction"].string,
+                                           tappedURL: item["tappedURL"].string,
+                                           organization_name: item["organization_name"].string,
+                                           description: item["description"].string)
+                self.adItems.append(prItem)
             }
+            self.state?(.adReady) // 通信完了
             
-            // 3つ目の並列処理
-            dispatchGroup.enter()
-            dispatchQueue.async {
-                var textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/tokumemoPlus/Url/" + String(i) + ".txt"
-                #if STUB // テスト環境
-                textUrlStr = "https://raw.githubusercontent.com/tokudai0000/hostingImage/main/test/Url/" + String(i) + ".txt"
-                #endif
-                if let textUrl = URL(string: textUrlStr) {
-                    adClientWebsiteUrlStr = self.getTxtDataFromGitHub(url: textUrl)
-                }
-                dispatchGroup.leave() // 2つ目終了
-            }
-            
-            // 上の二つの処理が終わった時（両方の dispatchGroup.leave() が呼ばれた時）実行される
-            dispatchGroup.notify(queue: .main) {
-                if let img = adImageUrlStrForGitHub,
-                   let txt = adClientIntroductionText,
-                   let ul = adClientWebsiteUrlStr {
-                    self.adItems.append(Advertisement(image: img, intro: txt, url: ul))
-                    
-                }else{
-                    self.state?(.adReady)
-                }
-            }
-        }
+        }, failure: { [weak self] (error) in
+            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+            self?.state?(.adError) // エラー表示
+        })
     }
     
     public func selectAdImageNumber() -> Int? {

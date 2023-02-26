@@ -92,9 +92,9 @@ final class HomeViewController: UIViewController {
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
         guard let num = viewModel.displayAdImagesNumber,
-              let image = viewModel.adItems[num].image,
-              let txt = viewModel.adItems[num].intro,
-              let url = viewModel.adItems[num].url else {
+              let image = viewModel.adItems[num].imageURL,
+              let txt = viewModel.adItems[num].introduction,
+              let url = viewModel.adItems[num].tappedURL else {
             return
         }
         let vc = R.storyboard.ad.adViewController()!
@@ -249,7 +249,7 @@ final class HomeViewController: UIViewController {
                                        repeats: true,
                                        block: { (timer) in
             guard let num = self.viewModel.selectAdImageNumber(),
-                  let image = self.viewModel.adItems[num].image else {
+                  let image = self.viewModel.adItems[num].imageURL else {
                 return
             }
             self.viewModel.displayAdImagesNumber = num // これから表示させる広告の配列番号を覚える
@@ -318,7 +318,7 @@ final class HomeViewController: UIViewController {
                     
                 case .adReady:
                     guard let num = self.viewModel.displayAdImagesNumber,
-                          let image = self.viewModel.adItems[num].image else {
+                          let image = self.viewModel.adItems[num].imageURL else {
                         return
                     }
                     // 広告画像の表示
