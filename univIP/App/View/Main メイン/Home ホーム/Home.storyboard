@@ -209,7 +209,7 @@
                             <constraint firstItem="JKS-4Y-lAY" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="26" id="mbG-j8-gik"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="CfG-S9-hWz"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="TabIcon/home" id="CfG-S9-hWz"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="JKS-4Y-lAY" id="mWa-qW-0dp"/>
@@ -228,7 +228,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="house" catalog="system" width="32" height="32"/>
+        <image name="TabIcon/home" width="25" height="25"/>
         <image name="tokumemoPlusIcon" width="512" height="512"/>
         <namedColor name="SubColor">
             <color red="1" green="0.75294117647058822" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
