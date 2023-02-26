@@ -15,22 +15,15 @@ class NewsViewController: UIViewController {
     private let viewModel = NewsViewModel()
     private let dataManager = DataManager.singleton
     // 読み込み中のクルクル(ビジーカーソルともいう)
-    private var ActivityIndicator: UIActivityIndicatorView!
+    private var viewActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initViewModel()
-        initActivityIndicator()
+        layoutInitSetting()
         
         viewModel.getNewsData()
-        viewModel.getImage()
-    
-        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil),
-                           forCellReuseIdentifier: "NewsTableViewCell")
-        
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
     }
     
     // ステータスバーの文字を白に設定
@@ -49,11 +42,11 @@ class NewsViewController: UIViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .busy: // 通信中
-                        self.ActivityIndicator.startAnimating() // クルクルスタート
+                        self.viewActivityIndicator.startAnimating() // クルクルスタート
                         break
                         
                     case .ready: // 通信完了
-                        self.ActivityIndicator.stopAnimating() // クルクルストップ
+                        self.viewActivityIndicator.stopAnimating() // クルクルストップ
                         self.tableView.reloadData()
                         break
                         
@@ -64,20 +57,21 @@ class NewsViewController: UIViewController {
         }
     }
     
-    private func initActivityIndicator() {
-        // ActivityIndicatorを作成＆中央に配置
-        ActivityIndicator = UIActivityIndicatorView()
-        ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        ActivityIndicator.center = self.view.center
+    private func layoutInitSetting() {
+        // ステータスバーの背景色を指定
+        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
         
-        // クルクルをストップした時に非表示する
-        ActivityIndicator.hidesWhenStopped = true
+        // ActivityIndicator
+        viewActivityIndicator = UIActivityIndicatorView()
+        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        viewActivityIndicator.center = self.view.center
+        viewActivityIndicator.hidesWhenStopped = true
+        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
+        self.view.addSubview(viewActivityIndicator)
         
-        // 色を設定
-        ActivityIndicator.style = UIActivityIndicatorView.Style.medium
-        
-        //Viewに追加
-        self.view.addSubview(ActivityIndicator)
+        // TableView
+        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil),
+                           forCellReuseIdentifier: "NewsTableViewCell")
     }
 }
 
@@ -91,8 +85,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     // セルの数
     func numberOfSections(in tableView: UITableView) -> Int {
         // 取得数が1未満であれば、データ取得に失敗していると判定し0個を返す
-        if 1 < viewModel.newsDatas.count &&
-            1 < viewModel.newsImgStr.count {
+        if 1 < viewModel.newsDatas.count {
             return viewModel.newsDatas.count
         } else {
             return 0
@@ -102,7 +95,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     
     //セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(150)
+        return CGFloat(80)
     }
     
     // セル背景色
@@ -121,17 +114,12 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
             let date = viewModel.newsDatas[indexPath.section].date
             var imgUrlStr = "NoImage"
             
-            if indexPath.section < viewModel.newsImgStr.count {
-                imgUrlStr = viewModel.newsImgStr[indexPath.section]
-            }
-            
             if imgUrlStr == "https://www.tokushima-u.ac.jp/assets/img/dummy.png" {
                 imgUrlStr = "NoImage"
             }
                 
             cell.setupCell(text: text,
-                           date: date,
-                           imgUrlStr: imgUrlStr)
+                           date: date)
         }
         
         return cell

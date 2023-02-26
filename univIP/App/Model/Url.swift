@@ -64,6 +64,15 @@ enum Url: String {
     /// 徳島大学生活共同組合　旧"https://tokudai.marucoop.com/#parts"
     case tokudaiCoop = "https://vsign.jp/tokudai/maruco#parts"
     
+    /// 徳島大学生協食堂メニュー
+    case tokudaiCoopDinigMenu = "https://tokudaicoop.jp/food2.html"
+    
+    /// 学びサポート企画部
+    case studySupportSpace = "https://www.lib.tokushima-u.ac.jp/support/sss/index.html"
+    
+    /// 四国防災情報
+    case disasterPrevention = "https://shikokubousai88wa-t.amebaownd.com/pages/4808974/page_202104051625"
+    
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
     /// 大学サイト、ログイン画面

@@ -14,6 +14,6 @@ class HomeCollectionCell: UICollectionViewCell {
     
     func setupCell(title: String, image: String) {
         titleLabel.text = title
-        iconImageView.image = UIImage(systemName: image)
+        iconImageView.image = UIImage(named: image)
     }
 }

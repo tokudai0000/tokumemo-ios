@@ -60,7 +60,7 @@ final class InputViewController: UIViewController {
         let defaultAction = UIAlertAction(title: "OK",
                                           style: UIAlertAction.Style.default,
                                           handler:{ (action: UIAlertAction!) -> Void in
-            self.dataManager.studentNumber = ""
+            self.dataManager.cAccount = ""
             self.dataManager.password = ""
             self.initSetup(self.type)
         })
@@ -81,8 +81,8 @@ final class InputViewController: UIViewController {
         guard let text2 = TextField2.text else { return }
         
         if type == .syllabus {
-            dataManager.syllabusSubjectName = text1
-            dataManager.syllabusTeacherName = text2
+            dataManager.syllabusTeacherName = text1
+            dataManager.syllabusSubjectName = text2
             let vc = R.storyboard.web.webViewController()!
             vc.loadUrlString = Url.syllabus.string()
             present(vc, animated: true, completion: nil)
@@ -101,8 +101,8 @@ final class InputViewController: UIViewController {
             return
         }
         
-        if type == .password, text1.prefix(1) == "c" {
-            MessageLabel1.text = "cアカウントではなく、学生番号です"
+        if type == .password, text1.prefix(1) != "c" {
+            MessageLabel1.text = "cアカウントを入力してください"
             textFieldCursorSetup(fieldType: .one, cursorType: .error)
             return
         }
@@ -112,10 +112,13 @@ final class InputViewController: UIViewController {
         
         switch type {
             case .password:
+                // 再ログインをする
+                dataManager.shouldRelogin = true
                 // KeyChianに保存する
-                dataManager.studentNumber = text1
+                dataManager.cAccount = text1
                 dataManager.password = text2
                 initSetup(.password)
+                dataManager.loginState.completed = false
                 alert(title: "♪ 登録完了 ♪",
                       message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
            
@@ -157,11 +160,11 @@ final class InputViewController: UIViewController {
         switch type {
             case .password:
                 title = "パスワード"
-                titleLabel1.text = "学生番号"
+                titleLabel1.text = "cアカウント"
                 titleLabel2.text = "パスワード"
-                TextField1.text = dataManager.studentNumber
+                TextField1.text = dataManager.cAccount
                 TextField2.text = dataManager.password
-                TextSizeLabel1.text = "\(dataManager.studentNumber.count)/10"
+                TextSizeLabel1.text = "\(dataManager.cAccount.count)/10"
                 TextSizeLabel2.text = "\(dataManager.password.count)/100"
                 TextField2.isSecureTextEntry = true
                 resetButton.layer.cornerRadius = 25.0
