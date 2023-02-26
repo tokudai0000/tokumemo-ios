@@ -24,7 +24,6 @@ class NewsViewController: UIViewController {
         layoutInitSetting()
         
         viewModel.getNewsData()
-        viewModel.getImage()
     }
     
     // ステータスバーの文字を白に設定
@@ -86,8 +85,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     // セルの数
     func numberOfSections(in tableView: UITableView) -> Int {
         // 取得数が1未満であれば、データ取得に失敗していると判定し0個を返す
-        if 1 < viewModel.newsDatas.count &&
-            1 < viewModel.newsImgStr.count {
+        if 1 < viewModel.newsDatas.count {
             return viewModel.newsDatas.count
         } else {
             return 0
@@ -97,7 +95,7 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
     
     //セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(150)
+        return CGFloat(80)
     }
     
     // セル背景色
@@ -116,17 +114,12 @@ extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
             let date = viewModel.newsDatas[indexPath.section].date
             var imgUrlStr = "NoImage"
             
-            if indexPath.section < viewModel.newsImgStr.count {
-                imgUrlStr = viewModel.newsImgStr[indexPath.section]
-            }
-            
             if imgUrlStr == "https://www.tokushima-u.ac.jp/assets/img/dummy.png" {
                 imgUrlStr = "NoImage"
             }
                 
             cell.setupCell(text: text,
-                           date: date,
-                           imgUrlStr: imgUrlStr)
+                           date: date)
         }
         
         return cell

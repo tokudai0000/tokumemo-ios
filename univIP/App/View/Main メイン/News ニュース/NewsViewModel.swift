@@ -27,8 +27,6 @@ final class NewsViewModel {
                  date: "",
                  urlStr: "")
     ]
-    // Newsの写真データ情報を保存
-    public var newsImgStr:[String] = []
     
     
     //MARK: - STATE ステータス
@@ -52,45 +50,24 @@ final class NewsViewModel {
             
             self.newsDatas.removeAll()
             
-            for i in 0..<10 {
-                let data = NewsData(title: response["items"][i]["title"].string!,
-                                    date: response["items"][i]["pubDate"].string!,
-                                    urlStr: response["items"][i]["link"].string!)
+            var counter = 0
+            while(true) {
+                guard let title = response["items"][counter]["title"].string,
+                      let date = response["items"][counter]["pubDate"].string,
+                      let urlStr = response["items"][counter]["link"].string else{
+                    break
+                }
+                let data = NewsData(title: title,
+                                    date: date,
+                                    urlStr: urlStr)
                 self.newsDatas.append(data)
+                counter += 1
             }
+            
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
             self?.state?(.error) // エラー表示
         })
-    }
-    
-    public func getImage() {
-        state?(.busy) // 通信開始（通信中）
-        let urlString = "https://www.tokushima-u.ac.jp/recent/"
-        let url = URL(string: urlString)! // fatalError
-        
-        do {
-            // URL先WebページのHTMLデータを取得
-            let data = try NSData(contentsOf: url) as Data
-            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            
-            newsImgStr.removeAll()
-            
-            // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
-            for node in doc.xpath("//div") {
-                // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-                if let str = node["style"] {
-                    let result = str.replacingOccurrences(of:"background-image: url(", with:"")
-                    let result2 = result.replacingOccurrences(of:");", with:"")
-                    let url = "https://www.tokushima-u.ac.jp" + result2
-                    newsImgStr.append(url)
-                }
-            }
-            self.state?(.ready) // 通信完了
-        } catch {
-            AKLog(level: .ERROR, message: "[Data取得エラー]: HTMLデータパースエラー\n urlString:\(url.absoluteString)")
-            self.state?(.error) // エラー表示
-        }
     }
 }

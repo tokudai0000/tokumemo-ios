@@ -11,12 +11,10 @@ class NewsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var contentsLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var newsImageView: UIImageView!
     
-    func setupCell(text: String, date: String, imgUrlStr: String) {
+    func setupCell(text: String, date: String) {
         contentsLabel.text = text
         dateLabel.text = date
-        newsImageView.loadCacheImage(urlStr: imgUrlStr)
     }
     
 }
