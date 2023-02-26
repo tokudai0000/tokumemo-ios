@@ -52,13 +52,13 @@ let initMenuLists:[MenuListItem] = [
     
     MenuListItem(title: "今学期の成績", id: .currentTermPerformance, image: R.image.menuIcon.今学期の成績.name, url: Url.currentTermPerformance.string(), isLockIconExists: true, isHiddon: false),
     
-    MenuListItem(title: "シラバス", id: .syllabus, image: R.image.menuIcon.シラバス.name, url: Url.syllabus.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "シラバス", id: .syllabus, image: R.image.menuIcon.シラバス.name, url: Url.syllabus.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: R.image.menuIcon.生協カレンダー.name, url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "生協カレンダー", id: .tokudaiCoop, image: R.image.menuIcon.生協カレンダー.name, url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
     
     MenuListItem(title: "今月の食堂メニュー", id: .tokudaiCoop, image: R.image.menuIcon.生協食堂.name, url: Url.tokudaiCoopDinigMenu.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "[図書]カレンダー", id: .libraryCalendar, image: R.image.menuIcon.図書カレンダー.name, url: nil, isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "[図書]カレンダー", id: .libraryCalendar, image: R.image.menuIcon.図書カレンダー.name, url: nil, isLockIconExists: false, isHiddon: false),
     
     MenuListItem(title: "[図書]本検索", id: .libraryMyPage, image: R.image.menuIcon.本検索.name, url: Url.libraryMyPage.string(), isLockIconExists: true, isHiddon: false),
         
