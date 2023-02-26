@@ -11,7 +11,12 @@ import Kanna
 import Alamofire
 import SwiftyJSON
 
-class HomeViewModel: BaseViewModel, BaseViewModelProtocol {
+class HomeViewModel {
+    
+    // 共通データ・マネージャ
+    public let dataManager = DataManager.singleton
+    // API マネージャ
+    public let apiManager = ApiManager.singleton
 
     //MARK: - MODEL モデル
     // 宣伝のURL
