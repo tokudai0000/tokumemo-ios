@@ -43,8 +43,8 @@ final class HomeViewController: UIViewController {
         viewModel.getPRItems()
         viewModel.getWether()
         
-        #if DEBUG
-//        dataManager.agreementVersion = ""   // 利用規約同意画面を出現させたい場合
+        #if STUB
+        dataManager.agreementVersion = ""   // 利用規約同意画面を出現させたい場合
         #endif
     }
     
