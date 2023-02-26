@@ -92,11 +92,11 @@ enum Url: String {
     /// ホームページのURL
     case homePage = "https://lit.link/developers"
     /// トクメモ＋のプライバシーポリシーURL[GitHub]
-    case privacyPolicy = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt"
+    case privacyPolicy = "https://tokudai0000.github.io/tokumemo_resource/document/privacy_policy.txt"
     /// トクメモ＋の利用規約URL[GitHub]
-    case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
+    case termsOfService = "https://tokudai0000.github.io/tokumemo_resource/document/terms_of_service.txt"
     /// アプリ紹介文
-    case appIntroduction = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TokumemoExplanation.txt"
+    case appIntroduction = "https://tokudai0000.github.io/tokumemo_resource/document/tokumemo_explanation.txt"
     /// トクメモ＋のソースコード[GitHub]
     case sourceCode = "https://github.com/tokudai0000/univIP"
     /// 気象庁の天気予報
