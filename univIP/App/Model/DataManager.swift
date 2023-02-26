@@ -63,6 +63,11 @@ final class DataManager {
                     newLists.append(item)
                     break
                 }
+                
+                if oldList.id == .favorite {
+                    // カスタマイズで入れた内容(ユーザー設定)
+                    newLists.append(oldList)
+                }
             }
             
             return newLists + initLists
