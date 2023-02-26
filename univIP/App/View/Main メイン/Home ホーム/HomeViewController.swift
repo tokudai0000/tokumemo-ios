@@ -285,8 +285,8 @@ final class HomeViewController: UIViewController {
         layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
         collectionView.collectionViewLayout = layout
         collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
-        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:)))
-        collectionView.addGestureRecognizer(longTapGesture)
+//        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:)))
+//        collectionView.addGestureRecognizer(longTapGesture)
     }
     
     /// 通信初期設定
