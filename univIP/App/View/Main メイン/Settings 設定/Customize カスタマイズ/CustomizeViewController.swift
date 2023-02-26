@@ -22,7 +22,13 @@ final class CustomizeViewController: UIViewController {
         tableView.setEditing(true, animated: false)
         tableView.allowsMultipleSelectionDuringEditing = true
         
-        reload()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        reload() // Home画面でのカスタマイズ機能で並び替えをタブ移動した際に反映するため
+        
     }
     
     private func reload() {
