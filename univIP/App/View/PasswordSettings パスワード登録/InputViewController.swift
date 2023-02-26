@@ -111,29 +111,31 @@ final class InputViewController: UIViewController {
         initSetup(type)
         
         switch type {
-            case .password:
-                // 再ログインをする
-                dataManager.shouldRelogin = true
-                // KeyChianに保存する
-                dataManager.cAccount = text1
-                dataManager.password = text2
-                initSetup(.password)
-                dataManager.loginState.completed = false
-                alert(title: "♪ 登録完了 ♪",
-                      message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
-           
-            case .favorite:
-                let item = MenuListItem(title: text2, id: .favorite, image: "questionmark.folder", url: text1, isLockIconExists: false, isHiddon: false)
-                addMenuContents(item)
-                
-                alert(title: "♪ 登録完了 ♪",
-                      message: "以降、メニュー画面に設定したお気に入り画面が表示される様になりました。")
-                
-            default:
-                fatalError()
+        case .password:
+            // 再ログインをする
+            dataManager.shouldRelogin = true
+            // KeyChianに保存する
+            dataManager.cAccount = text1
+            dataManager.password = text2
+            initSetup(.password)
+            dataManager.loginState.completed = false
+            alert(title: "♪ 登録完了 ♪",
+                  message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
+            
+        case .favorite:
+            let item = MenuListItem(title: text2, id: .favorite, image: R.image.menuIcon.etc.name, url: text1, isLockIconExists: false, isHiddon: false)
+            
+            var lists:[MenuListItem] = dataManager.menuLists
+            lists.append(item)
+            dataManager.menuLists = lists
+            alert(title: "♪ 登録完了 ♪",
+                  message: "以降、メニュー画面に設定したお気に入り画面が表示される様になりました。")
+            
+        default:
+            fatalError()
         }
     }
-        
+    
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
     }
@@ -158,51 +160,42 @@ final class InputViewController: UIViewController {
         self.view.addGestureRecognizer(tapGR)
         
         switch type {
-            case .password:
-                title = "パスワード"
-                titleLabel1.text = "cアカウント"
-                titleLabel2.text = "パスワード"
-                TextField1.text = dataManager.cAccount
-                TextField2.text = dataManager.password
-                TextSizeLabel1.text = "\(dataManager.cAccount.count)/10"
-                TextSizeLabel2.text = "\(dataManager.password.count)/100"
-                TextField2.isSecureTextEntry = true
-                resetButton.layer.cornerRadius = 25.0
-                registerButton.setTitle("登録", for: .normal)
-                
-            case .favorite:
-                title = "お気に入り登録"
-                titleLabel1.text = "登録したいURL"
-                titleLabel2.text = "タイトル"
-                TextField1.text = ""
-                TextField2.text = ""
-                TextSizeLabel1.text = "0/100"
-                TextSizeLabel2.text = "0/100"
-                passwordViewButton.isHidden = true
-                resetButton.isHidden = true
-                registerButton.setTitle("登録", for: .normal)
+        case .password:
+            title = "パスワード"
+            titleLabel1.text = "cアカウント"
+            titleLabel2.text = "パスワード"
+            TextField1.text = dataManager.cAccount
+            TextField2.text = dataManager.password
+            TextSizeLabel1.text = "\(dataManager.cAccount.count)/10"
+            TextSizeLabel2.text = "\(dataManager.password.count)/100"
+            TextField2.isSecureTextEntry = true
+            resetButton.layer.cornerRadius = 25.0
+            registerButton.setTitle("登録", for: .normal)
             
-            case .syllabus:
-                title = "シラバス"
-                titleLabel1.text = "教員名"
-                titleLabel2.text = "科目名"
-                TextField1.text = ""
-                TextField2.text = ""
-                TextSizeLabel1.text = "0/100"
-                TextSizeLabel2.text = "0/100"
-                passwordViewButton.isHidden = true
-                resetButton.isHidden = true
-                registerButton.setTitle("検索", for: .normal)
+        case .favorite:
+            title = "お気に入り登録"
+            titleLabel1.text = "登録したいURL"
+            titleLabel2.text = "タイトル"
+            TextField1.text = ""
+            TextField2.text = ""
+            TextSizeLabel1.text = "0/100"
+            TextSizeLabel2.text = "0/100"
+            passwordViewButton.isHidden = true
+            resetButton.isHidden = true
+            registerButton.setTitle("登録", for: .normal)
+            
+        case .syllabus:
+            title = "シラバス"
+            titleLabel1.text = "教員名"
+            titleLabel2.text = "科目名"
+            TextField1.text = ""
+            TextField2.text = ""
+            TextSizeLabel1.text = "0/100"
+            TextSizeLabel2.text = "0/100"
+            passwordViewButton.isHidden = true
+            resetButton.isHidden = true
+            registerButton.setTitle("検索", for: .normal)
         }
-    }
-    
-    /// MenuLists内の要素を追加する。その都度UserDefaultsに保存する
-    /// - Parameters:
-    ///   - menuItem: 追加したいお気に入り設定
-    private func addMenuContents(_ menuItem: MenuListItem) {
-        var lists:[MenuListItem] = dataManager.menuLists
-        lists.append(menuItem)
-        dataManager.menuLists = lists
     }
     
     private var alertController: UIAlertController!
