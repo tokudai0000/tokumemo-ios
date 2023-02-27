@@ -70,7 +70,7 @@ let initMenuLists:[MenuListItem] = [
     
     MenuListItem(title: "SSS時間割", id: .studySupportSpace, image: R.image.menuIcon.studySupportSpace.name, url: Url.studySupportSpace.string(), isLockIconExists: false, isHiddon: false),
     
-    MenuListItem(title: "防災情報", id: .disasterPrevention, image: R.image.menuIcon.disasterPrevention.name, url: Url.disasterPrevention.string(), isLockIconExists: false, isHiddon: false),
+    MenuListItem(title: "知っておきたい防災", id: .disasterPrevention, image: R.image.menuIcon.disasterPrevention.name, url: Url.disasterPrevention.string(), isLockIconExists: false, isHiddon: false),
     
     // Hiddon
     
