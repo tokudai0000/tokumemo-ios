@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-ZW-3cG">
-                        <rect key="frame" x="15.5" y="1" width="70" height="70"/>
+                        <rect key="frame" x="15.666666666666664" y="1" width="70" height="70"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="OwN-jG-hQu"/>
@@ -48,7 +50,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sAQ-Y9-pfw">
-                        <rect key="frame" x="20.5" y="6" width="60" height="60"/>
+                        <rect key="frame" x="20.666666666666671" y="6" width="60" height="60"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.050980392159999999" green="0.2274509804" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -56,10 +58,17 @@
                             <constraint firstAttribute="height" constant="60" id="y1h-3Z-eB9"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7w-oa-TaA">
-                        <rect key="frame" x="35" y="69.5" width="31" height="26.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7w-oa-TaA">
+                        <rect key="frame" x="0.0" y="69.666666666666671" width="101" height="26.333333333333329"/>
+                        <attributedString key="attributedText">
+                            <fragment content="Label">
+                                <attributes>
+                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <font key="NSFont" size="10" name="YuGo-Bold"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -71,8 +80,10 @@
                 <constraint firstItem="sAQ-Y9-pfw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="JUI-T6-b4D"/>
                 <constraint firstItem="U7w-oa-TaA" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="QIK-2Y-nGC"/>
                 <constraint firstItem="sAQ-Y9-pfw" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="QJ4-Q5-EuA"/>
+                <constraint firstItem="U7w-oa-TaA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TJ1-5l-O07"/>
                 <constraint firstItem="QzE-ZW-3cG" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="YJI-qN-cR9"/>
                 <constraint firstItem="U7w-oa-TaA" firstAttribute="top" secondItem="sAQ-Y9-pfw" secondAttribute="bottom" constant="3.5" id="ZvG-8W-ZhT"/>
+                <constraint firstAttribute="trailing" secondItem="U7w-oa-TaA" secondAttribute="trailing" id="dQ6-RQ-9FZ"/>
             </constraints>
             <size key="customSize" width="101" height="101"/>
             <connections>
