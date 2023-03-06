@@ -64,6 +64,15 @@ enum Url: String {
     /// 徳島大学生活共同組合　旧"https://tokudai.marucoop.com/#parts"
     case tokudaiCoop = "https://vsign.jp/tokudai/maruco#parts"
     
+    /// 徳島大学生協食堂メニュー
+    case tokudaiCoopDinigMenu = "https://tokudaicoop.jp/food2.html"
+    
+    /// 学びサポート企画部
+    case studySupportSpace = "https://www.lib.tokushima-u.ac.jp/support/sss/index.html"
+    
+    /// 防災情報
+    case disasterPrevention = "https://www.tokushima-u.ac.jp/rcmode/business/46584.html"
+    
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う)
     case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
     /// 大学サイト、ログイン画面
@@ -83,11 +92,11 @@ enum Url: String {
     /// ホームページのURL
     case homePage = "https://lit.link/developers"
     /// トクメモ＋のプライバシーポリシーURL[GitHub]
-    case privacyPolicy = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/PrivacyPolicy.txt"
+    case privacyPolicy = "https://tokudai0000.github.io/tokumemo_resource/document/privacy_policy.txt"
     /// トクメモ＋の利用規約URL[GitHub]
-    case termsOfService = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TermsOfService.txt"
+    case termsOfService = "https://tokudai0000.github.io/tokumemo_resource/document/terms_of_service.txt"
     /// アプリ紹介文
-    case appIntroduction = "https://raw.githubusercontent.com/tokudai0000/document/main/tokumemo/terms/TokumemoExplanation.txt"
+    case appIntroduction = "https://tokudai0000.github.io/tokumemo_resource/document/tokumemo_explanation.txt"
     /// トクメモ＋のソースコード[GitHub]
     case sourceCode = "https://github.com/tokudai0000/univIP"
     /// 気象庁の天気予報

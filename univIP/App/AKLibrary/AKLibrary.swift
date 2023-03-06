@@ -29,7 +29,7 @@ func AKLog(file: String = #file,
            level: AKLogLevel,
            message: Any ){
     
-    #if DEBUG || Stub
+    #if DEBUG || STUB
         let levelString: String
         switch level {
             case .FATAL:    levelString = "FATAL"

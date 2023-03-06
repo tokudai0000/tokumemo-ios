@@ -10,6 +10,6 @@ import Foundation
 
 struct ConstStruct {
     /// 現在の利用規約バージョン
-    static let latestTermsVersion = "2.0"
+    static let latestTermsVersion = "3.0"
     
 }

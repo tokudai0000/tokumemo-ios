@@ -17,6 +17,14 @@ final class DataManager {
     public var syllabusTeacherName = ""
     public var syllabusSubjectName = ""
     
+    public var shouldRelogin = true
+    struct LoginState {
+        public var isProgress = false          // 進行中
+        public var completeImmediately = false // 完了してすぐ
+        public var completed = false           // ログイン完了
+    }
+    public var loginState:LoginState = LoginState()
+    
     /// 次に読み込まれるURLはJavaScriptを動かすことを許可する
     /// これがないと、ログインに失敗した場合、永遠とログイン処理を行われてしまう
     public var canExecuteJavascript = false
@@ -33,8 +41,36 @@ final class DataManager {
         get {
             let jsonDecoder = JSONDecoder()
             let data = userDefaults.data(forKey: KEY_menuLists) ?? Data()
-            let lists = try? jsonDecoder.decode([MenuListItem].self, from: data)
-            return lists ?? initMenuLists
+            guard let lists = try? jsonDecoder.decode([MenuListItem].self, from: data) else{
+                return initMenuLists
+            }
+            var initLists = initMenuLists
+            var newLists:[MenuListItem] = []
+            for oldList in lists {
+                for i in 0..<initLists.count {
+                    guard oldList.id == initLists[i].id else{
+                        continue
+                    }
+                    // 新規initMenuListと変更点がないかを照らし合わせる
+                    let item = MenuListItem(title: initLists[i].title,
+                                            id: initLists[i].id,
+                                            image: initLists[i].image,
+                                            url: initLists[i].url,
+                                            isLockIconExists: initLists[i].isLockIconExists,
+                                            isHiddon: oldList.isHiddon)
+                    
+                    initLists.remove(at: i)
+                    newLists.append(item)
+                    break
+                }
+                
+                if oldList.id == .favorite {
+                    // カスタマイズで入れた内容(ユーザー設定)
+                    newLists.append(oldList)
+                }
+            }
+            
+            return newLists + initLists
         }
         set(v) {
             let jsonEncoder = JSONEncoder()
@@ -42,16 +78,11 @@ final class DataManager {
             userDefaults.set(data ,forKey: KEY_menuLists)
         }
     }
-    
-    /// cアカウントは学生番号の最後の桁を削除し、先頭に"c"をつける
+        
+    private let KEY_cAccount = "KEY_cAccount"
     public var cAccount: String {
-        get { return "c" + studentNumber.prefix(studentNumber.count - 1) }
-    }
-    
-    private let KEY_studentNumber = "KEY_studentNumber"
-    public var studentNumber: String {
-        get { return getKeyChain(key: KEY_studentNumber) }
-        set(v) { setKeyChain(key: KEY_studentNumber, value: v) }
+        get { return getKeyChain(key: KEY_cAccount) }
+        set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
     
     private let KEY_password = "KEY_password"
