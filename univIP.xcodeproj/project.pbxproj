@@ -50,8 +50,6 @@
 		1AB10B8D292A1A640071E876 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB10B8C292A1A640071E876 /* UIImageView.swift */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
 		1AB37B7D26FDFCF4008A2D2F /* univIPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */; };
-		1ABC422629269D2000D1361D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC422529269D2000D1361D /* BaseViewController.swift */; };
-		1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABC422729269D3A00D1361D /* BaseViewModel.swift */; };
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
 		1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABDE75626DE535500D4B04E /* Agreement.storyboard */; };
 		1ABE8BBE27B10402001EEA79 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BB927B10402001EEA79 /* HomeViewController.swift */; };
@@ -146,8 +144,6 @@
 		1AB37B7A26FDFCF4008A2D2F /* univIPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = univIPUITests.swift; sourceTree = "<group>"; };
 		1AB37B7E26FDFCF4008A2D2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1ABC422529269D2000D1361D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		1ABC422729269D3A00D1361D /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		1ABDE75426DE534300D4B04E /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		1ABDE75626DE535500D4B04E /* Agreement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Agreement.storyboard; sourceTree = "<group>"; };
 		1ABE8BB927B10402001EEA79 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -395,7 +391,6 @@
 		1AA056E326BD2D3700343005 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				1ABC422429269D0000D1361D /* Base */,
 				1A41EADF272914CC0064CDB7 /* AKLibrary */,
 				1AA056E526BD2D4900343005 /* etc */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
@@ -446,15 +441,6 @@
 				1AB37B7E26FDFCF4008A2D2F /* Info.plist */,
 			);
 			path = univIPUITests;
-			sourceTree = "<group>";
-		};
-		1ABC422429269D0000D1361D /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				1ABC422729269D3A00D1361D /* BaseViewModel.swift */,
-				1ABC422529269D2000D1361D /* BaseViewController.swift */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 		1ABDE75326DE530300D4B04E /* Agreement 規約同意 */ = {
@@ -832,9 +818,7 @@
 				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
-				1ABC422829269D3A00D1361D /* BaseViewModel.swift in Sources */,
 				1AE7096729955170004F5435 /* Date.swift in Sources */,
-				1ABC422629269D2000D1361D /* BaseViewController.swift in Sources */,
 				1AD00FB2299B726D009F3703 /* CollectionView.swift in Sources */,
 				1AA29EE4291E68470049A546 /* UIColor.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
