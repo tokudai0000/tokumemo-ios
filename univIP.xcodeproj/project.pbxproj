@@ -64,7 +64,6 @@
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
 		1AD00FB2299B726D009F3703 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00FB1299B726D009F3703 /* CollectionView.swift */; };
 		1AD00FB4299B72DE009F3703 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00FB3299B72DE009F3703 /* WebView.swift */; };
-		1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */; };
 		1AE7096729955170004F5435 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE7096629955170004F5435 /* Date.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		809DCF722906A63300593989 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809DCF712906A63300593989 /* UIView.swift */; };
@@ -158,7 +157,6 @@
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		1AD00FB1299B726D009F3703 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		1AD00FB3299B72DE009F3703 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = StudentNumberDiscription.rtf; sourceTree = "<group>"; };
 		1AE7096629955170004F5435 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -456,7 +454,6 @@
 			isa = PBXGroup;
 			children = (
 				1A9E0E15273D848100247F94 /* Agreement.rtf */,
-				1AD43F272923B755002A8BBF /* StudentNumberDiscription.rtf */,
 			);
 			path = RTFfile;
 			sourceTree = "<group>";
@@ -656,7 +653,6 @@
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Input.storyboard in Resources */,
-				1AD43F282923B755002A8BBF /* StudentNumberDiscription.rtf in Resources */,
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
 				1A5FD6842715305D0081F952 /* GoogleService-Info.plist in Resources */,
 				1A6C51B22904EC2F00A3E85A /* News.storyboard in Resources */,
