@@ -8,22 +8,23 @@
 import UIKit
 
 class SplashViewController: UIViewController {
-
+    
+    @IBOutlet weak var stateLabel: UILabel!
+//    var viewActivityIndicator: UIActivityIndicatorView! // ログイン中のクルクル
+    @IBOutlet weak var viewActivityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        stateLabel.text = "ログイン中"
 
-        // Do any additional setup after loading the view.
+        // viewActivityIndicator(ログイン中のクルクル)
+//        viewActivityIndicator = UIActivityIndicatorView(style: .large)
+//        viewActivityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
+//        viewActivityIndicator.center = CGPoint(x: self.view.frame.midX, y: self.view.bounds.maxY - CGFloat(100))
+//        viewActivityIndicator.color =  R.color.mainColor() // 色を設定
+//        self.view.addSubview(viewActivityIndicator)
+        viewActivityIndicator.startAnimating()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
