@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
+		1A16243629DEE55E00D7D1EC /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A16243529DEE55E00D7D1EC /* Splash.storyboard */; };
+		1A16243829DEE57E00D7D1EC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A16243729DEE57E00D7D1EC /* SplashViewController.swift */; };
 		1A1709B8293F95D6005B4CE8 /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1709B7293F95D5005B4CE8 /* MenuList.swift */; };
 		1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */; };
 		1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */; };
@@ -93,6 +95,8 @@
 
 /* Begin PBXFileReference section */
 		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		1A16243529DEE55E00D7D1EC /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		1A16243729DEE57E00D7D1EC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1A1709B7293F95D5005B4CE8 /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
 		1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 			children = (
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
 				1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */,
+				1A16243729DEE57E00D7D1EC /* SplashViewController.swift */,
+				1A16243529DEE55E00D7D1EC /* Splash.storyboard */,
 			);
 			name = "Splash スプラッシュ";
 			path = "Splash スプラッシュ";
@@ -661,6 +667,7 @@
 				1A6C51B42904ECCA00A3E85A /* ClubList.storyboard in Resources */,
 				1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */,
 				1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */,
+				1A16243629DEE55E00D7D1EC /* Splash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +839,7 @@
 				1AD00FB4299B72DE009F3703 /* WebView.swift in Sources */,
 				1A30D0A928F5BFB500C4012E /* HomeCollectionCell.swift in Sources */,
 				1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */,
+				1A16243829DEE57E00D7D1EC /* SplashViewController.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */,
