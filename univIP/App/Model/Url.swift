@@ -15,7 +15,7 @@ enum Url: String {
     /// Eラーニング一覧
     case eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
     
-    /// 教務事務システム(PC)
+    /// 教務システム(PC)
     case courseManagementPC = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
     /// 教務事務システム(Mobile)
     case courseManagementMobile  = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
