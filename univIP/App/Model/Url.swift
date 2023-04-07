@@ -16,7 +16,7 @@ enum Url: String {
     case eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
     
     /// 教務システム(PC)
-    case courseManagementPC = "https://eweb.stud.tokushim.ac.jp/Portal/shibboleth_login.aspx"
+    case courseManagementPC = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
     /// 教務事務システム(Mobile)
     case courseManagementMobile  = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
     /// マナバ(PC)
@@ -59,7 +59,7 @@ enum Url: String {
     case syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
     
     /// 徳島大学キャリアセンター
-    case tokudaiCareerCenter = "https://eweb.stud.tokushima-u.ac.jp/Portal/shibboleth_login.aspx"
+    case tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
     
     /// 徳島大学生活共同組合　旧"https://tokudai.marucoop.com/#parts"
     case tokudaiCoop = "https://vsign.jp/tokudai/maruco#parts"
@@ -74,7 +74,7 @@ enum Url: String {
     case disasterPrevention = "https://www.tokushima-u.ac.jp/rcmode/business/46584.html"
     
     /// ログイン画面に遷移する為のURL(何度もURL遷移を行う) 旧http://eweb.stud.tokushima-u.ac.jp/Portal/top.html
-    case universityTransitionLogin = "https://eweb.stud.tok"
+    case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
     /// 大学サイト、ログイン画面
     case universityLogin = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="
     /// タイムアウト(20分無操作)
