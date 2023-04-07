@@ -20,12 +20,7 @@ class SplashViewController: UIViewController, WKNavigationDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         viewActivityIndicator.startAnimating()
-        
-        stateLabel.text = "ログイン中"
-        relogin()
-        // webViewForLogin
         webView.navigationDelegate = self
-        dataManager.canExecuteJavascript = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,7 +32,12 @@ class SplashViewController: UIViewController, WKNavigationDelegate{
             return
         }
         
+        stateLabel.text = "情報取得中"
+        viewModel.getWether()
+        viewModel.getPRItems()
+        
         if viewModel.isWebLoginRequired() {
+            stateLabel.text = "自動ログイン中"
             relogin() // 大学サイトへのログイン状況がタイムアウトになってるから
         }
         
@@ -50,6 +50,7 @@ class SplashViewController: UIViewController, WKNavigationDelegate{
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
     func relogin() {
+        dataManager.canExecuteJavascript = true
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
     
