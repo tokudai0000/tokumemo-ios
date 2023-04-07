@@ -57,8 +57,56 @@ class SplashViewModel {
     }
     
     // 学生番号、パスワードを登録しているか判定
-    public func hasRegisteredPassword() -> Bool {
+    public func isPasswordRegistered() -> Bool {
         return !(dataManager.cAccount.isEmpty || dataManager.password.isEmpty)
+    }
+    
+    /// タイムアウトのURLであるか判定
+    public func isTimeoutOccurredForURL(urlStr: String) -> Bool {
+        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
+    }
+    
+    /// 大学統合認証システム(IAS)へのログインが完了したか判定
+    public func isLoginCompletedForURL(_ urlStr: String) -> Bool {
+        // ログイン後のURL
+        let check1 = urlStr.contains(Url.skipReminder.string())
+        let check2 = urlStr.contains(Url.courseManagementPC.string())
+        let check3 = urlStr.contains(Url.courseManagementMobile.string())
+        // 上記から1つでもtrueがあれば、result = true
+        let result = check1 || check2 || check3
+        
+        return (dataManager.loginState.isProgress && result)
+    }
+    
+    /// 大学統合認証システム(IAS)へのログインが失敗したか判定
+    public func isLoginFailedForURL(_ urlStr: String) -> Bool {
+        // ログイン失敗した時のURL
+        let check1 = urlStr.contains(Url.universityLogin.string())
+        let check2 = (urlStr.suffix(2) != "s1")
+        // 上記からどちらもtrueであれば、result = true
+        let result = check1 && check2
+        
+        // ログイン処理中かつ、ログイン失敗した時のURL
+        if dataManager.loginState.isProgress, result {
+            dataManager.loginState.isProgress = false
+            return true
+        }
+        return false
+    }
+    
+    /// JavaScriptを動かしたい指定のURLか判定
+    public func canRunJavaScriptOnURL(_ urlString: String) -> Bool {
+        // JavaScriptを実行するフラグ
+        if dataManager.canExecuteJavascript == false { return false }
+        
+        // cアカウント、パスワードの登録確認
+        if isPasswordRegistered() == false { return false }
+        
+        // 大学統合認証システム(IAS)のログイン画面の判定
+        if urlString.contains(Url.universityLogin.string()) { return true }
+        
+        // それ以外なら
+        return false
     }
     
     // GitHub上に0-2までのpngがある場合、ここでは
@@ -210,26 +258,7 @@ class SplashViewModel {
         }
         return pl[key] as! String
     }
-    /// タイムアウトのURLであるか判定
-    public func isTimeout(urlStr: String) -> Bool {
-        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
-    }
-    
-    /// JavaScriptを動かしたい指定のURLか判定
-    public func canExecuteJS(_ urlString: String) -> Bool {
-        // JavaScriptを実行するフラグ
-        if dataManager.canExecuteJavascript == false { return false }
         
-        // cアカウント、パスワードの登録確認
-        if hasRegisteredPassword() == false { return false }
-        
-        // 大学統合認証システム(IAS)のログイン画面の判定
-        if urlString.contains(Url.universityLogin.string()) { return true }
-        
-        // それ以外なら
-        return false
-    }
-    
     enum flagType {
         case notStart
         case loginStart
@@ -270,40 +299,7 @@ class SplashViewModel {
                 dataManager.loginState.completed = false
         }
     }
-    
-    /// 大学統合認証システム(IAS)へのログインが完了したか判定
-    public func checkLoginComplete(_ urlStr: String) {
-        // ログイン後のURL
-        let check1 = urlStr.contains(Url.skipReminder.string())
-        let check2 = urlStr.contains(Url.courseManagementPC.string())
-        let check3 = urlStr.contains(Url.courseManagementMobile.string())
-        // 上記から1つでもtrueがあれば、result = true
-        let result = check1 || check2 || check3
         
-        // ログイン処理中かつ、ログイン後のURL
-        if dataManager.loginState.isProgress, result {
-            updateLoginFlag(type: .loginSuccess)
-            return
-        }
-        return
-    }
-    
-    /// 大学統合認証システム(IAS)へのログインが失敗したか判定
-    public func isLoginFailure(_ urlStr: String) -> Bool {
-        // ログイン失敗した時のURL
-        let check1 = urlStr.contains(Url.universityLogin.string())
-        let check2 = (urlStr.suffix(2) != "s1")
-        // 上記からどちらもtrueであれば、result = true
-        let result = check1 && check2
-        
-        // ログイン処理中かつ、ログイン失敗した時のURL
-        if dataManager.loginState.isProgress, result {
-            dataManager.loginState.isProgress = false
-            return true
-        }
-        return false
-    }
-    
     /// 大学図書館の種類
     enum LibraryType {
         case main // 常三島本館

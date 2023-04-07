@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class SplashViewController: UIViewController, WKNavigationDelegate{
+class SplashViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var stateLabel: UILabel!
@@ -38,21 +38,24 @@ class SplashViewController: UIViewController, WKNavigationDelegate{
         
         if viewModel.isWebLoginRequired() {
             stateLabel.text = "自動ログイン中"
-            relogin() // 大学サイトへのログイン状況がタイムアウトになってるから
+            processReloginForWebPage() // 大学サイトへのログイン状況がタイムアウトになってるから
         }
         
-//        adImagesRotationTimerON()
+        //        adImagesRotationTimerON()
         
-//        viewModel.getPRItems()
-//        viewModel.getWether()
+        //        viewModel.getPRItems()
+        //        viewModel.getWether()
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
-    func relogin() {
+    private func processReloginForWebPage() {
         dataManager.canExecuteJavascript = true
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
+}
+
+extension SplashViewController: WKNavigationDelegate {
     
     /// 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
@@ -65,35 +68,32 @@ class SplashViewController: UIViewController, WKNavigationDelegate{
             return
         }
         
-        // ログインが完了しているか
-        viewModel.checkLoginComplete(url.absoluteString)
-
-        if viewModel.hasRegisteredPassword() == false {
+        // パスワードを登録しているか
+        if viewModel.isPasswordRegistered() == false {
             viewModel.updateLoginFlag(type: .notStart)
         }
-
-        // タイムアウトの判定
-        if viewModel.isTimeout(urlStr: url.absoluteString) {
-            relogin()
-        }
-
-        // ログインに失敗していた場合、通知
-        if viewModel.isLoginFailure(url.absoluteString) {
-            viewModel.updateLoginFlag(type: .loginFailure)
-//            toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
+        
+        // タイムアウトしているか
+        if viewModel.isTimeoutOccurredForURL(urlStr: url.absoluteString) {
+            viewModel.updateLoginFlag(type: .loginStart)
+            
+            processReloginForWebPage()
         }
         
-        // ログイン完了時に鍵マークを外す(画像更新)為に、collectionViewのCellデータを更新
-        if dataManager.loginState.completeImmediately {
+        // ログインが完了しているか
+        if viewModel.isLoginCompletedForURL(url.absoluteString) {
+            viewModel.updateLoginFlag(type: .loginSuccess)
+            
             let vc = R.storyboard.main.mainViewController()!
             present(vc, animated: false, completion: nil)
         }
-        
-        if dataManager.loginState.isProgress == false {
-//            viewActivityIndicator.stopAnimating() // クルクルストップ
-//            loginGrayBackGroundView.isHidden = true
+
+        // ログインに失敗しているか
+        if viewModel.isLoginFailedForURL(url.absoluteString) {
+            viewModel.updateLoginFlag(type: .loginFailure)
+//            toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
         }
-        
+                
         decisionHandler(.allow)
         return
     }
@@ -103,17 +103,15 @@ class SplashViewController: UIViewController, WKNavigationDelegate{
         
         let url = self.webView.url! // fatalError
         AKLog(level: .DEBUG, message: url.absoluteString)
-        print(url.absoluteString)
         
-        // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
-        if viewModel.canExecuteJS(url.absoluteString) {
+        // JavaScriptを動かしたいURLかどうかを判定
+        if viewModel.canRunJavaScriptOnURL(url.absoluteString) {
+            viewModel.updateLoginFlag(type: .executedJavaScript)
+            
             // 徳島大学　統合認証システムサイト(ログインサイト)に自動ログインを行う。JavaScriptInjection
             webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-
-            // フラグ管理
-            viewModel.updateLoginFlag(type: .executedJavaScript)
             return
         }
     }
