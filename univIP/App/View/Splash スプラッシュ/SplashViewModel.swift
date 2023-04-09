@@ -18,6 +18,7 @@ class SplashViewModel {
     public var displayedPRImage: PublicRelations?
     public var weatherData:Weather?
     
+    public var progressStatus = 10
     
     //MARK: - STATE ステータス
     enum State {

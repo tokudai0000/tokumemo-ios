@@ -17,6 +17,7 @@ class SplashViewController: UIViewController {
     
     let viewModel = SplashViewModel()
     let dataManager = DataManager.singleton
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +52,21 @@ class SplashViewController: UIViewController {
                 self.present(vc, animated: false, completion: nil)
             }
         }
-        // 7秒後にworkItemを実行する
-        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: workItem)
+        // 9秒後にworkItemを実行する
+        DispatchQueue.main.asyncAfter(deadline: .now() + 9.0, execute: workItem)
+        
+        
+        // 9秒間を退屈させないために、進行度を表示
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0,
+                                     repeats: true,
+                                     block: { (timer) in
+            if self.viewModel.progressStatus < 100 {
+                self.viewModel.progressStatus += 10
+                self.progressStatusLabel.text = String(self.viewModel.progressStatus) + " %"
+            }else{
+                timer.invalidate() //メモリ解放
+            }
+        })
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
@@ -96,10 +110,10 @@ extension SplashViewController: WKNavigationDelegate {
         
         // ログインが完了しているか
         if viewModel.isLoginCompletedForURL(url.absoluteString) {
-            viewModel.updateLoginFlag(type: .loginSuccess)
-            
-            let vc = R.storyboard.main.mainViewController()!
-            present(vc, animated: false, completion: nil)
+            //            viewModel.updateLoginFlag(type: .loginSuccess)
+            //
+            //            let vc = R.storyboard.main.mainViewController()!
+            //            present(vc, animated: false, completion: nil)
         }
         
         // ログインに失敗しているか
