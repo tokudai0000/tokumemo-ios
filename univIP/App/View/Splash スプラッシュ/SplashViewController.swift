@@ -10,6 +10,7 @@ import WebKit
 
 class SplashViewController: UIViewController {
     
+    @IBOutlet weak var progressStatusLabel: UILabel!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var viewActivityIndicator: UIActivityIndicatorView!

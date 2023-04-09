@@ -44,15 +44,23 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oaj-Le-PrI">
+                                <rect key="frame" x="178" y="663.66666666666663" width="37.333333333333343" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LFH-45-eDl" firstAttribute="top" secondItem="bBy-ZA-EwO" secondAttribute="bottom" constant="40" id="4AR-43-E9f"/>
                             <constraint firstItem="cD8-3E-pZz" firstAttribute="top" secondItem="LFH-45-eDl" secondAttribute="bottom" constant="10" id="7yK-AD-Qbq"/>
+                            <constraint firstItem="oaj-Le-PrI" firstAttribute="top" secondItem="H3z-xX-Qrj" secondAttribute="bottom" constant="50" id="JNM-ym-cWl"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="bBy-ZA-EwO" secondAttribute="trailing" constant="20" id="RU0-XN-apb"/>
                             <constraint firstItem="bBy-ZA-EwO" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="WHA-FN-gl2"/>
                             <constraint firstItem="H3z-xX-Qrj" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="d89-Ay-Xj0"/>
+                            <constraint firstItem="oaj-Le-PrI" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="nVR-zu-L7e"/>
                             <constraint firstItem="LFH-45-eDl" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="rVW-0C-cpK"/>
                             <constraint firstItem="H3z-xX-Qrj" firstAttribute="top" secondItem="LFH-45-eDl" secondAttribute="bottom" constant="50" id="wST-bL-2Hc"/>
                             <constraint firstItem="LFH-45-eDl" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="xx0-Vg-RpN"/>
@@ -61,6 +69,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressStatusLabel" destination="oaj-Le-PrI" id="xNT-l2-3c0"/>
                         <outlet property="stateLabel" destination="cD8-3E-pZz" id="jmn-1e-Bjq"/>
                         <outlet property="viewActivityIndicator" destination="H3z-xX-Qrj" id="bIU-O3-eVT"/>
                         <outlet property="webView" destination="bBy-ZA-EwO" id="iyt-Qw-WKe"/>

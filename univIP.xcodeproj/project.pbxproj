@@ -211,8 +211,6 @@
 		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
 			isa = PBXGroup;
 			children = (
-				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
-				1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */,
 				1A58087329DF122C00B24F40 /* SplashViewModel.swift */,
 				1A16243729DEE57E00D7D1EC /* SplashViewController.swift */,
 				1A16243529DEE55E00D7D1EC /* Splash.storyboard */,
@@ -412,6 +410,8 @@
 		1AA056E526BD2D4900343005 /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
+				1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */,
 				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
 				1ABDE75A26DEF7A100D4B04E /* RTFfile */,
