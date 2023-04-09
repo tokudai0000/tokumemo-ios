@@ -8,7 +8,6 @@
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
 import Alamofire
-//import SwiftyJSON
 
 class SplashViewModel {
     
@@ -40,6 +39,7 @@ class SplashViewModel {
     /// GitHubからPRの情報を取ってくる
     public func getPRItems() {
         prItems.removeAll()
+        self.state?(.busy) // 開始
         
         apiManager.request(Url.prItemJsonData.string(),
                            success: { [weak self] (response) in
@@ -58,6 +58,7 @@ class SplashViewModel {
                                              description: response["items"][i]["description"].string)
                 self.prItems.append(prItem)
             }
+            self.state?(.ready) // 終了
             
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] getPRItems: failure:\(error.localizedDescription)")

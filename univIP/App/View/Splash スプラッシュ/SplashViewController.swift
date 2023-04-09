@@ -41,6 +41,18 @@ class SplashViewController: UIViewController {
         
         viewModel.getPRItems()
         
+        
+        // ログイン中が一定経過すると自動ログイン失敗と処理する。
+        let workItem = DispatchWorkItem {
+            if self.dataManager.loginState.isProgress {
+                self.viewModel.updateLoginFlag(type: .loginFailure)
+                let vc = R.storyboard.main.mainViewController()!
+                self.present(vc, animated: false, completion: nil)
+            }
+        }
+        // 10秒後にworkItemを実行する
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: workItem)
+        RunLoop.main.run()
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
@@ -49,7 +61,6 @@ class SplashViewController: UIViewController {
         dataManager.canExecuteJavascript = true
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
-    
 }
 
 extension SplashViewController: WKNavigationDelegate {
@@ -74,6 +85,7 @@ extension SplashViewController: WKNavigationDelegate {
         if viewModel.isTimeoutOccurredForURL(urlStr: url.absoluteString) {
             viewModel.updateLoginFlag(type: .loginStart)
             
+            stateLabel.text = "再ログイン中"
             processReloginForWebPage()
         }
         
@@ -84,13 +96,15 @@ extension SplashViewController: WKNavigationDelegate {
             let vc = R.storyboard.main.mainViewController()!
             present(vc, animated: false, completion: nil)
         }
-
+        
         // ログインに失敗しているか
         if viewModel.isLoginFailedForURL(url.absoluteString) {
             viewModel.updateLoginFlag(type: .loginFailure)
-//            toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
+            //            toast(message: "学生番号もしくはパスワードが間違っている為、ログインできませんでした")
+            let vc = R.storyboard.main.mainViewController()!
+            present(vc, animated: false, completion: nil)
         }
-                
+        
         decisionHandler(.allow)
         return
     }
