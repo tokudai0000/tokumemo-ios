@@ -26,25 +26,25 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // 利用規約に同意する必要があるかどうか
         if viewModel.isTermsOfServiceAgreementNeeded() {
             let vc = R.storyboard.agreement.agreementViewController()!
             present(vc, animated: false, completion: nil)
             return
         }
         
-        stateLabel.text = "情報取得中"
+        // ログイン処理が必要かどうか
+        if viewModel.isWebLoginRequired() {
+            viewModel.updateLoginFlag(type: .loginStart)
+            
+            stateLabel.text = "自動ログイン中"
+            processReloginForWebPage()
+        }
+        
+        
         viewModel.getWether()
         viewModel.getPRItems()
         
-        if viewModel.isWebLoginRequired() {
-            stateLabel.text = "自動ログイン中"
-            processReloginForWebPage() // 大学サイトへのログイン状況がタイムアウトになってるから
-        }
-        
-        //        adImagesRotationTimerON()
-        
-        //        viewModel.getPRItems()
-        //        viewModel.getWether()
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
@@ -53,6 +53,7 @@ class SplashViewController: UIViewController {
         dataManager.canExecuteJavascript = true
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
+    
 }
 
 extension SplashViewController: WKNavigationDelegate {

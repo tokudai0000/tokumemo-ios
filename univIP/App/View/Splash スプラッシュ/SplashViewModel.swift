@@ -19,22 +19,10 @@ class SplashViewModel {
     public let apiManager = ApiManager.singleton
 
     //MARK: - MODEL モデル
-    // 宣伝のURL
-    struct PublicRelations {
-        public var imageURL:String?
-        public var introduction:String?
-        public var tappedURL:String?
-        public var organization_name:String?
-        public var description:String?
-    }
     public var prItems:[PublicRelations] = []
+    public var displayedPRImage: PublicRelations?
     public var displayPRImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
     
-    struct Weather {
-        public var description: String = ""
-        public var feelsLike: String = ""
-        public var iconUrlStr: String = ""
-    }
     public var weatherData:Weather = Weather()
     
     //MARK: - STATE ステータス
@@ -54,6 +42,18 @@ class SplashViewModel {
     /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
     public func isTermsOfServiceAgreementNeeded() -> Bool {
         return dataManager.agreementVersion != ConstStruct.latestTermsVersion
+    }
+    
+    public var lastLoginTime = Date().secondBefore(500)
+    public func isWebLoginRequired() -> Bool {
+        // パスワード更新等をした時に再ログイン
+        if dataManager.shouldRelogin {
+            dataManager.shouldRelogin = false
+            return true
+        }
+        let distance = abs(lastLoginTime.timeIntervalSinceNow)
+        // 300秒 = 5分
+        return 300 < distance
     }
     
     // 学生番号、パスワードを登録しているか判定
@@ -109,6 +109,9 @@ class SplashViewModel {
         return false
     }
     
+    
+    
+    
     // GitHub上に0-2までのpngがある場合、ここでは
     // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
     // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる　PR画像
@@ -142,25 +145,7 @@ class SplashViewModel {
             self?.state?(.prError) // エラー表示
         })
     }
-    
-    public func selectPRImageNumber() -> Int? {
-        // 広告数が0か1の場合はローテーションする必要がない
-        if prItems.count == 0 {
-            return nil
-        } else if prItems.count == 1 {
-            return 0
-        }
         
-        while true {
-            let randomNum = Int.random(in: 0..<prItems.count)
-            // 前回の画像表示番号と同じであれば、再度繰り返す
-            if randomNum != displayPRImagesNumber {
-                return randomNum
-            }
-        }
-        
-    }
-    
     // OpenWeatherMapのAPIから天気情報を取得
     public func getWether() {
         let latitude = "34.0778755" // 緯度 (徳島大学の座標)
@@ -200,35 +185,8 @@ class SplashViewModel {
             self?.state?(.weatherError) // エラー表示
         })
     }
+        
     
-    public var lastLoginTime = Date().secondBefore(500)
-    public func isWebLoginRequired() -> Bool {
-        // パスワード更新等をした時に再ログイン
-        if dataManager.shouldRelogin {
-            dataManager.shouldRelogin = false
-            return true
-        }
-        let distance = abs(lastLoginTime.timeIntervalSinceNow)
-        // 300秒 = 5分
-        return 300 < distance
-    }
-    
-    /// TableCellの内容(isHiddon=trueを除く)
-    public var menuLists: [MenuListItem] {
-        get{
-            // コレクションビューに表示させる配列(ここに入れていく)
-            var displayLists:[MenuListItem] = []
-            
-            for item in dataManager.menuLists {
-                if !item.isHiddon {
-                    displayLists.append(item)
-                }
-            }
-            return displayLists
-        }
-    }
-    
-
     // MARK: - Private func
     // GitHubからtxtデータを取得する
     private func getTxtDataFromGitHub(url: URL) -> String? {
@@ -298,75 +256,6 @@ class SplashViewModel {
                 dataManager.loginState.isProgress = true
                 dataManager.loginState.completed = false
         }
-    }
-        
-    /// 大学図書館の種類
-    enum LibraryType {
-        case main // 常三島本館
-        case kura // 蔵本分館
-    }
-    /// 図書館の開館カレンダーPDFまでのURLRequestを作成する
-    ///
-    /// PDFへのURLは状況により変化する為、図書館ホームページからスクレイピングを行う
-    /// 例1：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021.pdf
-    /// 例2：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_syuusei1.pdf
-    /// ==HTML==[常三島(本館Main) , 蔵本(分館Kura)でも同様]
-    /// <body class="index">
-    ///   <ul>
-    ///       <li class="pos_r">
-    ///         <a href="pub/pdf/calender/calender_main_2021.pdf title="開館カレンダー">
-    ///   ========
-    ///   aタグのhref属性を抽出、"pub/pdf/calender/"と一致していれば、例1のURLを作成する。
-    /// - Parameter type: 常三島(本館Main) , 蔵本(分館Kura)のどちらの開館カレンダーを欲しいのかLibraryTypeから選択
-    /// - Returns: 図書館の開館カレンダーPDFまでのURLRequest
-    public func makeLibraryCalendarUrl(type: LibraryType) -> String? {
-        var urlString = ""
-        switch type {
-            case .main:
-                urlString = Url.libraryHomePageMainPC.string()
-            case .kura:
-                urlString = Url.libraryHomePageKuraPC.string()
-        }
-        let url = URL(string: urlString)! // fatalError
-        do {
-            // URL先WebページのHTMLデータを取得
-            let data = try NSData(contentsOf: url) as Data
-            let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-            // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
-            for node in doc.xpath("//a") {
-                // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-                if let str = node["href"] {
-                    // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-                    if str.contains("pub/pdf/calender/") {
-                        // PDFまでのURLを作成する(本館のURLに付け加える)
-                        return Url.libraryHomePageMainPC.string() + str
-                    }
-                }
-            }
-            AKLog(level: .ERROR, message: "[URL抽出エラー]: 図書館開館カレンダーURLの抽出エラー \n urlString:\(url.absoluteString)")
-        } catch {
-            AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(url.absoluteString)")
-        }
-        return nil
-    }
-    
-    /// 今年度の成績表のURLを作成する
-    ///
-    /// - Note:
-    ///   2020年4月〜2021年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2020
-    ///   2021年4月〜2022年3月までの成績は https ... Results_Get_YearTerm.aspx?year=2021
-    ///   なので、2022年の1月から3月まではURLがyear=2021とする必要あり
-    /// - Returns: 今年度の成績表のURL
-    public func createCurrentTermPerformanceUrl() -> String {
-        
-        var year = Calendar.current.component(.year, from: Date())
-        let month = Calendar.current.component(.month, from: Date())
-        
-        // 1月から3月までは前年の成績
-        if month <= 3 {
-            year -= 1
-        }
-        return Url.currentTermPerformance.string() + String(year)
     }
 }
 
