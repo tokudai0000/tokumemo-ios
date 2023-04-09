@@ -39,7 +39,6 @@ class SplashViewController: UIViewController {
         processReloginForWebPage()
         
         
-        viewModel.getWether()
         viewModel.getPRItems()
         
     }
@@ -102,7 +101,7 @@ extension SplashViewController: WKNavigationDelegate {
         let url = self.webView.url! // fatalError
         AKLog(level: .DEBUG, message: url.absoluteString)
         
-        // JavaScriptを動かしたいURLかどうかを判定
+        // JavaScriptを動かしたいURLか
         if viewModel.canRunJavaScriptOnURL(url.absoluteString) {
             viewModel.updateLoginFlag(type: .executedJavaScript)
             
