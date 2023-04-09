@@ -33,13 +33,10 @@ class SplashViewController: UIViewController {
             return
         }
         
-        // ログイン処理が必要かどうか
-        if viewModel.isWebLoginRequired() {
-            viewModel.updateLoginFlag(type: .loginStart)
-            
-            stateLabel.text = "自動ログイン中"
-            processReloginForWebPage()
-        }
+        // ログイン処理
+        viewModel.updateLoginFlag(type: .loginStart)
+        stateLabel.text = "自動ログイン中"
+        processReloginForWebPage()
         
         
         viewModel.getWether()

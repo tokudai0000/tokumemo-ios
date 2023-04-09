@@ -8,7 +8,7 @@
 import Foundation
 
 struct Weather {
-    public var description: String = ""
-    public var feelsLike: String = ""
-    public var iconUrlStr: String = ""
+    public var description: String?
+    public var feelsLike: String?
+    public var iconUrlStr: String?
 }

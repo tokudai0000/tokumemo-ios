@@ -105,6 +105,11 @@ enum Url: String {
     /// 徳大学生活動リスト
     case clubList = "https://tokudai0000.github.io/club-list/"
     
+    
+    case prItemJsonData = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
+    
+    case weatherItemJsonData = "https://api.openweathermap.org/data/2.5/weather"
+    
     /// URLを文字列として返す
     func string() -> String {
         return rawValue

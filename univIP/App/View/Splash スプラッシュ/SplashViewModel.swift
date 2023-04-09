@@ -13,48 +13,101 @@ import SwiftyJSON
 
 class SplashViewModel {
     
-    // 共通データ・マネージャ
     public let dataManager = DataManager.singleton
-    // API マネージャ
     public let apiManager = ApiManager.singleton
 
-    //MARK: - MODEL モデル
     public var prItems:[PublicRelations] = []
     public var displayedPRImage: PublicRelations?
+    public var weatherData:Weather?
+    
     public var displayPRImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
     
-    public var weatherData:Weather = Weather()
     
     //MARK: - STATE ステータス
     enum State {
-        case weatherBusy  // 準備中
-        case weatherReady // 準備完了
-        case weatherError // エラー発生
-
-        case prBusy
-        case prReady
-        case prError
+        case busy  // 準備中
+        case ready // 準備完了
+        case error // エラー発生
     }
+    // 通信情報の更新
     public var state: ((State) -> Void)?
     
+    
     // MARK: - Public func
-
-    /// 最新の利用規約同意者か判定し、同意画面の表示を行うべきか判定
+    /// 利用規約に同意する必要があるかどうか
     public func isTermsOfServiceAgreementNeeded() -> Bool {
+        // 同意済みの利用規約Ver と 最新の利用規約Ver を比べる
         return dataManager.agreementVersion != ConstStruct.latestTermsVersion
     }
     
-    public var lastLoginTime = Date().secondBefore(500)
-    public func isWebLoginRequired() -> Bool {
-        // パスワード更新等をした時に再ログイン
-        if dataManager.shouldRelogin {
-            dataManager.shouldRelogin = false
-            return true
-        }
-        let distance = abs(lastLoginTime.timeIntervalSinceNow)
-        // 300秒 = 5分
-        return 300 < distance
+    
+    public func getPRItems() {
+        prItems.removeAll()
+        
+        apiManager.request(Url.prItemJsonData.string(),
+                           success: { [weak self] (response) in
+            guard let self = self else {
+                fatalError()
+            }
+            
+            let prItemCounts = response["itemCounts"].int ?? 0
+            
+            // response["items"] に入っている情報を1つづつprItemsに追加する
+            for i in 0 ..< prItemCounts {
+                let prItem = PublicRelations(imageURL: response["items"][i]["imageURL"].string,
+                                           introduction: response["items"][i]["introduction"].string,
+                                           tappedURL: response["items"][i]["tappedURL"].string,
+                                           organization_name: response["items"][i]["organization_name"].string,
+                                           description: response["items"][i]["description"].string)
+                self.prItems.append(prItem)
+            }
+            
+        }, failure: { [weak self] (error) in
+            AKLog(level: .ERROR, message: "[API] getPRItems: failure:\(error.localizedDescription)")
+            self?.state?(.error) // エラー表示
+        })
     }
+        
+    // OpenWeatherMapのAPIから天気情報を取得
+    public func getWetherItems() {
+        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
+        let longitude = "134.5615651" // 経度
+        let apiKey = loadPlist(path: "key", key: "openWeatherMapAPIKey")
+        let parameter = "?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
+        let urlStr = Url.weatherItemJsonData.string() + "lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
+        
+        apiManager.request(urlStr,
+                           success: { [weak self] (response) in
+            
+            guard let self = self else { // HomeViewModelのself
+                AKLog(level: .FATAL, message: "[self] FatalError")
+                fatalError()
+            }
+            
+            // 天気の様子が返ってくる 例: 曇
+            self.weatherData!.description = response["weather"][0]["description"].string ?? "Error"
+            
+            // 気温がdoubleの形で返ってくる　例: 21.52
+            if let temp = response["main"]["temp"].double {
+                // 215.2を四捨五入 => 215 , 215/10 = 21.5
+                let num = round(temp * 10) / 10
+                self.weatherData!.feelsLike = String(num) + "℃" // 例: "21.5℃"
+            }
+            
+            // 天気を表すアイコンコードが返ってくる 例 "02d"
+            if let iconCode = response["weather"][0]["icon"].string {
+                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
+                self.weatherData!.iconUrlStr = urlStr
+            }
+            self.state?(.weatherReady) // 通信完了
+            
+        }, failure: { [weak self] (error) in
+            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+            self?.state?(.weatherError) // エラー表示
+        })
+    }
+    
+    
     
     // 学生番号、パスワードを登録しているか判定
     public func isPasswordRegistered() -> Bool {
@@ -112,79 +165,6 @@ class SplashViewModel {
     
     
     
-    // GitHub上に0-2までのpngがある場合、ここでは
-    // 0.png -> 1.png -> 2.png -> 0.png とローテーションする
-    // その判定を3.pngをデータ化した際エラーが出ると、3.pngが存在しないと判定し、0.pngを読み込ませる　PR画像
-    public func getPRItems() {
-        prItems.removeAll()
-        
-        let urlStr = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
-        
-        apiManager.request(urlStr,
-                           success: { [weak self] (response) in
-            
-            guard let self = self else { // HomeViewModelのself
-                AKLog(level: .FATAL, message: "[self] FatalError")
-                fatalError()
-            }
-            let itemCounts = response["itemCounts"].int ?? 0
-            
-            for i in 0 ..< itemCounts {
-                let item = response["items"][i]
-                let prItem = PublicRelations(imageURL: item["imageURL"].string,
-                                           introduction: item["introduction"].string,
-                                           tappedURL: item["tappedURL"].string,
-                                           organization_name: item["organization_name"].string,
-                                           description: item["description"].string)
-                self.prItems.append(prItem)
-            }
-            self.state?(.prReady) // 通信完了
-            
-        }, failure: { [weak self] (error) in
-            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.prError) // エラー表示
-        })
-    }
-        
-    // OpenWeatherMapのAPIから天気情報を取得
-    public func getWether() {
-        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
-        let longitude = "134.5615651" // 経度
-        let API_KEY = loadPlist(path: "key", key: "openWeatherMapAPIKey")
-        let parameter = "lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
-        let urlStr = "https://api.openweathermap.org/data/2.5/weather?" + parameter
-        
-        state?(.weatherBusy) // 通信開始（通信中）
-        apiManager.request(urlStr,
-                           success: { [weak self] (response) in
-            
-            guard let self = self else { // HomeViewModelのself
-                AKLog(level: .FATAL, message: "[self] FatalError")
-                fatalError()
-            }
-            
-            // 天気の様子が返ってくる 例: 曇
-            self.weatherData.description = response["weather"][0]["description"].string ?? "Error"
-            
-            // 気温がdoubleの形で返ってくる　例: 21.52
-            if let temp = response["main"]["temp"].double {
-                // 215.2を四捨五入 => 215 , 215/10 = 21.5
-                let num = round(temp * 10) / 10
-                self.weatherData.feelsLike = String(num) + "℃" // 例: "21.5℃"
-            }
-            
-            // 天気を表すアイコンコードが返ってくる 例 "02d"
-            if let iconCode = response["weather"][0]["icon"].string {
-                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
-                self.weatherData.iconUrlStr = urlStr
-            }
-            self.state?(.weatherReady) // 通信完了
-            
-        }, failure: { [weak self] (error) in
-            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.weatherError) // エラー表示
-        })
-    }
         
     
     // MARK: - Private func

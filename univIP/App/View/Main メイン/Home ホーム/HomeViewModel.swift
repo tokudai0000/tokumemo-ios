@@ -117,9 +117,9 @@ class HomeViewModel {
     public func getWether() {
         let latitude = "34.0778755" // 緯度 (徳島大学の座標)
         let longitude = "134.5615651" // 経度
-        let API_KEY = loadPlist(path: "key", key: "openWeatherMapAPIKey")
-        let parameter = "lat=\(latitude)&lon=\(longitude)&appid=\(API_KEY)&lang=ja&units=metric"
-        let urlStr = "https://api.openweathermap.org/data/2.5/weather?" + parameter
+        let apiKey = loadPlist(path: "key", key: "openWeatherMapAPIKey")
+        let parameter = "?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
+        let urlStr = Url.weatherItemJsonData.string() + "lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
         
         state?(.weatherBusy) // 通信開始（通信中）
         apiManager.request(urlStr,
