@@ -50,9 +50,8 @@ class SplashViewController: UIViewController {
                 self.present(vc, animated: false, completion: nil)
             }
         }
-        // 10秒後にworkItemを実行する
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: workItem)
-        RunLoop.main.run()
+        // 7秒後にworkItemを実行する
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0, execute: workItem)
     }
     
     /// 大学統合認証システム(IAS)のページを読み込む
@@ -79,6 +78,11 @@ extension SplashViewController: WKNavigationDelegate {
         // パスワードを登録しているか
         if viewModel.isPasswordRegistered() == false {
             viewModel.updateLoginFlag(type: .notStart)
+            
+            let vc = R.storyboard.main.mainViewController()!
+            present(vc, animated: false, completion: nil)
+            decisionHandler(.cancel)
+            return
         }
         
         // タイムアウトしているか
