@@ -27,14 +27,7 @@ class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // 利用規約に同意する必要があるかどうか
-        if viewModel.isTermsOfServiceAgreementNeeded() {
-            let vc = R.storyboard.agreement.agreementViewController()!
-            present(vc, animated: false, completion: nil)
-            return
-        }
-        
+                
         // ログイン処理
         viewModel.updateLoginFlag(type: .loginStart)
         stateLabel.text = "自動ログイン中"
@@ -110,10 +103,10 @@ extension SplashViewController: WKNavigationDelegate {
         
         // ログインが完了しているか
         if viewModel.isLoginCompletedForURL(url.absoluteString) {
-            //            viewModel.updateLoginFlag(type: .loginSuccess)
-            //
-            //            let vc = R.storyboard.main.mainViewController()!
-            //            present(vc, animated: false, completion: nil)
+            viewModel.updateLoginFlag(type: .loginSuccess)
+            
+            let vc = R.storyboard.main.mainViewController()!
+            present(vc, animated: false, completion: nil)
         }
         
         // ログインに失敗しているか
