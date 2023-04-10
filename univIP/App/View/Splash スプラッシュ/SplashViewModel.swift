@@ -83,9 +83,11 @@ class SplashViewModel {
         let check1 = urlStr.contains(Url.skipReminder.string())
         let check2 = urlStr.contains(Url.courseManagementPC.string())
         let check3 = urlStr.contains(Url.courseManagementMobile.string())
-        // 上記から1つでもtrueがあれば、result = true
-        let result = check1 || check2 || check3
+        let check4 = urlStr.contains("https://eweb.stud.tokushima-u.ac.jp/Shibboleth.sso/SAML2/POST")
         
+        // 上記から1つでもtrueがあれば、result = true
+        let result = check1 || check2 || check3 || check4
+
         return (dataManager.loginState.isProgress && result)
     }
     

@@ -36,14 +36,19 @@ class SplashViewController: UIViewController {
         
         viewModel.getPRItems()
         
+        // パスワードを登録しているか
+        if viewModel.isPasswordRegistered() == false {
+            viewModel.updateLoginFlag(type: .notStart)
+            
+            let vc = R.storyboard.main.mainViewController()!
+            present(vc, animated: false, completion: nil)
+        }
         
         // ログイン中が一定経過すると自動ログイン失敗と処理する。
         let workItem = DispatchWorkItem {
-            if self.dataManager.loginState.isProgress {
-                self.viewModel.updateLoginFlag(type: .loginFailure)
-                let vc = R.storyboard.main.mainViewController()!
-                self.present(vc, animated: false, completion: nil)
-            }
+            self.viewModel.updateLoginFlag(type: .loginFailure)
+            let vc = R.storyboard.main.mainViewController()!
+            self.present(vc, animated: false, completion: nil)
         }
         // 9秒後にworkItemを実行する
         DispatchQueue.main.asyncAfter(deadline: .now() + 9.0, execute: workItem)
@@ -83,16 +88,6 @@ extension SplashViewController: WKNavigationDelegate {
             return
         }
         
-        // パスワードを登録しているか
-        if viewModel.isPasswordRegistered() == false {
-            viewModel.updateLoginFlag(type: .notStart)
-            
-            let vc = R.storyboard.main.mainViewController()!
-            present(vc, animated: false, completion: nil)
-            decisionHandler(.cancel)
-            return
-        }
-        
         // タイムアウトしているか
         if viewModel.isTimeoutOccurredForURL(urlStr: url.absoluteString) {
             viewModel.updateLoginFlag(type: .loginStart)
@@ -107,6 +102,11 @@ extension SplashViewController: WKNavigationDelegate {
             
             let vc = R.storyboard.main.mainViewController()!
             present(vc, animated: false, completion: nil)
+        }else{
+            print(dataManager.loginState.completed)
+            print(dataManager.loginState.isProgress)
+            print(dataManager.loginState.completeImmediately)
+            print("---")
         }
         
         // ログインに失敗しているか

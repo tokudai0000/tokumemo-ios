@@ -40,7 +40,9 @@ final class AgreementViewController: UIViewController {
     @IBAction func agreementButton(_ sender: Any) {
         // アプリ内に表示していた利用規約のバージョンを保存する。
         dataManager.agreementVersion = ConstStruct.latestTermsVersion
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        let vc = R.storyboard.splash.instantiateInitialViewController()!
+        present(vc, animated: false)
     }
     
     @IBAction func termsButton(_ sender: Any) {
