@@ -19,18 +19,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <wkWebView hidden="YES" contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhg-Di-ZNi">
-                                <rect key="frame" x="196.66666666666666" y="426" width="0.0" height="0.0"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" id="LjL-by-wfa"/>
-                                    <constraint firstAttribute="width" id="YIY-yM-gc0"/>
-                                </constraints>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t3x-iZ-niV" userLabel="Top View">
                                 <rect key="frame" x="12" y="69.000000000000014" width="369" height="173.33333333333337"/>
                                 <subviews>
@@ -203,9 +191,7 @@
                             <constraint firstItem="t3x-iZ-niV" firstAttribute="top" secondItem="mUR-4y-9mi" secondAttribute="top" constant="10" id="Rj2-Dl-HWc"/>
                             <constraint firstItem="t3x-iZ-niV" firstAttribute="trailing" secondItem="mUR-4y-9mi" secondAttribute="trailing" constant="-12" id="RnY-jo-AuQ"/>
                             <constraint firstItem="mUR-4y-9mi" firstAttribute="trailing" secondItem="JKS-4Y-lAY" secondAttribute="trailing" constant="26" id="cNk-j9-Fob"/>
-                            <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerY" secondItem="L9B-g3-Oj6" secondAttribute="centerY" id="gl5-kj-IFT"/>
                             <constraint firstItem="t3x-iZ-niV" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="12" id="gpy-PE-vsH"/>
-                            <constraint firstItem="Yhg-Di-ZNi" firstAttribute="centerX" secondItem="L9B-g3-Oj6" secondAttribute="centerX" id="imQ-Us-4r2"/>
                             <constraint firstItem="JKS-4Y-lAY" firstAttribute="leading" secondItem="mUR-4y-9mi" secondAttribute="leading" constant="26" id="mbG-j8-gik"/>
                         </constraints>
                     </view>
@@ -219,7 +205,6 @@
                         <outlet property="weatherIconImageView" destination="HJ5-Ek-c3Y" id="jzF-PC-D0S"/>
                         <outlet property="weatherLabel" destination="mC2-io-c4P" id="AOQ-o4-Kk2"/>
                         <outlet property="weatherView" destination="BXK-Ui-WVR" id="52q-0k-QTz"/>
-                        <outlet property="webViewForLogin" destination="Yhg-Di-ZNi" id="lAj-E7-7Mv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
