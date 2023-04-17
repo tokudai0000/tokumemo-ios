@@ -56,34 +56,19 @@ final class HomeViewController: UIViewController {
             
             DispatchQueue.main.async {
                 switch state {
-                case .weatherBusy: // 通信中
+                case .busy: // 通信中
                     break
                     
-                case .weatherReady: // 通信完了
+                case .ready: // 通信完了
                     self.weatherLabel.text = self.viewModel.weatherData.description
                     self.temperatureLabel.text = self.viewModel.weatherData.feelsLike
                     self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherData.iconUrlStr)
                     break
                     
-                case .weatherError: // 通信失敗
+                case .error: // 通信失敗
                     self.weatherLabel.text = "取得エラー"
                     self.temperatureLabel.text = ""
                     self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
-                    break
-                    
-                case .prBusy:
-                    break
-                    
-                case .prReady:
-                    guard let num = self.viewModel.displayPRImagesNumber,
-                          let image = self.viewModel.prItems[num].imageURL else {
-                        return
-                    }
-                    // 広告画像の表示
-                    self.prImageView.loadCacheImage(urlStr: image)
-                    break
-                    
-                case .prError:
                     break
                 }
             }
@@ -96,7 +81,7 @@ final class HomeViewController: UIViewController {
                         
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
-        viewModel.getPRItems()
+//        viewModel.getPRItems()
         viewModel.getWether()
         
         var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
@@ -193,7 +178,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
         
         // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
-        if viewModel.hasRegisteredPassword() == false , cell.isLockIconExists {
+        if dataManager.loginState.completed == false , cell.isLockIconExists {
             toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
             return
         }
