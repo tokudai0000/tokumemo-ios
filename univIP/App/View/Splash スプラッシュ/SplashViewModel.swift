@@ -14,7 +14,6 @@ class SplashViewModel {
     public let dataManager = DataManager.singleton
     public let apiManager = ApiManager.singleton
     
-    public var prItems:[PublicRelations] = []
     public var displayedPRImage: PublicRelations?
     public var weatherData:Weather?
     
@@ -39,7 +38,7 @@ class SplashViewModel {
     
     /// GitHubからPRの情報を取ってくる
     public func getPRItems() {
-        prItems.removeAll()
+        dataManager.prItems.removeAll()
         self.state?(.busy) // 開始
         
         apiManager.request(Url.prItemJsonData.string(),
@@ -57,7 +56,7 @@ class SplashViewModel {
                                              tappedURL: response["items"][i]["tappedURL"].string,
                                              organization_name: response["items"][i]["organization_name"].string,
                                              description: response["items"][i]["description"].string)
-                self.prItems.append(prItem)
+                self.dataManager.prItems.append(prItem)
             }
             self.state?(.ready) // 終了
             

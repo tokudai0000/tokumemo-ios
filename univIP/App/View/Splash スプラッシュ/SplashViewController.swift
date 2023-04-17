@@ -15,9 +15,9 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var viewActivityIndicator: UIActivityIndicatorView!
     
-    let viewModel = SplashViewModel()
-    let dataManager = DataManager.singleton
-    var timer: Timer?
+    private let viewModel = SplashViewModel()
+    private let dataManager = DataManager.singleton
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()

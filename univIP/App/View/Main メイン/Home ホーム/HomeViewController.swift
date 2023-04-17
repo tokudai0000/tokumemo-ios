@@ -95,7 +95,7 @@ final class HomeViewController: UIViewController {
                                        repeats: true,
                                        block: { (timer) in
             guard let num = self.viewModel.selectPRImageNumber(),
-                  let image = self.viewModel.prItems[num].imageURL else {
+                  let image = self.dataManager.prItems[num].imageURL else {
                 return
             }
             self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
@@ -130,9 +130,9 @@ final class HomeViewController: UIViewController {
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
         guard let num = viewModel.displayPRImagesNumber,
-              let image = viewModel.prItems[num].imageURL,
-              let txt = viewModel.prItems[num].introduction,
-              let url = viewModel.prItems[num].tappedURL else {
+              let image = dataManager.prItems[num].imageURL,
+              let txt = dataManager.prItems[num].introduction,
+              let url = dataManager.prItems[num].tappedURL else {
             return
         }
         let vc = R.storyboard.pR.prViewController()!
@@ -176,13 +176,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = viewModel.menuLists[indexPath.row]
         
         Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
-        
-        // パスワード未登録、ロック画像ありのアイコン(ログインが必要)を押した場合
-        if dataManager.loginState.completed == false , cell.isLockIconExists {
-            toast(message: "Settings -> パスワード設定から自動ログイン機能をONにしましょう")
-            return
-        }
-        
+                
         // 今年の成績だけ変化する為、保持する
         var loadUrlString = cell.url
         

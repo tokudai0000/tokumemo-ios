@@ -27,7 +27,6 @@ class HomeViewModel {
         public var organization_name:String?
         public var description:String?
     }
-    public var prItems:[PublicRelations] = []
     public var displayPRImagesNumber: Int? // 表示している広告がadItemsに入っている配列番号
     
     struct Weather {
@@ -94,15 +93,16 @@ class HomeViewModel {
 //    }
     
     public func selectPRImageNumber() -> Int? {
+        let items = dataManager.prItems
         // 広告数が0か1の場合はローテーションする必要がない
-        if prItems.count == 0 {
+        if items.count == 0 {
             return nil
-        } else if prItems.count == 1 {
+        } else if items.count == 1 {
             return 0
         }
         
         while true {
-            let randomNum = Int.random(in: 0..<prItems.count)
+            let randomNum = Int.random(in: 0..<items.count)
             // 前回の画像表示番号と同じであれば、再度繰り返す
             if randomNum != displayPRImagesNumber {
                 return randomNum
