@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
-		1A16243629DEE55E00D7D1EC /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A16243529DEE55E00D7D1EC /* Splash.storyboard */; };
-		1A16243829DEE57E00D7D1EC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A16243729DEE57E00D7D1EC /* SplashViewController.swift */; };
 		1A1709B8293F95D6005B4CE8 /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1709B7293F95D5005B4CE8 /* MenuList.swift */; };
 		1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */; };
 		1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */; };
@@ -21,7 +19,6 @@
 		1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0AF28F6D7BC00C4012E /* Web.storyboard */; };
 		1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B128F6ED2E00C4012E /* UIImage.swift */; };
 		1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BA28F9C14200C4012E /* SettingViewController.swift */; };
-		1A3751B229FC1D4400ACB23E /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A3751B129FC1D4400ACB23E /* Splash.storyboard */; };
 		1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A384F9728FD794200A1F52E /* WebViewModel.swift */; };
 		1A3A75FA2916792600069818 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* ApiManager.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
@@ -32,7 +29,6 @@
 		1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C12938CA9F003906DB /* MenuViewModel.swift */; };
 		1A5698C52938CE0F003906DB /* CustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C42938CE0F003906DB /* CustomizeViewController.swift */; };
 		1A5698C72938CE18003906DB /* Customize.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698C62938CE18003906DB /* Customize.storyboard */; };
-		1A58087429DF122C00B24F40 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58087329DF122C00B24F40 /* SplashViewModel.swift */; };
 		1A58087629E2ECE100B24F40 /* PublicRelations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58087529E2ECE100B24F40 /* PublicRelations.swift */; };
 		1A58087829E2EE4D00B24F40 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58087729E2EE4D00B24F40 /* Weather.swift */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
@@ -93,8 +89,6 @@
 
 /* Begin PBXFileReference section */
 		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
-		1A16243529DEE55E00D7D1EC /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
-		1A16243729DEE57E00D7D1EC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1A1709B7293F95D5005B4CE8 /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
 		1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,7 +100,6 @@
 		1A30D0AF28F6D7BC00C4012E /* Web.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Web.storyboard; sourceTree = "<group>"; };
 		1A30D0B128F6ED2E00C4012E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		1A30D0BA28F9C14200C4012E /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		1A3751B129FC1D4400ACB23E /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Splash.storyboard; path = "univIP/App/View/Splash スプラッシュ/Splash.storyboard"; sourceTree = SOURCE_ROOT; };
 		1A384F9728FD794200A1F52E /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		1A3A75F92916792600069818 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
@@ -117,7 +110,6 @@
 		1A5698C12938CA9F003906DB /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		1A5698C42938CE0F003906DB /* CustomizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizeViewController.swift; sourceTree = "<group>"; };
 		1A5698C62938CE18003906DB /* Customize.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Customize.storyboard; sourceTree = "<group>"; };
-		1A58087329DF122C00B24F40 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		1A58087529E2ECE100B24F40 /* PublicRelations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicRelations.swift; sourceTree = "<group>"; };
 		1A58087729E2EE4D00B24F40 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
@@ -200,18 +192,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */ = {
-			isa = PBXGroup;
-			children = (
-				1A58087329DF122C00B24F40 /* SplashViewModel.swift */,
-				1A16243729DEE57E00D7D1EC /* SplashViewController.swift */,
-				1A3751B129FC1D4400ACB23E /* Splash.storyboard */,
-				1A16243529DEE55E00D7D1EC /* Splash.storyboard */,
-			);
-			name = "Splash スプラッシュ";
-			path = "Splash スプラッシュ";
-			sourceTree = "<group>";
-		};
 		1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,7 +394,6 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1A19730C27C4BCA700F36FE7 /* Splash スプラッシュ */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
 				1ABE8BB827B10402001EEA79 /* Main メイン */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
@@ -652,8 +631,6 @@
 				1A6C51B42904ECCA00A3E85A /* ClubList.storyboard in Resources */,
 				1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */,
 				1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */,
-				1A16243629DEE55E00D7D1EC /* Splash.storyboard in Resources */,
-				1A3751B229FC1D4400ACB23E /* Splash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -816,13 +793,11 @@
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */,
-				1A58087429DF122C00B24F40 /* SplashViewModel.swift in Sources */,
 				1AC1332D294C2D4D00E3DC16 /* PRViewController.swift in Sources */,
 				1A3A75FA2916792600069818 /* ApiManager.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
 				1A30D0A928F5BFB500C4012E /* HomeCollectionCell.swift in Sources */,
 				1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */,
-				1A16243829DEE57E00D7D1EC /* SplashViewController.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */,
