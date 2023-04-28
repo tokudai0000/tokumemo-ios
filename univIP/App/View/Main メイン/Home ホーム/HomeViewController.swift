@@ -40,8 +40,6 @@ final class HomeViewController: UIViewController {
         
         layoutInitSetting()
         apiCommunicatingInitSetting()
-        viewModel.getPRItems()
-        viewModel.getWether()
         
         #if STUB
 //        dataManager.agreementVersion = ""   // 利用規約同意画面を出現させたい場合
@@ -64,6 +62,9 @@ final class HomeViewController: UIViewController {
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
         adImagesRotationTimerON()
+        
+        viewModel.getPRItems()
+        viewModel.getWether()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
