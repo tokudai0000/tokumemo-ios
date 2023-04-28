@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,12 +24,23 @@
                                     <constraint firstAttribute="height" constant="175" id="i3C-wz-kjg"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9Z-dL-0Ks">
+                                <rect key="frame" x="-16253" y="717.5" width="32920" height="61"/>
+                                <string key="text">Developed by Tokushima Univ  students
+
+GitHub: @tokudai0000</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="k9B-W9-Cfq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="TNz-lk-CaT"/>
                             <constraint firstItem="k9B-W9-Cfq" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="bbv-0H-VL0"/>
+                            <constraint firstItem="K9Z-dL-0Ks" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="300" id="nte-60-u9a"/>
+                            <constraint firstItem="K9Z-dL-0Ks" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="sAV-vF-NkT"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,6 +50,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="memokichi" width="566" height="566"/>
+        <image name="memokichi" width="283" height="283"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
