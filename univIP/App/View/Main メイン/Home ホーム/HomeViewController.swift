@@ -73,7 +73,6 @@ final class HomeViewController: UIViewController {
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
         viewModel.getPRItems()
-//        viewModel.getWether()
         
         var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
         
@@ -154,7 +153,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let collectionList = viewModel.menuLists[indexPath.row]//viewModel.collectionLists[indexPath.row]
         
         let title = collectionList.title
-        var icon = collectionList.image // fatalError
+        let icon = collectionList.image // fatalError
         
         cell.setupCell(title: title, image: icon)
         return cell
