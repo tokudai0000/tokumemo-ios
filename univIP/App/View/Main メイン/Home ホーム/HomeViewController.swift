@@ -286,7 +286,7 @@ extension HomeViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-        guard let url = navigationAction.request.url else {
+        guard let _ = navigationAction.request.url else {
             AKLog(level: .FATAL, message: "読み込み前のURLがnil")
             decisionHandler(.cancel)
             return
@@ -307,9 +307,7 @@ extension HomeViewController: WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-            
-            // フラグ管理
-//            viewModel.updateLoginFlag(type: .executedJavaScript)
+            dataManager.canExecuteJavascript = false
             return
         }
     }
