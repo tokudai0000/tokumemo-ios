@@ -57,15 +57,10 @@ final class HomeViewController: UIViewController {
                     break
                     
                 case .ready: // 通信完了
-                    self.weatherLabel.text = self.viewModel.weatherData.description
-                    self.temperatureLabel.text = self.viewModel.weatherData.feelsLike
-                    self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherData.iconUrlStr)
+                    self.displayPRImage()
                     break
                     
                 case .error: // 通信失敗
-                    self.weatherLabel.text = "取得エラー"
-                    self.temperatureLabel.text = ""
-                    self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
                     break
                 }
             }
@@ -83,19 +78,14 @@ final class HomeViewController: UIViewController {
         var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
         
         #if STUB
-        TIME_INTERVAL = 2.0
+        TIME_INTERVAL = 100.0
         #endif
         
         // TIME_INTERVAL秒毎に処理を実行する
         adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
                                        repeats: true,
                                        block: { (timer) in
-            guard let num = self.viewModel.selectPRImageNumber(),
-                  let image = self.viewModel.prItems[num].imageURL else {
-                return
-            }
-            self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
-            self.prImageView.loadCacheImage(urlStr: image) // 広告画像の表示
+            self.displayPRImage()
         })
     }
     
@@ -136,6 +126,15 @@ final class HomeViewController: UIViewController {
         vc.introductionText = txt
         vc.urlStr = url
         present(vc, animated: true, completion: nil)
+    }
+    
+    private func displayPRImage() {
+        guard let num = self.viewModel.selectPRImageNumber(),
+              let image = self.viewModel.prItems[num].imageURL else {
+            return
+        }
+        self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
+        self.prImageView.loadCacheImage(urlStr: image) // 広告画像の表示
     }
 }
 

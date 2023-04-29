@@ -64,6 +64,8 @@ class HomeViewModel {
     }
     
     public func getPRItems() {
+        state?(.busy) // 通信開始（通信中）
+        
         prItems.removeAll()
 
         let urlStr = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
@@ -86,11 +88,11 @@ class HomeViewModel {
                                            description: item["description"].string)
                 self.prItems.append(prItem)
             }
-//            self.state?(.prReady) // 通信完了
+            self.state?(.ready) // 通信完了
 
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-//            self?.state?(.prError) // エラー表示
+            self?.state?(.error) // エラー表示
         })
     }
     
@@ -111,45 +113,45 @@ class HomeViewModel {
         }
     }
     
-    // OpenWeatherMapのAPIから天気情報を取得
-    public func getWether() {
-        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
-        let longitude = "134.5615651" // 経度
-        let apiKey = loadPlist(path: "key", key: "openWeatherMapAPIKey")
-        let parameter = "?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
-        let urlStr = Url.weatherItemJsonData.string() + "lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
-        
-        state?(.busy) // 通信開始（通信中）
-        apiManager.request(urlStr,
-                           success: { [weak self] (response) in
-            
-            guard let self = self else { // HomeViewModelのself
-                AKLog(level: .FATAL, message: "[self] FatalError")
-                fatalError()
-            }
-            
-            // 天気の様子が返ってくる 例: 曇
-            self.weatherData.description = response["weather"][0]["description"].string ?? "Error"
-            
-            // 気温がdoubleの形で返ってくる　例: 21.52
-            if let temp = response["main"]["temp"].double {
-                // 215.2を四捨五入 => 215 , 215/10 = 21.5
-                let num = round(temp * 10) / 10
-                self.weatherData.feelsLike = String(num) + "℃" // 例: "21.5℃"
-            }
-            
-            // 天気を表すアイコンコードが返ってくる 例 "02d"
-            if let iconCode = response["weather"][0]["icon"].string {
-                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
-                self.weatherData.iconUrlStr = urlStr
-            }
-            self.state?(.ready) // 通信完了
-            
-        }, failure: { [weak self] (error) in
-            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.error) // エラー表示
-        })
-    }
+//    // OpenWeatherMapのAPIから天気情報を取得
+//    public func getWether() {
+//        let latitude = "34.0778755" // 緯度 (徳島大学の座標)
+//        let longitude = "134.5615651" // 経度
+//        let apiKey = loadPlist(path: "key", key: "openWeatherMapAPIKey")
+//        let parameter = "?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
+//        let urlStr = Url.weatherItemJsonData.string() + "lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&lang=ja&units=metric"
+//
+//        state?(.busy) // 通信開始（通信中）
+//        apiManager.request(urlStr,
+//                           success: { [weak self] (response) in
+//
+//            guard let self = self else { // HomeViewModelのself
+//                AKLog(level: .FATAL, message: "[self] FatalError")
+//                fatalError()
+//            }
+//
+//            // 天気の様子が返ってくる 例: 曇
+//            self.weatherData.description = response["weather"][0]["description"].string ?? "Error"
+//
+//            // 気温がdoubleの形で返ってくる　例: 21.52
+//            if let temp = response["main"]["temp"].double {
+//                // 215.2を四捨五入 => 215 , 215/10 = 21.5
+//                let num = round(temp * 10) / 10
+//                self.weatherData.feelsLike = String(num) + "℃" // 例: "21.5℃"
+//            }
+//
+//            // 天気を表すアイコンコードが返ってくる 例 "02d"
+//            if let iconCode = response["weather"][0]["icon"].string {
+//                let urlStr = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
+//                self.weatherData.iconUrlStr = urlStr
+//            }
+//            self.state?(.ready) // 通信完了
+//
+//        }, failure: { [weak self] (error) in
+//            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+//            self?.state?(.error) // エラー表示
+//        })
+//    }
         
 
     
