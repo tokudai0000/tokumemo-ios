@@ -133,7 +133,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="studentCardButton:" destination="l6Y-J6-Sft" eventType="touchUpInside" id="roW-zT-Kzj"/>
+                                                    <action selector="contactUsButton:" destination="l6Y-J6-Sft" eventType="touchUpInside" id="A4x-LH-cpB"/>
                                                 </connections>
                                             </button>
                                         </subviews>
