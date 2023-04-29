@@ -24,8 +24,8 @@ enum Url: String {
     /// マナバ(Mobile)
     case manabaMobile = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     
-    /// 講義時間割
-    case timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
+    /// 講義時間割 旧:https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx
+    case timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/Schedule/Day.aspx"
     /// 今期の成績表
     case currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
     /// 成績選択画面
