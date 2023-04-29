@@ -77,7 +77,7 @@ final class HomeViewController: UIViewController {
                         
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
-//        viewModel.getPRItems()
+        viewModel.getPRItems()
 //        viewModel.getWether()
         
         var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
@@ -91,7 +91,7 @@ final class HomeViewController: UIViewController {
                                        repeats: true,
                                        block: { (timer) in
             guard let num = self.viewModel.selectPRImageNumber(),
-                  let image = self.dataManager.prItems[num].imageURL else {
+                  let image = self.viewModel.prItems[num].imageURL else {
                 return
             }
             self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
@@ -126,9 +126,9 @@ final class HomeViewController: UIViewController {
     
     @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
         guard let num = viewModel.displayPRImagesNumber,
-              let image = dataManager.prItems[num].imageURL,
-              let txt = dataManager.prItems[num].introduction,
-              let url = dataManager.prItems[num].tappedURL else {
+              let image = viewModel.prItems[num].imageURL,
+              let txt = viewModel.prItems[num].introduction,
+              let url = viewModel.prItems[num].tappedURL else {
             return
         }
         let vc = R.storyboard.pR.prViewController()!

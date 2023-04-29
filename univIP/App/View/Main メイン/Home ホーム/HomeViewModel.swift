@@ -17,6 +17,8 @@ class HomeViewModel {
     public let dataManager = DataManager.singleton
     // API マネージャ
     public let apiManager = ApiManager.singleton
+    
+    public var prItems: [PublicRelations] = []
 
     //MARK: - MODEL モデル
     // 宣伝のURL
@@ -61,48 +63,47 @@ class HomeViewModel {
         }
     }
     
-//    public func getPRItems() {
-//        prItems.removeAll()
-//
-//        let urlStr = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
-//
-//        apiManager.request(urlStr,
-//                           success: { [weak self] (response) in
-//
-//            guard let self = self else { // HomeViewModelのself
-//                AKLog(level: .FATAL, message: "[self] FatalError")
-//                fatalError()
-//            }
-//            let itemCounts = response["itemCounts"].int ?? 0
-//
-//            for i in 0 ..< itemCounts {
-//                let item = response["items"][i]
-//                let prItem = PublicRelations(imageURL: item["imageURL"].string,
-//                                           introduction: item["introduction"].string,
-//                                           tappedURL: item["tappedURL"].string,
-//                                           organization_name: item["organization_name"].string,
-//                                           description: item["description"].string)
-//                self.prItems.append(prItem)
-//            }
-////            self.state?(.prReady) // 通信完了
-//
-//        }, failure: { [weak self] (error) in
-//            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-////            self?.state?(.prError) // エラー表示
-//        })
-//    }
+    public func getPRItems() {
+        prItems.removeAll()
+
+        let urlStr = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
+
+        apiManager.request(urlStr,
+                           success: { [weak self] (response) in
+
+            guard let self = self else { // HomeViewModelのself
+                AKLog(level: .FATAL, message: "[self] FatalError")
+                fatalError()
+            }
+            let itemCounts = response["itemCounts"].int ?? 0
+
+            for i in 0 ..< itemCounts {
+                let item = response["items"][i]
+                let prItem = PublicRelations(imageURL: item["imageURL"].string,
+                                           introduction: item["introduction"].string,
+                                           tappedURL: item["tappedURL"].string,
+                                           organization_name: item["organization_name"].string,
+                                           description: item["description"].string)
+                self.prItems.append(prItem)
+            }
+//            self.state?(.prReady) // 通信完了
+
+        }, failure: { [weak self] (error) in
+            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+//            self?.state?(.prError) // エラー表示
+        })
+    }
     
     public func selectPRImageNumber() -> Int? {
-        let items = dataManager.prItems
         // 広告数が0か1の場合はローテーションする必要がない
-        if items.count == 0 {
+        if prItems.count == 0 {
             return nil
-        } else if items.count == 1 {
+        } else if prItems.count == 1 {
             return 0
         }
         
         while true {
-            let randomNum = Int.random(in: 0..<items.count)
+            let randomNum = Int.random(in: 0..<prItems.count)
             // 前回の画像表示番号と同じであれば、再度繰り返す
             if randomNum != displayPRImagesNumber {
                 return randomNum

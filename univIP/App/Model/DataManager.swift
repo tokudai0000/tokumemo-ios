@@ -17,8 +17,6 @@ final class DataManager {
     public var syllabusTeacherName = ""
     public var syllabusSubjectName = ""
     
-    public var prItems:[PublicRelations] = []
-    
     public var shouldRelogin = true
     struct LoginState {
         public var isProgress = false          // 進行中
