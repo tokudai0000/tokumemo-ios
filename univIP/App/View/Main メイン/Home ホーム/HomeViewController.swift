@@ -48,12 +48,9 @@ final class HomeViewController: UIViewController {
         let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:)))
         collectionView.addGestureRecognizer(longTapGesture)
         
-        
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
-            
             guard let self = self else { fatalError() }
-            
             DispatchQueue.main.async {
                 switch state {
                 case .busy: // 通信中
@@ -73,7 +70,6 @@ final class HomeViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,7 +78,7 @@ final class HomeViewController: UIViewController {
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
 //        viewModel.getPRItems()
-        viewModel.getWether()
+//        viewModel.getWether()
         
         var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
         
@@ -160,11 +156,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let title = collectionList.title
         var icon = collectionList.image // fatalError
-        
-        // ログインが完了していないユーザーには鍵アイコンを表示(上書きする)
-        if dataManager.loginState.completed == false, collectionList.isLockIconExists {
-            icon = R.image.menuIcon.lock.name
-        }
         
         cell.setupCell(title: title, image: icon)
         return cell
