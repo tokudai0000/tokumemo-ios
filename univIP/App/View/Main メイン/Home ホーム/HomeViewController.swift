@@ -78,7 +78,7 @@ final class HomeViewController: UIViewController {
         var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
         
         #if STUB
-        TIME_INTERVAL = 100.0
+        TIME_INTERVAL = 2.0
         #endif
         
         // TIME_INTERVAL秒毎に処理を実行する
