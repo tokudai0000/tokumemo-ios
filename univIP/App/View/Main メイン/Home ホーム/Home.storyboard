@@ -38,12 +38,24 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
+                                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="svY-tv-sPp">
+                                                <rect key="frame" x="0.0" y="0.0" width="245" height="173.33333333333334"/>
+                                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <wkWebViewConfiguration key="configuration">
+                                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                                    <wkPreferences key="preferences"/>
+                                                </wkWebViewConfiguration>
+                                            </wkWebView>
                                         </subviews>
                                         <color key="backgroundColor" name="SubColor"/>
                                         <constraints>
                                             <constraint firstItem="v5T-GU-n4N" firstAttribute="top" secondItem="NP9-XI-xKL" secondAttribute="top" id="2su-za-mZn"/>
+                                            <constraint firstItem="svY-tv-sPp" firstAttribute="leading" secondItem="NP9-XI-xKL" secondAttribute="leading" id="4Km-ah-Jof"/>
+                                            <constraint firstItem="svY-tv-sPp" firstAttribute="top" secondItem="NP9-XI-xKL" secondAttribute="top" id="N9P-sA-NkI"/>
+                                            <constraint firstAttribute="bottom" secondItem="svY-tv-sPp" secondAttribute="bottom" id="Q1h-by-Zjk"/>
                                             <constraint firstAttribute="width" secondItem="NP9-XI-xKL" secondAttribute="height" multiplier="1.414:1" id="SPl-4o-h7z"/>
                                             <constraint firstAttribute="trailing" secondItem="v5T-GU-n4N" secondAttribute="trailing" id="X2n-9r-Kij"/>
+                                            <constraint firstAttribute="trailing" secondItem="svY-tv-sPp" secondAttribute="trailing" id="d3r-GU-cbB"/>
                                             <constraint firstItem="v5T-GU-n4N" firstAttribute="leading" secondItem="NP9-XI-xKL" secondAttribute="leading" id="mZt-C2-IVo"/>
                                             <constraint firstAttribute="bottom" secondItem="v5T-GU-n4N" secondAttribute="bottom" id="oHe-Hv-rHT"/>
                                         </constraints>
@@ -205,6 +217,7 @@
                         <outlet property="weatherIconImageView" destination="HJ5-Ek-c3Y" id="jzF-PC-D0S"/>
                         <outlet property="weatherLabel" destination="mC2-io-c4P" id="AOQ-o4-Kk2"/>
                         <outlet property="weatherView" destination="BXK-Ui-WVR" id="52q-0k-QTz"/>
+                        <outlet property="webViewForLogin" destination="svY-tv-sPp" id="Eou-75-eAl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hH1-11-DDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -21,6 +21,7 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var webViewForLogin: WKWebView!
     
     private let viewModel = HomeViewModel()
     private let dataManager = DataManager.singleton
@@ -48,6 +49,13 @@ final class HomeViewController: UIViewController {
         let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:)))
         collectionView.addGestureRecognizer(longTapGesture)
         
+        // webView
+        webViewForLogin.navigationDelegate = self
+        webViewForLogin.isHidden = true
+        #if STUB
+//        webViewForLogin.isHidden = false
+        #endif
+        
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
             guard let self = self else { fatalError() }
@@ -71,6 +79,9 @@ final class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
                         
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
+        
+        dataManager.canExecuteJavascript = true
+        webViewForLogin.load(Url.universityTransitionLogin.urlRequest())
         
         viewModel.getPRItems()
         
@@ -265,6 +276,42 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         alert.addAction(alertAction)
         alert.addAction(alertAction2)
         present(alert, animated: true, completion:nil)
+    }
+}
+
+// MARK: - WebView
+extension HomeViewController: WKNavigationDelegate {
+    /// 読み込み設定（リクエスト前）
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let url = navigationAction.request.url else {
+            AKLog(level: .FATAL, message: "読み込み前のURLがnil")
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
+        return
+    }
+    
+    /// 読み込み完了
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        let url = self.webViewForLogin.url! // fatalError
+        AKLog(level: .DEBUG, message: url.absoluteString)
+        
+        // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
+        if viewModel.canExecuteJS(url.absoluteString) {
+            // 徳島大学　統合認証システムサイト(ログインサイト)に自動ログインを行う。JavaScriptInjection
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            
+            // フラグ管理
+//            viewModel.updateLoginFlag(type: .executedJavaScript)
+            return
+        }
     }
 }
 

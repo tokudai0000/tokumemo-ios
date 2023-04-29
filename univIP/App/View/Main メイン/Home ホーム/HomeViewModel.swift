@@ -224,6 +224,20 @@ class HomeViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
+    /// JavaScriptを動かしたい指定のURLか判定
+    public func canExecuteJS(_ urlString: String) -> Bool {
+        // JavaScriptを実行するフラグ
+        if dataManager.canExecuteJavascript == false { return false }
+        
+        // cアカウント、パスワードの登録確認
+        if dataManager.cAccount.isEmpty || dataManager.password.isEmpty { return false }
+        
+        // 大学統合認証システム(IAS)のログイン画面の判定
+        if urlString.contains(Url.universityLogin.string()) { return true }
+        
+        // それ以外なら
+        return false
+    }
 
     // MARK: - Private func
     /// plistを読み込み
