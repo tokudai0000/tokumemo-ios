@@ -38,8 +38,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        // 利用規約に同意する必要があるかどうか
+        if DataManager.singleton.agreementVersion == ConstStruct.latestTermsVersion {
+//            let vc = R.storyboard.splash.instantiateInitialViewController()!
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
+        }else{
+            let vc = R.storyboard.agreement.agreementViewController()!
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -49,5 +57,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
+    func showLaunchScreen() {
+        // Launch画面のStoryboardを取得
+        let launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        
+        // Launch画面のViewControllerを取得
+        if let launchViewController = launchStoryboard.instantiateInitialViewController() {
+            
+            // Launch画面を現在のウィンドウに追加
+            self.window?.rootViewController?.view.addSubview(launchViewController.view)
+            
+            // 1秒後にLaunch画面を削除する
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                launchViewController.view.removeFromSuperview()
+            }
+        }
+    }
 }
 

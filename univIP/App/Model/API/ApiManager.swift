@@ -8,6 +8,7 @@
 import Foundation
 import Network
 import Alamofire
+import SwiftyJSON
 
 /// 通信タイムアウト時間　（方式設計指定値  リクエスト:30s　レスポンス:60s）
 let API_TIMEOUT: TimeInterval = 10.0
@@ -96,5 +97,26 @@ class ApiManager: NSObject {
         }
         let queue = DispatchQueue(label: "com.akidon0000.queue")
         monitor.start(queue: queue)
+    }
+}
+
+extension ApiManager {
+    public func request(_ urlStr: String,
+                        success: @escaping (_ response: JSON) -> (),
+                        failure: @escaping (_ error: ApiError) -> ()) {
+        
+        AKLog(level: .DEBUG, message: "\(urlStr)")
+        
+        manager.session.configuration.timeoutIntervalForRequest = API_TIMEOUT // リクエスト開始まで
+        manager.session.configuration.timeoutIntervalForResource = API_RESPONSE_TIMEOUT // リクエスト開始からレスポンス終了まで
+        
+        manager.request(urlStr).responseJSON { response in
+            guard let object = response.result.value else {
+                failure(ApiError.none)
+                return
+            }
+            success(JSON(object))
+            return
+        }
     }
 }

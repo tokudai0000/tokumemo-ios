@@ -16,55 +16,87 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var prContainerView: UIView!
     @IBOutlet weak var prImageView: UIImageView!
     
-    // 自動ログインをメイン画面(Home画面)中に完了させるために、サイズ0で表示はされないが読み込みや通信は行なっている。
-    @IBOutlet weak var webViewForLogin: WKWebView!
     @IBOutlet weak var weatherView: UIStackView!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var webViewForLogin: WKWebView!
     
-    // extensionで別ファイルから呼び出し
-    let viewModel = HomeViewModel()
-    let dataManager = DataManager.singleton
-    var loginGrayBackGroundView: UIView! // ログイン中のグレー背景
-    var viewActivityIndicator: UIActivityIndicatorView! // ログイン中のクルクル
+    private let viewModel = HomeViewModel()
+    private let dataManager = DataManager.singleton
+    private var adTimer = Timer()
+    
+    private var toastView:UIView?
+    private var toastShowFrame:CGRect = .zero
+    private var toastHideFrame:CGRect = .zero
+    private var toastInterval:TimeInterval = 3.0
+    
     
     // MARK: - Override
-    // キーボード非表示
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        layoutInitSetting()
-        apiCommunicatingInitSetting()
+        // adImageView
+        prImageView.isUserInteractionEnabled = true // タップ無効
+        prImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
         
+        // collectionView
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
+        collectionView.collectionViewLayout = layout
+        collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
+        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:)))
+        collectionView.addGestureRecognizer(longTapGesture)
+        
+        // webView
+        webViewForLogin.navigationDelegate = self
+        webViewForLogin.isHidden = true
         #if STUB
-//        dataManager.agreementVersion = ""   // 利用規約同意画面を出現させたい場合
+//        webViewForLogin.isHidden = false
         #endif
+        
+        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else { fatalError() }
+            DispatchQueue.main.async {
+                switch state {
+                case .busy: // 通信中
+                    break
+                    
+                case .ready: // 通信完了
+                    self.displayPRImage()
+                    break
+                    
+                case .error: // 通信失敗
+                    break
+                }
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if viewModel.shouldShowTermsAgreementView() {
-            let vc = R.storyboard.agreement.agreementViewController()!
-            present(vc, animated: false, completion: nil)
-            return
-        }
-        
-        if viewModel.shouldWebViewRelogin() {
-            relogin() // 大学サイトへのログイン状況がタイムアウトになってるから
-        }
-        
+                        
         collectionView.reloadData() // カスタマイズ機能で並び替えを反映するため
         
-        adImagesRotationTimerON()
+        dataManager.canExecuteJavascript = true
+        webViewForLogin.load(Url.universityTransitionLogin.urlRequest())
         
         viewModel.getPRItems()
-        viewModel.getWether()
+        
+        var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
+        
+        #if STUB
+        TIME_INTERVAL = 2.0
+        #endif
+        
+        // TIME_INTERVAL秒毎に処理を実行する
+        adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
+                                       repeats: true,
+                                       block: { (timer) in
+            self.displayPRImage()
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,6 +104,7 @@ final class HomeViewController: UIViewController {
         adTimer.invalidate() // タイマー停止
     }
     
+    // weatherViewがタップされた時用
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         for touch in touches {
@@ -85,7 +118,7 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - IBAction
-    @IBAction func studentCardButton(_ sender: Any) {
+    @IBAction func contactUsButton(_ sender: Any) {
         let vc = R.storyboard.web.webViewController()!
         vc.loadUrlString = Url.contactUs.string()
         present(vc, animated: true, completion: nil)
@@ -105,16 +138,184 @@ final class HomeViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    // MARK: - Public func
-    public var isToastShow : Bool {
-        get {
-            return toastView == nil ? false : true
+    private func displayPRImage() {
+        guard let num = self.viewModel.selectPRImageNumber(),
+              let image = self.viewModel.prItems[num].imageURL else {
+            return
+        }
+        self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
+        self.prImageView.loadCacheImage(urlStr: image) // 広告画像の表示
+    }
+}
+
+// MARK: - CollectionView
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    /// セル数
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.menuLists.count
+    }
+    
+    /// セルの中身
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)! // fatalError
+        
+        let collectionList = viewModel.menuLists[indexPath.row]//viewModel.collectionLists[indexPath.row]
+        
+        let title = collectionList.title
+        let icon = collectionList.image // fatalError
+        
+        cell.setupCell(title: title, image: icon)
+        return cell
+    }
+    
+    /// セルがタップされた時
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // タップされたセルの内容を取得
+        let cell = viewModel.menuLists[indexPath.row]
+        
+        Analytics.logEvent("Cell[\(cell.id)]", parameters: nil) // Analytics
+                
+        // 今年の成績だけ変化する為、保持する
+        var loadUrlString = cell.url
+        
+        switch cell.id {
+            case .syllabus:
+                let vc = R.storyboard.input.inputViewController()!
+                vc.type = .syllabus
+                present(vc, animated: true)
+                
+            case .currentTermPerformance: // 今年の成績
+                loadUrlString = viewModel.createCurrentTermPerformanceUrl()
+                
+            case .libraryCalendar:
+                libraryAlart()
+                return
+                
+            default:
+                break
+        }
+        
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = loadUrlString
+        present(vc, animated: true, completion: nil)
+    }
+        
+    // 長押しタップ時に並び替え
+    @objc func longTap(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
         }
     }
-    private var toastView:UIView?
-    private var toastShowFrame:CGRect = .zero
-    private var toastHideFrame:CGRect = .zero
-    private var toastInterval:TimeInterval = 3.0
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        var displayLists = viewModel.menuLists
+        let item = displayLists.remove(at: sourceIndexPath.row)
+        displayLists.insert(item, at: destinationIndexPath.row)
+        
+        var hiddonLists:[MenuListItem] = []
+        for list in dataManager.menuLists {
+            if list.isHiddon {
+                hiddonLists.append(list)
+            }
+        }
+        dataManager.menuLists = displayLists + hiddonLists
+    }
+    
+    /// 図書館では常三島と蔵本の2つのカレンダーを選択させるためにアラートを表示
+    private func libraryAlart() {
+        // 常三島と蔵本を選択させるpopup(**Alert**)を表示 **推奨されたAlertの使い方ではない為、修正すべき**
+        var alert:UIAlertController!
+        //アラートコントローラーを作成する。
+        alert = UIAlertController(title: "", message: "図書館の所在を選択", preferredStyle: UIAlertController.Style.alert)
+        
+        let alertAction = UIAlertAction(
+            title: "常三島",
+            style: UIAlertAction.Style.default,
+            handler: { action in
+                // 常三島のカレンダーURLを取得後、webView読み込み
+                if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .main) {
+                    let vcWeb = R.storyboard.web.webViewController()!
+                    vcWeb.loadUrlString = urlStr
+                    self.present(vcWeb, animated: true, completion: nil)
+                }else{
+                    AKLog(level: .ERROR, message: "[URL取得エラー]: 常三島開館カレンダー")
+                    self.toast(message: "Error")
+                }
+            })
+        
+        let alertAction2 = UIAlertAction(
+            title: "蔵本",
+            style: UIAlertAction.Style.default,
+            handler: { action in
+                // 蔵本のカレンダーURLを取得後、webView読み込み
+                if let urlStr = self.viewModel.makeLibraryCalendarUrl(type: .kura) {
+                    let vcWeb = R.storyboard.web.webViewController()!
+                    vcWeb.loadUrlString = urlStr
+                    self.present(vcWeb, animated: true, completion: nil)
+                }else{
+                    AKLog(level: .ERROR, message: "[URL取得エラー]: 蔵本開館カレンダー")
+                    self.toast(message: "Error")
+                }
+            })
+        
+        //アラートアクションを追加する。
+        alert.addAction(alertAction)
+        alert.addAction(alertAction2)
+        present(alert, animated: true, completion:nil)
+    }
+}
+
+// MARK: - WebView
+extension HomeViewController: WKNavigationDelegate {
+    /// 読み込み設定（リクエスト前）
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let _ = navigationAction.request.url else {
+            AKLog(level: .FATAL, message: "読み込み前のURLがnil")
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
+        return
+    }
+    
+    /// 読み込み完了
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        let url = self.webViewForLogin.url! // fatalError
+        AKLog(level: .DEBUG, message: url.absoluteString)
+        
+        // JavaScriptを動かしたいURLかどうかを判定し、必要なら動かす
+        if viewModel.canExecuteJS(url.absoluteString) {
+            // 徳島大学　統合認証システムサイト(ログインサイト)に自動ログインを行う。JavaScriptInjection
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            dataManager.canExecuteJavascript = false
+            return
+        }
+    }
+}
+
+// トースト表示について
+extension HomeViewController {
+    
     /// トースト表示
     ///
     /// - Parameters:
@@ -167,8 +368,6 @@ final class HomeViewController: UIViewController {
         default:
             return
         }
-        
-        
         toastView.frame = toastHideFrame  // 初期隠す位置
         toastView.backgroundColor = UIColor.black
         toastView.alpha = 0.8
@@ -197,10 +396,8 @@ final class HomeViewController: UIViewController {
         if labelHeight < label.frame.height {
             toastShowFrame.size.height += (label.frame.height - labelHeight)
         }
-        
         didHideIndicator()
     }
-    
     @objc private func didHideIndicator() {
         guard let toastView = self.toastView else { // アンラッピング
             return
@@ -220,114 +417,6 @@ final class HomeViewController: UIViewController {
                         toastView.removeFromSuperview()
                         self.toastView = nil // 破棄
                     }
-                }
-            }
-        }
-    }
-    
-    /// 大学統合認証システム(IAS)のページを読み込む
-    /// ログインの処理はWebViewのdidFinishで行う
-    func relogin() {
-        viewActivityIndicator.startAnimating() // クルクルスタート
-        loginGrayBackGroundView.isHidden = false
-        viewModel.updateLoginFlag(type: .loginStart)
-        webViewForLogin.load(Url.universityTransitionLogin.urlRequest())
-    }
-    
-    
-    // MARK: - Private func
-    private var adTimer = Timer()
-    /// 広告を一定時間ごとに読み込ませる処理のスイッチ
-    private func adImagesRotationTimerON() {
-        var TIME_INTERVAL = 5.0 // 広告を表示させる秒数
-        
-        #if STUB
-        TIME_INTERVAL = 2.0
-        #endif
-        
-        // TIME_INTERVAL秒毎に処理を実行する
-        adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
-                                       repeats: true,
-                                       block: { (timer) in
-            guard let num = self.viewModel.selectPRImageNumber(),
-                  let image = self.viewModel.prItems[num].imageURL else {
-                return
-            }
-            self.viewModel.displayPRImagesNumber = num // これから表示させる広告の配列番号を覚える
-            self.prImageView.loadCacheImage(urlStr: image) // 広告画像の表示
-        })
-    }
-    
-    /// レイアウト初期設定
-    private func layoutInitSetting() {
-        
-        // adImageView
-        prImageView.isUserInteractionEnabled = true // タップ無効
-        prImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
-        
-        // webViewForLogin
-        webViewForLogin.navigationDelegate = self
-        
-        // loginGrayBackGroundView(ログイン中の不透明画面表示)
-        loginGrayBackGroundView = UIView()
-        loginGrayBackGroundView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        loginGrayBackGroundView.backgroundColor = .gray.withAlphaComponent(0.25)
-        self.view.addSubview(loginGrayBackGroundView)
-        
-        // viewActivityIndicator(ログイン中のクルクル)
-        viewActivityIndicator = UIActivityIndicatorView(style: .large)
-        viewActivityIndicator.hidesWhenStopped = true // クルクルをストップした時に非表示する
-        viewActivityIndicator.center = self.view.center
-        viewActivityIndicator.color =  R.color.mainColor() // 色を設定
-        self.view.addSubview(viewActivityIndicator)
-        
-        // collectionView
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100) // 1つのCell(xib)サイズを変更
-        collectionView.collectionViewLayout = layout
-        collectionView.register(R.nib.homeCollectionCell) // xibファイルを使うことを登録
-        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:)))
-        collectionView.addGestureRecognizer(longTapGesture)
-    }
-    
-    /// 通信初期設定
-    private func apiCommunicatingInitSetting() {
-        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
-        self.viewModel.state = { [weak self] (state) in
-            
-            guard let self = self else { fatalError() }
-            
-            DispatchQueue.main.async {
-                switch state {
-                case .weatherBusy: // 通信中
-                    break
-                    
-                case .weatherReady: // 通信完了
-                    self.weatherLabel.text = self.viewModel.weatherData.description
-                    self.temperatureLabel.text = self.viewModel.weatherData.feelsLike
-                    self.weatherIconImageView.image = UIImage(url: self.viewModel.weatherData.iconUrlStr)
-                    break
-                    
-                case .weatherError: // 通信失敗
-                    self.weatherLabel.text = "取得エラー"
-                    self.temperatureLabel.text = ""
-                    self.weatherIconImageView.image = UIImage(resource: R.image.noImage)!
-                    break
-                    
-                case .prBusy:
-                    break
-                    
-                case .prReady:
-                    guard let num = self.viewModel.displayPRImagesNumber,
-                          let image = self.viewModel.prItems[num].imageURL else {
-                        return
-                    }
-                    // 広告画像の表示
-                    self.prImageView.loadCacheImage(urlStr: image)
-                    break
-                    
-                case .prError:
-                    break
                 }
             }
         }
