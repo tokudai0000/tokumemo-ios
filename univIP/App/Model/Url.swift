@@ -15,7 +15,7 @@ enum Url: String {
     /// Eラーニング一覧
     case eLearningList = "https://uls01.ulc.tokushima-u.ac.jp/info/index.html"
     
-    /// 教務事務システム(PC)
+    /// 教務システム(PC)
     case courseManagementPC = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Top.aspx"
     /// 教務事務システム(Mobile)
     case courseManagementMobile  = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/sp/Top.aspx"
@@ -24,8 +24,8 @@ enum Url: String {
     /// マナバ(Mobile)
     case manabaMobile = "https://manaba.lms.tokushima-u.ac.jp/s/home_summary"
     
-    /// 講義時間割
-    case timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx"
+    /// 講義時間割 旧:https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx
+    case timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/Schedule/Day.aspx"
     /// 今期の成績表
     case currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
     /// 成績選択画面
@@ -73,7 +73,7 @@ enum Url: String {
     /// 防災情報
     case disasterPrevention = "https://www.tokushima-u.ac.jp/rcmode/business/46584.html"
     
-    /// ログイン画面に遷移する為のURL(何度もURL遷移を行う)
+    /// ログイン画面に遷移する為のURL(何度もURL遷移を行う) 旧http://eweb.stud.tokushima-u.ac.jp/Portal/top.html
     case universityTransitionLogin = "http://eweb.stud.tokushima-u.ac.jp/Portal/top.html"
     /// 大学サイト、ログイン画面
     case universityLogin = "https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution="
@@ -104,6 +104,11 @@ enum Url: String {
     
     /// 徳大学生活動リスト
     case clubList = "https://tokudai0000.github.io/club-list/"
+    
+    
+    case prItemJsonData = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
+    
+    case weatherItemJsonData = "https://api.openweathermap.org/data/2.5/weather"
     
     /// URLを文字列として返す
     func string() -> String {
