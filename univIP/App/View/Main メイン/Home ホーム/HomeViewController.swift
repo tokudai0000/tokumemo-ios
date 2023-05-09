@@ -11,7 +11,9 @@ import WebKit
 import FirebaseAnalytics
 
 final class HomeViewController: UIViewController {
+    
     // MARK: - IBOutlet
+    
     @IBOutlet weak var prContainerView: UIView!
     @IBOutlet weak var prImageView: UIImageView!
     @IBOutlet weak var weatherView: UIStackView!
@@ -61,19 +63,11 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func handlePRImageTaped(_ sender: UITapGestureRecognizer) {
-//        guard let num = viewModel.displayPRImagesNumber,
-//              let image = viewModel.prItems[num].imageURL,
-//              let txt = viewModel.prItems[num].introduction,
-//              let url = viewModel.prItems[num].tappedURL else {
-//            return
-//        }
         guard let item = viewModel.displayPrItem else{
             return
         }
         let vc = R.storyboard.pR.prViewController()!
-//        vc.imageUrlStr = image
-//        vc.introductionText = txt
-//        vc.urlStr = url
+        vc.item = item
         present(vc, animated: true, completion: nil)
     }
     

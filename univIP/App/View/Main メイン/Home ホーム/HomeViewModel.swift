@@ -18,21 +18,7 @@ class HomeViewModel {
     
     // API マネージャ
     public let apiManager = ApiManager.singleton
-    
-    
-    /// imageURL: PR画像のURL(IDの代わりとなる)
-    /// instroduction: PR画像についての追加情報
-    /// tappedURL: PR画像の詳細情報をタップした際に遷移する
-    /// organizationName: PR画像掲載者名(使用しない)
-    /// description: PR画像掲載者についての情報(使用しない)
-    struct PrData {
-        public var imageURL: String? = ""
-        public var introduction: String? = ""
-        public var tappedURL: String? = ""
-        public var organizationName: String? = ""
-        public var description: String? = ""
-    }
-    
+        
     public var prItems: [PrData] = []
     
     public var displayPrItem: PrData?
@@ -111,7 +97,7 @@ class HomeViewModel {
         case kura // 蔵本分館
     }
     
-    /*
+    /**
      図書館の開館カレンダーPDFまでのURLRequestを作成する
      PDFへのURLは状況により変化する為、図書館ホームページからスクレイピングを行う
      例1：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021.pdf
@@ -157,7 +143,7 @@ class HomeViewModel {
         return nil
     }
     
-    /*
+    /**
      今年度の成績表のURLを作成する
      
      - Note:
@@ -175,7 +161,7 @@ class HomeViewModel {
         return Url.currentTermPerformance.string() + String(year)
     }
     
-    /*
+    /**
      JavaScriptを動かしたい指定のURLか判定
      ・JavaScriptを実行するフラグ
      ・cアカウント、パスワードの登録確認
