@@ -26,17 +26,12 @@ final class HomeViewController: UIViewController {
     // 共通データ・マネージャ
     private let dataManager = DataManager.singleton
     
-    //
-    private var adTimer = Timer()
+    private var prImageDisplayTimer = Timer()
     
-    // トースト表示
     private var toastView: UIView?
-    
-    private var toastShowFrame: CGRect = .zero
-    
-    private var toastHideFrame: CGRect = .zero
-    
     private var toastInterval: TimeInterval = 3.0
+    private var toastShowFrame: CGRect = .zero
+    private var toastHideFrame: CGRect = .zero
     
     // MARK: - View Life Cycle
     
@@ -46,29 +41,29 @@ final class HomeViewController: UIViewController {
         setupDelegate()
         setupRecognizer()
         setupConstraints()
-        setupViewStateUpdate()
+        setupViewModelStateRecognizer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupViewOnAppear()
-        setupPRTimer()
+        setupPrImageDisplayTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        adTimer.invalidate()
+        prImageDisplayTimer.invalidate()
     }
     
     // MARK: - IBAction
     
-    @IBAction func contactUsButton(_ sender: Any) {
+    @IBAction func suggestionBoxButton(_ sender: Any) {
         let vc = R.storyboard.web.webViewController()!
         vc.loadUrlString = Url.contactUs.string()
         present(vc, animated: true, completion: nil)
     }
     
-    @objc func tappedAdImageView(_ sender: UITapGestureRecognizer) {
+    @objc func handlePRImageTaped(_ sender: UITapGestureRecognizer) {
         guard let num = viewModel.displayPRImagesNumber,
               let image = viewModel.prItems[num].imageURL,
               let txt = viewModel.prItems[num].introduction,
@@ -98,7 +93,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func setupRecognizer() {
-        prImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedAdImageView(_:))))
+        prImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlePRImageTaped(_:))))
         collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:))))
     }
     
@@ -115,20 +110,20 @@ final class HomeViewController: UIViewController {
         viewModel.getPRItems()
     }
     
-    private func setupPRTimer() {
-        var TIME_INTERVAL = 5.0
+    private func setupPrImageDisplayTimer() {
+        var prImageDisplayInterval = 5.0
         #if STUB
-        TIME_INTERVAL = 2.0
+        prImageDisplayInterval = 2.0
         #endif
-        adTimer = Timer.scheduledTimer(withTimeInterval: TIME_INTERVAL,
-                                       repeats: true,
-                                       block: { (timer) in
+        prImageDisplayTimer = Timer.scheduledTimer(withTimeInterval: prImageDisplayInterval,
+                                                   repeats: true,
+                                                   block: { (timer) in
             self.displayPRImage()
         })
     }
     
     // ViewModelが変化したことの通知を受けて画面を更新する
-    private func setupViewStateUpdate() {
+    private func setupViewModelStateRecognizer() {
         self.viewModel.state = { [weak self] (state) in
             guard let self = self else { fatalError() }
             DispatchQueue.main.async {
@@ -173,25 +168,25 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = viewModel.menuLists[indexPath.row]
         switch cell.id {
-            case .syllabus:
-                let vc = R.storyboard.input.inputViewController()!
-                vc.type = .syllabus
-                present(vc, animated: true)
-            case .currentTermPerformance: // 今年の成績
-                let vc = R.storyboard.web.webViewController()!
-                vc.loadUrlString = viewModel.createCurrentTermPerformanceUrl()
-                present(vc, animated: true, completion: nil)
-            case .libraryCalendar:
-                libraryAlart()
-                return
-            default:
-                break
+        case .syllabus:
+            let vc = R.storyboard.input.inputViewController()!
+            vc.type = .syllabus
+            present(vc, animated: true)
+        case .currentTermPerformance: // 今年の成績
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = viewModel.createCurrentTermPerformanceUrl()
+            present(vc, animated: true, completion: nil)
+        case .libraryCalendar:
+            libraryAlart()
+            return
+        default:
+            break
         }
         let vc = R.storyboard.web.webViewController()!
         vc.loadUrlString = cell.url
         present(vc, animated: true, completion: nil)
     }
-        
+    
     // 長押しタップ時に並び替え
     @objc func longTap(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
