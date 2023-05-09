@@ -58,6 +58,9 @@ enum Url: String {
     /// シラバス
     case syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
     
+    /// 検索完了後のシラバス
+    case syllabusSearchCompleted = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
+    
     /// 徳島大学キャリアセンター
     case tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
     
