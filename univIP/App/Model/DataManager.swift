@@ -37,22 +37,22 @@ final class DataManager {
     
     /// 配列をUserDefaultsには保存できないので 配列 -> Json -> Data にパースし、保存する
     private let KEY_menuLists = "KEY_menuLists"
-    public var menuLists: [MenuListItem] {
+    public var menuLists: [MenuItemList] {
         get {
             let jsonDecoder = JSONDecoder()
             let data = userDefaults.data(forKey: KEY_menuLists) ?? Data()
-            guard let lists = try? jsonDecoder.decode([MenuListItem].self, from: data) else{
+            guard let lists = try? jsonDecoder.decode([MenuItemList].self, from: data) else{
                 return initMenuLists
             }
             var initLists = initMenuLists
-            var newLists:[MenuListItem] = []
+            var newLists:[MenuItemList] = []
             for oldList in lists {
                 for i in 0..<initLists.count {
                     guard oldList.id == initLists[i].id else{
                         continue
                     }
                     // 新規initMenuListと変更点がないかを照らし合わせる
-                    let item = MenuListItem(title: initLists[i].title,
+                    let item = MenuItemList(title: initLists[i].title,
                                             id: initLists[i].id,
                                             image: initLists[i].image,
                                             url: initLists[i].url,

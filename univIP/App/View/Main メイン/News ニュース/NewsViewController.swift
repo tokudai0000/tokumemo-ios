@@ -6,34 +6,50 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 class NewsViewController: UIViewController {
-
+    
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var tableView: UITableView!
     
     private let viewModel = NewsViewModel()
+    
+    // 共通データ・マネージャ
     private let dataManager = DataManager.singleton
-    // 読み込み中のクルクル(ビジーカーソルともいう)
+    
     private var viewActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        initViewModel()
-        layoutInitSetting()
-        
-        viewModel.getNewsData()
+        setupDefaults()
+        setupIndicatorView()
+        setupViewModelStateRecognizer()
     }
     
-    // ステータスバーの文字を白に設定
     override var preferredStatusBarStyle: UIStatusBarStyle {
-            return .lightContent
+        return .lightContent
     }
     
-    // MARK: - Private func
-    /// ViewModel初期化
-    private func initViewModel() {
+    // MARK: - Methods [Private]
+    
+    private func setupDefaults() {
+        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
+        tableView.register(R.nib.newsTableViewCell)
+        viewModel.updateNewsItems()
+    }
+    
+    private func setupIndicatorView() {
+        viewActivityIndicator = UIActivityIndicatorView()
+        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        viewActivityIndicator.center = self.view.center
+        viewActivityIndicator.hidesWhenStopped = true
+        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
+        self.view.addSubview(viewActivityIndicator)
+    }
+    
+    // ViewModelが変化したことの通知を受けて画面を更新する
+    private func setupViewModelStateRecognizer() {
         // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
         self.viewModel.state = { [weak self] (state) in
             guard let self = self else {
@@ -41,100 +57,49 @@ class NewsViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 switch state {
-                    case .busy: // 通信中
-                        self.viewActivityIndicator.startAnimating() // クルクルスタート
-                        break
-                        
-                    case .ready: // 通信完了
-                        self.viewActivityIndicator.stopAnimating() // クルクルストップ
-                        self.tableView.reloadData()
-                        break
-                        
-                    case .error:
-                        break
+                case .busy: // 通信中
+                    self.viewActivityIndicator.startAnimating() // クルクルスタート
+                    break
+                    
+                case .ready: // 通信完了
+                    self.viewActivityIndicator.stopAnimating() // クルクルストップ
+                    self.tableView.reloadData()
+                    break
+                    
+                case .error:
+                    break
                 }
             }
         }
-    }
-    
-    private func layoutInitSetting() {
-        // ステータスバーの背景色を指定
-        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
-        
-        // ActivityIndicator
-        viewActivityIndicator = UIActivityIndicatorView()
-        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        viewActivityIndicator.center = self.view.center
-        viewActivityIndicator.hidesWhenStopped = true
-        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
-        self.view.addSubview(viewActivityIndicator)
-        
-        // TableView
-        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil),
-                           forCellReuseIdentifier: "NewsTableViewCell")
     }
 }
 
 
 extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
-    // セクションの数
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    // セルの数
     func numberOfSections(in tableView: UITableView) -> Int {
-        // 取得数が1未満であれば、データ取得に失敗していると判定し0個を返す
-        if 1 < viewModel.newsDatas.count {
-            return viewModel.newsDatas.count
-        } else {
-            return 0
-        }
-        
+        return viewModel.newsItems.count
     }
     
-    //セルの高さ
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(80)
     }
     
-    // セル背景色
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.white
-    }
-    
-    // セルの内容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
-        
-        // タイトルや画像は別々で取得してくるため、配列内に必ずあるとは限らないため
-        if 1 < viewModel.newsDatas.count {
-            let text = viewModel.newsDatas[indexPath.section].title
-            let date = viewModel.newsDatas[indexPath.section].date
-            var imgUrlStr = "NoImage"
-            
-            if imgUrlStr == "https://www.tokushima-u.ac.jp/assets/img/dummy.png" {
-                imgUrlStr = "NoImage"
-            }
-                
-            cell.setupCell(text: text,
-                           date: date)
-        }
-        
+        let item = viewModel.newsItems[indexPath.section]
+        cell.setupCell(text: item.title, date: item.date)
         return cell
     }
     
-    
-    /// セルを選択時のイベント
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Analytics.logEvent("NewsTable", parameters: nil) // Analytics
-        // セルの選択状態を解除
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        
-        let vcWeb = R.storyboard.web.webViewController()!
-        let loadUrlString = viewModel.newsDatas[indexPath[0]].urlStr
-        vcWeb.loadUrlString = loadUrlString
-        present(vcWeb, animated: true, completion: nil)
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true) // セルの選択状態を解除
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = viewModel.newsItems[indexPath[0]].urlStr
+        present(vc, animated: true, completion: nil)
     }
 }

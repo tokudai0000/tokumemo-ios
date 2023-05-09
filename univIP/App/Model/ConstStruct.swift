@@ -1,5 +1,5 @@
 //
-//  model.swift
+//  ConstStruct.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/08/09.
@@ -11,5 +11,4 @@ import Foundation
 struct ConstStruct {
     /// 現在の利用規約バージョン
     static let latestTermsVersion = "3.0"
-    
 }

@@ -1,5 +1,5 @@
 //
-//  UrlModel.swift
+//  Url.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/11/03.
@@ -58,6 +58,9 @@ enum Url: String {
     /// シラバス
     case syllabus = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/"
     
+    /// 検索完了後のシラバス
+    case syllabusSearchCompleted = "http://eweb.stud.tokushima-u.ac.jp/Portal/Public/Syllabus/SearchMain.aspx"
+    
     /// 徳島大学キャリアセンター
     case tokudaiCareerCenter = "https://www.tokudai-syusyoku.com/index.php"
     
@@ -109,6 +112,8 @@ enum Url: String {
     case prItemJsonData = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
     
     case weatherItemJsonData = "https://api.openweathermap.org/data/2.5/weather"
+    
+    case newsItemJsonData = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
     
     /// URLを文字列として返す
     func string() -> String {

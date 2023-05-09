@@ -18,20 +18,12 @@ final class AgreementViewController: UIViewController {
     
     private let dataManager = DataManager.singleton
     
-    // MARK: - LifeCycle
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // ボタンの角を丸める
-        agreementButton.layer.cornerRadius = 5.0
-        termsButton.layer.cornerRadius = 10.0
-        privacyButton.layer.cornerRadius = 10.0
-        textView.layer.cornerRadius = 10.0
-        imageView.layer.cornerRadius = 100.0
-        
-        // 文章を表示
-        let filePath = R.file.agreementRtf()!
-        textView.attributedText = Common.loadRtfFileContents(filePath)
-        textView.textColor = .white
+        setupDefaults()
+        setupText()
     }
     
     // MARK: - IBAction
@@ -40,7 +32,6 @@ final class AgreementViewController: UIViewController {
     @IBAction func agreementButton(_ sender: Any) {
         // アプリ内に表示していた利用規約のバージョンを保存する。
         dataManager.agreementVersion = ConstStruct.latestTermsVersion
-//        dismiss(animated: true, completion: nil)
         let vc = R.storyboard.main.mainViewController()!
         present(vc, animated: false)
     }
@@ -55,5 +46,21 @@ final class AgreementViewController: UIViewController {
         let vcWeb = R.storyboard.web.webViewController()!
         vcWeb.loadUrlString = Url.privacyPolicy.string()
         present(vcWeb, animated: true, completion: nil)
+    }
+    
+    // MARK: - Methods [Private]
+    
+    private func setupDefaults() {
+        agreementButton.layer.cornerRadius = 5.0
+        termsButton.layer.cornerRadius = 10.0
+        privacyButton.layer.cornerRadius = 10.0
+        textView.layer.cornerRadius = 10.0
+        imageView.layer.cornerRadius = 100.0
+    }
+    
+    private func setupText() {
+        let filePath = R.file.agreementRtf()!
+        textView.attributedText = Common.loadRtfFileContents(filePath)
+        textView.textColor = .white
     }
 }
