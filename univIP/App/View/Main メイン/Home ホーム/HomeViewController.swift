@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import FirebaseAnalytics
 
 final class HomeViewController: UIViewController {
     

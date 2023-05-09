@@ -6,30 +6,30 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 final class CustomizeViewController: UIViewController {
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var tableView: UITableView!
     
     private let dataManager = DataManager.singleton
     
-    // MARK: - LifeCycle
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.setEditing(true, animated: false)
         tableView.allowsMultipleSelectionDuringEditing = true
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        reload() // Home画面でのカスタマイズ機能で並び替えをタブ移動した際に反映するため
-        
+        // Home画面でのカスタマイズ機能で並び替えをタブ移動した際に反映するため
+        reload()
     }
+    
+    // MARK: - Methods [Private]
     
     private func reload() {
         tableView.reloadData()
@@ -43,21 +43,18 @@ final class CustomizeViewController: UIViewController {
         }
     }
     
-    /// 要素を削除
     private func deleteMenuContents(row: Int) {
         var lists:[MenuItemList] = dataManager.menuLists
         lists.remove(at: row)
         dataManager.menuLists = lists
     }
     
-    /// 要素を変更
     private func changeMenuIsHiddon(row: Int, isHiddon: Bool) {
         var lists:[MenuItemList] = dataManager.menuLists
         lists[row].isHiddon = isHiddon
         dataManager.menuLists = lists
     }
     
-    /// 順番を変更
     public func sortMenu(sourceRow: Int, destinationRow: Int) {
         var lists:[MenuItemList] = dataManager.menuLists
         let todo = lists[sourceRow]
@@ -67,8 +64,6 @@ final class CustomizeViewController: UIViewController {
     }
 }
 
-
-// MARK: - TableView
 extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,18 +75,10 @@ extension CustomizeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.customizeTableCell, for: indexPath)! // fatalError
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.customizeTableCell, for: indexPath)!
         tableCell.textLabel?.text = dataManager.menuLists[indexPath.row].title
-        //        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         return tableCell
     }
-    
-    // 並び替え
-    //    func tableView(_ tableView: UITableView,
-    //                   targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
-    //                   toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-    //        return proposedDestinationIndexPath
-    //    }
     
     // 「編集モード」並び替え検知
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
