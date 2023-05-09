@@ -6,32 +6,26 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 final class SettingViewController: UIViewController {
     
-    private let viewModel = SettingViewModel()
+    // MARK: - IBOutlet
     
     @IBOutlet var tableView: UITableView!
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // カスタマイズ画面から戻ってきた場合、選択状態を解除する
-        if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-    }
+    private let viewModel = SettingViewModel()
     
+    // MARK: - View Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.white
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.settingLists.count
+        return viewModel.settingItemLists.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -45,40 +39,37 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         return 30
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.settingLists[section].count
+        return viewModel.settingItemLists[section].count
     }
-        
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.settingCell, for: indexPath)! // fatalError
-        cell.textLabel?.text = viewModel.settingLists[indexPath.section][indexPath.item].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.settingCell, for: indexPath)!
+        cell.textLabel?.text = viewModel.settingItemLists[indexPath.section][indexPath.item].title
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = viewModel.settingLists[indexPath.section][indexPath[1]]
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = viewModel.settingItemLists[indexPath.section][indexPath[1]]
         switch cell.id {
-            case .password:
-                let vc = R.storyboard.input.inputViewController()!
-                vc.type = .password
-                navigationController?.pushViewController(vc, animated: true)
-                
-            case .favorite:
-                let vc = R.storyboard.input.inputViewController()!
-                vc.type = .favorite
-                navigationController?.pushViewController(vc, animated: true)
-                
-            case .customize:
-                let vc = R.storyboard.customize.customizeViewController()!
-                vc.title = "カスタマイズ"
-                navigationController?.pushViewController(vc, animated: true)
-                
-            default:
-                let vc = R.storyboard.web.webViewController()!
-                vc.loadUrlString = cell.url!
-                present(vc, animated: true, completion: nil)
+        case .password:
+            let vc = R.storyboard.input.inputViewController()!
+            vc.type = .password
+            navigationController?.pushViewController(vc, animated: true)
+        case .favorite:
+            let vc = R.storyboard.input.inputViewController()!
+            vc.type = .favorite
+            navigationController?.pushViewController(vc, animated: true)
+        case .customize:
+            let vc = R.storyboard.customize.customizeViewController()!
+            vc.title = "カスタマイズ"
+            navigationController?.pushViewController(vc, animated: true)
+        default:
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = cell.url!
+            present(vc, animated: true, completion: nil)
         }
-        Analytics.logEvent("SettingCell[\(cell.id)]", parameters: nil) // Analytics
     }
 }

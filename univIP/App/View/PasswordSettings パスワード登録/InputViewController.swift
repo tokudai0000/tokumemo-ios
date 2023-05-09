@@ -123,9 +123,9 @@ final class InputViewController: UIViewController {
                   message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
             
         case .favorite:
-            let item = MenuListItem(title: text2, id: .favorite, image: R.image.menuIcon.etc.name, url: text1, isLockIconExists: false, isHiddon: false)
+            let item = MenuItemList(title: text2, id: .favorite, image: R.image.menuIcon.etc.name, url: text1, isLockIconExists: false, isHiddon: false)
             
-            var lists:[MenuListItem] = dataManager.menuLists
+            var lists:[MenuItemList] = dataManager.menuLists
             lists.append(item)
             dataManager.menuLists = lists
             alert(title: "♪ 登録完了 ♪",

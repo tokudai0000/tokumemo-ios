@@ -8,7 +8,7 @@
 import UIKit
 
 class NewsTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var contentsLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
@@ -16,5 +16,4 @@ class NewsTableViewCell: UITableViewCell {
         contentsLabel.text = text
         dateLabel.text = date
     }
-    
 }
