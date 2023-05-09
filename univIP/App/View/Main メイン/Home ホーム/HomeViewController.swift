@@ -15,9 +15,6 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var prContainerView: UIView!
     @IBOutlet weak var prImageView: UIImageView!
     @IBOutlet weak var weatherView: UIStackView!
-    @IBOutlet weak var weatherLabel: UILabel!
-    @IBOutlet weak var weatherIconImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var webViewForLogin: WKWebView!
     
