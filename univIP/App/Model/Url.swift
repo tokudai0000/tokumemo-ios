@@ -1,5 +1,5 @@
 //
-//  UrlModel.swift
+//  Url.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2021/11/03.
