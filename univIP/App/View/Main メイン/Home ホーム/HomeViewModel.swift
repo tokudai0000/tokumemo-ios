@@ -18,7 +18,7 @@ class HomeViewModel {
     
     // API マネージャ
     public let apiManager = ApiManager.singleton
-        
+    
     public var prItems: [PrData] = []
     
     public var displayPrItem: PrData?
@@ -32,8 +32,6 @@ class HomeViewModel {
     }
     public var state: ((State) -> Void)?
     
-    // MARK: - Public func
-    
     /// TableCellの内容(isHiddon=trueを除く)
     public var displayMenuItemLists: [MenuItemList] {
         get{
@@ -46,6 +44,8 @@ class HomeViewModel {
             return displayLists
         }
     }
+    
+    // MARK: - Public func
     
     public func updatePrItems() {
         state?(.busy) // 通信開始（通信中）

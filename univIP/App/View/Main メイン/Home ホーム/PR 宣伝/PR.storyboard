@@ -75,11 +75,19 @@
                                         <rect key="frame" x="0.0" y="360" width="404" height="335"/>
                                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="ああああ">
+                                            <fragment content="PR">
                                                 <attributes>
                                                     <color key="NSColor" systemColor="labelColor"/>
-                                                    <font key="NSFont" size="24" name="HiraMaruProN-W4"/>
+                                                    <font key="NSFont" metaFont="system" size="20"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="画像についての追加情報">
+                                                <attributes>
+                                                    <color key="NSColor" systemColor="labelColor"/>
+                                                    <font key="NSFont" size="20" name=".HiraKakuInterface-W3"/>
                                                     <font key="NSOriginalFont" metaFont="system" size="20"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>

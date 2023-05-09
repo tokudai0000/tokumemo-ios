@@ -229,6 +229,7 @@
 		1A384F9028FD5D1E00A1F52E /* Home ホーム */ = {
 			isa = PBXGroup;
 			children = (
+				1A1A4E102A09FE75003A343B /* PrData.swift */,
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
@@ -443,7 +444,6 @@
 		1ABE8BB827B10402001EEA79 /* Main メイン */ = {
 			isa = PBXGroup;
 			children = (
-				1A1A4E102A09FE75003A343B /* PrData.swift */,
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
