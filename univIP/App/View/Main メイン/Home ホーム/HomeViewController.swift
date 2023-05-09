@@ -61,16 +61,19 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func handlePRImageTaped(_ sender: UITapGestureRecognizer) {
-        guard let num = viewModel.displayPRImagesNumber,
-              let image = viewModel.prItems[num].imageURL,
-              let txt = viewModel.prItems[num].introduction,
-              let url = viewModel.prItems[num].tappedURL else {
+//        guard let num = viewModel.displayPRImagesNumber,
+//              let image = viewModel.prItems[num].imageURL,
+//              let txt = viewModel.prItems[num].introduction,
+//              let url = viewModel.prItems[num].tappedURL else {
+//            return
+//        }
+        guard let item = viewModel.displayPrItem else{
             return
         }
         let vc = R.storyboard.pR.prViewController()!
-        vc.imageUrlStr = image
-        vc.introductionText = txt
-        vc.urlStr = url
+//        vc.imageUrlStr = image
+//        vc.introductionText = txt
+//        vc.urlStr = url
         present(vc, animated: true, completion: nil)
     }
     
@@ -104,7 +107,7 @@ final class HomeViewController: UIViewController {
         collectionView.reloadData()
         dataManager.canExecuteJavascript = true
         webViewForLogin.load(Url.universityTransitionLogin.urlRequest())
-        viewModel.getPRItems()
+        viewModel.updatePrItems()
     }
     
     private func setupPrImageDisplayTimer() {
@@ -115,7 +118,7 @@ final class HomeViewController: UIViewController {
         prImageDisplayTimer = Timer.scheduledTimer(withTimeInterval: prImageDisplayInterval,
                                                    repeats: true,
                                                    block: { (timer) in
-            self.displayPRImage()
+            self.displayPrImage()
         })
     }
     
@@ -128,7 +131,7 @@ final class HomeViewController: UIViewController {
                 case .busy:
                     break
                 case .ready:
-                    self.displayPRImage()
+                    self.displayPrImage()
                     break
                 case .error:
                     break
@@ -137,25 +140,25 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private func displayPRImage() {
-        guard let num = self.viewModel.selectPRImageNumber(),
-              let image = self.viewModel.prItems[num].imageURL else {
+    private func displayPrImage() {
+        guard let item = self.viewModel.selectDispalyPrItem(),
+        let url = item.imageURL else {
             return
         }
-        self.viewModel.displayPRImagesNumber = num
-        self.prImageView.loadCacheImage(urlStr: image)
+        self.viewModel.displayPrItem = item
+        self.prImageView.loadCacheImage(urlStr: url)
     }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.menuLists.count
+        return viewModel.displayMenuItemLists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-        let collectionList = viewModel.menuLists[indexPath.row]
+        let collectionList = viewModel.displayMenuItemLists[indexPath.row]
         let title = collectionList.title
         let icon = collectionList.image
         cell.setupCell(title: title, image: icon)
@@ -163,7 +166,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = viewModel.menuLists[indexPath.row]
+        let cell = viewModel.displayMenuItemLists[indexPath.row]
         switch cell.id {
         case .syllabus:
             let vc = R.storyboard.input.inputViewController()!
@@ -206,10 +209,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        var displayLists = viewModel.menuLists
+        var displayLists = viewModel.displayMenuItemLists
         let item = displayLists.remove(at: sourceIndexPath.row)
         displayLists.insert(item, at: destinationIndexPath.row)
-        var hiddonLists:[MenuListItem] = []
+        var hiddonLists:[MenuItemList] = []
         for list in dataManager.menuLists {
             if list.isHiddon {
                 hiddonLists.append(list)

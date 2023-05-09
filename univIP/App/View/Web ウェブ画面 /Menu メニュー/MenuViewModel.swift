@@ -13,9 +13,9 @@ final class MenuViewModel {
     
     private let dataManager = DataManager.singleton
     
-    public var menuLists:[MenuListItem] {
+    public var menuLists:[MenuItemList] {
         get {
-            var lists:[MenuListItem] = []
+            var lists:[MenuItemList] = []
             for item in dataManager.menuLists {
                 if item.id != .libraryCalendar , item.id != .syllabus {
                     lists.append(item)

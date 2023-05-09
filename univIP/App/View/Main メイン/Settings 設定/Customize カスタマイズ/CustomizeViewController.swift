@@ -45,21 +45,21 @@ final class CustomizeViewController: UIViewController {
     
     /// 要素を削除
     private func deleteMenuContents(row: Int) {
-        var lists:[MenuListItem] = dataManager.menuLists
+        var lists:[MenuItemList] = dataManager.menuLists
         lists.remove(at: row)
         dataManager.menuLists = lists
     }
     
     /// 要素を変更
     private func changeMenuIsHiddon(row: Int, isHiddon: Bool) {
-        var lists:[MenuListItem] = dataManager.menuLists
+        var lists:[MenuItemList] = dataManager.menuLists
         lists[row].isHiddon = isHiddon
         dataManager.menuLists = lists
     }
     
     /// 順番を変更
     public func sortMenu(sourceRow: Int, destinationRow: Int) {
-        var lists:[MenuListItem] = dataManager.menuLists
+        var lists:[MenuItemList] = dataManager.menuLists
         let todo = lists[sourceRow]
         lists.remove(at: sourceRow)
         lists.insert(todo, at: destinationRow)
