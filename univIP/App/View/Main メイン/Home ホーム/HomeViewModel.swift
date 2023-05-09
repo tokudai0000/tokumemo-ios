@@ -45,7 +45,7 @@ class HomeViewModel {
         }
     }
     
-    // MARK: - Public func
+    // MARK: - Methods [Public]
     
     public func updatePrItems() {
         state?(.busy) // 通信開始（通信中）
