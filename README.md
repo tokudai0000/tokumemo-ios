@@ -31,7 +31,7 @@
 
 # 紹介動画
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zRVeZhip5ow/0.jpg)](https://www.youtube.com/watch?v=zRVeZhip5ow)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zRVeZhip5ow/0.jpg)](https://www.youtube.com/watch?v=zRVeZhip5ow)  
 ※Youtubeへ遷移します
 
 
@@ -78,13 +78,13 @@
 # 活動履歴
 詳細は[こちら](https://github.com/tokudai0000)を参照してください。
 
-|2021/11 メンバー募集ビラ|2021/12 アプリ広報ビラ_1|2021/12 アプリ広報ビラ_1|2022/11 アプリ広報ビラ|
-|:--|:--|:--|:--|
-|<img src="Docs/メンバー募集ビラ.png" width="207">|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_河崎案.png" width="207">|<img src="Docs/その他.png" width="207">|
+|2021/11 メンバー募集ビラ|2021/12 アプリ広報ビラ_1|2021/12 アプリ広報ビラ_2|
+|:--|:--|:--|
+|<img src="Docs/メンバー募集ビラ.png" width="207">|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_河崎案.png" width="207">|
 
-|2023/4 新入生向けアプリ広報ビラ|
-|:--|
-|<img src="Docs/新入生向けポスター.png" width="207">|
+|2022/11 アプリ広報ビラ|2023/4 新入生向けアプリ広報ビラ|
+|:--|:--|
+|<img src="Docs/その他.png" width="207">|<img src="Docs/新入生向けポスター.png" width="207">|
 
 
 # 開発
@@ -122,5 +122,5 @@ Copyright(c) 2023 tokudai0000
 
 ## ホームページ
 
-[![IMAGE ALT TEXT HERE](./Docs/homepage.png)](https://lit.link/developers)
+[![IMAGE ALT TEXT HERE](./Docs/homepage.png)](https://lit.link/developers)  
 ※画像をタップすると遷移します
