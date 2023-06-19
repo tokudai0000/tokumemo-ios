@@ -80,7 +80,7 @@
 
 |2021/11 メンバー募集ビラ|2021/12 アプリ広報ビラ_1|2021/12 アプリ広報ビラ_1|2022/11 アプリ広報ビラ|
 |:--|:--|:--|:--|
-|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_河崎案.png" width="207">|<img src="Docs/その他.png" width="207">|
+|<img src="Docs/メンバー募集ビラ.png" width="207">|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_河崎案.png" width="207">|<img src="Docs/その他.png" width="207">|
 
 |2023/4 新入生向けアプリ広報ビラ|
 |:--|
