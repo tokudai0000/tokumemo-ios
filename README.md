@@ -1,33 +1,35 @@
+<p align="center" >
+  <img src="./Docs/TokumemoPlusIcon.png" width=300px>
+</p>
+
 # トクメモ＋ (TokumemoPlus) for iOS
 
-<!-- [![Release](https://img.shields.io/github/v/release/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/release/latest) -->
 
-[![License: MIT](https://img.shields.io/github/license/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/blob/main/LICENSE)
+[![Download_on_the_App_Store_Badge](./Docs/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/tokudai0000/univIP)
+[![License: MIT](https://img.shields.io/github/license/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
+
 
 |Branch|CI|
 |:--|:--|
 |[main](https://github.com/tokudai0000/univIP/tree/main)|[![CI](https://github.com/tokudai0000/univIP/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/tokudai0000/univIP/actions/workflows/main.yml)|
 |[develop](https://github.com/tokudai0000/univIP/tree/develop)|[![CI](https://github.com/tokudai0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/tokudai0000/univIP/actions/workflows/main.yml)|
 
-[![Download_on_the_App_Store_Badge](./Docs/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
-
-
-<p align="center" >
-  <img src="./Docs/TokumemoPlusIcon.png" width=300px>
-</p>
 
 
 # 概要
-トクメモ＋は、[徳島大学生](https://github.com/akidon0000)が徳島大学のWebサービスの不便さを解消する目的で個人で開発したアプリ「トクメモ」が原点です。2022年4月に徳島大学イノベーションプラザで始まった「アプリ開発プロジェクト」により、トクメモの機能やUIデザインが刷新され、「トクメモ＋」として生まれ変わりました。
+トクメモ＋は、[ある徳島大学生](https://github.com/akidon0000)が徳島大学のWebサービスの不便さを解消する目的で個人開発したアプリ「トクメモ」が原点です。  
+本アプリは、徳島大学の講義情報やレポート提出、そして学内情報などの一元化を目的としており、それにはJavaScriptインジェクション、Webスクレイピング、そしてRSSフィードを活用し、学生生活のほとんどが一つのアプリで完結するという形で実現しました。  
 
-トクメモ＋は、徳島大学生のための学習支援アプリとして、自動ログインや部活動情報集約などの便利な機能を提供しています。開発は、大学側からAPIが提供されていないため、WebサイトスクレイピングやJavaScriptインジェクションを駆使して情報を収集しました。また、情報の透明性と外部意見の取り込みを目指して、オープンソース化を実施し、保守性の高いコードを意識して開発が進められました。
+現在、AppStoreとGooglePlayで公開しています。[利用者数](https://github.com/tokudai0000)はこちらをご覧ください。  
 
-2023年2月に「アプリ開発プロジェクト」は解散しましたが、現時点では2025年3月までアプリの運用を続ける予定です。現在、トクメモ＋はAndroid版も含め、徳島大学生の3人に1人（約2500人）が利用しています。アプリの更なる普及と改善を目指し、徳島大学生の充実した大学生活をサポートすることを目標に、今後も活動が続けていきます。
+開発では、大学側がAPIを提供していないため、WebスクレイピングとJavaScriptインジェクションを用いて情報収集を行いました。  
+具体的に、Webスクレイピングでは図書館の開館表がpdfとしてHTMLのボタン内に埋め込まれています。開館表に修正が入ったとしても対応させました。  
+また、JavaScriptインジェクションでは、SSOのSAML認証を行うログイン画面にてIDとパスワード、次へ進むボタンの3つをモバイル側からWebページ側へJavaScriptを送り実行させることで自動化させました。  
 
 
-# トクメモ＋紹介動画
+# 紹介動画
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zRVeZhip5ow/0.jpg)](https://www.youtube.com/watch?v=zRVeZhip5ow)
 ※Youtubeへ遷移します
@@ -35,81 +37,72 @@
 
 # スクリーンショット
 
-|ホーム画面|ニュース画面|設定画面|
+|ホーム画面|ニュース画面|設定画面|教務事務システム|マナバ|
+|:--|:--|:--|:--|:--|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_home.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_news.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_settings.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|
+
+|Outlookメールサービス|パスワード画面|カスタマイズ画面|
 |:--|:--|:--|
-|<img src="Docs/Screenshots/5.5inch/5.5inch_home.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_news.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_settings.png" width="207">|
-
-|教務事務システム|マナバ|Outlookメールサービス|
-|:--|:--|:--|
-|<img src="Docs/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_mail.png" width="207">|
-
-|パスワード画面|カスタマイズ画面|
-|:--|:--|
-|<img src="Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_customize.png" width="207">|
+|<img src="Docs/Screenshots/5.5inch/5.5inch_mail.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_password.png" width="207">|<img src="Docs/Screenshots/5.5inch/5.5inch_customize.png" width="207">|
 
 
-## ライブラリ
-- R.swift
-- Alamofire
-- SwiftyJSON
-- Firebase/Analytics
-- KeychainAccess // KeychainをUserDefautsのように操作する為
-- Kanna // Webスクレイピングを行う為
+# 機能紹介
 
-
-# トクメモ＋の機能紹介
-
-## 主要機能
+### 主要機能
 - 大学Webサービス（manaba、教務システムなど）への自動ログイン
 - 18種類の大学Webページへの簡単アクセス
 - 徳大Newsの閲覧
-- 徳大の学生団体情報
+- 徳大の学生団体情報の集約
+- 徳島大学生に向けて、先生や学生達が情報発信できる機能
 
-## 機能詳細
+### 機能詳細
 
-### 大学Webサービス（manaba、教務システムなど）への自動ログイン
-manabaや教務システムなど、大学Webサービスへ簡単にアクセスできます。お気に入りから探す手間が省け、ログイン済みの状態でページが開くことが出来ます。
+#### 大学Webサービス（manaba、教務システムなど）への自動ログイン
+- manabaや教務システムなど、大学Webサービスへ簡単にアクセスできます。お気に入りから探す手間が省け、ログイン済みの状態でページが開くことが出来ます。
 
-### 18種類の大学Webページへの簡単アクセス
-忙しい朝に教務、manaba、メールなどを素早く開いて大学からのお知らせをチェックできます。システム間の移動もボタン一つでスムーズに行えます。
+#### 18種類の大学Webページへの簡単アクセス
+- 忙しい朝に教務、manaba、メールなどを素早く開いて大学からのお知らせをチェックできます。システム間の移動もボタン一つでスムーズに行えます。
 
-### 徳大Newsの閲覧
-徳島大学のホームページに掲載されているNewsをアプリで確認できます。これで徳大の最新情報を逃さずチェックできます。
+#### 徳大Newsの閲覧
+- 徳島大学のホームページに掲載されているNewsをアプリで確認できます。これで徳大の最新情報を逃さずチェックできます。
 
-### 徳大の学生団体情報の集約
-徳島大学で活動する部活動・サークル・学生団体についての情報を一箇所で確認できます。これにより、学生団体の活動やイベントに関する情報を簡単に入手できます。
+#### 徳大の学生団体情報の集約
+- 徳島大学で活動する部活動・サークル・学生団体についての情報を一箇所で確認できます。これにより、学生団体の活動やイベントに関する情報を簡単に入手できます。
 
-## 対応する大学Webサービス一覧
-- 教務システム
-- マナバ
-- 図書館Webサイト
-- 図書館MyPage
-- 図書館本貸し出し期間延長
-- 図書館本購入リクエスト
-- 図書館開館カレンダー
-- シラバス
-- 時間割
-- 今年の成績表
-- 出欠記録
-- 授業アンケート
-- メール
-- キャリアセンター
-- 生協の営業時間
-- 生協の食堂メニュー
-- 履修登録
-- システムサービス一覧
-- Eラーニング一覧
-- 大学サイト
-- 学びサポート企画部のSSSカレンダー
-- 知っておきたい防災情報
-
-今後も更新予定
+#### 徳島大学生に向けて、先生や学生達が情報発信できる機能
+- 学生が主導で運営している[StudySupportSpace](https://www.lib.tokushima-u.ac.jp/support/sss/index.html)についての情報機能を追加
+- 社会基盤コースの先生から依頼を受け、徳島大学生に向けて[知っておきたい防災](https://www.tokushima-u.ac.jp/rcmode/business/46584.html)についての情報機能を追加
 
 
 
-|ビラ|
+# 活動履歴
+詳細は[こちら](https://github.com/tokudai0000)を参照してください。
+
+|2021/11 メンバー募集ビラ|2021/12 アプリ広報ビラ_1|2021/12 アプリ広報ビラ_1|2022/11 アプリ広報ビラ|
+|:--|:--|:--|:--|
+|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_松山案.png" width="207">|<img src="Docs/ビラ_河崎案.png" width="207">|<img src="Docs/その他.png" width="207">|
+
+|2023/4 新入生向けアプリ広報ビラ|
 |:--|
-|<img src="Docs/その他.png" width="207">|
+|<img src="Docs/新入生向けポスター.png" width="207">|
+
+
+# 開発
+
+## 動作確認環境
+- Xcode 14.2
+- iOS 15.0
+- cocoapod 1.12.1
+
+
+## 使用ライブラリ
+- [R.swift](https://github.com/mac-cain13/R.swift)
+- [Alamofire](https://github.com/Alamofire/Alamofire)
+- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+- [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess)
+- [Kanna](https://github.com/tid-kijyun/Kanna)
+- Firebase-Analytics
+
 
 
 ## 募集中
