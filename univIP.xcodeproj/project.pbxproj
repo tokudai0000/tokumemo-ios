@@ -507,12 +507,12 @@
 			buildConfigurationList = 1AA056DD26BD2AE500343005 /* Build configuration list for PBXNativeTarget "univIP" */;
 			buildPhases = (
 				6BC3F9ADAE1ED57107C2EC77 /* [CP] Check Pods Manifest.lock */,
-				1AA056E026BD2CC300343005 /* Run Script R.Swift */,
+				1AA056E026BD2CC300343005 /* Run Script(R.Swift) */,
 				1AA056C526BD2AE100343005 /* Sources */,
 				1AA056C626BD2AE100343005 /* Frameworks */,
 				1AA056C726BD2AE100343005 /* Resources */,
 				0CDD3BFE913BFE4F6BCDA491 /* [CP] Embed Pods Frameworks */,
-				1A53DB1B2A4850E00098DC94 /* FirebaseCrashlytics */,
+				1A53DB1B2A4850E00098DC94 /* Run Script(FirebaseCrashlytics) */,
 			);
 			buildRules = (
 			);
@@ -665,7 +665,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-univIP/Pods-univIP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1A53DB1B2A4850E00098DC94 /* FirebaseCrashlytics */ = {
+		1A53DB1B2A4850E00098DC94 /* Run Script(FirebaseCrashlytics) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -676,7 +676,7 @@
 				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			name = FirebaseCrashlytics;
+			name = "Run Script(FirebaseCrashlytics)";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -685,7 +685,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n";
 		};
-		1AA056E026BD2CC300343005 /* Run Script R.Swift */ = {
+		1AA056E026BD2CC300343005 /* Run Script(R.Swift) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
@@ -695,7 +695,7 @@
 			inputPaths = (
 				"$TEMP_DIR/rswift-lastrun",
 			);
-			name = "Run Script R.Swift";
+			name = "Run Script(R.Swift)";
 			outputFileListPaths = (
 			);
 			outputPaths = (
