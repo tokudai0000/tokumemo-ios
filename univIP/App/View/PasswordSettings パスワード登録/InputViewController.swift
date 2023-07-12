@@ -165,9 +165,11 @@ final class InputViewController: UIViewController {
             titleLabel1.text = "cアカウント"
             titleLabel2.text = "パスワード"
             TextField1.text = dataManager.cAccount
-            TextField2.text = dataManager.password
+            // 生体認証等無く、パスワードを表示させることは危険
+            // TextField2.text = dataManager.password
             TextSizeLabel1.text = "\(dataManager.cAccount.count)/10"
-            TextSizeLabel2.text = "\(dataManager.password.count)/100"
+            // 上記同様、桁数も初期状態では0桁にする
+            TextSizeLabel2.text = "0/100"
             TextField2.isSecureTextEntry = true
             resetButton.layer.cornerRadius = 25.0
             registerButton.setTitle("登録", for: .normal)
