@@ -11,6 +11,7 @@ target 'univIP' do
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
   pod 'Firebase/Analytics' , '~> 10.3'
+  pod 'FirebaseCrashlytics' , '~> 10.5'
   pod 'Alamofire', '~> 4' # いずれAlamofire 5系へ
   pod 'SwiftyJSON', '~> 5'
     
