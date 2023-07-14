@@ -41,6 +41,7 @@
 		1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListViewController.swift */; };
 		1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6EF50E27BA5C63004D0B2C /* DateFormatter.swift */; };
 		1A81A93126C12C8200CC56E2 /* ConstStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* ConstStruct.swift */; };
+		1A9378A12A60DC95009A5758 /* HomeContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A02A60DC95009A5758 /* HomeContainerViewController.swift */; };
 		1A94DEB429A22F1B00C62F1F /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A94DEB329A22F1B00C62F1F /* key.plist */; };
 		1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E15273D848100247F94 /* Agreement.rtf */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
@@ -123,6 +124,7 @@
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A93026C12C8200CC56E2 /* ConstStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstStruct.swift; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		1A9378A02A60DC95009A5758 /* HomeContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContainerViewController.swift; sourceTree = "<group>"; };
 		1A94DEB329A22F1B00C62F1F /* key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = key.plist; sourceTree = "<group>"; };
 		1A9E0E15273D848100247F94 /* Agreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,6 +230,7 @@
 				1A1A4E102A09FE75003A343B /* PrData.swift */,
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
+				1A9378A02A60DC95009A5758 /* HomeContainerViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
@@ -787,6 +790,7 @@
 				1AA29EE4291E68470049A546 /* UIColor.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */,
+				1A9378A12A60DC95009A5758 /* HomeContainerViewController.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* PrData.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */,
