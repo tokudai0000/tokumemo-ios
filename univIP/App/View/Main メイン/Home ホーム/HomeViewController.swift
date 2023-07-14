@@ -35,22 +35,22 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDefaults()
-        setupDelegate()
-        setupRecognizer()
-        setupConstraints()
-        setupViewModelStateRecognizer()
+//        setupDefaults()
+//        setupDelegate()
+//        setupRecognizer()
+//        setupConstraints()
+//        setupViewModelStateRecognizer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupViewOnAppear()
-        setupPrImageDisplayTimer()
+//        setupViewOnAppear()
+//        setupPrImageDisplayTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        prImageDisplayTimer.invalidate()
+//        prImageDisplayTimer.invalidate()
     }
     
     // MARK: - IBAction
