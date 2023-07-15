@@ -9,22 +9,29 @@ import UIKit
 
 class HomeContainerViewController: UIViewController {
 
-    let dataManager = DataManager.singleton
-
-    private let viewModel = HomeViewModel()
+    // MARK: - IBOutlet
 
     @IBOutlet weak var bannerContainerView: UIView!
     @IBOutlet weak var bannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bannerPageControl: UIPageControl!
+    @IBOutlet weak var menuCollectionView: UICollectionView!
 
-    var bannerViewController: BannerScrollViewController!
-//    @IBOutlet weak var prImageCollectionView: UICollectionView!
-//    let prImageCollerctionVC = PrImageCollectionViewController()
+    // 共通データ・マネージャ
+    private let dataManager = DataManager.singleton
+
+    private let viewModel = HomeViewModel()
+
+    private let menuCollerctionVC = MenuCollectionViewController()
+
+    private var bannerViewController: BannerScrollViewController!
+
+    // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBannerViewDefaults()
         setupBannerPageControl()
+        setupMenuCollectionView()
         setupViewModelStateRecognizer()
     }
 
@@ -64,8 +71,15 @@ class HomeContainerViewController: UIViewController {
         bannerPageControl.sizeToFit()
     }
 
-    private func updateBannerPageControl() {
-        bannerPageControl.currentPage = bannerViewController.pageIndex
+    private func setupMenuCollectionView() {
+        menuCollectionView.register(R.nib.homeCollectionCell)
+        menuCollectionView.delegate = menuCollerctionVC
+        menuCollectionView.dataSource = menuCollerctionVC
+        menuCollectionView.backgroundColor = .white
+        menuCollectionView.cornerRound = 20.0
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 100)
+        menuCollectionView.collectionViewLayout = layout
     }
 
     // ViewModelが変化したことの通知を受けて画面を更新する
@@ -86,7 +100,14 @@ class HomeContainerViewController: UIViewController {
             }
         }
     }
+
+    private func updateBannerPageControl() {
+        bannerPageControl.currentPage = bannerViewController.pageIndex
+    }
+
+
 }
+
 extension HomeContainerViewController: BannerScrollViewControllerDelegate {
 
     func bannerScrollViewController(_ scrollViewController: BannerScrollViewController, didChangePageIndex index: Int) {
@@ -94,17 +115,32 @@ extension HomeContainerViewController: BannerScrollViewControllerDelegate {
     }
 }
 
-//class PrImageCollectionViewController: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return initMenuLists.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-//        let collectionList = initMenuLists[indexPath.row]
-//        let title = collectionList.title
-//        let icon = collectionList.image
-//        cell.setupCell(title: title, image: icon)
-//        return cell
-//    }
-//}
+class MenuCollectionViewController: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    let initMenu2Lists:[MenuItemList] = [
+        MenuItemList(title: "教務システム", id: .courseManagementHomeMobile, image: R.image.menuIcon.courseManagementHome.name, url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: false),
+
+        MenuItemList(title: "manaba", id: .manabaHomePC, image: R.image.menuIcon.manaba.name, url: Url.manabaPC.string(), isLockIconExists: true, isHiddon: false),
+
+        MenuItemList(title: "メール", id: .mailService, image: R.image.menuIcon.mailService.name, url: Url.outlookService.string(), isLockIconExists: true, isHiddon: false),
+
+        MenuItemList(title: "図書館関連", id: .libraryBookLendingExtension, image: R.image.menuIcon.libraryBookLendingExtension.name, url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: false),
+
+        MenuItemList(title: "生協関連", id: .coopCalendar, image: R.image.menuIcon.coopCalendar.name, url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
+
+        MenuItemList(title: "その他", id: .careerCenter, image: R.image.menuIcon.careerCenter.name, url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false)
+    ]
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return initMenu2Lists.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
+        let collectionList = initMenu2Lists[indexPath.row]
+        let title = collectionList.title
+        let icon = collectionList.image
+        cell.setupCell(title: title, image: icon)
+        return cell
+    }
+}

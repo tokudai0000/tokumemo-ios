@@ -61,87 +61,6 @@ final class HomeViewController: UIViewController {
         vc.loadUrlString = Url.contactUs.string()
         present(vc, animated: true, completion: nil)
     }
-    
-//    @objc func handlePRImageTaped(_ sender: UITapGestureRecognizer) {
-//        guard let item = viewModel.displayPrItem else{
-//            return
-//        }
-//        let vc = R.storyboard.pR.prViewController()!
-//        vc.item = item
-//        present(vc, animated: true, completion: nil)
-//    }
-//
-//    // MARK: - Methods [Private]
-//
-//    private func setupDefaults() {
-//        prImageView.isUserInteractionEnabled = true
-//        collectionView.register(R.nib.homeCollectionCell)
-//        webViewForLogin.isHidden = true
-//        #if STUB
-//        webViewForLogin.isHidden = false
-//        #endif
-//    }
-//
-//    private func setupDelegate() {
-//        webViewForLogin.navigationDelegate = self
-//    }
-//
-//    private func setupRecognizer() {
-//        prImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlePRImageTaped(_:))))
-//        collectionView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longTap(gesture:))))
-//    }
-//
-//    private func setupConstraints() {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.itemSize = CGSize(width: 100, height: 100)
-//        collectionView.collectionViewLayout = layout
-//    }
-//
-//    private func setupViewOnAppear() {
-//        collectionView.reloadData()
-//        dataManager.canExecuteJavascript = true
-//        webViewForLogin.load(Url.universityTransitionLogin.urlRequest())
-//        viewModel.updatePrItems()
-//    }
-//
-//    private func setupPrImageDisplayTimer() {
-//        var prImageDisplayInterval = 5.0
-//        #if STUB
-//        prImageDisplayInterval = 2.0
-//        #endif
-//        prImageDisplayTimer = Timer.scheduledTimer(withTimeInterval: prImageDisplayInterval,
-//                                                   repeats: true,
-//                                                   block: { (timer) in
-//            self.displayPrImage()
-//        })
-//    }
-//
-//    // ViewModelが変化したことの通知を受けて画面を更新する
-//    private func setupViewModelStateRecognizer() {
-//        self.viewModel.state = { [weak self] (state) in
-//            guard let self = self else { fatalError() }
-//            DispatchQueue.main.async {
-//                switch state {
-//                case .busy:
-//                    break
-//                case .ready:
-//                    self.displayPrImage()
-//                    break
-//                case .error:
-//                    break
-//                }
-//            }
-//        }
-//    }
-//
-//    private func displayPrImage() {
-//        guard let item = self.viewModel.selectDispalyPrItem(),
-//        let url = item.imageURL else {
-//            return
-//        }
-//        self.viewModel.displayPrItem = item
-//        self.prImageView.loadCacheImage(urlStr: url)
-//    }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -179,40 +98,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let vc = R.storyboard.web.webViewController()!
         vc.loadUrlString = cell.url
         present(vc, animated: true, completion: nil)
-    }
-    
-    // 長押しタップ時に並び替え
-    @objc func longTap(gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
-                break
-            }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case .changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
-        case .ended:
-            collectionView.endInteractiveMovement()
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        var displayLists = viewModel.displayMenuItemLists
-        let item = displayLists.remove(at: sourceIndexPath.row)
-        displayLists.insert(item, at: destinationIndexPath.row)
-        var hiddonLists:[MenuItemList] = []
-        for list in dataManager.menuLists {
-            if list.isHiddon {
-                hiddonLists.append(list)
-            }
-        }
-        dataManager.menuLists = displayLists + hiddonLists
     }
     
     /// 図書館では常三島と蔵本の2つのカレンダーを選択させるためにアラートを表示
