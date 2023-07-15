@@ -45,6 +45,8 @@
 		1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */; };
 		1A9378AC2A60E7A7009A5758 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378AB2A60E7A7009A5758 /* BannerView.swift */; };
 		1A9378AE2A60E7B3009A5758 /* BannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378AD2A60E7B3009A5758 /* BannerView.xib */; };
+		1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378B12A6294C6009A5758 /* UnivBannerView.swift */; };
+		1A9378B42A6294D2009A5758 /* UnivBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378B32A6294D2009A5758 /* UnivBannerView.xib */; };
 		1A94DEB429A22F1B00C62F1F /* key.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A94DEB329A22F1B00C62F1F /* key.plist */; };
 		1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E15273D848100247F94 /* Agreement.rtf */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
@@ -131,6 +133,8 @@
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
 		1A9378AB2A60E7A7009A5758 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		1A9378AD2A60E7B3009A5758 /* BannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerView.xib; sourceTree = "<group>"; };
+		1A9378B12A6294C6009A5758 /* UnivBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivBannerView.swift; sourceTree = "<group>"; };
+		1A9378B32A6294D2009A5758 /* UnivBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnivBannerView.xib; sourceTree = "<group>"; };
 		1A94DEB329A22F1B00C62F1F /* key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = key.plist; sourceTree = "<group>"; };
 		1A9E0E15273D848100247F94 /* Agreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +242,7 @@
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A9378A02A60DC95009A5758 /* HomeContainerViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
+				1A9378B02A629487009A5758 /* UnivBanner */,
 				1A9378AF2A61645B009A5758 /* Banner バナー */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
@@ -341,6 +346,15 @@
 			);
 			name = "Banner バナー";
 			path = "Banner バナー";
+			sourceTree = "<group>";
+		};
+		1A9378B02A629487009A5758 /* UnivBanner */ = {
+			isa = PBXGroup;
+			children = (
+				1A9378B12A6294C6009A5758 /* UnivBannerView.swift */,
+				1A9378B32A6294D2009A5758 /* UnivBannerView.xib */,
+			);
+			path = UnivBanner;
 			sourceTree = "<group>";
 		};
 		1A9E0E08273CBA8500247F94 /* FireBaseAnalytics */ = {
@@ -638,6 +652,7 @@
 				1AAF27022748587C0071B89F /* Settings.bundle in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
+				1A9378B42A6294D2009A5758 /* UnivBannerView.xib in Resources */,
 				1A5698C72938CE18003906DB /* Customize.storyboard in Resources */,
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */,
@@ -813,6 +828,7 @@
 				1A9378A12A60DC95009A5758 /* HomeContainerViewController.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* PrData.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
+				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImage.swift in Sources */,

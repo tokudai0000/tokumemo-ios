@@ -113,6 +113,32 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peI-HX-KlV">
+                                <rect key="frame" x="0.0" y="535" width="393" height="200.33333333333337"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="徳島大学での活動" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwX-d8-eKQ">
+                                        <rect key="frame" x="20" y="0.0" width="353" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eij-dP-cJK">
+                                        <rect key="frame" x="0.0" y="20.333333333333371" width="393" height="180"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="180" id="vEv-Hm-Tap"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="eij-dP-cJK" firstAttribute="top" secondItem="KwX-d8-eKQ" secondAttribute="bottom" id="8yl-W3-JZa"/>
+                                    <constraint firstItem="KwX-d8-eKQ" firstAttribute="leading" secondItem="peI-HX-KlV" secondAttribute="leading" constant="20" id="KSE-IB-9yX"/>
+                                    <constraint firstAttribute="trailing" secondItem="eij-dP-cJK" secondAttribute="trailing" id="RiQ-dB-tI0"/>
+                                    <constraint firstAttribute="trailing" secondItem="KwX-d8-eKQ" secondAttribute="trailing" constant="20" id="XHd-Ie-rxp"/>
+                                    <constraint firstItem="KwX-d8-eKQ" firstAttribute="top" secondItem="peI-HX-KlV" secondAttribute="top" id="Zwh-cg-Oml"/>
+                                    <constraint firstItem="eij-dP-cJK" firstAttribute="leading" secondItem="peI-HX-KlV" secondAttribute="leading" id="eTd-aA-dyz"/>
+                                    <constraint firstAttribute="bottom" secondItem="eij-dP-cJK" secondAttribute="bottom" id="gxc-bF-uPc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3SR-tV-Ld6"/>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -121,8 +147,11 @@
                             <constraint firstItem="CiA-Ie-eOO" firstAttribute="top" secondItem="bKT-k2-QPH" secondAttribute="bottom" constant="20" id="3Qf-mh-cNf"/>
                             <constraint firstItem="3SR-tV-Ld6" firstAttribute="trailing" secondItem="CiA-Ie-eOO" secondAttribute="trailing" constant="20" id="7nr-3k-Yvn"/>
                             <constraint firstItem="3SR-tV-Ld6" firstAttribute="trailing" secondItem="bKT-k2-QPH" secondAttribute="trailing" id="Bcd-e7-W8I"/>
+                            <constraint firstItem="peI-HX-KlV" firstAttribute="leading" secondItem="3SR-tV-Ld6" secondAttribute="leading" id="FCC-5a-0jg"/>
+                            <constraint firstItem="peI-HX-KlV" firstAttribute="top" secondItem="CiA-Ie-eOO" secondAttribute="bottom" constant="20" id="OXY-GA-Cgc"/>
                             <constraint firstItem="CiA-Ie-eOO" firstAttribute="leading" secondItem="3SR-tV-Ld6" secondAttribute="leading" constant="20" id="RAR-5t-Qdp"/>
                             <constraint firstItem="bKT-k2-QPH" firstAttribute="leading" secondItem="3SR-tV-Ld6" secondAttribute="leading" id="awG-cu-ki9"/>
+                            <constraint firstItem="3SR-tV-Ld6" firstAttribute="trailing" secondItem="peI-HX-KlV" secondAttribute="trailing" id="axv-CS-2H6"/>
                         </constraints>
                     </view>
                     <connections>
@@ -130,6 +159,8 @@
                         <outlet property="bannerContainerViewHeightConstraint" destination="1iM-Ie-EFe" id="LGt-jO-YVT"/>
                         <outlet property="bannerPageControl" destination="BUK-yD-7Nb" id="7Oc-y9-3pE"/>
                         <outlet property="menuCollectionView" destination="CiA-Ie-eOO" id="8tM-gY-S7l"/>
+                        <outlet property="univBannerContainerView" destination="eij-dP-cJK" id="ecJ-Mg-zXO"/>
+                        <outlet property="univBannerContainerViewHeightConstraint" destination="vEv-Hm-Tap" id="TWO-n2-JWA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jXF-sA-vB9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

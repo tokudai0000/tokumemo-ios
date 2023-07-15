@@ -52,7 +52,6 @@ class BannerScrollViewController: UIViewController {
         setupSizes()
         setupScrollView()
         setupContentSize()
-        addPanels()
     }
 
     func setupViews() {
@@ -113,12 +112,13 @@ class BannerScrollViewController: UIViewController {
     }
 
     var bannerView: BannerView!
+    var univBannerView: BannerView!
 
     /// パネル追加
-    func addPanels() {
+    func addPrBannerPanels() {
         var prevBannerView: BannerView?
         dataManager.prItemLists.enumerated().forEach { index, item in
-            if let bannerView =  UINib(nibName: "BannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? BannerView {
+            if let bannerView = UINib(nibName: "BannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? BannerView {
                 // 中身表示
                 bannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
 
@@ -142,6 +142,39 @@ class BannerScrollViewController: UIViewController {
                 gesture.numberOfTouchesRequired = 1
                 bannerView.tag = index
                 bannerView.addGestureRecognizer(gesture)
+            }
+        }
+        contentView.layoutSubviews()
+    }
+    func addUnivBannerPanels() {
+        var prevBannerView: UnivBannerView?
+        dataManager.prItemLists.enumerated().forEach { index, item in
+            if let univBannerView =  UINib(nibName: "UnivBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? UnivBannerView {
+                // 中身表示
+                univBannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
+                univBannerView.titleTextView.text = item.organizationName?.description
+                univBannerView.discriptionTextView.text = item.introduction?.description
+
+                // レイアウト
+                univBannerView.translatesAutoresizingMaskIntoConstraints = false
+                contentView.addSubview(univBannerView)
+                univBannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+                univBannerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+                if index == 0 {
+                    univBannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+                } else {
+                    if let prevBanner = prevBannerView {
+                        univBannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
+                    }
+                }
+                univBannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
+                prevBannerView = univBannerView
+
+                // バナーをタップしたときのイベント設定
+                let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
+                gesture.numberOfTouchesRequired = 1
+                univBannerView.tag = index
+                univBannerView.addGestureRecognizer(gesture)
             }
         }
         contentView.layoutSubviews()

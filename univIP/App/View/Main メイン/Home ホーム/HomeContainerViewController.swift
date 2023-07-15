@@ -14,6 +14,8 @@ class HomeContainerViewController: UIViewController {
     @IBOutlet weak var bannerContainerView: UIView!
     @IBOutlet weak var bannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bannerPageControl: UIPageControl!
+    @IBOutlet weak var univBannerContainerView: UIView!
+    @IBOutlet weak var univBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuCollectionView: UICollectionView!
 
     // 共通データ・マネージャ
@@ -24,12 +26,14 @@ class HomeContainerViewController: UIViewController {
     private let menuCollerctionVC = MenuCollectionViewController()
 
     private var bannerViewController: BannerScrollViewController!
+    private var univBannerViewController: BannerScrollViewController!
 
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBannerViewDefaults()
+        setupUnivBannerViewDefaults()
         setupBannerPageControl()
         setupMenuCollectionView()
         setupViewModelStateRecognizer()
@@ -63,6 +67,21 @@ class HomeContainerViewController: UIViewController {
         bannerViewController.delegate = self
     }
 
+    private func setupUnivBannerViewDefaults() {
+        univBannerViewController = BannerScrollViewController()
+        addChild(univBannerViewController)
+        univBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        univBannerContainerView.addSubview(univBannerViewController.view)
+        univBannerViewController.view.topAnchor.constraint(equalTo: univBannerContainerView.topAnchor).isActive = true
+        univBannerViewController.view.bottomAnchor.constraint(equalTo: univBannerContainerView.bottomAnchor).isActive = true
+        univBannerViewController.view.leadingAnchor.constraint(equalTo: univBannerContainerView.leadingAnchor).isActive = true
+        univBannerViewController.view.trailingAnchor.constraint(equalTo: univBannerContainerView.trailingAnchor).isActive = true
+        univBannerViewController.didMove(toParent: self)
+        univBannerViewController.setup()
+        univBannerContainerViewHeightConstraint.constant = univBannerViewController.panelHeight
+        univBannerViewController.delegate = self
+    }
+
     private func setupBannerPageControl() {
         bannerPageControl.pageIndicatorTintColor = .lightGray
         bannerPageControl.currentPageIndicatorTintColor = .black
@@ -92,6 +111,9 @@ class HomeContainerViewController: UIViewController {
                     break
                 case .ready:
                     self.bannerViewController.setup()
+                    self.bannerViewController.addPrBannerPanels()
+                    self.univBannerViewController.setup()
+                    self.univBannerViewController.addUnivBannerPanels()
                     self.bannerPageControl.numberOfPages = self.dataManager.prItemLists.count
                     break
                 case .error:
