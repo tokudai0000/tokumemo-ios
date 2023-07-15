@@ -66,17 +66,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKT-k2-QPH" userLabel="BannerView">
-                                <rect key="frame" x="0.0" y="59" width="393" height="216"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="206"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LFM-XA-i7M" userLabel="BannerContainerView">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="180"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="1iM-Ie-EFe"/>
                                         </constraints>
                                     </view>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BUK-yD-7Nb">
-                                        <rect key="frame" x="138.66666666666666" y="190" width="116" height="26"/>
+                                        <rect key="frame" x="138.66666666666666" y="180" width="116" height="26"/>
                                         <connections>
                                             <action selector="didChangeBannerPageControl" destination="kIX-Gy-BrC" eventType="valueChanged" id="8fq-0r-DTy"/>
                                         </connections>
@@ -86,13 +85,13 @@
                                     <constraint firstItem="LFM-XA-i7M" firstAttribute="top" secondItem="bKT-k2-QPH" secondAttribute="top" id="TR6-20-BcF"/>
                                     <constraint firstItem="BUK-yD-7Nb" firstAttribute="centerX" secondItem="bKT-k2-QPH" secondAttribute="centerX" id="X1e-oY-liM"/>
                                     <constraint firstItem="LFM-XA-i7M" firstAttribute="leading" secondItem="bKT-k2-QPH" secondAttribute="leading" id="Xhf-tg-LBh"/>
-                                    <constraint firstItem="BUK-yD-7Nb" firstAttribute="top" secondItem="LFM-XA-i7M" secondAttribute="bottom" constant="10" id="YCW-lZ-QvM"/>
+                                    <constraint firstItem="BUK-yD-7Nb" firstAttribute="top" secondItem="LFM-XA-i7M" secondAttribute="bottom" id="YCW-lZ-QvM"/>
                                     <constraint firstAttribute="bottom" secondItem="BUK-yD-7Nb" secondAttribute="bottom" id="cKh-ZB-ynw"/>
                                     <constraint firstAttribute="trailing" secondItem="LFM-XA-i7M" secondAttribute="trailing" id="r4z-dB-bN8"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CiA-Ie-eOO">
-                                <rect key="frame" x="20" y="295" width="353" height="230"/>
+                                <rect key="frame" x="20" y="285" width="353" height="230"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="230" id="oa6-H8-Yer"/>
@@ -140,9 +139,6 @@
     </scenes>
     <resources>
         <image name="TabIcon/home" width="25" height="25"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
