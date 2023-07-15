@@ -15,6 +15,7 @@ protocol BannerScrollViewControllerDelegate: AnyObject {
 /// バナー表示Viewのコントローラ
 /// scrollViewを使って表示している
 class BannerScrollViewController: UIViewController {
+    let dataManager = DataManager.singleton
     /// バナーエリアの全体の幅
     let baseComponentWidth: CGFloat = 406
     /// デザインでのパネルの幅
@@ -46,19 +47,20 @@ class BannerScrollViewController: UIViewController {
 
     var delegate: BannerScrollViewControllerDelegate?
 
-    //開発用のダミーデータ
-    let colorHexs: [String] = ["D4C2FC", "C2DDFC", "C2FCF4", "C2FCCC", "D4FCC2",
-                               "EEFCC2", "FCE9C2", "FBC2A5", "FBAEA5", "FBA5CF"]
-    lazy var colors: [UIColor] = {
-        colorHexs.map { UIColor.hexStringToUIColor(hex: $0) }
-    }()
-
     /// 初期化
     func setup() {
         setupSizes()
         setupScrollView()
         setupContentSize()
         addPanels()
+    }
+
+    func setupViews() {
+        if let contents = contentView{
+            for subview in contents.subviews {
+                subview.removeFromSuperview()
+            }
+        }
     }
 
     /// viewの大きさ測定
@@ -104,7 +106,7 @@ class BannerScrollViewController: UIViewController {
     }
 
     func setupContentSize() {
-        let count = CGFloat(colors.count)
+        let count = CGFloat(dataManager.prItemLists.count)
         let contentWidth = (panelWidth + panelGap) * (count)
         contentViewWidthConstraint.constant = contentWidth
         scrollView.contentSize = CGSize(width: contentWidth, height: panelHeight)
@@ -115,12 +117,10 @@ class BannerScrollViewController: UIViewController {
     /// パネル追加
     func addPanels() {
         var prevBannerView: BannerView?
-        colors.enumerated().forEach { index, color in
+        dataManager.prItemLists.enumerated().forEach { index, item in
             if let bannerView =  UINib(nibName: "BannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? BannerView {
                 // 中身表示
-                bannerView.backgroundColor = color
-//                bannerView.titleLabel.text = "これはサンプルです。バナーNo. \(index + 1)"
-//                bannerView.subTextLabel.text = "サブテキストが入ります。あいうえお"
+                bannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
 
                 // レイアウト
                 bannerView.translatesAutoresizingMaskIntoConstraints = false

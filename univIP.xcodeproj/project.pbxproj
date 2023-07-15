@@ -237,12 +237,10 @@
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A9378A02A60DC95009A5758 /* HomeContainerViewController.swift */,
-				1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
+				1A9378AF2A61645B009A5758 /* Banner バナー */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
-				1A9378AB2A60E7A7009A5758 /* BannerView.swift */,
-				1A9378AD2A60E7B3009A5758 /* BannerView.xib */,
 			);
 			path = "Home ホーム";
 			sourceTree = "<group>";
@@ -332,6 +330,17 @@
 				1A3A75FB291679C600069818 /* API */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1A9378AF2A61645B009A5758 /* Banner バナー */ = {
+			isa = PBXGroup;
+			children = (
+				1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */,
+				1A9378AB2A60E7A7009A5758 /* BannerView.swift */,
+				1A9378AD2A60E7B3009A5758 /* BannerView.xib */,
+			);
+			name = "Banner バナー";
+			path = "Banner バナー";
 			sourceTree = "<group>";
 		};
 		1A9E0E08273CBA8500247F94 /* FireBaseAnalytics */ = {

@@ -19,9 +19,9 @@ class HomeViewModel {
     // API マネージャ
     public let apiManager = ApiManager.singleton
     
-    public var prItems: [PrData] = []
+//    public var prItems: [PrData] = []
     
-    public var displayPrItem: PrData?
+//    public var displayPrItem: PrData?
     
     //MARK: - STATE ステータス
     
@@ -49,7 +49,7 @@ class HomeViewModel {
     
     public func updatePrItems() {
         state?(.busy) // 通信開始（通信中）
-        prItems.removeAll()
+        dataManager.prItemLists.removeAll()
         apiManager.request(Url.prItemJsonData.string(),
                            success: { [weak self] (response) in
             guard let self = self else {
@@ -63,7 +63,7 @@ class HomeViewModel {
                                     tappedURL: item["tappedURL"].string,
                                     organizationName: item["organization_name"].string,
                                     description: item["description"].string)
-                self.prItems.append(prItem)
+                self.dataManager.prItemLists.append(prItem)
             }
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in
@@ -74,22 +74,22 @@ class HomeViewModel {
     
     /// prItemsをランダムに表示させるための関数
     /// prItemsの配列数が「0と1」の場合を除き、ランダムにPrData?を返す
-    public func selectDispalyPrItem() -> PrData? {
-        if prItems.count == 0 {
-            return nil
-        }else if prItems.count == 1 {
-            return prItems[0]
-        }
-        while true {
-            let randomNum = Int.random(in: 0..<prItems.count)
-            if displayPrItem == nil {
-                return prItems[randomNum]
-            }
-            if displayPrItem?.imageURL != prItems[randomNum].imageURL {
-                return prItems[randomNum]
-            }
-        }
-    }
+//    public func selectDispalyPrItem() -> PrData? {
+//        if prItems.count == 0 {
+//            return nil
+//        }else if prItems.count == 1 {
+//            return prItems[0]
+//        }
+//        while true {
+//            let randomNum = Int.random(in: 0..<prItems.count)
+//            if displayPrItem == nil {
+//                return prItems[randomNum]
+//            }
+//            if displayPrItem?.imageURL != prItems[randomNum].imageURL {
+//                return prItems[randomNum]
+//            }
+//        }
+//    }
     
     /// 大学図書館の種類
     enum LibraryType {

@@ -9,17 +9,39 @@ import UIKit
 
 class HomeContainerViewController: UIViewController {
 
+    let dataManager = DataManager.singleton
+
+    private let viewModel = HomeViewModel()
+
     @IBOutlet weak var bannerContainerView: UIView!
     @IBOutlet weak var bannerContainerViewHeightConstraint: NSLayoutConstraint!
-    var bannerViewController: BannerScrollViewController!
-
     @IBOutlet weak var bannerPageControl: UIPageControl!
 
+    var bannerViewController: BannerScrollViewController!
 //    @IBOutlet weak var prImageCollectionView: UICollectionView!
 //    let prImageCollerctionVC = PrImageCollectionViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBannerViewDefaults()
+        setupBannerPageControl()
+        setupViewModelStateRecognizer()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.updatePrItems()
+    }
+
+    // MARK: - IBAction
+
+    @IBAction func didChangeBannerPageControl() {
+        bannerViewController.showPage(index: bannerPageControl.currentPage, animated: true)
+    }
+
+    // MARK: - Methods [Private]
+
+    private func setupBannerViewDefaults() {
         bannerViewController = BannerScrollViewController()
         addChild(bannerViewController)
         bannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -32,63 +54,43 @@ class HomeContainerViewController: UIViewController {
         bannerViewController.setup()
         bannerContainerViewHeightConstraint.constant = bannerViewController.panelHeight
         bannerViewController.delegate = self
-
-        setupBannerPageControl()
-//        prImageCollectionView.register(R.nib.homeCollectionCell)
-//
-//        prImageCollectionView.delegate = prImageCollerctionVC
-//        prImageCollectionView.dataSource = prImageCollerctionVC
-//        let layout = UICollectionViewFlowLayout()
-//        layout.itemSize = CGSize(width: 100, height: 100)
-//        prImageCollectionView.collectionViewLayout = layout
     }
 
-    func setupBannerPageControl() {
+    private func setupBannerPageControl() {
         bannerPageControl.pageIndicatorTintColor = .lightGray
         bannerPageControl.currentPageIndicatorTintColor = .black
-        bannerPageControl.numberOfPages = bannerViewController.colors.count
+        bannerPageControl.numberOfPages = dataManager.prItemLists.count
         bannerPageControl.currentPage = bannerViewController.pageIndex
         bannerPageControl.sizeToFit()
     }
 
-    func updateBannerPageControl() {
+    private func updateBannerPageControl() {
         bannerPageControl.currentPage = bannerViewController.pageIndex
     }
 
-    @IBAction func didChangeBannerPageControl() {
-        bannerViewController.showPage(index: bannerPageControl.currentPage, animated: true)
+    // ViewModelが変化したことの通知を受けて画面を更新する
+    private func setupViewModelStateRecognizer() {
+        self.viewModel.state = { [weak self] (state) in
+            guard let self = self else { fatalError() }
+            DispatchQueue.main.async {
+                switch state {
+                case .busy:
+                    break
+                case .ready:
+                    self.bannerViewController.setup()
+                    self.bannerPageControl.numberOfPages = self.dataManager.prItemLists.count
+                    break
+                case .error:
+                    break
+                }
+            }
+        }
     }
 }
 extension HomeContainerViewController: BannerScrollViewControllerDelegate {
 
     func bannerScrollViewController(_ scrollViewController: BannerScrollViewController, didChangePageIndex index: Int) {
         updateBannerPageControl()
-    }
-}
-
-extension UIColor {
-
-    /// https://stackoverflow.com/a/27203691
-    static func hexStringToUIColor (hex:String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
-            return UIColor.gray
-        }
-
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
     }
 }
 
