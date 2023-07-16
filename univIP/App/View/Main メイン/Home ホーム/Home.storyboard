@@ -124,6 +124,7 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eij-dP-cJK">
                                         <rect key="frame" x="0.0" y="20.333333333333371" width="393" height="180"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="vEv-Hm-Tap"/>
                                         </constraints>

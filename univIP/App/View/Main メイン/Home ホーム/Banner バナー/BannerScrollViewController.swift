@@ -123,6 +123,7 @@ class BannerScrollViewController: UIViewController {
                 bannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
 
                 // レイアウト
+                bannerView.backgroundColor = .clear
                 bannerView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(bannerView)
                 bannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
