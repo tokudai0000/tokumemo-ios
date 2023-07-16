@@ -18,6 +18,7 @@ class HomeContainerViewController: UIViewController {
     @IBOutlet weak var univBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuCollectionView: UICollectionView!
 
+    @IBOutlet weak var homeTableView: UITableView!
     // 共通データ・マネージャ
     private let dataManager = DataManager.singleton
 
@@ -27,7 +28,54 @@ class HomeContainerViewController: UIViewController {
 
     private var bannerViewController: BannerScrollViewController!
     private var univBannerViewController: BannerScrollViewController!
+    enum SettingItemType {
 
+        case password
+
+        /// お気に入り登録
+        case favorite
+
+        /// 並び替え機能
+        case customize
+
+        case aboutThisApp
+
+        case contactUs
+
+        /// トクメモ＋のTwitter
+        case officialSNS
+
+        /// トクメモ＋のLit.linkホームページ
+        case homePage
+
+        case termsOfService
+
+        case privacyPolicy
+
+        /// univIPのGitHub
+        case sourceCode
+    }
+
+    struct SettingItem {
+        let title: String
+        let id: SettingItemType
+        let url: String?
+    }
+
+    let settingItemLists = [
+        [SettingItem(title: "パスワード設定", id: .password, url: nil)],
+
+        [SettingItem(title: "お気に入り登録", id: .favorite, url: nil),
+         SettingItem(title: "カスタマイズ", id: .customize, url: nil)],
+
+        [SettingItem(title: "このアプリについて", id: .aboutThisApp, url: Url.appIntroduction.string()),
+         SettingItem(title: "お問い合わせ", id: .contactUs, url: Url.contactUs.string()),
+         SettingItem(title: "公式SNS", id: .officialSNS, url: Url.officialSNS.string()),
+         SettingItem(title: "ホームページ", id: .homePage, url: Url.homePage.string()),],
+
+        [SettingItem(title: "利用規約", id: .termsOfService, url: Url.termsOfService.string()),
+         SettingItem(title: "プライバシーポリシー", id: .privacyPolicy, url: Url.privacyPolicy.string()),
+         SettingItem(title: "ソースコード", id: .sourceCode,url: Url.sourceCode.string())]]
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -135,6 +183,25 @@ extension HomeContainerViewController: BannerScrollViewControllerDelegate {
     func bannerScrollViewController(_ scrollViewController: BannerScrollViewController, didChangePageIndex index: Int) {
         updateBannerPageControl()
     }
+}
+
+extension HomeContainerViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return settingItemLists.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settingItemLists[section].count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.homeTableView, for: indexPath)!
+        cell.textLabel?.text = settingItemLists[indexPath.section][indexPath.item].title
+        return cell
+    }
+
+
 }
 
 class MenuCollectionViewController: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
