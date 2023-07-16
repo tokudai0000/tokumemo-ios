@@ -205,11 +205,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bannerContainerView" destination="LFM-XA-i7M" id="egN-Hx-TEU"/>
-                        <outlet property="bannerContainerViewHeightConstraint" destination="1iM-Ie-EFe" id="LGt-jO-YVT"/>
-                        <outlet property="bannerPageControl" destination="BUK-yD-7Nb" id="7Oc-y9-3pE"/>
                         <outlet property="homeTableView" destination="oJf-eX-9Ve" id="RlT-Lp-qJO"/>
                         <outlet property="menuCollectionView" destination="CiA-Ie-eOO" id="8tM-gY-S7l"/>
+                        <outlet property="prBannerContainerView" destination="LFM-XA-i7M" id="egN-Hx-TEU"/>
+                        <outlet property="prBannerContainerViewHeightConstraint" destination="1iM-Ie-EFe" id="LGt-jO-YVT"/>
+                        <outlet property="prBannerPageControl" destination="BUK-yD-7Nb" id="7Oc-y9-3pE"/>
                         <outlet property="univBannerContainerView" destination="eij-dP-cJK" id="ecJ-Mg-zXO"/>
                         <outlet property="univBannerContainerViewHeightConstraint" destination="vEv-Hm-Tap" id="TWO-n2-JWA"/>
                     </connections>
