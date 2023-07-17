@@ -96,3 +96,17 @@ let initMenuLists:[MenuItemList] = [
     
     MenuItemList(title: "[図書]HP_蔵本", id: .libraryWebHomePC, image: R.image.menuIcon.libraryBookLendingExtension.name, url: Url.libraryHomePageKuraPC.string(), isLockIconExists: false, isHiddon: true),
 ]
+
+let homeMenuLists:[MenuItemList] = [
+    MenuItemList(title: "教務システム", id: .courseManagementHomeMobile, image: R.image.menuIcon.courseManagementHome.name, url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: false),
+
+    MenuItemList(title: "manaba", id: .manabaHomePC, image: R.image.menuIcon.manaba.name, url: Url.manabaPC.string(), isLockIconExists: true, isHiddon: false),
+
+    MenuItemList(title: "メール", id: .mailService, image: R.image.menuIcon.mailService.name, url: Url.outlookService.string(), isLockIconExists: true, isHiddon: false),
+
+    MenuItemList(title: "図書館関連", id: .libraryBookLendingExtension, image: R.image.menuIcon.libraryBookLendingExtension.name, url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: false),
+
+    MenuItemList(title: "生協関連", id: .coopCalendar, image: R.image.menuIcon.coopCalendar.name, url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
+
+    MenuItemList(title: "その他", id: .careerCenter, image: R.image.menuIcon.careerCenter.name, url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false)
+]

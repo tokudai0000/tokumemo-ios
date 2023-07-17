@@ -17,6 +17,7 @@ class HomeContainerViewController: UIViewController {
     @IBOutlet weak var univBannerContainerView: UIView!
     @IBOutlet weak var univBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuCollectionView: UICollectionView!
+    @IBOutlet weak var menuCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var homeTableView: UITableView!
 
     // 共通データ・マネージャ
@@ -24,10 +25,7 @@ class HomeContainerViewController: UIViewController {
 
     private let viewModel = HomeViewModel()
 
-    private let menuCollerctionVC = MenuCollectionViewController()
-
     private var prBannerViewController: BannerScrollViewController!
-
     private var univBannerViewController: BannerScrollViewController!
 
     enum SettingItemType {
@@ -131,12 +129,17 @@ class HomeContainerViewController: UIViewController {
 
     private func setupMenuCollectionView() {
         menuCollectionView.register(R.nib.homeCollectionCell)
-        menuCollectionView.delegate = menuCollerctionVC
-        menuCollectionView.dataSource = menuCollerctionVC
+        menuCollectionView.delegate = self
+        menuCollectionView.dataSource = self
         menuCollectionView.backgroundColor = .white
         menuCollectionView.cornerRound = 20.0
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100)
+        let cellWidth = floor(menuCollectionView.bounds.width / 3)
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+        layout.sectionInset = UIEdgeInsets(top: 10,
+                                           left: 0,
+                                           bottom: 10,
+                                           right: 0)
         menuCollectionView.collectionViewLayout = layout
     }
 
@@ -193,32 +196,31 @@ extension HomeContainerViewController: UITableViewDelegate, UITableViewDataSourc
 
 }
 
-class MenuCollectionViewController: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    let initMenu2Lists:[MenuItemList] = [
-        MenuItemList(title: "教務システム", id: .courseManagementHomeMobile, image: R.image.menuIcon.courseManagementHome.name, url: Url.courseManagementMobile.string(), isLockIconExists: true, isHiddon: false),
-
-        MenuItemList(title: "manaba", id: .manabaHomePC, image: R.image.menuIcon.manaba.name, url: Url.manabaPC.string(), isLockIconExists: true, isHiddon: false),
-
-        MenuItemList(title: "メール", id: .mailService, image: R.image.menuIcon.mailService.name, url: Url.outlookService.string(), isLockIconExists: true, isHiddon: false),
-
-        MenuItemList(title: "図書館関連", id: .libraryBookLendingExtension, image: R.image.menuIcon.libraryBookLendingExtension.name, url: Url.libraryBookLendingExtension.string(), isLockIconExists: true, isHiddon: false),
-
-        MenuItemList(title: "生協関連", id: .coopCalendar, image: R.image.menuIcon.coopCalendar.name, url: Url.tokudaiCoop.string(), isLockIconExists: false, isHiddon: false),
-
-        MenuItemList(title: "その他", id: .careerCenter, image: R.image.menuIcon.careerCenter.name, url: Url.tokudaiCareerCenter.string(), isLockIconExists: false, isHiddon: false)
-    ]
+extension HomeContainerViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return initMenu2Lists.count
+        return homeMenuLists.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-        let collectionList = initMenu2Lists[indexPath.row]
-        let title = collectionList.title
-        let icon = collectionList.image
+        let title = homeMenuLists[indexPath.row].title
+        let icon = homeMenuLists[indexPath.row].image
         cell.setupCell(title: title, image: icon)
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // セルの割当に利用可能なwidth
+        let availableWidth = menuCollectionView.bounds.width
+        let margin: CGFloat = 10
+        let itemPerWidth: CGFloat = 3
+        // セル一つのwidth
+        // : ( menuCollectionViewの横サイズ / 1列当たりのアイテム数 ) - 余白
+        let cellWidth = (availableWidth / itemPerWidth) - margin
+        // menuCollectionViewの縦サイズを指定
+        // : ( セルサイズ + 余白 ) * 2
+        menuCollectionViewHeightConstraint.constant = (cellWidth + margin) * 2
+        return CGSize(width: cellWidth, height: cellWidth)
     }
 }
