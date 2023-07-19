@@ -184,13 +184,9 @@ class BannerScrollViewController: UIViewController {
     @objc func didTapBanner(gesture: UITapGestureRecognizer) {
         if case .ended = gesture.state,
            let index = gesture.view?.tag {
-
-            let alertController = UIAlertController(title: "\(index) がタップされました", message: nil, preferredStyle: .alert)
-            let okButton = UIAlertAction(title: "OK", style: .default) { _ in
-                alertController.dismiss(animated: true, completion: nil)
-            }
-            alertController.addAction(okButton)
-            present(alertController, animated: true, completion: nil)
+            let vc = R.storyboard.pR.prViewController()!
+            vc.item = dataManager.prItemLists[index]
+            present(vc, animated: true, completion: nil)
         }
     }
 
