@@ -48,8 +48,8 @@ class BannerScrollViewController: UIViewController {
     var delegate: BannerScrollViewControllerDelegate?
 
     /// 初期化
-    func setup() {
-        setupSizes()
+    func initSetup() {
+        setupViewSizes()
         setupScrollView()
         setupContentSize()
     }
@@ -63,7 +63,7 @@ class BannerScrollViewController: UIViewController {
     }
 
     /// viewの大きさ測定
-    func setupSizes() {
+    func setupViewSizes() {
         let viewWidth = view.frame.width
         let ratio: CGFloat = viewWidth / baseComponentWidth
         panelWidth = ratio * basePanelWidth

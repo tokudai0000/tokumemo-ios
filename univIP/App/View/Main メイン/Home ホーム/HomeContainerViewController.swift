@@ -33,11 +33,8 @@ class HomeContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        prBannerViewController = BannerScrollViewController()
-        setupBannerViewDefaults(prBannerViewController, prBannerContainerView, prBannerContainerViewHeightConstraint)
-        setupPrBannerPageControl()
-        univBannerViewController = BannerScrollViewController()
-        setupBannerViewDefaults(univBannerViewController, univBannerContainerView, univBannerContainerViewHeightConstraint)
+        setupPrBannerDefaults()
+        setupUnivBannerDefaults()
         setupMenuCollectionView()
         setupViewModelStateRecognizer()
         homeTableViewHeightConstraint.constant = CGFloat(44 * homeTableItemLists.count)
@@ -56,20 +53,29 @@ class HomeContainerViewController: UIViewController {
 
     // MARK: - Methods [Private]
 
-    private func setupBannerViewDefaults(_ bannerViewController: BannerScrollViewController,
-                                         _ bannerContainerView: UIView,
-                                         _ bannerContainerViewHeightConstraint: NSLayoutConstraint) {
-        addChild(bannerViewController)
-        bannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        bannerContainerView.addSubview(bannerViewController.view)
-        bannerViewController.view.topAnchor.constraint(equalTo: bannerContainerView.topAnchor).isActive = true
-        bannerViewController.view.bottomAnchor.constraint(equalTo: bannerContainerView.bottomAnchor).isActive = true
-        bannerViewController.view.leadingAnchor.constraint(equalTo: bannerContainerView.leadingAnchor).isActive = true
-        bannerViewController.view.trailingAnchor.constraint(equalTo: bannerContainerView.trailingAnchor).isActive = true
-        bannerViewController.didMove(toParent: self)
-        bannerViewController.setup()
-        bannerViewController.delegate = self
-        bannerContainerViewHeightConstraint.constant = bannerViewController.panelHeight
+    private func setupPrBannerDefaults() {
+        prBannerViewController = BannerScrollViewController()
+        setupBannerViewDefaults(bannerVC: prBannerViewController, containerView: prBannerContainerView)
+        prBannerContainerViewHeightConstraint.constant = prBannerViewController.panelHeight
+        setupPrBannerPageControl()
+    }
+
+    private func setupUnivBannerDefaults() {
+        univBannerViewController = BannerScrollViewController()
+        setupBannerViewDefaults(bannerVC: univBannerViewController, containerView: univBannerContainerView)
+        univBannerContainerViewHeightConstraint.constant = univBannerViewController.panelHeight
+    }
+
+    private func setupBannerViewDefaults(bannerVC: BannerScrollViewController,
+                                         containerView: UIView) {
+        containerView.addSubview(bannerVC.view)
+        bannerVC.initSetup()
+        bannerVC.delegate = self
+        bannerVC.view.translatesAutoresizingMaskIntoConstraints = false
+        bannerVC.view.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        bannerVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+        bannerVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        bannerVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
     }
 
     private func setupPrBannerPageControl() {
@@ -96,6 +102,10 @@ class HomeContainerViewController: UIViewController {
         menuCollectionView.collectionViewLayout = layout
     }
 
+    private func updateBannerPageControl() {
+        prBannerPageControl.currentPage = prBannerViewController.pageIndex
+    }
+
     // ViewModelが変化したことの通知を受けて画面を更新する
     private func setupViewModelStateRecognizer() {
         self.viewModel.state = { [weak self] (state) in
@@ -105,10 +115,12 @@ class HomeContainerViewController: UIViewController {
                 case .busy:
                     break
                 case .ready:
-                    self.prBannerViewController.setup()
+                    self.prBannerViewController.setupContentSize()
                     self.prBannerViewController.addPrBannerPanels()
                     self.prBannerPageControl.numberOfPages = self.dataManager.prItemLists.count
-                    self.univBannerViewController.setup()
+
+                    self.univBannerViewController.setupContentSize()
+                    self.univBannerContainerViewHeightConstraint.constant = self.univBannerViewController.panelHeight
                     self.univBannerViewController.addUnivBannerPanels()
                     break
                 case .error:
@@ -116,10 +128,6 @@ class HomeContainerViewController: UIViewController {
                 }
             }
         }
-    }
-
-    private func updateBannerPageControl() {
-        prBannerPageControl.currentPage = prBannerViewController.pageIndex
     }
 }
 
