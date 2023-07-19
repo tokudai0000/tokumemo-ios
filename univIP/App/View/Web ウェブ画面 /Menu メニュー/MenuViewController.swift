@@ -24,7 +24,7 @@ final class MenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
+//        tableView.delegate = self
     }
     
     // メニューエリア以外タップ時、画面をMainViewに戻す
@@ -40,34 +40,34 @@ final class MenuViewController: UIViewController {
     }
 }
 
-extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.menuLists.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
-        let menuLists = viewModel.menuLists
-        tableCell.textLabel?.text = menuLists[indexPath.item].title
-        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
-        return tableCell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let delegate = self.delegate else {
-            AKLog(level: .FATAL, message: "[delegateエラー]: WebViewControllerから delegate=self を渡されていない")
-            fatalError()
-        }
-        dataManager.canExecuteJavascript = true
-        self.dismiss(animated: false, completion: { [self] in
-            let urlString = self.viewModel.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
-            let url = URL(string: urlString)!
-            delegate.webView.load(URLRequest(url: url))
-        })
-    }
-}
+//extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return viewModel.menuLists.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let tableCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.tableCell, for: indexPath)! // fatalError
+//        let menuLists = viewModel.menuLists
+//        tableCell.textLabel?.text = menuLists[indexPath.item].title
+//        tableCell.textLabel?.font = UIFont.systemFont(ofSize: 17)
+//        return tableCell
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 44
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let delegate = self.delegate else {
+//            AKLog(level: .FATAL, message: "[delegateエラー]: WebViewControllerから delegate=self を渡されていない")
+//            fatalError()
+//        }
+//        dataManager.canExecuteJavascript = true
+//        self.dismiss(animated: false, completion: { [self] in
+//            let urlString = self.viewModel.menuLists[indexPath[1]].url!   // fatalError(url=nilは上記で網羅できているから)
+//            let url = URL(string: urlString)!
+//            delegate.webView.load(URLRequest(url: url))
+//        })
+//    }
+//}

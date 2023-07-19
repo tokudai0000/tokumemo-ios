@@ -12,20 +12,20 @@ final class MenuViewModel {
     
     private let dataManager = DataManager.singleton
     
-    public var menuLists:[MenuItemList] {
-        get {
-            var lists:[MenuItemList] = []
-            for item in dataManager.menuLists {
-                if item.id == .libraryCalendar ||
-                   item.id == .syllabus ||
-                   item.id == .libraryCalendar{
-                    continue
-                }
-                if item.isHiddon == false {
-                    lists.append(item)
-                }
-            }
-            return lists
-        }
-    }
+//    public var menuLists:[MenuItemList] {
+//        get {
+//            var lists:[MenuItemList] = []
+//            for item in dataManager.menuLists {
+//                if item.id == .libraryCalendar ||
+//                   item.id == .syllabus ||
+//                   item.id == .libraryCalendar{
+//                    continue
+//                }
+//                if item.isHiddon == false {
+//                    lists.append(item)
+//                }
+//            }
+//            return lists
+//        }
+//    }
 }

@@ -165,6 +165,28 @@ extension HomeContainerViewController:  UICollectionViewDelegate, UICollectionVi
         menuCollectionViewHeightConstraint.constant = (cellWidth + margin) * 2
         return CGSize(width: cellWidth, height: cellWidth)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = homeMenuLists[indexPath.row]
+        if let url = cell.url {
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = url
+            present(vc, animated: true, completion: nil)
+        }
+//        switch cell.id {
+//        case .libraryRAS:
+//
+//        case .coopRAS:
+//
+//        case .etc:
+//
+//        default:
+//            break
+//        }
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = cell.url
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 extension HomeContainerViewController: UITableViewDelegate, UITableViewDataSource {
