@@ -51,6 +51,13 @@ class HomeContainerViewController: UIViewController {
         prBannerViewController.showPage(index: prBannerPageControl.currentPage, animated: true)
     }
 
+    @IBAction func twitterButton(_ sender: Any) {
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = Url.officialSNS.string()
+        present(vc, animated: true)
+    }
+
+
     // MARK: - Methods [Private]
 
     private func setupPrBannerDefaults() {
