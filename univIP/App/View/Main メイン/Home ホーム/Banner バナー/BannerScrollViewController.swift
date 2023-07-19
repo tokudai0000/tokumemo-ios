@@ -154,7 +154,7 @@ class BannerScrollViewController: UIViewController {
                 // 中身表示
                 univBannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
                 univBannerView.titleTextView.text = item.organizationName?.description
-                univBannerView.discriptionTextView.text = item.introduction?.description
+                univBannerView.discriptionTextView.text = item.explanation?.description
 
                 // レイアウト
                 univBannerView.translatesAutoresizingMaskIntoConstraints = false
