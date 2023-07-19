@@ -200,6 +200,14 @@ extension HomeContainerViewController: UITableViewDelegate, UITableViewDataSourc
         return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = homeTableItemLists[indexPath.row]
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = cell.url!
+        present(vc, animated: true)
+    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
          return 44
      }

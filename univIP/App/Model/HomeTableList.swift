@@ -34,7 +34,7 @@ struct HomeTableItem {
 }
 
 let homeTableItemLists = [
-    HomeTableItem(title: "PR画像(広告)の申請", id: .termsOfService, url: Url.termsOfService.string()),
-    HomeTableItem(title: "バグや新規機能の相談", id: .termsOfService, url: Url.termsOfService.string()),
+    HomeTableItem(title: "PR画像(広告)の申請", id: .termsOfService, url: Url.prApplication.string()),
+    HomeTableItem(title: "バグや新規機能の相談", id: .termsOfService, url: Url.contactUs.string()),
     HomeTableItem(title: "利用規約", id: .termsOfService, url: Url.termsOfService.string()),
     HomeTableItem(title: "プライバシーポリシー", id: .privacyPolicy, url: Url.privacyPolicy.string())]

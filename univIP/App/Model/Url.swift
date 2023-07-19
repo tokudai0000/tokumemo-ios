@@ -88,8 +88,10 @@ enum Url: String {
     case skipReminder = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/TopEnqCheck.aspx"
     /// マナバから授業動画[Youtube]を開く時
     case popupToYoutube = "https://manaba.lms.tokushima-u.ac.jp/s/link_balloon"
+    /// GoogleFormsでPR画像申請フォームを作成
+    case prApplication = "https://docs.google.com/forms/d/e/1FAIpQLSeyQ-rpMslvLp4WSLc1JsyI9skve_WYYNp61G1zlRAdGKVlBQ/viewform"
     /// GoogleFormsでお問い合わせフォームを作成
-    case contactUs = "https://forms.gle/ceBzS6TL3A1XuJsNA"
+    case contactUs = "https://docs.google.com/forms/d/e/1FAIpQLScYRhlWY9IjqWOrvnWJ0bJ_yPQZpXy4PPShWb68092t2klzeg/viewform"
     /// TwitterのURL
     case officialSNS = "https://twitter.com/tokumemo0000"
     /// ホームページのURL
