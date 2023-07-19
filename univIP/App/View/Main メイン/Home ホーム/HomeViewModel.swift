@@ -42,10 +42,9 @@ class HomeViewModel {
             for i in 0 ..< itemCounts {
                 let item = response["items"][i]
                 let prItem = PrData(imageURL: item["imageURL"].string,
-                                    explanation: item["introduction"].string,
                                     tappedURL: item["tappedURL"].string,
-                                    organizationName: item["organization_name"].string,
-                                    description: item["description"].string)
+                                    explanation: item["introduction"].string,
+                                    organizationName: item["organization_name"].string)
                 self.dataManager.prItemLists.append(prItem)
             }
             self.state?(.ready) // 通信完了
