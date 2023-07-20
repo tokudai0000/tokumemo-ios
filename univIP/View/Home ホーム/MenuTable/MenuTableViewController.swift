@@ -12,7 +12,7 @@ class MenuTableViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var menuTableView: UITableView!
 
     let viewModel = HomeViewModel()
-    public var menuLists: [MenuItemList] = []
+    public var menuLists: [MenuItem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()

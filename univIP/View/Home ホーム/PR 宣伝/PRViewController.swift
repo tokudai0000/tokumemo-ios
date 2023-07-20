@@ -15,7 +15,7 @@ class PRViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var detailsInfoButton: UIButton!
     
-    public var item: PrData!
+    public var item: PrItem!
     
     // MARK: - View Life Cycle
     
@@ -23,8 +23,8 @@ class PRViewController: UIViewController {
         super.viewDidLoad()
 //        textView.cornerRound = 15
 //        detailsInfoButton.cornerRound = 20
-        guard let url = item.imageURL,
-              let intro = item.explanation else{
+        guard let url = item.urlSavedImage,
+              let intro = item.descriptionAboutImage else{
             return
         }
         imageView.loadCacheImage(urlStr: url)
@@ -38,7 +38,7 @@ class PRViewController: UIViewController {
     }
     
     @IBAction func detailsInfoButton(_ sender: Any) {
-        guard let url = item.tappedURL else{
+        guard let url = item.urlNextTransition else{
             return
         }
         let vc = R.storyboard.web.webViewController()!

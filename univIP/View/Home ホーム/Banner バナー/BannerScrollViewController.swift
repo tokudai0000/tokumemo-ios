@@ -120,7 +120,7 @@ class BannerScrollViewController: UIViewController {
         dataManager.prItemLists.enumerated().forEach { index, item in
             if let bannerView = UINib(nibName: "BannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? BannerView {
                 // 中身表示
-                bannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
+                bannerView.imageView.loadCacheImage(urlStr: item.urlSavedImage!)
 
                 // レイアウト
                 bannerView.backgroundColor = .clear
@@ -152,9 +152,9 @@ class BannerScrollViewController: UIViewController {
         dataManager.prItemLists.enumerated().forEach { index, item in
             if let univBannerView =  UINib(nibName: "UnivBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? UnivBannerView {
                 // 中身表示
-                univBannerView.imageView.loadCacheImage(urlStr: item.imageURL!)
-                univBannerView.titleTextView.text = item.organizationName?.description
-                univBannerView.discriptionTextView.text = item.explanation?.description
+                univBannerView.imageView.loadCacheImage(urlStr: item.urlSavedImage!)
+                univBannerView.titleTextView.text = item.requesterName?.description
+                univBannerView.discriptionTextView.text = item.descriptionAboutImage?.description
 
                 // レイアウト
                 univBannerView.translatesAutoresizingMaskIntoConstraints = false

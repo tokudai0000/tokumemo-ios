@@ -14,7 +14,7 @@ final class DataManager {
     static let singleton = DataManager() // シングルトン・インタンス
     private var userDefaults = UserDefaults.standard
 
-    public var prItemLists: [PrData] = []
+    public var prItemLists: [PrItem] = []
     
     public var syllabusTeacherName = ""
     public var syllabusSubjectName = ""
