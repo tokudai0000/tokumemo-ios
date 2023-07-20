@@ -137,4 +137,9 @@ class HomeViewModel {
         if urlString.contains(Url.universityLogin.string()) { return true }
         return false
     }
+
+    /// タイムアウトのURLであるか判定
+    public func isTimeout(urlStr: String) -> Bool {
+        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
+    }
 }

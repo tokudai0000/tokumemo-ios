@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class HomeContainerViewController: UIViewController {
 
@@ -33,6 +34,7 @@ class HomeContainerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupWebView()
         setupPrBannerDefaults()
         setupUnivBannerDefaults()
         setupMenuCollectionView()
@@ -59,6 +61,17 @@ class HomeContainerViewController: UIViewController {
 
 
     // MARK: - Methods [Private]
+
+    private var webView: WKWebView!
+
+    private func setupWebView() {
+        dataManager.canExecuteJavascript = true
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        webView.load(Url.universityTransitionLogin.urlRequest())
+    }
 
     private func setupPrBannerDefaults() {
         prBannerViewController = BannerScrollViewController()
@@ -135,6 +148,11 @@ class HomeContainerViewController: UIViewController {
                 }
             }
         }
+    }
+    /// 大学統合認証システム(IAS)のページを読み込む
+    /// ログインの処理はWebViewのdidFinishで行う
+    private func relogin() {
+        webView.load(Url.universityTransitionLogin.urlRequest())
     }
 }
 
@@ -218,4 +236,54 @@ extension HomeContainerViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
          return 44
      }
+}
+
+extension HomeContainerViewController: WKUIDelegate, WKNavigationDelegate {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let url = navigationAction.request.url else {
+            AKLog(level: .FATAL, message: "読み込み前のURLがnil")
+            decisionHandler(.cancel)
+            return
+        }
+        if viewModel.isTimeout(urlStr: url.absoluteString) {
+            relogin()
+        }
+        decisionHandler(.allow)
+        return
+    }
+
+    /*
+     JavaScriptをWebサイトごとに実行する
+     - アンケート解答の催促画面
+     - 徳島大学　統合認証システムサイト(ログインサイト)
+     - シラバスの検索画面
+     - outlook(メール)へのログイン画面
+     - 徳島大学キャリアセンター室
+
+     NOTE:
+     シラバスでは検索中は、画面を消すことにより、ユーザーの別操作を防ぐ
+     キャリアセンター室ではログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
+     */
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let url = self.webView.url!
+        AKLog(level: .DEBUG, message: url.absoluteString)
+        if viewModel.canExecuteJS(url.absoluteString) {
+            webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            dataManager.canExecuteJavascript = false
+        }
+    }
+
+    /// target="_blank"(新しいタブで開く) の処理
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
+        // 新しいタブで開くURLを取得し、読み込む
+        webView.load(navigationAction.request)
+        return nil
+    }
 }
