@@ -13,6 +13,8 @@ final class DataManager {
     
     static let singleton = DataManager() // シングルトン・インタンス
     private var userDefaults = UserDefaults.standard
+
+    public var prItemLists: [PrData] = []
     
     public var syllabusTeacherName = ""
     public var syllabusSubjectName = ""
@@ -37,47 +39,47 @@ final class DataManager {
     
     /// 配列をUserDefaultsには保存できないので 配列 -> Json -> Data にパースし、保存する
     private let KEY_menuLists = "KEY_menuLists"
-    public var menuLists: [MenuItemList] {
-        get {
-            let jsonDecoder = JSONDecoder()
-            let data = userDefaults.data(forKey: KEY_menuLists) ?? Data()
-            guard let lists = try? jsonDecoder.decode([MenuItemList].self, from: data) else{
-                return initMenuLists
-            }
-            var initLists = initMenuLists
-            var newLists:[MenuItemList] = []
-            for oldList in lists {
-                for i in 0..<initLists.count {
-                    guard oldList.id == initLists[i].id else{
-                        continue
-                    }
-                    // 新規initMenuListと変更点がないかを照らし合わせる
-                    let item = MenuItemList(title: initLists[i].title,
-                                            id: initLists[i].id,
-                                            image: initLists[i].image,
-                                            url: initLists[i].url,
-                                            isLockIconExists: initLists[i].isLockIconExists,
-                                            isHiddon: oldList.isHiddon)
-                    
-                    initLists.remove(at: i)
-                    newLists.append(item)
-                    break
-                }
-                
-                if oldList.id == .favorite {
-                    // カスタマイズで入れた内容(ユーザー設定)
-                    newLists.append(oldList)
-                }
-            }
-            
-            return newLists + initLists
-        }
-        set(v) {
-            let jsonEncoder = JSONEncoder()
-            guard let data = try? jsonEncoder.encode(v) else { return }
-            userDefaults.set(data ,forKey: KEY_menuLists)
-        }
-    }
+//    public var menuLists: [MenuItemList] {
+//        get {
+//            let jsonDecoder = JSONDecoder()
+//            let data = userDefaults.data(forKey: KEY_menuLists) ?? Data()
+//            guard let lists = try? jsonDecoder.decode([MenuItemList].self, from: data) else{
+//                return initMenuLists
+//            }
+//            var initLists = initMenuLists
+//            var newLists:[MenuItemList] = []
+//            for oldList in lists {
+//                for i in 0..<initLists.count {
+//                    guard oldList.id == initLists[i].id else{
+//                        continue
+//                    }
+//                    // 新規initMenuListと変更点がないかを照らし合わせる
+//                    let item = MenuItemList(title: initLists[i].title,
+//                                            id: initLists[i].id,
+//                                            image: initLists[i].image,
+//                                            url: initLists[i].url,
+//                                            isLockIconExists: initLists[i].isLockIconExists,
+//                                            isHiddon: oldList.isHiddon)
+//                    
+//                    initLists.remove(at: i)
+//                    newLists.append(item)
+//                    break
+//                }
+//                
+//                if oldList.id == .favorite {
+//                    // カスタマイズで入れた内容(ユーザー設定)
+//                    newLists.append(oldList)
+//                }
+//            }
+//            
+//            return newLists + initLists
+//        }
+//        set(v) {
+//            let jsonEncoder = JSONEncoder()
+//            guard let data = try? jsonEncoder.encode(v) else { return }
+//            userDefaults.set(data ,forKey: KEY_menuLists)
+//        }
+//    }
         
     private let KEY_cAccount = "KEY_cAccount"
     public var cAccount: String {

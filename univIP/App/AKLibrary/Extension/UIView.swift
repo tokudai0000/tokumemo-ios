@@ -39,44 +39,44 @@ extension UIView {
     }
   }
 
-  /// 影の色
-  @IBInspectable var shadowColor: UIColor? {
-    get {
-      layer.shadowColor.map { UIColor(cgColor: $0) }
-    }
-    set {
-      layer.shadowColor = newValue?.cgColor
-      layer.masksToBounds = false
-    }
-  }
-
-  /// 影の透明度
-  @IBInspectable var shadowAlpha: Float {
-    get {
-      layer.shadowOpacity
-    }
-    set {
-      layer.shadowOpacity = newValue
-    }
-  }
-
-  /// 影のオフセット
-  @IBInspectable var shadowOffset: CGSize {
-    get {
-      layer.shadowOffset
-    }
-    set {
-      layer.shadowOffset = newValue
-    }
-  }
-
-  /// 影のぼかし量
-  @IBInspectable var shadowRadius: CGFloat {
-    get {
-      layer.shadowRadius
-    }
-    set {
-      layer.shadowRadius = newValue
-    }
-  }
+//  /// 影の色
+//  @IBInspectable var shadowColor: UIColor? {
+//    get {
+//      layer.shadowColor.map { UIColor(cgColor: $0) }
+//    }
+//    set {
+//      layer.shadowColor = newValue?.cgColor
+//      layer.masksToBounds = false
+//    }
+//  }
+//
+//  /// 影の透明度
+//  @IBInspectable var shadowAlpha: Float {
+//    get {
+//      layer.shadowOpacity
+//    }
+//    set {
+//      layer.shadowOpacity = newValue
+//    }
+//  }
+//
+//  /// 影のオフセット
+//  @IBInspectable var shadowOffset: CGSize {
+//    get {
+//      layer.shadowOffset
+//    }
+//    set {
+//      layer.shadowOffset = newValue
+//    }
+//  }
+//
+//  /// 影のぼかし量
+//  @IBInspectable var shadowRadius: CGFloat {
+//    get {
+//      layer.shadowRadius
+//    }
+//    set {
+//      layer.shadowRadius = newValue
+//    }
+//  }
 }

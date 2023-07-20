@@ -18,11 +18,7 @@ class HomeViewModel {
     
     // API マネージャ
     public let apiManager = ApiManager.singleton
-    
-    public var prItems: [PrData] = []
-    
-    public var displayPrItem: PrData?
-    
+
     //MARK: - STATE ステータス
     
     enum State {
@@ -31,25 +27,12 @@ class HomeViewModel {
         case error // エラー発生
     }
     public var state: ((State) -> Void)?
-    
-    /// TableCellの内容(isHiddon=trueを除く)
-    public var displayMenuItemLists: [MenuItemList] {
-        get{
-            var displayLists:[MenuItemList] = []
-            for item in dataManager.menuLists {
-                if !item.isHiddon {
-                    displayLists.append(item)
-                }
-            }
-            return displayLists
-        }
-    }
-    
+
     // MARK: - Methods [Public]
     
     public func updatePrItems() {
         state?(.busy) // 通信開始（通信中）
-        prItems.removeAll()
+        dataManager.prItemLists.removeAll()
         apiManager.request(Url.prItemJsonData.string(),
                            success: { [weak self] (response) in
             guard let self = self else {
@@ -59,36 +42,16 @@ class HomeViewModel {
             for i in 0 ..< itemCounts {
                 let item = response["items"][i]
                 let prItem = PrData(imageURL: item["imageURL"].string,
-                                    introduction: item["introduction"].string,
                                     tappedURL: item["tappedURL"].string,
-                                    organizationName: item["organization_name"].string,
-                                    description: item["description"].string)
-                self.prItems.append(prItem)
+                                    explanation: item["introduction"].string,
+                                    organizationName: item["organization_name"].string)
+                self.dataManager.prItemLists.append(prItem)
             }
             self.state?(.ready) // 通信完了
         }, failure: { [weak self] (error) in
             AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
             self?.state?(.error) // エラー表示
         })
-    }
-    
-    /// prItemsをランダムに表示させるための関数
-    /// prItemsの配列数が「0と1」の場合を除き、ランダムにPrData?を返す
-    public func selectDispalyPrItem() -> PrData? {
-        if prItems.count == 0 {
-            return nil
-        }else if prItems.count == 1 {
-            return prItems[0]
-        }
-        while true {
-            let randomNum = Int.random(in: 0..<prItems.count)
-            if displayPrItem == nil {
-                return prItems[randomNum]
-            }
-            if displayPrItem?.imageURL != prItems[randomNum].imageURL {
-                return prItems[randomNum]
-            }
-        }
     }
     
     /// 大学図書館の種類
@@ -173,5 +136,10 @@ class HomeViewModel {
         if dataManager.cAccount.isEmpty || dataManager.password.isEmpty { return false }
         if urlString.contains(Url.universityLogin.string()) { return true }
         return false
+    }
+
+    /// タイムアウトのURLであるか判定
+    public func isTimeout(urlStr: String) -> Bool {
+        return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
 }

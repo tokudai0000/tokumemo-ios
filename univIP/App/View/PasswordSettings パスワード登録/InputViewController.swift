@@ -122,14 +122,14 @@ final class InputViewController: UIViewController {
             alert(title: "♪ 登録完了 ♪",
                   message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
             
-        case .favorite:
-            let item = MenuItemList(title: text2, id: .favorite, image: R.image.menuIcon.etc.name, url: text1, isLockIconExists: false, isHiddon: false)
-            
-            var lists:[MenuItemList] = dataManager.menuLists
-            lists.append(item)
-            dataManager.menuLists = lists
-            alert(title: "♪ 登録完了 ♪",
-                  message: "以降、メニュー画面に設定したお気に入り画面が表示される様になりました。")
+//        case .favorite:
+//            let item = MenuItemList(title: text2, id: .favorite, image: R.image.menuIcon.etc.name, url: text1, isLockIconExists: false, isHiddon: false)
+//
+//            var lists:[MenuItemList] = dataManager.menuLists
+//            lists.append(item)
+//            dataManager.menuLists = lists
+//            alert(title: "♪ 登録完了 ♪",
+//                  message: "以降、メニュー画面に設定したお気に入り画面が表示される様になりました。")
             
         default:
             fatalError()

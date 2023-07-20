@@ -21,10 +21,10 @@ class PRViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textView.cornerRound = 15
-        detailsInfoButton.cornerRound = 20
+//        textView.cornerRound = 15
+//        detailsInfoButton.cornerRound = 20
         guard let url = item.imageURL,
-              let intro = item.introduction else{
+              let intro = item.explanation else{
             return
         }
         imageView.loadCacheImage(urlStr: url)
