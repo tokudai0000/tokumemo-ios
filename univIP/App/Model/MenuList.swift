@@ -57,13 +57,13 @@ let homeMenuLists:[MenuItemList] = [
 ]
 
 let homelibraryRASItemLists = [
-    MenuItemList(title: "a生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: nil),
+    MenuItemList(title: "a生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: Url.manabaPC.string()),
 ]
 
 let homeCoopRASItemLists = [
-    MenuItemList(title: "s生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: nil),
+    MenuItemList(title: "s生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: Url.manabaPC.string()),
 ]
 
 let homeEtcItemLists = [
-    MenuItemList(title: "d生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: nil),
+    MenuItemList(title: "d生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: Url.manabaPC.string()),
 ]

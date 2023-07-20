@@ -32,26 +32,22 @@ class MenuTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
 
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        let cell = menuLists[indexPath.row]
-//        switch cell.id {
-//        case .password:
-//            let vc = R.storyboard.input.inputViewController()!
-//            vc.type = .password
-//            navigationController?.pushViewController(vc, animated: true)
-//        case .favorite:
-//            let vc = R.storyboard.input.inputViewController()!
-//            vc.type = .favorite
-//            navigationController?.pushViewController(vc, animated: true)
-//        case .customize:
-//            let vc = R.storyboard.customize.customizeViewController()!
-//            vc.title = "カスタマイズ"
-//            navigationController?.pushViewController(vc, animated: true)
-//        default:
-//            let vc = R.storyboard.web.webViewController()!
-//            vc.loadUrlString = cell.url!
-//            present(vc, animated: true, completion: nil)
-//        }
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = menuLists[indexPath.row]
+        switch cell.id {
+        case .syllabus:
+            let vc = R.storyboard.input.inputViewController()!
+            vc.type = .password
+            navigationController?.pushViewController(vc, animated: true)
+        case .libraryCalendar:
+            let vc = R.storyboard.input.inputViewController()!
+            vc.type = .favorite
+            navigationController?.pushViewController(vc, animated: true)
+        default:
+            let vc = R.storyboard.web.webViewController()!
+            vc.loadUrlString = cell.url!
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
 }
