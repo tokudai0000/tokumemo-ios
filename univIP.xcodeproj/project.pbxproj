@@ -208,6 +208,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A085CE62A69275F00D31183 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
+				1A3A75FE2916B43700069818 /* NewsViewModel.swift */,
+				1A63062B2944B48600205C7C /* SettingViewModel.swift */,
+				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1A085CE72A69277200D31183 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				1A3A75F92916792600069818 /* ApiManager.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		1A085CE82A69278E00D31183 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1A00A4382750716C00EF3F99 /* Common.swift */,
+				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
+				1A6EF50D27BA5C43004D0B2C /* Extension */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +249,6 @@
 		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
 			isa = PBXGroup;
 			children = (
-				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
 				1A30D0AD28F6D79800C4012E /* WebViewController.swift */,
 				1A30D0AF28F6D7BC00C4012E /* Web.storyboard */,
 				1A5698BC2938CA09003906DB /* Menu メニュー */,
@@ -232,7 +260,6 @@
 		1A30D0B728F9BED600C4012E /* Settings 設定 */ = {
 			isa = PBXGroup;
 			children = (
-				1A63062B2944B48600205C7C /* SettingViewModel.swift */,
 				1A30D0BA28F9C14200C4012E /* SettingViewController.swift */,
 				1A6C51B52904ED2400A3E85A /* Settings.storyboard */,
 				1A5698C32938CDC8003906DB /* Customize カスタマイズ */,
@@ -244,8 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				1AAEB5072A68CC9D00932643 /* MenuTable */,
-				1A1A4E102A09FE75003A343B /* PrData.swift */,
-				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
 				1A9378A02A60DC95009A5758 /* HomeContainerViewController.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
@@ -260,7 +285,6 @@
 		1A384F9128FD5D4E00A1F52E /* News ニュース */ = {
 			isa = PBXGroup;
 			children = (
-				1A3A75FE2916B43700069818 /* NewsViewModel.swift */,
 				1A6C51B72905072500A3E85A /* NewsViewController.swift */,
 				1A6C51B12904EC2F00A3E85A /* News.storyboard */,
 				1ACB59AB291D11A8005A90BE /* NewsTableViewCell */,
@@ -277,24 +301,6 @@
 			name = "ClubList クラブリスト";
 			path = "Review レビュー";
 			sourceTree = "<group>";
-		};
-		1A3A75FB291679C600069818 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				1A3A75F92916792600069818 /* ApiManager.swift */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
-		1A41EADF272914CC0064CDB7 /* AKLibrary */ = {
-			isa = PBXGroup;
-			children = (
-				1A6EF50D27BA5C43004D0B2C /* Extension */,
-				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
-			);
-			name = AKLibrary;
-			path = univIP/App/AKLibrary;
-			sourceTree = SOURCE_ROOT;
 		};
 		1A5698BC2938CA09003906DB /* Menu メニュー */ = {
 			isa = PBXGroup;
@@ -337,10 +343,9 @@
 				1A1709B7293F95D5005B4CE8 /* MenuList.swift */,
 				1AF65CC62A64FC0A006F113B /* HomeTableList.swift */,
 				1A81A93026C12C8200CC56E2 /* ConstStruct.swift */,
-				1A00A4382750716C00EF3F99 /* Common.swift */,
+				1A1A4E102A09FE75003A343B /* PrData.swift */,
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
 				1AFC67CC2732BFA80059A053 /* Url.swift */,
-				1A3A75FB291679C600069818 /* API */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -399,21 +404,14 @@
 		1AA056CB26BD2AE100343005 /* univIP */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF27012748587C0071B89F /* Settings.bundle */,
-				1AA056E326BD2D3700343005 /* App */,
-			);
-			path = univIP;
-			sourceTree = "<group>";
-		};
-		1AA056E326BD2D3700343005 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				1A41EADF272914CC0064CDB7 /* AKLibrary */,
-				1AA056E526BD2D4900343005 /* etc */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* View */,
+				1A085CE62A69275F00D31183 /* ViewModel */,
+				1A085CE72A69277200D31183 /* API */,
+				1A085CE82A69278E00D31183 /* Utils */,
+				1AA056E526BD2D4900343005 /* etc */,
 			);
-			path = App;
+			path = univIP;
 			sourceTree = "<group>";
 		};
 		1AA056E526BD2D4900343005 /* etc */ = {
@@ -423,6 +421,7 @@
 				1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */,
 				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
+				1AAF27012748587C0071B89F /* Settings.bundle */,
 				1ABDE75A26DEF7A100D4B04E /* RTFfile */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1A9E0E08273CBA8500247F94 /* FireBaseAnalytics */,
@@ -434,8 +433,12 @@
 		1AA056E926BD2DCA00343005 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
+				1A30D0B728F9BED600C4012E /* Settings 設定 */,
+				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
+				1A384F9128FD5D4E00A1F52E /* News ニュース */,
+				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
-				1ABE8BB827B10402001EEA79 /* Main メイン */,
 				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
 				1ABE8BCB27B10489001EEA79 /* Input 入力画面 */,
 			);
@@ -485,18 +488,6 @@
 				1A9E0E15273D848100247F94 /* Agreement.rtf */,
 			);
 			path = RTFfile;
-			sourceTree = "<group>";
-		};
-		1ABE8BB827B10402001EEA79 /* Main メイン */ = {
-			isa = PBXGroup;
-			children = (
-				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
-				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
-				1A384F9128FD5D4E00A1F52E /* News ニュース */,
-				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
-				1A30D0B728F9BED600C4012E /* Settings 設定 */,
-			);
-			path = "Main メイン";
 			sourceTree = "<group>";
 		};
 		1ABE8BCB27B10489001EEA79 /* Input 入力画面 */ = {
@@ -990,7 +981,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
-				INFOPLIST_FILE = univIP/App/etc/Info.plist;
+				INFOPLIST_FILE = univIP/etc/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "トクメモ＋";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1190,7 +1181,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
-				INFOPLIST_FILE = univIP/App/etc/Info.plist;
+				INFOPLIST_FILE = univIP/etc/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "トクメモ＋";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1231,7 +1222,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
-				INFOPLIST_FILE = univIP/App/etc/Info.plist;
+				INFOPLIST_FILE = univIP/etc/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "トクメモ＋";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
