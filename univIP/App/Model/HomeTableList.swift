@@ -38,3 +38,4 @@ let homeTableItemLists = [
     HomeTableItem(title: "バグや新規機能の相談", id: .termsOfService, url: Url.contactUs.string()),
     HomeTableItem(title: "利用規約", id: .termsOfService, url: Url.termsOfService.string()),
     HomeTableItem(title: "プライバシーポリシー", id: .privacyPolicy, url: Url.privacyPolicy.string())]
+

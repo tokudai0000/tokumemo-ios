@@ -51,6 +51,8 @@
 		1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1A9E0E15273D848100247F94 /* Agreement.rtf */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AA29EE4291E68470049A546 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA29EE3291E68470049A546 /* UIColor.swift */; };
+		1AAEB5092A68CD8200932643 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AAEB5082A68CD8200932643 /* MenuTableViewController.swift */; };
+		1AAEB50B2A68CDB500932643 /* MenuTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AAEB50A2A68CDB500932643 /* MenuTable.storyboard */; };
 		1AAF27022748587C0071B89F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF27012748587C0071B89F /* Settings.bundle */; };
 		1AB10B8D292A1A640071E876 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB10B8C292A1A640071E876 /* UIImageView.swift */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
@@ -142,6 +144,8 @@
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AA29EE3291E68470049A546 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		1AAEB5082A68CD8200932643 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		1AAEB50A2A68CDB500932643 /* MenuTable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MenuTable.storyboard; sourceTree = "<group>"; };
 		1AAF27012748587C0071B89F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1AB10B8C292A1A640071E876 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		1AB37B6C26FDFCEA008A2D2F /* univIPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +243,7 @@
 		1A384F9028FD5D1E00A1F52E /* Home ホーム */ = {
 			isa = PBXGroup;
 			children = (
+				1AAEB5072A68CC9D00932643 /* MenuTable */,
 				1A1A4E102A09FE75003A343B /* PrData.swift */,
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1ABE8BB927B10402001EEA79 /* HomeViewController.swift */,
@@ -435,6 +440,15 @@
 				1ABE8BCB27B10489001EEA79 /* Input 入力画面 */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1AAEB5072A68CC9D00932643 /* MenuTable */ = {
+			isa = PBXGroup;
+			children = (
+				1AAEB5082A68CD8200932643 /* MenuTableViewController.swift */,
+				1AAEB50A2A68CDB500932643 /* MenuTable.storyboard */,
+			);
+			path = MenuTable;
 			sourceTree = "<group>";
 		};
 		1AB37B6D26FDFCEA008A2D2F /* univIPTests */ = {
@@ -665,6 +679,7 @@
 				1A6C51B22904EC2F00A3E85A /* News.storyboard in Resources */,
 				1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */,
 				1A9E0E16273D848100247F94 /* Agreement.rtf in Resources */,
+				1AAEB50B2A68CDB500932643 /* MenuTable.storyboard in Resources */,
 				1A6C51B42904ECCA00A3E85A /* ClubList.storyboard in Resources */,
 				1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */,
 				1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */,
@@ -821,6 +836,7 @@
 				1A5698C52938CE0F003906DB /* CustomizeViewController.swift in Sources */,
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
 				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
+				1AAEB5092A68CD8200932643 /* MenuTableViewController.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1AE7096729955170004F5435 /* Date.swift in Sources */,

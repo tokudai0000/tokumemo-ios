@@ -55,3 +55,15 @@ let homeMenuLists:[MenuItemList] = [
 
     MenuItemList(title: "その他", id: .etc, image: R.image.menuIcon.careerCenter.name, url: nil)
 ]
+
+let homelibraryRASItemLists = [
+    MenuItemList(title: "a生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: nil),
+]
+
+let homeCoopRASItemLists = [
+    MenuItemList(title: "s生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: nil),
+]
+
+let homeEtcItemLists = [
+    MenuItemList(title: "d生協 関連", id: .coopRAS, image: R.image.menuIcon.coopCalendar.name, url: nil),
+]

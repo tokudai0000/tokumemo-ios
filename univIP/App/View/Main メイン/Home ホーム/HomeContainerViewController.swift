@@ -197,19 +197,20 @@ extension HomeContainerViewController:  UICollectionViewDelegate, UICollectionVi
             let vc = R.storyboard.web.webViewController()!
             vc.loadUrlString = url
             present(vc, animated: true, completion: nil)
+            return
         }
-//        switch cell.id {
-//        case .libraryRAS:
-//
-//        case .coopRAS:
-//
-//        case .etc:
-//
-//        default:
-//            break
-//        }
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = cell.url
+        let vc = R.storyboard.menuTable.menuTableViewController()!
+        switch cell.id {
+        case .libraryRAS:
+            vc.menuLists = homelibraryRASItemLists
+        case .coopRAS:
+            vc.menuLists = homeCoopRASItemLists
+        case . etc:
+            vc.menuLists = homeEtcItemLists
+        default:
+            break
+        }
+
         present(vc, animated: true, completion: nil)
     }
 }
