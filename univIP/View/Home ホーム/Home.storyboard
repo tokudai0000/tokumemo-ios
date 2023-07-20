@@ -13,7 +13,7 @@
         <!--Home-->
         <scene sceneID="EY9-uc-3A2">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5a2-Af-fFk" userLabel="Home" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" title="トクメモ2" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5a2-Af-fFk" userLabel="Home" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UHL-ib-Jiu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

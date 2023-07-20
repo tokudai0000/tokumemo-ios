@@ -10,6 +10,7 @@ import UIKit
 final class AgreementViewController: UIViewController {
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var termsButton: UIButton!
@@ -37,15 +38,15 @@ final class AgreementViewController: UIViewController {
     }
     
     @IBAction func termsButton(_ sender: Any) {
-        let vcWeb = R.storyboard.web.webViewController()!
-        vcWeb.loadUrlString = Url.termsOfService.string()
-        present(vcWeb, animated: true, completion: nil)
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = Url.termsOfService.string()
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func pribacyButton(_ sender: Any) {
-        let vcWeb = R.storyboard.web.webViewController()!
-        vcWeb.loadUrlString = Url.privacyPolicy.string()
-        present(vcWeb, animated: true, completion: nil)
+        let vc = R.storyboard.web.webViewController()!
+        vc.loadUrlString = Url.privacyPolicy.string()
+        present(vc, animated: true, completion: nil)
     }
     
     // MARK: - Methods [Private]
