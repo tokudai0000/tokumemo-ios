@@ -111,14 +111,14 @@ class BannerScrollViewController: UIViewController {
         scrollView.contentSize = CGSize(width: contentWidth, height: panelHeight)
     }
 
-    var bannerView: BannerView!
-    var univBannerView: BannerView!
+    var bannerView: PrBannerView!
+    var univBannerView: UnivBannerView!
 
     /// パネル追加
     func addPrBannerPanels() {
-        var prevBannerView: BannerView?
+        var prevBannerView: PrBannerView?
         dataManager.prItemLists.enumerated().forEach { index, item in
-            if let bannerView = UINib(nibName: "BannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? BannerView {
+            if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
                 // 中身表示
                 bannerView.imageView.loadCacheImage(urlStr: item.urlSavedImage!)
 

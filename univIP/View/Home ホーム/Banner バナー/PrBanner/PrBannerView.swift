@@ -1,5 +1,5 @@
 //
-//  BannerView.swift
+//  PrBannerView.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2023/07/14.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BannerView: UIView {
+class PrBannerView: UIView {
 
     @IBOutlet weak var imageView: UIImageView!
 

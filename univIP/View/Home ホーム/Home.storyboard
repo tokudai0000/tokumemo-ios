@@ -58,10 +58,10 @@
             </objects>
             <point key="canvasLocation" x="1510.6870229007634" y="-697.18309859154931"/>
         </scene>
-        <!--Home Container View Controller-->
+        <!--Home View Controller-->
         <scene sceneID="CUa-Yh-eVK">
             <objects>
-                <viewController id="kIX-Gy-BrC" customClass="HomeContainerViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kIX-Gy-BrC" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L7M-J1-ZqP" userLabel="ContainerView">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
