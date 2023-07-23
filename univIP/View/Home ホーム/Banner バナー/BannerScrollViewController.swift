@@ -77,8 +77,8 @@ class BannerScrollViewController: UIViewController {
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
+
         contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
         // 本来見えない箇所をclipsToBounds=falseで見えるようにしている。
         scrollView.clipsToBounds = false

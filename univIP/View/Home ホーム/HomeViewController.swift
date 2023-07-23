@@ -27,19 +27,22 @@ class HomeViewController: UIViewController {
 
     private let viewModel = HomeViewModel()
 
+    private var webView: WKWebView!
     private var prBannerViewController: BannerScrollViewController!
     private var univBannerViewController: BannerScrollViewController!
+
+    private let homeTableViewHight: Int = 44
 
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWebView()
+        setupDefaults()
         setupPrBannerDefaults()
         setupUnivBannerDefaults()
         setupMenuCollectionView()
         setupViewModelStateRecognizer()
-        homeTableViewHeightConstraint.constant = CGFloat(44 * homeTableItemLists.count)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -62,12 +65,13 @@ class HomeViewController: UIViewController {
 
     // MARK: - Methods [Private]
 
-    private var webView: WKWebView!
+    private func setupDefaults() {
+        dataManager.canExecuteJavascript = true
+        homeTableViewHeightConstraint.constant = CGFloat(homeTableViewHight * homeTableItemLists.count)
+    }
 
     private func setupWebView() {
-        dataManager.canExecuteJavascript = true
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.load(Url.universityTransitionLogin.urlRequest())

@@ -8,7 +8,7 @@
 
 struct ConstStruct {
     /// 現在の利用規約バージョン
-    static let latestTermsVersion = "3.01"
+    static let latestTermsVersion = "3.0"
 }
 
 let homeMenuLists:[MenuItem] = [
