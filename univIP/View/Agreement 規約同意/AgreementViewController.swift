@@ -23,14 +23,12 @@ final class AgreementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        privacyButton.layer.borderColor = UIColor.black.cgColor
         setupText()
         setupDefaults()
         setupImageView()
         setupTermsButton()
         setupPrivacyButton()
         setupAgreementButton()
-        privacyButton.layer.borderColor = UIColor.black.cgColor
     }
     
     // MARK: - IBAction
