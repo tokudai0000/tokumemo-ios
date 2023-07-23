@@ -23,8 +23,14 @@ final class AgreementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDefaults()
+        privacyButton.layer.borderColor = UIColor.black.cgColor
         setupText()
+        setupDefaults()
+        setupImageView()
+        setupTermsButton()
+        setupPrivacyButton()
+        setupAgreementButton()
+        privacyButton.layer.borderColor = UIColor.black.cgColor
     }
     
     // MARK: - IBAction
@@ -52,16 +58,38 @@ final class AgreementViewController: UIViewController {
     // MARK: - Methods [Private]
     
     private func setupDefaults() {
-        agreementButton.layer.cornerRadius = 5.0
-        termsButton.layer.cornerRadius = 10.0
-        privacyButton.layer.cornerRadius = 10.0
         textView.layer.cornerRadius = 10.0
-        imageView.layer.cornerRadius = 100.0
+        view.backgroundColor = .white
     }
-    
+    private func setupImageView() {
+        imageView.image = UIImage(resource: R.image.tokumemoPlusIcon)
+        imageView.layer.cornerRadius = 50.0
+    }
+    private func setupAgreementButton() {
+        agreementButton.setTitle(NSLocalizedString("agreement button", comment: ""), for: .normal)
+        agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
+        agreementButton.tintColor = .black
+        agreementButton.layer.cornerRadius = 5.0
+        termsButton.layer.borderWidth = 1
+    }
+    private func setupTermsButton() {
+        termsButton.setTitle(NSLocalizedString("term button", comment: ""), for: .normal)
+        termsButton.backgroundColor = .white
+        termsButton.borderColor = .black
+        termsButton.tintColor = .black
+        termsButton.layer.cornerRadius = 10.0
+        termsButton.layer.borderWidth = 1
+    }
+    private func setupPrivacyButton() {
+        privacyButton.setTitle(NSLocalizedString("privacy policy button", comment: ""), for: .normal)
+        privacyButton.backgroundColor = .white
+        privacyButton.borderColor = .black
+        privacyButton.tintColor = .black
+        privacyButton.layer.cornerRadius = 10.0
+        privacyButton.layer.borderWidth = 1
+    }
     private func setupText() {
         let filePath = R.file.agreementRtf()!
         textView.attributedText = Common.loadRtfFileContents(filePath)
-        textView.textColor = .white
     }
 }

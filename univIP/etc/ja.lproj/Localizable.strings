@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  univIP
+
+  Created by Akihiro Matsuyama on 2023/07/22.
+  
+*/
+
+"term button" = "利用規約";
+"privacy policy button" = "プライバシーポリシー";
+"agreement button" = "同意する";
