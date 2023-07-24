@@ -25,6 +25,7 @@
 		1A3A75FA2916792600069818 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* ApiManager.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
+		1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */; };
 		1A556D922963BD4B00A650B2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A556D912963BD4B00A650B2 /* String.swift */; };
 		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
 		1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698BF2938CA96003906DB /* MenuViewController.swift */; };
@@ -112,6 +113,7 @@
 		1A3A75F92916792600069818 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
+		1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1A556D912963BD4B00A650B2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		1A5698BF2938CA96003906DB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -849,6 +851,7 @@
 				809DCF722906A63300593989 /* UIView.swift in Sources */,
 				1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
+				1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */,
 				1A085CEC2A694AD200D31183 /* MenuItem.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */,
