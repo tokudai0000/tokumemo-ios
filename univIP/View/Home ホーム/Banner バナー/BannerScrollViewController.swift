@@ -95,6 +95,7 @@ class BannerScrollViewController: UIViewController {
         // https://stackoverflow.com/a/36641652
         view.addGestureRecognizer(scrollView.panGestureRecognizer)
 
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true

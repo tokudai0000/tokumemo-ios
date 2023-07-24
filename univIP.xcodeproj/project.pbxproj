@@ -40,7 +40,7 @@
 		1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListViewController.swift */; };
 		1A6EF50F27BA5C63004D0B2C /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6EF50E27BA5C63004D0B2C /* DateFormatter.swift */; };
 		1A81A93126C12C8200CC56E2 /* ConstStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* ConstStruct.swift */; };
-		1A9378A12A60DC95009A5758 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A02A60DC95009A5758 /* HomeViewController.swift */; };
+		1A9378A12A60DC95009A5758 /* HomeContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A02A60DC95009A5758 /* HomeContentsView.swift */; };
 		1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */; };
 		1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */; };
 		1A9378AE2A60E7B3009A5758 /* PrBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */; };
@@ -129,7 +129,7 @@
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A81A93026C12C8200CC56E2 /* ConstStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstStruct.swift; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		1A9378A02A60DC95009A5758 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		1A9378A02A60DC95009A5758 /* HomeContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentsView.swift; sourceTree = "<group>"; };
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
 		1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrBannerView.swift; sourceTree = "<group>"; };
 		1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrBannerView.xib; sourceTree = "<group>"; };
@@ -274,9 +274,10 @@
 		1A384F9028FD5D1E00A1F52E /* Home ホーム */ = {
 			isa = PBXGroup;
 			children = (
-				1AD6B78F2A6970CC0046FA47 /* MenuTable */,
-				1A9378A02A60DC95009A5758 /* HomeViewController.swift */,
+				1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */,
+				1A9378A02A60DC95009A5758 /* HomeContentsView.swift */,
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
+				1AD6B78F2A6970CC0046FA47 /* MenuTable */,
 				1A9378AF2A61645B009A5758 /* Banner バナー */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
@@ -826,7 +827,7 @@
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
 				1A19731027C4BCCD00F36FE7 /* SceneDelegate.swift in Sources */,
-				1A9378A12A60DC95009A5758 /* HomeViewController.swift in Sources */,
+				1A9378A12A60DC95009A5758 /* HomeContentsView.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* PrItem.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
