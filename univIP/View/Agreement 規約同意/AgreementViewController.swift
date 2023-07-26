@@ -68,7 +68,7 @@ final class AgreementViewController: UIViewController {
         agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
         agreementButton.tintColor = .black
         agreementButton.layer.cornerRadius = 5.0
-        termsButton.layer.borderWidth = 1
+        agreementButton.layer.borderWidth = 1
     }
     private func setupTermsButton() {
         termsButton.setTitle(NSLocalizedString("term button", comment: ""), for: .normal)
