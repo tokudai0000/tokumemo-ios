@@ -19,7 +19,7 @@
 		1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */; };
 		1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0AD28F6D79800C4012E /* WebViewController.swift */; };
 		1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0AF28F6D7BC00C4012E /* Web.storyboard */; };
-		1A30D0B228F6ED2E00C4012E /* UIImage+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B128F6ED2E00C4012E /* UIImage+Exetnsion.swift */; };
+		1A30D0B228F6ED2E00C4012E /* UIImageView+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0B128F6ED2E00C4012E /* UIImageView+Exetnsion.swift */; };
 		1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BA28F9C14200C4012E /* SettingViewController.swift */; };
 		1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A384F9728FD794200A1F52E /* WebViewModel.swift */; };
 		1A3A75FA2916792600069818 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* ApiManager.swift */; };
@@ -103,7 +103,7 @@
 		1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionCell.xib; sourceTree = "<group>"; };
 		1A30D0AD28F6D79800C4012E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A30D0AF28F6D7BC00C4012E /* Web.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Web.storyboard; sourceTree = "<group>"; };
-		1A30D0B128F6ED2E00C4012E /* UIImage+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Exetnsion.swift"; sourceTree = "<group>"; };
+		1A30D0B128F6ED2E00C4012E /* UIImageView+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A30D0BA28F9C14200C4012E /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		1A384F9728FD794200A1F52E /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		1A3A75F92916792600069818 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 			children = (
 				1A5B10882A77D9BF00C0E61B /* UIView+Exetnsion.swift */,
 				1ADE675D2A77A13E00B79D69 /* UIColor+Exetnsion.swift */,
-				1A30D0B128F6ED2E00C4012E /* UIImage+Exetnsion.swift */,
+				1A30D0B128F6ED2E00C4012E /* UIImageView+Exetnsion.swift */,
 				1A6EF50E27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift */,
 				1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */,
 			);
@@ -821,7 +821,7 @@
 				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
-				1A30D0B228F6ED2E00C4012E /* UIImage+Exetnsion.swift in Sources */,
+				1A30D0B228F6ED2E00C4012E /* UIImageView+Exetnsion.swift in Sources */,
 				1AC1332D294C2D4D00E3DC16 /* PRViewController.swift in Sources */,
 				1A3A75FA2916792600069818 /* ApiManager.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,

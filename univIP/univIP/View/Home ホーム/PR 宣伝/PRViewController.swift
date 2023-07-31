@@ -28,7 +28,7 @@ class PRViewController: UIViewController {
               let intro = item.descriptionAboutImage else{
             return
         }
-        imageView.image = UIImage(url: url)
+        imageView.loadImage(from: url)
         textView.text = intro
     }
     

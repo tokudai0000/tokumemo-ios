@@ -122,7 +122,7 @@ class BannerScrollViewController: UIViewController {
             if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
                 if let urlStr = item.urlSavedImage,
                     let url = URL(string: urlStr) {
-                    bannerView.imageView.image = UIImage(url: url)
+                    bannerView.imageView.loadImage(from: url)
                 }
 
                 // レイアウト
@@ -156,7 +156,7 @@ class BannerScrollViewController: UIViewController {
             if let univBannerView =  UINib(nibName: "UnivBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? UnivBannerView {
                 if let urlStr = item.urlSavedImage,
                     let url = URL(string: urlStr) {
-                    univBannerView.imageView.image = UIImage(url: url)
+                    univBannerView.imageView.loadImage(from: url)
                 }
                 univBannerView.titleTextView.text = item.requesterName?.description
                 univBannerView.discriptionTextView.text = item.descriptionAboutImage?.description
