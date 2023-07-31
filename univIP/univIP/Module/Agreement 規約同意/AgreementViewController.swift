@@ -87,7 +87,7 @@ final class AgreementViewController: UIViewController {
         privacyButton.layer.borderWidth = 1
     }
     private func setupText() {
-        let filePath = R.file.agreementRtf()!
-        textView.attributedText = Common.loadRtfFileContents(filePath)
+//        let filePath = R.file
+//        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
 }
