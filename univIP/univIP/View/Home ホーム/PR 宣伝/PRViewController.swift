@@ -23,11 +23,12 @@ class PRViewController: UIViewController {
         super.viewDidLoad()
 //        textView.cornerRound = 15
 //        detailsInfoButton.cornerRound = 20
-        guard let url = item.urlSavedImage,
+        guard let urlStr = item.urlSavedImage,
+              let url = URL(string: urlStr),
               let intro = item.descriptionAboutImage else{
             return
         }
-        imageView.loadCacheImage(urlStr: url)
+        imageView.image = UIImage(url: url)
         textView.text = intro
     }
     

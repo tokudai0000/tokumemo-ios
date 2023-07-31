@@ -36,7 +36,7 @@ final class AgreementViewController: UIViewController {
     /// 同意ボタン  利用規約のバージョン更新も行う
     @IBAction func agreementButton(_ sender: Any) {
         // アプリ内に表示していた利用規約のバージョンを保存する。
-        dataManager.agreementVersion = ConstStruct.latestTermsVersion
+        dataManager.agreementVersion = AppConstants.latestTermsVersion
         let vc = R.storyboard.main.mainViewController()!
         present(vc, animated: false)
     }

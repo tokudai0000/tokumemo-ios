@@ -39,7 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         // 利用規約に同意する必要があるかどうか
-        if DataManager.singleton.agreementVersion == ConstStruct.latestTermsVersion {
+        if DataManager.singleton.agreementVersion == AppConstants.latestTermsVersion {
 //            let vc = R.storyboard.splash.instantiateInitialViewController()!
 //            self.window?.rootViewController = vc
 //            self.window?.makeKeyAndVisible()

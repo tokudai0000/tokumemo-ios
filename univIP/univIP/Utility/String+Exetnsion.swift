@@ -6,7 +6,7 @@
 //
 
 extension String {
-    // 左から文字埋めする UIColorのtoHexStringしか使っていない
+    /// 左から文字埋めする
     func leftPadding(toLength: Int, withPad character: Character) -> String {
         let stringLength = self.count
         if stringLength < toLength {

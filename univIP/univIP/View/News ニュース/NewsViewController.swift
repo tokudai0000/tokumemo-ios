@@ -34,7 +34,7 @@ class NewsViewController: UIViewController {
     // MARK: - Methods [Private]
     
     private func setupDefaults() {
-        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
+//        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
         tableView.register(R.nib.newsTableViewCell)
         viewModel.updateNewsItems()
     }

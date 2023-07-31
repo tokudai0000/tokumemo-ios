@@ -120,8 +120,10 @@ class BannerScrollViewController: UIViewController {
         var prevBannerView: PrBannerView?
         dataManager.prItemLists.enumerated().forEach { index, item in
             if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
-                // 中身表示
-                bannerView.imageView.loadCacheImage(urlStr: item.urlSavedImage!)
+                if let urlStr = item.urlSavedImage,
+                    let url = URL(string: urlStr) {
+                    bannerView.imageView.image = UIImage(url: url)
+                }
 
                 // レイアウト
                 bannerView.backgroundColor = .clear
@@ -152,8 +154,10 @@ class BannerScrollViewController: UIViewController {
         var prevBannerView: UnivBannerView?
         dataManager.prItemLists.enumerated().forEach { index, item in
             if let univBannerView =  UINib(nibName: "UnivBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? UnivBannerView {
-                // 中身表示
-                univBannerView.imageView.loadCacheImage(urlStr: item.urlSavedImage!)
+                if let urlStr = item.urlSavedImage,
+                    let url = URL(string: urlStr) {
+                    univBannerView.imageView.image = UIImage(url: url)
+                }
                 univBannerView.titleTextView.text = item.requesterName?.description
                 univBannerView.discriptionTextView.text = item.descriptionAboutImage?.description
 
