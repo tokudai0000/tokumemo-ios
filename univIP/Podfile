@@ -14,7 +14,10 @@ target 'univIP' do
   pod 'FirebaseCrashlytics' , '~> 10.5'
   pod 'Alamofire', '~> 4' # いずれAlamofire 5系へ
   pod 'SwiftyJSON', '~> 5'
-    
+  pod 'RxCocoa'
+  pod 'RxSwift'
+  pod 'RxGesture'
+
   target  'univIPTests' do
     inherit! :search_paths
     pod 'Firebase'

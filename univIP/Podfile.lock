@@ -110,6 +110,15 @@ PODS:
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
   - R.swift (7.3.2)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxGesture (4.0.4):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
@@ -120,6 +129,9 @@ DEPENDENCIES:
   - Kanna (~> 5)
   - KeychainAccess (~> 4)
   - R.swift (~> 7.2)
+  - RxCocoa
+  - RxGesture
+  - RxSwift
   - SwiftyJSON (~> 5)
 
 SPEC REPOS:
@@ -142,6 +154,10 @@ SPEC REPOS:
     - PromisesObjC
     - PromisesSwift
     - R.swift
+    - RxCocoa
+    - RxGesture
+    - RxRelay
+    - RxSwift
     - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -163,8 +179,12 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 64b49952ea7b1c15cc25cf0a99cc8ad4df257468
+PODFILE CHECKSUM: 9f87ea8c7aa7c138efd8bfc59884b0dea8b8d961
 
 COCOAPODS: 1.12.1
