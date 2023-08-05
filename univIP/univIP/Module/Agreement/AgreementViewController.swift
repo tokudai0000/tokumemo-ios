@@ -18,7 +18,8 @@ final class AgreementViewController: UIViewController {
     @IBOutlet weak var agreementButton: UIButton!
     
     private let dataManager = DataManager.singleton
-    
+    var viewModel: AgreementViewModelInterface!
+
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {

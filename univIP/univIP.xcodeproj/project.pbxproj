@@ -61,6 +61,11 @@
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1AC1332D294C2D4D00E3DC16 /* PRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC1332C294C2D4D00E3DC16 /* PRViewController.swift */; };
 		1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1332E294C2D5D00E3DC16 /* PR.storyboard */; };
+		1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE892A7CE62700598EED /* AgreementViewModel.swift */; };
+		1AC4BE8C2A7CE64B00598EED /* AgreementRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE8B2A7CE64B00598EED /* AgreementRouter.swift */; };
+		1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE8E2A7DE32C00598EED /* BaseRouter.swift */; };
+		1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE902A7DE84200598EED /* BaseViewModel.swift */; };
+		1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE922A7DE91200598EED /* RootViewController.swift */; };
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
 		1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */; };
@@ -153,6 +158,11 @@
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AC1332C294C2D4D00E3DC16 /* PRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRViewController.swift; sourceTree = "<group>"; };
 		1AC1332E294C2D5D00E3DC16 /* PR.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PR.storyboard; sourceTree = "<group>"; };
+		1AC4BE892A7CE62700598EED /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
+		1AC4BE8B2A7CE64B00598EED /* AgreementRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementRouter.swift; sourceTree = "<group>"; };
+		1AC4BE8E2A7DE32C00598EED /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
+		1AC4BE902A7DE84200598EED /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		1AC4BE922A7DE91200598EED /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
@@ -386,12 +396,14 @@
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
 				1A26A2602A77FB3C00BC6988 /* R.generated.swift */,
 				1A19730F27C4BCCD00F36FE7 /* SceneDelegate.swift */,
+				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
 				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
 				1A5B108A2A77E86B00C0E61B /* Agreement.rtf */,
 				1AD6B7982A6BE5830046FA47 /* Localizable.strings */,
 				1A085CE72A69277200D31183 /* API */,
 				1ADE675C2A779FE600B79D69 /* Common */,
+				1AC4BE8D2A7DE30000598EED /* Core */,
 				1A5B108D2A77E99F00C0E61B /* Entity */,
 				1A81A92626C0D52F00CC56E2 /* Model */,
 				1AA056E926BD2DCA00343005 /* Module */,
@@ -406,7 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
-				1ABDE75326DE530300D4B04E /* Agreement 規約同意 */,
+				1ABDE75326DE530300D4B04E /* Agreement */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
@@ -437,13 +449,15 @@
 			path = univIPUITests;
 			sourceTree = "<group>";
 		};
-		1ABDE75326DE530300D4B04E /* Agreement 規約同意 */ = {
+		1ABDE75326DE530300D4B04E /* Agreement */ = {
 			isa = PBXGroup;
 			children = (
 				1ABDE75626DE535500D4B04E /* Agreement.storyboard */,
+				1AC4BE8B2A7CE64B00598EED /* AgreementRouter.swift */,
 				1ABDE75426DE534300D4B04E /* AgreementViewController.swift */,
+				1AC4BE892A7CE62700598EED /* AgreementViewModel.swift */,
 			);
-			path = "Agreement 規約同意";
+			path = Agreement;
 			sourceTree = "<group>";
 		};
 		1ABE8BCB27B10489001EEA79 /* Input 入力画面 */ = {
@@ -463,6 +477,15 @@
 				1AC1332C294C2D4D00E3DC16 /* PRViewController.swift */,
 			);
 			path = "PR 宣伝";
+			sourceTree = "<group>";
+		};
+		1AC4BE8D2A7DE30000598EED /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1AC4BE8E2A7DE32C00598EED /* BaseRouter.swift */,
+				1AC4BE902A7DE84200598EED /* BaseViewModel.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		1ACB59AB291D11A8005A90BE /* NewsTableViewCell */ = {
@@ -800,6 +823,7 @@
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
 				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */,
+				1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
@@ -808,9 +832,12 @@
 				1A9378A12A60DC95009A5758 /* HomeContentsView.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* PrItem.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
+				1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */,
 				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */,
+				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
+				1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImageView+Exetnsion.swift in Sources */,
 				1AC1332D294C2D4D00E3DC16 /* PRViewController.swift in Sources */,
 				1A3A75FA2916792600069818 /* ApiManager.swift in Sources */,
@@ -824,6 +851,7 @@
 				1A81A93126C12C8200CC56E2 /* AppConstants.swift in Sources */,
 				1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
+				1AC4BE8C2A7CE64B00598EED /* AgreementRouter.swift in Sources */,
 				1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */,
 				1A085CEC2A694AD200D31183 /* MenuItem.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,

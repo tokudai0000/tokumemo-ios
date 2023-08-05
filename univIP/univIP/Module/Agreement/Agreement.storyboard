@@ -13,7 +13,7 @@
         <!--Agreement View Controller-->
         <scene sceneID="KII-g8-ZvX">
             <objects>
-                <viewController storyboardIdentifier="AgreementViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jZa-tP-bxu" customClass="AgreementViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AgreemantViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jZa-tP-bxu" customClass="AgreementViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FjM-kX-fxE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
