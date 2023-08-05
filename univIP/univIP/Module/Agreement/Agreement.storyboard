@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -15,54 +15,48 @@
             <objects>
                 <viewController storyboardIdentifier="AgreemantViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jZa-tP-bxu" customClass="AgreementViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FjM-kX-fxE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tokumemoPlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="W3Q-uH-fSA">
-                                <rect key="frame" x="157" y="68" width="100" height="100"/>
+                                <rect key="frame" x="146.66666666666666" y="79" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Ofs-yF-S1R"/>
                                     <constraint firstAttribute="width" constant="100" id="tT9-gd-41w"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YDb-DZ-Pu2">
-                                <rect key="frame" x="10" y="173" width="394" height="588"/>
+                                <rect key="frame" x="10" y="184" width="373" height="533"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="OiA-zl-Dwf">
-                                <rect key="frame" x="10" y="766" width="394" height="30"/>
+                                <rect key="frame" x="10" y="722" width="373" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0H4-PB-kGf">
-                                        <rect key="frame" x="0.0" y="0.0" width="184.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="174" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.1029662075421668" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" title="利用規約"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="radius" value="YES"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="termsButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="BBv-cC-HEJ"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnv-BZ-InL">
-                                        <rect key="frame" x="209.5" y="0.0" width="184.5" height="30"/>
+                                        <rect key="frame" x="199" y="0.0" width="174" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.095406235448572019" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" title="プライバシポリシー"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="radius" value="YES"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="pribacyButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="Kfh-w8-SXW"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-yp-BMa">
-                                <rect key="frame" x="132" y="806" width="150" height="36"/>
+                                <rect key="frame" x="121.66666666666669" y="762" width="150" height="36"/>
                                 <color key="backgroundColor" name="SubColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="feE-R8-PUb"/>
@@ -75,9 +69,6 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="radius" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="agreementButton:" destination="jZa-tP-bxu" eventType="touchUpInside" id="OgY-UL-fHp"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YGM-qQ-O9g"/>
@@ -98,7 +89,7 @@
                     </view>
                     <connections>
                         <outlet property="agreementButton" destination="tVJ-yp-BMa" id="GCj-jo-jvD"/>
-                        <outlet property="imageView" destination="W3Q-uH-fSA" id="W7Z-zD-lKy"/>
+                        <outlet property="iconImageView" destination="W3Q-uH-fSA" id="AVG-r0-I1k"/>
                         <outlet property="privacyButton" destination="dnv-BZ-InL" id="Zkd-j0-5n5"/>
                         <outlet property="termsButton" destination="0H4-PB-kGf" id="o2B-5m-1Ow"/>
                         <outlet property="textView" destination="YDb-DZ-Pu2" id="AJ7-fc-OXN"/>

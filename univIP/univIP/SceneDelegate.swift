@@ -44,10 +44,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 ////            self.window?.rootViewController = vc
 ////            self.window?.makeKeyAndVisible()
 //        }else{
-            let vc = R.storyboard.agreement.agreemantViewController()!
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
+//            let vc = R.storyboard.agreement.agreemantViewController()!
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
 //        }
+//        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
+        window?.makeKeyAndVisible()
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {

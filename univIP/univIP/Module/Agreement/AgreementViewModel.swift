@@ -21,6 +21,10 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
     struct Input: InputType {
         // PublishRelayは初期値がない
         let viewWillAppear = PublishRelay<Void>()
+        let termsButtonTapped = PublishRelay<Void>()
+        let privacyButtonTapped = PublishRelay<Void>()
+        let agreementButtonTapped = PublishRelay<Void>()
+
     }
 
     /// Viewに購読させたい変数を定義する
@@ -43,6 +47,27 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
 
         input.viewWillAppear
             .subscribe { _ in
+            }
+            .disposed(by: disposeBag)
+
+        input.termsButtonTapped
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe { _ in
+                dependency.router.navigate(.goWeb(Url.termsOfService.urlRequest()))
+            }
+            .disposed(by: disposeBag)
+
+        input.privacyButtonTapped
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe { _ in
+                dependency.router.navigate(.goWeb(Url.privacyPolicy.urlRequest()))
+            }
+            .disposed(by: disposeBag)
+
+        input.agreementButtonTapped
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe { _ in
+                dependency.router.navigate(.agree)
             }
             .disposed(by: disposeBag)
 

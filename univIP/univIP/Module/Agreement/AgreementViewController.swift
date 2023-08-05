@@ -6,80 +6,87 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class AgreementViewController: UIViewController {
-    
-    // MARK: - IBOutlet
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var termsButton: UIButton!
-    @IBOutlet weak var privacyButton: UIButton!
-    @IBOutlet weak var agreementButton: UIButton!
-    
-    private let dataManager = DataManager.singleton
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var termsButton: UIButton!
+    @IBOutlet private weak var privacyButton: UIButton!
+    @IBOutlet private weak var agreementButton: UIButton!
+
+    private let disposeBag = DisposeBag()
+
     var viewModel: AgreementViewModelInterface!
 
-    // MARK: - View Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupText()
-        setupDefaults()
-        setupImageView()
-        setupTermsButton()
-        setupPrivacyButton()
-        setupAgreementButton()
+        configureDefaults()
+        configureImageView()
+        configureButton()
+        binding()
     }
-    
-    // MARK: - IBAction
-    
-    /// 同意ボタン  利用規約のバージョン更新も行う
-    @IBAction func agreementButton(_ sender: Any) {
-        // アプリ内に表示していた利用規約のバージョンを保存する。
-        dataManager.agreementVersion = AppConstants.latestTermsVersion
-        let vc = R.storyboard.main.mainViewController()!
-        present(vc, animated: false)
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.input.viewWillAppear.accept(())
     }
-    
-    @IBAction func termsButton(_ sender: Any) {
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = Url.termsOfService.string()
-        present(vc, animated: true, completion: nil)
+}
+
+// MARK: Binding
+private extension AgreementViewController {
+    func binding() {
+        termsButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.termsButtonTapped.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        privacyButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.privacyButtonTapped.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        agreementButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.agreementButtonTapped.accept(())
+            }
+            .disposed(by: disposeBag)
     }
-    
-    @IBAction func pribacyButton(_ sender: Any) {
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = Url.privacyPolicy.string()
-        present(vc, animated: true, completion: nil)
-    }
-    
-    // MARK: - Methods [Private]
-    
-    private func setupDefaults() {
+}
+
+// MARK: Layout
+private extension AgreementViewController {
+    private func configureDefaults() {
         textView.layer.cornerRadius = 10.0
         view.backgroundColor = .white
     }
-    private func setupImageView() {
-        imageView.image = UIImage(resource: R.image.tokumemoPlusIcon)
-        imageView.layer.cornerRadius = 50.0
+
+    private func configureImageView() {
+        iconImageView.image = UIImage(resource: R.image.tokumemoPlusIcon)
+        iconImageView.layer.cornerRadius = 50.0
     }
-    private func setupAgreementButton() {
+
+    private func configureButton() {
         agreementButton.setTitle(NSLocalizedString("agreement button", comment: ""), for: .normal)
         agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
         agreementButton.tintColor = .black
         agreementButton.layer.cornerRadius = 5.0
         agreementButton.layer.borderWidth = 1
-    }
-    private func setupTermsButton() {
+
         termsButton.setTitle(NSLocalizedString("term button", comment: ""), for: .normal)
         termsButton.backgroundColor = .white
         termsButton.borderColor = .black
         termsButton.tintColor = .black
         termsButton.layer.cornerRadius = 10.0
         termsButton.layer.borderWidth = 1
-    }
-    private func setupPrivacyButton() {
+
         privacyButton.setTitle(NSLocalizedString("privacy policy button", comment: ""), for: .normal)
         privacyButton.backgroundColor = .white
         privacyButton.borderColor = .black
@@ -87,6 +94,7 @@ final class AgreementViewController: UIViewController {
         privacyButton.layer.cornerRadius = 10.0
         privacyButton.layer.borderWidth = 1
     }
+
     private func setupText() {
 //        let filePath = R.file
 //        textView.attributedText = Common.loadRtfFileContents(filePath)

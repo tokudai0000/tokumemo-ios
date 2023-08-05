@@ -19,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if !targetEnvironment(simulator)
             FirebaseApp.configure()
         #endif
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.rootViewController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
+//        window?.makeKeyAndVisible()
+
         return true
     }
     
