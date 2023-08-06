@@ -132,7 +132,7 @@ class HomeViewModel {
      ・それ以外なら
      */
     public func canExecuteJS(_ urlString: String) -> Bool {
-        if dataManager.canExecuteJavascript == false { return false }
+//        if dataManager.canExecuteJavascript == false { return false }
         if dataManager.cAccount.isEmpty || dataManager.password.isEmpty { return false }
         if urlString.contains(Url.universityLogin.string()) { return true }
         return false

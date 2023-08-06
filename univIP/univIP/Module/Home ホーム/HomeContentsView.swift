@@ -66,7 +66,7 @@ class HomeContentsView: UIViewController {
     // MARK: - Methods [Private]
 
     private func setupDefaults() {
-        dataManager.canExecuteJavascript = true
+//        dataManager.canExecuteJavascript = true
         homeTableViewHeightConstraint.constant = CGFloat(homeTableViewHight * homeTableItemLists.count)
     }
 
@@ -278,7 +278,7 @@ extension HomeContentsView: WKUIDelegate, WKNavigationDelegate {
             webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-            dataManager.canExecuteJavascript = false
+//            dataManager.canExecuteJavascript = false
         }
     }
 

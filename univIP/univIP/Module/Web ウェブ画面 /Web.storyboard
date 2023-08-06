@@ -136,8 +136,12 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="cV4-O6-vDl" id="lVm-ep-9g6"/>
+                        <outlet property="doneButton" destination="eec-eU-8pd" id="QhT-fs-iuD"/>
                         <outlet property="forwardButton" destination="Mig-mD-6Jb" id="hlh-60-2B3"/>
+                        <outlet property="menuButton" destination="IiE-H2-KtA" id="HXp-RJ-GP3"/>
                         <outlet property="progressView" destination="wyf-84-Yq1" id="IuM-oX-hD4"/>
+                        <outlet property="reloadButton" destination="BcE-tV-5mG" id="QJ9-Lb-G9T"/>
+                        <outlet property="safariButton" destination="3M5-Ov-TSx" id="7Y6-IM-08e"/>
                         <outlet property="urlLabel" destination="fzv-K2-wm1" id="FgV-nI-MgC"/>
                         <outlet property="webView" destination="wU7-49-cl9" id="0Jr-39-F9e"/>
                     </connections>

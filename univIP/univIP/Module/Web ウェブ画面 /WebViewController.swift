@@ -15,8 +15,12 @@ final class WebViewController: UIViewController {
     @IBOutlet private weak var urlLabel: UILabel!
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
+    @IBOutlet private weak var doneButton: UIButton!
+    @IBOutlet private weak var reloadButton: UIButton!
     @IBOutlet private weak var forwardButton: UIButton!
     @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var safariButton: UIButton!
+    @IBOutlet private weak var menuButton: UIButton!
 
     private let disposeBag = DisposeBag()
 
@@ -49,6 +53,20 @@ final class WebViewController: UIViewController {
 // MARK: Binding
 private extension WebViewController {
     func binding() {
+        doneButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                self.dismiss(animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
+
+        reloadButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                self.webView.reload()
+            }
+            .disposed(by: disposeBag)
+
         forwardButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
@@ -68,43 +86,80 @@ private extension WebViewController {
             }
             .disposed(by: disposeBag)
 
-
-        viewModel.output.loadUrl
-            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
-            .drive(with: self) { owner, url in
-                owner.webView.load(url)
+        safariButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                self.viewModel.input.didTapSafariButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        //
-        //    @IBAction func safariButton(_ sender: Any) {
-        //        let url = URL(string: viewModel.loadingUrlStr)!
-        //        if UIApplication.shared.canOpenURL(url) {
-        //            UIApplication.shared.open(url)
-        //        }
-        //    }
-        //
-        //    @IBAction func menuButton(_ sender: Any) {
-        //        let vc = R.storyboard.menu.menuViewController()!
-        //        vc.delegate = self
-        //        present(vc, animated: true, completion: nil)
-        //    }
-        //
-        //
-        //    @IBAction func reloadButton(_ sender: Any) {
-        //        webView.reload()
-        //    }
+        menuButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+//                let vc = R.storyboard.menu.menuViewController()!
+//                vc.delegate = self
+//                present(vc, animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.openSafari
+            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
+            .drive(with: self) { owner, urlRequest in
+                guard let url = urlRequest.url else { return }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.loadUrl
+            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
+            .drive(with: self) { owner, urlRequest in
+                self.urlLabel.text = urlRequest.url?.host
+                owner.webView.load(urlRequest)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.javaScriptInjectionType
+            .asDriver(onErrorJustReturn: .none)
+            .drive(with: self) { owner, type in
+                switch type {
+                case .skipReminder:
+                    owner.webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+                case .loginIAS:
+//                    webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
+//                    webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
+                    owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+                case .syllabus:
+//                    webView.isHidden = true
+//                    webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(dataManager.syllabusSubjectName)'", completionHandler:  nil)
+//                    webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(dataManager.syllabusTeacherName)'", completionHandler:  nil)
+                    owner.webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
+                case .loginOutlook:
+//                    webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
+//                    webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
+                    owner.webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
+                case .loginCareerCenter:
+                    print("a")
+//                    webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
+//                    webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
+                case .none:
+                    print("q")
+                    break
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: Layout
 private extension WebViewController {
 
-    private func configureDefaults() {
+    func configureDefaults() {
         forwardButton.alpha = 0.6
     }
     
-    private func configureWebView() {
+    func configureWebView() {
         webView.allowsBackForwardNavigationGestures = true
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -141,9 +196,9 @@ private extension WebViewController {
     
     /// 大学統合認証システム(IAS)のページを読み込む
     /// ログインの処理はWebViewのdidFinishで行う
-    private func relogin() {
-        webView.load(Url.universityTransitionLogin.urlRequest())
-    }
+//    func relogin() {
+//        webView.load(Url.universityTransitionLogin.urlRequest())
+//    }
 }
 
 extension WebViewController: WKNavigationDelegate, WKUIDelegate {
@@ -156,25 +211,22 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
             decisionHandler(.cancel)
             return
         }
-//        if let component = NSURLComponents(string: url.absoluteString) {
-//            if let domain = component.host {
-//                urlLabel.text = domain
-//            }
-//        }
-//        if viewModel.isTimeout(urlStr: url.absoluteString) {
-//            relogin()
-//        }
-//        if viewModel.shouldOpenSafari(urlStr: url.absoluteString) {
-//            let url = URL(string: viewModel.loadingUrlStr)!
-//            if UIApplication.shared.canOpenURL(url) {
-//                UIApplication.shared.open(url)
-//            }
-//            decisionHandler(.cancel)
-//            return
-//        }
+        self.viewModel.input.loadingUrl.accept(URLRequest(url: url))
         decisionHandler(.allow)
         return
     }
+
+    //        if viewModel.isTimeout(urlStr: url.absoluteString) {
+    //            relogin()
+    //        }
+    //        if viewModel.shouldOpenSafari(urlStr: url.absoluteString) {
+    //            let url = URL(string: viewModel.loadingUrlStr)!
+    //            if UIApplication.shared.canOpenURL(url) {
+    //                UIApplication.shared.open(url)
+    //            }
+    //            decisionHandler(.cancel)
+    //            return
+    //        }
     
     /*
      JavaScriptをWebサイトごとに実行する
@@ -188,7 +240,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
      シラバスでは検索中は、画面を消すことにより、ユーザーの別操作を防ぐ
      キャリアセンター室ではログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
      */
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 //        let url = self.webView.url!
 //        AKLog(level: .DEBUG, message: url.absoluteString)
 //        viewModel.loadingUrlStr = url.absoluteString // Safari用にデータ保持
@@ -223,7 +275,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
 //            webView.isHidden = false
 //        }
 //        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.6 // 戻る、進むボタンの表示を変更
-    }
+//    }
     
     /// alert対応
     func webView(_ webView: WKWebView,
