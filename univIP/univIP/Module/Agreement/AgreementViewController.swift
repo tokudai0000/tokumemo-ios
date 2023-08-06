@@ -22,16 +22,11 @@ final class AgreementViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupText()
+        configureText()
         configureDefaults()
         configureImageView()
         configureButton()
         binding()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.input.viewWillAppear.accept(())
     }
 }
 
@@ -41,21 +36,21 @@ private extension AgreementViewController {
         termsButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.termsButtonTapped.accept(())
+                owner.viewModel.input.didTapTermsButton.accept(())
             }
             .disposed(by: disposeBag)
 
         privacyButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.privacyButtonTapped.accept(())
+                owner.viewModel.input.didTapPrivacyButton.accept(())
             }
             .disposed(by: disposeBag)
 
         agreementButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.agreementButtonTapped.accept(())
+                owner.viewModel.input.didTapAgreementButton.accept(())
             }
             .disposed(by: disposeBag)
     }
@@ -63,6 +58,11 @@ private extension AgreementViewController {
 
 // MARK: Layout
 private extension AgreementViewController {
+    func configureText() {
+//        let filePath = R.file
+//        textView.attributedText = Common.loadRtfFileContents(filePath)
+    }
+
     func configureDefaults() {
         textView.layer.cornerRadius = 10.0
         view.backgroundColor = .white
@@ -74,29 +74,24 @@ private extension AgreementViewController {
     }
 
     func configureButton() {
-        agreementButton.setTitle(NSLocalizedString("agreement button", comment: ""), for: .normal)
+        agreementButton.setTitle(R.string.localizable.agree(), for: .normal)
         agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
         agreementButton.tintColor = .black
         agreementButton.layer.cornerRadius = 5.0
         agreementButton.layer.borderWidth = 1
 
-        termsButton.setTitle(NSLocalizedString("term button", comment: ""), for: .normal)
+        termsButton.setTitle(R.string.localizable.term_of_Service(), for: .normal)
         termsButton.backgroundColor = .white
         termsButton.borderColor = .black
         termsButton.tintColor = .black
         termsButton.layer.cornerRadius = 10.0
         termsButton.layer.borderWidth = 1
 
-        privacyButton.setTitle(NSLocalizedString("privacy policy button", comment: ""), for: .normal)
+        privacyButton.setTitle(R.string.localizable.privacy_policy(), for: .normal)
         privacyButton.backgroundColor = .white
         privacyButton.borderColor = .black
         privacyButton.tintColor = .black
         privacyButton.layer.cornerRadius = 10.0
         privacyButton.layer.borderWidth = 1
-    }
-
-    func setupText() {
-//        let filePath = R.file
-//        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
 }

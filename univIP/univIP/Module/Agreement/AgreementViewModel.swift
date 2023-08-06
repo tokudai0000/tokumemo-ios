@@ -21,10 +21,9 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
     struct Input: InputType {
         // PublishRelayは初期値がない
         let viewWillAppear = PublishRelay<Void>()
-        let termsButtonTapped = PublishRelay<Void>()
-        let privacyButtonTapped = PublishRelay<Void>()
-        let agreementButtonTapped = PublishRelay<Void>()
-
+        let didTapTermsButton = PublishRelay<Void>()
+        let didTapPrivacyButton = PublishRelay<Void>()
+        let didTapAgreementButton = PublishRelay<Void>()
     }
 
     /// Viewに購読させたい変数を定義する
@@ -45,26 +44,21 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
     /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
 
-        input.viewWillAppear
-            .subscribe { _ in
-            }
-            .disposed(by: disposeBag)
-
-        input.termsButtonTapped
+        input.didTapTermsButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
                 dependency.router.navigate(.goWeb(Url.termsOfService.urlRequest()))
             }
             .disposed(by: disposeBag)
 
-        input.privacyButtonTapped
+        input.didTapPrivacyButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
                 dependency.router.navigate(.goWeb(Url.privacyPolicy.urlRequest()))
             }
             .disposed(by: disposeBag)
 
-        input.agreementButtonTapped
+        input.didTapAgreementButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
                 dependency.router.navigate(.agree)

@@ -6,6 +6,6 @@
   
 */
 
-"term button" = "利用規約";
-"privacy policy button" = "プライバシーポリシー";
-"agreement button" = "同意する";
+"term_of_Service" = "利用規約";
+"privacy_policy" = "プライバシーポリシー";
+"agree" = "同意する";
