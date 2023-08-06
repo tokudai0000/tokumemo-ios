@@ -32,7 +32,7 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
     func navigate(_ destination: AgreementNavigationDestination) {
         switch destination {
         case .goWeb(let urlRequest):
-            moduleViewController.navigationController?.popViewController(animated: true)
+            present(WebRouter(loadUrl: urlRequest))
         case .agree:
             moduleViewController.dismiss(animated: true)
         }

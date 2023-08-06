@@ -63,17 +63,17 @@ private extension AgreementViewController {
 
 // MARK: Layout
 private extension AgreementViewController {
-    private func configureDefaults() {
+    func configureDefaults() {
         textView.layer.cornerRadius = 10.0
         view.backgroundColor = .white
     }
 
-    private func configureImageView() {
+    func configureImageView() {
         iconImageView.image = UIImage(resource: R.image.tokumemoPlusIcon)
         iconImageView.layer.cornerRadius = 50.0
     }
 
-    private func configureButton() {
+    func configureButton() {
         agreementButton.setTitle(NSLocalizedString("agreement button", comment: ""), for: .normal)
         agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
         agreementButton.tintColor = .black
@@ -95,7 +95,7 @@ private extension AgreementViewController {
         privacyButton.layer.borderWidth = 1
     }
 
-    private func setupText() {
+    func setupText() {
 //        let filePath = R.file
 //        textView.attributedText = Common.loadRtfFileContents(filePath)
     }

@@ -66,6 +66,7 @@
 		1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE8E2A7DE32C00598EED /* BaseRouter.swift */; };
 		1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE902A7DE84200598EED /* BaseViewModel.swift */; };
 		1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE922A7DE91200598EED /* RootViewController.swift */; };
+		1AC4BE952A7E336600598EED /* WebRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE942A7E336600598EED /* WebRouter.swift */; };
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
 		1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */; };
@@ -163,6 +164,7 @@
 		1AC4BE8E2A7DE32C00598EED /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
 		1AC4BE902A7DE84200598EED /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		1AC4BE922A7DE91200598EED /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		1AC4BE942A7E336600598EED /* WebRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRouter.swift; sourceTree = "<group>"; };
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
@@ -245,15 +247,16 @@
 			path = HomeCollectionCell;
 			sourceTree = "<group>";
 		};
-		1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */ = {
+		1A30D0AC28F6D75000C4012E /* Web */ = {
 			isa = PBXGroup;
 			children = (
 				1A30D0AF28F6D7BC00C4012E /* Web.storyboard */,
+				1AC4BE942A7E336600598EED /* WebRouter.swift */,
 				1A30D0AD28F6D79800C4012E /* WebViewController.swift */,
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
 				1A5698BC2938CA09003906DB /* Menu メニュー */,
 			);
-			name = "Web ウェブ画面 ";
+			name = Web;
 			path = "Web ウェブ画面 ";
 			sourceTree = "<group>";
 		};
@@ -424,7 +427,7 @@
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
 				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
 				1A30D0B728F9BED600C4012E /* Settings 設定 */,
-				1A30D0AC28F6D75000C4012E /* Web ウェブ画面  */,
+				1A30D0AC28F6D75000C4012E /* Web */,
 				1ABE8BCB27B10489001EEA79 /* Input 入力画面 */,
 			);
 			path = Module;
@@ -824,6 +827,7 @@
 				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */,
 				1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */,
+				1AC4BE952A7E336600598EED /* WebRouter.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,

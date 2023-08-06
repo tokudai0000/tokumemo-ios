@@ -43,7 +43,7 @@ extension ClubListViewController: WKNavigationDelegate, WKScriptMessageHandler {
     /// window.webkit.messageHandlers.tokumemoPlus.postMessage(url)
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = message.body as? String
+        vc.loadUrlString = (message.body as? String)!
         present(vc, animated: true, completion: nil)
     }
 }
