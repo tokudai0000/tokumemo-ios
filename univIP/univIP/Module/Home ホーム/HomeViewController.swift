@@ -39,7 +39,12 @@ final class HomeViewController: UIViewController {
 //        configureUnivBannerDefaults()
 //        configureMenuCollectionView()
 //        binding()
-//        viewModel.input.viewDidLoad.accept(())
+        viewModel.input.viewDidLoad.accept(())
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        viewModel.input.viewWillAppear.accept(())
     }
 
 }

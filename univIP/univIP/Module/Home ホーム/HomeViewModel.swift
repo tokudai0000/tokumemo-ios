@@ -24,7 +24,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     /// Viewからのイベントを受け取りたい変数を定義する
     struct Input: InputType {
         // PublishRelayは初期値がない
-//        let viewDidLoad = PublishRelay<Void>()
+        let viewDidLoad = PublishRelay<Void>()
+        let viewWillAppear = PublishRelay<Void>()
     }
 
     /// Viewに購読させたい変数を定義する
@@ -77,7 +78,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
 //        input.viewDidLoad
 //            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
 //            .subscribe(onNext: { _ in
-//                getInitialConfiguration()
+////                getInitialConfiguration()
 //            })
 //            .disposed(by: disposeBag)
 

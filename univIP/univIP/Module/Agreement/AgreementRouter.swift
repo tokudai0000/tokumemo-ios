@@ -34,7 +34,7 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .agree:
-            moduleViewController.dismiss(animated: true)
+            present(HomeRouter())
         }
     }
 }
