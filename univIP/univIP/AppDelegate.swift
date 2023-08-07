@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // アナリティクスをシュミレーターでは起動させない
-        #if !targetEnvironment(simulator)
-            FirebaseApp.configure()
-        #endif
+//        #if !targetEnvironment(simulator)
+//            FirebaseApp.configure()
+//        #endif
 //        window = UIWindow(frame: UIScreen.main.bounds)
 //        window?.rootViewController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
 //        window?.makeKeyAndVisible()

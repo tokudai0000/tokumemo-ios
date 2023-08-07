@@ -10,15 +10,13 @@ import APIKit
 import Foundation
 import RxSwift
 
-protocol AnnotateImageAPIInterface {
-    func postAnnotateImage(imageBase64String: String) -> Single<AnnotateImagePostRequest.Response>
+protocol InitialConfigurationAPIInterface {
+    func getInitialConfiguration() -> Single<InitialConfigurationGetRequest.Response>
 }
 
-struct AnnotateImageAPI: AnnotateImageAPIInterface {
-    let apiKey: String
-
-    func postAnnotateImage(imageBase64String: String) -> RxSwift.Single<AnnotateImagePostRequest.Response> {
-        let request = AnnotateImagePostRequest(apiKey: AppConstants.API.key, base64String: imageBase64String)
+struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
+    func getInitialConfiguration() -> RxSwift.Single<InitialConfigurationGetRequest.Response> {
+        let request = InitialConfigurationGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
                 switch result {
@@ -36,53 +34,23 @@ struct AnnotateImageAPI: AnnotateImageAPIInterface {
     }
 }
 
-// API仕様はこちらを参照
-// https://cloud.google.com/vision/docs/detecting-fulltext?hl=ja
-// https://cloud.google.com/vision/docs/reference/rest/v1/images/annotate?hl=ja#AnnotateImageRequest
-struct AnnotateImagePostRequest: Request {
+struct InitialConfigurationGetRequest: Request {
     struct ResponseBody: Decodable {
-        let responses: [AnnotateImage]
+        let responses: [AdItem]
     }
 
     typealias Response = ResponseBody
 
-    var apiKey: String
-    var base64String: String
-
     var baseURL: URL {
-        return URL(string: "https://vision.googleapis.com")!
+        return URL(string: "https://tokudai0000.github.io")!
     }
 
     var method: HTTPMethod {
-        return .post
+        return .get
     }
 
     var path: String {
-//        return "/v1/images:annotate"
-        return "/v1p4beta1/images:annotate"
-    }
-
-    var queryParameters: [String: Any]? {
-        return [
-            "key": apiKey
-        ]
-    }
-
-    var bodyParameters: BodyParameters? {
-        let json: [String: Any] = [
-            "requests": [
-                "image": [
-                    "content": "\(base64String)"
-                ],
-                "features": [[
-                    "type": "DOCUMENT_TEXT_DETECTION",
-                    "maxResults": 30,
-                    "model": "builtin/latest"
-                ]]
-            ]
-        ]
-
-        return JSONBodyParameters(JSONObject: json)
+        return "/tokumemo_resource/api/v1/info.json"
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {

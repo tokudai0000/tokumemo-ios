@@ -19,7 +19,7 @@ protocol HomeRouterInterface {
 
 final class HomeRouter: BaseRouter, HomeRouterInterface {
     init() {
-        let viewController = R.storyboard.home.homeViewController()!
+        let viewController = HomeViewController()//R.storyboard.home.homeViewController()!
         super.init(moduleViewController: viewController)
         viewController.viewModel = HomeViewModel(
             input: .init(),

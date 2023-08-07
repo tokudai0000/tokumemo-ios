@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/05/09.
 //
 
-struct AdItem {
+struct AdItem: Decodable {
     let id: String
     let clientName: String
     let imageUrlStr: String

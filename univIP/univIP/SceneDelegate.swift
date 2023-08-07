@@ -49,8 +49,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            self.window?.makeKeyAndVisible()
 //        }
 //        window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.rootViewController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
-//        window?.makeKeyAndVisible()
+
+//        window?.rootViewController = UINavigationController(rootViewController: HomeRouter().moduleViewController)
+//        window?.rootViewController = UIController(rootViewController: HomeRouter().moduleViewController)
+        window?.rootViewController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
+        window?.makeKeyAndVisible()
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {

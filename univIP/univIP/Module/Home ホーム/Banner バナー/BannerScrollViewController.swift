@@ -117,73 +117,73 @@ class BannerScrollViewController: UIViewController {
 
     /// パネル追加
     func addPrBannerPanels() {
-        var prevBannerView: PrBannerView?
-        dataManager.prItemLists.enumerated().forEach { index, item in
-            if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
-                if let urlStr = item.urlSavedImage,
-                    let url = URL(string: urlStr) {
-                    bannerView.imageView.loadImage(from: url)
-                }
-
-                // レイアウト
-                bannerView.backgroundColor = .clear
-                bannerView.translatesAutoresizingMaskIntoConstraints = false
-                contentView.addSubview(bannerView)
-                bannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-                bannerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-                if index == 0 {
-                    bannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-                } else {
-                    if let prevBanner = prevBannerView {
-                        bannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
-                    }
-                }
-                bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-                prevBannerView = bannerView
-
-                // バナーをタップしたときのイベント設定
-                let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
-                gesture.numberOfTouchesRequired = 1
-                bannerView.tag = index
-                bannerView.addGestureRecognizer(gesture)
-            }
-        }
-        contentView.layoutSubviews()
+//        var prevBannerView: PrBannerView?
+//        dataManager.prItemLists.enumerated().forEach { index, item in
+//            if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
+//                if let urlStr = item.urlSavedImage,
+//                    let url = URL(string: urlStr) {
+//                    bannerView.imageView.loadImage(from: url)
+//                }
+//
+//                // レイアウト
+//                bannerView.backgroundColor = .clear
+//                bannerView.translatesAutoresizingMaskIntoConstraints = false
+//                contentView.addSubview(bannerView)
+//                bannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+//                bannerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+//                if index == 0 {
+//                    bannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+//                } else {
+//                    if let prevBanner = prevBannerView {
+//                        bannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
+//                    }
+//                }
+//                bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
+//                prevBannerView = bannerView
+//
+//                // バナーをタップしたときのイベント設定
+//                let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
+//                gesture.numberOfTouchesRequired = 1
+//                bannerView.tag = index
+//                bannerView.addGestureRecognizer(gesture)
+//            }
+//        }
+//        contentView.layoutSubviews()
     }
     func addUnivBannerPanels() {
-        var prevBannerView: UnivBannerView?
-        dataManager.prItemLists.enumerated().forEach { index, item in
-            if let univBannerView =  UINib(nibName: "UnivBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? UnivBannerView {
-                if let urlStr = item.urlSavedImage,
-                    let url = URL(string: urlStr) {
-                    univBannerView.imageView.loadImage(from: url)
-                }
-                univBannerView.titleTextView.text = item.requesterName?.description
-                univBannerView.discriptionTextView.text = item.descriptionAboutImage?.description
-
-                // レイアウト
-                univBannerView.translatesAutoresizingMaskIntoConstraints = false
-                contentView.addSubview(univBannerView)
-                univBannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-                univBannerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-                if index == 0 {
-                    univBannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-                } else {
-                    if let prevBanner = prevBannerView {
-                        univBannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
-                    }
-                }
-                univBannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-                prevBannerView = univBannerView
-
-                // バナーをタップしたときのイベント設定
-                let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
-                gesture.numberOfTouchesRequired = 1
-                univBannerView.tag = index
-                univBannerView.addGestureRecognizer(gesture)
-            }
-        }
-        contentView.layoutSubviews()
+//        var prevBannerView: UnivBannerView?
+//        dataManager.prItemLists.enumerated().forEach { index, item in
+//            if let univBannerView =  UINib(nibName: "UnivBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? UnivBannerView {
+//                if let urlStr = item.urlSavedImage,
+//                    let url = URL(string: urlStr) {
+//                    univBannerView.imageView.loadImage(from: url)
+//                }
+//                univBannerView.titleTextView.text = item.requesterName?.description
+//                univBannerView.discriptionTextView.text = item.descriptionAboutImage?.description
+//
+//                // レイアウト
+//                univBannerView.translatesAutoresizingMaskIntoConstraints = false
+//                contentView.addSubview(univBannerView)
+//                univBannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+//                univBannerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+//                if index == 0 {
+//                    univBannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+//                } else {
+//                    if let prevBanner = prevBannerView {
+//                        univBannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
+//                    }
+//                }
+//                univBannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
+//                prevBannerView = univBannerView
+//
+//                // バナーをタップしたときのイベント設定
+//                let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
+//                gesture.numberOfTouchesRequired = 1
+//                univBannerView.tag = index
+//                univBannerView.addGestureRecognizer(gesture)
+//            }
+//        }
+//        contentView.layoutSubviews()
     }
 
     @objc func didTapBanner(gesture: UITapGestureRecognizer) {

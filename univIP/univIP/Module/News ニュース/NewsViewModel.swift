@@ -16,7 +16,7 @@ final class NewsViewModel {
     public let dataManager = DataManager.singleton
     
     // API マネージャ
-    public let apiManager = ApiManager.singleton
+//    public let apiManager = ApiManager.singleton
     
     
     struct NewsData {
@@ -39,27 +39,27 @@ final class NewsViewModel {
     // MARK: - Methods [Public]
     
     public func updateNewsItems() {
-        state?(.busy) // 通信開始（通信中）
-        newsItems.removeAll()
-        apiManager.request(Url.newsItemJsonData.string(),
-                           success: { [weak self] (response) in
-            guard let self = self else {
-                AKLog(level: .FATAL, message: "[self] FatalError")
-                fatalError()
-            }
-            for i in 0 ..< 50 { // MAX50件
-                guard let title = response["items"][i]["title"].string,
-                      let date = response["items"][i]["pubDate"].string,
-                      let urlStr = response["items"][i]["link"].string else{
-                    break
-                }
-                let data = NewsData(title: title, date: date, urlStr: urlStr)
-                self.newsItems.append(data)
-            }
-            self.state?(.ready) // 通信完了
-        }, failure: { [weak self] (error) in
-            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-            self?.state?(.error) // エラー表示
-        })
+//        state?(.busy) // 通信開始（通信中）
+//        newsItems.removeAll()
+//        apiManager.request(Url.newsItemJsonData.string(),
+//                           success: { [weak self] (response) in
+//            guard let self = self else {
+//                AKLog(level: .FATAL, message: "[self] FatalError")
+//                fatalError()
+//            }
+//            for i in 0 ..< 50 { // MAX50件
+//                guard let title = response["items"][i]["title"].string,
+//                      let date = response["items"][i]["pubDate"].string,
+//                      let urlStr = response["items"][i]["link"].string else{
+//                    break
+//                }
+//                let data = NewsData(title: title, date: date, urlStr: urlStr)
+//                self.newsItems.append(data)
+//            }
+//            self.state?(.ready) // 通信完了
+//        }, failure: { [weak self] (error) in
+//            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
+//            self?.state?(.error) // エラー表示
+//        })
     }
 }

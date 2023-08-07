@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import RxCocoa
+import RxGesture
 import RxSwift
 
 
@@ -32,12 +33,13 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureWebView()
-        configureDefaults()
-        configurePrBannerDefaults()
-        configureUnivBannerDefaults()
-        configureMenuCollectionView()
-        viewModel.input.viewDidAppear.accept(())
+//        configureWebView()
+//        configureDefaults()
+//        configurePrBannerDefaults()
+//        configureUnivBannerDefaults()
+//        configureMenuCollectionView()
+//        binding()
+//        viewModel.input.viewDidLoad.accept(())
     }
 
 }
@@ -45,7 +47,12 @@ final class HomeViewController: UIViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
-
+//        viewModel.output.adItems
+//            .asDriver(onErrorJustReturn: [])
+//            .drive(with: self) { owner, adItems in
+//                print(adItems)
+//            }
+//            .disposed(by: disposeBag)
     }
 }
 
@@ -125,21 +132,27 @@ extension HomeViewController: BannerScrollViewControllerDelegate {
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return homeMenuLists.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
+        let title = homeMenuLists[indexPath.row].title
+        let icon = homeMenuLists[indexPath.row].image
+        cell.setupCell(title: title, image: icon)
+        return cell
     }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return homeTableItemLists.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.homeTableView, for: indexPath)!
+        cell.textLabel?.text = homeTableItemLists[indexPath.item].title
+        return cell
     }
 }
 

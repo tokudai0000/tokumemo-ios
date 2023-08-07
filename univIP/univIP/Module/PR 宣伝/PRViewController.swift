@@ -23,13 +23,13 @@ class PRViewController: UIViewController {
         super.viewDidLoad()
 //        textView.cornerRound = 15
 //        detailsInfoButton.cornerRound = 20
-        guard let urlStr = item.urlSavedImage,
-              let url = URL(string: urlStr),
-              let intro = item.descriptionAboutImage else{
-            return
-        }
-        imageView.loadImage(from: url)
-        textView.text = intro
+//        guard let urlStr = item.urlSavedImage,
+//              let url = URL(string: urlStr),
+//              let intro = item.descriptionAboutImage else{
+//            return
+//        }
+//        imageView.loadImage(from: url)
+//        textView.text = intro
     }
     
     // MARK: - IBAction
@@ -39,11 +39,11 @@ class PRViewController: UIViewController {
     }
     
     @IBAction func detailsInfoButton(_ sender: Any) {
-        guard let url = item.urlNextTransition else{
-            return
-        }
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = url
-        present(vc, animated: true, completion: nil)
+//        guard let url = item.urlNextTransition else{
+//            return
+//        }
+//        let vc = R.storyboard.web.webViewController()!
+//        vc.loadUrlString = url
+//        present(vc, animated: true, completion: nil)
     }
 }
