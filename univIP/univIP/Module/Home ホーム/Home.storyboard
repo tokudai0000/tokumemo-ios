@@ -13,7 +13,7 @@
         <!--Home-->
         <scene sceneID="EY9-uc-3A2">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5a2-Af-fFk" userLabel="Home" customClass="HomeContentsView" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5a2-Af-fFk" userLabel="Home" customClass="HomeViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UHL-ib-Jiu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="1852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,9 +46,6 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="26" id="HEd-mI-auh"/>
                                                         </constraints>
-                                                        <connections>
-                                                            <action selector="didChangeBannerPageControl" destination="5a2-Af-fFk" eventType="valueChanged" id="b9U-Pq-hao"/>
-                                                        </connections>
                                                     </pageControl>
                                                 </subviews>
                                                 <constraints>
@@ -144,9 +141,6 @@
                                                         <state key="normal" title="Button" image="twitter_icon">
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="twitterButton:" destination="5a2-Af-fFk" eventType="touchUpInside" id="d2l-ZS-GHY"/>
-                                                        </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSK-Fc-L5j">
                                                         <rect key="frame" x="209" y="0.0" width="184" height="25"/>

@@ -21,7 +21,7 @@ final class DataManager: DataManagerInterface {
     var syllabusTeacherName = ""
     var syllabusSubjectName = ""
 
-    var prItemLists: [PrItem]
+    var prItemLists: [AdItem]
 
     init() {
         prItemLists = []

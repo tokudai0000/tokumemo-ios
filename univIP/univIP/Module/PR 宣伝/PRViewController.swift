@@ -15,7 +15,7 @@ class PRViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var detailsInfoButton: UIButton!
     
-    public var item: PrItem!
+    public var item: AdItem!
     
     // MARK: - View Life Cycle
     
