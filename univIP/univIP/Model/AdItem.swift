@@ -6,6 +6,7 @@
 //
 
 struct AdItem: Decodable {
+    let id: Int?
     let clientName: String?
     let imageUrlStr: String?
     let targetUrlStr: String?

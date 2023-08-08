@@ -32,14 +32,14 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     struct Output: OutputType {
         // Observableは値を流すことができない購読専用 (ViewからOutputに値を流せなくする)
         let adItems: Observable<[AdItem]>
-//        let univNoticeItems: Observable<[AdItem]>
+        //        let univNoticeItems: Observable<[AdItem]>
     }
 
     /// 状態変数を定義する(MVVMでいうModel相当)
     struct State: StateType {
         // BehaviorRelayは初期値があり､現在の値を保持することができる｡
         let adItems: BehaviorRelay<[AdItem]> = .init(value: [])
-//        let univNoticeItems: BehaviorRelay<[AdItem]> = .init(value: [])
+        //        let univNoticeItems: BehaviorRelay<[AdItem]> = .init(value: [])
     }
 
     /// Presentationレイヤーより上の依存物(APIやUseCase)や引数を定義する
@@ -52,8 +52,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let adItems: PublishRelay<[AdItem]> = .init()
-//        let univNoticeItems: PublishRelay<[AdItem]> = .init()
-//
+        //        let univNoticeItems: PublishRelay<[AdItem]> = .init()
+        //
         func getInitialConfiguration() {
             dependency.initialConfigurationAPI.getInitialConfiguration()
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
@@ -61,10 +61,11 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                     onSuccess: { initialConfigurationResponse in
                         initialConfigurationResponse.items.forEach { adItem in
                             dependency.adItemStoreUseCase.addBizCard(AdItem(
-                                                                            clientName: adItem.clientName,
-                                                                            imageUrlStr: adItem.imageUrlStr,
-                                                                            targetUrlStr: adItem.targetUrlStr,
-                                                                            imageDescription: adItem.imageDescription))
+                                id: adItem.id,
+                                clientName: adItem.clientName,
+                                imageUrlStr: adItem.imageUrlStr,
+                                targetUrlStr: adItem.targetUrlStr,
+                                imageDescription: adItem.imageDescription))
                         }
                         adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
                     },
@@ -84,7 +85,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
 
         return .init(
             adItems: adItems.asObservable()
-//            univNoticeItems: univNoticeItems.asObservable()
+            //            univNoticeItems: univNoticeItems.asObservable()
         )
     }
 }

@@ -50,7 +50,7 @@ struct InitialConfigurationGetRequest: Request {
     }
 
     var path: String {
-        return "/tokumemo_resource/api/v1/info.json"
+        return "/tokumemo_resource/api/v1/ad_items.json"
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
