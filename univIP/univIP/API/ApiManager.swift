@@ -9,6 +9,7 @@
 import APIKit
 import Foundation
 import RxSwift
+import SwiftyJSON
 
 protocol InitialConfigurationAPIInterface {
     func getInitialConfiguration() -> Single<InitialConfigurationGetRequest.Response>
@@ -36,7 +37,15 @@ struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
 
 struct InitialConfigurationGetRequest: Request {
     struct ResponseBody: Decodable {
-        let items: [AdItem]
+        let items: String?
+
+        init(object: Any) throws {
+            guard let dictionary = object as? [String: Any],
+                  let items = dictionary["items"] as? String else {
+                throw ResponseError.unexpectedObject(object)
+            }
+            self.items = items
+        }
     }
 
     typealias Response = ResponseBody
@@ -50,16 +59,39 @@ struct InitialConfigurationGetRequest: Request {
     }
 
     var path: String {
-        return "/tokumemo_resource/api/v1/ad_items.json"
+        return "/tokumemo_resource/api/v1/ad.json"
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        // ResponseがDecodableに準拠していなければパースされない
-        guard let response = object as? Response else {
-            throw ResponseError.unexpectedObject(object)
-        }
-        return response
+        let items = try Response(object: object)
+        print(items.items)
+
+        return try Response(object: object)
+//        print(try decoder.decode(ResponseBody.self, from: object as! Data))
+//        return try decoder.decode(ResponseBody.self, from: object as! Data)
+//        if let jsonData = object.data(using: String.Encoding.utf8) {
+//            let decoder = JSONDecoder()
+//            do {
+//                let response = try decoder.decode(ResponseBody.self, from: jsonData)
+//                print(response.items) // Optional("test")
+//            } catch {
+//                print(error) // エラーを出力
+//            }
+//        }
+//        print(object["items"])
+//        guard let response = object as? ResponseBody else {
+//            throw ResponseError.unexpectedObject(object)
+//        }
+//        return response
     }
+
+//    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+//        // ResponseがDecodableに準拠していなければパースされない
+//        guard let response = object as? Response else {
+//            throw ResponseError.unexpectedObject(object)
+//        }
+//        return response
+//    }
 }
 
 

@@ -58,19 +58,20 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             dependency.initialConfigurationAPI.getInitialConfiguration()
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
-                    onSuccess: { initialConfigurationResponse in
-                        initialConfigurationResponse.items.forEach { adItem in
-                            dependency.adItemStoreUseCase.addBizCard(AdItem(
-                                id: adItem.id,
-                                clientName: adItem.clientName,
-                                imageUrlStr: adItem.imageUrlStr,
-                                targetUrlStr: adItem.targetUrlStr,
-                                imageDescription: adItem.imageDescription))
-                        }
-                        adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
+                    onSuccess: { response in
+//                        response.items.forEach { adItem in
+//                            dependency.adItemStoreUseCase.addBizCard(AdItem(
+//                                id: adItem.id,
+//                                clientName: adItem.clientName,
+//                                imageUrlStr: adItem.imageUrlStr,
+//                                targetUrlStr: adItem.targetUrlStr,
+//                                imageDescription: adItem.imageDescription))
+//                        }
+                        print(dependency.adItemStoreUseCase.fetchBizCards())
+//                        adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
                     },
                     onFailure: { error in
-                        print(error)
+                        AKLog(level: .ERROR, message: error)
                     }
                 )
                 .disposed(by: disposeBag)

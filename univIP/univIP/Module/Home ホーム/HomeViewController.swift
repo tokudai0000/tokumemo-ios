@@ -52,12 +52,13 @@ final class HomeViewController: UIViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
-//        viewModel.output.adItems
-//            .asDriver(onErrorJustReturn: [])
-//            .drive(with: self) { owner, adItems in
-//                print(adItems)
-//            }
-//            .disposed(by: disposeBag)
+        viewModel.output.adItems
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, adItems in
+                print("xxx")
+                print(adItems)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
