@@ -9,9 +9,9 @@ import Foundation
 
 protocol AdItemRepositoryInterface {
     func fetchBizCards() -> [AdItem]
-    func fetchBizCard(id: String) -> AdItem?
+//    func fetchBizCard(id: String) -> AdItem?
     func addBizCard(_ adItem: AdItem)
-    func updateBizCard(_ adItem: AdItem) -> Bool
+//    func updateBizCard(_ adItem: AdItem) -> Bool
 }
 
 /// クラスプロパティで保持するクラス
@@ -28,20 +28,20 @@ final class AdItemOnMemoryRepository: AdItemRepositoryInterface {
         return Self.shared.adItems
     }
 
-    func fetchBizCard(id: String) -> AdItem? {
-        return Self.shared.adItems.first(where: { $0.id == id })
-    }
+//    func fetchBizCard(id: String) -> AdItem? {
+//        return Self.shared.adItems.first(where: { $0.id == id })
+//    }
 
     func addBizCard(_ adItem: AdItem) {
         return Self.shared.adItems.append(adItem)
     }
 
-    func updateBizCard(_ adItem: AdItem) -> Bool {
-        guard let index = Self.shared.adItems.firstIndex(where: { $0.id == adItem.id }) else {
-            return false
-        }
-
-        Self.shared.adItems[index] = adItem
-        return true
-    }
+//    func updateBizCard(_ adItem: AdItem) -> Bool {
+//        guard let index = Self.shared.adItems.firstIndex(where: { $0.id == adItem.id }) else {
+//            return false
+//        }
+//
+//        Self.shared.adItems[index] = adItem
+//        return true
+//    }
 }

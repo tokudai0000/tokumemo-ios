@@ -10,9 +10,9 @@ import UIKit
 
 protocol AdItemStoreUseCaseInterface {
     func fetchBizCards() -> [AdItem]
-    func fetchBizCard(id: String) -> AdItem?
+//    func fetchBizCard(id: String) -> AdItem?
     func addBizCard(_ bizCard: AdItem)
-    func updateBizCard(_ bizCard: AdItem) -> Bool
+//    func updateBizCard(_ bizCard: AdItem) -> Bool
 //    func fetchImage(id: String) -> UIImage?
 //    func addImage(id: String, image: UIImage)
 }
@@ -34,17 +34,17 @@ struct AdItemStoreUseCase: AdItemStoreUseCaseInterface {
         return adItemRepository.fetchBizCards()
     }
 
-    func fetchBizCard(id: String) -> AdItem? {
-        return adItemRepository.fetchBizCard(id: id)
-    }
+//    func fetchBizCard(id: String) -> AdItem? {
+//        return adItemRepository.fetchBizCard(id: id)
+//    }
 
     func addBizCard(_ bizCard: AdItem) {
         adItemRepository.addBizCard(bizCard)
     }
 
-    func updateBizCard(_ bizCard: AdItem) -> Bool {
-        return adItemRepository.updateBizCard(bizCard)
-    }
+//    func updateBizCard(_ bizCard: AdItem) -> Bool {
+//        return adItemRepository.updateBizCard(bizCard)
+//    }
 
 //    func fetchImage(id: String) -> UIImage? {
 //        return bizCardImageRepository.fetchImage(id: id)

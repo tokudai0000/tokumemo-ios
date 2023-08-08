@@ -36,7 +36,7 @@ struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
 
 struct InitialConfigurationGetRequest: Request {
     struct ResponseBody: Decodable {
-        let responses: [AdItem]
+        let items: [AdItem]
     }
 
     typealias Response = ResponseBody

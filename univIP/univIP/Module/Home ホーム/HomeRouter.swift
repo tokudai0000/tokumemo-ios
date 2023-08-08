@@ -10,7 +10,7 @@ import UIKit
 
 enum HomeNavigationDestination {
     case goWeb(URLRequest)
-//    case detail(AdItem)
+    case detail(AdItem)
 }
 
 protocol HomeRouterInterface {
@@ -24,7 +24,9 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
         viewController.viewModel = HomeViewModel(
             input: .init(),
             state: .init(),
-            dependency: .init(router: self)
+            dependency: .init(router: self,
+                              initialConfigurationAPI: InitialConfigurationAPI(),
+                              adItemStoreUseCase: AdItemStoreUseCase(adItemRepository: AdItemOnMemoryRepository()))
         )
 
     }
@@ -33,8 +35,8 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
         switch destination {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
-//        case .detail(let item):
-//            moduleViewController.dismiss(animated: true)
+        case .detail(let item):
+            moduleViewController.dismiss(animated: true)
         }
     }
 }

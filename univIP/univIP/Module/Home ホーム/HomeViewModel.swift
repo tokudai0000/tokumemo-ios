@@ -31,59 +31,59 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     /// Viewに購読させたい変数を定義する
     struct Output: OutputType {
         // Observableは値を流すことができない購読専用 (ViewからOutputに値を流せなくする)
-//        let adItems: Observable<[AdItem]>
+        let adItems: Observable<[AdItem]>
 //        let univNoticeItems: Observable<[AdItem]>
     }
 
     /// 状態変数を定義する(MVVMでいうModel相当)
     struct State: StateType {
         // BehaviorRelayは初期値があり､現在の値を保持することができる｡
-//        let adItems: BehaviorRelay<[AdItem]> = .init(value: [])
+        let adItems: BehaviorRelay<[AdItem]> = .init(value: [])
 //        let univNoticeItems: BehaviorRelay<[AdItem]> = .init(value: [])
     }
 
     /// Presentationレイヤーより上の依存物(APIやUseCase)や引数を定義する
     struct Dependency: DependencyType {
         let router: HomeRouterInterface
-//        let initialConfigurationAPI: InitialConfigurationAPIInterface
-//        let adItemStoreUseCase: AdItemStoreUseCaseInterface
+        let initialConfigurationAPI: InitialConfigurationAPIInterface
+        let adItemStoreUseCase: AdItemStoreUseCaseInterface
     }
 
     /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
-//        let adItems: PublishRelay<[AdItem]> = .init()
+        let adItems: PublishRelay<[AdItem]> = .init()
 //        let univNoticeItems: PublishRelay<[AdItem]> = .init()
 //
-//        func getInitialConfiguration() {
-////            dependency.initialConfigurationAPI.getInitialConfiguration()
-////                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-////                .subscribe(
-////                    onSuccess: { initialConfigurationResponse in
-////                        initialConfigurationResponse.responses.forEach { adItem in
-////                            dependency.adItemStoreUseCase.addBizCard(AdItem(id: adItem.id,
-////                                                                            clientName: adItem.clientName,
-////                                                                            imageUrlStr: adItem.imageUrlStr,
-////                                                                            targetUrlStr: adItem.targetUrlStr,
-////                                                                            imageDescription: adItem.imageDescription))
-////                        }
-////                        adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
-////                    },
-////                    onFailure: { _ in
-////                        print("")
-////                    }
-////                )
-////                .disposed(by: disposeBag)
-//        }
-//
-//        input.viewDidLoad
-//            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
-//            .subscribe(onNext: { _ in
-////                getInitialConfiguration()
-//            })
-//            .disposed(by: disposeBag)
+        func getInitialConfiguration() {
+            dependency.initialConfigurationAPI.getInitialConfiguration()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { initialConfigurationResponse in
+                        initialConfigurationResponse.items.forEach { adItem in
+                            dependency.adItemStoreUseCase.addBizCard(AdItem(
+                                                                            clientName: adItem.clientName,
+                                                                            imageUrlStr: adItem.imageUrlStr,
+                                                                            targetUrlStr: adItem.targetUrlStr,
+                                                                            imageDescription: adItem.imageDescription))
+                        }
+                        adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
+                    },
+                    onFailure: { error in
+                        print(error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+
+        input.viewDidLoad
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
+            .subscribe(onNext: { _ in
+                getInitialConfiguration()
+            })
+            .disposed(by: disposeBag)
 
         return .init(
-//            adItems: adItems.asObservable(),
+            adItems: adItems.asObservable()
 //            univNoticeItems: univNoticeItems.asObservable()
         )
     }
