@@ -79,35 +79,8 @@ struct InitialConfigurationGetRequest: Request {
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        let items = try Response(object: object)
-        print(items.items)
-
         return try Response(object: object)
-//        print(try decoder.decode(ResponseBody.self, from: object as! Data))
-//        return try decoder.decode(ResponseBody.self, from: object as! Data)
-//        if let jsonData = object.data(using: String.Encoding.utf8) {
-//            let decoder = JSONDecoder()
-//            do {
-//                let response = try decoder.decode(ResponseBody.self, from: jsonData)
-//                print(response.items) // Optional("test")
-//            } catch {
-//                print(error) // エラーを出力
-//            }
-//        }
-//        print(object["items"])
-//        guard let response = object as? ResponseBody else {
-//            throw ResponseError.unexpectedObject(object)
-//        }
-//        return response
     }
-
-//    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-//        // ResponseがDecodableに準拠していなければパースされない
-//        guard let response = object as? Response else {
-//            throw ResponseError.unexpectedObject(object)
-//        }
-//        return response
-//    }
 }
 
 

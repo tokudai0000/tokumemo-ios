@@ -59,16 +59,15 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-//                        response.items.forEach { adItem in
-//                            dependency.adItemStoreUseCase.addBizCard(AdItem(
-//                                id: adItem.id,
-//                                clientName: adItem.clientName,
-//                                imageUrlStr: adItem.imageUrlStr,
-//                                targetUrlStr: adItem.targetUrlStr,
-//                                imageDescription: adItem.imageDescription))
-//                        }
-                        print(dependency.adItemStoreUseCase.fetchBizCards())
-//                        adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
+                        response.items.forEach { adItem in
+                            dependency.adItemStoreUseCase.addBizCard(AdItem(
+                                id: adItem.id,
+                                clientName: adItem.clientName,
+                                imageUrlStr: adItem.imageUrlStr,
+                                targetUrlStr: adItem.targetUrlStr,
+                                imageDescription: adItem.imageDescription))
+                        }
+                        adItems.accept(dependency.adItemStoreUseCase.fetchBizCards())
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)

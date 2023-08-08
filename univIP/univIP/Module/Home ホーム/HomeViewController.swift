@@ -33,12 +33,12 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureWebView()
-//        configureDefaults()
-//        configurePrBannerDefaults()
-//        configureUnivBannerDefaults()
-//        configureMenuCollectionView()
-//        binding()
+        configureWebView()
+        configureDefaults()
+        configurePrBannerDefaults()
+        configureUnivBannerDefaults()
+        configureMenuCollectionView()
+        binding()
         viewModel.input.viewDidLoad.accept(())
     }
 
@@ -52,11 +52,11 @@ final class HomeViewController: UIViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
-        viewModel.output.adItems
+        viewModel.output
+            .adItems
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, adItems in
-                print("xxx")
-                print(adItems)
+                self.prBannerViewController.addPrBannerPanels(items: adItems)
             }
             .disposed(by: disposeBag)
     }
