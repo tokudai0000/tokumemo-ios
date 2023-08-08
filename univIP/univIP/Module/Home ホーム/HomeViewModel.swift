@@ -59,9 +59,6 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                     onSuccess: { response in
                         dependency.adItemStoreUseCase.assignmentPrItems(response.prItems)
                         dependency.adItemStoreUseCase.assignmentUnivItems(response.univItems)
-                        print(response.prItems)
-                        print("---------")
-                        print(response.univItems)
                         prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
                         univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
                     },

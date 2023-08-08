@@ -204,8 +204,8 @@
                         <outlet property="prBannerContainerViewHeightConstraint" destination="1iM-Ie-EFe" id="c8N-7a-9SG"/>
                         <outlet property="prBannerPageControl" destination="BUK-yD-7Nb" id="lYJ-Xi-FPf"/>
                         <outlet property="prContainerView" destination="LFM-XA-i7M" id="mtq-p0-lFu"/>
-                        <outlet property="univBannerContainerView" destination="eij-dP-cJK" id="nYz-Rb-3AD"/>
                         <outlet property="univBannerContainerViewHeightConstraint" destination="vEv-Hm-Tap" id="tRg-YM-k9X"/>
+                        <outlet property="univContainerView" destination="eij-dP-cJK" id="nYz-Rb-3AD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AZS-5I-6wV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

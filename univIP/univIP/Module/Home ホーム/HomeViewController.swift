@@ -16,7 +16,7 @@ final class HomeViewController: UIViewController {
     @IBOutlet private weak var prContainerView: UIView!
     @IBOutlet private weak var prBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var prBannerPageControl: UIPageControl!
-    @IBOutlet private weak var univBannerContainerView: UIView!
+    @IBOutlet private weak var univContainerView: UIView!
     @IBOutlet private weak var univBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var menuCollectionView: UICollectionView!
     @IBOutlet private weak var menuCollectionViewHeightConstraint: NSLayoutConstraint!
@@ -37,7 +37,7 @@ final class HomeViewController: UIViewController {
         configureDefaults()
         configurePrBanner()
         configurePrBannerPageControl()
-        configureUnivBannerDefaults()
+        configureUnivBanner()
         configureMenuCollectionView()
         binding()
         viewModel.input.viewDidLoad.accept(())
@@ -57,14 +57,18 @@ private extension HomeViewController {
             .prItems
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, adItems in
-                self.reloadPrBanner(items: adItems)
+                self.prBannerViewController.addPrBannerPanels(items: adItems)
+                self.prBannerPageControl.numberOfPages = adItems.count
             }
             .disposed(by: disposeBag)
-    }
 
-    func reloadPrBanner(items: [AdItem]) {
-        self.prBannerViewController.addPrBannerPanels(items: items)
-        prBannerPageControl.numberOfPages = items.count
+        viewModel.output
+            .univItems
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, adItems in
+                self.univBannerViewController.addUnivBannerPanels(items: adItems)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -106,23 +110,22 @@ private extension HomeViewController {
         prBannerPageControl.sizeToFit()
     }
 
-    func configureUnivBannerDefaults() {
+    func configureUnivBanner() {
         univBannerViewController = BannerScrollViewController()
-        configureBannerViewDefaults(bannerVC: univBannerViewController, containerView: univBannerContainerView)
+        prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        univContainerView.addSubview(univBannerViewController.view)
+        NSLayoutConstraint.activate([
+            univBannerViewController.view.topAnchor.constraint(equalTo: univContainerView.topAnchor),
+            univBannerViewController.view.bottomAnchor.constraint(equalTo: univContainerView.bottomAnchor),
+            univBannerViewController.view.leadingAnchor.constraint(equalTo: univContainerView.leadingAnchor),
+            univBannerViewController.view.trailingAnchor.constraint(equalTo: univContainerView.trailingAnchor),
+        ])
+
+        univBannerViewController.initSetup()
         univBannerContainerViewHeightConstraint.constant = univBannerViewController.panelHeight
     }
 
-    func configureBannerViewDefaults(bannerVC: BannerScrollViewController,
-                                         containerView: UIView) {
-        containerView.addSubview(bannerVC.view)
-        bannerVC.initSetup()
-        bannerVC.delegate = self
-        bannerVC.view.translatesAutoresizingMaskIntoConstraints = false
-        bannerVC.view.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        bannerVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        bannerVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        bannerVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-    }
+
 
     func configureMenuCollectionView() {
         menuCollectionView.register(R.nib.homeCollectionCell)
@@ -131,7 +134,7 @@ private extension HomeViewController {
         menuCollectionView.backgroundColor = .white
         menuCollectionView.cornerRound = 20.0
         let layout = UICollectionViewFlowLayout()
-        let cellWidth = floor(menuCollectionView.bounds.width / 3)
+        let cellWidth = floor(menuCollectionView.bounds.width / 3.5)
         layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
         layout.sectionInset = UIEdgeInsets(top: 10,
                                            left: 0,
