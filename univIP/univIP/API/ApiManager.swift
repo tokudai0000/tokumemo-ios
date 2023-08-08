@@ -37,13 +37,29 @@ struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
 
 struct InitialConfigurationGetRequest: Request {
     struct ResponseBody: Decodable {
-        let items: String?
-
+        let items: [AdItem]
         init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
-                  let items = dictionary["items"] as? String else {
+                  let itemsArray = dictionary["items"] as? [[String: Any]] else {
                 throw ResponseError.unexpectedObject(object)
             }
+            var items: [AdItem] = []
+            for item in itemsArray {
+                guard let id = item["id"] as? Int,
+                      let clientName = item["clientName"] as? String,
+                      let imageUrlStr = item["imageUrlStr"] as? String,
+                      let targetUrlStr = item["targetUrlStr"] as? String,
+                      let imageDescription = item["imageDescription"] as? String else {
+                    throw ResponseError.unexpectedObject(object)
+                }
+                let item = AdItem(id: id,
+                                  clientName: clientName,
+                                  imageUrlStr: imageUrlStr,
+                                  targetUrlStr: targetUrlStr,
+                                  imageDescription: imageDescription)
+                items.append(item)
+            }
+
             self.items = items
         }
     }
@@ -59,7 +75,7 @@ struct InitialConfigurationGetRequest: Request {
     }
 
     var path: String {
-        return "/tokumemo_resource/api/v1/ad.json"
+        return "/tokumemo_resource/api/v1/ad_items.json"
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {

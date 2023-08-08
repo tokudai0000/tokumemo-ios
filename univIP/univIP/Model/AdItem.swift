@@ -4,11 +4,12 @@
 //
 //  Created by Akihiro Matsuyama on 2023/05/09.
 //
+import SwiftyJSON
 
 struct AdItem: Decodable {
-    let id: Int?
-    let clientName: String?
-    let imageUrlStr: String?
-    let targetUrlStr: String?
-    let imageDescription: String?
+    let id: Int
+    let clientName: String
+    let imageUrlStr: String
+    let targetUrlStr: String
+    let imageDescription: String
 }
