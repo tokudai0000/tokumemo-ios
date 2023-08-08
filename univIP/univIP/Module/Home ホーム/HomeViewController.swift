@@ -13,7 +13,7 @@ import RxSwift
 
 
 final class HomeViewController: UIViewController {
-    @IBOutlet private weak var prBannerContainerView: UIView!
+    @IBOutlet private weak var prContainerView: UIView!
     @IBOutlet private weak var prBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var prBannerPageControl: UIPageControl!
     @IBOutlet private weak var univBannerContainerView: UIView!
@@ -35,7 +35,8 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureWebView()
         configureDefaults()
-        configurePrBannerDefaults()
+        configurePrBanner()
+        configurePrBannerPageControl()
         configureUnivBannerDefaults()
         configureMenuCollectionView()
         binding()
@@ -53,12 +54,17 @@ final class HomeViewController: UIViewController {
 private extension HomeViewController {
     func binding() {
         viewModel.output
-            .adItems
+            .prItems
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, adItems in
-                self.prBannerViewController.addPrBannerPanels(items: adItems)
+                self.reloadPrBanner(items: adItems)
             }
             .disposed(by: disposeBag)
+    }
+
+    func reloadPrBanner(items: [AdItem]) {
+        self.prBannerViewController.addPrBannerPanels(items: items)
+        prBannerPageControl.numberOfPages = items.count
     }
 }
 
@@ -77,11 +83,27 @@ private extension HomeViewController {
         webView.load(Url.universityTransitionLogin.urlRequest())
     }
 
-    func configurePrBannerDefaults() {
+    func configurePrBanner() {
         prBannerViewController = BannerScrollViewController()
-        configureBannerViewDefaults(bannerVC: prBannerViewController, containerView: prBannerContainerView)
+        prBannerViewController.delegate = self
+        prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        prContainerView.addSubview(prBannerViewController.view)
+        NSLayoutConstraint.activate([
+            prBannerViewController.view.topAnchor.constraint(equalTo: prContainerView.topAnchor),
+            prBannerViewController.view.bottomAnchor.constraint(equalTo: prContainerView.bottomAnchor),
+            prBannerViewController.view.leadingAnchor.constraint(equalTo: prContainerView.leadingAnchor),
+            prBannerViewController.view.trailingAnchor.constraint(equalTo: prContainerView.trailingAnchor),
+        ])
+
+        prBannerViewController.initSetup()
         prBannerContainerViewHeightConstraint.constant = prBannerViewController.panelHeight
-        configurePrBannerPageControl()
+    }
+
+    func configurePrBannerPageControl() {
+        prBannerPageControl.pageIndicatorTintColor = .lightGray
+        prBannerPageControl.currentPageIndicatorTintColor = .black
+        prBannerPageControl.currentPage = prBannerViewController.pageIndex
+        prBannerPageControl.sizeToFit()
     }
 
     func configureUnivBannerDefaults() {
@@ -100,14 +122,6 @@ private extension HomeViewController {
         bannerVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
         bannerVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
         bannerVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-    }
-
-    func configurePrBannerPageControl() {
-        prBannerPageControl.pageIndicatorTintColor = .lightGray
-        prBannerPageControl.currentPageIndicatorTintColor = .black
-//        prBannerPageControl.numberOfPages = dataManager.prItemLists.count
-        prBannerPageControl.currentPage = prBannerViewController.pageIndex
-        prBannerPageControl.sizeToFit()
     }
 
     func configureMenuCollectionView() {

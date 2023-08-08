@@ -5,19 +5,20 @@
 //  Created by Akihiro Matsuyama on 2022/11/05.
 //
 
-
 import APIKit
-import Foundation
 import RxSwift
 import SwiftyJSON
 
-protocol InitialConfigurationAPIInterface {
-    func getInitialConfiguration() -> Single<InitialConfigurationGetRequest.Response>
+/// AdItemはPRアイテムとUnivアイテムで使用する
+/// PRアイテムは大学生が大学生に向けて告知したい内容。比較的掲載が簡単
+/// Univアイテムは教員や学生が、大学生に向けて有用な情報だと判断した内容。
+protocol AdItemsAPIInterface {
+    func getAdItems() -> Single<AdItemsGetRequest.Response>
 }
 
-struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
-    func getInitialConfiguration() -> RxSwift.Single<InitialConfigurationGetRequest.Response> {
-        let request = InitialConfigurationGetRequest()
+struct AdItemsAPI: AdItemsAPIInterface {
+    func getAdItems() -> RxSwift.Single<AdItemsGetRequest.Response> {
+        let request = AdItemsGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
                 switch result {
@@ -27,7 +28,6 @@ struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
                     observer(.failure(error))
                 }
             }
-
             return Disposables.create {
                 session?.cancel()
             }
@@ -35,32 +35,20 @@ struct InitialConfigurationAPI: InitialConfigurationAPIInterface {
     }
 }
 
-struct InitialConfigurationGetRequest: Request {
+struct AdItemsGetRequest: Request {
     struct ResponseBody: Decodable {
-        let items: [AdItem]
+        let prItems: [AdItem]
+        let univItems: [AdItem]
+
         init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
-                  let itemsArray = dictionary["items"] as? [[String: Any]] else {
+                  let prItemsArray = dictionary["prItems"] as? [[String: Any]],
+                  let univItemsArray = dictionary["univItems"] as? [[String: Any]] else {
                 throw ResponseError.unexpectedObject(object)
             }
-            var items: [AdItem] = []
-            for item in itemsArray {
-                guard let id = item["id"] as? Int,
-                      let clientName = item["clientName"] as? String,
-                      let imageUrlStr = item["imageUrlStr"] as? String,
-                      let targetUrlStr = item["targetUrlStr"] as? String,
-                      let imageDescription = item["imageDescription"] as? String else {
-                    throw ResponseError.unexpectedObject(object)
-                }
-                let item = AdItem(id: id,
-                                  clientName: clientName,
-                                  imageUrlStr: imageUrlStr,
-                                  targetUrlStr: targetUrlStr,
-                                  imageDescription: imageDescription)
-                items.append(item)
-            }
 
-            self.items = items
+            prItems = try prItemsArray.map { try AdItem(dictionary: $0) }
+            univItems = try univItemsArray.map { try AdItem(dictionary: $0) }
         }
     }
 

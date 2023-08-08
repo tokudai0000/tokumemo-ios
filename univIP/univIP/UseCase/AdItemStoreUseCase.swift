@@ -9,48 +9,36 @@ import Foundation
 import UIKit
 
 protocol AdItemStoreUseCaseInterface {
-    func fetchBizCards() -> [AdItem]
-//    func fetchBizCard(id: String) -> AdItem?
-    func addBizCard(_ bizCard: AdItem)
-//    func updateBizCard(_ bizCard: AdItem) -> Bool
-//    func fetchImage(id: String) -> UIImage?
-//    func addImage(id: String, image: UIImage)
+    func fetchPrItems() -> [AdItem]
+    func fetchUnivItems() -> [AdItem]
+    func assignmentPrItems(_ items: [AdItem])
+    func assignmentUnivItems(_ items: [AdItem])
 }
 
-/// 名刺情報をRepositoryと読み書きするUseCase
+/// 広告アイテム関係をRepositoryと読み書きするUseCase
 struct AdItemStoreUseCase: AdItemStoreUseCaseInterface {
-    private let adItemRepository: AdItemRepositoryInterface
-//    private let bizCardImageRepository: AdItemRepositoryInterface
+    private let prItemRepository: AdItemRepositoryInterface
+    private let univItemRepository: AdItemRepositoryInterface
 
     init(
-        adItemRepository: AdItemRepositoryInterface
-//        bizCardImageRepository: AdItemRepositoryInterface
+        prItemRepository: AdItemRepositoryInterface,
+        univItemRepository: AdItemRepositoryInterface
     ) {
-        self.adItemRepository = adItemRepository
-//        self.bizCardImageRepository = bizCardImageRepository
+        self.prItemRepository = prItemRepository
+        self.univItemRepository = univItemRepository
     }
 
-    func fetchBizCards() -> [AdItem] {
-        return adItemRepository.fetchBizCards()
+    func fetchPrItems() -> [AdItem] {
+        return prItemRepository.fetchPrItems()
+    }
+    func fetchUnivItems() -> [AdItem] {
+        return univItemRepository.fetchUnivItems()
     }
 
-//    func fetchBizCard(id: String) -> AdItem? {
-//        return adItemRepository.fetchBizCard(id: id)
-//    }
-
-    func addBizCard(_ bizCard: AdItem) {
-        adItemRepository.addBizCard(bizCard)
+    func assignmentPrItems(_ items: [AdItem]) {
+        prItemRepository.assignmentPrItems(items)
     }
-
-//    func updateBizCard(_ bizCard: AdItem) -> Bool {
-//        return adItemRepository.updateBizCard(bizCard)
-//    }
-
-//    func fetchImage(id: String) -> UIImage? {
-//        return bizCardImageRepository.fetchImage(id: id)
-//    }
-//
-//    func addImage(id: String, image: UIImage) {
-//        bizCardImageRepository.addImage(id: id, image: image)
-//    }
+    func assignmentUnivItems(_ items: [AdItem]) {
+        univItemRepository.assignmentUnivItems(items)
+    }
 }

@@ -25,8 +25,9 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              initialConfigurationAPI: InitialConfigurationAPI(),
-                              adItemStoreUseCase: AdItemStoreUseCase(adItemRepository: AdItemOnMemoryRepository()))
+                              adItemsAPI: AdItemsAPI(),
+                              adItemStoreUseCase: AdItemStoreUseCase(prItemRepository: AdItemOnMemoryRepository(),
+                                                                     univItemRepository: AdItemOnMemoryRepository()))
         )
 
     }
