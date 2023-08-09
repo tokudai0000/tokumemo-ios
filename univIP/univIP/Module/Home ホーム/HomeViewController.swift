@@ -47,12 +47,21 @@ final class HomeViewController: UIViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
+        prBannerPageControl.rx.controlEvent(.valueChanged)
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.prBannerViewController.showPage(index: self?.prBannerPageControl.currentPage ?? 0, animated: true)
+            })
+            .disposed(by: disposeBag)
+
+
         viewModel.output
             .prItems
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, adItems in
-                self.prBannerViewController.addPrBannerPanels(items: adItems)
-                self.prBannerPageControl.numberOfPages = adItems.count
+                owner.prBannerViewController.setupContentSize()
+                owner.prBannerViewController.addPrBannerPanels(items: adItems)
+                owner.prBannerPageControl.numberOfPages = adItems.count
             }
             .disposed(by: disposeBag)
 
@@ -83,18 +92,19 @@ private extension HomeViewController {
 
     func configurePrBanner() {
         prBannerViewController = BannerScrollViewController()
+        addChild(prBannerViewController)
         prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
         prContainerView.addSubview(prBannerViewController.view)
-        prBannerViewController.initSetup()
-        prBannerViewController.delegate = self
         NSLayoutConstraint.activate([
             prBannerViewController.view.topAnchor.constraint(equalTo: prContainerView.topAnchor),
             prBannerViewController.view.bottomAnchor.constraint(equalTo: prContainerView.bottomAnchor),
             prBannerViewController.view.leadingAnchor.constraint(equalTo: prContainerView.leadingAnchor),
             prBannerViewController.view.trailingAnchor.constraint(equalTo: prContainerView.trailingAnchor),
         ])
-
+        prBannerViewController.didMove(toParent: self)
+        prBannerViewController.initSetup()
         prBannerContainerViewHeightConstraint.constant = prBannerViewController.panelHeight
+        prBannerViewController.delegate = self
     }
 
     func configurePrBannerPageControl() {
@@ -106,7 +116,7 @@ private extension HomeViewController {
 
     func configureUnivBanner() {
         univBannerViewController = BannerScrollViewController()
-        prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        univBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
         univContainerView.addSubview(univBannerViewController.view)
         NSLayoutConstraint.activate([
             univBannerViewController.view.topAnchor.constraint(equalTo: univContainerView.topAnchor),
@@ -140,11 +150,11 @@ private extension HomeViewController {
 
 extension HomeViewController: BannerScrollViewControllerDelegate {
     func bannerScrollViewController(_ scrollViewController: BannerScrollViewController, didChangePageIndex index: Int) {
+        updateBannerPageControl()
+    }
+    func updateBannerPageControl() {
         prBannerPageControl.currentPage = prBannerViewController.pageIndex
     }
-//    func updateBannerPageControl() {
-//        prBannerPageControl.currentPage = prBannerViewController.pageIndex
-//    }
 }
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

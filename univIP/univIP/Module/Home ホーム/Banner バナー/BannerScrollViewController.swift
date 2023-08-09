@@ -112,15 +112,14 @@ class BannerScrollViewController: UIViewController {
         scrollView.contentSize = CGSize(width: contentWidth, height: panelHeight)
     }
 
-    var bannerView: PrBannerView!
-    var univBannerView: UnivBannerView!
-
     /// パネル追加
     func addPrBannerPanels(items: [AdItem]) {
         var prevBannerView: PrBannerView?
         items.enumerated().forEach { index, item in
 
             let bannerView = R.nib.prBannerView(withOwner: self)!
+//            if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
+
             if let url = URL(string: item.imageUrlStr) {
                 bannerView.imageView.loadImage(from: url)
             }
@@ -146,12 +145,9 @@ class BannerScrollViewController: UIViewController {
             gesture.numberOfTouchesRequired = 1
             bannerView.tag = index
             bannerView.addGestureRecognizer(gesture)
+//            }
         }
         contentView.layoutSubviews()
-
-            setupViewSizes()
-            setupScrollView()
-            setupContentSize()
     }
 
     func addUnivBannerPanels(items: [AdItem]) {
