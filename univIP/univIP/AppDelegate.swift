@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            FirebaseApp.configure()
 //        #endif
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
+//        window?.rootViewController = UINavigationController(rootViewController: ClubListRouter().moduleViewController)
+//        let tabBarController = ClubListRouter().moduleViewController
+//        let router = AppRouter(tabBarController: tabBarController)
+//        let mainController = TabBarController(router: router)
+
+        window?.rootViewController = R.storyboard.main.mainViewController()!
         window?.makeKeyAndVisible()
 
         return true

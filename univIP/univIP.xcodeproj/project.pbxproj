@@ -25,6 +25,8 @@
 		1A3A75FA2916792600069818 /* AdItemsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* AdItemsAPI.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
+		1A50CDAB2A82B57D0079A090 /* ClubListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */; };
+		1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAC2A832AE70079A090 /* MainRouter.swift */; };
 		1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */; };
 		1A556D922963BD4B00A650B2 /* String+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */; };
 		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
@@ -116,6 +118,8 @@
 		1A3A75F92916792600069818 /* AdItemsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItemsAPI.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
+		1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListRouter.swift; sourceTree = "<group>"; };
+		1A50CDAC2A832AE70079A090 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
@@ -297,13 +301,14 @@
 			path = "News ニュース";
 			sourceTree = "<group>";
 		};
-		1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */ = {
+		1A384F9228FD5D5C00A1F52E /* ClubList */ = {
 			isa = PBXGroup;
 			children = (
 				1A6C51B32904ECCA00A3E85A /* ClubList.storyboard */,
+				1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */,
 				1A6C51B92905077E00A3E85A /* ClubListViewController.swift */,
 			);
-			name = "ClubList クラブリスト";
+			name = ClubList;
 			path = "Review レビュー";
 			sourceTree = "<group>";
 		};
@@ -435,11 +440,12 @@
 			isa = PBXGroup;
 			children = (
 				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
+				1A50CDAC2A832AE70079A090 /* MainRouter.swift */,
 				1ABDE75326DE530300D4B04E /* Agreement */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
 				1A384F9128FD5D4E00A1F52E /* News ニュース */,
-				1A384F9228FD5D5C00A1F52E /* ClubList クラブリスト */,
+				1A384F9228FD5D5C00A1F52E /* ClubList */,
 				1A30D0B728F9BED600C4012E /* Settings 設定 */,
 				1A30D0AC28F6D75000C4012E /* Web */,
 				1ABE8BCB27B10489001EEA79 /* Input 入力画面 */,
@@ -840,6 +846,7 @@
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
 				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingViewController.swift in Sources */,
+				1A50CDAB2A82B57D0079A090 /* ClubListRouter.swift in Sources */,
 				1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */,
 				1AC4BE952A7E336600598EED /* WebRouter.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
@@ -848,6 +855,7 @@
 				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
 				1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */,
 				1A9378A12A60DC95009A5758 /* HomeContentsView.swift in Sources */,
+				1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* AdItem.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */,

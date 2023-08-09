@@ -23,10 +23,6 @@ class ClubListViewController: UIViewController {
         super.viewDidAppear(animated)
         webView.load(Url.clubList.urlRequest())
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 extension ClubListViewController: WKNavigationDelegate, WKScriptMessageHandler {
