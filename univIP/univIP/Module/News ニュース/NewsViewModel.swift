@@ -30,6 +30,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
     struct Output: OutputType {
         // Observableは値を流すことができない購読専用 (ViewからOutputに値を流せなくする)
         let sectionItems: Observable<[NewsListSectionModel]>
+        let newsItems: Observable<[NewsItem]>
     }
 
     /// 状態変数を定義する(MVVMでいうModel相当)
@@ -47,19 +48,24 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
     /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let sectionItems: PublishRelay<[NewsListSectionModel]> = .init()
+        let newsItems: PublishRelay<[NewsItem]> = .init()
 
         func getNewsItems() {
             dependency.newsItemsRSS.getNewsItems()
-//                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-//                .subscribe(
-//                    onSuccess: { response in
-//
-//                    },
-//                    onFailure: { error in
-//                        AKLog(level: .ERROR, message: error)
-//                    }
-//                )
-//                .disposed(by: disposeBag)
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+
+                        dependency.newsItemStoreUseCase.assignmentNewsItems(response)
+                        newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
+//                        newsItems.accept(response)
+//                        sectionItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
 
 //            dependency.adItemsAPI.getAdItems()
 //                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
@@ -137,7 +143,8 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
 
         return .init(
 //            sectionItems:
-            sectionItems: sectionItems.asObservable()
+            sectionItems: sectionItems.asObservable(),
+            newsItems: newsItems.asObservable()
         )
     }
 }

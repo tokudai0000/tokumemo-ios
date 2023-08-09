@@ -15,7 +15,7 @@ class NewsViewController: UIViewController {
     private typealias Item = NewsListItemModel
     private class DataSource: UITableViewDiffableDataSource<Section, Item> {}
 
-//    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
 
     var viewModel: NewsViewModelInterface!
 
@@ -23,14 +23,22 @@ class NewsViewController: UIViewController {
     
     private var viewActivityIndicator: UIActivityIndicatorView!
     private var dataSource: DataSource!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        setupDefaults()
 //        setupIndicatorView()
-//        binding()
+        binding()
         viewModel.input.viewDidLoad.accept(())
 //        setupViewModelStateRecognizer()
+
+//        data.bind(to: tableView.rx.items(cellIdentifier: "NewsCell")) { index, model, cell in
+//            cell.textLabel?.text = model
+//            }
+//            .disposed(by: disposeBag)
+
+        // セルの登録
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
     }
 }
 
@@ -50,6 +58,28 @@ private extension NewsViewController {
                 owner.dataSource.apply(snapShot, animatingDifferences: false)
 //                tableView(tableView, numberOfRowsInSection: newsItems.count)
 //                self.univBannerViewController.addUnivBannerPanels(items: adItems)
+            }
+            .disposed(by: disposeBag)
+
+//        viewModel.output
+//            .newsItems
+//            .asDriver(onErrorJustReturn: [])
+//            .drive(with: self) { owner, items in
+//                self.data.bind(to: self.tableView.rx.items(cellIdentifier: "NewsCell")) { index, model, cell in
+//                    cell.textLabel?.text = model
+//                    }
+//                .disposed(by: self.disposeBag)
+//            }
+//            .disposed(by: disposeBag)
+//        viewModel.output.newsItems
+//            .bind(to: self.tableView.rx.items(cellIdentifier: "NewsCell")) { index, model, cell in
+//            cell.textLabel?.text = model.title
+//            }
+//        .disposed(by: self.disposeBag)
+        // データのバインディング
+        viewModel.output.newsItems
+            .bind(to: tableView.rx.items(cellIdentifier: "NewsCell", cellType: UITableViewCell.self)) { index, model, cell in
+                cell.textLabel?.text = model.title // modelはNewsItem型のインスタンスを想定
             }
             .disposed(by: disposeBag)
     }

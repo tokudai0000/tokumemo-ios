@@ -64,6 +64,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="News" image="TabIcon/news" id="pQO-b7-vuW"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="P70-JE-nX7" id="v5B-JR-khj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TUj-qY-9Pg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
