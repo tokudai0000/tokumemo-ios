@@ -18,14 +18,8 @@ protocol MainRouterInterface {
 
 final class MainRouter: BaseRouter, MainRouterInterface {
     init() {
-        let viewController = R.storyboard.agreement.agreemantViewController()!
+        let viewController = MainViewController()
         super.init(moduleViewController: viewController)
-//        viewController.viewModel = AgreementViewModel(
-//            input: .init(),
-//            state: .init(),
-//            dependency: .init(router: self)
-//        )
-
     }
 
     func navigate(_ destination: MainNavigationDestination) {

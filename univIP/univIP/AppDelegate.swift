@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let router = AppRouter(tabBarController: tabBarController)
 //        let mainController = TabBarController(router: router)
 
-        window?.rootViewController = R.storyboard.main.mainViewController()!
+        window?.rootViewController = MainRouter().moduleViewController
         window?.makeKeyAndVisible()
 
         return true

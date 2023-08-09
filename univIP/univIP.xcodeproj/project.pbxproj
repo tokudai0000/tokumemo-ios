@@ -27,6 +27,7 @@
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A50CDAB2A82B57D0079A090 /* ClubListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */; };
 		1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAC2A832AE70079A090 /* MainRouter.swift */; };
+		1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAE2A832D170079A090 /* MainViewController.swift */; };
 		1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */; };
 		1A556D922963BD4B00A650B2 /* String+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */; };
 		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
@@ -61,7 +62,6 @@
 		1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */; };
 		1ABE8BDC27B10489001EEA79 /* Input.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BCC27B10489001EEA79 /* Input.storyboard */; };
 		1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BCD27B10489001EEA79 /* InputViewController.swift */; };
-		1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE427B10513001EEA79 /* Main.storyboard */; };
 		1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */; };
 		1AC1332D294C2D4D00E3DC16 /* PRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC1332C294C2D4D00E3DC16 /* PRViewController.swift */; };
 		1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AC1332E294C2D5D00E3DC16 /* PR.storyboard */; };
@@ -120,6 +120,7 @@
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListRouter.swift; sourceTree = "<group>"; };
 		1A50CDAC2A832AE70079A090 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		1A50CDAE2A832D170079A090 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
@@ -163,7 +164,6 @@
 		1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1ABE8BCC27B10489001EEA79 /* Input.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Input.storyboard; sourceTree = "<group>"; };
 		1ABE8BCD27B10489001EEA79 /* InputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
-		1ABE8BE427B10513001EEA79 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AC1332C294C2D4D00E3DC16 /* PRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRViewController.swift; sourceTree = "<group>"; };
 		1AC1332E294C2D5D00E3DC16 /* PR.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PR.storyboard; sourceTree = "<group>"; };
@@ -439,8 +439,8 @@
 		1AA056E926BD2DCA00343005 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				1ABE8BE427B10513001EEA79 /* Main.storyboard */,
 				1A50CDAC2A832AE70079A090 /* MainRouter.swift */,
+				1A50CDAE2A832D170079A090 /* MainViewController.swift */,
 				1ABDE75326DE530300D4B04E /* Agreement */,
 				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
 				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
@@ -677,7 +677,6 @@
 				1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */,
-				1ABE8BE527B10513001EEA79 /* Main.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
 				1A9378B42A6294D2009A5758 /* UnivBannerView.xib in Resources */,
@@ -880,6 +879,7 @@
 				1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
 				1AC4BE8C2A7CE64B00598EED /* AgreementRouter.swift in Sources */,
+				1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */,
 				1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */,
 				1A085CEC2A694AD200D31183 /* MenuItem.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,
