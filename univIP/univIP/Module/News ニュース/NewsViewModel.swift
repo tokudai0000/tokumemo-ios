@@ -20,7 +20,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
-        let didTapNewsItem = PublishRelay<NewsListItemModel>()
+        let didTapNewsItem = PublishRelay<NewsItemModel>()
     }
 
     struct Output: OutputType {

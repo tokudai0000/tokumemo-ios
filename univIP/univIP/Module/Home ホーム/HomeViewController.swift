@@ -83,9 +83,10 @@ private extension HomeViewController {
 
     func configurePrBanner() {
         prBannerViewController = BannerScrollViewController()
-        prBannerViewController.delegate = self
         prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
         prContainerView.addSubview(prBannerViewController.view)
+        prBannerViewController.initSetup()
+        prBannerViewController.delegate = self
         NSLayoutConstraint.activate([
             prBannerViewController.view.topAnchor.constraint(equalTo: prContainerView.topAnchor),
             prBannerViewController.view.bottomAnchor.constraint(equalTo: prContainerView.bottomAnchor),
@@ -93,7 +94,6 @@ private extension HomeViewController {
             prBannerViewController.view.trailingAnchor.constraint(equalTo: prContainerView.trailingAnchor),
         ])
 
-        prBannerViewController.initSetup()
         prBannerContainerViewHeightConstraint.constant = prBannerViewController.panelHeight
     }
 
@@ -140,11 +140,11 @@ private extension HomeViewController {
 
 extension HomeViewController: BannerScrollViewControllerDelegate {
     func bannerScrollViewController(_ scrollViewController: BannerScrollViewController, didChangePageIndex index: Int) {
-        updateBannerPageControl()
-    }
-    func updateBannerPageControl() {
         prBannerPageControl.currentPage = prBannerViewController.pageIndex
     }
+//    func updateBannerPageControl() {
+//        prBannerPageControl.currentPage = prBannerViewController.pageIndex
+//    }
 }
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
