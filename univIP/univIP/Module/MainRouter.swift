@@ -8,24 +8,9 @@
 import Foundation
 import UIKit
 
-enum MainNavigationDestination {
-    case goWeb(URLRequest)
-}
-
-protocol MainRouterInterface {
-    func navigate(_ destination: MainNavigationDestination)
-}
-
-final class MainRouter: BaseRouter, MainRouterInterface {
+final class MainRouter: BaseRouter {
     init() {
         let viewController = MainViewController()
         super.init(moduleViewController: viewController)
-    }
-
-    func navigate(_ destination: MainNavigationDestination) {
-        switch destination {
-        case .goWeb(let urlRequest):
-            present(WebRouter(loadUrl: urlRequest))
-        }
     }
 }
