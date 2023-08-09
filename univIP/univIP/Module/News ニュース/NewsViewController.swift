@@ -28,6 +28,7 @@ class NewsViewController: UIViewController {
         super.viewDidLoad()
 //        setupDefaults()
 //        setupIndicatorView()
+        tableView.register(R.nib.newsTableViewCell)
         binding()
         viewModel.input.viewDidLoad.accept(())
 //        setupViewModelStateRecognizer()
@@ -61,25 +62,16 @@ private extension NewsViewController {
             }
             .disposed(by: disposeBag)
 
-//        viewModel.output
-//            .newsItems
-//            .asDriver(onErrorJustReturn: [])
-//            .drive(with: self) { owner, items in
-//                self.data.bind(to: self.tableView.rx.items(cellIdentifier: "NewsCell")) { index, model, cell in
-//                    cell.textLabel?.text = model
-//                    }
-//                .disposed(by: self.disposeBag)
-//            }
-//            .disposed(by: disposeBag)
-//        viewModel.output.newsItems
-//            .bind(to: self.tableView.rx.items(cellIdentifier: "NewsCell")) { index, model, cell in
-//            cell.textLabel?.text = model.title
-//            }
-//        .disposed(by: self.disposeBag)
-        // データのバインディング
+
+
         viewModel.output.newsItems
-            .bind(to: tableView.rx.items(cellIdentifier: "NewsCell", cellType: UITableViewCell.self)) { index, model, cell in
-                cell.textLabel?.text = model.title // modelはNewsItem型のインスタンスを想定
+            .bind(to: tableView.rx.items(cellIdentifier: R.nib.newsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { index, model, cell in
+//            .bind(to: tableView.rx.items(nibName: ))
+//            .bind(to: tableView.rx.items(nibName: R.nib.newsTableViewCell.name, cellIdentifier: R.reuseIdentifier.newsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { index, model, cell in
+//            .bind(to: tableView.rx.items(cellIdentifier: "NewsCell", cellType: UITableViewCell.self)) { index, model, cell in
+//                cell.textLabel?.text = model.title // modelはNewsItem型のインスタンスを想定
+
+                cell.setupCell(text: model.title, date: "xxx")
             }
             .disposed(by: disposeBag)
     }
