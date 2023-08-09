@@ -5,7 +5,6 @@
 //  Created by Akihiro Matsuyama on 2023/08/04.
 //
 
-import Foundation
 import UIKit
 
 enum AgreementNavigationDestination {
@@ -26,7 +25,6 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
             state: .init(),
             dependency: .init(router: self)
         )
-
     }
 
     func navigate(_ destination: AgreementNavigationDestination) {

@@ -6,7 +6,6 @@
 //
 
 import APIKit
-import SwiftyJSON
 
 struct AdItem: Decodable {
     let id: Int

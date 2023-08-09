@@ -41,16 +41,7 @@ final class HomeViewController: UIViewController {
         configureMenuCollectionView()
         binding()
         viewModel.input.viewDidLoad.accept(())
-//        self.tabBarItem = UITabBarItem(title: "Home",
-//                                       image: R.image.tabIcon.home(),
-//                                       selectedImage: nil)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        viewModel.input.viewWillAppear.accept(())
-    }
-
 }
 
 // MARK: Binding

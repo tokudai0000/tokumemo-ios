@@ -1,72 +1,12 @@
-////
-////  HomeContainerViewController.swift
-////  univIP
-////
-////  Created by Akihiro Matsuyama on 2023/07/14.
-////
 //
-//import UIKit
-//import WebKit
+//  HomeContainerViewController.swift
+//  univIP
 //
-//class HomeContentsView: UIViewController {
+//  Created by Akihiro Matsuyama on 2023/07/14.
 //
-//    // MARK: - IBOutlet
-//
-//    @IBOutlet weak var prBannerContainerView: UIView!
-//    @IBOutlet weak var prBannerContainerViewHeightConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var prBannerPageControl: UIPageControl!
-//    @IBOutlet weak var univBannerContainerView: UIView!
-//    @IBOutlet weak var univBannerContainerViewHeightConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var menuCollectionView: UICollectionView!
-//    @IBOutlet weak var menuCollectionViewHeightConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var homeTableView: UITableView!
-//    @IBOutlet weak var homeTableViewHeightConstraint: NSLayoutConstraint!
-//
-//    // 共通データ・マネージャ
-//    private let dataManager = DataManager.singleton
-//
-//    private let viewModel = HomeViewModel()
-//
-//    private var webView: WKWebView!
-//    private var prBannerViewController: BannerScrollViewController!
-//    private var univBannerViewController: BannerScrollViewController!
-//
-//    private let homeTableViewHight: Int = 44
-//
-//    // MARK: - View Life Cycle
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        setupWebView()
-//        setupDefaults()
-//        setupPrBannerDefaults()
-//        setupUnivBannerDefaults()
-//        setupMenuCollectionView()
-//        setupViewModelStateRecognizer()
-//    }
-//
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        viewModel.updatePrItems()
-//    }
-//
-//    // MARK: - IBAction
-//
-//    @IBAction func didChangeBannerPageControl() {
-//        prBannerViewController.showPage(index: prBannerPageControl.currentPage, animated: true)
-//    }
-//
-//    @IBAction func twitterButton(_ sender: Any) {
-//        let vc = R.storyboard.web.webViewController()!
-//        vc.loadUrlString = Url.officialSNS.string()
-//        present(vc, animated: true)
-//    }
-//
-//
-//    // MARK: - Methods [Private]
-//
+
 //    private func setupDefaults() {
-////        dataManager.canExecuteJavascript = true
+//        dataManager.canExecuteJavascript = true
 //        homeTableViewHeightConstraint.constant = CGFloat(homeTableViewHight * homeTableItemLists.count)
 //    }
 //

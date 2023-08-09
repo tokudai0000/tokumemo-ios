@@ -9,12 +9,10 @@ import UIKit
 import WebKit
 
 class ClubListViewController: UIViewController {
-    
     @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
         // Web側(JavaScript)からtokumemoPlus関数が送られてくるのを受け取る設定
         webView.configuration.userContentController.add(self, name: "tokumemoPlus")
     }

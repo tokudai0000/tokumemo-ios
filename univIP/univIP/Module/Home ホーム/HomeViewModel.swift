@@ -7,9 +7,6 @@
 
 //WARNING// import UIKit 等UI関係は実装しない
 import Foundation
-//import Kanna
-//import Alamofire
-//import SwiftyJSON
 import RxRelay
 import RxSwift
 
@@ -18,36 +15,27 @@ protocol HomeViewModelInterface: AnyObject {
     var output: HomeViewModel.Output { get }
 }
 
-/// ViewからのInputに応じで処理を行いOutputとして公開する
 final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface {
 
-    /// Viewからのイベントを受け取りたい変数を定義する
     struct Input: InputType {
-        // PublishRelayは初期値がない
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
     }
 
-    /// Viewに購読させたい変数を定義する
     struct Output: OutputType {
-        // Observableは値を流すことができない購読専用 (ViewからOutputに値を流せなくする)
         let prItems: Observable<[AdItem]>
         let univItems: Observable<[AdItem]>
     }
 
-    /// 状態変数を定義する(MVVMでいうModel相当)
     struct State: StateType {
-        // BehaviorRelayは初期値があり､現在の値を保持することができる｡
     }
 
-    /// Presentationレイヤーより上の依存物(APIやUseCase)や引数を定義する
     struct Dependency: DependencyType {
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
         let adItemStoreUseCase: AdItemStoreUseCaseInterface
     }
 
-    /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let prItems: PublishRelay<[AdItem]> = .init()
         let univItems: PublishRelay<[AdItem]> = .init()
@@ -84,49 +72,6 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
 }
 
 
-//class HomeViewModel {
-//
-//    // 共通データ・マネージャ
-//    public let dataManager = DataManager.singleton
-//
-//    // API マネージャ
-//    public let apiManager = ApiManager.singleton
-//
-//    //MARK: - STATE ステータス
-//
-//    enum State {
-//        case busy  // 準備中
-//        case ready // 準備完了
-//        case error // エラー発生
-//    }
-//    public var state: ((State) -> Void)?
-//
-//    // MARK: - Methods [Public]
-//
-//    public func updatePrItems() {
-//        state?(.busy) // 通信開始（通信中）
-//        dataManager.prItemLists.removeAll()
-//        apiManager.request(Url.prItemJsonData.string(),
-//                           success: { [weak self] (response) in
-//            guard let self = self else {
-//                fatalError()
-//            }
-//            let itemCounts = response["itemCounts"].int ?? 0
-//            for i in 0 ..< itemCounts {
-//                let item = response["items"][i]
-//                let prItem = PrItem(urlSavedImage: item["imageURL"].string,
-//                                    urlNextTransition: item["tappedURL"].string,
-//                                    descriptionAboutImage: item["introduction"].string,
-//                                    requesterName: item["organization_name"].string)
-//                self.dataManager.prItemLists.append(prItem)
-//            }
-//            self.state?(.ready) // 通信完了
-//        }, failure: { [weak self] (error) in
-//            AKLog(level: .ERROR, message: "[API] userUpdate: failure:\(error.localizedDescription)")
-//            self?.state?(.error) // エラー表示
-//        })
-//    }
-//
 //    /// 大学図書館の種類
 //    enum LibraryType {
 //        case main // 常三島本館

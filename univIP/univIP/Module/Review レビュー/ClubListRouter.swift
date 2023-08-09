@@ -25,7 +25,6 @@ final class ClubListRouter: BaseRouter, ClubListRouterInterface {
 //            state: .init(),
 //            dependency: .init(router: self)
 //        )
-
     }
 
     func navigate(_ destination: ClubListNavigationDestination) {

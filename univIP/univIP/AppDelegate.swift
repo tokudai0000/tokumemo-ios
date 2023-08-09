@@ -16,15 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // アナリティクスをシュミレーターでは起動させない
-//        #if !targetEnvironment(simulator)
-//            FirebaseApp.configure()
-//        #endif
-        window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.rootViewController = UINavigationController(rootViewController: ClubListRouter().moduleViewController)
-//        let tabBarController = ClubListRouter().moduleViewController
-//        let router = AppRouter(tabBarController: tabBarController)
-//        let mainController = TabBarController(router: router)
+        #if !targetEnvironment(simulator)
+            FirebaseApp.configure()
+        #endif
 
+        window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = MainRouter().moduleViewController
         window?.makeKeyAndVisible()
 

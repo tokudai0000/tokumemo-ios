@@ -59,8 +59,8 @@ private extension AgreementViewController {
 // MARK: Layout
 private extension AgreementViewController {
     func configureText() {
-//        let filePath = R.file
-//        textView.attributedText = Common.loadRtfFileContents(filePath)
+        //        let filePath = R.file
+        //        textView.attributedText = Common.loadRtfFileContents(filePath)
     }
 
     func configureDefaults() {

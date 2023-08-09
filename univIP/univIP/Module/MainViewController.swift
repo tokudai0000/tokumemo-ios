@@ -8,6 +8,7 @@
 import UIKit
 
 class MainViewController: UITabBarController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,7 +18,7 @@ class MainViewController: UITabBarController {
     func configureViewControllers() {
 
         let homeRouter = HomeRouter()
-        let homeVC = homeRouter.moduleViewController // UIViewControllerを取得
+        let homeVC = homeRouter.moduleViewController
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: R.image.tabIcon.home(), selectedImage: nil)
 
         let newsRouter = NewsRouter()
@@ -25,7 +26,7 @@ class MainViewController: UITabBarController {
         newsVC.tabBarItem = UITabBarItem(title: "News", image: R.image.tabIcon.news(), selectedImage: nil)
 
         let clubListRouter = ClubListRouter()
-        let clubListVC = clubListRouter.moduleViewController // UIViewControllerを取得
+        let clubListVC = clubListRouter.moduleViewController
         clubListVC.tabBarItem = UITabBarItem(title: "ClubLists", image: R.image.tabIcon.clubLists(), selectedImage: nil)
 
         let settingsVC = SettingViewController()

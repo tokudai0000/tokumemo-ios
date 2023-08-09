@@ -5,10 +5,8 @@
 //  Created by Akihiro Matsuyama on 2023/08/09.
 //
 
-import Foundation
-
-struct NewsItem {
+struct NewsItemModel {
     let title: String
-    let createdAt: Date
+    let createdAt: String
     let targetUrlStr: String
 }
