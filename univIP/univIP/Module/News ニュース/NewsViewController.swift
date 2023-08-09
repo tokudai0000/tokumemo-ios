@@ -6,39 +6,80 @@
 //
 
 import UIKit
+import RxCocoa
+import RxGesture
+import RxSwift
 
 class NewsViewController: UIViewController {
-    
-    // MARK: - IBOutlet
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    private let viewModel = NewsViewModel()
-    
-    // 共通データ・マネージャ
-    private let dataManager = DataManager.singleton
+    private typealias Section = NewsListSectionModel
+    private typealias Item = NewsListItemModel
+    private class DataSource: UITableViewDiffableDataSource<Section, Item> {}
+
+//    @IBOutlet weak var tableView: UITableView!
+
+    var viewModel: NewsViewModelInterface!
+
+    private let disposeBag = DisposeBag()
     
     private var viewActivityIndicator: UIActivityIndicatorView!
+    private var dataSource: DataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDefaults()
-        setupIndicatorView()
-        setupViewModelStateRecognizer()
+//        setupDefaults()
+//        setupIndicatorView()
+//        binding()
+        viewModel.input.viewDidLoad.accept(())
+//        setupViewModelStateRecognizer()
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+}
+
+// MARK: Binding
+private extension NewsViewController {
+    func binding() {
+        viewModel.output
+            .sectionItems
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, sectionItems in
+                var snapShot = owner.dataSource.snapshot()
+                snapShot.deleteAllItems()
+                snapShot.appendSections(sectionItems)
+                sectionItems.forEach { section in
+                    snapShot.appendItems(section.items, toSection: section)
+                }
+                owner.dataSource.apply(snapShot, animatingDifferences: false)
+//                tableView(tableView, numberOfRowsInSection: newsItems.count)
+//                self.univBannerViewController.addUnivBannerPanels(items: adItems)
+            }
+            .disposed(by: disposeBag)
     }
-    
-    // MARK: - Methods [Private]
-    
+}
+
+// MARK: Layout
+private extension NewsViewController {
     private func setupDefaults() {
-//        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
-        tableView.register(R.nib.newsTableViewCell)
-        viewModel.updateNewsItems()
+//        tableView.register(R.nib.newsTableViewCell)
+//        viewModel.updateNewsItems()
     }
-    
+
+//    private func configureTableView() {
+////        tableView.register(HomeListHeaderView.self, forHeaderFooterViewReuseIdentifier: HomeListHeaderView.reuseIdentifier)
+//        tableView.register(R.nib.newsTableViewCell)
+//        dataSource = .init(tableView: tableView, cellProvider: { tableView, indexPath, item in
+//            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
+////            cell.configure(model: item)
+//            cell.selectionStyle = .none
+//            cell.separatorInset = .zero
+//            return cell
+//        })
+//
+//        tableView.delegate = self
+//        tableView.dataSource = dataSource
+//        tableView.backgroundColor = AppConstants.Color.backGroundGray
+//        tableView.showsVerticalScrollIndicator = true
+//        tableView.indicatorStyle = .black
+//    }
+
     private func setupIndicatorView() {
         viewActivityIndicator = UIActivityIndicatorView()
         viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -49,57 +90,41 @@ class NewsViewController: UIViewController {
     }
     
     // ViewModelが変化したことの通知を受けて画面を更新する
-    private func setupViewModelStateRecognizer() {
-        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
-        self.viewModel.state = { [weak self] (state) in
-            guard let self = self else {
-                fatalError()
-            }
-            DispatchQueue.main.async {
-                switch state {
-                case .busy: // 通信中
-                    self.viewActivityIndicator.startAnimating() // クルクルスタート
-                    break
-                    
-                case .ready: // 通信完了
-                    self.viewActivityIndicator.stopAnimating() // クルクルストップ
-                    self.tableView.reloadData()
-                    break
-                    
-                case .error:
-                    break
-                }
-            }
-        }
-    }
+//    private func setupViewModelStateRecognizer() {
+//        // Protocol： ViewModelが変化したことの通知を受けて画面を更新する
+//        self.viewModel.state = { [weak self] (state) in
+//            guard let self = self else {
+//                fatalError()
+//            }
+//            DispatchQueue.main.async {
+//                switch state {
+//                case .busy: // 通信中
+//                    self.viewActivityIndicator.startAnimating() // クルクルスタート
+//                    break
+//
+//                case .ready: // 通信完了
+//                    self.viewActivityIndicator.stopAnimating() // クルクルストップ
+//                    self.tableView.reloadData()
+//                    break
+//
+//                case .error:
+//                    break
+//                }
+//            }
+//        }
+//    }
 }
 
 
-extension NewsViewController: UITableViewDelegate,UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.newsItems.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(80)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsTableViewCell, for: indexPath)!
-        let item = viewModel.newsItems[indexPath.section]
-        cell.setupCell(text: item.title, date: item.date)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true) // セルの選択状態を解除
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = viewModel.newsItems[indexPath[0]].urlStr
-        present(vc, animated: true, completion: nil)
-    }
-}
+//extension NewsViewController: UITableViewDelegate {
+//
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return CGFloat(80)
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+//        viewModel.input.didTapNewsItem.accept(item)
+//    }
+//}

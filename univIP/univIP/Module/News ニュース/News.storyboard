@@ -13,7 +13,7 @@
         <!--News-->
         <scene sceneID="cYl-iR-8N1">
             <objects>
-                <viewController id="QFM-83-OSM" customClass="NewsViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QFM-83-OSM" customClass="NewsViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XXo-Ah-Bva">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,10 +31,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="QFM-83-OSM" id="QSU-NJ-Z5v"/>
-                                    <outlet property="delegate" destination="QFM-83-OSM" id="bPp-e3-SWs"/>
-                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eA9-h0-050">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -68,9 +64,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="News" image="TabIcon/news" id="pQO-b7-vuW"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="tableView" destination="P70-JE-nX7" id="q4U-I2-Hlu"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TUj-qY-9Pg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

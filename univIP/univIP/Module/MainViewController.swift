@@ -20,7 +20,8 @@ class MainViewController: UITabBarController {
         let homeVC = homeRouter.moduleViewController // UIViewControllerを取得
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: R.image.tabIcon.home(), selectedImage: nil)
 
-        let newsVC = NewsViewController()
+        let newsRouter = NewsRouter()
+        let newsVC = newsRouter.moduleViewController
         newsVC.tabBarItem = UITabBarItem(title: "News", image: R.image.tabIcon.news(), selectedImage: nil)
 
         let clubListRouter = ClubListRouter()
