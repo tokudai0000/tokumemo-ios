@@ -120,6 +120,7 @@ class BannerScrollViewController: UIViewController {
 
             if let url = URL(string: item.imageUrlStr) {
                 bannerView.imageView.loadImage(from: url)
+                bannerView.imageView.contentMode = .scaleAspectFill
             }
 
             // レイアウト
@@ -136,6 +137,7 @@ class BannerScrollViewController: UIViewController {
                 }
             }
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
+            bannerView.imageView.cornerRound = 20
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定
