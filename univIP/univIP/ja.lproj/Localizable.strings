@@ -40,9 +40,10 @@
 "career_center" = "キャリア支援室";
 "study_support_space" = "SSS時間割";
 "disaster_prevention" = "知っておきたい防災";
-"" = "";
-"" = "";
-"" = "";
-"" = "";
-"" = "";
+
+"pr_application" = "PR画像(広告)の申請";
+"contact_us" = "バグや新規機能の相談";
+"home_page" = "ホームページ";
+"terms_of_service" = "利用規約";
+"privacy_policy" = "プライバシーポリシー";
 "" = "";

@@ -96,8 +96,9 @@ private extension HomeViewController {
 // MARK: Layout
 private extension HomeViewController {
     func configureDefaults() {
-//        dataManager.canExecuteJavascript = true
-//        homeTableViewHeightConstraint.constant = CGFloat(homeTableViewHight * homeTableItemLists.count)
+        homeTableView.delegate = self
+        homeTableView.dataSource = self
+        homeTableViewHeightConstraint.constant = CGFloat(44 * HomeItemsConstants().menuItems.count)
     }
 
     /// ログイン用
@@ -179,13 +180,13 @@ extension HomeViewController: BannerScrollViewControllerDelegate {
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return HomeMenuConstants().menuItems.count
+        return HomeItemsConstants().menuItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-        let title = HomeMenuConstants().menuItems[indexPath.row].title
-        let icon = HomeMenuConstants().menuItems[indexPath.row].icon
+        let title = HomeItemsConstants().menuItems[indexPath.row].title
+        let icon = HomeItemsConstants().menuItems[indexPath.row].icon
         cell.setupCell(title: title, image: icon)
         return cell
     }
@@ -197,13 +198,18 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return homeTableItemLists.count
+        return HomeItemsConstants().settingsItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.homeTableView, for: indexPath)!
-        cell.textLabel?.text = homeTableItemLists[indexPath.item].title
+        cell.textLabel?.text = HomeItemsConstants().settingsItems[indexPath.item].title
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.input.didSelectMiniSettings.accept(HomeItemsConstants().settingsItems[indexPath.row])
+        homeTableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -35,8 +35,9 @@
 		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
 		1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698BF2938CA96003906DB /* MenuViewController.swift */; };
 		1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C12938CA9F003906DB /* MenuViewModel.swift */; };
-		1A58F6742A84D9320025737A /* HomeMenuConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6732A84D9320025737A /* HomeMenuConstants.swift */; };
+		1A58F6742A84D9320025737A /* HomeItemsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6732A84D9320025737A /* HomeItemsConstants.swift */; };
 		1A58F6772A8532520025737A /* MenuDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6762A8532520025737A /* MenuDetailItem.swift */; };
+		1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */; };
 		1A5B10892A77D9BF00C0E61B /* UIView+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B10882A77D9BF00C0E61B /* UIView+Exetnsion.swift */; };
 		1A5B108C2A77E8AA00C0E61B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1A5B108B2A77E8AA00C0E61B /* Settings.bundle */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
@@ -137,8 +138,9 @@
 		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		1A5698BF2938CA96003906DB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1A5698C12938CA9F003906DB /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
-		1A58F6732A84D9320025737A /* HomeMenuConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuConstants.swift; sourceTree = "<group>"; };
+		1A58F6732A84D9320025737A /* HomeItemsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemsConstants.swift; sourceTree = "<group>"; };
 		1A58F6762A8532520025737A /* MenuDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailItem.swift; sourceTree = "<group>"; };
+		1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMiniSettingsItem.swift; sourceTree = "<group>"; };
 		1A5B10882A77D9BF00C0E61B /* UIView+Exetnsion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A5B108A2A77E86B00C0E61B /* Agreement.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		1A5B108B2A77E8AA00C0E61B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				1A1A4E102A09FE75003A343B /* AdItem.swift */,
 				1A085CEB2A694AD200D31183 /* MenuItem.swift */,
 				1A58F6762A8532520025737A /* MenuDetailItem.swift */,
+				1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */,
 				1AE816B72A836D9F00B8DA64 /* NewsItemModel.swift */,
 				1A085CED2A694B9300D31183 /* SettingsItem.swift */,
 			);
@@ -552,7 +555,7 @@
 				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
 				1A00A4382750716C00EF3F99 /* Common.swift */,
 				1A81A93026C12C8200CC56E2 /* AppConstants.swift */,
-				1A58F6732A84D9320025737A /* HomeMenuConstants.swift */,
+				1A58F6732A84D9320025737A /* HomeItemsConstants.swift */,
 				1AFC67CC2732BFA80059A053 /* Url.swift */,
 			);
 			path = Common;
@@ -881,6 +884,7 @@
 				1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */,
 				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */,
+				1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */,
 				1AE816B62A833DF800B8DA64 /* NewsRouter.swift in Sources */,
 				1A9A3E452A80D771003B5E40 /* AdItemRepository.swift in Sources */,
 				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
@@ -898,7 +902,7 @@
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
 				1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */,
-				1A58F6742A84D9320025737A /* HomeMenuConstants.swift in Sources */,
+				1A58F6742A84D9320025737A /* HomeItemsConstants.swift in Sources */,
 				1A20C4612A809A970063B5D6 /* HomeRouter.swift in Sources */,
 				1A239B5A2A84A90D0085BA46 /* PrRouter.swift in Sources */,
 				1A81A93126C12C8200CC56E2 /* AppConstants.swift in Sources */,

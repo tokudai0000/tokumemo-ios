@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct HomeMenuConstants {
-    let menuItems:[MenuItem] = [
+struct HomeItemsConstants {
+    let menuItems: [MenuItem] = [
         MenuItem(title: R.string.localizable.course_management(),
                  id: .courseManagement,
                  icon: R.image.menuIcon.courseManagementHome.name,
@@ -40,7 +40,7 @@ struct HomeMenuConstants {
                  targetUrl: nil)
     ]
 
-    let academicRelatedItems = [
+    let academicRelatedItems: [MenuDetailItem] = [
         MenuDetailItem(title: R.string.localizable.time_table(),
                        id: .timeTable,
                        targetUrl: Url.timeTable.urlRequest()),
@@ -78,7 +78,7 @@ struct HomeMenuConstants {
         //                 targetUrl: Url.eLearningList.urlRequest()),
     ]
 
-    let libraryRelatedItems = [
+    let libraryRelatedItems: [MenuDetailItem] = [
         MenuDetailItem(title: R.string.localizable.library_web_home_pc(),
                        id: .libraryWebHomePC,
                        targetUrl: Url.libraryHomePageMainPC.urlRequest()),
@@ -108,7 +108,7 @@ struct HomeMenuConstants {
                        targetUrl: nil),
     ]
 
-    let etcItems = [
+    let etcItems: [MenuDetailItem] = [
         MenuDetailItem(title: R.string.localizable.coop_calendar(),
                        id: .coopCalendar,
                        targetUrl: Url.tokudaiCoop.urlRequest()),
@@ -128,5 +128,27 @@ struct HomeMenuConstants {
         MenuDetailItem(title: R.string.localizable.disaster_prevention(),
                        id: .disasterPrevention,
                        targetUrl: Url.disasterPrevention.urlRequest()),
+    ]
+
+    let settingsItems: [HomeMiniSettingsItem] = [
+        HomeMiniSettingsItem(title: R.string.localizable.pr_application(),
+                             id: .prApplication,
+                             targetUrl: Url.prApplication.urlRequest()),
+
+        HomeMiniSettingsItem(title: R.string.localizable.contact_us(),
+                             id: .contactUs,
+                             targetUrl: Url.contactUs.urlRequest()),
+
+        HomeMiniSettingsItem(title: R.string.localizable.home_page(),
+                             id: .homePage,
+                             targetUrl: Url.homePage.urlRequest()),
+
+        HomeMiniSettingsItem(title: R.string.localizable.terms_of_service(),
+                             id: .termsOfService,
+                             targetUrl: Url.termsOfService.urlRequest()),
+
+        HomeMiniSettingsItem(title: R.string.localizable.privacy_policy(),
+                             id: .privacyPolicy,
+                             targetUrl: Url.privacyPolicy.urlRequest())
     ]
 }

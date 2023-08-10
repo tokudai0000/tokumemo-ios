@@ -24,6 +24,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let didTapUnivItem = PublishRelay<Int>()
         let didTapMenuCollectionItem = PublishRelay<Int>()
         let didSelectMenuDetailItem = PublishRelay<MenuDetailItem>()
+        let didSelectMiniSettings = PublishRelay<HomeMiniSettingsItem>()
     }
 
     struct Output: OutputType {
@@ -98,7 +99,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         input.didTapMenuCollectionItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                let tappedCell = HomeMenuConstants().menuItems[index]
+                let tappedCell = HomeItemsConstants().menuItems[index]
 
                 switch tappedCell.id {
                 case .courseManagement, .manaba, .mail:
@@ -106,16 +107,24 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                         dependency.router.navigate(.goWeb(url))
                     }
                 case .academicRelated:
-                    menuDetailItem.accept(HomeMenuConstants().academicRelatedItems)
+                    menuDetailItem.accept(HomeItemsConstants().academicRelatedItems)
                 case .libraryRelated:
-                    menuDetailItem.accept(HomeMenuConstants().libraryRelatedItems)
+                    menuDetailItem.accept(HomeItemsConstants().libraryRelatedItems)
                 case .etc:
-                    menuDetailItem.accept(HomeMenuConstants().etcItems)
+                    menuDetailItem.accept(HomeItemsConstants().etcItems)
                 }
             })
             .disposed(by: disposeBag)
 
         input.didSelectMenuDetailItem
+            .subscribe { item in
+                if let url = item.element?.targetUrl {
+                    dependency.router.navigate(.goWeb(url))
+                }
+            }
+            .disposed(by: disposeBag)
+
+        input.didSelectMiniSettings
             .subscribe { item in
                 if let url = item.element?.targetUrl {
                     dependency.router.navigate(.goWeb(url))
