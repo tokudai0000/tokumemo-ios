@@ -35,23 +35,23 @@ class MenuTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = menuLists[indexPath.row]
-        switch cell.id {
-        case .syllabus:
-            let vc = R.storyboard.input.inputViewController()!
-            vc.type = .syllabus
-            present(vc, animated: true)
-        case .libraryCalendar:
-            libraryAlart()
-        case .currentTermPerformance:
-            let vc = R.storyboard.web.webViewController()!
-//            vc.loadUrlString = viewModel.createCurrentTermPerformanceUrl()
-            present(vc, animated: true, completion: nil)
-
-        default:
-            let vc = R.storyboard.web.webViewController()!
-            vc.loadUrlString = cell.url!
-            self.present(vc, animated: true, completion: nil)
-        }
+//        switch cell.id {
+//        case .syllabus:
+//            let vc = R.storyboard.input.inputViewController()!
+//            vc.type = .syllabus
+//            present(vc, animated: true)
+//        case .libraryCalendar:
+//            libraryAlart()
+//        case .currentTermPerformance:
+//            let vc = R.storyboard.web.webViewController()!
+////            vc.loadUrlString = viewModel.createCurrentTermPerformanceUrl()
+//            present(vc, animated: true, completion: nil)
+//
+//        default:
+//            let vc = R.storyboard.web.webViewController()!
+//            vc.loadUrlString = cell.url!
+//            self.present(vc, animated: true, completion: nil)
+//        }
     }
 
     /// 図書館では常三島と蔵本の2つのカレンダーを選択させるためにアラートを表示

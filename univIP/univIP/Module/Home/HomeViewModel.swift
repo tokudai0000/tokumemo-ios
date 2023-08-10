@@ -21,6 +21,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
         let didTapPrItem = PublishRelay<Int>()
+        let didTapMenuCollectionItem = PublishRelay<Int>()
     }
 
     struct Output: OutputType {
@@ -75,6 +76,17 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 if let item = state.prItems.value?[index] {
                     dependency.router.navigate(.detail(item))
                 }
+            })
+            .disposed(by: disposeBag)
+
+        input.didTapMenuCollectionItem
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { index in
+                let tappedCell = HomeMenuConstants().menuItems[index]
+
+//                switch tappedCell.id {
+//                case .
+//                }
             })
             .disposed(by: disposeBag)
 
