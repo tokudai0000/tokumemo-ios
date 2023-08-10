@@ -46,6 +46,8 @@ class BannerScrollViewController: UIViewController {
 
     var delegate: BannerScrollViewControllerDelegate?
 
+    var viewModel: HomeViewModelInterface!
+
     /// 初期化
     func initSetup() {
         setupViewSizes()
@@ -187,6 +189,7 @@ class BannerScrollViewController: UIViewController {
     @objc func didTapBanner(gesture: UITapGestureRecognizer) {
         if case .ended = gesture.state,
            let index = gesture.view?.tag {
+            viewModel.input.didTapPrItem.accept(index)
             //            let vc = R.storyboard.pR.prViewController()!
             //            vc.item = dataManager.prItemLists[index]
             //            present(vc, animated: true, completion: nil)

@@ -20,6 +20,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
+        let didTapPrItem = PublishRelay<Int>()
     }
 
     struct Output: OutputType {
@@ -28,6 +29,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     }
 
     struct State: StateType {
+        let prItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
@@ -47,8 +49,11 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                     onSuccess: { response in
                         dependency.adItemStoreUseCase.assignmentPrItems(response.prItems)
                         dependency.adItemStoreUseCase.assignmentUnivItems(response.univItems)
+
                         prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
                         univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
+
+                        state.prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -61,6 +66,15 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
                 getAdItems()
+            })
+            .disposed(by: disposeBag)
+
+        input.didTapPrItem
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { index in
+                if let item = state.prItems.value?[index] {
+                    dependency.router.navigate(.detail(item))
+                }
             })
             .disposed(by: disposeBag)
 

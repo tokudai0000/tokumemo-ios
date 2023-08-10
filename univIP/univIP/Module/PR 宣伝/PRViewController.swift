@@ -6,16 +6,18 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class PRViewController: UIViewController {
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var detailsInfoButton: UIButton!
     
-    // MARK: - IBOutlet
+    private let disposeBag = DisposeBag()
+
+    var viewModel: PrViewModelInterface!
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var detailsInfoButton: UIButton!
-    
-    public var item: AdItem!
     
     // MARK: - View Life Cycle
     

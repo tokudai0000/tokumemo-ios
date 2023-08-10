@@ -93,6 +93,7 @@ private extension HomeViewController {
 
     func configurePrBanner() {
         prBannerViewController = BannerScrollViewController()
+        prBannerViewController.viewModel = self.viewModel
         addChild(prBannerViewController)
         prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
         prContainerView.addSubview(prBannerViewController.view)

@@ -37,7 +37,7 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .detail(let item):
-            moduleViewController.dismiss(animated: true)
+            present(PrRouter(prItem: item))
         }
     }
 }
