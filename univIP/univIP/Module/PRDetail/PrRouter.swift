@@ -9,7 +9,7 @@ import UIKit
 
 enum PrNavigationDestination {
     case goWeb(URLRequest)
-    case agree
+    case close
 }
 
 protocol PrRouterInterface {
@@ -32,8 +32,8 @@ final class PrRouter: BaseRouter, PrRouterInterface {
         switch destination {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
-        case .agree:
-            present(HomeRouter())
+        case .close:
+            moduleViewController.dismiss(animated: true)
         }
     }
 }

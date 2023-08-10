@@ -21,6 +21,13 @@ class BaseRouter {
         moduleViewController.present(viewController, animated: true, completion: completion)
     }
 
+    func modal(_ router: BaseRouter, completion: (() -> Void)? = nil) {
+        let viewController = router.moduleViewController
+        viewController.modalPresentationStyle = .automatic
+        viewController.modalTransitionStyle = .coverVertical
+        moduleViewController.present(viewController, animated: true, completion: completion)
+    }
+
     func presentNavigation(_ router: BaseRouter, completion: (() -> Void)? = nil) {
         let viewController = UINavigationController(rootViewController: router.moduleViewController)
         viewController.modalPresentationStyle = .fullScreen

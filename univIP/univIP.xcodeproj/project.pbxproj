@@ -293,7 +293,7 @@
 			path = "Settings 設定";
 			sourceTree = "<group>";
 		};
-		1A384F9028FD5D1E00A1F52E /* Home ホーム */ = {
+		1A384F9028FD5D1E00A1F52E /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				1A6C51AF2904E82900A3E85A /* Home.storyboard */,
@@ -301,12 +301,12 @@
 				1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */,
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
 				1A9378A02A60DC95009A5758 /* HomeContentsView.swift */,
-				1A9378AF2A61645B009A5758 /* Banner バナー */,
+				1A9378AF2A61645B009A5758 /* Banner */,
 			);
-			path = "Home ホーム";
+			path = Home;
 			sourceTree = "<group>";
 		};
-		1A384F9128FD5D4E00A1F52E /* News ニュース */ = {
+		1A384F9128FD5D4E00A1F52E /* News */ = {
 			isa = PBXGroup;
 			children = (
 				1A6C51B12904EC2F00A3E85A /* News.storyboard */,
@@ -315,7 +315,7 @@
 				1A3A75FE2916B43700069818 /* NewsViewModel.swift */,
 				1ACB59AB291D11A8005A90BE /* Cell */,
 			);
-			path = "News ニュース";
+			path = News;
 			sourceTree = "<group>";
 		};
 		1A384F9228FD5D5C00A1F52E /* ClubList */ = {
@@ -379,12 +379,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1A9378AF2A61645B009A5758 /* Banner バナー */ = {
+		1A9378AF2A61645B009A5758 /* Banner */ = {
 			isa = PBXGroup;
 			children = (
 				1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */,
 			);
-			name = "Banner バナー";
+			name = Banner;
 			path = "Banner バナー";
 			sourceTree = "<group>";
 		};
@@ -461,9 +461,9 @@
 				1A50CDAC2A832AE70079A090 /* MainRouter.swift */,
 				1A50CDAE2A832D170079A090 /* MainViewController.swift */,
 				1ABDE75326DE530300D4B04E /* Agreement */,
-				1AC1332B294C2D1000E3DC16 /* PR 宣伝 */,
-				1A384F9028FD5D1E00A1F52E /* Home ホーム */,
-				1A384F9128FD5D4E00A1F52E /* News ニュース */,
+				1AC1332B294C2D1000E3DC16 /* PRDetail */,
+				1A384F9028FD5D1E00A1F52E /* Home */,
+				1A384F9128FD5D4E00A1F52E /* News */,
 				1A384F9228FD5D5C00A1F52E /* ClubList */,
 				1A30D0B728F9BED600C4012E /* Settings 設定 */,
 				1A30D0AC28F6D75000C4012E /* Web */,
@@ -512,7 +512,7 @@
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};
-		1AC1332B294C2D1000E3DC16 /* PR 宣伝 */ = {
+		1AC1332B294C2D1000E3DC16 /* PRDetail */ = {
 			isa = PBXGroup;
 			children = (
 				1AC1332E294C2D5D00E3DC16 /* PR.storyboard */,
@@ -520,7 +520,7 @@
 				1AC1332C294C2D4D00E3DC16 /* PRViewController.swift */,
 				1A239B5B2A84A9C30085BA46 /* PrViewModel.swift */,
 			);
-			path = "PR 宣伝";
+			path = PRDetail;
 			sourceTree = "<group>";
 		};
 		1AC4BE8D2A7DE30000598EED /* Core */ = {
