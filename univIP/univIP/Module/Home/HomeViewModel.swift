@@ -22,11 +22,13 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let viewWillAppear = PublishRelay<Void>()
         let didTapPrItem = PublishRelay<Int>()
         let didTapMenuCollectionItem = PublishRelay<Int>()
+        let didSelectMenuDetailItem = PublishRelay<MenuDetailItem>()
     }
 
     struct Output: OutputType {
         let prItems: Observable<[AdItem]>
         let univItems: Observable<[AdItem]>
+        let menuDetailItem: Observable<[MenuDetailItem]>
     }
 
     struct State: StateType {
@@ -42,6 +44,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let prItems: PublishRelay<[AdItem]> = .init()
         let univItems: PublishRelay<[AdItem]> = .init()
+        let menuDetailItem: PublishRelay<[MenuDetailItem]> = .init()
 
         func getAdItems() {
             dependency.adItemsAPI.getAdItems()
@@ -84,15 +87,33 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe(onNext: { index in
                 let tappedCell = HomeMenuConstants().menuItems[index]
 
-//                switch tappedCell.id {
-//                case .
-//                }
+                switch tappedCell.id {
+                case .courseManagement, .manaba, .mail:
+                    if let url = tappedCell.targetUrl {
+                        dependency.router.navigate(.goWeb(url))
+                    }
+                case .academicRelated:
+                    menuDetailItem.accept(HomeMenuConstants().academicRelatedItems)
+                case .libraryRelated:
+                    menuDetailItem.accept(HomeMenuConstants().libraryRelatedItems)
+                case .etc:
+                    menuDetailItem.accept(HomeMenuConstants().etcItems)
+                }
             })
+            .disposed(by: disposeBag)
+
+        input.didSelectMenuDetailItem
+            .subscribe { item in
+                if let url = item.element?.targetUrl {
+                    dependency.router.navigate(.goWeb(url))
+                }
+            }
             .disposed(by: disposeBag)
 
         return .init(
             prItems: prItems.asObservable(),
-            univItems: univItems.asObservable()
+            univItems: univItems.asObservable(),
+            menuDetailItem: menuDetailItem.asObservable()
         )
     }
 }

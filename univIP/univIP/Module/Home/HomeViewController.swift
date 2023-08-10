@@ -73,6 +73,23 @@ private extension HomeViewController {
                 owner.univBannerViewController.addUnivBannerPanels(items: adItems)
             }
             .disposed(by: disposeBag)
+
+        viewModel.output
+            .menuDetailItem
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, menuDetailItems in
+                let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                menuDetailItems.forEach { item in
+                    let action = UIAlertAction(title: item.title, style: .default) { (action) in
+                        self.viewModel.input.didSelectMenuDetailItem.accept(item)
+                    }
+                    alertController.addAction(action)
+                }
+                let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

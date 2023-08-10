@@ -15,6 +15,7 @@
 "academic_related" = "講義関連";
 "library_related" = "図書館関連";
 "etc" = "その他";
+"cancel" = "キャンセル";
 
 "time_table" = "時間割";
 "current_term_performance" = "今学期の成績";
