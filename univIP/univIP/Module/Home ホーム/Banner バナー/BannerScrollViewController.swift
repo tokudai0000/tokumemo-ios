@@ -15,7 +15,6 @@ protocol BannerScrollViewControllerDelegate: AnyObject {
 /// バナー表示Viewのコントローラ
 /// scrollViewを使って表示している
 class BannerScrollViewController: UIViewController {
-    let dataManager = DataManager.singleton
     /// バナーエリアの全体の幅
     let baseComponentWidth: CGFloat = 406
     /// デザインでのパネルの幅
@@ -105,8 +104,8 @@ class BannerScrollViewController: UIViewController {
         contentView.heightAnchor.constraint(equalToConstant: panelHeight).isActive = true
     }
 
-    func setupContentSize() {
-        let count = CGFloat(dataManager.prItemLists.count)
+    func setupContentSize(items: [AdItem] = []) {
+        let count = CGFloat(items.count)
         let contentWidth = (panelWidth + panelGap) * (count)
         contentViewWidthConstraint.constant = contentWidth
         scrollView.contentSize = CGSize(width: contentWidth, height: panelHeight)
@@ -118,7 +117,6 @@ class BannerScrollViewController: UIViewController {
         items.enumerated().forEach { index, item in
 
             let bannerView = R.nib.prBannerView(withOwner: self)!
-//            if let bannerView = UINib(nibName: "PrBannerView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? PrBannerView {
 
             if let url = URL(string: item.imageUrlStr) {
                 bannerView.imageView.loadImage(from: url)
@@ -145,8 +143,8 @@ class BannerScrollViewController: UIViewController {
             gesture.numberOfTouchesRequired = 1
             bannerView.tag = index
             bannerView.addGestureRecognizer(gesture)
-//            }
         }
+
         contentView.layoutSubviews()
     }
 
@@ -183,13 +181,13 @@ class BannerScrollViewController: UIViewController {
         }
         contentView.layoutSubviews()
     }
-
+    
     @objc func didTapBanner(gesture: UITapGestureRecognizer) {
         if case .ended = gesture.state,
            let index = gesture.view?.tag {
-            let vc = R.storyboard.pR.prViewController()!
-            vc.item = dataManager.prItemLists[index]
-            present(vc, animated: true, completion: nil)
+            //            let vc = R.storyboard.pR.prViewController()!
+            //            vc.item = dataManager.prItemLists[index]
+            //            present(vc, animated: true, completion: nil)
         }
     }
 

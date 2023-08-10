@@ -59,7 +59,7 @@ private extension HomeViewController {
             .prItems
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, adItems in
-                owner.prBannerViewController.setupContentSize()
+                owner.prBannerViewController.setupContentSize(items: adItems)
                 owner.prBannerViewController.addPrBannerPanels(items: adItems)
                 owner.prBannerPageControl.numberOfPages = adItems.count
             }
@@ -69,7 +69,8 @@ private extension HomeViewController {
             .univItems
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, adItems in
-                self.univBannerViewController.addUnivBannerPanels(items: adItems)
+                owner.univBannerViewController.setupContentSize(items: adItems)
+                owner.univBannerViewController.addUnivBannerPanels(items: adItems)
             }
             .disposed(by: disposeBag)
     }
