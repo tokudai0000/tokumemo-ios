@@ -21,6 +21,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
         let didTapPrItem = PublishRelay<Int>()
+        let didTapUnivItem = PublishRelay<Int>()
         let didTapMenuCollectionItem = PublishRelay<Int>()
         let didSelectMenuDetailItem = PublishRelay<MenuDetailItem>()
     }
@@ -33,6 +34,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
 
     struct State: StateType {
         let prItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
+        let univItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
@@ -58,6 +60,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                         univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
 
                         state.prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
+                        state.univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -78,6 +81,16 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe(onNext: { index in
                 if let item = state.prItems.value?[index] {
                     dependency.router.navigate(.detail(item))
+                }
+            })
+            .disposed(by: disposeBag)
+
+        input.didTapUnivItem
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { index in
+                if let item = state.univItems.value?[index],
+                   let url = URL(string: item.targetUrlStr) {
+                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
                 }
             })
             .disposed(by: disposeBag)

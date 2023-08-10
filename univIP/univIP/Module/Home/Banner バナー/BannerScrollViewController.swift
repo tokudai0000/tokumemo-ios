@@ -143,7 +143,7 @@ class BannerScrollViewController: UIViewController {
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapPrBanner(gesture:)))
             gesture.numberOfTouchesRequired = 1
             bannerView.tag = index
             bannerView.addGestureRecognizer(gesture)
@@ -159,7 +159,10 @@ class BannerScrollViewController: UIViewController {
             let bannerView = R.nib.univBannerView(withOwner: self)!
             if let url = URL(string: item.imageUrlStr) {
                 bannerView.imageView.loadImage(from: url)
+                bannerView.imageView.contentMode = .scaleAspectFill
             }
+            bannerView.titleTextView.text = item.clientName
+            bannerView.discriptionTextView.text = item.imageDescription
 
             // レイアウト
             bannerView.backgroundColor = .clear
@@ -175,10 +178,11 @@ class BannerScrollViewController: UIViewController {
                 }
             }
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
+            bannerView.imageView.cornerRound = 20
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner(gesture:)))
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapUnivBanner(gesture:)))
             gesture.numberOfTouchesRequired = 1
             bannerView.tag = index
             bannerView.addGestureRecognizer(gesture)
@@ -186,13 +190,17 @@ class BannerScrollViewController: UIViewController {
         contentView.layoutSubviews()
     }
     
-    @objc func didTapBanner(gesture: UITapGestureRecognizer) {
+    @objc func didTapPrBanner(gesture: UITapGestureRecognizer) {
         if case .ended = gesture.state,
            let index = gesture.view?.tag {
             viewModel.input.didTapPrItem.accept(index)
-            //            let vc = R.storyboard.pR.prViewController()!
-            //            vc.item = dataManager.prItemLists[index]
-            //            present(vc, animated: true, completion: nil)
+        }
+    }
+
+    @objc func didTapUnivBanner(gesture: UITapGestureRecognizer) {
+        if case .ended = gesture.state,
+           let index = gesture.view?.tag {
+            viewModel.input.didTapUnivItem.accept(index)
         }
     }
 

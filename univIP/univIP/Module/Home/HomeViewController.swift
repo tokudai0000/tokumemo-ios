@@ -135,6 +135,8 @@ private extension HomeViewController {
 
     func configureUnivBanner() {
         univBannerViewController = BannerScrollViewController()
+        univBannerViewController.viewModel = self.viewModel
+        addChild(univBannerViewController)
         univBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
         univContainerView.addSubview(univBannerViewController.view)
         NSLayoutConstraint.activate([
@@ -143,12 +145,11 @@ private extension HomeViewController {
             univBannerViewController.view.leadingAnchor.constraint(equalTo: univContainerView.leadingAnchor),
             univBannerViewController.view.trailingAnchor.constraint(equalTo: univContainerView.trailingAnchor),
         ])
-
+        univBannerViewController.didMove(toParent: self)
         univBannerViewController.initSetup()
         univBannerContainerViewHeightConstraint.constant = univBannerViewController.panelHeight
+        univBannerViewController.delegate = self
     }
-
-
 
     func configureMenuCollectionView() {
         menuCollectionView.register(R.nib.homeCollectionCell)
