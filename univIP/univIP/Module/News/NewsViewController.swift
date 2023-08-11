@@ -45,6 +45,8 @@ private extension NewsViewController {
         tableView.backgroundColor = AppConstants.Color.backGroundGray
         tableView.showsVerticalScrollIndicator = true
         tableView.indicatorStyle = .black
+        tableView.rowHeight = 120
+        tableView.delegate = self
     }
 
     // インジケーターは後日実装予定
@@ -56,4 +58,11 @@ private extension NewsViewController {
 //        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
 //        self.view.addSubview(viewActivityIndicator)
 //    }
+}
+
+extension NewsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.input.didTapNewsItem.accept(indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

@@ -20,7 +20,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
-        let didTapNewsItem = PublishRelay<NewsItemModel>()
+        let didTapNewsItem = PublishRelay<Int>()
     }
 
     struct Output: OutputType {
@@ -28,6 +28,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
     }
 
     struct State: StateType {
+        let newsItems: BehaviorRelay<[NewsItemModel]?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
@@ -46,6 +47,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
                     onSuccess: { response in
                         dependency.newsItemStoreUseCase.assignmentNewsItems(response)
                         newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
+                        state.newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -62,8 +64,11 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
             .disposed(by: disposeBag)
 
         input.didTapNewsItem
-            .subscribe { item in
-                print(item)
+            .subscribe { index in
+                if let newsItems = state.newsItems.value,
+                   let url = URL(string: newsItems[0].targetUrlStr) {
+                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
+                }
             }
             .disposed(by: disposeBag)
 
