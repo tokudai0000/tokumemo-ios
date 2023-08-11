@@ -22,6 +22,8 @@ final class HomeViewController: UIViewController {
     @IBOutlet private weak var menuCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var homeTableView: UITableView!
     @IBOutlet private weak var homeTableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var twitterButton: UIButton!
+    @IBOutlet private weak var githubButton: UIButton!
 
     private let disposeBag = DisposeBag()
 
@@ -54,6 +56,19 @@ private extension HomeViewController {
             })
             .disposed(by: disposeBag)
 
+        twitterButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapTwitterButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        githubButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapGithubButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
         viewModel.output
             .prItems
@@ -99,6 +114,7 @@ private extension HomeViewController {
         homeTableView.delegate = self
         homeTableView.dataSource = self
         homeTableViewHeightConstraint.constant = CGFloat(44 * HomeItemsConstants().menuItems.count)
+//        stackView.spacing = view.bounds.width / 3 // 1/3のスペース
     }
 
     /// ログイン用

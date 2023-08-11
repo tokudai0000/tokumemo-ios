@@ -125,29 +125,49 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ig-F0-yXF">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="8Ig-F0-yXF">
                                                 <rect key="frame" x="0.0" y="849.66666666666663" width="393" height="25"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DON-qs-Lfi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="184" height="25"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQf-cl-ufa">
+                                                        <rect key="frame" x="0.0" y="0.0" width="120" height="25"/>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7lv-by-bAM">
-                                                        <rect key="frame" x="184" y="0.0" width="25" height="25"/>
+                                                        <rect key="frame" x="130" y="0.0" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="Ngb-0G-cvW"/>
                                                             <constraint firstAttribute="width" constant="25" id="QxF-xt-zu2"/>
                                                         </constraints>
+                                                        <color key="tintColor" systemColor="labelColor"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" title="Button" image="twitter_icon">
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration"/>
                                                         </state>
                                                     </button>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSK-Fc-L5j">
-                                                        <rect key="frame" x="209" y="0.0" width="184" height="25"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHP-fA-caK">
+                                                        <rect key="frame" x="165" y="0.0" width="80" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="l1c-Cd-qY8"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qT-Ni-wns">
+                                                        <rect key="frame" x="255" y="0.0" width="25" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="25" id="D2f-hk-HbJ"/>
+                                                            <constraint firstAttribute="height" constant="25" id="bM9-HF-J4X"/>
+                                                        </constraints>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Button" image="github_icon">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration"/>
+                                                        </state>
+                                                    </button>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQU-6E-Cky">
+                                                        <rect key="frame" x="290" y="0.0" width="103" height="25"/>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="DON-qs-Lfi" firstAttribute="width" secondItem="cSK-Fc-L5j" secondAttribute="width" id="u8t-UK-97C"/>
+                                                    <constraint firstItem="7lv-by-bAM" firstAttribute="leading" secondItem="kQf-cl-ufa" secondAttribute="trailing" constant="10" id="34V-oY-uaK"/>
+                                                    <constraint firstItem="OQU-6E-Cky" firstAttribute="width" secondItem="kQf-cl-ufa" secondAttribute="width" multiplier="0.858333" id="VQQ-Ye-fw0"/>
                                                 </constraints>
                                             </stackView>
                                         </subviews>
@@ -198,6 +218,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="393" height="1852"/>
                     <connections>
+                        <outlet property="githubButton" destination="3qT-Ni-wns" id="RgN-VO-q9Q"/>
                         <outlet property="homeTableView" destination="oJf-eX-9Ve" id="4ZF-5J-AXD"/>
                         <outlet property="homeTableViewHeightConstraint" destination="fTs-CI-0Hw" id="2Da-wh-4lj"/>
                         <outlet property="menuCollectionView" destination="CiA-Ie-eOO" id="8AR-xm-Xpt"/>
@@ -205,6 +226,7 @@
                         <outlet property="prBannerContainerViewHeightConstraint" destination="1iM-Ie-EFe" id="c8N-7a-9SG"/>
                         <outlet property="prBannerPageControl" destination="BUK-yD-7Nb" id="lYJ-Xi-FPf"/>
                         <outlet property="prContainerView" destination="LFM-XA-i7M" id="mtq-p0-lFu"/>
+                        <outlet property="twitterButton" destination="7lv-by-bAM" id="T87-Mg-IgY"/>
                         <outlet property="univBannerContainerViewHeightConstraint" destination="vEv-Hm-Tap" id="tRg-YM-k9X"/>
                         <outlet property="univContainerView" destination="eij-dP-cJK" id="nYz-Rb-3AD"/>
                     </connections>
@@ -216,7 +238,11 @@
     </scenes>
     <resources>
         <image name="TabIcon/home" width="25" height="25"/>
+        <image name="github_icon" width="200" height="200"/>
         <image name="twitter_icon" width="166.66667175292969" height="166.66667175292969"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

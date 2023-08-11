@@ -25,6 +25,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let didTapMenuCollectionItem = PublishRelay<Int>()
         let didSelectMenuDetailItem = PublishRelay<MenuDetailItem>()
         let didSelectMiniSettings = PublishRelay<HomeMiniSettingsItem>()
+        let didTapTwitterButton = PublishRelay<Void>()
+        let didTapGithubButton = PublishRelay<Void>()
     }
 
     struct Output: OutputType {
@@ -129,6 +131,20 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 if let url = item.element?.targetUrl {
                     dependency.router.navigate(.goWeb(url))
                 }
+            }
+            .disposed(by: disposeBag)
+
+        input.didTapTwitterButton
+            .subscribe { item in
+                let url = Url.officialSNS.urlRequest()
+                dependency.router.navigate(.goWeb(url))
+            }
+            .disposed(by: disposeBag)
+
+        input.didTapGithubButton
+            .subscribe { item in
+                let url = Url.github.urlRequest()
+                dependency.router.navigate(.goWeb(url))
             }
             .disposed(by: disposeBag)
 

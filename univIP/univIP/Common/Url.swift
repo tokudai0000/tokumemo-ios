@@ -104,6 +104,8 @@ enum Url: String {
     case appIntroduction = "https://tokudai0000.github.io/tokumemo_resource/document/tokumemo_explanation.txt"
     /// トクメモ＋のソースコード[GitHub]
     case sourceCode = "https://github.com/tokudai0000/univIP"
+    /// トクメモ＋のソースコード[GitHub]
+    case github = "https://github.com/tokudai0000"
     /// 気象庁の天気予報
     case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
     
