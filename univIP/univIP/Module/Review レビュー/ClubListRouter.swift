@@ -20,11 +20,11 @@ final class ClubListRouter: BaseRouter, ClubListRouterInterface {
     init() {
         let viewController = R.storyboard.clubList.clubListViewController()!
         super.init(moduleViewController: viewController)
-//        viewController.viewModel = HomeViewModel(
-//            input: .init(),
-//            state: .init(),
-//            dependency: .init(router: self)
-//        )
+        viewController.viewModel = ClubListViewModel(
+            input: .init(),
+            state: .init(),
+            dependency: .init(router: self)
+        )
     }
 
     func navigate(_ destination: ClubListNavigationDestination) {
