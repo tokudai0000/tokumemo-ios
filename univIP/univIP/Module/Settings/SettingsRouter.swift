@@ -10,6 +10,7 @@ import UIKit
 
 enum SettingsNavigationDestination {
     case goWeb(URLRequest)
+    case modal(InputDisplayItem.type)
 }
 
 protocol SettingsRouterInterface {
@@ -31,6 +32,8 @@ final class SettingsRouter: BaseRouter, SettingsRouterInterface {
         switch destination {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
+        case .modal(let type):
+            modal(InputRouter(type: type))
         }
     }
 }

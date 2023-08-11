@@ -40,6 +40,8 @@
 		1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */; };
 		1A58F67D2A8612A80025737A /* ClubListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F67C2A8612A80025737A /* ClubListViewModel.swift */; };
 		1A58F67F2A861AFE0025737A /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F67E2A861AFE0025737A /* SettingsRouter.swift */; };
+		1A58F6812A8645120025737A /* InputRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6802A8645120025737A /* InputRouter.swift */; };
+		1A58F6832A8645780025737A /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6822A8645780025737A /* InputViewModel.swift */; };
 		1A5B10892A77D9BF00C0E61B /* UIView+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B10882A77D9BF00C0E61B /* UIView+Exetnsion.swift */; };
 		1A5B108C2A77E8AA00C0E61B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1A5B108B2A77E8AA00C0E61B /* Settings.bundle */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
@@ -80,6 +82,9 @@
 		1AC4BE952A7E336600598EED /* WebRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE942A7E336600598EED /* WebRouter.swift */; };
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
+		1ACD66342A864EE100244DC0 /* InputDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66332A864EE100244DC0 /* InputDisplayItem.swift */; };
+		1ACD66362A8671D800244DC0 /* PasswordStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66352A8671D800244DC0 /* PasswordStoreUseCase.swift */; };
+		1ACD66382A867C0300244DC0 /* PasswordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66372A867C0300244DC0 /* PasswordRepository.swift */; };
 		1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */; };
 		1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */; };
 		1AD6B7962A6BE5830046FA47 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7982A6BE5830046FA47 /* Localizable.strings */; };
@@ -145,6 +150,8 @@
 		1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMiniSettingsItem.swift; sourceTree = "<group>"; };
 		1A58F67C2A8612A80025737A /* ClubListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListViewModel.swift; sourceTree = "<group>"; };
 		1A58F67E2A861AFE0025737A /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		1A58F6802A8645120025737A /* InputRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRouter.swift; sourceTree = "<group>"; };
+		1A58F6822A8645780025737A /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		1A5B10882A77D9BF00C0E61B /* UIView+Exetnsion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A5B108A2A77E86B00C0E61B /* Agreement.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		1A5B108B2A77E8AA00C0E61B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -194,6 +201,9 @@
 		1AC4BE942A7E336600598EED /* WebRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRouter.swift; sourceTree = "<group>"; };
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
+		1ACD66332A864EE100244DC0 /* InputDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDisplayItem.swift; sourceTree = "<group>"; };
+		1ACD66352A8671D800244DC0 /* PasswordStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStoreUseCase.swift; sourceTree = "<group>"; };
+		1ACD66372A867C0300244DC0 /* PasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRepository.swift; sourceTree = "<group>"; };
 		1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MenuTable.storyboard; sourceTree = "<group>"; };
 		1AD6B7972A6BE5830046FA47 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -360,6 +370,7 @@
 				1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */,
 				1AE816B72A836D9F00B8DA64 /* NewsItemModel.swift */,
 				1A085CED2A694B9300D31183 /* SettingsItem.swift */,
+				1ACD66332A864EE100244DC0 /* InputDisplayItem.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -370,6 +381,7 @@
 				1A2B2F6426C2170F00414A54 /* DataManager.swift */,
 				1A9A3E442A80D771003B5E40 /* AdItemRepository.swift */,
 				1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */,
+				1ACD66372A867C0300244DC0 /* PasswordRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -408,6 +420,7 @@
 			children = (
 				1A9A3E472A80DACB003B5E40 /* AdItemStoreUseCase.swift */,
 				1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */,
+				1ACD66352A8671D800244DC0 /* PasswordStoreUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -511,7 +524,9 @@
 			isa = PBXGroup;
 			children = (
 				1ABE8BCC27B10489001EEA79 /* Input.storyboard */,
+				1A58F6802A8645120025737A /* InputRouter.swift */,
 				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
+				1A58F6822A8645780025737A /* InputViewModel.swift */,
 			);
 			name = "Input 入力画面";
 			path = "PasswordSettings パスワード登録";
@@ -881,16 +896,19 @@
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */,
 				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
+				1A58F6832A8645780025737A /* InputViewModel.swift in Sources */,
 				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
 				1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */,
 				1A9378A12A60DC95009A5758 /* HomeContentsView.swift in Sources */,
 				1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* AdItem.swift in Sources */,
+				1ACD66382A867C0300244DC0 /* PasswordRepository.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */,
 				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */,
 				1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */,
+				1ACD66362A8671D800244DC0 /* PasswordStoreUseCase.swift in Sources */,
 				1AE816B62A833DF800B8DA64 /* NewsRouter.swift in Sources */,
 				1A9A3E452A80D771003B5E40 /* AdItemRepository.swift in Sources */,
 				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
@@ -902,8 +920,10 @@
 				1A3A75FA2916792600069818 /* AdItemsAPI.swift in Sources */,
 				1AE816B82A836D9F00B8DA64 /* NewsItemModel.swift in Sources */,
 				1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */,
+				1ACD66342A864EE100244DC0 /* InputDisplayItem.swift in Sources */,
 				1AE816BF2A838C0100B8DA64 /* NewsItemsRSS.swift in Sources */,
 				1A30D0A928F5BFB500C4012E /* HomeCollectionCell.swift in Sources */,
+				1A58F6812A8645120025737A /* InputRouter.swift in Sources */,
 				1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */,
 				1A26A2612A77FB3C00BC6988 /* R.generated.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
