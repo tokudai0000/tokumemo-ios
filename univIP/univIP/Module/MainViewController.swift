@@ -29,8 +29,10 @@ class MainViewController: UITabBarController {
         let clubListVC = clubListRouter.moduleViewController
         clubListVC.tabBarItem = UITabBarItem(title: "ClubLists", image: R.image.tabIcon.clubLists(), selectedImage: nil)
 
-        let settingsVC = SettingViewController()
+        let settingsRouter = SettingsRouter()
+        let settingsVC = settingsRouter.moduleViewController
         settingsVC.tabBarItem = UITabBarItem(title: "Settings", image: R.image.tabIcon.settings(), selectedImage: nil)
+
 
         viewControllers = [homeVC, newsVC, clubListVC, settingsVC]
     }

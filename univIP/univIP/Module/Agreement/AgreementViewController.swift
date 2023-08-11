@@ -80,7 +80,7 @@ private extension AgreementViewController {
         agreementButton.layer.cornerRadius = 5.0
         agreementButton.layer.borderWidth = 1
 
-        termsButton.setTitle(R.string.localizable.term_of_Service(), for: .normal)
+        termsButton.setTitle(R.string.localizable.terms_of_service(), for: .normal)
         termsButton.backgroundColor = .white
         termsButton.borderColor = .black
         termsButton.tintColor = .black

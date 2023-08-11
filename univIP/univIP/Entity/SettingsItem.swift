@@ -5,36 +5,21 @@
 //  Created by Akihiro Matsuyama on 2023/07/20.
 //
 
-struct SettingsItem {
-    let title: String
-    let id: SettingsItemType
-    let url: String?
-}
+import Foundation
 
-enum SettingsItemType {
-    
-    case password
-    
-    /// お気に入り登録
-    case favorite
-    
-    /// 並び替え機能
-    case customize
-    
-    case aboutThisApp
-    
-    case contactUs
-    
-    /// トクメモ＋のTwitter
-    case officialSNS
-    
-    /// トクメモ＋のLit.linkホームページ
-    case homePage
-    
-    case termsOfService
-    
-    case privacyPolicy
-    
-    /// univIPのGitHub
-    case sourceCode
+struct SettingsItem {
+    enum type {
+        case password
+        case aboutThisApp
+        case contactUs
+        case officialSNS
+        case homePage
+        case termsOfService
+        case privacyPolicy
+        case sourceCode
+    }
+
+    let title: String
+    let id: type
+    let targetUrl: URLRequest?
 }

@@ -101,7 +101,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         input.didTapMenuCollectionItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                let tappedCell = HomeItemsConstants().menuItems[index]
+                let tappedCell = ItemsConstants().menuItems[index]
 
                 switch tappedCell.id {
                 case .courseManagement, .manaba, .mail:
@@ -109,11 +109,11 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                         dependency.router.navigate(.goWeb(url))
                     }
                 case .academicRelated:
-                    menuDetailItem.accept(HomeItemsConstants().academicRelatedItems)
+                    menuDetailItem.accept(ItemsConstants().academicRelatedItems)
                 case .libraryRelated:
-                    menuDetailItem.accept(HomeItemsConstants().libraryRelatedItems)
+                    menuDetailItem.accept(ItemsConstants().libraryRelatedItems)
                 case .etc:
-                    menuDetailItem.accept(HomeItemsConstants().etcItems)
+                    menuDetailItem.accept(ItemsConstants().etcItems)
                 }
             })
             .disposed(by: disposeBag)

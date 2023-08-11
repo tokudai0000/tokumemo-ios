@@ -16,7 +16,7 @@ struct HomeMiniSettingsItem {
         case privacyPolicy
     }
 
-    public let title: String
-    public let id: type
-    public let targetUrl: URLRequest?
+    let title: String
+    let id: type
+    let targetUrl: URLRequest?
 }

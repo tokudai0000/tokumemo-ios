@@ -1,8 +1,8 @@
 //
-//  ClubListViewModel.swift
+//  SettingsViewModel.swift
 //  univIP
 //
-//  Created by Akihiro Matsuyama on 2023/08/11.
+//  Created by Akihiro Matsuyama on 2022/12/10.
 //
 
 //WARNING// import UIKit 等UI関係は実装しない
@@ -10,16 +10,16 @@ import Foundation
 import RxRelay
 import RxSwift
 
-protocol ClubListViewModelInterface: AnyObject {
-    var input: ClubListViewModel.Input { get }
-    var output: ClubListViewModel.Output { get }
+protocol SettingsViewModelInterface: AnyObject {
+    var input: SettingsViewModel.Input { get }
+    var output: SettingsViewModel.Output { get }
 }
 
-final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewModelInterface {
+final class SettingsViewModel: BaseViewModel<SettingsViewModel>, SettingsViewModelInterface {
 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
-        let didTapWebItem = PublishRelay<String>()
+//        let didTapWebItem = PublishRelay<String>()
     }
 
     struct Output: OutputType {
@@ -29,7 +29,7 @@ final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewMod
     }
 
     struct Dependency: DependencyType {
-        let router: ClubListRouterInterface
+        let router: SettingsRouterInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -40,13 +40,13 @@ final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewMod
             })
             .disposed(by: disposeBag)
 
-        input.didTapWebItem
-            .subscribe { urlStr in
-                if let url = URL(string: urlStr) {
-                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
-                }
-            }
-            .disposed(by: disposeBag)
+//        input.didTapWebItem
+//            .subscribe { urlStr in
+//                if let url = URL(string: urlStr) {
+//                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
+//                }
+//            }
+//            .disposed(by: disposeBag)
 
         return .init(
         )

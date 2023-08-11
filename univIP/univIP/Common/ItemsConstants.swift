@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeItemsConstants {
+struct ItemsConstants {
     let menuItems: [MenuItem] = [
         MenuItem(title: R.string.localizable.course_management(),
                  id: .courseManagement,
@@ -130,7 +130,7 @@ struct HomeItemsConstants {
                        targetUrl: Url.disasterPrevention.urlRequest()),
     ]
 
-    let settingsItems: [HomeMiniSettingsItem] = [
+    let homeMiniSettingsItems: [HomeMiniSettingsItem] = [
         HomeMiniSettingsItem(title: R.string.localizable.pr_application(),
                              id: .prApplication,
                              targetUrl: Url.prApplication.urlRequest()),
@@ -150,5 +150,43 @@ struct HomeItemsConstants {
         HomeMiniSettingsItem(title: R.string.localizable.privacy_policy(),
                              id: .privacyPolicy,
                              targetUrl: Url.privacyPolicy.urlRequest())
+    ]
+
+    let settingsItems: [[SettingsItem]] = [
+        [
+            SettingsItem(title: R.string.localizable.password(),
+                         id: .password,
+                         targetUrl: nil)
+        ],
+
+        [
+            SettingsItem(title: R.string.localizable.about_app(),
+                         id: .aboutThisApp,
+                         targetUrl: Url.appIntroduction.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.home_page(),
+                         id: .homePage,
+                         targetUrl: Url.homePage.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.contact_us(),
+                         id: .contactUs,
+                         targetUrl: Url.contactUs.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.offical_SNS(),
+                         id: .officialSNS,
+                         targetUrl: Url.officialSNS.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.terms_of_service(),
+                         id: .termsOfService,
+                         targetUrl: Url.termsOfService.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.privacy_policy(),
+                         id: .privacyPolicy,
+                         targetUrl: Url.privacyPolicy.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.source_code(),
+                         id: .sourceCode,
+                         targetUrl: Url.sourceCode.urlRequest()),
+        ]
     ]
 }

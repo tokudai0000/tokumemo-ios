@@ -6,7 +6,6 @@
   
 */
 
-"term_of_Service" = "利用規約";
 "privacy_policy" = "プライバシーポリシー";
 "agree" = "同意する";
 "course_management" = "教務システム";
@@ -45,5 +44,9 @@
 "contact_us" = "バグや新規機能の相談";
 "home_page" = "ホームページ";
 "terms_of_service" = "利用規約";
-"privacy_policy" = "プライバシーポリシー";
-"" = "";
+"source_code" = "ソースコード";
+"offical_SNS" = "公式Twitter";
+"contact_us" = "お問い合わせ";
+"about_app" = "アプリについて";
+"password" = "パスワード";
+
