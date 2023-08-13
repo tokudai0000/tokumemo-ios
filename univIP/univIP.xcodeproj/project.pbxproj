@@ -485,7 +485,7 @@
 				1A384F9228FD5D5C00A1F52E /* ClubList */,
 				1A30D0B728F9BED600C4012E /* Settings */,
 				1A30D0AC28F6D75000C4012E /* Web */,
-				1ABE8BCB27B10489001EEA79 /* Input 入力画面 */,
+				1ABE8BCB27B10489001EEA79 /* Input */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -520,7 +520,7 @@
 			path = Agreement;
 			sourceTree = "<group>";
 		};
-		1ABE8BCB27B10489001EEA79 /* Input 入力画面 */ = {
+		1ABE8BCB27B10489001EEA79 /* Input */ = {
 			isa = PBXGroup;
 			children = (
 				1ABE8BCC27B10489001EEA79 /* Input.storyboard */,
@@ -528,7 +528,7 @@
 				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
 				1A58F6822A8645780025737A /* InputViewModel.swift */,
 			);
-			name = "Input 入力画面";
+			name = Input;
 			path = "PasswordSettings パスワード登録";
 			sourceTree = "<group>";
 		};

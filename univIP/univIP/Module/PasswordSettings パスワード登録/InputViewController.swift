@@ -26,6 +26,8 @@ final class InputViewController: UIViewController {
     @IBOutlet private weak var registerButton: UIButton!
     @IBOutlet private weak var passwordViewButton: UIButton!
 
+    private let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: nil, action: nil)
+
     private let disposeBag = DisposeBag()
 
     var viewModel: InputViewModelInterface!
@@ -35,6 +37,7 @@ final class InputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDefaults()
+        configureNavigation()
         binding()
         viewModel.input.viewDidLoad.accept(())
     }
@@ -48,6 +51,12 @@ final class InputViewController: UIViewController {
 // MARK: Binding
 private extension InputViewController {
     func binding() {
+
+        leftBarButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapBackButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
         resetButton.rx
             .tap
@@ -129,6 +138,14 @@ private extension InputViewController {
         let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGR.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGR)
+    }
+
+    func configureNavigation() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationItem.setLeftBarButton(leftBarButton, animated: true)
+        navigationItem.leftBarButtonItem?.tintColor = .black
+//        navigationItem.rightBarButtonItem?.tintColor = .white
+//        setEdgeSwipeBackIsActive(to: true)
     }
 
     func configurePassword() {

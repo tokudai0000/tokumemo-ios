@@ -10,7 +10,7 @@ import UIKit
 
 enum InputNavigationDestination {
     case goWeb
-    case close
+    case back
 }
 
 protocol InputRouterInterface {
@@ -33,7 +33,7 @@ final class InputRouter: BaseRouter, InputRouterInterface {
         switch destination {
         case .goWeb:
             moduleViewController.navigationController?.popViewController(animated: true)
-        case .close:
+        case .back:
             moduleViewController.dismiss(animated: true)
         }
     }

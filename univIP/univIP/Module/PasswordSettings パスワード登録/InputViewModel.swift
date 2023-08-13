@@ -19,6 +19,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
+        let didTapBackButton = PublishRelay<Void>()
         let didTapSaveButton = PublishRelay<(cAccount: String?, password: String?)>()
     }
 
@@ -44,6 +45,13 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                 configureTextType.accept(dependency.type)
                 print(dependency.passwordStoreUseCase.fetchCAccount())
                 print(dependency.passwordStoreUseCase.fetchPassword())
+            })
+            .disposed(by: disposeBag)
+
+        input.didTapBackButton
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                dependency.router.navigate(.back)
             })
             .disposed(by: disposeBag)
 
