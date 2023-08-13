@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.9.1)
+  - APIKit (5.4.0)
   - Firebase (10.11.0):
     - Firebase/Core (= 10.11.0)
   - Firebase/Analytics (10.11.0):
@@ -110,21 +111,35 @@ PODS:
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
   - R.swift (7.3.2)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxGesture (4.0.4):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4)
+  - APIKit
   - Firebase
   - Firebase/Analytics (~> 10.3)
   - FirebaseCrashlytics (~> 10.5)
   - Kanna (~> 5)
   - KeychainAccess (~> 4)
   - R.swift (~> 7.2)
+  - RxCocoa
+  - RxGesture
+  - RxSwift
   - SwiftyJSON (~> 5)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - APIKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -142,10 +157,15 @@ SPEC REPOS:
     - PromisesObjC
     - PromisesSwift
     - R.swift
+    - RxCocoa
+    - RxGesture
+    - RxRelay
+    - RxSwift
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  APIKit: 0680e86d2e8abd5bc42e64963f5f89d209eb9271
   Firebase: 31d9575c124839fb5abc0db6d39511cc1dab1b85
   FirebaseAnalytics: 6c6bf99e8854475bf1fa342028841be8ecd236da
   FirebaseCore: 62fd4d549f5e3f3bd52b7998721c5fa0557fb355
@@ -163,8 +183,12 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 64b49952ea7b1c15cc25cf0a99cc8ad4df257468
+PODFILE CHECKSUM: 57a62f70cf176575394bcc03e1a454849447ec02
 
 COCOAPODS: 1.12.1

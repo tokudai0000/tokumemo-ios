@@ -7,6 +7,7 @@ target 'univIP' do
   inhibit_all_warnings!
   
   # Pods for univIP
+  pod 'APIKit'
   pod 'R.swift' , '~> 7.2'
   pod 'KeychainAccess' , '~> 4'
   pod 'Kanna' , '~> 5'
@@ -14,7 +15,10 @@ target 'univIP' do
   pod 'FirebaseCrashlytics' , '~> 10.5'
   pod 'Alamofire', '~> 4' # いずれAlamofire 5系へ
   pod 'SwiftyJSON', '~> 5'
-    
+  pod 'RxCocoa'
+  pod 'RxSwift'
+  pod 'RxGesture'
+
   target  'univIPTests' do
     inherit! :search_paths
     pod 'Firebase'

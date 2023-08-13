@@ -9,23 +9,28 @@ import UIKit
 import WebKit
 
 class ClubListViewController: UIViewController {
-    
     @IBOutlet weak var webView: WKWebView!
-    
+
+    var viewModel: ClubListViewModelInterface!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setStatusBarBackgroundColor(UIColor(red: 13/255, green: 58/255, blue: 151/255, alpha: 1.0))
+        configureDefault()
+    }
+}
+
+// MARK: Binding
+private extension ClubListViewController {
+    func binding() {
+    }
+}
+
+// MARK: Layout
+private extension ClubListViewController {
+    func configureDefault() {
         // Web側(JavaScript)からtokumemoPlus関数が送られてくるのを受け取る設定
         webView.configuration.userContentController.add(self, name: "tokumemoPlus")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         webView.load(Url.clubList.urlRequest())
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }
 
@@ -42,8 +47,8 @@ extension ClubListViewController: WKNavigationDelegate, WKScriptMessageHandler {
     /// postMessageを受けとり、表示する
     /// window.webkit.messageHandlers.tokumemoPlus.postMessage(url)
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let vc = R.storyboard.web.webViewController()!
-        vc.loadUrlString = message.body as? String
-        present(vc, animated: true, completion: nil)
+        if let urlStr = message.body as? String {
+            viewModel.input.didTapWebItem.accept(urlStr)
+        }
     }
 }

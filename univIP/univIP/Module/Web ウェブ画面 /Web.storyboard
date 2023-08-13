@@ -24,36 +24,24 @@
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system" title=""/>
-                                        <connections>
-                                            <action selector="backButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="1PB-cf-1om"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mig-mD-6Jb">
                                         <rect key="frame" x="105" y="0.0" width="99" height="44"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.forward" catalog="system" title=""/>
-                                        <connections>
-                                            <action selector="forwardButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="O4h-fB-UhO"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3M5-Ov-TSx">
                                         <rect key="frame" x="210" y="0.0" width="99" height="44"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="safari" catalog="system" title=""/>
-                                        <connections>
-                                            <action selector="safariButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="IGA-ap-ltU"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IiE-H2-KtA">
                                         <rect key="frame" x="315" y="0.0" width="99" height="44"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system" title=""/>
-                                        <connections>
-                                            <action selector="menuButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="FOq-Eu-Yo5"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588450000005" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -80,9 +68,6 @@
                                                 </fragment>
                                             </attributedString>
                                         </buttonConfiguration>
-                                        <connections>
-                                            <action selector="dismissButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qFn-fC-xPb"/>
-                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzv-K2-wm1">
                                         <rect key="frame" x="193.5" y="5" width="27" height="30"/>
@@ -95,9 +80,6 @@
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise" catalog="system"/>
-                                        <connections>
-                                            <action selector="reloadButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Jin-f5-FHA"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588450000005" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -154,8 +136,12 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="cV4-O6-vDl" id="lVm-ep-9g6"/>
+                        <outlet property="doneButton" destination="eec-eU-8pd" id="QhT-fs-iuD"/>
                         <outlet property="forwardButton" destination="Mig-mD-6Jb" id="hlh-60-2B3"/>
+                        <outlet property="menuButton" destination="IiE-H2-KtA" id="HXp-RJ-GP3"/>
                         <outlet property="progressView" destination="wyf-84-Yq1" id="IuM-oX-hD4"/>
+                        <outlet property="reloadButton" destination="BcE-tV-5mG" id="QJ9-Lb-G9T"/>
+                        <outlet property="safariButton" destination="3M5-Ov-TSx" id="7Y6-IM-08e"/>
                         <outlet property="urlLabel" destination="fzv-K2-wm1" id="FgV-nI-MgC"/>
                         <outlet property="webView" destination="wU7-49-cl9" id="0Jr-39-F9e"/>
                     </connections>
