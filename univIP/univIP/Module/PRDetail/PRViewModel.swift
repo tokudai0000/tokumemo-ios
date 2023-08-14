@@ -10,12 +10,12 @@ import Foundation
 import RxRelay
 import RxSwift
 
-protocol PrViewModelInterface: AnyObject {
-    var input: PrViewModel.Input { get }
-    var output: PrViewModel.Output { get }
+protocol PRViewModelInterface: AnyObject {
+    var input: PRViewModel.Input { get }
+    var output: PRViewModel.Output { get }
 }
 
-final class PrViewModel: BaseViewModel<PrViewModel>, PrViewModelInterface {
+final class PRViewModel: BaseViewModel<PRViewModel>, PRViewModelInterface {
 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
@@ -33,7 +33,7 @@ final class PrViewModel: BaseViewModel<PrViewModel>, PrViewModelInterface {
     }
 
     struct Dependency: DependencyType {
-        let router: PrRouterInterface
+        let router: PRRouterInterface
         let prItem: AdItem
     }
 

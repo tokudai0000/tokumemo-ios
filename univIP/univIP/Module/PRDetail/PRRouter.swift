@@ -7,20 +7,20 @@
 
 import UIKit
 
-enum PrNavigationDestination {
+enum PRNavigationDestination {
     case goWeb(URLRequest)
     case close
 }
 
-protocol PrRouterInterface {
-    func navigate(_ destination: PrNavigationDestination)
+protocol PRRouterInterface {
+    func navigate(_ destination: PRNavigationDestination)
 }
 
-final class PrRouter: BaseRouter, PrRouterInterface {
+final class PRRouter: BaseRouter, PRRouterInterface {
     init(prItem: AdItem) {
         let viewController = R.storyboard.pR.prViewController()!
         super.init(moduleViewController: viewController)
-        viewController.viewModel = PrViewModel(
+        viewController.viewModel = PRViewModel(
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
@@ -28,7 +28,7 @@ final class PrRouter: BaseRouter, PrRouterInterface {
         )
     }
 
-    func navigate(_ destination: PrNavigationDestination) {
+    func navigate(_ destination: PRNavigationDestination) {
         switch destination {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))

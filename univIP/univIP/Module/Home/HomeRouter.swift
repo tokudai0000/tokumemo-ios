@@ -37,7 +37,7 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .detail(let item):
-            modal(PrRouter(prItem: item))
+            modal(PRRouter(prItem: item))
         }
     }
 }

@@ -18,7 +18,7 @@ class PRViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    var viewModel: PrViewModelInterface!
+    var viewModel: PRViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
