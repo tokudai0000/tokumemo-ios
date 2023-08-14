@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = MainRouter().moduleViewController
+        window?.rootViewController = SplashRouter().moduleViewController
         window?.makeKeyAndVisible()
 
         return true

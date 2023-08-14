@@ -50,3 +50,9 @@
 "about_app" = "アプリについて";
 "password" = "パスワード";
 
+"verifying_authentication" = "認証確認中";
+"retrieving_data" = "データ取得中";
+"processing_login" = "ログイン処理中";
+"" = "";
+"" = "";
+"" = "";

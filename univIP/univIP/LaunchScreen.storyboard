@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9Z-dL-0Ks">
-                                <rect key="frame" x="0.0" y="717.5" width="414" height="61"/>
+                                <rect key="frame" x="0.0" y="751" width="414" height="61"/>
                                 <string key="text">Developed by Tokushima Univ  students
 
 GitHub: @tokudai0000</string>
@@ -37,11 +37,10 @@ GitHub: @tokudai0000</string>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="K9Z-dL-0Ks" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Dva-QX-IKd"/>
                             <constraint firstItem="k9B-W9-Cfq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="TNz-lk-CaT"/>
                             <constraint firstItem="k9B-W9-Cfq" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="bbv-0H-VL0"/>
                             <constraint firstItem="K9Z-dL-0Ks" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="fU7-nr-mtb"/>
-                            <constraint firstItem="K9Z-dL-0Ks" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="300" id="iOd-UE-GM0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="K9Z-dL-0Ks" secondAttribute="bottom" constant="50" id="jiF-9N-6OI"/>
                             <constraint firstAttribute="trailing" secondItem="K9Z-dL-0Ks" secondAttribute="trailing" id="sBo-L1-v8a"/>
                         </constraints>
                     </view>
