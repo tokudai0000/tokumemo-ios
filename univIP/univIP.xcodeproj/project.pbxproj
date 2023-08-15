@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A00A4392750716C00EF3F99 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00A4382750716C00EF3F99 /* Common.swift */; };
 		1A085CEC2A694AD200D31183 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A085CEB2A694AD200D31183 /* MenuItem.swift */; };
 		1A085CEE2A694B9300D31183 /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A085CED2A694B9300D31183 /* SettingsItem.swift */; };
 		1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */; };
@@ -90,6 +89,7 @@
 		1AD00BE92A8BD44A008C7EFC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */; };
 		1AD00BEB2A8BD457008C7EFC /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */; };
 		1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */; };
+		1AD00BEF2A8BF14F008C7EFC /* InitSettingsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEE2A8BF14F008C7EFC /* InitSettingsAPI.swift */; };
 		1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */; };
 		1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */; };
 		1AD6B7962A6BE5830046FA47 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7982A6BE5830046FA47 /* Localizable.strings */; };
@@ -122,7 +122,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1A00A4382750716C00EF3F99 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1A085CEB2A694AD200D31183 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		1A085CED2A694B9300D31183 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +213,7 @@
 		1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		1AD00BEE2A8BF14F008C7EFC /* InitSettingsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitSettingsAPI.swift; sourceTree = "<group>"; };
 		1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MenuTable.storyboard; sourceTree = "<group>"; };
 		1AD6B7972A6BE5830046FA47 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -265,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				1A3A75F92916792600069818 /* AdItemsAPI.swift */,
+				1AD00BEE2A8BF14F008C7EFC /* InitSettingsAPI.swift */,
 				1AE816BE2A838C0100B8DA64 /* NewsItemsRSS.swift */,
 				1A6A0C602A8B1DD500342186 /* LibraryCalendarWebScraper.swift */,
 			);
@@ -593,7 +594,6 @@
 			isa = PBXGroup;
 			children = (
 				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
-				1A00A4382750716C00EF3F99 /* Common.swift */,
 				1A81A93026C12C8200CC56E2 /* AppConstants.swift */,
 				1A58F6732A84D9320025737A /* ItemsConstants.swift */,
 				1AFC67CC2732BFA80059A053 /* Url.swift */,
@@ -915,7 +915,6 @@
 				1AC4BE952A7E336600598EED /* WebRouter.swift in Sources */,
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */,
-				1A00A4392750716C00EF3F99 /* Common.swift in Sources */,
 				1A58F6832A8645780025737A /* InputViewModel.swift in Sources */,
 				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
 				1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */,
@@ -934,6 +933,7 @@
 				1A9A3E452A80D771003B5E40 /* AdItemRepository.swift in Sources */,
 				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
 				1A58F67F2A861AFE0025737A /* SettingsRouter.swift in Sources */,
+				1AD00BEF2A8BF14F008C7EFC /* InitSettingsAPI.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImageView+Exetnsion.swift in Sources */,

@@ -13,12 +13,25 @@ enum AppConstants {
     /// Note これはいずれなくす
     static let latestTermsVersion: String = "3.0"
 
-    enum Color {
-        static let navigation: UIColor = .init(red255: 0, green255: 78, blue255: 152)
-        static let sansanBlue: UIColor = .init(red255: 0, green255: 78, blue255: 152)
-        static let sansanProductBlue: UIColor = .init(red255: 5, green255: 121, blue255: 230)
-        static let sansanBlack: UIColor = .init(red255: 34, green255: 34, blue255: 34)
-        static let sansanGray: UIColor = .init(red255: 117, green255: 117, blue255: 117)
-        static let backGroundGray: UIColor = .init(red255: 242, green255: 242, blue255: 242)
+    /// rtfファイルを読み込む
+    /// - Parameter url: rtfFileまでのPATH
+    /// - Returns: rtfFileの内容
+    /// 使用例
+    /// let filePath = R.file.aboutThisAppRtf()!
+    /// textView.attributedText = Common.loadRtfFileContents(filePath)
+    static func loadRtfFileContents(_ filePath: URL) -> NSAttributedString {
+        do {
+            let terms = try Data(contentsOf: filePath)
+            let attributedString = try NSAttributedString(
+                data: terms,
+                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf],
+                documentAttributes: nil
+            )
+            return attributedString
+
+        } catch let error {
+            AKLog(level: .FATAL, message: "[rtfファイルのDataパース失敗]:\(error.localizedDescription)")
+            fatalError()
+        }
     }
 }
