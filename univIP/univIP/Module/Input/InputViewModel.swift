@@ -20,10 +20,12 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
         let didTapBackButton = PublishRelay<Void>()
+        let didTapResetOKButton = PublishRelay<Void>()
         let didTapSaveButton = PublishRelay<(cAccount: String?, password: String?)>()
     }
 
     struct Output: OutputType {
+        let textField1: Observable<String>
         let configureTextType: Observable<InputDisplayItem.type>
     }
 
@@ -37,14 +39,14 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
+        let textField1: PublishRelay<String> = .init()
         let configureTextType: PublishRelay<InputDisplayItem.type> = .init()
 
         input.viewDidLoad
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
                 configureTextType.accept(dependency.type)
-                print(dependency.passwordStoreUseCase.fetchCAccount())
-                print(dependency.passwordStoreUseCase.fetchPassword())
+                textField1.accept(dependency.passwordStoreUseCase.fetchCAccount())
             })
             .disposed(by: disposeBag)
 
@@ -54,6 +56,15 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                 dependency.router.navigate(.back)
             })
             .disposed(by: disposeBag)
+
+        input.didTapResetOKButton
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                dependency.passwordStoreUseCase.assignmentCAccount("")
+                dependency.passwordStoreUseCase.assignmentPassword("")
+            })
+            .disposed(by: disposeBag)
+
 
         input.didTapSaveButton
             .subscribe { items in
@@ -102,8 +113,8 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                     //                    dataManager.password = text2
                     //                    initSetup(.password)
                     //                    dataManager.loginState.completed = false
-                    //                    alert(title: "♪ 登録完了 ♪",
-                    //                          message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
+//                    alert(title: "♪ 登録完了 ♪",
+//                          message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
                     //
                     //                default:
                     //                    fatalError()
@@ -113,6 +124,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
             .disposed(by: disposeBag)
 
         return .init(
+            textField1: textField1.asObservable(),
             configureTextType: configureTextType.asObservable()
         )
     }

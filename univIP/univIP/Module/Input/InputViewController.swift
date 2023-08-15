@@ -61,26 +61,25 @@ private extension InputViewController {
         resetButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-//                let alert = UIAlertController(title: "アラート表示",
-//                                              message: "学生番号とパスワードの情報をこのスマホから消去しますか？",
-//                                              preferredStyle:  UIAlertController.Style.alert)
-//
-//                let defaultAction = UIAlertAction(title: "OK",
-//                                                  style: UIAlertAction.Style.default,
-//                                                  handler:{ (action: UIAlertAction!) -> Void in
-//                    self.dataManager.cAccount = ""
-//                    self.dataManager.password = ""
-//                    self.initSetup(self.type)
-//                })
-//
-//                let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル",
-//                                                                style: UIAlertAction.Style.cancel,
-//                                                                handler:{ (action: UIAlertAction!) -> Void in })
-//
-//                alert.addAction(cancelAction)
-//                alert.addAction(defaultAction)
-//
-//                present(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "アラート表示",
+                                              message: "学生番号とパスワードの情報をこのスマホから消去しますか？",
+                                              preferredStyle:  UIAlertController.Style.alert)
+
+                let defaultAction = UIAlertAction(title: "OK",
+                                                  style: UIAlertAction.Style.default,
+                                                  handler:{ (action: UIAlertAction!) -> Void in
+                    owner.TextField1.text = ""
+                    owner.viewModel.input.didTapResetOKButton.accept(())
+                })
+
+                let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル",
+                                                                style: UIAlertAction.Style.cancel,
+                                                                handler:{ (action: UIAlertAction!) -> Void in })
+
+                alert.addAction(cancelAction)
+                alert.addAction(defaultAction)
+
+                owner.present(alert, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
 
@@ -115,6 +114,14 @@ private extension InputViewController {
                 case . error:
                     fatalError()
                 }
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .textField1
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, text in
+                owner.TextField1.text = text
             }
             .disposed(by: disposeBag)
     }
