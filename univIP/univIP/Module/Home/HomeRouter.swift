@@ -27,7 +27,8 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
             dependency: .init(router: self,
                               adItemsAPI: AdItemsAPI(),
                               adItemStoreUseCase: AdItemStoreUseCase(prItemRepository: AdItemOnMemoryRepository(),
-                                                                     univItemRepository: AdItemOnMemoryRepository()))
+                                                                     univItemRepository: AdItemOnMemoryRepository()),
+                              libraryCalendarWebScraper: LibraryCalendarWebScraper())
         )
 
     }

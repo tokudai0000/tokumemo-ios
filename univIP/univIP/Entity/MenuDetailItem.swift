@@ -27,7 +27,8 @@ struct MenuDetailItem {
         case libraryMyPage                  // 図書館MyPage
         case libraryBookLendingExtension    // 図書館本貸出し期間延長
         case libraryBookPurchaseRequest     // 図書館本購入リクエスト
-        case libraryCalendar                // 図書館カレンダー
+        case libraryCalendarMain            // 図書館カレンダー
+        case libraryCalendarKura
 
         case coopCalendar                   // 徳島大学生活共同組合
         case cafeteria                      // 徳島大学食堂

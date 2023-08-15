@@ -27,7 +27,7 @@ enum Url: String {
     /// 講義時間割 旧:https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistList.aspx
     case timeTable = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/Schedule/Day.aspx"
     /// 今期の成績表
-    case currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx?year="
+    case currentTermPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Sp/ReferResults/SubDetail/Results_Get_YearTerm.aspx"
     /// 成績選択画面
     case termPerformance = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/ReferResults/Menu.aspx"
     /// 出欠記録

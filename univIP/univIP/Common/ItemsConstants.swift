@@ -103,8 +103,12 @@ struct ItemsConstants {
                        id: .libraryBookPurchaseRequest,
                        targetUrl: Url.libraryBookPurchaseRequest.urlRequest()),
 
-        MenuDetailItem(title: R.string.localizable.library_calendar(),
-                       id: .libraryCalendar,
+        MenuDetailItem(title: R.string.localizable.library_calendar_main(),
+                       id: .libraryCalendarMain,
+                       targetUrl: nil),
+
+        MenuDetailItem(title: R.string.localizable.library_calendar_kura(),
+                       id: .libraryCalendarKura,
                        targetUrl: nil),
     ]
 

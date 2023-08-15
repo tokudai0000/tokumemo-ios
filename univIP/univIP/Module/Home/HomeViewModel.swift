@@ -44,6 +44,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
         let adItemStoreUseCase: AdItemStoreUseCaseInterface
+        let libraryCalendarWebScraper : LibraryCalendarWebScraperInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -71,6 +72,20 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 )
                 .disposed(by: disposeBag)
         }
+
+//        func libraryCalendarWebScraper(libraryUrl: URLRequest) {
+//            dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: libraryUrl)
+//                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+//                .subscribe(
+//                    onSuccess: { response in
+//                        dependency.router.navigate(.goWeb(response))
+//                    },
+//                    onFailure: { error in
+//                        AKLog(level: .ERROR, message: error)
+//                    }
+//                )
+//                .disposed(by: disposeBag)
+//        }
 
         input.viewDidLoad
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
@@ -120,9 +135,15 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
 
         input.didSelectMenuDetailItem
             .subscribe { item in
-                if let url = item.element?.targetUrl {
-                    dependency.router.navigate(.goWeb(url))
-                }
+//                guard let item = item.element,
+//                      let url = item.targetUrl else { return }
+//
+//                if item.id == .libraryCalendarMain || item.id == .libraryCalendarKura {
+//                    libraryCalendarWebScraper(libraryUrl: url)
+//
+//                }else{
+//                    dependency.router.navigate(.goWeb(url))
+//                }
             }
             .disposed(by: disposeBag)
 

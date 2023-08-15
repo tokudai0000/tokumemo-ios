@@ -211,6 +211,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
             decisionHandler(.cancel)
             return
         }
+        print(url.absoluteString)
         self.viewModel.input.loadingUrl.accept(URLRequest(url: url))
         decisionHandler(.allow)
         return
