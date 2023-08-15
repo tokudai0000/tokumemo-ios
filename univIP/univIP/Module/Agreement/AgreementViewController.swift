@@ -27,6 +27,7 @@ final class AgreementViewController: UIViewController {
         configureImageView()
         configureButton()
         binding()
+        viewModel.input.viewDidLoad.accept(())
     }
 }
 
@@ -51,6 +52,14 @@ private extension AgreementViewController {
             .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapAgreementButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .termText
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, text in
+                owner.textView.text = text
             }
             .disposed(by: disposeBag)
     }

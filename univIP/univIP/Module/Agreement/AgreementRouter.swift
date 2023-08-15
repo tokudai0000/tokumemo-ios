@@ -17,13 +17,15 @@ protocol AgreementRouterInterface {
 }
 
 final class AgreementRouter: BaseRouter, AgreementRouterInterface {
-    init() {
+    init(currentTermVersion: String) {
         let viewController = R.storyboard.agreement.agreemantViewController()!
         super.init(moduleViewController: viewController)
         viewController.viewModel = AgreementViewModel(
             input: .init(),
             state: .init(),
-            dependency: .init(router: self)
+            dependency: .init(router: self,
+                              currentTermVersion: currentTermVersion,
+                              initSettingsStoreUseCase: InitSettingsStoreUseCase(initSettingsRepository: InitSettingsOnMemoryRepository()))
         )
     }
 

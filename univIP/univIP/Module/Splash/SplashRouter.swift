@@ -8,7 +8,7 @@
 import UIKit
 
 enum SplashNavigationDestination {
-    case agree
+    case agree(String)
     case main
 }
 
@@ -24,14 +24,16 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              passwordStoreUseCase: PasswordStoreUseCase(passwordRepository: PasswordOnKeyChainRepository()))
+                              initSettingsAPI: InitSettingsAPI(),
+                              passwordStoreUseCase: PasswordStoreUseCase(passwordRepository: PasswordOnKeyChainRepository()),
+                              initSettingsStoreUseCase: InitSettingsStoreUseCase(initSettingsRepository: InitSettingsOnMemoryRepository()))
         )
     }
 
     func navigate(_ destination: SplashNavigationDestination) {
         switch destination {
-        case .agree:
-            present(AgreementRouter())
+        case .agree(let current):
+            present(AgreementRouter(currentTermVersion: current))
         case .main:
             present(MainRouter())
         }

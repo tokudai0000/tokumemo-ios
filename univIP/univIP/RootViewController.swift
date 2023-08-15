@@ -28,7 +28,7 @@ final class RootViewController: UIViewController {
     }
 
     private func switchToMain() {
-        let navigationController = UINavigationController(rootViewController: AgreementRouter().moduleViewController)
+        let navigationController = UINavigationController(rootViewController: MainRouter().moduleViewController)
         switchContainer(to: navigationController)
     }
 

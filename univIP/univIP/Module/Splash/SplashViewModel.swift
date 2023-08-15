@@ -35,11 +35,14 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
     struct State: StateType {
         let canExecuteJavascript: BehaviorRelay<Bool?> = .init(value: nil)
+        let termVersion: BehaviorRelay<String?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
         let router: SplashRouterInterface
+        let initSettingsAPI: InitSettingsAPIInterface
         let passwordStoreUseCase: PasswordStoreUseCaseInterface
+        let initSettingsStoreUseCase: InitSettingsStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -82,9 +85,40 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             return current != accepted
         }
 
+        func getInitSettings() {
+            dependency.initSettingsAPI.getInitSettings()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        state.termVersion.accept(response.currentTermVersion)
+
+                        dependency.initSettingsStoreUseCase.assignmentNumberOfUsers(response.numberOfUsers)
+                        dependency.initSettingsStoreUseCase.assignmentTermText(response.termText)
+
+                        let current = response.currentTermVersion
+                        let accepted = dependency.initSettingsStoreUseCase.fetchAcceptedTermVersion()
+                        if isTermsVersionDifferent(current: current, accepted: accepted) {
+                            // メインスレッドで実行
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                dependency.router.navigate(.agree(current))
+                            }
+                            return
+                        }
+
+                        statusLabel.accept(R.string.localizable.processing_login())
+
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+
         input.viewDidLoad
             .subscribe { _ in
                 loadUrl.accept(Url.universityTransitionLogin.urlRequest())
+                getInitSettings()
             }
             .disposed(by: disposeBag)
 
@@ -92,18 +126,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             .subscribe { _ in
                 activityIndicator.accept(true)
                 statusLabel.accept(R.string.localizable.verifying_authentication())
-
-                let current = ""
-                let accepted = ""
-                if isTermsVersionDifferent(current: current, accepted: accepted) {
-                    // メインスレッドで実行
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        dependency.router.navigate(.agree)
-                    }
-                    return
-                }
-
-                statusLabel.accept(R.string.localizable.processing_login())
 
                 // ログイン処理に失敗した場合、10秒後には必ずメイン画面に遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
@@ -129,9 +151,9 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                     reloadLoginURLInWebView.accept(Void())
                 }
 
-                if isURLImmediatelyAfterLogin(urlStr) {
-                    dependency.router.navigate(.main)
-                }
+//                if isURLImmediatelyAfterLogin(urlStr) {
+//                    dependency.router.navigate(.main)
+//                }
             }
             .disposed(by: disposeBag)
 
