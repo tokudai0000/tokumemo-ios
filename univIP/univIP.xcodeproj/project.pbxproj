@@ -27,10 +27,6 @@
 		1A3A75FA2916792600069818 /* AdItemsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* AdItemsAPI.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
-		1A49B0AE2A8940A800D6F69A /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A49B0AD2A8940A800D6F69A /* SplashRouter.swift */; };
-		1A49B0B02A8940C300D6F69A /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A49B0AF2A8940C300D6F69A /* SplashViewController.swift */; };
-		1A49B0B22A8940CF00D6F69A /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A49B0B12A8940CF00D6F69A /* SplashViewModel.swift */; };
-		1A49B0B42A894C0500D6F69A /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A49B0B32A894C0500D6F69A /* Splash.storyboard */; };
 		1A50CDAB2A82B57D0079A090 /* ClubListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */; };
 		1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAC2A832AE70079A090 /* MainRouter.swift */; };
 		1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAE2A832D170079A090 /* MainViewController.swift */; };
@@ -142,10 +138,6 @@
 		1A3A75F92916792600069818 /* AdItemsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItemsAPI.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
-		1A49B0AD2A8940A800D6F69A /* SplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashRouter.swift; path = "../../../../../../../.Trash/univIP 23-53-28-625/univIP/univIP/Module/Web ウェブ画面 /SplashRouter.swift"; sourceTree = "<group>"; };
-		1A49B0AF2A8940C300D6F69A /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashViewController.swift; path = ../../../../../../../SplashViewController.swift; sourceTree = "<group>"; };
-		1A49B0B12A8940CF00D6F69A /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashViewModel.swift; path = ../../../../../../../SplashViewModel.swift; sourceTree = "<group>"; };
-		1A49B0B32A894C0500D6F69A /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Splash.storyboard; path = ../../../../../../../Splash.storyboard; sourceTree = "<group>"; };
 		1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListRouter.swift; sourceTree = "<group>"; };
 		1A50CDAC2A832AE70079A090 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		1A50CDAE2A832D170079A090 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -308,7 +300,7 @@
 				1AC4BE942A7E336600598EED /* WebRouter.swift */,
 				1A30D0AD28F6D79800C4012E /* WebViewController.swift */,
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
-				1A5698BC2938CA09003906DB /* Menu メニュー */,
+				1A5698BC2938CA09003906DB /* Menu */,
 			);
 			path = Web;
 			sourceTree = "<group>";
@@ -357,29 +349,24 @@
 				1A6C51B92905077E00A3E85A /* ClubListViewController.swift */,
 				1A58F67C2A8612A80025737A /* ClubListViewModel.swift */,
 			);
-			name = ClubList;
-			path = "Review レビュー";
+			path = ClubList;
 			sourceTree = "<group>";
 		};
 		1A49B0AC2A893F8500D6F69A /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				1A49B0B32A894C0500D6F69A /* Splash.storyboard */,
-				1A49B0AD2A8940A800D6F69A /* SplashRouter.swift */,
-				1A49B0AF2A8940C300D6F69A /* SplashViewController.swift */,
-				1A49B0B12A8940CF00D6F69A /* SplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		1A5698BC2938CA09003906DB /* Menu メニュー */ = {
+		1A5698BC2938CA09003906DB /* Menu */ = {
 			isa = PBXGroup;
 			children = (
 				1A5698BD2938CA8D003906DB /* Menu.storyboard */,
 				1A5698BF2938CA96003906DB /* MenuViewController.swift */,
 				1A5698C12938CA9F003906DB /* MenuViewModel.swift */,
 			);
-			path = "Menu メニュー";
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		1A5B108D2A77E99F00C0E61B /* Entity */ = {
@@ -423,8 +410,7 @@
 			children = (
 				1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */,
 			);
-			name = Banner;
-			path = "Banner バナー";
+			path = Banner;
 			sourceTree = "<group>";
 		};
 		1A9378B02A629487009A5758 /* UnivBanner */ = {
@@ -550,8 +536,7 @@
 				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
 				1A58F6822A8645780025737A /* InputViewModel.swift */,
 			);
-			name = Input;
-			path = "PasswordSettings パスワード登録";
+			path = Input;
 			sourceTree = "<group>";
 		};
 		1AC1332B294C2D1000E3DC16 /* PRDetail */ = {
@@ -741,7 +726,6 @@
 				1A9378AE2A60E7B3009A5758 /* PrBannerView.xib in Resources */,
 				1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
-				1A49B0B42A894C0500D6F69A /* Splash.storyboard in Resources */,
 				1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
@@ -906,13 +890,11 @@
 				1A58F6772A8532520025737A /* MenuDetailItem.swift in Sources */,
 				1A5B10892A77D9BF00C0E61B /* UIView+Exetnsion.swift in Sources */,
 				1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */,
-				1A49B0B02A8940C300D6F69A /* SplashViewController.swift in Sources */,
 				1A63062C2944B48600205C7C /* SettingsViewModel.swift in Sources */,
 				1A556D922963BD4B00A650B2 /* String+Exetnsion.swift in Sources */,
 				1A2B2F6526C2170F00414A54 /* DataManager.swift in Sources */,
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
 				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
-				1A49B0AE2A8940A800D6F69A /* SplashRouter.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingsViewController.swift in Sources */,
 				1A50CDAB2A82B57D0079A090 /* ClubListRouter.swift in Sources */,
 				1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */,
@@ -924,7 +906,6 @@
 				1A58F6832A8645780025737A /* InputViewModel.swift in Sources */,
 				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
 				1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */,
-				1A49B0B22A8940CF00D6F69A /* SplashViewModel.swift in Sources */,
 				1A9378A12A60DC95009A5758 /* HomeContentsView.swift in Sources */,
 				1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* AdItem.swift in Sources */,
