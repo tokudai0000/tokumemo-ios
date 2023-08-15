@@ -310,8 +310,7 @@
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
 				1A5698BC2938CA09003906DB /* Menu メニュー */,
 			);
-			name = Web;
-			path = "Web ウェブ画面 ";
+			path = Web;
 			sourceTree = "<group>";
 		};
 		1A30D0B728F9BED600C4012E /* Settings */ = {

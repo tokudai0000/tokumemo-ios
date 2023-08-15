@@ -10,16 +10,16 @@ import Foundation
 final class WebViewModel {
     // Safariで開く用として、現在表示しているURLを保存する
     public var loadingUrlStr = "https://www.google.com/?hl=ja"
-    
+
     private let dataManager = DataManager.singleton
-    
+
     private let safariUrls = ["https://teams.microsoft.com/l/meetup-join", "https://zoom.us/meeting/register/","https://join.skype.com/"]
-    
+
     /// タイムアウトのURLであるか判定
     public func isTimeout(urlStr: String) -> Bool {
         return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
-    
+
     /// Safariで開きたいURLであるか判定
     public func shouldOpenSafari(urlStr: String) -> Bool {
         for url in safariUrls {
@@ -29,7 +29,7 @@ final class WebViewModel {
         }
         return false
     }
-    
+
     /// JavaScriptを動かす種類
     enum JavaScriptType {
         case skipReminder // アンケート解答の催促画面
