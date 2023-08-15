@@ -30,7 +30,7 @@ protocol LibraryCalendarWebScraperInterface {
 struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
     func getLibraryCalendarURL(libraryUrl: URLRequest) -> RxSwift.Single<URLRequest> {
         return .create { observer in
-            guard let url = libraryUrl.url else{ return }
+            let url = libraryUrl.url!
 
             let task = URLSession.shared.dataTask(with: url) { (data, _ , error) in
                 // ここのエラーはクライアントサイドのエラー(ホストに接続できないなど)
@@ -44,27 +44,27 @@ struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
                 }
 
                 var urlStr = ""
-//
-//                do {
-//                    // URL先WebページのHTMLデータを取得
-//                    // let data = try NSData(contentsOf: url) as Data
-//                    let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-//                    // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
-//                    for node in doc.xpath("//a") {
-//                        // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-//                        if let str = node["href"] {
-//                            // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-//                            if str.contains("pub/pdf/calender/") {
-//                                // PDFまでのURLを作成する(本館のURLに付け加える)
-//                                urlStr = Url.libraryHomePageMainPC.string() + str
-//                            }
-//                        }
-//                    }
-//                } catch {
-//                    AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(url.absoluteString)")
-//                    return observer(.failure(error))
-//                }
-                observer(.success(libraryUrl: urlStr))
+
+                do {
+                    // URL先WebページのHTMLデータを取得
+                    // let data = try NSData(contentsOf: url) as Data
+                    let doc = try HTML(html: data, encoding: String.Encoding.utf8)
+                    // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
+                    for node in doc.xpath("//a") {
+                        // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
+                        if let str = node["href"] {
+                            // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
+                            if str.contains("pub/pdf/calender/") {
+                                // PDFまでのURLを作成する(本館のURLに付け加える)
+                                urlStr = Url.libraryHomePageMainPC.string() + str
+                            }
+                        }
+                    }
+                } catch {
+                    AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(url.absoluteString)")
+                    return observer(.failure(error))
+                }
+                observer(.success(URLRequest(url: URL(string: urlStr)!)))
             }
             task.resume()
 

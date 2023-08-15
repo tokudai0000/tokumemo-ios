@@ -105,11 +105,11 @@ struct ItemsConstants {
 
         MenuDetailItem(title: R.string.localizable.library_calendar_main(),
                        id: .libraryCalendarMain,
-                       targetUrl: nil),
+                       targetUrl: Url.libraryHomePageMainPC.urlRequest()),
 
         MenuDetailItem(title: R.string.localizable.library_calendar_kura(),
                        id: .libraryCalendarKura,
-                       targetUrl: nil),
+                       targetUrl: Url.libraryHomePageKuraPC.urlRequest()),
     ]
 
     let etcItems: [MenuDetailItem] = [
