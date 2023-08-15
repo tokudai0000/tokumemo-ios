@@ -14,34 +14,24 @@ protocol WebViewModelInterface: AnyObject {
     var output: WebViewModel.Output { get }
 }
 
-/// ViewからのInputに応じで処理を行いOutputとして公開する
 final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
-    /// JavaScriptを動かす種類
-    enum JavaScriptInjectionType {
-        case skipReminder // アンケート解答の催促画面
-        case syllabus // シラバスの検索画面
-        case loginIAS // 大学統合認証システム(IAS)のログイン画面
-        case loginOutlook // メール(Outlook)のログイン画面
-        case loginCareerCenter // 徳島大学キャリアセンターのログイン画面
-        case none // JavaScriptを動かす必要がない場合
-    }
 
-    /// Viewからのイベントを受け取りたい変数を定義する
     struct Input: InputType {
-        // PublishRelayは初期値がない
         let viewDidAppear = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
         let didTapSafariButton = PublishRelay<Void>()
-        let loadingUrl = PublishRelay<URLRequest>()
+        let urlPendingLoad = PublishRelay<URL>()
+        let urlDidLoad = PublishRelay<URL>()
     }
 
-    /// Viewに購読させたい変数を定義する
     struct Output: OutputType {
-        // Observableは値を流すことができない購読専用 (ViewからOutputに値を流せなくする)
         let loadUrl: Observable<URLRequest>
+        let reloadLoginURLInWebView: Observable<Void>
+        let urlLabel: Observable<String>
         let openSafari: Observable<URLRequest>
-        let javaScriptInjectionType: Observable<JavaScriptInjectionType>
-
+        let loginJavaScriptInjection: Observable<(cAccount: String, password: String)>
+        let loginOutlookJavaScriptInjection: Observable<(cAccount: String, password: String)>
+        let loginCareerCenterJavaScriptInjection: Observable<(cAccount: String, password: String)>
     }
 
     /// 状態変数を定義する(MVVMでいうModel相当)
@@ -55,14 +45,60 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
     struct Dependency: DependencyType {
         let router: WebRouterInterface
         let loadUrl: URLRequest
+        let passwordStoreUseCase: PasswordStoreUseCaseInterface
     }
 
     /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let loadUrl: PublishRelay<URLRequest> = .init()
+        let reloadLoginURLInWebView: PublishRelay<Void> = .init()
+        let urlLabel: PublishRelay<String> = .init()
         let openSafari: PublishRelay<URLRequest> = .init()
-        let javaScriptInjectionType: PublishRelay<JavaScriptInjectionType> = .init()
+        let loginJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
+        let loginOutlookJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
+        let loginCareerCenterJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
 
+        func shouldInjectJavaScript(at urlString: String) -> Bool {
+            if state.canExecuteJavascript.value == false { return false }
+            if urlString.contains(Url.universityLogin.string()) { return true }
+            return false
+        }
+
+        func shouldOutlookInjectJavaScript(at urlString: String) -> Bool {
+            if state.canExecuteJavascript.value == false { return false }
+            if urlString.contains(Url.outlookLoginForm.string()) { return true }
+            return false
+        }
+
+        func shouldCareerCenterInjectJavaScript(at urlString: String) -> Bool {
+            if state.canExecuteJavascript.value == false { return false }
+            if urlString.contains(Url.tokudaiCareerCenter.string()) { return true }
+            return false
+        }
+
+        /// タイムアウトのURLであるか判定
+        func isUniversityServiceTimeoutURL(_ urlStr: String) -> Bool {
+            return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
+        }
+
+        /// ログインが完了した直後のURLであるか
+        /// ログイン画面から、ログイン完了後に遷移される画面は3種類
+        /// 1, アンケート最速画面
+        /// 2, 教務事務システムのモバイル画面(iPhone)
+        /// 3, 教務事務システムのPC画面(iPad)
+        func isURLImmediatelyAfterLogin(_ urlStr: String) -> Bool {
+            let targetURLs = [Url.skipReminder.string(),
+                              Url.courseManagementMobile.string(),
+                              Url.courseManagementPC.string()]
+
+            for target in targetURLs {
+                if urlStr == target {
+                    return true
+                }
+            }
+            return false
+        }
+        
         input.viewDidAppear
             .subscribe { _ in
                 let url = dependency.loadUrl
@@ -84,51 +120,56 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
             }
             .disposed(by: disposeBag)
 
-        input.loadingUrl
+        input.urlPendingLoad
             .subscribe { url in
-//                state.displayUrl.accept(url)
-//                loadUrl.accept(url)
-//                if let type = anyJavaScriptExecute(state: state) {
-//                    javaScriptInjectionType.accept(type)
-//                }
+                guard let url = url.element else{ return }
+                let urlStr = url.absoluteString
+
+                if isUniversityServiceTimeoutURL(urlStr) {
+                    reloadLoginURLInWebView.accept(Void())
+                }
+            }
+            .disposed(by: disposeBag)
+
+        input.urlDidLoad
+            .subscribe { url in
+                guard let url = url.element,
+                      let host = url.host else{ return }
+                let urlStr = url.absoluteString
+
+                urlLabel.accept(host.description)
+
+                if shouldInjectJavaScript(at: urlStr) {
+                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    loginJavaScriptInjection.accept((cAccount: cAccount, password: password))
+                    state.canExecuteJavascript.accept(false)
+                }
+
+                if shouldOutlookInjectJavaScript(at: urlStr) {
+                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    loginOutlookJavaScriptInjection.accept((cAccount: cAccount, password: password))
+                    state.canExecuteJavascript.accept(false)
+                }
+
+                if shouldCareerCenterInjectJavaScript(at: urlStr) {
+                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    loginCareerCenterJavaScriptInjection.accept((cAccount: cAccount, password: password))
+                    state.canExecuteJavascript.accept(false)
+                }
             }
             .disposed(by: disposeBag)
 
         return .init(
             loadUrl: loadUrl.asObservable(),
+            reloadLoginURLInWebView: reloadLoginURLInWebView.asObservable(),
+            urlLabel: urlLabel.asObservable(),
             openSafari: openSafari.asObservable(),
-            javaScriptInjectionType: javaScriptInjectionType.asObservable()
+            loginJavaScriptInjection: loginJavaScriptInjection.asObservable(),
+            loginOutlookJavaScriptInjection: loginOutlookJavaScriptInjection.asObservable(),
+            loginCareerCenterJavaScriptInjection: loginCareerCenterJavaScriptInjection.asObservable()
         )
-
-        func anyJavaScriptExecute(state: State) -> JavaScriptInjectionType? {
-            guard let canExecuteJS = state.canExecuteJavascript.value,
-                  let urlString = state.displayUrl.value?.description else { return nil }
-            // JavaScriptを実行するフラグが立っていない場合はnoneを返す
-            if canExecuteJS == false {
-                return nil
-            }
-            // アンケート解答の催促画面
-            if urlString == Url.skipReminder.string() {
-                return .skipReminder
-            }
-            // 大学統合認証システム(IAS)のログイン画面
-            if urlString.contains(Url.universityLogin.string()) {
-                return .loginIAS
-            }
-            // シラバスの検索画面
-            if urlString == Url.syllabus.string() {
-                return .syllabus
-            }
-            // メール(Outlook)のログイン画面
-            if urlString.contains(Url.outlookLoginForm.string()) {
-                return .loginOutlook
-            }
-            // 徳島大学キャリアセンターのログイン画面
-            if urlString == Url.tokudaiCareerCenter.string() {
-                return .loginCareerCenter
-            }
-            // それ以外なら
-            return nil
-        }
     }
 }

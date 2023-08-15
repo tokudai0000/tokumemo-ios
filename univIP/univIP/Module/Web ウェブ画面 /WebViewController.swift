@@ -32,15 +32,6 @@ final class WebViewController: UIViewController {
         configureDefaults()
         configureWebView()
         binding()
-//        if dataManager.cAccount.isEmpty || dataManager.password.isEmpty {
-//            toast(message: "settingsからパスワード設定すると、自動ログインできますよ♪", interval: 10.0)
-//            dataManager.canExecuteJavascript = false
-//        }
-//        if let urlString = loadUrlString {
-//            if let url = URL(string: urlString){
-//                webView.load(URLRequest(url: url))
-//            }
-//        }
         viewModel.input.viewDidAppear.accept(())
     }
 
@@ -102,7 +93,8 @@ private extension WebViewController {
             }
             .disposed(by: disposeBag)
 
-        viewModel.output.openSafari
+        viewModel.output
+            .openSafari
             .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
             .drive(with: self) { owner, urlRequest in
                 guard let url = urlRequest.url else { return }
@@ -112,41 +104,55 @@ private extension WebViewController {
             }
             .disposed(by: disposeBag)
 
-        viewModel.output.loadUrl
+        viewModel.output
+            .urlLabel
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, urlStr in
+                owner.urlLabel.text = urlStr
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .loadUrl
             .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
             .drive(with: self) { owner, urlRequest in
-                self.urlLabel.text = urlRequest.url?.host
                 owner.webView.load(urlRequest)
             }
             .disposed(by: disposeBag)
 
-        viewModel.output.javaScriptInjectionType
-            .asDriver(onErrorJustReturn: .none)
-            .drive(with: self) { owner, type in
-                switch type {
-                case .skipReminder:
-                    owner.webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
-                case .loginIAS:
-//                    webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
-//                    webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
-                    owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-                case .syllabus:
-//                    webView.isHidden = true
-//                    webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(dataManager.syllabusSubjectName)'", completionHandler:  nil)
-//                    webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(dataManager.syllabusTeacherName)'", completionHandler:  nil)
-                    owner.webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-                case .loginOutlook:
-//                    webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
-//                    webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
-                    owner.webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-                case .loginCareerCenter:
-                    print("a")
-//                    webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
-//                    webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
-                case .none:
-                    print("q")
-                    break
-                }
+        viewModel.output
+            .urlLabel
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, text in
+                owner.urlLabel.text = text
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .loginJavaScriptInjection
+            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
+            .drive(with: self) { owner, data in
+                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(data.cAccount)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(data.password)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .loginOutlookJavaScriptInjection
+            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
+            .drive(with: self) { owner, data in
+                owner.webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(data.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(data.password)'", completionHandler:  nil)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .loginCareerCenterJavaScriptInjection
+            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
+            .drive(with: self) { owner, data in
+                owner.webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(data.cAccount)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(data.password)'", completionHandler:  nil)
             }
             .disposed(by: disposeBag)
     }
@@ -164,45 +170,10 @@ private extension WebViewController {
         webView.uiDelegate = self
         webView.navigationDelegate = self
     }
-    
-//    private func setupProgressView() {
-//        progressView.progressTintColor = colorArray[colorCnt]
-//        colorCnt = colorCnt + 1
-//        observation = webView.observe(\.estimatedProgress, options: .new){_, change in
-//            self.progressView.setProgress(Float(change.newValue!), animated: true)
-//
-//            if change.newValue! >= 1.0 {
-//                UIView.animate(withDuration: 1.0,
-//                               delay: 0.0,
-//                               options: [.curveEaseIn],
-//                               animations: {
-//                    self.progressView.alpha = 0.0
-//
-//                }, completion: { (finished: Bool) in
-//                    self.progressView.progressTintColor = self.colorArray[self.colorCnt]
-//                    self.colorCnt = self.colorCnt + 1
-//                    if self.colorCnt >= self.colorArray.count {
-//                        self.colorCnt = 0
-//                    }
-//
-//                    self.progressView.setProgress(0, animated: false)
-//                })
-//            }
-//            else {
-//                self.progressView.alpha = 1.0
-//            }
-//        }
-//    }
-    
-    /// 大学統合認証システム(IAS)のページを読み込む
-    /// ログインの処理はWebViewのdidFinishで行う
-//    func relogin() {
-//        webView.load(Url.universityTransitionLogin.urlRequest())
-//    }
 }
 
 extension WebViewController: WKNavigationDelegate, WKUIDelegate {
-    
+    // 読み込み設定（リクエスト前）
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -211,73 +182,23 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
             decisionHandler(.cancel)
             return
         }
-        print(url.absoluteString)
-        self.viewModel.input.loadingUrl.accept(URLRequest(url: url))
+        viewModel.input.urlPendingLoad.accept(url)
         decisionHandler(.allow)
-        return
     }
 
-    //        if viewModel.isTimeout(urlStr: url.absoluteString) {
-    //            relogin()
-    //        }
-    //        if viewModel.shouldOpenSafari(urlStr: url.absoluteString) {
-    //            let url = URL(string: viewModel.loadingUrlStr)!
-    //            if UIApplication.shared.canOpenURL(url) {
-    //                UIApplication.shared.open(url)
-    //            }
-    //            decisionHandler(.cancel)
-    //            return
-    //        }
-    
-    /*
-     JavaScriptをWebサイトごとに実行する
-     - アンケート解答の催促画面
-     - 徳島大学　統合認証システムサイト(ログインサイト)
-     - シラバスの検索画面
-     - outlook(メール)へのログイン画面
-     - 徳島大学キャリアセンター室
-     
-     NOTE:
-     シラバスでは検索中は、画面を消すことにより、ユーザーの別操作を防ぐ
-     キャリアセンター室ではログインボタンは自動にしない(キャリアセンターと大学パスワードは人によるが同じではないから)
-     */
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        let url = self.webView.url!
-//        AKLog(level: .DEBUG, message: url.absoluteString)
-//        viewModel.loadingUrlStr = url.absoluteString // Safari用にデータ保持
-//        switch viewModel.anyJavaScriptExecute(url.absoluteString) {
-//        case .skipReminder:
-//            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
-//        case .loginIAS:
-//            webView.evaluateJavaScript("document.getElementById('username').value= '\(dataManager.cAccount)'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementById('password').value= '\(dataManager.password)'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
-//            dataManager.canExecuteJavascript = false
-//        case .syllabus:
-//            webView.isHidden = true
-//            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_sbj_Search').value='\(dataManager.syllabusSubjectName)'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_txt_staff_Search').value='\(dataManager.syllabusTeacherName)'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ctl06_btnSearch').click();", completionHandler:  nil)
-//            dataManager.canExecuteJavascript = false
-//        case .loginOutlook:
-//            webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(dataManager.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(dataManager.password)'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementById('submitButton').click();", completionHandler:  nil)
-//            dataManager.canExecuteJavascript = false
-//        case .loginCareerCenter:
-//            webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(dataManager.cAccount)'", completionHandler:  nil)
-//            webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(dataManager.password)'", completionHandler:  nil)
-//            dataManager.canExecuteJavascript = false
-//        case .none:
-//            break
-//        }
-//
-//        if url.absoluteString == Url.syllabusSearchCompleted.string() {
-//            webView.isHidden = false
-//        }
-//        forwardButton.alpha = webView.canGoForward ? 1.0 : 0.6 // 戻る、進むボタンの表示を変更
-//    }
-    
+    // 読み込み設定（レスポンス取得後）
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationResponse: WKNavigationResponse,
+                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if let url = self.webView.url{
+            viewModel.input.urlDidLoad.accept(url)
+        }
+    }
+
     /// alert対応
     func webView(_ webView: WKWebView,
                  runJavaScriptAlertPanelWithMessage message: String,
@@ -288,7 +209,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
         alertController.addAction(otherAction)
         present(alertController, animated: true, completion: nil)
     }
-    
+
     /// confirm対応
     /// 確認画面、イメージは「この内容で保存しますか？はい・いいえ」のようなもの
     func webView(_ webView: WKWebView,
@@ -302,7 +223,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    
+
     /// prompt対応
     /// 入力ダイアログ、Alertのtext入力できる版
     func webView(_ webView: WKWebView,
@@ -325,7 +246,7 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    
+
     /// target="_blank"(新しいタブで開く) の処理
     func webView(_ webView: WKWebView,
                  createWebViewWith configuration: WKWebViewConfiguration,
