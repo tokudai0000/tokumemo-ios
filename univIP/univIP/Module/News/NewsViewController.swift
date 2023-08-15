@@ -42,7 +42,6 @@ private extension NewsViewController {
 private extension NewsViewController {
     private func configureTableView() {
         tableView.register(R.nib.newsTableViewCell)
-        tableView.backgroundColor = AppConstants.Color.backGroundGray
         tableView.showsVerticalScrollIndicator = true
         tableView.indicatorStyle = .black
         tableView.rowHeight = 120

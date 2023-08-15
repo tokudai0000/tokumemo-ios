@@ -17,8 +17,8 @@ struct MenuItem {
         case etc
     }
 
-    public let title: String
-    public let id: type
-    public let icon: String
-    public let targetUrl: URLRequest?
+    let title: String
+    let id: type
+    let icon: String
+    let targetUrl: URLRequest?
 }

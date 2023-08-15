@@ -38,7 +38,7 @@ struct MenuDetailItem {
         case superEnglish                   // スーパー英語
     }
 
-    public let title: String
-    public let id: type
-    public let targetUrl: URLRequest?
+    let title: String
+    let id: type
+    let targetUrl: URLRequest?
 }

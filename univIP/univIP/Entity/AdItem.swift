@@ -22,6 +22,7 @@ struct AdItem: Decodable {
         self.imageDescription = imageDescription
     }
 
+    // APIからのレスポンスをパースする
     init(dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? Int,
               let clientName = dictionary["clientName"] as? String,
