@@ -53,47 +53,23 @@ struct ItemsConstants {
                        id: .syllabus,
                        targetUrl: Url.syllabus.urlRequest()),
 
-        MenuDetailItem(title: R.string.localizable.term_performance(),
-                       id: .termPerformance,
-                       targetUrl: Url.termPerformance.urlRequest()),
-
-        MenuDetailItem(title: R.string.localizable.university_web(),
-                       id: .universityWeb,
-                       targetUrl: Url.universityHomePage.urlRequest()),
-
         MenuDetailItem(title: R.string.localizable.presence_absence_record(),
                        id: .presenceAbsenceRecord,
                        targetUrl: Url.presenceAbsenceRecord.urlRequest()),
 
-        MenuDetailItem(title: R.string.localizable.class_questionnaire(),
-                       id: .classQuestionnaire,
-                       targetUrl: Url.classQuestionnaire.urlRequest()),
-
-        MenuDetailItem(title: R.string.localizable.eLearning_list(),
-                       id: .eLearningList,
-                       targetUrl: Url.eLearningList.urlRequest()),
-
-        //        MenuDetailItem(title: R.string.localizable.portal(),
-        //                 id: .portal,
-        //                 targetUrl: Url.eLearningList.urlRequest()),
+        MenuDetailItem(title: R.string.localizable.term_performance(),
+                       id: .termPerformance,
+                       targetUrl: Url.termPerformance.urlRequest()),
     ]
 
     let libraryRelatedItems: [MenuDetailItem] = [
-        MenuDetailItem(title: R.string.localizable.library_web_home_pc(),
-                       id: .libraryWebHomePC,
+        MenuDetailItem(title: R.string.localizable.library_calendar_main(),
+                       id: .libraryCalendarMain,
                        targetUrl: Url.libraryHomePageMainPC.urlRequest()),
 
-        MenuDetailItem(title: R.string.localizable.library_web_home_kura_pc(),
-                       id: .libraryWebHomeKuraPC,
+        MenuDetailItem(title: R.string.localizable.library_calendar_kura(),
+                       id: .libraryCalendarKura,
                        targetUrl: Url.libraryHomePageKuraPC.urlRequest()),
-
-        //        MenuDetailItem(title: R.string.localizable.library_web_home_mobile(),
-        //                 id: .libraryWebHomeMobile,
-        //                 targetUrl: Url.libraryHomePageKuraPC.urlRequest()),
-
-        MenuDetailItem(title: R.string.localizable.library_my_page(),
-                       id: .libraryMyPage,
-                       targetUrl: Url.libraryMyPage.urlRequest()),
 
         MenuDetailItem(title: R.string.localizable.library_book_lending_extension(),
                        id: .libraryBookLendingExtension,
@@ -103,13 +79,9 @@ struct ItemsConstants {
                        id: .libraryBookPurchaseRequest,
                        targetUrl: Url.libraryBookPurchaseRequest.urlRequest()),
 
-        MenuDetailItem(title: R.string.localizable.library_calendar_main(),
-                       id: .libraryCalendarMain,
-                       targetUrl: Url.libraryHomePageMainPC.urlRequest()),
-
-        MenuDetailItem(title: R.string.localizable.library_calendar_kura(),
-                       id: .libraryCalendarKura,
-                       targetUrl: Url.libraryHomePageKuraPC.urlRequest()),
+        MenuDetailItem(title: R.string.localizable.library_my_page(),
+                       id: .libraryMyPage,
+                       targetUrl: Url.libraryMyPage.urlRequest()),
     ]
 
     let etcItems: [MenuDetailItem] = [
