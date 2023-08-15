@@ -57,6 +57,10 @@ GitHub: @tokudai0000</string>
                             <constraint firstItem="6qY-g1-Mwo" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="yx4-kR-Z0Z"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="LtJ-go-LwY" id="dTT-FY-Tci"/>
+                        <outlet property="statusLabel" destination="wRL-R6-KiE" id="flA-CQ-U12"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

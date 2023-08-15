@@ -23,7 +23,8 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
         viewController.viewModel = SplashViewModel(
             input: .init(),
             state: .init(),
-            dependency: .init(router: self)
+            dependency: .init(router: self,
+                              passwordStoreUseCase: PasswordStoreUseCase(passwordRepository: PasswordOnKeyChainRepository()))
         )
     }
 
