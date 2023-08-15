@@ -35,6 +35,7 @@ struct MenuDetailItem {
         case careerCenter                   // キャリアセンター
         case studySupportSpace              // 学びサポート企画部
         case disasterPrevention             // 上月研究室防災情報
+        case superEnglish                   // スーパー英語
     }
 
     public let title: String

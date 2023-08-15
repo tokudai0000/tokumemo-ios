@@ -36,6 +36,9 @@ enum Url: String {
     case classQuestionnaire = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Enquete/EnqAnswerList.aspx"
     /// 履修登録
     case courseRegistration = "https://eweb.stud.tokushima-u.ac.jp/Portal/StudentApp/Regist/RegistEdit.aspx"
+
+    /// スーパー英語
+    case superEnglishLogin = "https://tse.ait231.tokushima-u.ac.jp/student/main/login/"
     
     /// 図書館サイト(本館PC)
     case libraryHomePageMainPC = "https://www.lib.tokushima-u.ac.jp/"
