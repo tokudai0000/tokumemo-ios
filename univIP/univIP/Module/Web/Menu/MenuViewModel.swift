@@ -10,7 +10,6 @@ import Foundation
 
 final class MenuViewModel {
     
-    private let dataManager = DataManager.singleton
     
 //    public var menuLists:[MenuItemList] {
 //        get {

@@ -18,8 +18,6 @@ final class MenuViewController: UIViewController {
     
     private let viewModel = MenuViewModel()
     
-    private let dataManager = DataManager.singleton
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
