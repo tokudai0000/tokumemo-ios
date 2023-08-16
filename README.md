@@ -80,11 +80,11 @@
 
 |2021/11 メンバー募集ビラ|2021/12 アプリ広報ビラ_1|2021/12 アプリ広報ビラ_2|
 |:--|:--|:--|
-|<img src="assets/メンバー募集ビラ.png" width="207">|<img src="assets/ビラ_松山案.png" width="207">|<img src="assets/ビラ_河崎案.png" width="207">|
+|<img src="assets/leaflet_members _wanted.png" width="207">|<img src="assets/leaflet_matsuyama.png" width="207">|<img src="assets/leaflet_kawasaki.png" width="207">|
 
 |2022/11 アプリ広報ビラ|2023/4 新入生向けアプリ広報ビラ|
 |:--|:--|
-|<img src="assets/その他.png" width="207">|<img src="assets/新入生向けポスター.png" width="207">|
+|<img src="assets/leaflet_etc.png" width="207">|<img src="assets/leaflet_freshman.png" width="207">|
 
 
 # 開発
