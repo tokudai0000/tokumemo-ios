@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class ClubListViewController: UIViewController {
+class ClubListViewController: BaseViewController {
     @IBOutlet weak var webView: WKWebView!
 
     var viewModel: ClubListViewModelInterface!
@@ -48,7 +48,7 @@ extension ClubListViewController: WKNavigationDelegate, WKScriptMessageHandler {
     /// window.webkit.messageHandlers.tokumemoPlus.postMessage(url)
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if let urlStr = message.body as? String {
-            viewModel.input.didTapWebItem.accept(urlStr)
+            viewModel.input.didTapWebLink.accept(urlStr)
         }
     }
 }

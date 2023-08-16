@@ -18,8 +18,7 @@ protocol ClubListViewModelInterface: AnyObject {
 final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewModelInterface {
 
     struct Input: InputType {
-        let viewDidLoad = PublishRelay<Void>()
-        let didTapWebItem = PublishRelay<String>()
+        let didTapWebLink = PublishRelay<String>()
     }
 
     struct Output: OutputType {
@@ -34,13 +33,7 @@ final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewMod
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
 
-        input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
-            .subscribe(onNext: { _ in
-            })
-            .disposed(by: disposeBag)
-
-        input.didTapWebItem
+        input.didTapWebLink
             .subscribe { urlStr in
                 if let url = URL(string: urlStr) {
                     dependency.router.navigate(.goWeb(URLRequest(url: url)))
