@@ -30,6 +30,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     }
 
     struct Output: OutputType {
+        let numberOfUsersLabel: Observable<String>
         let prItems: Observable<[AdItem]>
         let univItems: Observable<[AdItem]>
         let menuDetailItem: Observable<[MenuDetailItem]>
@@ -44,10 +45,12 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
         let adItemStoreUseCase: AdItemStoreUseCaseInterface
-        let libraryCalendarWebScraper : LibraryCalendarWebScraperInterface
+        let libraryCalendarWebScraper: LibraryCalendarWebScraperInterface
+        let initSettingsStoreUseCase: InitSettingsStoreUseCase
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
+        let numberOfUsersLabel: PublishRelay<String> = .init()
         let prItems: PublishRelay<[AdItem]> = .init()
         let univItems: PublishRelay<[AdItem]> = .init()
         let menuDetailItem: PublishRelay<[MenuDetailItem]> = .init()
@@ -93,6 +96,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
                 getAdItems()
+                numberOfUsersLabel.accept(dependency.initSettingsStoreUseCase.fetchNumberOfUsers())
             })
             .disposed(by: disposeBag)
 
@@ -172,6 +176,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .disposed(by: disposeBag)
 
         return .init(
+            numberOfUsersLabel: numberOfUsersLabel.asObservable(),
             prItems: prItems.asObservable(),
             univItems: univItems.asObservable(),
             menuDetailItem: menuDetailItem.asObservable()

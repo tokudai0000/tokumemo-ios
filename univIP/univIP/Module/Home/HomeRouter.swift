@@ -28,7 +28,8 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
                               adItemsAPI: AdItemsAPI(),
                               adItemStoreUseCase: AdItemStoreUseCase(prItemRepository: AdItemOnMemoryRepository(),
                                                                      univItemRepository: AdItemOnMemoryRepository()),
-                              libraryCalendarWebScraper: LibraryCalendarWebScraper())
+                              libraryCalendarWebScraper: LibraryCalendarWebScraper(),
+                              initSettingsStoreUseCase: InitSettingsStoreUseCase(initSettingsRepository: InitSettingsOnMemoryRepository()))
         )
 
     }

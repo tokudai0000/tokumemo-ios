@@ -13,6 +13,8 @@ import RxSwift
 
 
 final class HomeViewController: UIViewController {
+
+    @IBOutlet private weak var numberOfUsersLabel: UILabel!
     @IBOutlet private weak var prContainerView: UIView!
     @IBOutlet private weak var prBannerContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var prBannerPageControl: UIPageControl!
@@ -67,6 +69,14 @@ private extension HomeViewController {
             .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapGithubButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .numberOfUsersLabel
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, text in
+                owner.numberOfUsersLabel.text = text
             }
             .disposed(by: disposeBag)
 
