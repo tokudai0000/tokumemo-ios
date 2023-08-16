@@ -1,0 +1,62 @@
+/* 
+  Localizable.strings
+  univIP
+
+  Created by Akihiro Matsuyama on 2023/07/22.
+  
+*/
+
+"privacy_policy" = "プライバシーポリシー";
+"agree" = "同意する";
+"course_management" = "教務システム";
+"manaba" = "manaba";
+"mail" = "メール";
+"academic_related" = "講義関連";
+"library_related" = "図書館関連";
+"etc" = "その他";
+"cancel" = "キャンセル";
+
+"time_table" = "時間割";
+"current_term_performance" = "今学期の成績";
+"syllabus" = "シラバス";
+"term_performance" = "すべての成績";
+"university_web" = "大学サイト";
+"presence_absence_record" = "出欠記録";
+"class_questionnaire" = "授業アンケート";
+"eLearning_list" = "LMS一覧";
+"portal" = "統合認証ポータル";
+
+"library_web_home_pc" = "図書館ホームページ(常三島)";
+"library_web_home_kura_pc" = "図書館ホームページ(蔵本)";
+"library_web_home_mobile" = "図書館ホームページ(モバイル)";
+"library_my_page" = "マイページ";
+"library_book_lending_extension" = "貸出図書の期間延長";
+"library_book_purchase_request" = "本の購入リクエスト";
+"library_calendar_main" = "常三島図書館 カレンダー";
+"library_calendar_kura" = "蔵本図書館 カレンダー";
+
+"coop_calendar" = "生協営業時間";
+"cafeteria" = "食堂メニュー";
+"career_center" = "キャリア支援室";
+"study_support_space" = "SSS学習支援室の時間割";
+"disaster_prevention" = "命を守る防災知識";
+"super_english" = "スーパー英語";
+
+"pr_application" = "PR画像(広告)の申請";
+"contact_us" = "バグや新規機能の相談";
+"home_page" = "ホームページ";
+"terms_of_service" = "利用規約";
+"source_code" = "ソースコード";
+"offical_SNS" = "公式Twitter";
+"contact_us" = "お問い合わせ";
+"about_app" = "アプリについて";
+"password" = "パスワード";
+
+"verifying_authentication" = "認証確認中";
+"retrieving_data" = "データ取得中";
+"processing_login" = "ログイン処理中";
+
+"home" = "Home";
+"news" = "News";
+"club_lists" = "ClubLists";
+"settings" = "Settings";
