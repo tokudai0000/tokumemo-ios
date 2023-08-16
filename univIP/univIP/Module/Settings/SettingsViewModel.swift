@@ -18,7 +18,6 @@ protocol SettingsViewModelInterface: AnyObject {
 final class SettingsViewModel: BaseViewModel<SettingsViewModel>, SettingsViewModelInterface {
 
     struct Input: InputType {
-        let viewDidLoad = PublishRelay<Void>()
         let didTapSettingsItem = PublishRelay<IndexPath>()
     }
 
@@ -33,13 +32,7 @@ final class SettingsViewModel: BaseViewModel<SettingsViewModel>, SettingsViewMod
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
-
-        input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
-            .subscribe(onNext: { _ in
-            })
-            .disposed(by: disposeBag)
-
+        
         input.didTapSettingsItem
             .subscribe { index in
                 guard let index = index.element else {

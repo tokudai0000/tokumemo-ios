@@ -7,46 +7,40 @@
 
 import UIKit
 
-final class SettingsViewController: UIViewController {
+final class SettingsViewController: BaseViewController {
     @IBOutlet var tableView: UITableView!
 
     var viewModel: SettingsViewModelInterface!
-    
-    // MARK: - View Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+
+    private let itemsConstants = ItemsConstants()
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return ItemsConstants().settingsItems.count
+        return itemsConstants.settingsItems.count
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "毎日面倒だったマナバなどへのログインを自動化します"
-        }
-        return " "
+        return section == 0 ? "毎日面倒だったマナバなどへのログインを自動化します" : " "
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ItemsConstants().settingsItems[section].count
+        return itemsConstants.settingsItems[section].count
     }
-    
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.settingCell, for: indexPath)!
-        cell.textLabel?.text = ItemsConstants().settingsItems[indexPath.section][indexPath.item].title
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.settingCell, for: indexPath) else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = itemsConstants.settingsItems[indexPath.section][indexPath.item].title
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.input.didTapSettingsItem.accept(indexPath)
         tableView.deselectRow(at: indexPath, animated: true)

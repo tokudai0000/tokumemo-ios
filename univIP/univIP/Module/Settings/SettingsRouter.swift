@@ -34,7 +34,6 @@ final class SettingsRouter: BaseRouter, SettingsRouterInterface {
             present(WebRouter(loadUrl: urlRequest))
         case .modal(let type):
             presentNavigation(InputRouter(type: type))
-//            modal(InputRouter(type: type))
         }
     }
 }
