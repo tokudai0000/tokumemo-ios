@@ -10,13 +10,12 @@ import Foundation
 protocol AdItemRepositoryInterface {
     func fetchPrItems() -> [AdItem]
     func fetchUnivItems() -> [AdItem]
-    func assignmentPrItems(_ items: [AdItem])
-    func assignmentUnivItems(_ items: [AdItem])
+    func setPrItems(_ items: [AdItem])
+    func setUnivItems(_ items: [AdItem])
 }
 
-/// クラスプロパティで保持するクラス
 final class AdItemOnMemoryRepository: AdItemRepositoryInterface {
-    static var shared = AdItemOnMemoryRepository()
+    static let shared = AdItemOnMemoryRepository()
 
     private var prItems: [AdItem]
     private var univItems: [AdItem]
@@ -33,10 +32,10 @@ final class AdItemOnMemoryRepository: AdItemRepositoryInterface {
         return Self.shared.univItems
     }
 
-    func assignmentPrItems(_ items: [AdItem]) {
-        return Self.shared.prItems = items
+    func setPrItems(_ items: [AdItem]) {
+        Self.shared.prItems = items
     }
-    func assignmentUnivItems(_ items: [AdItem]) {
-        return Self.shared.univItems = items
+    func setUnivItems(_ items: [AdItem]) {
+        Self.shared.univItems = items
     }
 }

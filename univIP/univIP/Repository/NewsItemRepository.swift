@@ -9,12 +9,11 @@ import Foundation
 
 protocol NewsItemRepositoryInterface {
     func fetchNewsItems() -> [NewsItemModel]
-    func assignmentNewsItems(_ items: [NewsItemModel])
+    func setNewsItems(_ items: [NewsItemModel])
 }
 
-/// クラスプロパティで保持するクラス
 final class NewsItemOnMemoryRepository: NewsItemRepositoryInterface {
-    static var shared = NewsItemOnMemoryRepository()
+    static let shared = NewsItemOnMemoryRepository()
 
     private var newsItems: [NewsItemModel]
 
@@ -23,10 +22,10 @@ final class NewsItemOnMemoryRepository: NewsItemRepositoryInterface {
     }
 
     func fetchNewsItems() -> [NewsItemModel] {
-        return Self.shared.newsItems
+        Self.shared.newsItems
     }
 
-    func assignmentNewsItems(_ items: [NewsItemModel]) {
-        return Self.shared.newsItems = items
+    func setNewsItems(_ items: [NewsItemModel]) {
+        Self.shared.newsItems = items
     }
 }

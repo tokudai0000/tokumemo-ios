@@ -63,8 +63,8 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                     onSuccess: { response in
                         state.termVersion.accept(response.currentTermVersion)
 
-                        dependency.initSettingsStoreUseCase.assignmentNumberOfUsers(response.numberOfUsers)
-                        dependency.initSettingsStoreUseCase.assignmentTermText(response.termText)
+                        dependency.initSettingsStoreUseCase.setNumberOfUsers(response.numberOfUsers)
+                        dependency.initSettingsStoreUseCase.setTermText(response.termText)
 
                         let current = response.currentTermVersion
                         let accepted = ""// dependency.initSettingsStoreUseCase.fetchAcceptedTermVersion()
@@ -135,7 +135,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 let urlStr = url.absoluteString
 
                 if URLHelper.shouldInjectJavaScript(at: urlStr, canExecuteJavascript) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
                     let password = dependency.passwordStoreUseCase.fetchPassword()
                     loginJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)

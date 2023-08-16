@@ -9,18 +9,16 @@ import Foundation
 
 protocol InitSettingsRepositoryInterface {
     func fetchNumberOfUsers() -> String
-    func assignmentNumberOfUsers(_ items: String)
+    func setNumberOfUsers(_ items: String)
 
     func fetchAcceptedTermVersion() -> String
-    func assignmentAcceptedTermVersion(_ items: String)
+    func setAcceptedTermVersion(_ items: String)
 
     func fetchTermText() -> String
-    func assignmentTermText(_ items: String)
+    func setTermText(_ items: String)
 }
 
-/// クラスプロパティで保持するクラス
 final class InitSettingsOnMemoryRepository: InitSettingsRepositoryInterface {
-
     static var shared = InitSettingsOnMemoryRepository()
 
     private var numberOfUsers: String
@@ -34,11 +32,11 @@ final class InitSettingsOnMemoryRepository: InitSettingsRepositoryInterface {
     }
 
     func fetchNumberOfUsers() -> String {
-        Self.shared.numberOfUsers
+        return Self.shared.numberOfUsers
     }
 
-    func assignmentNumberOfUsers(_ items: String) {
-        return Self.shared.numberOfUsers = items
+    func setNumberOfUsers(_ items: String) {
+        Self.shared.numberOfUsers = items
     }
 
     private var userDefaults = UserDefaults.standard
@@ -47,15 +45,15 @@ final class InitSettingsOnMemoryRepository: InitSettingsRepositoryInterface {
         return userDefaults.string(forKey: KEY_agreementVersion) ?? ""
     }
 
-    func assignmentAcceptedTermVersion(_ items: String) {
+    func setAcceptedTermVersion(_ items: String) {
         userDefaults.set(items ,forKey: KEY_agreementVersion)
     }
 
     func fetchTermText() -> String {
-        Self.shared.termText
+        return Self.shared.termText
     }
 
-    func assignmentTermText(_ items: String) {
-        return Self.shared.termText = items
+    func setTermText(_ items: String) {
+        Self.shared.termText = items
     }
 }

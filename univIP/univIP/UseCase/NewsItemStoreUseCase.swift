@@ -6,14 +6,12 @@
 //
 
 import Foundation
-import UIKit
 
 protocol NewsItemStoreUseCaseInterface {
     func fetchNewsItems() -> [NewsItemModel]
-    func assignmentNewsItems(_ items: [NewsItemModel])
+    func setNewsItems(_ items: [NewsItemModel])
 }
 
-/// 広告アイテム関係をRepositoryと読み書きするUseCase
 struct NewsItemStoreUseCase: NewsItemStoreUseCaseInterface {
     private let newsItemRepository: NewsItemRepositoryInterface
 
@@ -27,7 +25,7 @@ struct NewsItemStoreUseCase: NewsItemStoreUseCaseInterface {
         return newsItemRepository.fetchNewsItems()
     }
 
-    func assignmentNewsItems(_ items: [NewsItemModel]) {
-        newsItemRepository.assignmentNewsItems(items)
+    func setNewsItems(_ items: [NewsItemModel]) {
+        newsItemRepository.setNewsItems(items)
     }
 }

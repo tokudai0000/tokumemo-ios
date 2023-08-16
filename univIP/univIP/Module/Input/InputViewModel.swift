@@ -46,7 +46,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
                 configureTextType.accept(dependency.type)
-                textField1.accept(dependency.passwordStoreUseCase.fetchCAccount())
+                textField1.accept(dependency.passwordStoreUseCase.fetchAccountID())
             })
             .disposed(by: disposeBag)
 
@@ -60,8 +60,8 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
         input.didTapResetOKButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { _ in
-                dependency.passwordStoreUseCase.assignmentCAccount("")
-                dependency.passwordStoreUseCase.assignmentPassword("")
+                dependency.passwordStoreUseCase.setAccountID("")
+                dependency.passwordStoreUseCase.setPassword("")
             })
             .disposed(by: disposeBag)
 
@@ -71,8 +71,8 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                 if let items = items.element,
                 let cAccount = items.cAccount,
                    let password = items.password{
-                    dependency.passwordStoreUseCase.assignmentCAccount(cAccount.description)
-                    dependency.passwordStoreUseCase.assignmentPassword(password.description)
+                    dependency.passwordStoreUseCase.setAccountID(cAccount.description)
+                    dependency.passwordStoreUseCase.setPassword(password.description)
 
                     //                if type == .syllabus {
                     //                    dataManager.syllabusTeacherName = text1

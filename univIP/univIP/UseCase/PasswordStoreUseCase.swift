@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import UIKit
 
 protocol PasswordStoreUseCaseInterface {
-    func fetchCAccount() -> String
+    func fetchAccountID() -> String
     func fetchPassword() -> String
 
-    func assignmentCAccount(_ items: String)
-    func assignmentPassword(_ items: String)
+    func setAccountID(_ items: String)
+    func setPassword(_ items: String)
 }
 
 struct PasswordStoreUseCase: PasswordStoreUseCaseInterface {
@@ -25,19 +24,19 @@ struct PasswordStoreUseCase: PasswordStoreUseCaseInterface {
         self.passwordRepository = passwordRepository
     }
 
-    func fetchCAccount() -> String {
-        return passwordRepository.fetchCAccount()
+    func fetchAccountID() -> String {
+        return passwordRepository.fetchAccountID()
     }
 
     func fetchPassword() -> String {
         return passwordRepository.fetchPassword()
     }
 
-    func assignmentCAccount(_ items: String) {
-        passwordRepository.assignmentCACount(items)
+    func setAccountID(_ items: String) {
+        passwordRepository.setAccountID(items)
     }
 
-    func assignmentPassword(_ items: String) {
-        passwordRepository.assignmentPassword(items)
+    func setPassword(_ items: String) {
+        passwordRepository.setPassword(items)
     }
 }

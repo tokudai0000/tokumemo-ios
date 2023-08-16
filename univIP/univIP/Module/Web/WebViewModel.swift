@@ -154,21 +154,21 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
                 urlLabel.accept(host.description)
 
                 if shouldInjectJavaScript(at: urlStr) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
                     let password = dependency.passwordStoreUseCase.fetchPassword()
                     loginJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)
                 }
 
                 if shouldOutlookInjectJavaScript(at: urlStr) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
                     let password = dependency.passwordStoreUseCase.fetchPassword()
                     loginOutlookJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)
                 }
 
                 if shouldCareerCenterInjectJavaScript(at: urlStr) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchCAccount()
+                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
                     let password = dependency.passwordStoreUseCase.fetchPassword()
                     loginCareerCenterJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)

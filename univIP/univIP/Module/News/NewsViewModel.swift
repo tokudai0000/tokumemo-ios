@@ -45,7 +45,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        dependency.newsItemStoreUseCase.assignmentNewsItems(response)
+                        dependency.newsItemStoreUseCase.setNewsItems(response)
                         newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
                         state.newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
                     },

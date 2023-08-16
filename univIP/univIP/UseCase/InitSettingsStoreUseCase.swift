@@ -6,22 +6,19 @@
 //
 
 import Foundation
-import UIKit
 
 protocol InitSettingsStoreUseCaseInterface {
     func fetchNumberOfUsers() -> String
-    func assignmentNumberOfUsers(_ items: String)
+    func setNumberOfUsers(_ items: String)
 
     func fetchAcceptedTermVersion() -> String
-    func assignmentAcceptedTermVersion(_ items: String)
+    func setAcceptedTermVersion(_ items: String)
 
     func fetchTermText() -> String
-    func assignmentTermText(_ items: String)
+    func setTermText(_ items: String)
 }
 
-/// 広告アイテム関係をRepositoryと読み書きするUseCase
 struct InitSettingsStoreUseCase: InitSettingsStoreUseCaseInterface {
-
     private let initSettingsRepository: InitSettingsRepositoryInterface
 
     init(
@@ -34,23 +31,23 @@ struct InitSettingsStoreUseCase: InitSettingsStoreUseCaseInterface {
         return initSettingsRepository.fetchNumberOfUsers()
     }
 
-    func assignmentNumberOfUsers(_ items: String) {
-        initSettingsRepository.assignmentNumberOfUsers(items)
+    func setNumberOfUsers(_ items: String) {
+        initSettingsRepository.setNumberOfUsers(items)
     }
 
     func fetchAcceptedTermVersion() -> String {
         return initSettingsRepository.fetchAcceptedTermVersion()
     }
 
-    func assignmentAcceptedTermVersion(_ items: String) {
-        initSettingsRepository.assignmentAcceptedTermVersion(items)
+    func setAcceptedTermVersion(_ items: String) {
+        initSettingsRepository.setAcceptedTermVersion(items)
     }
 
     func fetchTermText() -> String {
         return initSettingsRepository.fetchTermText()
     }
 
-    func assignmentTermText(_ items: String) {
-        initSettingsRepository.assignmentTermText(items)
+    func setTermText(_ items: String) {
+        initSettingsRepository.setTermText(items)
     }
 }

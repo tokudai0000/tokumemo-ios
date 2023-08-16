@@ -60,8 +60,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        dependency.adItemStoreUseCase.assignmentPrItems(response.prItems)
-                        dependency.adItemStoreUseCase.assignmentUnivItems(response.univItems)
+                        dependency.adItemStoreUseCase.setPrItems(response.prItems)
+                        dependency.adItemStoreUseCase.setUnivItems(response.univItems)
 
                         prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
                         univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())

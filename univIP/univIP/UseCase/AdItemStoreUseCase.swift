@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import UIKit
 
 protocol AdItemStoreUseCaseInterface {
     func fetchPrItems() -> [AdItem]
     func fetchUnivItems() -> [AdItem]
-    func assignmentPrItems(_ items: [AdItem])
-    func assignmentUnivItems(_ items: [AdItem])
+    func setPrItems(_ items: [AdItem])
+    func setUnivItems(_ items: [AdItem])
 }
 
 /// 広告アイテム関係をRepositoryと読み書きするUseCase
@@ -35,10 +34,10 @@ struct AdItemStoreUseCase: AdItemStoreUseCaseInterface {
         return univItemRepository.fetchUnivItems()
     }
 
-    func assignmentPrItems(_ items: [AdItem]) {
-        prItemRepository.assignmentPrItems(items)
+    func setPrItems(_ items: [AdItem]) {
+        prItemRepository.setPrItems(items)
     }
-    func assignmentUnivItems(_ items: [AdItem]) {
-        univItemRepository.assignmentUnivItems(items)
+    func setUnivItems(_ items: [AdItem]) {
+        univItemRepository.setUnivItems(items)
     }
 }

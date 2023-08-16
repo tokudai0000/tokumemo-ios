@@ -25,8 +25,12 @@ final class InputRouter: BaseRouter, InputRouterInterface {
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                             type: type,
-                             passwordStoreUseCase: PasswordStoreUseCase(passwordRepository: PasswordOnKeyChainRepository())))
+                              type: type,
+                              passwordStoreUseCase: PasswordStoreUseCase(
+                                passwordRepository: PasswordOnKeyChainRepository()
+                              )
+                             )
+        )
     }
 
     func navigate(_ destination: InputNavigationDestination) {

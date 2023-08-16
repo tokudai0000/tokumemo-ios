@@ -9,43 +9,41 @@ import Foundation
 import KeychainAccess
 
 protocol PasswordRepositoryInterface {
-    func fetchCAccount() -> String
+    func fetchAccountID() -> String
     func fetchPassword() -> String
-    func assignmentCACount(_ items: String)
-    func assignmentPassword(_ items: String)
+    func setAccountID(_ items: String)
+    func setPassword(_ items: String)
 }
 
-/// クラスプロパティで保持するクラス
 final class PasswordOnKeyChainRepository: PasswordRepositoryInterface {
-
-    static var shared = PasswordOnKeyChainRepository()
+    static let shared = PasswordOnKeyChainRepository()
 
     private let KEY_cAccount = "KEY_cAccount"
-    var cAccount: String {
+    private var accountID: String {
         get { return getKeyChain(key: KEY_cAccount) }
         set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
 
     private let KEY_password = "KEY_password"
-    var password: String {
+    private var password: String {
         get { return getKeyChain(key: KEY_password) }
         set(v) { setKeyChain(key: KEY_password, value: v) }
     }
 
-    func fetchCAccount() -> String {
-        return Self.shared.cAccount
+    func fetchAccountID() -> String {
+        return Self.shared.accountID
     }
 
     func fetchPassword() -> String {
         return Self.shared.password
     }
 
-    func assignmentCACount(_ items: String) {
-        return Self.shared.cAccount = items
+    func setAccountID(_ items: String) {
+        Self.shared.accountID = items
     }
 
-    func assignmentPassword(_ items: String) {
-        return Self.shared.password = items
+    func setPassword(_ items: String) {
+        Self.shared.password = items
     }
 }
 
