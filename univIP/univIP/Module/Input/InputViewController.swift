@@ -90,6 +90,17 @@ private extension InputViewController {
                 guard let text1 = owner.TextField1.text else { return }
                 guard let text2 = owner.TextField2.text else { return }
                 owner.viewModel.input.didTapSaveButton.accept((text1, text2))
+
+                let alert = UIAlertController(title: "登録完了",
+                                              message: "",
+                                              preferredStyle:  UIAlertController.Style.alert)
+
+                let defaultAction = UIAlertAction(title: "OK",
+                                                  style: UIAlertAction.Style.default,
+                                                  handler:{ (action: UIAlertAction!) -> Void in
+                })
+                alert.addAction(defaultAction)
+                owner.present(alert, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
 
