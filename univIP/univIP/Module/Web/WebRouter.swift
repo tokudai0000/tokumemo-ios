@@ -10,7 +10,7 @@ import UIKit
 
 enum WebNavigationDestination {
     case goWeb
-    case agree
+    case close
 }
 
 protocol WebRouterInterface {
@@ -26,16 +26,18 @@ final class WebRouter: BaseRouter, WebRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                              loadUrl: loadUrl,
-                              passwordStoreUseCase: PasswordStoreUseCase(passwordRepository: PasswordOnKeyChainRepository()))
+                              passwordStoreUseCase: PasswordStoreUseCase(
+                                passwordRepository: PasswordOnKeyChainRepository()
+                              )
+                             )
         )
-
     }
 
     func navigate(_ destination: WebNavigationDestination) {
         switch destination {
         case .goWeb:
             moduleViewController.navigationController?.popViewController(animated: true)
-        case .agree:
+        case .close:
             moduleViewController.dismiss(animated: true)
         }
     }

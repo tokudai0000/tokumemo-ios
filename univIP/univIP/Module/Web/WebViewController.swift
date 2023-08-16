@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 import WebKit
 
-final class WebViewController: UIViewController {
+final class WebViewController: BaseViewController {
     @IBOutlet private weak var urlLabel: UILabel!
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
@@ -22,10 +22,7 @@ final class WebViewController: UIViewController {
     @IBOutlet private weak var safariButton: UIButton!
     @IBOutlet private weak var menuButton: UIButton!
 
-    private let disposeBag = DisposeBag()
-
     var viewModel: WebViewModelInterface!
-    var loadUrlString: String? = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +41,10 @@ final class WebViewController: UIViewController {
 // MARK: Binding
 private extension WebViewController {
     func binding() {
-        doneButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                self.dismiss(animated: true, completion: nil)
-            }
-            .disposed(by: disposeBag)
+
+        bindButtonTapEvent(doneButton, to: viewModel.input.didTapDoneButton)
+        bindButtonTapEvent(safariButton, to: viewModel.input.didTapSafariButton)
+//        bindButtonTapEvent(menuButton, to: viewModel.input.didTapTwitterButton)
 
         reloadButton.rx
             .tap
@@ -77,21 +72,6 @@ private extension WebViewController {
             }
             .disposed(by: disposeBag)
 
-        safariButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                self.viewModel.input.didTapSafariButton.accept(())
-            }
-            .disposed(by: disposeBag)
-
-        menuButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-//                let vc = R.storyboard.menu.menuViewController()!
-//                vc.delegate = self
-//                present(vc, animated: true, completion: nil)
-            }
-            .disposed(by: disposeBag)
 
         viewModel.output
             .openSafari

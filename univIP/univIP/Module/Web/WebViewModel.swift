@@ -19,7 +19,9 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
     struct Input: InputType {
         let viewDidAppear = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
+        let didTapDoneButton = PublishRelay<Void>()
         let didTapSafariButton = PublishRelay<Void>()
+        let didTapMenuButton = PublishRelay<Void>()
         let urlPendingLoad = PublishRelay<URL>()
         let urlDidLoad = PublishRelay<URL>()
     }
@@ -112,6 +114,12 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
             }
             .disposed(by: disposeBag)
 
+        input.didTapDoneButton
+            .subscribe { _ in
+                dependency.router.navigate(.close)
+            }
+            .disposed(by: disposeBag)
+
         input.didTapSafariButton
             .subscribe { _ in
                 if let url = state.displayUrl.value {
@@ -119,6 +127,12 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
                 }
             }
             .disposed(by: disposeBag)
+
+        input.didTapMenuButton
+            .subscribe { _ in
+            }
+            .disposed(by: disposeBag)
+
 
         input.urlPendingLoad
             .subscribe { url in
