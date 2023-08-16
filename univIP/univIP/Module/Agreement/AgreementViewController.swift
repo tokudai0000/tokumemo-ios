@@ -9,20 +9,17 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class AgreementViewController: UIViewController {
+final class AgreementViewController: BaseViewController {
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var termsButton: UIButton!
     @IBOutlet private weak var privacyButton: UIButton!
     @IBOutlet private weak var agreementButton: UIButton!
 
-    private let disposeBag = DisposeBag()
-
     var viewModel: AgreementViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureText()
         configureDefaults()
         configureImageView()
         configureButton()
@@ -33,27 +30,11 @@ final class AgreementViewController: UIViewController {
 
 // MARK: Binding
 private extension AgreementViewController {
+
     func binding() {
-        termsButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.didTapTermsButton.accept(())
-            }
-            .disposed(by: disposeBag)
-
-        privacyButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.didTapPrivacyButton.accept(())
-            }
-            .disposed(by: disposeBag)
-
-        agreementButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.didTapAgreementButton.accept(())
-            }
-            .disposed(by: disposeBag)
+        bindButtonTapEvent(termsButton, to: viewModel.input.didTapTermsButton)
+        bindButtonTapEvent(privacyButton, to: viewModel.input.didTapPrivacyButton)
+        bindButtonTapEvent(agreementButton, to: viewModel.input.didTapAgreementButton)
 
         viewModel.output
             .termText
@@ -67,10 +48,6 @@ private extension AgreementViewController {
 
 // MARK: Layout
 private extension AgreementViewController {
-    func configureText() {
-        //        let filePath = R.file
-        //        textView.attributedText = Common.loadRtfFileContents(filePath)
-    }
 
     func configureDefaults() {
         textView.layer.cornerRadius = 10.0

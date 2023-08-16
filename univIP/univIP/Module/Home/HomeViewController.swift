@@ -12,8 +12,7 @@ import RxGesture
 import RxSwift
 
 
-final class HomeViewController: UIViewController {
-
+final class HomeViewController: BaseViewController {
     @IBOutlet private weak var numberOfUsersLabel: UILabel!
     @IBOutlet private weak var prContainerView: UIView!
     @IBOutlet private weak var prBannerContainerViewHeightConstraint: NSLayoutConstraint!
@@ -27,8 +26,6 @@ final class HomeViewController: UIViewController {
     @IBOutlet private weak var twitterButton: UIButton!
     @IBOutlet private weak var githubButton: UIButton!
 
-    private let disposeBag = DisposeBag()
-
     var viewModel: HomeViewModelInterface!
 
     private var webView: WKWebView!
@@ -37,11 +34,14 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureWebView()
         configureDefaults()
-        configurePrBanner()
+        configureBanner(for: prContainerView,
+                        viewController: prBannerViewController,
+                        heightConstraint: prBannerContainerViewHeightConstraint)
+        configureBanner(for: univContainerView,
+                        viewController: univBannerViewController,
+                        heightConstraint: univBannerContainerViewHeightConstraint)
         configurePrBannerPageControl()
-        configureUnivBanner()
         configureMenuCollectionView()
         binding()
         viewModel.input.viewDidLoad.accept(())
@@ -51,25 +51,15 @@ final class HomeViewController: UIViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
+
+        bindButtonTapEvent(twitterButton, to: viewModel.input.didTapTwitterButton)
+        bindButtonTapEvent(githubButton, to: viewModel.input.didTapGithubButton)
+
         prBannerPageControl.rx.controlEvent(.valueChanged)
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.prBannerViewController.showPage(index: self?.prBannerPageControl.currentPage ?? 0, animated: true)
             })
-            .disposed(by: disposeBag)
-
-        twitterButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.didTapTwitterButton.accept(())
-            }
-            .disposed(by: disposeBag)
-
-        githubButton.rx
-            .tap
-            .subscribe(with: self) { owner, _ in
-                owner.viewModel.input.didTapGithubButton.accept(())
-            }
             .disposed(by: disposeBag)
 
         viewModel.output
@@ -124,33 +114,25 @@ private extension HomeViewController {
         homeTableView.delegate = self
         homeTableView.dataSource = self
         homeTableViewHeightConstraint.constant = CGFloat(44 * ItemsConstants().menuItems.count)
-//        stackView.spacing = view.bounds.width / 3 // 1/3のスペース
-    }
-
-    /// ログイン用
-    func configureWebView() {
-        webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        webView.load(Url.universityTransitionLogin.urlRequest())
-    }
-
-    func configurePrBanner() {
         prBannerViewController = BannerScrollViewController()
-        prBannerViewController.viewModel = self.viewModel
-        addChild(prBannerViewController)
-        prBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        prContainerView.addSubview(prBannerViewController.view)
+        univBannerViewController = BannerScrollViewController()
+    }
+
+    private func configureBanner(for containerView: UIView, viewController: BannerScrollViewController, heightConstraint: NSLayoutConstraint) {
+        viewController.viewModel = self.viewModel
+        addChild(viewController)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(viewController.view)
         NSLayoutConstraint.activate([
-            prBannerViewController.view.topAnchor.constraint(equalTo: prContainerView.topAnchor),
-            prBannerViewController.view.bottomAnchor.constraint(equalTo: prContainerView.bottomAnchor),
-            prBannerViewController.view.leadingAnchor.constraint(equalTo: prContainerView.leadingAnchor),
-            prBannerViewController.view.trailingAnchor.constraint(equalTo: prContainerView.trailingAnchor),
+            viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
         ])
-        prBannerViewController.didMove(toParent: self)
-        prBannerViewController.initSetup()
-        prBannerContainerViewHeightConstraint.constant = prBannerViewController.panelHeight
-        prBannerViewController.delegate = self
+        viewController.didMove(toParent: self)
+        viewController.initSetup()
+        heightConstraint.constant = viewController.panelHeight
+        viewController.delegate = self
     }
 
     func configurePrBannerPageControl() {
@@ -158,24 +140,6 @@ private extension HomeViewController {
         prBannerPageControl.currentPageIndicatorTintColor = .black
         prBannerPageControl.currentPage = prBannerViewController.pageIndex
         prBannerPageControl.sizeToFit()
-    }
-
-    func configureUnivBanner() {
-        univBannerViewController = BannerScrollViewController()
-        univBannerViewController.viewModel = self.viewModel
-        addChild(univBannerViewController)
-        univBannerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        univContainerView.addSubview(univBannerViewController.view)
-        NSLayoutConstraint.activate([
-            univBannerViewController.view.topAnchor.constraint(equalTo: univContainerView.topAnchor),
-            univBannerViewController.view.bottomAnchor.constraint(equalTo: univContainerView.bottomAnchor),
-            univBannerViewController.view.leadingAnchor.constraint(equalTo: univContainerView.leadingAnchor),
-            univBannerViewController.view.trailingAnchor.constraint(equalTo: univContainerView.trailingAnchor),
-        ])
-        univBannerViewController.didMove(toParent: self)
-        univBannerViewController.initSetup()
-        univBannerContainerViewHeightConstraint.constant = univBannerViewController.panelHeight
-        univBannerViewController.delegate = self
     }
 
     func configureMenuCollectionView() {
@@ -237,7 +201,4 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         viewModel.input.didSelectMiniSettings.accept(ItemsConstants().homeMiniSettingsItems[indexPath.row])
         homeTableView.deselectRow(at: indexPath, animated: true)
     }
-}
-
-extension HomeViewController: WKUIDelegate, WKNavigationDelegate {
 }

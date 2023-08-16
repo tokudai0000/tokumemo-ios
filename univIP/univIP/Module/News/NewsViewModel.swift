@@ -65,10 +65,12 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
 
         input.didTapNewsItem
             .subscribe { index in
-                if let newsItems = state.newsItems.value,
-                   let url = URL(string: newsItems[0].targetUrlStr) {
-                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
+                guard let newsItems = state.newsItems.value,
+                      let url = URL(string: newsItems[index].targetUrlStr) else {
+                    return
                 }
+                dependency.router.navigate(.goWeb(URLRequest(url: url)))
+
             }
             .disposed(by: disposeBag)
 

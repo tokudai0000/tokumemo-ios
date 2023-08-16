@@ -10,14 +10,12 @@ import RxCocoa
 import RxGesture
 import RxSwift
 
-class NewsViewController: UIViewController {
+class NewsViewController: BaseViewController {
     @IBOutlet private weak var tableView: UITableView!
 
-    var viewModel: NewsViewModelInterface!
-
-    private let disposeBag = DisposeBag()
-
     //    private var viewActivityIndicator: UIActivityIndicatorView!
+
+    var viewModel: NewsViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +33,13 @@ private extension NewsViewController {
                 cell.configure(model: model)
             }
             .disposed(by: disposeBag)
+
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.viewModel.input.didTapNewsItem.accept(indexPath.row)
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -49,14 +54,14 @@ private extension NewsViewController {
     }
 
     // インジケーターは後日実装予定
-//    private func setupIndicatorView() {
-//        viewActivityIndicator = UIActivityIndicatorView()
-//        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-//        viewActivityIndicator.center = self.view.center
-//        viewActivityIndicator.hidesWhenStopped = true
-//        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
-//        self.view.addSubview(viewActivityIndicator)
-//    }
+    //    private func setupIndicatorView() {
+    //        viewActivityIndicator = UIActivityIndicatorView()
+    //        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+    //        viewActivityIndicator.center = self.view.center
+    //        viewActivityIndicator.hidesWhenStopped = true
+    //        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
+    //        self.view.addSubview(viewActivityIndicator)
+    //    }
 }
 
 extension NewsViewController: UITableViewDelegate {

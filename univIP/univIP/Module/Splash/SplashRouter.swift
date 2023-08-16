@@ -25,11 +25,16 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               initSettingsAPI: InitSettingsAPI(),
-                              passwordStoreUseCase: PasswordStoreUseCase(passwordRepository: PasswordOnKeyChainRepository()),
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(initSettingsRepository: InitSettingsOnMemoryRepository()))
+                              passwordStoreUseCase: PasswordStoreUseCase(
+                                passwordRepository: PasswordOnKeyChainRepository()
+                              ),
+                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
+                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              )
+                             )
         )
     }
-
+    
     func navigate(_ destination: SplashNavigationDestination) {
         switch destination {
         case .agree(let current):

@@ -10,29 +10,28 @@ import WebKit
 import RxCocoa
 import RxSwift
 
-final class SplashViewController: UIViewController {
+final class SplashViewController: BaseViewController {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var statusLabel: UILabel!
 
     private var webView: WKWebView = .init(frame: .zero)
-    private let disposeBag = DisposeBag()
 
     var viewModel: SplashViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDefaults()
+        configureWebView()
         binding()
         viewModel.input.viewDidLoad.accept(())
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         viewModel.input.viewWillAppear.accept(())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         viewModel.input.viewWillDisappear.accept(())
     }
 }
@@ -85,7 +84,8 @@ private extension SplashViewController {
 
 // MARK: Layout
 private extension SplashViewController {
-    func configureDefaults() {
+    // WebViewは画面には表示させず、裏でログインの処理を実行
+    func configureWebView() {
         webView = WKWebView()
         webView.uiDelegate = self
         webView.navigationDelegate = self

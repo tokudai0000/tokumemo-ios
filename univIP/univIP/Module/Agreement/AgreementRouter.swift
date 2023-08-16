@@ -9,7 +9,7 @@ import UIKit
 
 enum AgreementNavigationDestination {
     case goWeb(URLRequest)
-    case agree
+    case agreedUpon
 }
 
 protocol AgreementRouterInterface {
@@ -25,7 +25,10 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               currentTermVersion: currentTermVersion,
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(initSettingsRepository: InitSettingsOnMemoryRepository()))
+                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
+                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              )
+                             )
         )
     }
 
@@ -33,8 +36,8 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
         switch destination {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
-        case .agree:
-            present(HomeRouter())
+        case .agreedUpon:
+            present(MainRouter())
         }
     }
 }

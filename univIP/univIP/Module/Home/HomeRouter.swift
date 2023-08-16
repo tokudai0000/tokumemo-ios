@@ -26,10 +26,15 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               adItemsAPI: AdItemsAPI(),
-                              adItemStoreUseCase: AdItemStoreUseCase(prItemRepository: AdItemOnMemoryRepository(),
-                                                                     univItemRepository: AdItemOnMemoryRepository()),
+                              adItemStoreUseCase: AdItemStoreUseCase(
+                                prItemRepository: AdItemOnMemoryRepository(),
+                                univItemRepository: AdItemOnMemoryRepository()
+                              ),
                               libraryCalendarWebScraper: LibraryCalendarWebScraper(),
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(initSettingsRepository: InitSettingsOnMemoryRepository()))
+                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
+                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              )
+                             )
         )
 
     }

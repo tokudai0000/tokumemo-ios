@@ -65,7 +65,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
                 dependency.initSettingsStoreUseCase.assignmentAcceptedTermVersion(dependency.currentTermVersion)
-                dependency.router.navigate(.agree)
+                dependency.router.navigate(.agreedUpon)
             }
             .disposed(by: disposeBag)
 
