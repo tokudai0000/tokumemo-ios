@@ -34,16 +34,31 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
     struct Dependency: DependencyType {
         let router: AgreementRouterInterface
         let currentTermVersion: String
+        let termTextAPI: TermTextAPIInterface
         let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let termText: PublishRelay<String> = .init()
 
+        func getTermText() {
+            dependency.termTextAPI.getTermText()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        termText.accept(response.termText)
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+
         input.viewDidLoad
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
-                termText.accept(dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion())
+                getTermText()
             })
             .disposed(by: disposeBag)
 
@@ -64,7 +79,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapAgreementButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency)
+                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentTermVersion)
                 dependency.router.navigate(.agreedUpon)
             }
             .disposed(by: disposeBag)

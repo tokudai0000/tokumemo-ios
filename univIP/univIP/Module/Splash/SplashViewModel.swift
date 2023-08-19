@@ -42,7 +42,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         let router: SplashRouterInterface
         let currentTermVersionAPI: CurrentTermVersionAPI
         let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
-        let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
