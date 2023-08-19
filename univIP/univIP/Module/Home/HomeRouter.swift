@@ -26,13 +26,11 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               adItemsAPI: AdItemsAPI(),
+                              numberOfUsersAPI: NumberOfUsersAPI(),
                               adItemStoreUseCase: AdItemStoreUseCase(
                                 adItemRepository: AdItemOnMemoryRepository()
                               ),
-                              libraryCalendarWebScraper: LibraryCalendarWebScraper(),
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
-                                initSettingsRepository: InitSettingsOnMemoryRepository()
-                              )
+                              libraryCalendarWebScraper: LibraryCalendarWebScraper()
                              )
         )
 

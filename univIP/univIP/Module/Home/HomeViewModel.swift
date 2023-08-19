@@ -43,9 +43,9 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     struct Dependency: DependencyType {
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
+        let numberOfUsersAPI: NumberOfUsersAPIInterface
         let adItemStoreUseCase: AdItemStoreUseCaseInterface
         let libraryCalendarWebScraper: LibraryCalendarWebScraperInterface
-        let initSettingsStoreUseCase: InitSettingsStoreUseCase
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -74,6 +74,20 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .disposed(by: disposeBag)
         }
 
+        func getNumberOfUsers() {
+            dependency.numberOfUsersAPI.getNumberOfUsers()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        numberOfUsersLabel.accept(response.numberOfUsers)
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+
         func scrapeLibraryCalendar(with url: URLRequest) {
             dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: url)
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
@@ -93,7 +107,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
                 getAdItems()
-                numberOfUsersLabel.accept(dependency.initSettingsStoreUseCase.fetchNumberOfUsers())
+                getNumberOfUsers()
             })
             .disposed(by: disposeBag)
 

@@ -25,8 +25,8 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               currentTermVersion: currentTermVersion,
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
-                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
+                                acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
                               )
                              )
         )

@@ -28,8 +28,8 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
                               univAuthStoreUseCase: UnivAuthStoreUseCase(
                                 univAuthRepository: UnivAuthOnKeyChainRepository()
                               ),
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
-                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
+                                acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
                               )
                              )
         )
