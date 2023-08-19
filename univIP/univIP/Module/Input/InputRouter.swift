@@ -26,8 +26,8 @@ final class InputRouter: BaseRouter, InputRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               type: type,
-                              passwordStoreUseCase: PasswordStoreUseCase(
-                                passwordRepository: PasswordOnKeyChainRepository()
+                              univAuthStoreUseCase: UnivAuthStoreUseCase(
+                                univAuthRepository: UnivAuthOnKeyChainRepository()
                               )
                              )
         )

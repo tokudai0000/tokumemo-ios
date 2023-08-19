@@ -47,7 +47,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
     struct Dependency: DependencyType {
         let router: WebRouterInterface
         let loadUrl: URLRequest
-        let passwordStoreUseCase: PasswordStoreUseCaseInterface
+        let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
     }
 
     /// Input, Stateからプレゼンテーションロジックを実装し､Outputにイベントを流す｡
@@ -154,22 +154,22 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
                 urlLabel.accept(host.description)
 
                 if shouldInjectJavaScript(at: urlStr) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
-                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    let cAccount = dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID
+                    let password = dependency.univAuthStoreUseCase.fetchUnivAuth().password
                     loginJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)
                 }
 
                 if shouldOutlookInjectJavaScript(at: urlStr) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
-                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    let cAccount = dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID
+                    let password = dependency.univAuthStoreUseCase.fetchUnivAuth().password
                     loginOutlookJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)
                 }
 
                 if shouldCareerCenterInjectJavaScript(at: urlStr) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
-                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    let cAccount = dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID
+                    let password = dependency.univAuthStoreUseCase.fetchUnivAuth().password
                     loginCareerCenterJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)
                 }

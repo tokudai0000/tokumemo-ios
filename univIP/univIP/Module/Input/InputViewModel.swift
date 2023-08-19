@@ -35,7 +35,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
     struct Dependency: DependencyType {
         let router: InputRouterInterface
         let type: InputDisplayItem.type
-        let passwordStoreUseCase: PasswordStoreUseCaseInterface
+        let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -46,7 +46,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
                 configureTextType.accept(dependency.type)
-                textField1.accept(dependency.passwordStoreUseCase.fetchAccountID())
+                textField1.accept(dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID)
             })
             .disposed(by: disposeBag)
 
@@ -60,8 +60,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
         input.didTapResetOKButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { _ in
-                dependency.passwordStoreUseCase.setAccountID("")
-                dependency.passwordStoreUseCase.setPassword("")
+                dependency.univAuthStoreUseCase.setUnivAuth(UnivAuth(accountCID: "", password: ""))
             })
             .disposed(by: disposeBag)
 
@@ -71,8 +70,9 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                 if let items = items.element,
                 let cAccount = items.cAccount,
                    let password = items.password{
-                    dependency.passwordStoreUseCase.setAccountID(cAccount.description)
-                    dependency.passwordStoreUseCase.setPassword(password.description)
+                    dependency.univAuthStoreUseCase.setUnivAuth(
+                        UnivAuth(accountCID: cAccount.description, password: password.description)
+                    )
 
                     //                if type == .syllabus {
                     //                    dataManager.syllabusTeacherName = text1

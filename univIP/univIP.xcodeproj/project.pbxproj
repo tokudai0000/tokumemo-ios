@@ -86,8 +86,8 @@
 		1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */; };
 		1ACB59AF291D11CD005A90BE /* NewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */; };
 		1ACD66342A864EE100244DC0 /* InputDisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66332A864EE100244DC0 /* InputDisplayItem.swift */; };
-		1ACD66362A8671D800244DC0 /* PasswordStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66352A8671D800244DC0 /* PasswordStoreUseCase.swift */; };
-		1ACD66382A867C0300244DC0 /* PasswordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66372A867C0300244DC0 /* PasswordRepository.swift */; };
+		1ACD66362A8671D800244DC0 /* UnivAuthStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66352A8671D800244DC0 /* UnivAuthStoreUseCase.swift */; };
+		1ACD66382A867C0300244DC0 /* UnivAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66372A867C0300244DC0 /* UnivAuthRepository.swift */; };
 		1AD00BE72A8BD426008C7EFC /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BE62A8BD426008C7EFC /* SplashRouter.swift */; };
 		1AD00BE92A8BD44A008C7EFC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */; };
 		1AD00BEB2A8BD457008C7EFC /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */; };
@@ -103,6 +103,7 @@
 		1AE816BF2A838C0100B8DA64 /* NewsItemsRSS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816BE2A838C0100B8DA64 /* NewsItemsRSS.swift */; };
 		1AE816C12A83978E00B8DA64 /* NewsItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */; };
 		1AE816C32A83986D00B8DA64 /* NewsItemStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */; };
+		1AED5D062A90C2DB0090B8DE /* UnivAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D052A90C2DB0090B8DE /* UnivAuth.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		DD6E21A67C66B1450D71E5B4 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */; };
 		EFA32B322A2CE5411673C240 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */; };
@@ -214,8 +215,8 @@
 		1ACB59AC291D11CD005A90BE /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		1ACB59AD291D11CD005A90BE /* NewsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsTableViewCell.xib; sourceTree = "<group>"; };
 		1ACD66332A864EE100244DC0 /* InputDisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputDisplayItem.swift; sourceTree = "<group>"; };
-		1ACD66352A8671D800244DC0 /* PasswordStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordStoreUseCase.swift; sourceTree = "<group>"; };
-		1ACD66372A867C0300244DC0 /* PasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRepository.swift; sourceTree = "<group>"; };
+		1ACD66352A8671D800244DC0 /* UnivAuthStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivAuthStoreUseCase.swift; sourceTree = "<group>"; };
+		1ACD66372A867C0300244DC0 /* UnivAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivAuthRepository.swift; sourceTree = "<group>"; };
 		1AD00BE62A8BD426008C7EFC /* SplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRouter.swift; sourceTree = "<group>"; };
 		1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
@@ -231,6 +232,7 @@
 		1AE816BE2A838C0100B8DA64 /* NewsItemsRSS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemsRSS.swift; sourceTree = "<group>"; };
 		1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemRepository.swift; sourceTree = "<group>"; };
 		1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemStoreUseCase.swift; sourceTree = "<group>"; };
+		1AED5D052A90C2DB0090B8DE /* UnivAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivAuth.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 		1A5B108D2A77E99F00C0E61B /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				1AED5D052A90C2DB0090B8DE /* UnivAuth.swift */,
 				1A1A4E102A09FE75003A343B /* AdItem.swift */,
 				1A085CEB2A694AD200D31183 /* MenuItem.swift */,
 				1A58F6762A8532520025737A /* MenuDetailItem.swift */,
@@ -416,7 +419,7 @@
 			children = (
 				1A9A3E442A80D771003B5E40 /* AdItemRepository.swift */,
 				1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */,
-				1ACD66372A867C0300244DC0 /* PasswordRepository.swift */,
+				1ACD66372A867C0300244DC0 /* UnivAuthRepository.swift */,
 				1AD00BF22A8BFE55008C7EFC /* InitSettingsRepository.swift */,
 			);
 			path = Repository;
@@ -456,7 +459,7 @@
 			children = (
 				1A9A3E472A80DACB003B5E40 /* AdItemStoreUseCase.swift */,
 				1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */,
-				1ACD66352A8671D800244DC0 /* PasswordStoreUseCase.swift */,
+				1ACD66352A8671D800244DC0 /* UnivAuthStoreUseCase.swift */,
 				1AD00BF02A8BFDE0008C7EFC /* InitSettingsStoreUseCase.swift */,
 			);
 			path = UseCase;
@@ -942,14 +945,14 @@
 				1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */,
 				1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* AdItem.swift in Sources */,
-				1ACD66382A867C0300244DC0 /* PasswordRepository.swift in Sources */,
+				1ACD66382A867C0300244DC0 /* UnivAuthRepository.swift in Sources */,
 				1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */,
 				1AC4BE912A7DE84200598EED /* BaseViewModel.swift in Sources */,
 				1AD00BE72A8BD426008C7EFC /* SplashRouter.swift in Sources */,
 				1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */,
 				1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */,
 				1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */,
-				1ACD66362A8671D800244DC0 /* PasswordStoreUseCase.swift in Sources */,
+				1ACD66362A8671D800244DC0 /* UnivAuthStoreUseCase.swift in Sources */,
 				1AE816B62A833DF800B8DA64 /* NewsRouter.swift in Sources */,
 				1A9A3E452A80D771003B5E40 /* AdItemRepository.swift in Sources */,
 				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
@@ -983,6 +986,7 @@
 				1A58F67D2A8612A80025737A /* ClubListViewModel.swift in Sources */,
 				1A02301B2A8F98BF0084DD0B /* TermTextAPI.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
+				1AED5D062A90C2DB0090B8DE /* UnivAuth.swift in Sources */,
 				1AE816C12A83978E00B8DA64 /* NewsItemRepository.swift in Sources */,
 				1AC4BE8C2A7CE64B00598EED /* AgreementRouter.swift in Sources */,
 				1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */,

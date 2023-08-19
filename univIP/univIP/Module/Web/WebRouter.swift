@@ -26,8 +26,8 @@ final class WebRouter: BaseRouter, WebRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                              loadUrl: loadUrl,
-                              passwordStoreUseCase: PasswordStoreUseCase(
-                                passwordRepository: PasswordOnKeyChainRepository()
+                              univAuthStoreUseCase: UnivAuthStoreUseCase(
+                                univAuthRepository: UnivAuthOnKeyChainRepository()
                               )
                              )
         )

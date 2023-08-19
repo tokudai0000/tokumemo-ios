@@ -1,5 +1,5 @@
 //
-//  PasswordRepository.swift
+//  UnivAuthRepository.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2023/08/11.
@@ -8,18 +8,16 @@
 import Foundation
 import KeychainAccess
 
-protocol PasswordRepositoryInterface {
-    func fetchAccountID() -> String
-    func fetchPassword() -> String
-    func setAccountID(_ items: String)
-    func setPassword(_ items: String)
+protocol UnivAuthRepositoryInterface {
+    func fetchUnivAuth() -> UnivAuth
+    func setUnivAuth(_ items: UnivAuth)
 }
 
-final class PasswordOnKeyChainRepository: PasswordRepositoryInterface {
-    static let shared = PasswordOnKeyChainRepository()
+final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
+    static let shared = UnivAuthOnKeyChainRepository()
 
     private let KEY_cAccount = "KEY_cAccount"
-    private var accountID: String {
+    private var accountCID: String {
         get { return getKeyChain(key: KEY_cAccount) }
         set(v) { setKeyChain(key: KEY_cAccount, value: v) }
     }
@@ -30,24 +28,19 @@ final class PasswordOnKeyChainRepository: PasswordRepositoryInterface {
         set(v) { setKeyChain(key: KEY_password, value: v) }
     }
 
-    func fetchAccountID() -> String {
-        return Self.shared.accountID
+    func fetchUnivAuth() -> UnivAuth {
+        let accountCID = Self.shared.accountCID
+        let password = Self.shared.password
+        return UnivAuth(accountCID: accountCID, password: password)
     }
 
-    func fetchPassword() -> String {
-        return Self.shared.password
-    }
-
-    func setAccountID(_ items: String) {
-        Self.shared.accountID = items
-    }
-
-    func setPassword(_ items: String) {
-        Self.shared.password = items
+    func setUnivAuth(_ items: UnivAuth) {
+        Self.shared.accountCID = items.accountCID
+        Self.shared.password = items.password
     }
 }
 
-extension PasswordOnKeyChainRepository {
+extension UnivAuthOnKeyChainRepository {
     // MARK: - Private func
     /// KeychainAccess インスタンス
     private var keychain: Keychain {

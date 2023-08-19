@@ -41,7 +41,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
     struct Dependency: DependencyType {
         let router: SplashRouterInterface
         let currentTermVersionAPI: CurrentTermVersionAPI
-        let passwordStoreUseCase: PasswordStoreUseCaseInterface
+        let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
         let initSettingsStoreUseCase: InitSettingsStoreUseCaseInterface
     }
 
@@ -132,8 +132,8 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 let urlStr = url.absoluteString
 
                 if URLHelper.shouldInjectJavaScript(at: urlStr, canExecuteJavascript) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
-                    let password = dependency.passwordStoreUseCase.fetchPassword()
+                    let cAccount = dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID
+                    let password = dependency.univAuthStoreUseCase.fetchUnivAuth().password
                     loginJavaScriptInjection.accept((cAccount: cAccount, password: password))
                     state.canExecuteJavascript.accept(false)
                 }
