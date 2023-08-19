@@ -92,7 +92,6 @@
 		1AD00BE92A8BD44A008C7EFC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */; };
 		1AD00BEB2A8BD457008C7EFC /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */; };
 		1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */; };
-		1AD00BEF2A8BF14F008C7EFC /* InitSettingsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEE2A8BF14F008C7EFC /* InitSettingsAPI.swift */; };
 		1AD00BF12A8BFDE0008C7EFC /* InitSettingsStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BF02A8BFDE0008C7EFC /* InitSettingsStoreUseCase.swift */; };
 		1AD00BF32A8BFE55008C7EFC /* InitSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BF22A8BFE55008C7EFC /* InitSettingsRepository.swift */; };
 		1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */; };
@@ -221,7 +220,6 @@
 		1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
-		1AD00BEE2A8BF14F008C7EFC /* InitSettingsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitSettingsAPI.swift; sourceTree = "<group>"; };
 		1AD00BF02A8BFDE0008C7EFC /* InitSettingsStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitSettingsStoreUseCase.swift; sourceTree = "<group>"; };
 		1AD00BF22A8BFE55008C7EFC /* InitSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitSettingsRepository.swift; sourceTree = "<group>"; };
 		1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
@@ -286,7 +284,6 @@
 				1A3A75F92916792600069818 /* AdItemsAPI.swift */,
 				1A02301A2A8F98BF0084DD0B /* TermTextAPI.swift */,
 				1A0230162A8F94680084DD0B /* NumberOfUsersAPI.swift */,
-				1AD00BEE2A8BF14F008C7EFC /* InitSettingsAPI.swift */,
 				1AE816BE2A838C0100B8DA64 /* NewsItemsRSS.swift */,
 			);
 			path = API;
@@ -958,7 +955,6 @@
 				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
 				1A58F67F2A861AFE0025737A /* SettingsRouter.swift in Sources */,
 				1A0230172A8F94680084DD0B /* NumberOfUsersAPI.swift in Sources */,
-				1AD00BEF2A8BF14F008C7EFC /* InitSettingsAPI.swift in Sources */,
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImageView+Exetnsion.swift in Sources */,
