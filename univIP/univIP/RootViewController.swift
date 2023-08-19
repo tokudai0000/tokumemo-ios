@@ -5,7 +5,6 @@
 //  Created by Akihiro Matsuyama on 2023/08/05.
 //
 
-import Foundation
 import UIKit
 
 final class RootViewController: UIViewController {
@@ -14,7 +13,11 @@ final class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        setupContainerView()
+        switchToSplash()
+    }
+
+    private func setupContainerView() {
         view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -23,12 +26,20 @@ final class RootViewController: UIViewController {
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-
-        switchToMain()
     }
 
-    private func switchToMain() {
-        let navigationController = UINavigationController(rootViewController: MainRouter().moduleViewController)
+    func switchToSplash() {
+        let navigationController = SplashRouter().moduleViewController
+        switchContainer(to: navigationController)
+    }
+
+    func switchToAgreement(currentTermVersion: String) {
+        let navigationController = AgreementRouter(currentTermVersion: currentTermVersion).moduleViewController
+        switchContainer(to: navigationController)
+    }
+
+    func switchToMain() {
+        let navigationController = MainRouter().moduleViewController
         switchContainer(to: navigationController)
     }
 
@@ -40,7 +51,16 @@ final class RootViewController: UIViewController {
         }
 
         addChild(viewController)
-        self.containerView.addSubview(viewController.view)
+
+        containerView.addSubview(viewController.view)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        ])
+
         viewController.didMove(toParent: self)
         self.currentViewController = viewController
         view.layoutSubviews()
