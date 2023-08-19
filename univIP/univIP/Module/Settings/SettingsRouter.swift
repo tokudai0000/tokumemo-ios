@@ -33,7 +33,7 @@ final class SettingsRouter: BaseRouter, SettingsRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .modal(let type):
-            presentNavigation(InputRouter(type: type))
+            push(InputRouter(type: type))
         }
     }
 }

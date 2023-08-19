@@ -35,8 +35,8 @@ final class MainViewController: UITabBarController {
                                              image: R.image.tabIcon.clubLists(),
                                              selectedImage: nil)
 
-        let settingsRouter = SettingsRouter()
-        let settingsVC = settingsRouter.moduleViewController
+//        let settingsRouter = UINavigationController(rootViewController: SettingsRouter().moduleViewController)
+        let settingsVC = UINavigationController(rootViewController: SettingsRouter().moduleViewController)
         settingsVC.tabBarItem = UITabBarItem(title: R.string.localizable.settings(),
                                              image: R.image.tabIcon.settings(),
                                              selectedImage: nil)

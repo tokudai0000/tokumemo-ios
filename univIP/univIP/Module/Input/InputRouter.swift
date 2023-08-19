@@ -38,7 +38,7 @@ final class InputRouter: BaseRouter, InputRouterInterface {
         case .goWeb:
             moduleViewController.navigationController?.popViewController(animated: true)
         case .back:
-            moduleViewController.dismiss(animated: true)
+            moduleViewController.navigationController?.popViewController(animated: true)
         }
     }
 }
