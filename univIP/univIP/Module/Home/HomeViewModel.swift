@@ -37,8 +37,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     }
 
     struct State: StateType {
-        let prItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
-        let univItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
+        let adItems: BehaviorRelay<AdItems?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
@@ -60,14 +59,13 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        dependency.adItemStoreUseCase.setPrItems(response.prItems)
-                        dependency.adItemStoreUseCase.setUnivItems(response.univItems)
+                        dependency.adItemStoreUseCase.setAdItems(response.adItems)
 
-                        prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
-                        univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
+                        let fetchAdItems = dependency.adItemStoreUseCase.fetchAdItems()
+                        prItems.accept(fetchAdItems.prItems)
+                        univItems.accept(fetchAdItems.univItems)
 
-                        state.prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
-                        state.univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
+                        state.adItems.accept(fetchAdItems)
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -102,7 +100,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         input.didTapPrItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                if let item = state.prItems.value?[index] {
+                if let item = state.adItems.value?.prItems[index] {
                     dependency.router.navigate(.detail(item))
                 }
             })
@@ -111,7 +109,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         input.didTapUnivItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                if let item = state.univItems.value?[index],
+                if let item = state.adItems.value?.univItems[index],
                    let url = URL(string: item.targetUrlStr) {
                     dependency.router.navigate(.goWeb(URLRequest(url: url)))
                 }

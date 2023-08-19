@@ -8,36 +8,25 @@
 import Foundation
 
 protocol AdItemStoreUseCaseInterface {
-    func fetchPrItems() -> [AdItem]
-    func fetchUnivItems() -> [AdItem]
-    func setPrItems(_ items: [AdItem])
-    func setUnivItems(_ items: [AdItem])
+    func fetchAdItems() -> AdItems
+    func setAdItems(_ items: AdItems)
 }
 
 /// 広告アイテム関係をRepositoryと読み書きするUseCase
 struct AdItemStoreUseCase: AdItemStoreUseCaseInterface {
-    private let prItemRepository: AdItemRepositoryInterface
-    private let univItemRepository: AdItemRepositoryInterface
+    private let adItemRepository: AdItemRepositoryInterface
 
     init(
-        prItemRepository: AdItemRepositoryInterface,
-        univItemRepository: AdItemRepositoryInterface
+        adItemRepository: AdItemRepositoryInterface
     ) {
-        self.prItemRepository = prItemRepository
-        self.univItemRepository = univItemRepository
+        self.adItemRepository = adItemRepository
     }
 
-    func fetchPrItems() -> [AdItem] {
-        return prItemRepository.fetchPrItems()
-    }
-    func fetchUnivItems() -> [AdItem] {
-        return univItemRepository.fetchUnivItems()
+    func fetchAdItems() -> AdItems {
+        return adItemRepository.fetchAdItems()
     }
 
-    func setPrItems(_ items: [AdItem]) {
-        prItemRepository.setPrItems(items)
-    }
-    func setUnivItems(_ items: [AdItem]) {
-        univItemRepository.setUnivItems(items)
+    func setAdItems(_ items: AdItems) {
+        adItemRepository.setAdItems(items)
     }
 }

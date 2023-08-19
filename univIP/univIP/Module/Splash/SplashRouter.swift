@@ -24,7 +24,7 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              initSettingsAPI: InitSettingsAPI(),
+                              currentTermVersionAPI: CurrentTermVersionAPI(),
                               passwordStoreUseCase: PasswordStoreUseCase(
                                 passwordRepository: PasswordOnKeyChainRepository()
                               ),

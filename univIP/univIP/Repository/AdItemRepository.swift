@@ -8,34 +8,25 @@
 import Foundation
 
 protocol AdItemRepositoryInterface {
-    func fetchPrItems() -> [AdItem]
-    func fetchUnivItems() -> [AdItem]
-    func setPrItems(_ items: [AdItem])
-    func setUnivItems(_ items: [AdItem])
+    func fetchAdItems() -> AdItems
+    func setAdItems(_ items: AdItems)
 }
 
 final class AdItemOnMemoryRepository: AdItemRepositoryInterface {
     static let shared = AdItemOnMemoryRepository()
 
-    private var prItems: [AdItem]
-    private var univItems: [AdItem]
+    // PrItemsとUnivItemsを保持
+    private var adItems: AdItems
 
     init() {
-        prItems = []
-        univItems = []
+        adItems = AdItems(prItems: [], univItems: [])
     }
 
-    func fetchPrItems() -> [AdItem] {
-        return Self.shared.prItems
-    }
-    func fetchUnivItems() -> [AdItem] {
-        return Self.shared.univItems
+    func fetchAdItems() -> AdItems {
+        return Self.shared.adItems
     }
 
-    func setPrItems(_ items: [AdItem]) {
-        Self.shared.prItems = items
-    }
-    func setUnivItems(_ items: [AdItem]) {
-        Self.shared.univItems = items
+    func setAdItems(_ items: AdItems) {
+        Self.shared.adItems = items
     }
 }

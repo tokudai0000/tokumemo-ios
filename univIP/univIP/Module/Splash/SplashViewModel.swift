@@ -40,7 +40,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
     struct Dependency: DependencyType {
         let router: SplashRouterInterface
-        let initSettingsAPI: InitSettingsAPIInterface
+        let currentTermVersionAPI: CurrentTermVersionAPI
         let passwordStoreUseCase: PasswordStoreUseCaseInterface
         let initSettingsStoreUseCase: InitSettingsStoreUseCaseInterface
     }
@@ -56,15 +56,12 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             return current != accepted
         }
 
-        func getInitSettings() {
-            dependency.initSettingsAPI.getInitSettings()
+        func getCurrentTermVersion() {
+            dependency.currentTermVersionAPI.getCurrentTermVersion()
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
                         state.termVersion.accept(response.currentTermVersion)
-
-                        dependency.initSettingsStoreUseCase.setNumberOfUsers(response.numberOfUsers)
-                        dependency.initSettingsStoreUseCase.setTermText(response.termText)
 
                         let current = response.currentTermVersion
                         let accepted = ""// dependency.initSettingsStoreUseCase.fetchAcceptedTermVersion()
@@ -89,7 +86,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         input.viewDidLoad
             .subscribe { _ in
                 loadUrl.accept(Url.universityTransitionLogin.urlRequest())
-                getInitSettings()
+                getCurrentTermVersion()
             }
             .disposed(by: disposeBag)
 
