@@ -7,6 +7,11 @@
 
 import APIKit
 
+struct AdItems {
+    var prItems:[AdItem]
+    var univItems:[AdItem]
+}
+
 struct AdItem: Decodable {
     let id: Int
     let clientName: String
