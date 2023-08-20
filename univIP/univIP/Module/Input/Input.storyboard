@@ -194,20 +194,78 @@
                                             </attributedString>
                                         </buttonConfiguration>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XP-BK-q56">
+                                        <rect key="frame" x="169" y="639" width="76" height="35"/>
+                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <color key="tintColor" systemColor="tintColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="同意書"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3v1-5T-GYf">
+                                        <rect key="frame" x="0.0" y="609.5" width="414" height="24.5"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="必ず一回以上はお読み下さい。">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="11" name=".HiraKakuInterface-W3"/>
+                                                    <font key="NSOriginalFont" metaFont="system" size="11"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" &lt;">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system" size="11"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="本システムを利用するものは下記に同意したものとみなします。">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="11" name=".HiraKakuInterface-W3"/>
+                                                    <font key="NSOriginalFont" metaFont="system" size="11"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="&gt;">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system" size="11"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nu4-hO-ujJ">
+                                        <rect key="frame" x="0.0" y="288" width="414" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="9xC-ph-Caa" firstAttribute="leading" secondItem="aaN-rv-6Sv" secondAttribute="leading" constant="25" id="7PZ-th-ThI"/>
                                     <constraint firstAttribute="trailing" secondItem="zBK-DS-WU8" secondAttribute="trailing" constant="25" id="AgN-0G-lwh"/>
                                     <constraint firstAttribute="bottom" secondItem="cIt-Jt-07f" secondAttribute="bottom" constant="80" id="MHF-SE-Pd3"/>
+                                    <constraint firstItem="4XP-BK-q56" firstAttribute="top" secondItem="3v1-5T-GYf" secondAttribute="bottom" constant="5" id="RXZ-yq-cVw"/>
+                                    <constraint firstAttribute="trailing" secondItem="3v1-5T-GYf" secondAttribute="trailing" id="S1d-TN-3iS"/>
+                                    <constraint firstAttribute="trailing" secondItem="nu4-hO-ujJ" secondAttribute="trailing" id="UTH-qV-fLK"/>
+                                    <constraint firstItem="4XP-BK-q56" firstAttribute="centerX" secondItem="aaN-rv-6Sv" secondAttribute="centerX" id="Yls-6n-Il7"/>
+                                    <constraint firstItem="nu4-hO-ujJ" firstAttribute="top" secondItem="Hb8-i9-clk" secondAttribute="bottom" constant="30" id="Yzv-wr-sdL"/>
                                     <constraint firstItem="Hb8-i9-clk" firstAttribute="top" secondItem="9xC-ph-Caa" secondAttribute="bottom" constant="50" id="alj-ep-Xsn"/>
                                     <constraint firstAttribute="trailing" secondItem="Hb8-i9-clk" secondAttribute="trailing" constant="25" id="au6-lB-Oyc"/>
                                     <constraint firstItem="9xC-ph-Caa" firstAttribute="top" secondItem="aaN-rv-6Sv" secondAttribute="top" constant="20" id="cIc-mM-aCw"/>
                                     <constraint firstAttribute="trailing" secondItem="cIt-Jt-07f" secondAttribute="trailing" constant="20" id="cUk-OZ-BcJ"/>
+                                    <constraint firstItem="3v1-5T-GYf" firstAttribute="centerX" secondItem="aaN-rv-6Sv" secondAttribute="centerX" id="efU-3x-N95"/>
                                     <constraint firstItem="Hb8-i9-clk" firstAttribute="leading" secondItem="aaN-rv-6Sv" secondAttribute="leading" constant="25" id="hdG-GQ-cJR"/>
+                                    <constraint firstItem="zBK-DS-WU8" firstAttribute="top" secondItem="4XP-BK-q56" secondAttribute="bottom" constant="80" id="l6v-yc-TTX"/>
                                     <constraint firstAttribute="trailing" secondItem="9xC-ph-Caa" secondAttribute="trailing" constant="25" id="lLk-A1-7D8"/>
                                     <constraint firstAttribute="bottom" secondItem="zBK-DS-WU8" secondAttribute="bottom" constant="20" id="pRE-Rn-fDf"/>
+                                    <constraint firstItem="3v1-5T-GYf" firstAttribute="leading" secondItem="aaN-rv-6Sv" secondAttribute="leading" id="pbL-F8-uDu"/>
                                     <constraint firstItem="zBK-DS-WU8" firstAttribute="leading" secondItem="aaN-rv-6Sv" secondAttribute="leading" constant="25" id="qmI-ig-fta"/>
+                                    <constraint firstItem="nu4-hO-ujJ" firstAttribute="leading" secondItem="aaN-rv-6Sv" secondAttribute="leading" id="zTo-Yt-WW1"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -230,6 +288,8 @@
                         <outlet property="TextSizeLabel2" destination="p8l-eb-fwU" id="moz-wG-EwB"/>
                         <outlet property="UnderLine1" destination="Uv4-nb-axb" id="qmf-Q0-Z2P"/>
                         <outlet property="UnderLine2" destination="Vw6-Lr-EIR" id="NF3-Hd-gjd"/>
+                        <outlet property="alertLabel" destination="nu4-hO-ujJ" id="GQM-oj-aqC"/>
+                        <outlet property="helpmessageAgreeButton" destination="4XP-BK-q56" id="zO5-ew-ICC"/>
                         <outlet property="passwordViewButton" destination="acS-bq-nRs" id="6c2-Tg-PAF"/>
                         <outlet property="registerButton" destination="zBK-DS-WU8" id="xJt-Tt-DeU"/>
                         <outlet property="resetButton" destination="cIt-Jt-07f" id="oHC-BZ-aWQ"/>
@@ -250,8 +310,14 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

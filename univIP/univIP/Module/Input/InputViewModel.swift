@@ -22,6 +22,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
         let didTapBackButton = PublishRelay<Void>()
         let didTapResetOKButton = PublishRelay<Void>()
         let didTapSaveButton = PublishRelay<(cAccount: String?, password: String?)>()
+        let didHelpmessageAgreeButton = PublishRelay<Void>()
     }
 
     struct Output: OutputType {
@@ -73,46 +74,6 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                     dependency.univAuthStoreUseCase.setUnivAuth(
                         UnivAuth(accountCID: cAccount.description, password: password.description)
                     )
-
-                    //                if type == .syllabus {
-                    //                    dataManager.syllabusTeacherName = text1
-                    //                    dataManager.syllabusSubjectName = text2
-                    //                    let vc = R.storyboard.web.webViewController()!
-                    //                    vc.loadUrlString = Url.syllabus.string()
-                    //                    present(vc, animated: true, completion: nil)
-                    //                    return
-                    //                }
-                    //
-                    //                if text1.isEmpty {
-                    //                    MessageLabel1.text = "空欄です"
-                    //                    textFieldCursorSetup(fieldType: .one, cursorType: .error)
-                    //                    return
-                    //                }
-                    //
-                    //                if text2.isEmpty {
-                    //                    MessageLabel2.text = "空欄です"
-                    //                    textFieldCursorSetup(fieldType: .two, cursorType: .error)
-                    //                    return
-                    //                }
-                    //
-                    //                if type == .password, text1.prefix(1) != "c" {
-                    //                    MessageLabel1.text = "cアカウントを入力してください"
-                    //                    textFieldCursorSetup(fieldType: .one, cursorType: .error)
-                    //                    return
-                    //                }
-                    //
-                    //                // エラー表示が出ていた場合、画面を初期化
-                    //                initSetup(type)
-                    //
-                    //                switch type {
-                    //                case .password:
-                    //                    // 再ログインをする
-                    //                    dataManager.shouldRelogin = true
-                    //                    // KeyChianに保存する
-                    //                    dataManager.cAccount = text1
-                    //                    dataManager.password = text2
-                    //                    initSetup(.password)
-                    //                    dataManager.loginState.completed = false
 //                    alert(title: "♪ 登録完了 ♪",
 //                          message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
                     //
@@ -121,6 +82,13 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
                     //                }
                 }
             }
+            .disposed(by: disposeBag)
+
+        input.didHelpmessageAgreeButton
+            .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                dependency.router.navigate(.helpmessageAgree)
+            })
             .disposed(by: disposeBag)
 
         return .init(

@@ -104,6 +104,13 @@
 		1AE816C12A83978E00B8DA64 /* NewsItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */; };
 		1AE816C32A83986D00B8DA64 /* NewsItemStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */; };
 		1AED5D062A90C2DB0090B8DE /* UnivAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D052A90C2DB0090B8DE /* UnivAuth.swift */; };
+		1AED5D0C2A91112F0090B8DE /* HelpmessageAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D0A2A91112F0090B8DE /* HelpmessageAgreeView.swift */; };
+		1AED5D0D2A91112F0090B8DE /* HelpmessageAgreeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AED5D0B2A91112F0090B8DE /* HelpmessageAgreeViewController.xib */; };
+		1AED5D0F2A9119180090B8DE /* HelpmessegeAgreeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D0E2A9119180090B8DE /* HelpmessegeAgreeAPI.swift */; };
+		1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AED5D152A91A4690090B8DE /* HelpmessageAgree.storyboard */; };
+		1AED5D182A91A4770090B8DE /* HelpmessageAgreeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D172A91A4770090B8DE /* HelpmessageAgreeRouter.swift */; };
+		1AED5D1A2A91A4840090B8DE /* HelpmessageAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D192A91A4840090B8DE /* HelpmessageAgreeViewController.swift */; };
+		1AED5D1C2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D1B2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift */; };
 		1AFC67CD2732BFA80059A053 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		DD6E21A67C66B1450D71E5B4 /* Pods_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */; };
 		EFA32B322A2CE5411673C240 /* Pods_univIPTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9283E6046AA8A529100E68E /* Pods_univIPTests.framework */; };
@@ -233,6 +240,13 @@
 		1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemRepository.swift; sourceTree = "<group>"; };
 		1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemStoreUseCase.swift; sourceTree = "<group>"; };
 		1AED5D052A90C2DB0090B8DE /* UnivAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivAuth.swift; sourceTree = "<group>"; };
+		1AED5D0A2A91112F0090B8DE /* HelpmessageAgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpmessageAgreeView.swift; sourceTree = "<group>"; };
+		1AED5D0B2A91112F0090B8DE /* HelpmessageAgreeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpmessageAgreeViewController.xib; sourceTree = "<group>"; };
+		1AED5D0E2A9119180090B8DE /* HelpmessegeAgreeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpmessegeAgreeAPI.swift; sourceTree = "<group>"; };
+		1AED5D152A91A4690090B8DE /* HelpmessageAgree.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpmessageAgree.storyboard; sourceTree = "<group>"; };
+		1AED5D172A91A4770090B8DE /* HelpmessageAgreeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpmessageAgreeRouter.swift; sourceTree = "<group>"; };
+		1AED5D192A91A4840090B8DE /* HelpmessageAgreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpmessageAgreeViewController.swift; sourceTree = "<group>"; };
+		1AED5D1B2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpmessageAgreeViewModel.swift; sourceTree = "<group>"; };
 		1AFC67CC2732BFA80059A053 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
 		27A3DC41C828934C2FDE9900 /* Pods_univIP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_univIP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		294EC15743FDC66EEB16D643 /* Pods-univIP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-univIP.release.xcconfig"; path = "Target Support Files/Pods-univIP/Pods-univIP.release.xcconfig"; sourceTree = "<group>"; };
@@ -283,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				1A0230182A8F96490084DD0B /* CurrentTermVersionAPI.swift */,
+				1AED5D0E2A9119180090B8DE /* HelpmessegeAgreeAPI.swift */,
 				1A3A75F92916792600069818 /* AdItemsAPI.swift */,
 				1A02301A2A8F98BF0084DD0B /* TermTextAPI.swift */,
 				1A0230162A8F94680084DD0B /* NumberOfUsersAPI.swift */,
@@ -428,6 +443,7 @@
 		1A5B108F2A77EB3400C0E61B /* UIComponent */ = {
 			isa = PBXGroup;
 			children = (
+				1AED5D092A9110F60090B8DE /* HelpmessageAgreeView */,
 				1ACB59AB291D11A8005A90BE /* NewsCell */,
 				1AD6B78F2A6970CC0046FA47 /* MenuTable */,
 				1A085CEF2A69676900D31183 /* PrBanner */,
@@ -569,6 +585,7 @@
 				1A58F6802A8645120025737A /* InputRouter.swift */,
 				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
 				1A58F6822A8645780025737A /* InputViewModel.swift */,
+				1AED5D102A91A3E20090B8DE /* HelpmessageAgree */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -622,6 +639,26 @@
 				1A154F282A8C809900E6D3CB /* URLHelper.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		1AED5D092A9110F60090B8DE /* HelpmessageAgreeView */ = {
+			isa = PBXGroup;
+			children = (
+				1AED5D0B2A91112F0090B8DE /* HelpmessageAgreeViewController.xib */,
+				1AED5D0A2A91112F0090B8DE /* HelpmessageAgreeView.swift */,
+			);
+			path = HelpmessageAgreeView;
+			sourceTree = "<group>";
+		};
+		1AED5D102A91A3E20090B8DE /* HelpmessageAgree */ = {
+			isa = PBXGroup;
+			children = (
+				1AED5D152A91A4690090B8DE /* HelpmessageAgree.storyboard */,
+				1AED5D172A91A4770090B8DE /* HelpmessageAgreeRouter.swift */,
+				1AED5D192A91A4840090B8DE /* HelpmessageAgreeViewController.swift */,
+				1AED5D1B2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift */,
+			);
+			path = HelpmessageAgree;
 			sourceTree = "<group>";
 		};
 		1C91199C2DFA8E4D8B3EBE6D /* Frameworks */ = {
@@ -758,8 +795,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */,
 				1A9378AE2A60E7B3009A5758 /* PrBannerView.xib in Resources */,
 				1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */,
+				1AED5D0D2A91112F0090B8DE /* HelpmessageAgreeViewController.xib in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */,
 				1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */,
@@ -961,7 +1000,9 @@
 				1A19730E27C4BCB200F36FE7 /* AppDelegate.swift in Sources */,
 				1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */,
 				1A30D0B228F6ED2E00C4012E /* UIImageView+Exetnsion.swift in Sources */,
+				1AED5D1A2A91A4840090B8DE /* HelpmessageAgreeViewController.swift in Sources */,
 				1A6A0C612A8B1DD500342186 /* LibraryCalendarWebScraper.swift in Sources */,
+				1AED5D1C2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift in Sources */,
 				1AC1332D294C2D4D00E3DC16 /* PRViewController.swift in Sources */,
 				1A3A75FA2916792600069818 /* AdItemsAPI.swift in Sources */,
 				1AE816B82A836D9F00B8DA64 /* NewsItemModel.swift in Sources */,
@@ -987,12 +1028,15 @@
 				1A02301B2A8F98BF0084DD0B /* TermTextAPI.swift in Sources */,
 				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
 				1AED5D062A90C2DB0090B8DE /* UnivAuth.swift in Sources */,
+				1AED5D0C2A91112F0090B8DE /* HelpmessageAgreeView.swift in Sources */,
 				1AE816C12A83978E00B8DA64 /* NewsItemRepository.swift in Sources */,
 				1AC4BE8C2A7CE64B00598EED /* AgreementRouter.swift in Sources */,
 				1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */,
+				1AED5D0F2A9119180090B8DE /* HelpmessegeAgreeAPI.swift in Sources */,
 				1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */,
 				1A085CEC2A694AD200D31183 /* MenuItem.swift in Sources */,
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,
+				1AED5D182A91A4770090B8DE /* HelpmessageAgreeRouter.swift in Sources */,
 				1ADE675E2A77A13E00B79D69 /* UIColor+Exetnsion.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */,
 				1A085CEE2A694B9300D31183 /* SettingsItem.swift in Sources */,

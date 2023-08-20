@@ -25,6 +25,8 @@ final class InputViewController: UIViewController {
     @IBOutlet private weak var resetButton: UIButton!
     @IBOutlet private weak var registerButton: UIButton!
     @IBOutlet private weak var passwordViewButton: UIButton!
+    @IBOutlet private weak var alertLabel: UILabel!
+    @IBOutlet private weak var helpmessageAgreeButton: UIButton!
 
     private let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: nil, action: nil)
 
@@ -55,6 +57,12 @@ private extension InputViewController {
         leftBarButton.rx.tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapBackButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        helpmessageAgreeButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didHelpmessageAgreeButton.accept(())
             }
             .disposed(by: disposeBag)
 

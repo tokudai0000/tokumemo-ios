@@ -5,11 +5,10 @@
 //  Created by Akihiro Matsuyama on 2023/08/11.
 //
 
-import Foundation
 import UIKit
 
 enum InputNavigationDestination {
-    case goWeb
+    case helpmessageAgree
     case back
 }
 
@@ -35,8 +34,8 @@ final class InputRouter: BaseRouter, InputRouterInterface {
 
     func navigate(_ destination: InputNavigationDestination) {
         switch destination {
-        case .goWeb:
-            moduleViewController.navigationController?.popViewController(animated: true)
+        case .helpmessageAgree:
+            push(HelpmessageAgreeRouter())
         case .back:
             moduleViewController.navigationController?.popViewController(animated: true)
         }
