@@ -55,13 +55,6 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
                 .disposed(by: disposeBag)
         }
 
-        input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
-            .subscribe(onNext: { _ in
-                getTermText()
-            })
-            .disposed(by: disposeBag)
-
         input.didTapTermsButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
@@ -82,6 +75,13 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
                 dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentTermVersion)
                 dependency.router.navigate(.agreedUpon)
             }
+            .disposed(by: disposeBag)
+
+        input.viewDidLoad
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { _ in
+                getTermText()
+            })
             .disposed(by: disposeBag)
 
         return .init(

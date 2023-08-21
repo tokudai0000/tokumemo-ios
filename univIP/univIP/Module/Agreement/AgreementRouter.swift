@@ -38,9 +38,8 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .agreedUpon:
-            if let rootVC = moduleViewController.parent as? RootViewController {
-                rootVC.switchToMain()
-            }
+            let rootViewController = moduleViewController.parent as? RootViewController
+            rootViewController?.switchToMain()
         }
     }
 }
