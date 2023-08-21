@@ -42,6 +42,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         let router: SplashRouterInterface
         let currentTermVersionAPI: CurrentTermVersionAPI
         let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
+        let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -63,7 +64,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                         state.termVersion.accept(response.currentTermVersion)
 
                         let current = response.currentTermVersion
-                        let accepted = ""// dependency.initSettingsStoreUseCase.fetchAcceptedTermVersion()
+                        let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
                         if isTermsVersionDifferent(current: current, accepted: accepted) {
                             // メインスレッドで実行
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

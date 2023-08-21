@@ -27,6 +27,9 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
                               currentTermVersionAPI: CurrentTermVersionAPI(),
                               univAuthStoreUseCase: UnivAuthStoreUseCase(
                                 univAuthRepository: UnivAuthOnKeyChainRepository()
+                              ),
+                              acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
+                                acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
                               )
                              )
         )
