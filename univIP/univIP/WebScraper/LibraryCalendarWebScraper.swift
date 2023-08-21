@@ -9,62 +9,47 @@ import Kanna
 import RxSwift
 
 protocol LibraryCalendarWebScraperInterface {
-    func getLibraryCalendarURL(libraryUrl: URLRequest) -> Single<URLRequest>
+    func getLibraryCalendarURL(libraryUrl: URL) -> Single<URLRequest>
 }
 
-/**
- 図書館の開館カレンダーPDFまでのURLRequestを作成する
- PDFへのURLは状況により変化する為、図書館ホームページからスクレイピングを行う
- 例1：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021.pdf
- 例2：https://www.lib.tokushima-u.ac.jp/pub/pdf/calender/calender_main_2021_syuusei1.pdf
- ==HTML==[常三島(本館Main) , 蔵本(分館Kura)でも同様]
- <body class="index">
- <ul>
- <li class="pos_r">
- <a href="pub/pdf/calender/calender_main_2021.pdf title="開館カレンダー">
- ========
- aタグのhref属性を抽出、"pub/pdf/calender/"と一致していれば、例1のURLを作成する。
- - Parameter type: 常三島(本館Main) , 蔵本(分館Kura)のどちらの開館カレンダーを欲しいのかLibraryTypeから選択
- - Returns: 図書館の開館カレンダーPDFまでのString
- */
 struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
-    func getLibraryCalendarURL(libraryUrl: URLRequest) -> RxSwift.Single<URLRequest> {
+    enum LibraryError: Error {
+        case networkError(Error)
+        case noDataAvailable(statusCode: Int?)
+        case parsingError(Error)
+        case invalidURL(String)
+    }
+
+    private let baseURLString = "https://www.lib.tokushima-u.ac.jp/"
+
+    func getLibraryCalendarURL(libraryUrl: URL) -> RxSwift.Single<URLRequest> {
         return .create { observer in
-            let url = libraryUrl.url!
-
-            let task = URLSession.shared.dataTask(with: url) { (data, _ , error) in
-                // ここのエラーはクライアントサイドのエラー(ホストに接続できないなど)
+            let task = URLSession.shared.dataTask(with: libraryUrl) { (data, response , error) in
                 if let error = error {
-                    print("クライアントエラー: \(error.localizedDescription)")
-                    return observer(.failure(error))
+                    return observer(.failure(LibraryError.networkError(error)))
                 }
+
                 guard let data = data else {
-                    print("no data or no response")
-                    return observer(.failure(error!))
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode
+                    return observer(.failure(LibraryError.noDataAvailable(statusCode: statusCode)))
                 }
 
-                var urlStr = ""
-
+                var urlStr = self.baseURLString
                 do {
-                    // URL先WebページのHTMLデータを取得
-                    // let data = try NSData(contentsOf: url) as Data
                     let doc = try HTML(html: data, encoding: String.Encoding.utf8)
-                    // タグ(HTMLでのリンクの出発点と到達点を指定するタグ)を抽出
                     for node in doc.xpath("//a") {
-                        // 属性(HTMLでの目当ての資源の所在を指し示す属性)に設定されている文字列を出力
-                        if let str = node["href"] {
-                            // 開館カレンダーは図書ホームページのカレンダーボタンにPDFへのURLが埋め込まれている
-                            if str.contains("pub/pdf/calender/") {
-                                // PDFまでのURLを作成する(本館のURLに付け加える)
-                                urlStr = Url.libraryHomePageMainPC.string() + str
-                            }
+                        if let str = node["href"], str.contains("pub/pdf/calender/") {
+                            urlStr = urlStr + str
                         }
                     }
-                } catch {
-                    AKLog(level: .ERROR, message: "[Data取得エラー]: 図書館開館カレンダーHTMLデータパースエラー\n urlString:\(url.absoluteString)")
-                    return observer(.failure(error))
+                } catch let parseError {
+                    return observer(.failure(LibraryError.parsingError(parseError)))
                 }
-                observer(.success(URLRequest(url: URL(string: urlStr)!)))
+
+                guard let url = URL(string: urlStr) else {
+                    return observer(.failure(LibraryError.invalidURL(urlStr)))
+                }
+                observer(.success(URLRequest(url: url)))
             }
             task.resume()
 
