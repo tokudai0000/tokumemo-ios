@@ -34,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = RootViewController()
+        window?.makeKeyAndVisible()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
