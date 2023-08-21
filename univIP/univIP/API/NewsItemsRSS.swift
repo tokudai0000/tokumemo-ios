@@ -19,8 +19,10 @@ struct NewsItemsRSS: NewsItemsRSSInterface {
     func getNewsItems() -> RxSwift.Single<[NewsItemModel]> {
         return .create { observer in
             guard let url = URL(string: baseURLString) else {
-                return
+                observer(.failure(WebScrapeError.invalidURL(baseURLString)))
+                return Disposables.create()
             }
+
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     return observer(.failure(WebScrapeError.networkError(error)))
