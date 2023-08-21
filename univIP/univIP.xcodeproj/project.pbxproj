@@ -171,7 +171,6 @@
 		1A58F6802A8645120025737A /* InputRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRouter.swift; sourceTree = "<group>"; };
 		1A58F6822A8645780025737A /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		1A5B10882A77D9BF00C0E61B /* UIView+Exetnsion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Exetnsion.swift"; sourceTree = "<group>"; };
-		1A5B108A2A77E86B00C0E61B /* Agreement.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Agreement.rtf; sourceTree = "<group>"; };
 		1A5B108B2A77E8AA00C0E61B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
 		1A5FD6832715305D0081F952 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -512,7 +511,6 @@
 				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
 				1AA056D526BD2AE500343005 /* Assets.xcassets */,
 				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
-				1A5B108A2A77E86B00C0E61B /* Agreement.rtf */,
 				1AD6B7982A6BE5830046FA47 /* Localizable.strings */,
 				1A0230152A8F940E0084DD0B /* WebScraper */,
 				1A085CE72A69277200D31183 /* API */,
