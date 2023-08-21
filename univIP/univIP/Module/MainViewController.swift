@@ -11,37 +11,30 @@ final class MainViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureViewControllers()
     }
 
     func configureViewControllers() {
+        let homeViewController = HomeRouter().moduleViewController
+        homeViewController.tabBarItem = UITabBarItem(title: R.string.localizable.home(),
+                                                     image: R.image.tabIcon.home(),
+                                                     selectedImage: nil)
 
-        let homeRouter = HomeRouter()
-        let homeVC = homeRouter.moduleViewController
-        homeVC.tabBarItem = UITabBarItem(title: R.string.localizable.home(),
-                                         image: R.image.tabIcon.home(),
-                                         selectedImage: nil)
+        let newsViewController = NewsRouter().moduleViewController
+        newsViewController.tabBarItem = UITabBarItem(title: R.string.localizable.news(),
+                                                     image: R.image.tabIcon.news(),
+                                                     selectedImage: nil)
 
-        let newsRouter = NewsRouter()
-        let newsVC = newsRouter.moduleViewController
-        newsVC.tabBarItem = UITabBarItem(title: R.string.localizable.news(),
-                                         image: R.image.tabIcon.news(),
-                                         selectedImage: nil)
+        let clubListViewController = ClubListRouter().moduleViewController
+        clubListViewController.tabBarItem = UITabBarItem(title: R.string.localizable.club_lists(),
+                                                         image: R.image.tabIcon.clubLists(),
+                                                         selectedImage: nil)
 
-        let clubListRouter = ClubListRouter()
-        let clubListVC = clubListRouter.moduleViewController
-        clubListVC.tabBarItem = UITabBarItem(title: R.string.localizable.club_lists(),
-                                             image: R.image.tabIcon.clubLists(),
-                                             selectedImage: nil)
+        let settingsViewController = UINavigationController(rootViewController: SettingsRouter().moduleViewController)
+        settingsViewController.tabBarItem = UITabBarItem(title: R.string.localizable.settings(),
+                                                         image: R.image.tabIcon.settings(),
+                                                         selectedImage: nil)
 
-//        let settingsRouter = UINavigationController(rootViewController: SettingsRouter().moduleViewController)
-        let settingsVC = UINavigationController(rootViewController: SettingsRouter().moduleViewController)
-        settingsVC.tabBarItem = UITabBarItem(title: R.string.localizable.settings(),
-                                             image: R.image.tabIcon.settings(),
-                                             selectedImage: nil)
-
-
-        viewControllers = [homeVC, newsVC, clubListVC, settingsVC]
+        viewControllers = [homeViewController, newsViewController, clubListViewController, settingsViewController]
     }
 }
