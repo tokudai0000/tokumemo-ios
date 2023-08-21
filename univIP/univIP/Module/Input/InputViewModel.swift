@@ -27,7 +27,6 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
 
     struct Output: OutputType {
         let textField1: Observable<String>
-        let configureTextType: Observable<InputDisplayItem.type>
     }
 
     struct State: StateType {
@@ -35,18 +34,15 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
 
     struct Dependency: DependencyType {
         let router: InputRouterInterface
-        let type: InputDisplayItem.type
         let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let textField1: PublishRelay<String> = .init()
-        let configureTextType: PublishRelay<InputDisplayItem.type> = .init()
 
         input.viewDidLoad
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
             .subscribe(onNext: { _ in
-                configureTextType.accept(dependency.type)
                 textField1.accept(dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID)
             })
             .disposed(by: disposeBag)
@@ -92,8 +88,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
             .disposed(by: disposeBag)
 
         return .init(
-            textField1: textField1.asObservable(),
-            configureTextType: configureTextType.asObservable()
+            textField1: textField1.asObservable()
         )
     }
 }

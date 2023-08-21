@@ -40,6 +40,7 @@ final class InputViewController: UIViewController {
         super.viewDidLoad()
         configureDefaults()
         configureNavigation()
+        configurePassword()
         binding()
         viewModel.input.viewDidLoad.accept(())
     }
@@ -121,20 +122,20 @@ private extension InputViewController {
             }
             .disposed(by: disposeBag)
 
-        viewModel.output
-            .configureTextType
-            .asDriver(onErrorJustReturn: .error)
-            .drive(with: self) { owner, type in
-                switch type {
-                case .password:
-                    owner.configurePassword()
-                case .syllabus:
-                    owner.configureSyllabus()
-                case . error:
-                    fatalError()
-                }
-            }
-            .disposed(by: disposeBag)
+//        viewModel.output
+//            .configureTextType
+//            .asDriver(onErrorJustReturn: .error)
+//            .drive(with: self) { owner, type in
+//                switch type {
+//                case .password:
+//                    owner.configurePassword()
+//                case .syllabus:
+//                    owner.configureSyllabus()
+//                case . error:
+//                    fatalError()
+//                }
+//            }
+//            .disposed(by: disposeBag)
 
         viewModel.output
             .textField1

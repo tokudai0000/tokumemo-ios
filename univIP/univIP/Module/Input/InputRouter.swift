@@ -17,14 +17,13 @@ protocol InputRouterInterface {
 }
 
 final class InputRouter: BaseRouter, InputRouterInterface {
-    init(type: InputDisplayItem.type) {
+    init() {
         let viewController = R.storyboard.input.inputViewController()!
         super.init(moduleViewController: viewController)
         viewController.viewModel = InputViewModel(
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              type: type,
                               univAuthStoreUseCase: UnivAuthStoreUseCase(
                                 univAuthRepository: UnivAuthOnKeyChainRepository()
                               )
