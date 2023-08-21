@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class ClubListViewController: BaseViewController {
+class ClubListViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView!
 
     var viewModel: ClubListViewModelInterface!

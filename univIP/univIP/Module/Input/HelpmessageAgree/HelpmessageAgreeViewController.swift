@@ -10,10 +10,12 @@ import RxGesture
 import RxSwift
 import UIKit
 
-final class HelpmessageAgreeViewController: BaseViewController {
+final class HelpmessageAgreeViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView!
 
     private let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: nil, action: nil)
+
+    private let disposeBag = DisposeBag()
 
     var viewModel: HelpmessageAgreeViewModelInterface!
 

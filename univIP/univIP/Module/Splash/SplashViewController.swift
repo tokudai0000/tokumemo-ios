@@ -10,12 +10,14 @@ import WebKit
 import RxCocoa
 import RxSwift
 
-final class SplashViewController: BaseViewController {
+final class SplashViewController: UIViewController {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var statusLabel: UILabel!
 
     private var webView: WKWebView = .init(frame: .zero)
 
+    private let disposeBag = DisposeBag()
+    
     var viewModel: SplashViewModelInterface!
 
     override func viewDidLoad() {

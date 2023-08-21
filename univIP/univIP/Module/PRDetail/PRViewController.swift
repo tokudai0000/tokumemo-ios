@@ -9,13 +9,15 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class PRViewController: BaseViewController {
+class PRViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var detailsInfoButton: UIButton!
     @IBOutlet private weak var closeButton: UIButton!
 
+    private let disposeBag = DisposeBag()
+    
     var viewModel: PRViewModelInterface!
 
     override func viewDidLoad() {
@@ -29,8 +31,17 @@ class PRViewController: BaseViewController {
 // MARK: Binding
 private extension PRViewController {
     func binding() {
-        bindButtonTapEvent(detailsInfoButton, to: viewModel.input.didTapDetailsInfoButton)
-        bindButtonTapEvent(closeButton, to: viewModel.input.didTapCloseButton)
+        detailsInfoButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapDetailsInfoButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        closeButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapCloseButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
         viewModel.output
             .imageStr

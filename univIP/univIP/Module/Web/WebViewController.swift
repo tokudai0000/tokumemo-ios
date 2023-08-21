@@ -11,7 +11,7 @@ import RxSwift
 import UIKit
 import WebKit
 
-final class WebViewController: BaseViewController {
+final class WebViewController: UIViewController {
     @IBOutlet private weak var urlLabel: UILabel!
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
@@ -22,6 +22,8 @@ final class WebViewController: BaseViewController {
     @IBOutlet private weak var safariButton: UIButton!
     @IBOutlet private weak var menuButton: UIButton!
 
+    private let disposeBag = DisposeBag()
+    
     var viewModel: WebViewModelInterface!
 
     override func viewDidLoad() {
@@ -41,10 +43,17 @@ final class WebViewController: BaseViewController {
 // MARK: Binding
 private extension WebViewController {
     func binding() {
+        doneButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapDoneButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
-        bindButtonTapEvent(doneButton, to: viewModel.input.didTapDoneButton)
-        bindButtonTapEvent(safariButton, to: viewModel.input.didTapSafariButton)
-//        bindButtonTapEvent(menuButton, to: viewModel.input.didTapTwitterButton)
+        safariButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapSafariButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
         reloadButton.rx
             .tap

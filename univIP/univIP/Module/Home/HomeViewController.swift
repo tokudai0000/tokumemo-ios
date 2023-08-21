@@ -12,7 +12,7 @@ import RxGesture
 import RxSwift
 
 
-final class HomeViewController: BaseViewController {
+final class HomeViewController: UIViewController {
     @IBOutlet private weak var numberOfUsersLabel: UILabel!
     @IBOutlet private weak var prContainerView: UIView!
     @IBOutlet private weak var prBannerContainerViewHeightConstraint: NSLayoutConstraint!
@@ -26,6 +26,8 @@ final class HomeViewController: BaseViewController {
     @IBOutlet private weak var twitterButton: UIButton!
     @IBOutlet private weak var githubButton: UIButton!
 
+    private let disposeBag = DisposeBag()
+    
     var viewModel: HomeViewModelInterface!
 
     private var webView: WKWebView!
@@ -51,9 +53,17 @@ final class HomeViewController: BaseViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
+        twitterButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapTwitterButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
-        bindButtonTapEvent(twitterButton, to: viewModel.input.didTapTwitterButton)
-        bindButtonTapEvent(githubButton, to: viewModel.input.didTapGithubButton)
+        githubButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapGithubButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
         prBannerPageControl.rx.controlEvent(.valueChanged)
             .asObservable()
