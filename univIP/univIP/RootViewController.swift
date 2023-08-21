@@ -9,15 +9,15 @@ import UIKit
 
 final class RootViewController: UIViewController {
     private let containerView: UIView = .init()
-    private var currentViewController: UIViewController?
+    private var currentChildViewController: UIViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupContainerView()
+        configureContainerView()
         switchToSplash()
     }
 
-    private func setupContainerView() {
+    private func configureContainerView() {
         view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -44,14 +44,14 @@ final class RootViewController: UIViewController {
     }
 
     private func switchContainer(to viewController: UIViewController) {
-        if let previousViewController = self.currentViewController {
+        // 現在の子ViewControllerを削除
+        if let previousViewController = self.currentChildViewController {
             previousViewController.willMove(toParent: nil)
             previousViewController.view.removeFromSuperview()
             previousViewController.removeFromParent()
         }
-
-        addChild(viewController)
-
+        // 新しい子ViewControllerのViewをcontainerViewに追加
+        self.currentChildViewController = viewController
         containerView.addSubview(viewController.view)
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -60,9 +60,10 @@ final class RootViewController: UIViewController {
             viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
         ])
-
+        // RootViewControllerに子ViewControllerを追加
+        addChild(viewController)
         viewController.didMove(toParent: self)
-        self.currentViewController = viewController
+
         view.layoutSubviews()
     }
 }
