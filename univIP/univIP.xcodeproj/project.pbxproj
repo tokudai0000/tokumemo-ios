@@ -58,6 +58,7 @@
 		1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListViewController.swift */; };
 		1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6EF50E27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift */; };
 		1A762FCB2A9381D900F60DFA /* GenericAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A762FCA2A9381D900F60DFA /* GenericAPI.swift */; };
+		1A762FCE2A93947200F60DFA /* WebScrapeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A762FCD2A93947200F60DFA /* WebScrapeError.swift */; };
 		1A81A93126C12C8200CC56E2 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* AppConstants.swift */; };
 		1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */; };
 		1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */; };
@@ -186,6 +187,7 @@
 		1A6EF50E27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		1A762FCA2A9381D900F60DFA /* GenericAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAPI.swift; sourceTree = "<group>"; };
+		1A762FCD2A93947200F60DFA /* WebScrapeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapeError.swift; sourceTree = "<group>"; };
 		1A81A93026C12C8200CC56E2 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
@@ -295,13 +297,13 @@
 		1A085CE72A69277200D31183 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				1AE816BE2A838C0100B8DA64 /* NewsItemsRSS.swift */,
 				1A762FCA2A9381D900F60DFA /* GenericAPI.swift */,
 				1A0230182A8F96490084DD0B /* CurrentTermVersionAPI.swift */,
 				1AED5D0E2A9119180090B8DE /* HelpmessegeAgreeAPI.swift */,
 				1A3A75F92916792600069818 /* AdItemsAPI.swift */,
 				1A02301A2A8F98BF0084DD0B /* TermTextAPI.swift */,
 				1A0230162A8F94680084DD0B /* NumberOfUsersAPI.swift */,
-				1AE816BE2A838C0100B8DA64 /* NewsItemsRSS.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -417,6 +419,7 @@
 		1A5B108D2A77E99F00C0E61B /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				1A762FCC2A93894D00F60DFA /* Errors */,
 				1AED5D052A90C2DB0090B8DE /* UnivAuth.swift */,
 				1A1A4E102A09FE75003A343B /* AdItem.swift */,
 				1A085CEB2A694AD200D31183 /* MenuItem.swift */,
@@ -451,6 +454,14 @@
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 			);
 			path = UIComponent;
+			sourceTree = "<group>";
+		};
+		1A762FCC2A93894D00F60DFA /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				1A762FCD2A93947200F60DFA /* WebScrapeError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 		1A9378AF2A61645B009A5758 /* Banner */ = {
@@ -1036,6 +1047,7 @@
 				1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */,
 				1AED5D182A91A4770090B8DE /* HelpmessageAgreeRouter.swift in Sources */,
 				1ADE675E2A77A13E00B79D69 /* UIColor+Exetnsion.swift in Sources */,
+				1A762FCE2A93947200F60DFA /* WebScrapeError.swift in Sources */,
 				1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */,
 				1A085CEE2A694B9300D31183 /* SettingsItem.swift in Sources */,
 				1AE816C32A83986D00B8DA64 /* NewsItemStoreUseCase.swift in Sources */,

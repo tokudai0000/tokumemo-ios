@@ -13,19 +13,22 @@ protocol NewsItemsRSSInterface {
 }
 
 struct NewsItemsRSS: NewsItemsRSSInterface {
+
+    private let baseURLString = "https://www.tokushima-u.ac.jp/recent/rss.xml"
+
     func getNewsItems() -> RxSwift.Single<[NewsItemModel]> {
         return .create { observer in
-            let url = URL(string: "https://www.tokushima-u.ac.jp/recent/rss.xml")! // fatalError
-
-            let task = URLSession.shared.dataTask(with: url) { (data, _ , error) in
-                // ここのエラーはクライアントサイドのエラー(ホストに接続できないなど)
+            guard let url = URL(string: baseURLString) else {
+                return
+            }
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
-                    print("クライアントエラー: \(error.localizedDescription)")
-                    return observer(.failure(error))
+                    return observer(.failure(WebScrapeError.networkError(error)))
                 }
+
                 guard let data = data else {
-                    print("no data or no response")
-                    return observer(.failure(error!))
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode
+                    return observer(.failure(WebScrapeError.noDataAvailable(statusCode: statusCode)))
                 }
 
                 var newsItems:[NewsItemModel] = []
@@ -35,14 +38,14 @@ struct NewsItemsRSS: NewsItemsRSSInterface {
                         let title = element.at_xpath("title")?.text ?? ""
                         let link = element.at_xpath("link")?.text ?? ""
                         let pubDate = element.at_xpath("pubDate")?.text ?? ""
-                        // dcDateを取得できない。不明
+                        // dcDateを取得できない。使わないデータなので放置
                         // let dcDate = element.at_xpath("dc:date")?.text ?? ""
 
                         let item = NewsItemModel(title: title, createdAt: pubDate, targetUrlStr: link)
                         newsItems.append(item)
                     }
-                } catch {
-                    print("Error parsing XML: \(error.localizedDescription)")
+                } catch let parseError {
+                    return observer(.failure(WebScrapeError.parsingError(parseError)))
                 }
                 observer(.success(newsItems))
             }
