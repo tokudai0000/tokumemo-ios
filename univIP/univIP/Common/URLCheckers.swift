@@ -31,6 +31,25 @@ struct URLCheckers {
         return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
 
+    /// URLが大学サイトのログインに失敗し、再入力を求められている画面かを確認します。
+    /// 初回ログイン https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s1
+    /// 1回ログイン失敗 https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s2
+    /// 2回ログイン失敗 https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=e1s3
+    /// - Parameter urlStr: 確認するURLの文字列
+    /// - Returns: ログインに失敗した際のURLである場合は`true`、そうでない場合は`false`
+    static func isFailureUniversityServiceLoggedInURL(at urlStr: String) -> Bool {
+        // execution=e1s1 や execution=e1s2 となる
+        if urlStr.contains("https://localidp.ait230.tokushima-u.ac.jp/idp/profile/SAML2/Redirect/SSO?execution=") {
+            let start = urlStr.index(urlStr.endIndex, offsetBy: -2)
+            let end = urlStr.index(urlStr.endIndex, offsetBy: 0)
+            // 下2桁を比較
+            if String(urlStr[start..<end]) != "s1" {
+                return true
+            }
+        }
+        return false
+    }
+
     /// URLが大学サイトのログイン直後かを確認します。(3通り存在)
     /// - Parameter urlStr: 確認するURLの文字列
     /// - Returns: ログイン直後のURLである場合は`true`、そうでない場合は`false`

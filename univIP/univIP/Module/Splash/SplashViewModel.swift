@@ -92,7 +92,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
         input.viewDidLoad
             .subscribe { _ in
-                loadUrl.accept(Url.universityTransitionLogin.urlRequest())
                 fetchAndHandleCurrentTermVersion()
             }
             .disposed(by: disposeBag)
@@ -101,7 +100,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             .subscribe { _ in
                 state.canExecuteJavascript.accept(true)
                 activityIndicator.accept(.start)
-                statusLabel.accept(R.string.localizable.verifying_authentication())
 
                 // ログイン処理に失敗した場合、10秒後には必ずメイン画面に遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
@@ -123,12 +121,16 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 guard let url = url.element else{
                     return
                 }
-
+                // タイムアウト
                 if URLCheckers.isUniversityServiceTimeoutURL(at: url.absoluteString) {
                     reloadLoginURLInWebView.accept(Void())
                 }
-
+                // ログイン成功
                 if URLCheckers.isImmediatelyAfterLoginURL(at: url.absoluteString) {
+                    dependency.router.navigate(.main)
+                }
+                // ログイン失敗
+                if URLCheckers.isFailureUniversityServiceLoggedInURL(at: url.absoluteString) {
                     dependency.router.navigate(.main)
                 }
             }
@@ -140,7 +142,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                       let canExecuteJavascript = state.canExecuteJavascript.value else{
                     return
                 }
-
+                // ログイン処理を行うURLか判定
                 if URLCheckers.canInjectJavaScriptForUniversityLoginURL(at: url.absoluteString, canExecuteJavascript) {
                     state.canExecuteJavascript.accept(false)
                     loginJavaScriptInjection.accept(dependency.univAuthStoreUseCase.fetchUnivAuth())

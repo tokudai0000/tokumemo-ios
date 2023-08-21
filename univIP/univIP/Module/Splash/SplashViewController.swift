@@ -23,6 +23,7 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDefault()
         configureWebView()
         binding()
         viewModel.input.viewDidLoad.accept(())
@@ -94,31 +95,34 @@ private extension SplashViewController {
 
 // MARK: Layout
 private extension SplashViewController {
+    func configureDefault() {
+        statusLabel.text = R.string.localizable.verifying_authentication()
+    }
+
     // WebViewは画面には表示させず、裏でログインの処理を実行
     func configureWebView() {
         webView = WKWebView()
-        webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.load(Url.universityTransitionLogin.urlRequest())
-        
+
+        // 開発時は、Splash画面の上部に表示
+        #if DEBUG || STUB
         self.view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: view.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.centerYAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+        #endif
     }
 }
 
-extension SplashViewController: WKUIDelegate, WKNavigationDelegate {
-    // 読み込み設定（リクエスト前）
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+extension SplashViewController: WKNavigationDelegate {
+    // リクエスト前
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url else {
-            AKLog(level: .FATAL, message: "読み込み前のURLがnil")
             decisionHandler(.cancel)
             return
         }
@@ -126,13 +130,12 @@ extension SplashViewController: WKUIDelegate, WKNavigationDelegate {
         decisionHandler(.allow)
     }
 
-    // 読み込み設定（レスポンス取得後）
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationResponse: WKNavigationResponse,
-                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    // レスポンス取得後
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
     }
 
+    // 読み込み完了後
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let url = self.webView.url{
             viewModel.input.urlDidLoad.accept(url)
