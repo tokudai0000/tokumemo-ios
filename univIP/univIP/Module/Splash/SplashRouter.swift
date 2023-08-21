@@ -42,7 +42,9 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
                 rootVC.switchToAgreement(currentTermVersion: current)
             }
         case .main:
-            present(MainRouter())
+            if let rootVC = moduleViewController.parent as? RootViewController {
+                rootVC.switchToMain()
+            }
         }
     }
 }
