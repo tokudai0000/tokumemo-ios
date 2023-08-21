@@ -81,6 +81,14 @@ private extension SplashViewController {
                 owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             }
             .disposed(by: disposeBag)
+
+        viewModel.output
+            .reloadLoginURLInWebView
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.webView.load(Url.universityTransitionLogin.urlRequest())
+            }
+            .disposed(by: disposeBag)
     }
 }
 

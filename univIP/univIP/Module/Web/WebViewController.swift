@@ -118,6 +118,22 @@ private extension WebViewController {
             .disposed(by: disposeBag)
 
         viewModel.output
+            .reloadLoginURLInWebView
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.webView.load(Url.universityTransitionLogin.urlRequest())
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .skipReminderJavaScriptInjection
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
             .loginJavaScriptInjection
             .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
             .drive(with: self) { owner, data in

@@ -34,6 +34,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let loginJavaScriptInjection: Observable<(cAccount: String, password: String)>
         let loginOutlookJavaScriptInjection: Observable<(cAccount: String, password: String)>
         let loginCareerCenterJavaScriptInjection: Observable<(cAccount: String, password: String)>
+        let skipReminderJavaScriptInjection: Observable<Void>
     }
 
     /// 状態変数を定義する(MVVMでいうModel相当)
@@ -59,6 +60,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let loginJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
         let loginOutlookJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
         let loginCareerCenterJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
+        let skipReminderJavaScriptInjection: PublishRelay<Void> = .init()
 
         func shouldInjectJavaScript(at urlString: String) -> Bool {
             if state.canExecuteJavascript.value == false { return false }
@@ -153,6 +155,10 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
 
                 urlLabel.accept(host.description)
 
+                if URLHelper.shouldSkipReminderInjectJavaScript(at: urlStr) {
+                    skipReminderJavaScriptInjection.accept(Void())
+                }
+
                 if shouldInjectJavaScript(at: urlStr) {
                     let cAccount = dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID
                     let password = dependency.univAuthStoreUseCase.fetchUnivAuth().password
@@ -183,7 +189,8 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
             openSafari: openSafari.asObservable(),
             loginJavaScriptInjection: loginJavaScriptInjection.asObservable(),
             loginOutlookJavaScriptInjection: loginOutlookJavaScriptInjection.asObservable(),
-            loginCareerCenterJavaScriptInjection: loginCareerCenterJavaScriptInjection.asObservable()
+            loginCareerCenterJavaScriptInjection: loginCareerCenterJavaScriptInjection.asObservable(),
+            skipReminderJavaScriptInjection: skipReminderJavaScriptInjection.asObservable()
         )
     }
 }

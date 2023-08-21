@@ -14,6 +14,11 @@ struct URLHelper {
         return false
     }
 
+    static func shouldSkipReminderInjectJavaScript(at urlString: String) -> Bool {
+        if urlString.contains(Url.skipReminder.string()) { return true }
+        return false
+    }
+
     static func isUniversityServiceTimeoutURL(_ urlStr: String) -> Bool {
         return urlStr == Url.universityServiceTimeOut.string() || urlStr == Url.universityServiceTimeOut2.string()
     }
