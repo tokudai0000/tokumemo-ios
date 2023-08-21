@@ -116,7 +116,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 guard let url = url.element else{ return }
                 let urlStr = url.absoluteString
 
-                if URLHelper.isUniversityServiceTimeoutURL(urlStr) {
+                if URLCheckers.isUniversityServiceTimeoutURL(at: urlStr) {
                     reloadLoginURLInWebView.accept(Void())
                 }
 
@@ -132,7 +132,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                       let canExecuteJavascript = state.canExecuteJavascript.value else{ return }
                 let urlStr = url.absoluteString
 
-                if URLHelper.shouldInjectJavaScript(at: urlStr, canExecuteJavascript) {
+                if URLCheckers.canInjectJavaScriptForUniversityLoginURL(at: urlStr, canExecuteJavascript) {
                     let cAccount = dependency.univAuthStoreUseCase.fetchUnivAuth().accountCID
                     let password = dependency.univAuthStoreUseCase.fetchUnivAuth().password
                     loginJavaScriptInjection.accept((cAccount: cAccount, password: password))

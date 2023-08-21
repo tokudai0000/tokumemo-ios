@@ -155,7 +155,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
 
                 urlLabel.accept(host.description)
 
-                if URLHelper.shouldSkipReminderInjectJavaScript(at: urlStr) {
+                if URLCheckers.isSkipReminderURL(at: urlStr) {
                     skipReminderJavaScriptInjection.accept(Void())
                 }
 
