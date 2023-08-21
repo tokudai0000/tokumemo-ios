@@ -7,6 +7,6 @@
 
 struct NewsItemModel {
     let title: String
-    let createdAt: String
     let targetUrlStr: String
+    let createdAt: String
 }

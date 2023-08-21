@@ -43,7 +43,7 @@ struct NewsItemsRSS: NewsItemsRSSInterface {
                         // dcDateを取得できない。使わないデータなので放置
                         // let dcDate = element.at_xpath("dc:date")?.text ?? ""
 
-                        let item = NewsItemModel(title: title, createdAt: pubDate, targetUrlStr: link)
+                        let item = NewsItemModel(title: title, targetUrlStr: link, createdAt: pubDate)
                         newsItems.append(item)
                     }
                 } catch let parseError {
