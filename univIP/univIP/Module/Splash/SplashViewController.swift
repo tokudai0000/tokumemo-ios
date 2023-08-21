@@ -89,6 +89,16 @@ private extension SplashViewController {
                 owner.webView.load(Url.universityTransitionLogin.urlRequest())
             }
             .disposed(by: disposeBag)
+
+        viewModel.output
+            .loginJavaScriptInjection
+            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
+            .drive(with: self) { owner, data in
+                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(data.cAccount)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(data.password)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -100,6 +110,15 @@ private extension SplashViewController {
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.load(Url.universityTransitionLogin.urlRequest())
+        
+        self.view.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
     }
 }
 

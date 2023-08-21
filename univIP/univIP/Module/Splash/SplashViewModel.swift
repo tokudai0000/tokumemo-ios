@@ -92,6 +92,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
         input.viewWillAppear
             .subscribe { _ in
+                state.canExecuteJavascript.accept(true)
                 activityIndicator.accept(true)
                 statusLabel.accept(R.string.localizable.verifying_authentication())
 
