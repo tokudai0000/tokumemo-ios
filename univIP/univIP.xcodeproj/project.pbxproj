@@ -28,6 +28,7 @@
 		1A384F9828FD794200A1F52E /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A384F9728FD794200A1F52E /* WebViewModel.swift */; };
 		1A3A75FA2916792600069818 /* AdItemsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75F92916792600069818 /* AdItemsAPI.swift */; };
 		1A3A75FF2916B43700069818 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3A75FE2916B43700069818 /* NewsViewModel.swift */; };
+		1A3B75B32A93BBAF00E96B60 /* ActivityIndicatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B75B22A93BBAF00E96B60 /* ActivityIndicatorState.swift */; };
 		1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A50CDAB2A82B57D0079A090 /* ClubListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */; };
 		1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAC2A832AE70079A090 /* MainRouter.swift */; };
@@ -154,6 +155,7 @@
 		1A384F9728FD794200A1F52E /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		1A3A75F92916792600069818 /* AdItemsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItemsAPI.swift; sourceTree = "<group>"; };
 		1A3A75FE2916B43700069818 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
+		1A3B75B22A93BBAF00E96B60 /* ActivityIndicatorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorState.swift; sourceTree = "<group>"; };
 		1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKLibrary.swift; sourceTree = "<group>"; };
 		1A50CDAA2A82B57D0079A090 /* ClubListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListRouter.swift; sourceTree = "<group>"; };
 		1A50CDAC2A832AE70079A090 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 				1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */,
 				1AE816B72A836D9F00B8DA64 /* NewsItemModel.swift */,
 				1A085CED2A694B9300D31183 /* SettingsItem.swift */,
+				1A3B75B22A93BBAF00E96B60 /* ActivityIndicatorState.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 			files = (
 				1A58F6772A8532520025737A /* MenuDetailItem.swift in Sources */,
 				1A5B10892A77D9BF00C0E61B /* UIView+Exetnsion.swift in Sources */,
+				1A3B75B32A93BBAF00E96B60 /* ActivityIndicatorState.swift in Sources */,
 				1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */,
 				1A63062C2944B48600205C7C /* SettingsViewModel.swift in Sources */,
 				1AD00BF32A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift in Sources */,

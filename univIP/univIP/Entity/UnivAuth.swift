@@ -8,4 +8,9 @@
 struct UnivAuth {
     let accountCID: String
     let password: String
+
+    init(accountCID: String, password: String) {
+        self.accountCID = accountCID
+        self.password = password
+    }
 }

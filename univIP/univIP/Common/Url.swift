@@ -8,6 +8,8 @@
 import Foundation
 
 enum Url: String {
+    /// 何もリクエストしない(エラー用)
+    case emptyRequest = "about:blank"
     /// 大学ホームページ
     case universityHomePage = "https://www.tokushima-u.ac.jp/"
     /// 統合認証システム

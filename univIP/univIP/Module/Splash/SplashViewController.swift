@@ -14,6 +14,7 @@ final class SplashViewController: UIViewController {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var statusLabel: UILabel!
 
+    // バックグラウンドでログインの処理を行う
     private var webView: WKWebView = .init(frame: .zero)
 
     private let disposeBag = DisposeBag()
@@ -43,6 +44,14 @@ private extension SplashViewController {
     func binding() {
 
         viewModel.output
+            .loadUrl
+            .asDriver(onErrorJustReturn: Url.emptyRequest.urlRequest())
+            .drive(with: self) { owner, urlRequest in
+                owner.webView.load(urlRequest)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.output
             .statusLabel
             .asDriver(onErrorJustReturn: "")
             .drive(with: self) { owner, text in
@@ -51,34 +60,15 @@ private extension SplashViewController {
             .disposed(by: disposeBag)
 
         viewModel.output
-            .loadUrl
-            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
-            .drive(with: self) { owner, urlRequest in
-                owner.webView.load(urlRequest)
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.output
             .activityIndicator
-            .asDriver(onErrorJustReturn: false)
-            .drive(with: self) { owner, flag in
-                if let activityIndicator = owner.activityIndicator {
-                    if flag {
-                        activityIndicator.startAnimating()
-                    } else {
-                        activityIndicator.stopAnimating()
-                    }
+            .asDriver(onErrorJustReturn: .stop)
+            .drive(with: self) { owner, state in
+                switch state {
+                case .start:
+                    owner.activityIndicator?.startAnimating()
+                case .stop:
+                    owner.activityIndicator?.stopAnimating()
                 }
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.output
-            .loginJavaScriptInjection
-            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
-            .drive(with: self) { owner, data in
-                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(data.cAccount)'", completionHandler:  nil)
-                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(data.password)'", completionHandler:  nil)
-                owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             }
             .disposed(by: disposeBag)
 
@@ -92,10 +82,10 @@ private extension SplashViewController {
 
         viewModel.output
             .loginJavaScriptInjection
-            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
-            .drive(with: self) { owner, data in
-                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(data.cAccount)'", completionHandler:  nil)
-                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(data.password)'", completionHandler:  nil)
+            .asDriver(onErrorJustReturn: UnivAuth(accountCID: "", password: ""))
+            .drive(with: self) { owner, univAuth in
+                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(univAuth.accountCID)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(univAuth.password)'", completionHandler:  nil)
                 owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             }
             .disposed(by: disposeBag)

@@ -36,15 +36,12 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
     }
     
     func navigate(_ destination: SplashNavigationDestination) {
+        let rootViewController = moduleViewController.parent as? RootViewController
         switch destination {
-        case .agree(let current):
-            if let rootVC = moduleViewController.parent as? RootViewController {
-                rootVC.switchToAgreement(currentTermVersion: current)
-            }
+        case .agree(let currentAgreementVersion):
+            rootViewController?.switchToAgreement(currentTermVersion: currentAgreementVersion)
         case .main:
-            if let rootVC = moduleViewController.parent as? RootViewController {
-                rootVC.switchToMain()
-            }
+            rootViewController?.switchToMain()
         }
     }
 }
