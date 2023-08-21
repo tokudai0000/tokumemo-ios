@@ -57,6 +57,7 @@
 		1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B72905072500A3E85A /* NewsViewController.swift */; };
 		1A6C51BA2905077E00A3E85A /* ClubListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListViewController.swift */; };
 		1A6EF50F27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6EF50E27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift */; };
+		1A762FCB2A9381D900F60DFA /* GenericAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A762FCA2A9381D900F60DFA /* GenericAPI.swift */; };
 		1A81A93126C12C8200CC56E2 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A93026C12C8200CC56E2 /* AppConstants.swift */; };
 		1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */; };
 		1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */; };
@@ -184,6 +185,7 @@
 		1A6C51B92905077E00A3E85A /* ClubListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListViewController.swift; sourceTree = "<group>"; };
 		1A6EF50E27BA5C63004D0B2C /* DateFormatter+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Exetnsion.swift"; sourceTree = "<group>"; };
 		1A72E30A26D65A6B00DB3179 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
+		1A762FCA2A9381D900F60DFA /* GenericAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAPI.swift; sourceTree = "<group>"; };
 		1A81A93026C12C8200CC56E2 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 		1A085CE72A69277200D31183 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				1A762FCA2A9381D900F60DFA /* GenericAPI.swift */,
 				1A0230182A8F96490084DD0B /* CurrentTermVersionAPI.swift */,
 				1AED5D0E2A9119180090B8DE /* HelpmessegeAgreeAPI.swift */,
 				1A3A75F92916792600069818 /* AdItemsAPI.swift */,
@@ -1023,6 +1026,7 @@
 				1ABE8BDD27B10489001EEA79 /* InputViewController.swift in Sources */,
 				1AED5D062A90C2DB0090B8DE /* UnivAuth.swift in Sources */,
 				1AED5D0C2A91112F0090B8DE /* HelpmessageAgreeView.swift in Sources */,
+				1A762FCB2A9381D900F60DFA /* GenericAPI.swift in Sources */,
 				1AE816C12A83978E00B8DA64 /* NewsItemRepository.swift in Sources */,
 				1AC4BE8C2A7CE64B00598EED /* AgreementRouter.swift in Sources */,
 				1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */,
