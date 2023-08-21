@@ -89,7 +89,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         }
 
         func scrapeLibraryCalendar(with url: URLRequest) {
-            dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: url)
+            dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: url.url!)
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .observe(on: MainScheduler.instance) // メインスレッドでの処理を指定
                 .subscribe(
