@@ -45,16 +45,25 @@ final class InputViewController: UIViewController {
         viewModel.input.viewDidLoad.accept(())
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        initSetup(type)
+    enum TextLabelType {
+        case first
+        case second
+    }
+    private func updateLabelWithText(text: String, for labelType: TextLabelType) {
+        switch labelType {
+        case .first:
+            TextField1.text = text
+            TextSizeLabel1.text = "\(text.count)/10"
+        case .second:
+            TextField2.text = text
+            TextSizeLabel2.text = "\(text.count)/30"
+        }
     }
 }
 
 // MARK: Binding
 private extension InputViewController {
     func binding() {
-
         leftBarButton.rx.tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapBackButton.accept(())
@@ -67,81 +76,56 @@ private extension InputViewController {
             }
             .disposed(by: disposeBag)
 
-        resetButton.rx
-            .tap
+        resetButton.rx.tap
             .subscribe(with: self) { owner, _ in
-                let alert = UIAlertController(title: "アラート表示",
-                                              message: "学生番号とパスワードの情報をこのスマホから消去しますか？",
-                                              preferredStyle:  UIAlertController.Style.alert)
-
-                let defaultAction = UIAlertAction(title: "OK",
-                                                  style: UIAlertAction.Style.default,
-                                                  handler:{ (action: UIAlertAction!) -> Void in
-                    owner.TextField1.text = ""
+                let alert = UIAlertController(title: "アラート表示", message: "学生番号とパスワードの情報をこのスマホから消去しますか？", preferredStyle:  UIAlertController.Style.alert)
+                let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in
+                    owner.updateLabelWithText(text: "", for: .first)
+                    owner.updateLabelWithText(text: "", for: .second)
                     owner.viewModel.input.didTapResetOKButton.accept(())
                 })
-
-                let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル",
-                                                                style: UIAlertAction.Style.cancel,
-                                                                handler:{ (action: UIAlertAction!) -> Void in })
-
-                alert.addAction(cancelAction)
+                let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{ (action: UIAlertAction!) -> Void in })
                 alert.addAction(defaultAction)
-
+                alert.addAction(cancelAction)
                 owner.present(alert, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
 
-        registerButton.rx
-            .tap
+        registerButton.rx.tap
             .subscribe(with: self) { owner, _ in
                 // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
                 guard let text1 = owner.TextField1.text else { return }
                 guard let text2 = owner.TextField2.text else { return }
                 owner.viewModel.input.didTapSaveButton.accept((text1, text2))
-
-                let alert = UIAlertController(title: "登録完了",
-                                              message: "",
-                                              preferredStyle:  UIAlertController.Style.alert)
-
-                let defaultAction = UIAlertAction(title: "OK",
-                                                  style: UIAlertAction.Style.default,
-                                                  handler:{ (action: UIAlertAction!) -> Void in
-                })
-                alert.addAction(defaultAction)
-                owner.present(alert, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
 
-        passwordViewButton.rx
-            .tap
+        passwordViewButton.rx.tap
             .subscribe(with: self) { owner, _ in
+                // パスワードを●●で表記しているのを切り替え。ボタンの画像も切り替える。
                 let image = owner.TextField2.isSecureTextEntry ? "eye" : "eye.slash"
                 owner.passwordViewButton.setImage(UIImage(systemName: image), for: .normal)
                 owner.TextField2.isSecureTextEntry = !owner.TextField2.isSecureTextEntry
             }
             .disposed(by: disposeBag)
 
-//        viewModel.output
-//            .configureTextType
-//            .asDriver(onErrorJustReturn: .error)
-//            .drive(with: self) { owner, type in
-//                switch type {
-//                case .password:
-//                    owner.configurePassword()
-//                case .syllabus:
-//                    owner.configureSyllabus()
-//                case . error:
-//                    fatalError()
-//                }
-//            }
-//            .disposed(by: disposeBag)
-
         viewModel.output
             .textField1
             .asDriver(onErrorJustReturn: "")
             .drive(with: self) { owner, text in
-                owner.TextField1.text = text
+                // 生体認証等無く、パスワードを表示させることは危険なので、cアカウントのみ表示
+                owner.updateLabelWithText(text: text, for: .first)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .callDoneAlert
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                let alert = UIAlertController(title: "登録完了", message: "", preferredStyle: UIAlertController.Style.alert)
+                let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in })
+                alert.addAction(defaultAction)
+                owner.present(alert, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
     }
@@ -171,47 +155,16 @@ private extension InputViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationItem.setLeftBarButton(leftBarButton, animated: true)
         navigationItem.leftBarButtonItem?.tintColor = .black
-//        navigationItem.rightBarButtonItem?.tintColor = .white
-//        setEdgeSwipeBackIsActive(to: true)
     }
 
     func configurePassword() {
         title = "パスワード"
         titleLabel1.text = "cアカウント"
         titleLabel2.text = "パスワード"
-//        TextField1.text = dataManager.cAccount
-        // 生体認証等無く、パスワードを表示させることは危険
-        // TextField2.text = dataManager.password
-//        TextSizeLabel1.text = "\(dataManager.cAccount.count)/10"
-        // 上記同様、桁数も初期状態では0桁にする
-        TextSizeLabel2.text = "0/100"
+        TextSizeLabel2.text = "0/30"
         TextField2.isSecureTextEntry = true
         resetButton.layer.cornerRadius = 25.0
         registerButton.setTitle("登録", for: .normal)
-
-    }
-
-    func configureSyllabus() {
-        title = "シラバス"
-        titleLabel1.text = "教員名"
-        titleLabel2.text = "科目名"
-        TextField1.text = ""
-        TextField2.text = ""
-        TextSizeLabel1.text = "0/100"
-        TextSizeLabel2.text = "0/100"
-        resetButton.isHidden = true
-        passwordViewButton.isHidden = true
-        registerButton.setTitle("検索", for: .normal)
-    }
-
-    func alert(title:String, message:String) {
-        alertController = UIAlertController(title: title,
-                                            message: message,
-                                            preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK",
-                                                style: .default,
-                                                handler: nil))
-        present(alertController, animated: true)
     }
 
     @objc func dismissKeyboard() {
@@ -222,8 +175,8 @@ private extension InputViewController {
 private extension InputViewController {
     /// TextFieldの種類
     enum FieldType: Int {
-        case one = 0 // 科目名
-        case two = 1 // 教員名
+        case one = 0 // cアカウント
+        case two = 1 // パスワード
     }
     /// カーソルの表示種類
     enum CursorType {
@@ -295,7 +248,11 @@ extension InputViewController: UITextFieldDelegate {
     }
     /// text内容が変更されるたびに
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        TextSizeLabel1.text = "\(TextField1.text?.count ?? 0)/10"
-        TextSizeLabel2.text = "\(TextField2.text?.count ?? 0)/100"
+        if let textField1 = TextField1.text {
+            TextSizeLabel1.text = "\(textField1.count)/10"
+        }
+        if let textField2 = TextField2.text {
+            TextSizeLabel2.text = "\(textField2.count)/30"
+        }
     }
 }

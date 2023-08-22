@@ -27,6 +27,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
 
     struct Output: OutputType {
         let textField1: Observable<String>
+        let callDoneAlert: Observable<Void>
     }
 
     struct State: StateType {
@@ -39,6 +40,7 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let textField1: PublishRelay<String> = .init()
+        let callDoneAlert: PublishRelay<Void> = .init()
 
         input.viewDidLoad
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
@@ -65,17 +67,11 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
         input.didTapSaveButton
             .subscribe { items in
                 if let items = items.element,
-                let cAccount = items.cAccount,
-                   let password = items.password{
+                let cAccount = items.cAccount, let password = items.password{
                     dependency.univAuthStoreUseCase.setUnivAuth(
                         UnivAuth(accountCID: cAccount.description, password: password.description)
                     )
-//                    alert(title: "♪ 登録完了 ♪",
-//                          message: "以降、アプリを開くたびに自動ログインの機能が使用できる様になりました。")
-                    //
-                    //                default:
-                    //                    fatalError()
-                    //                }
+                    callDoneAlert.accept(())
                 }
             }
             .disposed(by: disposeBag)
@@ -88,7 +84,8 @@ final class InputViewModel: BaseViewModel<InputViewModel>, InputViewModelInterfa
             .disposed(by: disposeBag)
 
         return .init(
-            textField1: textField1.asObservable()
+            textField1: textField1.asObservable(),
+            callDoneAlert: callDoneAlert.asObservable()
         )
     }
 }
