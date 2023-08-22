@@ -112,6 +112,14 @@ private extension HomeViewController {
                 }
                 let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
+
+                // iPad用の設定
+                alertController.popoverPresentationController?.sourceView = owner.view
+                alertController.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.size.width/2,
+                                                                                   y: UIScreen.main.bounds.size.height-70,
+                                                                                   width: 0,
+                                                                                   height: 0)
+
                 owner.present(alertController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
@@ -159,10 +167,23 @@ private extension HomeViewController {
         menuCollectionView.backgroundColor = .white
         menuCollectionView.layer.cornerRadius = 20.0
         let layout = UICollectionViewFlowLayout()
-        // 画面横に3つ配置したい。余裕を持って横画面/3.5 に設定
-        let cellSize = floor(menuCollectionView.bounds.width / 3.5)
-        layout.itemSize = CGSize(width: cellSize, height: cellSize)
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            // 使用デバイスがiPhoneの場合
+            // 画面横に3つ配置したい。余裕を持って横画面/4 に設定
+            let cellSize = floor(view.bounds.width / 4)
+            layout.itemSize = CGSize(width: cellSize, height: cellSize)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
+            menuCollectionViewHeightConstraint.constant = (cellSize * 2) + 10
+
+        } else if UIDevice.current.userInterfaceIdiom == .pad {
+            // 使用デバイスがiPadの場合
+            // 画面横に6つ配置したい。余裕を持って横画面/6.5 に設定
+            let cellSize = floor(view.bounds.width / 7)
+            layout.itemSize = CGSize(width: cellSize, height: cellSize)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            menuCollectionViewHeightConstraint.constant = cellSize
+        }
+
         menuCollectionView.collectionViewLayout = layout
     }
 }
@@ -192,6 +213,21 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.input.didTapMenuCollectionItem.accept(indexPath.row)
     }
+
+    // 中央寄せ
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+//        let cellWidth = Int(flowLayout.itemSize.width)
+//        let cellSpacing = Int(flowLayout.minimumInteritemSpacing)
+//        let cellCount = ItemsConstants().menuItems.count
+//
+//        let totalCellWidth = cellWidth * cellCount
+//        let totalSpacingWidth = cellSpacing * (cellCount - 1)
+//
+//        let inset = (collectionView.bounds.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+//
+//        return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+//    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
