@@ -89,8 +89,6 @@
 		1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */; };
 		1AD00BF12A8BFDE0008C7EFC /* AcceptedTermVersionStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BF02A8BFDE0008C7EFC /* AcceptedTermVersionStoreUseCase.swift */; };
 		1AD00BF32A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BF22A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift */; };
-		1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */; };
-		1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */; };
 		1AD6B7962A6BE5830046FA47 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7982A6BE5830046FA47 /* Localizable.strings */; };
 		1ADE675E2A77A13E00B79D69 /* UIColor+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADE675D2A77A13E00B79D69 /* UIColor+Exetnsion.swift */; };
 		1AE816B62A833DF800B8DA64 /* NewsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816B52A833DF800B8DA64 /* NewsRouter.swift */; };
@@ -219,8 +217,6 @@
 		1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		1AD00BF02A8BFDE0008C7EFC /* AcceptedTermVersionStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedTermVersionStoreUseCase.swift; sourceTree = "<group>"; };
 		1AD00BF22A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedTermVersionRepository.swift; sourceTree = "<group>"; };
-		1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
-		1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MenuTable.storyboard; sourceTree = "<group>"; };
 		1AD6B7972A6BE5830046FA47 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1ADE675D2A77A13E00B79D69 /* UIColor+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Exetnsion.swift"; sourceTree = "<group>"; };
 		1AE816B52A833DF800B8DA64 /* NewsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRouter.swift; sourceTree = "<group>"; };
@@ -424,7 +420,6 @@
 			children = (
 				1AED5D092A9110F60090B8DE /* HelpmessageAgreeView */,
 				1ACB59AB291D11A8005A90BE /* NewsCell */,
-				1AD6B78F2A6970CC0046FA47 /* MenuTable */,
 				1A085CEF2A69676900D31183 /* PrBanner */,
 				1A9378B02A629487009A5758 /* UnivBanner */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
@@ -604,15 +599,6 @@
 			path = NewsCell;
 			sourceTree = "<group>";
 		};
-		1AD6B78F2A6970CC0046FA47 /* MenuTable */ = {
-			isa = PBXGroup;
-			children = (
-				1AD6B7912A6970CC0046FA47 /* MenuTable.storyboard */,
-				1AD6B7902A6970CC0046FA47 /* MenuTableViewController.swift */,
-			);
-			path = MenuTable;
-			sourceTree = "<group>";
-		};
 		1ADE675C2A779FE600B79D69 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,7 +769,6 @@
 				1AED5D0D2A91112F0090B8DE /* HelpmessageAgreeViewController.xib in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */,
-				1AD6B7932A6970CC0046FA47 /* MenuTable.storyboard in Resources */,
 				1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
 				1A9378B42A6294D2009A5758 /* UnivBannerView.xib in Resources */,
@@ -961,7 +946,6 @@
 				1ACB59AE291D11CD005A90BE /* NewsTableViewCell.swift in Sources */,
 				1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */,
 				1A58F6832A8645780025737A /* InputViewModel.swift in Sources */,
-				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
 				1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* AdItem.swift in Sources */,
 				1ACD66382A867C0300244DC0 /* UnivAuthRepository.swift in Sources */,
