@@ -139,7 +139,7 @@ class BannerScrollViewController: UIViewController {
                 }
             }
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-            bannerView.imageView.cornerRound = 20
+            bannerView.imageView.layer.cornerRadius = 20
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定
@@ -178,7 +178,7 @@ class BannerScrollViewController: UIViewController {
                 }
             }
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-            bannerView.imageView.cornerRound = 20
+            bannerView.imageView.layer.cornerRadius = 20
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定

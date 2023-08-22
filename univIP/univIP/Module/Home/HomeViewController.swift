@@ -157,7 +157,7 @@ private extension HomeViewController {
         menuCollectionView.delegate = self
         menuCollectionView.dataSource = self
         menuCollectionView.backgroundColor = .white
-        menuCollectionView.cornerRound = 20.0
+        menuCollectionView.layer.cornerRadius = 20.0
         let layout = UICollectionViewFlowLayout()
         // 画面横に3つ配置したい。余裕を持って横画面/3.5 に設定
         let cellSize = floor(menuCollectionView.bounds.width / 3.5)

@@ -84,14 +84,14 @@ private extension AgreementViewController {
 
         termsButton.setTitle(R.string.localizable.terms_of_service(), for: .normal)
         termsButton.backgroundColor = .white
-        termsButton.borderColor = .black
+        termsButton.layer.borderColor = UIColor.black.cgColor
         termsButton.tintColor = .black
         termsButton.layer.cornerRadius = 10.0
         termsButton.layer.borderWidth = 1
 
         privacyButton.setTitle(R.string.localizable.privacy_policy(), for: .normal)
         privacyButton.backgroundColor = .white
-        privacyButton.borderColor = .black
+        privacyButton.layer.borderColor = UIColor.black.cgColor
         privacyButton.tintColor = .black
         privacyButton.layer.cornerRadius = 10.0
         privacyButton.layer.borderWidth = 1
