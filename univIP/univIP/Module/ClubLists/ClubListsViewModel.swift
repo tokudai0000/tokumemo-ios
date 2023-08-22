@@ -1,5 +1,5 @@
 //
-//  ClubListViewModel.swift
+//  ClubListsViewModel.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2023/08/11.
@@ -10,12 +10,12 @@ import Foundation
 import RxRelay
 import RxSwift
 
-protocol ClubListViewModelInterface: AnyObject {
-    var input: ClubListViewModel.Input { get }
-    var output: ClubListViewModel.Output { get }
+protocol ClubListsViewModelInterface: AnyObject {
+    var input: ClubListsViewModel.Input { get }
+    var output: ClubListsViewModel.Output { get }
 }
 
-final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewModelInterface {
+final class ClubListsViewModel: BaseViewModel<ClubListsViewModel>, ClubListsViewModelInterface {
 
     struct Input: InputType {
         let didTapWebLink = PublishRelay<String>()
@@ -28,11 +28,10 @@ final class ClubListViewModel: BaseViewModel<ClubListViewModel>, ClubListViewMod
     }
 
     struct Dependency: DependencyType {
-        let router: ClubListRouterInterface
+        let router: ClubListsRouterInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
-
         input.didTapWebLink
             .subscribe { urlStr in
                 if let url = URL(string: urlStr) {

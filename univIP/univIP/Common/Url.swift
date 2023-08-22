@@ -115,7 +115,7 @@ enum Url: String {
     case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
     
     /// 徳大学生活動リスト
-    case clubList = "https://tokudai0000.github.io/club-list/"
+    case clubLists = "https://tokudai0000.github.io/club-list/"
     
     
     case prItemJsonData = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"

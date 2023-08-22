@@ -12,15 +12,15 @@ enum ClubListNavigationDestination {
     case goWeb(URLRequest)
 }
 
-protocol ClubListRouterInterface {
+protocol ClubListsRouterInterface {
     func navigate(_ destination: ClubListNavigationDestination)
 }
 
-final class ClubListRouter: BaseRouter, ClubListRouterInterface {
+final class ClubListsRouter: BaseRouter, ClubListsRouterInterface {
     init() {
-        let viewController = R.storyboard.clubList.clubListViewController()!
+        let viewController = R.storyboard.clubLists.clubListsViewController()!
         super.init(moduleViewController: viewController)
-        viewController.viewModel = ClubListViewModel(
+        viewController.viewModel = ClubListsViewModel(
             input: .init(),
             state: .init(),
             dependency: .init(router: self)

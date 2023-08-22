@@ -1,5 +1,5 @@
 //
-//  ClubListViewController.swift
+//  ClubListsViewController.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2022/10/23.
@@ -8,10 +8,10 @@
 import UIKit
 import WebKit
 
-class ClubListViewController: UIViewController {
+class ClubListsViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView!
 
-    var viewModel: ClubListViewModelInterface!
+    var viewModel: ClubListsViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,15 +20,15 @@ class ClubListViewController: UIViewController {
 }
 
 // MARK: Layout
-private extension ClubListViewController {
+private extension ClubListsViewController {
     func configureDefault() {
         // Web側(JavaScript)からtokumemoPlus関数が送られてくるのを受け取る設定
         webView.configuration.userContentController.add(self, name: "tokumemoPlus")
-        webView.load(Url.clubList.urlRequest())
+        webView.load(Url.clubLists.urlRequest())
     }
 }
 
-extension ClubListViewController: WKNavigationDelegate, WKScriptMessageHandler {
+extension ClubListsViewController: WKNavigationDelegate, WKScriptMessageHandler {
     
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,

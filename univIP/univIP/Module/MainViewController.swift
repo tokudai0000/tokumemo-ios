@@ -25,8 +25,8 @@ final class MainViewController: UITabBarController {
                                                      image: R.image.tabIcon.news(),
                                                      selectedImage: nil)
 
-        let clubListViewController = ClubListRouter().moduleViewController
-        clubListViewController.tabBarItem = UITabBarItem(title: R.string.localizable.club_lists(),
+        let clubListsViewController = ClubListsRouter().moduleViewController
+        clubListsViewController.tabBarItem = UITabBarItem(title: R.string.localizable.club_lists(),
                                                          image: R.image.tabIcon.clubLists(),
                                                          selectedImage: nil)
 
@@ -35,6 +35,6 @@ final class MainViewController: UITabBarController {
                                                          image: R.image.tabIcon.settings(),
                                                          selectedImage: nil)
 
-        viewControllers = [homeViewController, newsViewController, clubListViewController, settingsViewController]
+        viewControllers = [homeViewController, newsViewController, clubListsViewController, settingsViewController]
     }
 }

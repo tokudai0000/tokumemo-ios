@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ClubList-->
+        <!--ClubLists-->
         <scene sceneID="vpG-Vn-O9W">
             <objects>
-                <viewController storyboardIdentifier="ClubListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="c8q-AA-dNK" customClass="ClubListViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ClubListsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="c8q-AA-dNK" customClass="ClubListsViewController" customModule="univIP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fOP-Xx-bJm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,7 +55,7 @@
                             <constraint firstItem="LMj-0H-bht" firstAttribute="top" secondItem="ZRM-2d-DCw" secondAttribute="bottom" id="nie-lC-KQo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="ClubList" image="TabIcon/clubLists" id="kdD-Fy-TXF"/>
+                    <tabBarItem key="tabBarItem" title="ClubLists" image="TabIcon/clubLists" id="kdD-Fy-TXF"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="LMj-0H-bht" id="pyL-N4-DCm"/>
