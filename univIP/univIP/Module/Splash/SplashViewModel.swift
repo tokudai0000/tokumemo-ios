@@ -105,7 +105,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                     dependency.router.navigate(.main)
                 }
-                return
             }
             .disposed(by: disposeBag)
 
@@ -143,7 +142,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                     return
                 }
                 // ログイン処理を行うURLか判定
-                if URLCheckers.canInjectJavaScriptForUniversityLoginURL(at: url.absoluteString, canExecuteJavascript) {
+                if URLCheckers.shouldInjectJavaScript(at: url.absoluteString, canExecuteJavascript, for: .universityLogin) {
                     state.canExecuteJavascript.accept(false)
                     loginJavaScriptInjection.accept(dependency.univAuthStoreUseCase.fetchUnivAuth())
                 }

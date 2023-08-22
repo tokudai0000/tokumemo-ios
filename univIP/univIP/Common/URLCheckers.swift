@@ -7,14 +7,27 @@
 
 struct URLCheckers {
 
-    /// URLが大学サイトのログイン画面であり、JavaScriptを挿入できるかを確認します。
+    enum UrlType {
+        case universityLogin       // 大学のログインページ
+        case outlookLoginForm      // Outlookのログインフォーム
+        case tokudaiCareerCenter   // 特大キャリアセンター
+    }
+    /// 指定されたURLにJavaScriptを挿入できるかどうかを判断します。
     /// - Parameters:
     ///   - urlString: 確認するURLの文字列
-    ///   - canExecuteJavascript: JavaScriptの実行が許可されているかどうか
+    ///   - canExecuteJavascript: JavaScriptの実行が許可されているかどうかのフラグ
+    ///   - urlType: 確認するURLのタイプ
     /// - Returns: JavaScriptを挿入できる場合は`true`、そうでない場合は`false`
-    static func canInjectJavaScriptForUniversityLoginURL(at urlString: String, _ canExecuteJavascript: Bool) -> Bool {
+    static func shouldInjectJavaScript(at urlString: String, _ canExecuteJavascript: Bool, for urlType: UrlType) -> Bool {
         if canExecuteJavascript == false { return false }
-        return urlString.contains(Url.universityLogin.string())
+        switch urlType {
+        case .universityLogin:
+            return urlString.contains(Url.universityLogin.string())
+        case .outlookLoginForm:
+            return urlString.contains(Url.outlookLoginForm.string())
+        case .tokudaiCareerCenter:
+            return urlString.contains(Url.tokudaiCareerCenter.string())
+        }
     }
 
     /// URLが大学サイトのアンケート催促画面かを確認します。
@@ -51,6 +64,9 @@ struct URLCheckers {
     }
 
     /// URLが大学サイトのログイン直後かを確認します。(3通り存在)
+    /// 1, アンケート最速画面
+    /// 2, 教務事務システムのモバイル画面(iPhone)
+    /// 3, 教務事務システムのPC画面(iPad)
     /// - Parameter urlStr: 確認するURLの文字列
     /// - Returns: ログイン直後のURLである場合は`true`、そうでない場合は`false`
     static func isImmediatelyAfterLoginURL(at urlStr: String) -> Bool {
