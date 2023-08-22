@@ -45,6 +45,14 @@ final class HomeViewController: UIViewController {
         binding()
         viewModel.input.viewDidLoad.accept(())
     }
+
+    // iPadで画面回転を行った際の再描画
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil, completion: { _ in
+            self.configureMenuCollectionView()
+        })
+    }
 }
 
 // MARK: Binding
@@ -64,7 +72,8 @@ private extension HomeViewController {
             }
             .disposed(by: disposeBag)
 
-        prBannerPageControl.rx.controlEvent(.valueChanged)
+        prBannerPageControl.rx
+            .controlEvent(.valueChanged)
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
