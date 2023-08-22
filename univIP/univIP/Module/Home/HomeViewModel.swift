@@ -44,7 +44,6 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
         let numberOfUsersAPI: NumberOfUsersAPIInterface
-        let adItemStoreUseCase: AdItemStoreUseCaseInterface
         let libraryCalendarWebScraper: LibraryCalendarWebScraperInterface
     }
 
@@ -59,13 +58,10 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        dependency.adItemStoreUseCase.setAdItems(response.adItems)
+                        prItems.accept(response.adItems.prItems)
+                        univItems.accept(response.adItems.univItems)
 
-                        let fetchAdItems = dependency.adItemStoreUseCase.fetchAdItems()
-                        prItems.accept(fetchAdItems.prItems)
-                        univItems.accept(fetchAdItems.univItems)
-
-                        state.adItems.accept(fetchAdItems)
+                        state.adItems.accept(response.adItems)
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)

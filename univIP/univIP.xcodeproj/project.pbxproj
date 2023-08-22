@@ -65,8 +65,6 @@
 		1A9378AE2A60E7B3009A5758 /* PrBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */; };
 		1A9378B22A6294C6009A5758 /* UnivBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378B12A6294C6009A5758 /* UnivBannerView.swift */; };
 		1A9378B42A6294D2009A5758 /* UnivBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378B32A6294D2009A5758 /* UnivBannerView.xib */; };
-		1A9A3E452A80D771003B5E40 /* AdItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9A3E442A80D771003B5E40 /* AdItemRepository.swift */; };
-		1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9A3E472A80DACB003B5E40 /* AdItemStoreUseCase.swift */; };
 		1AA056D626BD2AE500343005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AA056D526BD2AE500343005 /* Assets.xcassets */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
 		1AB37B7D26FDFCF4008A2D2F /* univIPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B7C26FDFCF4008A2D2F /* univIPUITests.swift */; };
@@ -194,8 +192,6 @@
 		1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrBannerView.xib; sourceTree = "<group>"; };
 		1A9378B12A6294C6009A5758 /* UnivBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivBannerView.swift; sourceTree = "<group>"; };
 		1A9378B32A6294D2009A5758 /* UnivBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnivBannerView.xib; sourceTree = "<group>"; };
-		1A9A3E442A80D771003B5E40 /* AdItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItemRepository.swift; sourceTree = "<group>"; };
-		1A9A3E472A80DACB003B5E40 /* AdItemStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItemStoreUseCase.swift; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA056D526BD2AE500343005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AA056DA26BD2AE500343005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -433,7 +429,6 @@
 		1A5B108E2A77EB0F00C0E61B /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				1A9A3E442A80D771003B5E40 /* AdItemRepository.swift */,
 				1AE816C02A83978E00B8DA64 /* NewsItemRepository.swift */,
 				1ACD66372A867C0300244DC0 /* UnivAuthRepository.swift */,
 				1AD00BF22A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift */,
@@ -482,7 +477,6 @@
 		1A9A3E462A80DA78003B5E40 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				1A9A3E472A80DACB003B5E40 /* AdItemStoreUseCase.swift */,
 				1AE816C22A83986D00B8DA64 /* NewsItemStoreUseCase.swift */,
 				1ACD66352A8671D800244DC0 /* UnivAuthStoreUseCase.swift */,
 				1AD00BF02A8BFDE0008C7EFC /* AcceptedTermVersionStoreUseCase.swift */,
@@ -987,7 +981,6 @@
 				1A9378AC2A60E7A7009A5758 /* PrBannerView.swift in Sources */,
 				1A58F6832A8645780025737A /* InputViewModel.swift in Sources */,
 				1AD6B7922A6970CC0046FA47 /* MenuTableViewController.swift in Sources */,
-				1A9A3E482A80DACB003B5E40 /* AdItemStoreUseCase.swift in Sources */,
 				1A50CDAD2A832AE70079A090 /* MainRouter.swift in Sources */,
 				1A1A4E112A09FE75003A343B /* AdItem.swift in Sources */,
 				1ACD66382A867C0300244DC0 /* UnivAuthRepository.swift in Sources */,
@@ -999,7 +992,6 @@
 				1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */,
 				1ACD66362A8671D800244DC0 /* UnivAuthStoreUseCase.swift in Sources */,
 				1AE816B62A833DF800B8DA64 /* NewsRouter.swift in Sources */,
-				1A9A3E452A80D771003B5E40 /* AdItemRepository.swift in Sources */,
 				1AC4BE8A2A7CE62700598EED /* AgreementViewModel.swift in Sources */,
 				1A58F67F2A861AFE0025737A /* SettingsRouter.swift in Sources */,
 				1A0230172A8F94680084DD0B /* NumberOfUsersAPI.swift in Sources */,
