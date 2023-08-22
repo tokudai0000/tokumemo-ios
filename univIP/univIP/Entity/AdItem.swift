@@ -5,8 +5,6 @@
 //  Created by Akihiro Matsuyama on 2023/05/09.
 //
 
-import APIKit
-
 struct AdItems {
     var prItems:[AdItem]
     var univItems:[AdItem]
@@ -18,7 +16,7 @@ struct AdItem: Decodable {
     let imageUrlStr: String
     let targetUrlStr: String
     let imageDescription: String
-    
+
     init(id: Int, clientName: String, imageUrlStr: String, targetUrlStr: String, imageDescription: String) {
         self.id = id
         self.clientName = clientName
@@ -27,14 +25,17 @@ struct AdItem: Decodable {
         self.imageDescription = imageDescription
     }
 
-    // APIからのレスポンスをパースする
+    enum ParsingError: Error {
+        case invalidData
+    }
+
     init(dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? Int,
               let clientName = dictionary["clientName"] as? String,
               let imageUrlStr = dictionary["imageUrlStr"] as? String,
               let targetUrlStr = dictionary["targetUrlStr"] as? String,
               let imageDescription = dictionary["imageDescription"] as? String else {
-            throw ResponseError.unexpectedObject(dictionary)
+            throw ParsingError.invalidData
         }
         self.id = id
         self.clientName = clientName
