@@ -11,8 +11,8 @@ import RxSwift
 
 class PRViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var textLabel: UILabel!
-    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var clientNameLabel: UILabel!
+    @IBOutlet private weak var imageDescriptionTextView: UITextView!
     @IBOutlet private weak var detailsInfoButton: UIButton!
     @IBOutlet private weak var closeButton: UIButton!
 
@@ -44,11 +44,11 @@ private extension PRViewController {
             .disposed(by: disposeBag)
 
         viewModel.output
-            .imageStr
+            .imageUrlStr
             .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner, imageStr in
-                if let url = URL(string: imageStr) {
-                    owner.imageView.loadImage(from: url)
+            .drive(with: self) { owner, imageUrlStr in
+                if let imageUrl = URL(string: imageUrlStr) {
+                    owner.imageView.loadImage(from: imageUrl)
                 }
             }
             .disposed(by: disposeBag)
@@ -57,15 +57,15 @@ private extension PRViewController {
             .clientName
             .asDriver(onErrorJustReturn: "")
             .drive(with: self) { owner, text in
-                owner.textLabel.text = text
+                owner.clientNameLabel.text = text
             }
             .disposed(by: disposeBag)
 
         viewModel.output
-            .text
+            .imageDescription
             .asDriver(onErrorJustReturn: "")
             .drive(with: self) { owner, text in
-                owner.textView.text = text
+                owner.imageDescriptionTextView.text = text
             }
             .disposed(by: disposeBag)
     }
@@ -74,7 +74,7 @@ private extension PRViewController {
 // MARK: Layout
 private extension PRViewController {
     func configureDefault() {
-        textView.cornerRound = 15
+        imageDescriptionTextView.cornerRound = 15
         detailsInfoButton.cornerRound = 20
     }
 }
