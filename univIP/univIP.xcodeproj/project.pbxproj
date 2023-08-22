@@ -35,9 +35,6 @@
 		1A50CDAF2A832D170079A090 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50CDAE2A832D170079A090 /* MainViewController.swift */; };
 		1A5306CE2A6E2C5B00A1AD0C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */; };
 		1A556D922963BD4B00A650B2 /* String+Exetnsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */; };
-		1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A5698BD2938CA8D003906DB /* Menu.storyboard */; };
-		1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698BF2938CA96003906DB /* MenuViewController.swift */; };
-		1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5698C12938CA9F003906DB /* MenuViewModel.swift */; };
 		1A58F6742A84D9320025737A /* ItemsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6732A84D9320025737A /* ItemsConstants.swift */; };
 		1A58F6772A8532520025737A /* MenuDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6762A8532520025737A /* MenuDetailItem.swift */; };
 		1A58F67B2A85551E0025737A /* HomeMiniSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */; };
@@ -160,9 +157,6 @@
 		1A50CDAE2A832D170079A090 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Exetnsion.swift"; sourceTree = "<group>"; };
-		1A5698BD2938CA8D003906DB /* Menu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
-		1A5698BF2938CA96003906DB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		1A5698C12938CA9F003906DB /* MenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		1A58F6732A84D9320025737A /* ItemsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsConstants.swift; sourceTree = "<group>"; };
 		1A58F6762A8532520025737A /* MenuDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailItem.swift; sourceTree = "<group>"; };
 		1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMiniSettingsItem.swift; sourceTree = "<group>"; };
@@ -339,7 +333,6 @@
 				1AC4BE942A7E336600598EED /* WebRouter.swift */,
 				1A30D0AD28F6D79800C4012E /* WebViewController.swift */,
 				1A384F9728FD794200A1F52E /* WebViewModel.swift */,
-				1A5698BC2938CA09003906DB /* Menu */,
 			);
 			path = Web;
 			sourceTree = "<group>";
@@ -398,16 +391,6 @@
 				1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */,
 			);
 			path = Splash;
-			sourceTree = "<group>";
-		};
-		1A5698BC2938CA09003906DB /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				1A5698BD2938CA8D003906DB /* Menu.storyboard */,
-				1A5698BF2938CA96003906DB /* MenuViewController.swift */,
-				1A5698C12938CA9F003906DB /* MenuViewModel.swift */,
-			);
-			path = Menu;
 			sourceTree = "<group>";
 		};
 		1A5B108D2A77E99F00C0E61B /* Entity */ = {
@@ -797,7 +780,6 @@
 			files = (
 				1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */,
 				1A9378AE2A60E7B3009A5758 /* PrBannerView.xib in Resources */,
-				1A5698BE2938CA8D003906DB /* Menu.storyboard in Resources */,
 				1AED5D0D2A91112F0090B8DE /* HelpmessageAgreeViewController.xib in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */,
@@ -971,7 +953,6 @@
 				1A556D922963BD4B00A650B2 /* String+Exetnsion.swift in Sources */,
 				1A154F292A8C809900E6D3CB /* URLCheckers.swift in Sources */,
 				1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */,
-				1A5698C22938CA9F003906DB /* MenuViewModel.swift in Sources */,
 				1A30D0BB28F9C14200C4012E /* SettingsViewController.swift in Sources */,
 				1A50CDAB2A82B57D0079A090 /* ClubListsRouter.swift in Sources */,
 				1AC4BE8F2A7DE32C00598EED /* BaseRouter.swift in Sources */,
@@ -1014,7 +995,6 @@
 				1A26A2612A77FB3C00BC6988 /* R.generated.swift in Sources */,
 				1A41EAE4272914CC0064CDB7 /* AKLibrary.swift in Sources */,
 				1AFC67CD2732BFA80059A053 /* Url.swift in Sources */,
-				1A5698C02938CA96003906DB /* MenuViewController.swift in Sources */,
 				1AD00BE92A8BD44A008C7EFC /* SplashViewController.swift in Sources */,
 				1A58F6742A84D9320025737A /* ItemsConstants.swift in Sources */,
 				1A20C4612A809A970063B5D6 /* HomeRouter.swift in Sources */,
