@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxGesture
 
 final class HelpmessageAgreeViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView!
