@@ -30,17 +30,20 @@ class NewsViewController: UIViewController {
 // MARK: Binding
 private extension NewsViewController {
     func binding() {
+        tableView.rx
+            .itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                if let self = self {
+                    self.viewModel.input.didTapNewsItem.accept(indexPath.row)
+                    self.tableView.deselectRow(at: indexPath, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+
         viewModel.output.newsItems
             .bind(to: tableView.rx.items(cellIdentifier: R.nib.newsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { index, model, cell in
                 cell.configure(model: model)
             }
-            .disposed(by: disposeBag)
-
-        tableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.viewModel.input.didTapNewsItem.accept(indexPath.row)
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-            })
             .disposed(by: disposeBag)
     }
 }

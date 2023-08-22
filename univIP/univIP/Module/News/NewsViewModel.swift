@@ -34,7 +34,6 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
     struct Dependency: DependencyType {
         let router: NewsRouterInterface
         let newsItemsRSS: NewsItemsRSSInterface
-        let newsItemStoreUseCase: NewsItemStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -45,9 +44,8 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        dependency.newsItemStoreUseCase.setNewsItems(response)
-                        newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
-                        state.newsItems.accept(dependency.newsItemStoreUseCase.fetchNewsItems())
+                        state.newsItems.accept(response)
+                        newsItems.accept(response)
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -57,7 +55,7 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
         }
 
         input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { _ in
                 getNewsItems()
             })
@@ -65,12 +63,10 @@ final class NewsViewModel: BaseViewModel<NewsViewModel>, NewsViewModelInterface 
 
         input.didTapNewsItem
             .subscribe { index in
-                guard let newsItems = state.newsItems.value,
-                      let url = URL(string: newsItems[index].targetUrlStr) else {
-                    return
+                if let newsItems = state.newsItems.value,
+                      let url = URL(string: newsItems[index].targetUrlStr) {
+                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
                 }
-                dependency.router.navigate(.goWeb(URLRequest(url: url)))
-
             }
             .disposed(by: disposeBag)
 

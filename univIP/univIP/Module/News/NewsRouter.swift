@@ -24,10 +24,7 @@ final class NewsRouter: BaseRouter, NewsRouterInterface {
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              newsItemsRSS: NewsItemsRSS(),
-                              newsItemStoreUseCase: NewsItemStoreUseCase(
-                                newsItemRepository: NewsItemOnMemoryRepository()
-                              )
+                              newsItemsRSS: NewsItemsRSS()
                              )
         )
     }
