@@ -53,7 +53,7 @@ final class HelpmessageAgreeViewModel: BaseViewModel<HelpmessageAgreeViewModel>,
         }
 
         input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { _ in
                 getAgreementText()
             })

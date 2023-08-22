@@ -59,7 +59,5 @@ private extension HelpmessageAgreeViewController {
         navigationItem.setLeftBarButton(leftBarButton, animated: true)
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.title = "同意書"
-//        navigationItem.rightBarButtonItem?.tintColor = .white
-//        setEdgeSwipeBackIsActive(to: true)
     }
 }

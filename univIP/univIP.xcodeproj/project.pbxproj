@@ -529,6 +529,7 @@
 				1AC1332B294C2D1000E3DC16 /* PRDetail */,
 				1A30D0AC28F6D75000C4012E /* Web */,
 				1ABE8BCB27B10489001EEA79 /* Input */,
+				1AED5D102A91A3E20090B8DE /* HelpmessageAgree */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -570,7 +571,6 @@
 				1A58F6802A8645120025737A /* InputRouter.swift */,
 				1ABE8BCD27B10489001EEA79 /* InputViewController.swift */,
 				1A58F6822A8645780025737A /* InputViewModel.swift */,
-				1AED5D102A91A3E20090B8DE /* HelpmessageAgree */,
 			);
 			path = Input;
 			sourceTree = "<group>";
