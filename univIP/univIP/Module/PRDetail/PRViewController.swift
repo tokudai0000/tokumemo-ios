@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
 import RxSwift
 
 class PRViewController: UIViewController {
@@ -31,13 +30,15 @@ class PRViewController: UIViewController {
 // MARK: Binding
 private extension PRViewController {
     func binding() {
-        detailsInfoButton.rx.tap
+        detailsInfoButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapDetailsInfoButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        closeButton.rx.tap
+        closeButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapCloseButton.accept(())
             }

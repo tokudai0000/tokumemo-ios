@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
 import RxSwift
 
 final class AgreementViewController: UIViewController {
@@ -34,19 +33,22 @@ final class AgreementViewController: UIViewController {
 private extension AgreementViewController {
 
     func binding() {
-        termsButton.rx.tap
+        termsButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapTermsButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        privacyButton.rx.tap
+        privacyButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapPrivacyButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        agreementButton.rx.tap
+        agreementButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapAgreementButton.accept(())
             }

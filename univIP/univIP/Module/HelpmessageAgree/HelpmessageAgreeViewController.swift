@@ -5,10 +5,8 @@
 //  Created by Akihiro Matsuyama on 2023/08/20.
 //
 
-import RxCocoa
-import RxGesture
-import RxSwift
 import UIKit
+import RxSwift
 
 final class HelpmessageAgreeViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView!
@@ -32,7 +30,8 @@ final class HelpmessageAgreeViewController: UIViewController {
 // MARK: Binding
 private extension HelpmessageAgreeViewController {
     func binding() {
-        leftBarButton.rx.tap
+        leftBarButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapBackButton.accept(())
             }

@@ -6,10 +6,9 @@
 //  Copyright © 2021年　akidon0000
 //
 
-import RxCocoa
-import RxGesture
-import RxSwift
 import UIKit
+import RxSwift
+import RxGesture
 
 final class InputViewController: UIViewController {
     @IBOutlet private weak var titleLabel1: UILabel!
@@ -64,19 +63,22 @@ final class InputViewController: UIViewController {
 // MARK: Binding
 private extension InputViewController {
     func binding() {
-        leftBarButton.rx.tap
+        leftBarButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapBackButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        helpmessageAgreeButton.rx.tap
+        helpmessageAgreeButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didHelpmessageAgreeButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        resetButton.rx.tap
+        resetButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 let alert = UIAlertController(title: "アラート表示", message: "学生番号とパスワードの情報をこのスマホから消去しますか？", preferredStyle:  UIAlertController.Style.alert)
                 let defaultAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in
@@ -91,7 +93,8 @@ private extension InputViewController {
             }
             .disposed(by: disposeBag)
 
-        registerButton.rx.tap
+        registerButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 // textField.textはnilにはならずOptional("")となる(objective-c仕様の名残)
                 guard let text1 = owner.TextField1.text else { return }
@@ -100,7 +103,8 @@ private extension InputViewController {
             }
             .disposed(by: disposeBag)
 
-        passwordViewButton.rx.tap
+        passwordViewButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 // パスワードを●●で表記しているのを切り替え。ボタンの画像も切り替える。
                 let image = owner.TextField2.isSecureTextEntry ? "eye" : "eye.slash"

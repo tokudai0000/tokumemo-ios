@@ -7,8 +7,6 @@
 
 import UIKit
 import WebKit
-//import RxCocoa
-import RxGesture
 import RxSwift
 
 final class HomeViewController: UIViewController {
@@ -52,13 +50,15 @@ final class HomeViewController: UIViewController {
 // MARK: Binding
 private extension HomeViewController {
     func binding() {
-        twitterButton.rx.tap
+        twitterButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapTwitterButton.accept(())
             }
             .disposed(by: disposeBag)
 
-        githubButton.rx.tap
+        githubButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.didTapGithubButton.accept(())
             }

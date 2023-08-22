@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
-import RxGesture
 import RxSwift
 
 class NewsViewController: UIViewController {
@@ -40,7 +38,8 @@ private extension NewsViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel.output.newsItems
+        viewModel.output
+            .newsItems
             .bind(to: tableView.rx.items(cellIdentifier: R.nib.newsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { index, model, cell in
                 cell.configure(model: model)
             }

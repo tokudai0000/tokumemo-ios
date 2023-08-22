@@ -5,11 +5,9 @@
 //  Created by Akihiro Matsuyama on 2022/10/12.
 //
 
-import RxCocoa
-import RxGesture
-import RxSwift
 import UIKit
 import WebKit
+import RxSwift
 
 final class WebViewController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton!
@@ -43,7 +41,8 @@ final class WebViewController: UIViewController {
 // MARK: Binding
 private extension WebViewController {
     func binding() {
-        closeButton.rx.tap
+        closeButton.rx
+            .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.viewClose.accept(())
             }
