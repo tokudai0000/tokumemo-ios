@@ -19,19 +19,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hX-o8-Uk9">
-                        <rect key="frame" x="5" y="5" width="33" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="10.000000000000004" y="5.0000000000000018" width="44.333333333333343" height="28.666666666666671"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LICENSE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ryt-at-DN2">
-                        <rect key="frame" x="9.9999999999999964" y="25.999999999999996" width="49.666666666666657" height="14.333333333333332"/>
+                        <rect key="frame" x="9.9999999999999964" y="33.666666666666664" width="49.666666666666657" height="14.333333333333336"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" systemColor="systemGray2Color"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="text" translatesAutoresizingMaskIntoConstraints="NO" id="nDv-tG-wXZ">
-                        <rect key="frame" x="0.0" y="40.333333333333343" width="325" height="364.66666666666663"/>
+                        <rect key="frame" x="0.0" y="48" width="325" height="357"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="textColor" systemColor="labelColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -39,7 +39,7 @@
                     </textView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8hX-o8-Uk9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ASV-5z-SRd"/>
+                    <constraint firstItem="8hX-o8-Uk9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ASV-5z-SRd"/>
                     <constraint firstAttribute="trailing" secondItem="nDv-tG-wXZ" secondAttribute="trailing" id="DOE-DK-VRj"/>
                     <constraint firstItem="Ryt-at-DN2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DbC-Gg-T9u"/>
                     <constraint firstItem="8hX-o8-Uk9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="QmO-5m-TE4"/>
