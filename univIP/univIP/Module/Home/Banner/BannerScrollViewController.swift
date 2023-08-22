@@ -66,7 +66,11 @@ class BannerScrollViewController: UIViewController {
     /// viewの大きさ測定
     func setupViewSizes() {
         let viewWidth = view.frame.width
-        let ratio: CGFloat = viewWidth / baseComponentWidth
+        var ratio: CGFloat = viewWidth / baseComponentWidth
+        // baseComponentWidthより大きいディスプレイの場合は、baseComponentWidthに合わせる
+        if 1.0 <= ratio {
+            ratio = 1.0
+        }
         panelWidth = ratio * basePanelWidth
         panelHeight = ratio * basePanelImageHeight + basePanelTextContainerHeight
         panelHorizontalMargin = ratio * basePanelHorizontalMargin
