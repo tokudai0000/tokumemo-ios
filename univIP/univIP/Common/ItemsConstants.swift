@@ -161,6 +161,10 @@ struct ItemsConstants {
             SettingsItem(title: R.string.localizable.source_code(),
                          id: .sourceCode,
                          targetUrl: Url.sourceCode.urlRequest()),
+            
+            SettingsItem(title: R.string.localizable.acknowledgements(),
+                         id: .acknowledgements,
+                         targetUrl: nil),
         ]
     ]
 }

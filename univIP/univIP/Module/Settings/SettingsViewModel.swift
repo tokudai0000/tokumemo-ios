@@ -40,9 +40,15 @@ final class SettingsViewModel: BaseViewModel<SettingsViewModel>, SettingsViewMod
                 }
                 let tappedCell = ItemsConstants().settingsItems[index.section][index[1]]
                 if tappedCell.id == .password {
-                    dependency.router.navigate(.modal)
+                    dependency.router.navigate(.modal(InputRouter()))
                     return
                 }
+
+                if tappedCell.id == .acknowledgements {
+                    dependency.router.navigate(.modal(AcknowledgementsRouter()))
+                    return
+                }
+
                 if let url = tappedCell.targetUrl {
                     dependency.router.navigate(.goWeb(url))
                 }
