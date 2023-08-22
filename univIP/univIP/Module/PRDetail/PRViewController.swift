@@ -74,7 +74,7 @@ private extension PRViewController {
 // MARK: Layout
 private extension PRViewController {
     func configureDefault() {
-        imageDescriptionTextView.cornerRound = 15
-        detailsInfoButton.cornerRound = 20
+        imageDescriptionTextView.layer.cornerRadius = 15
+        detailsInfoButton.layer.cornerRadius = 20
     }
 }
