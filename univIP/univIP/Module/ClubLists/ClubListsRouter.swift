@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-enum ClubListNavigationDestination {
+enum ClubListsNavigationDestination {
     case goWeb(URLRequest)
 }
 
 protocol ClubListsRouterInterface {
-    func navigate(_ destination: ClubListNavigationDestination)
+    func navigate(_ destination: ClubListsNavigationDestination)
 }
 
 final class ClubListsRouter: BaseRouter, ClubListsRouterInterface {
@@ -27,7 +27,7 @@ final class ClubListsRouter: BaseRouter, ClubListsRouterInterface {
         )
     }
 
-    func navigate(_ destination: ClubListNavigationDestination) {
+    func navigate(_ destination: ClubListsNavigationDestination) {
         switch destination {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
