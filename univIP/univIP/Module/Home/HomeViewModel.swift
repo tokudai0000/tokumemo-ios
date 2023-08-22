@@ -23,8 +23,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let didTapPrItem = PublishRelay<Int>()
         let didTapUnivItem = PublishRelay<Int>()
         let didTapMenuCollectionItem = PublishRelay<Int>()
-        let didSelectMenuDetailItem = PublishRelay<MenuDetailItem>()
-        let didSelectMiniSettings = PublishRelay<HomeMiniSettingsItem>()
+        let didTapMenuDetailItem = PublishRelay<MenuDetailItem>()
+        let didTapMiniSettings = PublishRelay<HomeMiniSettingsItem>()
         let didTapTwitterButton = PublishRelay<Void>()
         let didTapGithubButton = PublishRelay<Void>()
     }
@@ -104,7 +104,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         }
 
         input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { _ in
                 getAdItems()
                 getNumberOfUsers()
@@ -134,7 +134,6 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
                 let tappedCell = ItemsConstants().menuItems[index]
-
                 switch tappedCell.id {
                 case .courseManagement, .manaba, .mail:
                     if let url = tappedCell.targetUrl {
@@ -150,11 +149,13 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             })
             .disposed(by: disposeBag)
 
-        input.didSelectMenuDetailItem
+        input.didTapMenuDetailItem
             .subscribe { item in
                 guard let item = item.element,
-                      let url = item.targetUrl else { return }
-
+                      let url = item.targetUrl else {
+                    return
+                }
+                // 図書館のカレンダーについては、Webスクレイピングを実行する必要あり
                 if item.id == .libraryCalendarMain || item.id == .libraryCalendarKura {
                     scrapeLibraryCalendar(with: url)
                 }else{
@@ -163,7 +164,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             }
             .disposed(by: disposeBag)
 
-        input.didSelectMiniSettings
+        input.didTapMiniSettings
             .subscribe { item in
                 if let url = item.element?.targetUrl {
                     dependency.router.navigate(.goWeb(url))

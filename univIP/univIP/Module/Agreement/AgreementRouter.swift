@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/08/04.
 //
 
-import UIKit
+import Foundation
 
 enum AgreementNavigationDestination {
     case goWeb(URLRequest)

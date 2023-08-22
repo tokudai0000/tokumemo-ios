@@ -52,7 +52,7 @@ class BannerScrollViewController: UIViewController {
     func initSetup() {
         setupViewSizes()
         setupScrollView()
-        setupContentSize()
+        setupContentSize(itemsCount: 0)
     }
 
     func setupViews() {
@@ -106,8 +106,8 @@ class BannerScrollViewController: UIViewController {
         contentView.heightAnchor.constraint(equalToConstant: panelHeight).isActive = true
     }
 
-    func setupContentSize(items: [AdItem] = []) {
-        let count = CGFloat(items.count)
+    func setupContentSize(itemsCount: Int) {
+        let count = CGFloat(itemsCount)
         let contentWidth = (panelWidth + panelGap) * (count)
         contentViewWidthConstraint.constant = contentWidth
         scrollView.contentSize = CGSize(width: contentWidth, height: panelHeight)

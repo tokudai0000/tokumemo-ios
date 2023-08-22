@@ -7,10 +7,9 @@
 
 import UIKit
 import WebKit
-import RxCocoa
+//import RxCocoa
 import RxGesture
 import RxSwift
-
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var numberOfUsersLabel: UILabel!
@@ -68,7 +67,8 @@ private extension HomeViewController {
         prBannerPageControl.rx.controlEvent(.valueChanged)
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.prBannerViewController.showPage(index: self?.prBannerPageControl.currentPage ?? 0, animated: true)
+                guard let self = self else { return }
+                self.prBannerViewController.showPage(index: self.prBannerPageControl.currentPage, animated: true)
             })
             .disposed(by: disposeBag)
 
@@ -82,9 +82,9 @@ private extension HomeViewController {
 
         viewModel.output
             .prItems
-            .asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, adItems in
-                owner.prBannerViewController.setupContentSize(items: adItems)
+                owner.prBannerViewController.setupContentSize(itemsCount: adItems.count)
                 owner.prBannerViewController.addPrBannerPanels(items: adItems)
                 owner.prBannerPageControl.numberOfPages = adItems.count
             }
@@ -92,27 +92,27 @@ private extension HomeViewController {
 
         viewModel.output
             .univItems
-            .asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, adItems in
-                owner.univBannerViewController.setupContentSize(items: adItems)
+                owner.univBannerViewController.setupContentSize(itemsCount: adItems.count )
                 owner.univBannerViewController.addUnivBannerPanels(items: adItems)
             }
             .disposed(by: disposeBag)
 
         viewModel.output
             .menuDetailItem
-            .asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, menuDetailItems in
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 menuDetailItems.forEach { item in
                     let action = UIAlertAction(title: item.title, style: .default) { (action) in
-                        self.viewModel.input.didSelectMenuDetailItem.accept(item)
+                        owner.viewModel.input.didTapMenuDetailItem.accept(item)
                     }
                     alertController.addAction(action)
                 }
                 let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
-                self.present(alertController, animated: true, completion: nil)
+                owner.present(alertController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
     }
@@ -159,12 +159,10 @@ private extension HomeViewController {
         menuCollectionView.backgroundColor = .white
         menuCollectionView.cornerRound = 20.0
         let layout = UICollectionViewFlowLayout()
-        let cellWidth = floor(menuCollectionView.bounds.width / 3.5)
-        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
-        layout.sectionInset = UIEdgeInsets(top: 10,
-                                           left: 0,
-                                           bottom: 10,
-                                           right: 0)
+        // 画面横に3つ配置したい。余裕を持って横画面/3.5 に設定
+        let cellSize = floor(menuCollectionView.bounds.width / 3.5)
+        layout.itemSize = CGSize(width: cellSize, height: cellSize)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         menuCollectionView.collectionViewLayout = layout
     }
 }
@@ -208,7 +206,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.didSelectMiniSettings.accept(ItemsConstants().homeMiniSettingsItems[indexPath.row])
+        viewModel.input.didTapMiniSettings.accept(ItemsConstants().homeMiniSettingsItems[indexPath.row])
         homeTableView.deselectRow(at: indexPath, animated: true)
     }
 }
