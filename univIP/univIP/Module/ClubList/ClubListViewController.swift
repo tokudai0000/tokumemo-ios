@@ -19,12 +19,6 @@ class ClubListViewController: UIViewController {
     }
 }
 
-// MARK: Binding
-private extension ClubListViewController {
-    func binding() {
-    }
-}
-
 // MARK: Layout
 private extension ClubListViewController {
     func configureDefault() {
