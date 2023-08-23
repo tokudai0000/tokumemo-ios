@@ -29,7 +29,6 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
                               libraryCalendarWebScraper: LibraryCalendarWebScraper()
                              )
         )
-
     }
 
     func navigate(_ destination: HomeNavigationDestination) {
