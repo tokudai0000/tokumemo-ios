@@ -28,6 +28,9 @@ final class WebRouter: BaseRouter, WebRouterInterface {
                              loadUrl: loadUrl,
                               univAuthStoreUseCase: UnivAuthStoreUseCase(
                                 univAuthRepository: UnivAuthOnKeyChainRepository()
+                              ),
+                              webViewCloseCountStoreUseCase: WebViewCloseCountStoreUseCase(
+                                webViewCloseCountRepository: WebViewCloseCountRepository()
                               )
                              )
         )

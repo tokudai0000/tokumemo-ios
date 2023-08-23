@@ -46,13 +46,6 @@ private extension WebViewController {
             .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.viewClose.accept(())
-
-                // レビュー依頼を行う
-                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                    if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                        SKStoreReviewController.requestReview(in: windowScene)
-                    }
-                }
             }
             .disposed(by: disposeBag)
 
@@ -159,6 +152,18 @@ private extension WebViewController {
             }
             .disposed(by: disposeBag)
 
+        viewModel.output
+            .showReviewAlert
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                // レビュー依頼を行う
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 

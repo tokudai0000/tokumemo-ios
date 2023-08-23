@@ -35,6 +35,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let loginJavaScriptInjection: Observable<UnivAuth>
         let loginOutlookJavaScriptInjection: Observable<UnivAuth>
         let loginCareerCenterJavaScriptInjection: Observable<UnivAuth>
+        let showReviewAlert: Observable<Void>
     }
 
     struct State: StateType {
@@ -46,6 +47,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let router: WebRouterInterface
         let loadUrl: URLRequest
         let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
+        let webViewCloseCountStoreUseCase: WebViewCloseCountStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -57,6 +59,17 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let loginJavaScriptInjection: PublishRelay<UnivAuth> = .init()
         let loginOutlookJavaScriptInjection: PublishRelay<UnivAuth> = .init()
         let loginCareerCenterJavaScriptInjection: PublishRelay<UnivAuth> = .init()
+        let showReviewAlert: PublishRelay<Void> = .init()
+
+        func updateWebViewCloseCounterAndShowReviewIfNecessary() {
+            let counter = dependency.webViewCloseCountStoreUseCase.fetchWebViewCloseCount() + 1
+            dependency.webViewCloseCountStoreUseCase.setWebViewCloseCount(counter)
+            // 画面が閉じられた回数が累積10回づつでレビューの催促
+            // 注: Appleのポリシーにより、レビュー催促が必ず表示されるわけではありません(1年間に表示できるのは3回まで)
+            if counter % 10 == 0 {
+                showReviewAlert.accept(())
+            }
+        }
 
         input.viewDidLoad
             .subscribe { _ in
@@ -79,6 +92,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
 
         input.viewClose
             .subscribe { _ in
+                updateWebViewCloseCounterAndShowReviewIfNecessary()
                 dependency.router.navigate(.close)
             }
             .disposed(by: disposeBag)
@@ -141,7 +155,8 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
             skipReminderJavaScriptInjection: skipReminderJavaScriptInjection.asObservable(),
             loginJavaScriptInjection: loginJavaScriptInjection.asObservable(),
             loginOutlookJavaScriptInjection: loginOutlookJavaScriptInjection.asObservable(),
-            loginCareerCenterJavaScriptInjection: loginCareerCenterJavaScriptInjection.asObservable()
+            loginCareerCenterJavaScriptInjection: loginCareerCenterJavaScriptInjection.asObservable(),
+            showReviewAlert: showReviewAlert.asObservable()
         )
     }
 }
