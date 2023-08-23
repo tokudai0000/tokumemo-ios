@@ -62,7 +62,12 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
             .subscribe { _ in
                 let url = dependency.loadUrl
                 state.displayUrl.accept(url)
-                loadUrl.accept(url)
+
+                if url == Url.review.urlRequest() {
+                    openSafari.accept(url)
+                }else{
+                    loadUrl.accept(url)
+                }
             }
             .disposed(by: disposeBag)
 

@@ -123,6 +123,8 @@ enum Url: String {
     case weatherItemJsonData = "https://api.openweathermap.org/data/2.5/weather"
     
     case newsItemJsonData = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
+
+    case review = "https://apps.apple.com/app/id1582738889?action=write-review"
     
     /// URLを文字列として返す
     func string() -> String {

@@ -123,7 +123,11 @@ struct ItemsConstants {
 
         HomeMiniSettingsItem(title: R.string.localizable.privacy_policy(),
                              id: .privacyPolicy,
-                             targetUrl: Url.privacyPolicy.urlRequest())
+                             targetUrl: Url.privacyPolicy.urlRequest()),
+
+        HomeMiniSettingsItem(title: R.string.localizable.review(),
+                             id: .review,
+                             targetUrl: Url.review.urlRequest())
     ]
 
     let settingsItems: [[SettingsItem]] = [
@@ -161,6 +165,10 @@ struct ItemsConstants {
             SettingsItem(title: R.string.localizable.source_code(),
                          id: .sourceCode,
                          targetUrl: Url.sourceCode.urlRequest()),
+
+            SettingsItem(title: R.string.localizable.review(),
+                         id: .review,
+                         targetUrl: Url.review.urlRequest()),
             
             SettingsItem(title: R.string.localizable.acknowledgements(),
                          id: .acknowledgements,
