@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import RxSwift
+import StoreKit
 
 final class WebViewController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton!
@@ -45,6 +46,13 @@ private extension WebViewController {
             .tap
             .subscribe(with: self) { owner, _ in
                 owner.viewModel.input.viewClose.accept(())
+
+                // レビュー依頼を行う
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                }
             }
             .disposed(by: disposeBag)
 
