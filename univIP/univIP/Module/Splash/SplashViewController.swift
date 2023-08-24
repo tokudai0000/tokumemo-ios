@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import RxSwift
+import Entity
 
 final class SplashViewController: UIViewController {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!

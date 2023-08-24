@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Entity
 
 enum HomeNavigationDestination {
     case goWeb(URLRequest)

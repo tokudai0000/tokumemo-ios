@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Entity
 
 final class AcknowledgementsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!

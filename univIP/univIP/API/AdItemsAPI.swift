@@ -7,6 +7,7 @@
 
 import APIKit
 import RxSwift
+import Entity
 
 /// AdItemはPRアイテムとUnivアイテムで使用する
 /// PRアイテムは大学生が大学生に向けて告知したい内容。比較的掲載が簡単

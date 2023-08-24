@@ -9,6 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import Entity
 
 protocol HomeViewModelInterface: AnyObject {
     var input: HomeViewModel.Input { get }

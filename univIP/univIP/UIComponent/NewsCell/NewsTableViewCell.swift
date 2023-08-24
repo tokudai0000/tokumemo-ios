@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Entity
 
 class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var contentsLabel: UILabel!

@@ -5,6 +5,8 @@
 //  Created by Akihiro Matsuyama on 2023/08/10.
 //
 
+import Entity
+
 struct ItemsConstants {
     let menuItems: [MenuItem] = [
         MenuItem(title: R.string.localizable.course_management(),

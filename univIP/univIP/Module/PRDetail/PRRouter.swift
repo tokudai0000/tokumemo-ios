@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Entity
 
 enum PRNavigationDestination {
     case goWeb(URLRequest)

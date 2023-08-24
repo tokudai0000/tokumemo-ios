@@ -9,6 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import Entity
 
 protocol AcknowledgementsViewModelInterface: AnyObject {
     var input: AcknowledgementsViewModel.Input { get }

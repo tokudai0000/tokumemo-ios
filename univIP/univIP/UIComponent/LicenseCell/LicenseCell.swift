@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Entity
 
 class LicenseCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!

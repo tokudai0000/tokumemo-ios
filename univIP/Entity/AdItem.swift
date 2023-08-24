@@ -5,19 +5,14 @@
 //  Created by Akihiro Matsuyama on 2023/05/09.
 //
 
-struct AdItems {
-    var prItems:[AdItem]
-    var univItems:[AdItem]
-}
+public struct AdItem: Decodable {
+    public let id: Int
+    public let clientName: String
+    public let imageUrlStr: String
+    public let targetUrlStr: String
+    public let imageDescription: String
 
-struct AdItem: Decodable {
-    let id: Int
-    let clientName: String
-    let imageUrlStr: String
-    let targetUrlStr: String
-    let imageDescription: String
-
-    init(id: Int, clientName: String, imageUrlStr: String, targetUrlStr: String, imageDescription: String) {
+    public init(id: Int, clientName: String, imageUrlStr: String, targetUrlStr: String, imageDescription: String) {
         self.id = id
         self.clientName = clientName
         self.imageUrlStr = imageUrlStr
@@ -25,11 +20,11 @@ struct AdItem: Decodable {
         self.imageDescription = imageDescription
     }
 
-    enum ParsingError: Error {
+    public enum ParsingError: Error {
         case invalidData
     }
 
-    init(dictionary: [String: Any]) throws {
+    public init(dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? Int,
               let clientName = dictionary["clientName"] as? String,
               let imageUrlStr = dictionary["imageUrlStr"] as? String,

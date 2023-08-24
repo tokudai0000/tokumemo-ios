@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import RxSwift
+import Entity
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var numberOfUsersLabel: UILabel!

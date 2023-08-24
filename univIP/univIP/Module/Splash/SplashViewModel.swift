@@ -9,6 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import Entity
 
 protocol SplashViewModelInterface: AnyObject {
     var input: SplashViewModel.Input { get }
