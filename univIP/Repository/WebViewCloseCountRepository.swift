@@ -7,20 +7,21 @@
 
 import Foundation
 
-protocol WebViewCloseCountRepositoryInterface {
+public protocol WebViewCloseCountRepositoryInterface {
     func fetchWebViewCloseCount() -> Int
     func setWebViewCloseCount(_ items: Int)
 }
 
-final class WebViewCloseCountRepository: WebViewCloseCountRepositoryInterface {
-
+public final class WebViewCloseCountRepository: WebViewCloseCountRepositoryInterface {
+    public init() {}
+    
     private var userDefaults = UserDefaults.standard
     private let KEY_webViewCloseCount = "KEY_agreementVersion"
-    func fetchWebViewCloseCount() -> Int {
+    public func fetchWebViewCloseCount() -> Int {
         return userDefaults.integer(forKey: KEY_webViewCloseCount)
     }
 
-    func setWebViewCloseCount(_ items: Int) {
+    public func setWebViewCloseCount(_ items: Int) {
         userDefaults.set(items ,forKey: KEY_webViewCloseCount)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Repository
 
 enum AgreementNavigationDestination {
     case goWeb(URLRequest)

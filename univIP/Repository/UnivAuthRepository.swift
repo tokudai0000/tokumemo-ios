@@ -9,14 +9,16 @@ import Foundation
 import KeychainAccess
 import Entity
 
-protocol UnivAuthRepositoryInterface {
+public protocol UnivAuthRepositoryInterface {
     func fetchUnivAuth() -> UnivAuth
     func setUnivAuth(_ items: UnivAuth)
 }
 
-final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
-    static let shared = UnivAuthOnKeyChainRepository()
+public final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
+    public static let shared = UnivAuthOnKeyChainRepository()
 
+    public init() {}
+    
     private let KEY_cAccount = "KEY_cAccount"
     private var accountCID: String {
         get { return getKeyChain(key: KEY_cAccount) }
@@ -29,13 +31,13 @@ final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
         set(v) { setKeyChain(key: KEY_password, value: v) }
     }
 
-    func fetchUnivAuth() -> UnivAuth {
+    public func fetchUnivAuth() -> UnivAuth {
         let accountCID = Self.shared.accountCID
         let password = Self.shared.password
         return UnivAuth(accountCID: accountCID, password: password)
     }
 
-    func setUnivAuth(_ items: UnivAuth) {
+    public func setUnivAuth(_ items: UnivAuth) {
         Self.shared.accountCID = items.accountCID
         Self.shared.password = items.password
     }
@@ -55,7 +57,7 @@ extension UnivAuthOnKeyChainRepository {
         do {
             if let value = try keychain.get(key) { return value }
         } catch {
-            AKLog(level: .ERROR, message: "DataManager.getKeyChain catch")
+//            AKLog(level: .ERROR, message: "DataManager.getKeyChain catch")
         }
         return ""
     }
@@ -66,7 +68,7 @@ extension UnivAuthOnKeyChainRepository {
                 .accessibility(Accessibility.alwaysThisDeviceOnly)  // 常時アクセス可能、デバイス限定
                 .set(value, key: key)
         } catch {
-            AKLog(level: .ERROR, message: "DataManager.setKeyChain catch")
+//            AKLog(level: .ERROR, message: "DataManager.setKeyChain catch")
         }
     }
 }
