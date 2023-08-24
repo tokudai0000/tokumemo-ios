@@ -34,18 +34,26 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
     struct Dependency: DependencyType {
         let router: AgreementRouterInterface
         let currentTermVersion: String
-        let initSettingsStoreUseCase: InitSettingsStoreUseCaseInterface
+        let termTextAPI: TermTextAPIInterface
+        let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let termText: PublishRelay<String> = .init()
 
-        input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
-            .subscribe(onNext: { _ in
-                termText.accept(dependency.initSettingsStoreUseCase.fetchTermText())
-            })
-            .disposed(by: disposeBag)
+        func getTermText() {
+            dependency.termTextAPI.getTermText()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        termText.accept(response.termText)
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
 
         input.didTapTermsButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
@@ -64,9 +72,16 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapAgreementButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.initSettingsStoreUseCase.setAcceptedTermVersion(dependency.currentTermVersion)
+                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentTermVersion)
                 dependency.router.navigate(.agreedUpon)
             }
+            .disposed(by: disposeBag)
+
+        input.viewDidLoad
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { _ in
+                getTermText()
+            })
             .disposed(by: disposeBag)
 
         return .init(

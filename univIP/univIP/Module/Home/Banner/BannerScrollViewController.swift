@@ -52,7 +52,7 @@ class BannerScrollViewController: UIViewController {
     func initSetup() {
         setupViewSizes()
         setupScrollView()
-        setupContentSize()
+        setupContentSize(itemsCount: 0)
     }
 
     func setupViews() {
@@ -66,7 +66,11 @@ class BannerScrollViewController: UIViewController {
     /// viewの大きさ測定
     func setupViewSizes() {
         let viewWidth = view.frame.width
-        let ratio: CGFloat = viewWidth / baseComponentWidth
+        var ratio: CGFloat = viewWidth / baseComponentWidth
+        // baseComponentWidthより大きいディスプレイの場合は、baseComponentWidthに合わせる
+        if 1.0 <= ratio {
+            ratio = 1.0
+        }
         panelWidth = ratio * basePanelWidth
         panelHeight = ratio * basePanelImageHeight + basePanelTextContainerHeight
         panelHorizontalMargin = ratio * basePanelHorizontalMargin
@@ -106,8 +110,8 @@ class BannerScrollViewController: UIViewController {
         contentView.heightAnchor.constraint(equalToConstant: panelHeight).isActive = true
     }
 
-    func setupContentSize(items: [AdItem] = []) {
-        let count = CGFloat(items.count)
+    func setupContentSize(itemsCount: Int) {
+        let count = CGFloat(itemsCount)
         let contentWidth = (panelWidth + panelGap) * (count)
         contentViewWidthConstraint.constant = contentWidth
         scrollView.contentSize = CGSize(width: contentWidth, height: panelHeight)
@@ -139,7 +143,7 @@ class BannerScrollViewController: UIViewController {
                 }
             }
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-            bannerView.imageView.cornerRound = 20
+            bannerView.imageView.layer.cornerRadius = 20
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定
@@ -178,7 +182,7 @@ class BannerScrollViewController: UIViewController {
                 }
             }
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-            bannerView.imageView.cornerRound = 20
+            bannerView.imageView.layer.cornerRadius = 20
             prevBannerView = bannerView
 
             // バナーをタップしたときのイベント設定

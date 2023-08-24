@@ -17,6 +17,11 @@ protocol SplashViewModelInterface: AnyObject {
 
 final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInterface {
 
+    enum ActivityIndicatorState {
+        case start
+        case stop
+    }
+
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
         let viewWillAppear = PublishRelay<Void>()
@@ -28,56 +33,55 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
     struct Output: OutputType {
         let loadUrl: Observable<URLRequest>
         let statusLabel: Observable<String>
+        let activityIndicator: Observable<ActivityIndicatorState>
         let reloadLoginURLInWebView: Observable<Void>
-        let loginJavaScriptInjection: Observable<(cAccount: String, password: String)>
-        let activityIndicator: Observable<Bool>
+        let loginJavaScriptInjection: Observable<UnivAuth>
     }
 
     struct State: StateType {
-        let canExecuteJavascript: BehaviorRelay<Bool?> = .init(value: nil)
         let termVersion: BehaviorRelay<String?> = .init(value: nil)
+        let canExecuteJavascript: BehaviorRelay<Bool?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
         let router: SplashRouterInterface
-        let initSettingsAPI: InitSettingsAPIInterface
-        let passwordStoreUseCase: PasswordStoreUseCaseInterface
-        let initSettingsStoreUseCase: InitSettingsStoreUseCaseInterface
+        let currentTermVersionAPI: CurrentTermVersionAPI
+        let univAuthStoreUseCase: UnivAuthStoreUseCaseInterface
+        let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let loadUrl: PublishRelay<URLRequest> = .init()
         let statusLabel: PublishRelay<String> = .init()
+        let activityIndicator: PublishRelay<ActivityIndicatorState> = .init()
         let reloadLoginURLInWebView: PublishRelay<Void> = .init()
-        let loginJavaScriptInjection: PublishRelay<(cAccount: String, password: String)> = .init()
-        let activityIndicator: PublishRelay<Bool> = .init()
+        let loginJavaScriptInjection: PublishRelay<UnivAuth> = .init()
 
         func isTermsVersionDifferent(current: String, accepted: String) -> Bool {
             return current != accepted
         }
 
-        func getInitSettings() {
-            dependency.initSettingsAPI.getInitSettings()
+        func processTermVersion(response: CurrentTermVersionGetRequest.Response) {
+            state.termVersion.accept(response.currentTermVersion)
+            let current = response.currentTermVersion
+            let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
+            if isTermsVersionDifferent(current: current, accepted: accepted) {
+                // メインスレッドで1秒後に実行
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    dependency.router.navigate(.agree(current))
+                }
+            } else {
+                // 同意済みなのでログイン処理へと進む
+                statusLabel.accept(R.string.localizable.processing_login())
+            }
+        }
+
+        func fetchAndHandleCurrentTermVersion() {
+            dependency.currentTermVersionAPI.getCurrentTermVersion()
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        state.termVersion.accept(response.currentTermVersion)
-
-                        dependency.initSettingsStoreUseCase.setNumberOfUsers(response.numberOfUsers)
-                        dependency.initSettingsStoreUseCase.setTermText(response.termText)
-
-                        let current = response.currentTermVersion
-                        let accepted = ""// dependency.initSettingsStoreUseCase.fetchAcceptedTermVersion()
-                        if isTermsVersionDifferent(current: current, accepted: accepted) {
-                            // メインスレッドで実行
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                dependency.router.navigate(.agree(current))
-                            }
-                            return
-                        }
-
-                        statusLabel.accept(R.string.localizable.processing_login())
-
+                        processTermVersion(response: response)
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -88,57 +92,59 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
         input.viewDidLoad
             .subscribe { _ in
-                loadUrl.accept(Url.universityTransitionLogin.urlRequest())
-                getInitSettings()
+                fetchAndHandleCurrentTermVersion()
             }
             .disposed(by: disposeBag)
 
         input.viewWillAppear
             .subscribe { _ in
-                activityIndicator.accept(true)
-                statusLabel.accept(R.string.localizable.verifying_authentication())
+                state.canExecuteJavascript.accept(true)
+                activityIndicator.accept(.start)
 
                 // ログイン処理に失敗した場合、10秒後には必ずメイン画面に遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                     dependency.router.navigate(.main)
                 }
-                return
             }
             .disposed(by: disposeBag)
 
         input.viewWillDisappear
             .subscribe { _ in
-                activityIndicator.accept(false)
+                activityIndicator.accept(.stop)
             }
             .disposed(by: disposeBag)
 
 
         input.urlPendingLoad
             .subscribe { url in
-                guard let url = url.element else{ return }
-                let urlStr = url.absoluteString
-
-                if URLHelper.isUniversityServiceTimeoutURL(urlStr) {
+                guard let url = url.element else{
+                    return
+                }
+                // タイムアウト
+                if URLCheckers.isUniversityServiceTimeoutURL(at: url.absoluteString) {
                     reloadLoginURLInWebView.accept(Void())
                 }
-
-                //                if isURLImmediatelyAfterLogin(urlStr) {
-                //                    dependency.router.navigate(.main)
-                //                }
+                // ログイン成功
+                if URLCheckers.isImmediatelyAfterLoginURL(at: url.absoluteString) {
+                    dependency.router.navigate(.main)
+                }
+                // ログイン失敗
+                if URLCheckers.isFailureUniversityServiceLoggedInURL(at: url.absoluteString) {
+                    dependency.router.navigate(.main)
+                }
             }
             .disposed(by: disposeBag)
 
         input.urlDidLoad
             .subscribe { url in
                 guard let url = url.element,
-                      let canExecuteJavascript = state.canExecuteJavascript.value else{ return }
-                let urlStr = url.absoluteString
-
-                if URLHelper.shouldInjectJavaScript(at: urlStr, canExecuteJavascript) {
-                    let cAccount = dependency.passwordStoreUseCase.fetchAccountID()
-                    let password = dependency.passwordStoreUseCase.fetchPassword()
-                    loginJavaScriptInjection.accept((cAccount: cAccount, password: password))
+                      let canExecuteJavascript = state.canExecuteJavascript.value else{
+                    return
+                }
+                // ログイン処理を行うURLか判定
+                if URLCheckers.shouldInjectJavaScript(at: url.absoluteString, canExecuteJavascript, for: .universityLogin) {
                     state.canExecuteJavascript.accept(false)
+                    loginJavaScriptInjection.accept(dependency.univAuthStoreUseCase.fetchUnivAuth())
                 }
             }
             .disposed(by: disposeBag)
@@ -146,9 +152,9 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         return .init(
             loadUrl: loadUrl.asObservable(),
             statusLabel: statusLabel.asObservable(),
+            activityIndicator: activityIndicator.asObservable(),
             reloadLoginURLInWebView: reloadLoginURLInWebView.asObservable(),
-            loginJavaScriptInjection: loginJavaScriptInjection.asObservable(),
-            activityIndicator: activityIndicator.asObservable()
+            loginJavaScriptInjection: loginJavaScriptInjection.asObservable()
         )
     }
 }

@@ -5,16 +5,19 @@
 //  Created by Akihiro Matsuyama on 2023/08/05.
 //
 
-import Foundation
 import UIKit
 
 final class RootViewController: UIViewController {
     private let containerView: UIView = .init()
-    private var currentViewController: UIViewController?
+    private var currentChildViewController: UIViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        configureContainerView()
+        switchToSplash()
+    }
+
+    private func configureContainerView() {
         view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -23,26 +26,44 @@ final class RootViewController: UIViewController {
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
-
-        switchToMain()
     }
 
-    private func switchToMain() {
-        let navigationController = UINavigationController(rootViewController: MainRouter().moduleViewController)
+    func switchToSplash() {
+        let navigationController = SplashRouter().moduleViewController
+        switchContainer(to: navigationController)
+    }
+
+    func switchToAgreement(currentTermVersion: String) {
+        let navigationController = AgreementRouter(currentTermVersion: currentTermVersion).moduleViewController
+        switchContainer(to: navigationController)
+    }
+
+    func switchToMain() {
+        let navigationController = MainRouter().moduleViewController
         switchContainer(to: navigationController)
     }
 
     private func switchContainer(to viewController: UIViewController) {
-        if let previousViewController = self.currentViewController {
+        // 現在の子ViewControllerを削除
+        if let previousViewController = self.currentChildViewController {
             previousViewController.willMove(toParent: nil)
             previousViewController.view.removeFromSuperview()
             previousViewController.removeFromParent()
         }
-
+        // 新しい子ViewControllerのViewをcontainerViewに追加
+        self.currentChildViewController = viewController
+        containerView.addSubview(viewController.view)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        ])
+        // RootViewControllerに子ViewControllerを追加
         addChild(viewController)
-        self.containerView.addSubview(viewController.view)
         viewController.didMove(toParent: self)
-        self.currentViewController = viewController
+
         view.layoutSubviews()
     }
 }

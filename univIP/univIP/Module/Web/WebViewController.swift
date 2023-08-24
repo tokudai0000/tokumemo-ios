@@ -5,23 +5,24 @@
 //  Created by Akihiro Matsuyama on 2022/10/12.
 //
 
-import RxCocoa
-import RxGesture
-import RxSwift
 import UIKit
 import WebKit
+import RxSwift
+import StoreKit
 
-final class WebViewController: BaseViewController {
+final class WebViewController: UIViewController {
+    @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var urlLabel: UILabel!
+    @IBOutlet private weak var reloadButton: UIButton!
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
-    @IBOutlet private weak var doneButton: UIButton!
-    @IBOutlet private weak var reloadButton: UIButton!
-    @IBOutlet private weak var forwardButton: UIButton!
-    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var goForwardButton: UIButton!
+    @IBOutlet private weak var goBackButton: UIButton!
     @IBOutlet private weak var safariButton: UIButton!
     @IBOutlet private weak var menuButton: UIButton!
 
+    private let disposeBag = DisposeBag()
+    
     var viewModel: WebViewModelInterface!
 
     override func viewDidLoad() {
@@ -29,7 +30,7 @@ final class WebViewController: BaseViewController {
         configureDefaults()
         configureWebView()
         binding()
-        viewModel.input.viewDidAppear.accept(())
+        viewModel.input.viewDidLoad.accept(())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,46 +42,42 @@ final class WebViewController: BaseViewController {
 // MARK: Binding
 private extension WebViewController {
     func binding() {
-
-        bindButtonTapEvent(doneButton, to: viewModel.input.didTapDoneButton)
-        bindButtonTapEvent(safariButton, to: viewModel.input.didTapSafariButton)
-//        bindButtonTapEvent(menuButton, to: viewModel.input.didTapTwitterButton)
+        closeButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.viewClose.accept(())
+            }
+            .disposed(by: disposeBag)
 
         reloadButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-                self.webView.reload()
+                owner.webView.reload()
             }
             .disposed(by: disposeBag)
 
-        forwardButton.rx
+        goForwardButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-                self.webView.goForward()
+                owner.webView.goForward()
             }
             .disposed(by: disposeBag)
 
-        backButton.rx
+        goBackButton.rx
             .tap
             .subscribe(with: self) { owner, _ in
-                // 戻るボタンは常に有効　戻るサイトが無い場合は、画面を削除
-                if self.webView.canGoBack {
-                    self.webView.goBack()
+                // 戻るサイトが無い場合は、画面を削除
+                if owner.webView.canGoBack {
+                    owner.webView.goBack()
                 } else {
-                    self.dismiss(animated: true, completion: nil)
+                    owner.viewModel.input.viewClose.accept(())
                 }
             }
             .disposed(by: disposeBag)
 
-
-        viewModel.output
-            .openSafari
-            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
-            .drive(with: self) { owner, urlRequest in
-                guard let url = urlRequest.url else { return }
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url)
-                }
+        safariButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapSafariButton.accept(())
             }
             .disposed(by: disposeBag)
 
@@ -94,45 +91,77 @@ private extension WebViewController {
 
         viewModel.output
             .loadUrl
-            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
+            .asDriver(onErrorJustReturn: Url.emptyRequest.urlRequest())
             .drive(with: self) { owner, urlRequest in
                 owner.webView.load(urlRequest)
             }
             .disposed(by: disposeBag)
 
         viewModel.output
-            .urlLabel
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner, text in
-                owner.urlLabel.text = text
+            .reloadLoginURLInWebView
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.webView.load(Url.universityTransitionLogin.urlRequest())
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .skipReminderJavaScriptInjection
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.webView.evaluateJavaScript("document.getElementById('ctl00_phContents_ucTopEnqCheck_link_lnk').click();", completionHandler:  nil)
             }
             .disposed(by: disposeBag)
 
         viewModel.output
             .loginJavaScriptInjection
-            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
-            .drive(with: self) { owner, data in
-                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(data.cAccount)'", completionHandler:  nil)
-                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(data.password)'", completionHandler:  nil)
+            .asDriver(onErrorJustReturn: UnivAuth(accountCID: "", password: ""))
+            .drive(with: self) { owner, univAuth in
+                owner.webView.evaluateJavaScript("document.getElementById('username').value= '\(univAuth.accountCID)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementById('password').value= '\(univAuth.password)'", completionHandler:  nil)
                 owner.webView.evaluateJavaScript("document.getElementsByClassName('form-element form-button')[0].click();", completionHandler:  nil)
             }
             .disposed(by: disposeBag)
 
         viewModel.output
             .loginOutlookJavaScriptInjection
-            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
-            .drive(with: self) { owner, data in
-                owner.webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(data.cAccount)@tokushima-u.ac.jp'", completionHandler:  nil)
-                owner.webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(data.password)'", completionHandler:  nil)
+            .asDriver(onErrorJustReturn: UnivAuth(accountCID: "", password: ""))
+            .drive(with: self) { owner, univAuth in
+                owner.webView.evaluateJavaScript("document.getElementById('userNameInput').value='\(univAuth.accountCID)@tokushima-u.ac.jp'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementById('passwordInput').value='\(univAuth.password)'", completionHandler:  nil)
             }
             .disposed(by: disposeBag)
 
         viewModel.output
             .loginCareerCenterJavaScriptInjection
-            .asDriver(onErrorJustReturn: (cAccount: "", password: ""))
-            .drive(with: self) { owner, data in
-                owner.webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(data.cAccount)'", completionHandler:  nil)
-                owner.webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(data.password)'", completionHandler:  nil)
+            .asDriver(onErrorJustReturn: UnivAuth(accountCID: "", password: ""))
+            .drive(with: self) { owner, univAuth in
+                owner.webView.evaluateJavaScript("document.getElementsByName('user_id')[0].value='\(univAuth.accountCID)'", completionHandler:  nil)
+                owner.webView.evaluateJavaScript("document.getElementsByName('user_password')[0].value='\(univAuth.password)'", completionHandler:  nil)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .openSafari
+            .asDriver(onErrorJustReturn: Url.privacyPolicy.urlRequest())
+            .drive(with: self) { owner, urlRequest in
+                guard let url = urlRequest.url else { return }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .showReviewAlert
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                // レビュー依頼を行う
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -142,7 +171,7 @@ private extension WebViewController {
 private extension WebViewController {
 
     func configureDefaults() {
-        forwardButton.alpha = 0.6
+//        goForwardButton.alpha = 0.6
     }
     
     func configureWebView() {
@@ -153,12 +182,9 @@ private extension WebViewController {
 }
 
 extension WebViewController: WKNavigationDelegate, WKUIDelegate {
-    // 読み込み設定（リクエスト前）
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    // リクエスト前
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url else {
-            AKLog(level: .FATAL, message: "読み込み前のURLがnil")
             decisionHandler(.cancel)
             return
         }
@@ -166,13 +192,12 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
         decisionHandler(.allow)
     }
 
-    // 読み込み設定（レスポンス取得後）
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationResponse: WKNavigationResponse,
-                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    // レスポンス取得後
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
     }
 
+    // 読み込み完了後
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let url = self.webView.url{
             viewModel.input.urlDidLoad.accept(url)

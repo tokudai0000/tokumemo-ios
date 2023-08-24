@@ -23,8 +23,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let didTapPrItem = PublishRelay<Int>()
         let didTapUnivItem = PublishRelay<Int>()
         let didTapMenuCollectionItem = PublishRelay<Int>()
-        let didSelectMenuDetailItem = PublishRelay<MenuDetailItem>()
-        let didSelectMiniSettings = PublishRelay<HomeMiniSettingsItem>()
+        let didTapMenuDetailItem = PublishRelay<MenuDetailItem>()
+        let didTapMiniSettings = PublishRelay<HomeMiniSettingsItem>()
         let didTapTwitterButton = PublishRelay<Void>()
         let didTapGithubButton = PublishRelay<Void>()
     }
@@ -37,16 +37,14 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
     }
 
     struct State: StateType {
-        let prItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
-        let univItems: BehaviorRelay<[AdItem]?> = .init(value: nil)
+        let adItems: BehaviorRelay<AdItems?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
-        let adItemStoreUseCase: AdItemStoreUseCaseInterface
+        let numberOfUsersAPI: NumberOfUsersAPIInterface
         let libraryCalendarWebScraper: LibraryCalendarWebScraperInterface
-        let initSettingsStoreUseCase: InitSettingsStoreUseCase
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -60,14 +58,24 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(
                     onSuccess: { response in
-                        dependency.adItemStoreUseCase.setPrItems(response.prItems)
-                        dependency.adItemStoreUseCase.setUnivItems(response.univItems)
+                        prItems.accept(response.adItems.prItems)
+                        univItems.accept(response.adItems.univItems)
 
-                        prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
-                        univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
+                        state.adItems.accept(response.adItems)
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
 
-                        state.prItems.accept(dependency.adItemStoreUseCase.fetchPrItems())
-                        state.univItems.accept(dependency.adItemStoreUseCase.fetchUnivItems())
+        func getNumberOfUsers() {
+            dependency.numberOfUsersAPI.getNumberOfUsers()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        numberOfUsersLabel.accept(response.numberOfUsers)
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -77,7 +85,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         }
 
         func scrapeLibraryCalendar(with url: URLRequest) {
-            dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: url)
+            dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: url.url!)
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .observe(on: MainScheduler.instance) // メインスレッドでの処理を指定
                 .subscribe(
@@ -92,17 +100,17 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         }
 
         input.viewDidLoad
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated)) // ユーザーの操作を阻害しない
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { _ in
                 getAdItems()
-                numberOfUsersLabel.accept(dependency.initSettingsStoreUseCase.fetchNumberOfUsers())
+                getNumberOfUsers()
             })
             .disposed(by: disposeBag)
 
         input.didTapPrItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                if let item = state.prItems.value?[index] {
+                if let item = state.adItems.value?.prItems[index] {
                     dependency.router.navigate(.detail(item))
                 }
             })
@@ -111,7 +119,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         input.didTapUnivItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                if let item = state.univItems.value?[index],
+                if let item = state.adItems.value?.univItems[index],
                    let url = URL(string: item.targetUrlStr) {
                     dependency.router.navigate(.goWeb(URLRequest(url: url)))
                 }
@@ -122,7 +130,6 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
                 let tappedCell = ItemsConstants().menuItems[index]
-
                 switch tappedCell.id {
                 case .courseManagement, .manaba, .mail:
                     if let url = tappedCell.targetUrl {
@@ -138,11 +145,13 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             })
             .disposed(by: disposeBag)
 
-        input.didSelectMenuDetailItem
+        input.didTapMenuDetailItem
             .subscribe { item in
                 guard let item = item.element,
-                      let url = item.targetUrl else { return }
-
+                      let url = item.targetUrl else {
+                    return
+                }
+                // 図書館のカレンダーについては、Webスクレイピングを実行する必要あり
                 if item.id == .libraryCalendarMain || item.id == .libraryCalendarKura {
                     scrapeLibraryCalendar(with: url)
                 }else{
@@ -151,7 +160,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             }
             .disposed(by: disposeBag)
 
-        input.didSelectMiniSettings
+        input.didTapMiniSettings
             .subscribe { item in
                 if let url = item.element?.targetUrl {
                     dependency.router.navigate(.goWeb(url))

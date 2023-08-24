@@ -8,6 +8,8 @@
 import Foundation
 
 enum Url: String {
+    /// 何もリクエストしない(エラー用)
+    case emptyRequest = "about:blank"
     /// 大学ホームページ
     case universityHomePage = "https://www.tokushima-u.ac.jp/"
     /// 統合認証システム
@@ -113,7 +115,7 @@ enum Url: String {
     case weather = "https://www.jma.go.jp/bosai/#area_type=class20s&area_code=3620100&pattern=forecast"
     
     /// 徳大学生活動リスト
-    case clubList = "https://tokudai0000.github.io/club-list/"
+    case clubLists = "https://tokudai0000.github.io/club-list/"
     
     
     case prItemJsonData = "https://tokudai0000.github.io/tokumemo_resource/pr_image/info.json"
@@ -121,6 +123,8 @@ enum Url: String {
     case weatherItemJsonData = "https://api.openweathermap.org/data/2.5/weather"
     
     case newsItemJsonData = "https://api.rss2json.com/v1/api.json?rss_url=https://www.tokushima-u.ac.jp/recent/rss.xml"
+
+    case review = "https://apps.apple.com/app/id1582738889?action=write-review"
     
     /// URLを文字列として返す
     func string() -> String {

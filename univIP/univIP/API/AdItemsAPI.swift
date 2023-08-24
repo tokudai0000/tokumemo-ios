@@ -35,9 +35,8 @@ struct AdItemsAPI: AdItemsAPIInterface {
 }
 
 struct AdItemsGetRequest: Request {
-    struct ResponseBody: Decodable {
-        let prItems: [AdItem]
-        let univItems: [AdItem]
+    struct ResponseBody {
+        let adItems:AdItems
 
         init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
@@ -46,8 +45,9 @@ struct AdItemsGetRequest: Request {
                 throw ResponseError.unexpectedObject(object)
             }
 
-            prItems = try prItemsArray.map { try AdItem(dictionary: $0) }
-            univItems = try univItemsArray.map { try AdItem(dictionary: $0) }
+            let prItems = try prItemsArray.map { try AdItem(dictionary: $0) }
+            let univItems = try univItemsArray.map { try AdItem(dictionary: $0) }
+            adItems = AdItems(prItems: prItems, univItems: univItems)
         }
     }
 

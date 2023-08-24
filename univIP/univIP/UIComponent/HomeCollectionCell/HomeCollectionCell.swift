@@ -8,7 +8,6 @@
 import UIKit
 
 class HomeCollectionCell: UICollectionViewCell {
-    
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     

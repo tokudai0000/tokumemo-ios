@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SettingsViewController: BaseViewController {
+final class SettingsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
 
     var viewModel: SettingsViewModelInterface!

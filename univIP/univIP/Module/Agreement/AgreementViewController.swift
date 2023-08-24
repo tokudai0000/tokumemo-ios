@@ -6,16 +6,17 @@
 //
 
 import UIKit
-import RxCocoa
 import RxSwift
 
-final class AgreementViewController: BaseViewController {
+final class AgreementViewController: UIViewController {
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var termsButton: UIButton!
     @IBOutlet private weak var privacyButton: UIButton!
     @IBOutlet private weak var agreementButton: UIButton!
 
+    private let disposeBag = DisposeBag()
+    
     var viewModel: AgreementViewModelInterface!
 
     override func viewDidLoad() {
@@ -32,9 +33,26 @@ final class AgreementViewController: BaseViewController {
 private extension AgreementViewController {
 
     func binding() {
-        bindButtonTapEvent(termsButton, to: viewModel.input.didTapTermsButton)
-        bindButtonTapEvent(privacyButton, to: viewModel.input.didTapPrivacyButton)
-        bindButtonTapEvent(agreementButton, to: viewModel.input.didTapAgreementButton)
+        termsButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapTermsButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        privacyButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapPrivacyButton.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        agreementButton.rx
+            .tap
+            .subscribe(with: self) { owner, _ in
+                owner.viewModel.input.didTapAgreementButton.accept(())
+            }
+            .disposed(by: disposeBag)
 
         viewModel.output
             .termText
@@ -68,14 +86,14 @@ private extension AgreementViewController {
 
         termsButton.setTitle(R.string.localizable.terms_of_service(), for: .normal)
         termsButton.backgroundColor = .white
-        termsButton.borderColor = .black
+        termsButton.layer.borderColor = UIColor.black.cgColor
         termsButton.tintColor = .black
         termsButton.layer.cornerRadius = 10.0
         termsButton.layer.borderWidth = 1
 
         privacyButton.setTitle(R.string.localizable.privacy_policy(), for: .normal)
         privacyButton.backgroundColor = .white
-        privacyButton.borderColor = .black
+        privacyButton.layer.borderColor = UIColor.black.cgColor
         privacyButton.tintColor = .black
         privacyButton.layer.cornerRadius = 10.0
         privacyButton.layer.borderWidth = 1

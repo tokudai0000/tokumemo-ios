@@ -8,7 +8,6 @@
 import UIKit
 
 class UnivBannerView: UIView {
-
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextView: UILabel!
     @IBOutlet weak var discriptionTextView: UILabel!

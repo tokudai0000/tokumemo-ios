@@ -17,6 +17,8 @@ struct SettingsItem {
         case termsOfService
         case privacyPolicy
         case sourceCode
+        case review
+        case acknowledgements
     }
 
     let title: String

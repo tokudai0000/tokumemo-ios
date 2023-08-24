@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/08/16.
 //
 
-import UIKit
+import Foundation
 
 enum SplashNavigationDestination {
     case agree(String)
@@ -24,23 +24,24 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              initSettingsAPI: InitSettingsAPI(),
-                              passwordStoreUseCase: PasswordStoreUseCase(
-                                passwordRepository: PasswordOnKeyChainRepository()
+                              currentTermVersionAPI: CurrentTermVersionAPI(),
+                              univAuthStoreUseCase: UnivAuthStoreUseCase(
+                                univAuthRepository: UnivAuthOnKeyChainRepository()
                               ),
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
-                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
+                                acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
                               )
                              )
         )
     }
     
     func navigate(_ destination: SplashNavigationDestination) {
+        let rootViewController = moduleViewController.parent as? RootViewController
         switch destination {
-        case .agree(let current):
-            present(AgreementRouter(currentTermVersion: current))
+        case .agree(let currentAgreementVersion):
+            rootViewController?.switchToAgreement(currentTermVersion: currentAgreementVersion)
         case .main:
-            present(MainRouter())
+            rootViewController?.switchToMain()
         }
     }
 }

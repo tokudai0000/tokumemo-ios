@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 enum HomeNavigationDestination {
     case goWeb(URLRequest)
@@ -26,17 +25,10 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               adItemsAPI: AdItemsAPI(),
-                              adItemStoreUseCase: AdItemStoreUseCase(
-                                prItemRepository: AdItemOnMemoryRepository(),
-                                univItemRepository: AdItemOnMemoryRepository()
-                              ),
-                              libraryCalendarWebScraper: LibraryCalendarWebScraper(),
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
-                                initSettingsRepository: InitSettingsOnMemoryRepository()
-                              )
+                              numberOfUsersAPI: NumberOfUsersAPI(),
+                              libraryCalendarWebScraper: LibraryCalendarWebScraper()
                              )
         )
-
     }
 
     func navigate(_ destination: HomeNavigationDestination) {

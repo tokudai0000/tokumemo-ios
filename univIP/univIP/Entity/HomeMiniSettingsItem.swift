@@ -9,6 +9,7 @@ import Foundation
 
 struct HomeMiniSettingsItem {
     enum type {
+        case review
         case prApplication
         case contactUs
         case homePage

@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="./assets/TokumemoPlusIcon.png" width=300px>
+  <img src="./assets/TokumemoPlusIcon.png" width=150px>
 </p>
 
 # トクメモ＋ (TokumemoPlus) for iOS
@@ -17,91 +17,197 @@
 |[develop](https://github.com/tokudai0000/univIP/tree/develop)|[![CI](https://github.com/tokudai0000/univIP/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/tokudai0000/univIP/actions/workflows/main.yml)|
 
 
+## 開発環境
+- Xcodeバージョン: 14.2
 
-# 概要
-トクメモ＋は、[ある徳島大学生](https://github.com/akidon0000)が徳島大学のWebサービスの不便さを解消する目的で個人開発したアプリ「トクメモ」が原点です。
+
+## 動作環境
+- deployment target: iOS 15.0
+- cocoapod 1.12.1
+
+## 準備
+1. ライブラリインストール
+   1. bundlerをインストールする
+   ```
+   bundle install
+   ```
+   2. podからライブラリをインストールする
+   ```
+   bundle exec pod install
+   ```
+2. `univIP.xcworkspace` からプロジェクトを開く
+
+
+## このアプリについて
+### 概要
+**トクメモ＋は、徳島大学のWebサービスの不便さを解消するアプリで、[個人開発](https://github.com/akidon0000)の「トクメモ」が原点です。**
 本アプリは、徳島大学の講義情報やレポート提出、そして学内情報などの一元化を目的としており、それにはJavaScriptインジェクション、Webスクレイピング、そしてRSSフィードを活用し、学生生活のほとんどが一つのアプリで完結するという形で実現しました。
-
-現在、AppStoreとGooglePlayで公開しています。[利用者数](https://github.com/tokudai0000)はこちらをご覧ください。
 
 開発では、大学側がAPIを提供していないため、WebスクレイピングとJavaScriptインジェクションを用いて情報収集を行いました。
 具体的に、Webスクレイピングでは図書館の開館表がpdfとしてHTMLのボタン内に埋め込まれています。開館表に修正が入ったとしても対応させました。
 また、JavaScriptインジェクションでは、SSOのSAML認証を行うログイン画面にてIDとパスワード、次へ進むボタンの3つをモバイル側からWebページ側へJavaScriptを送り実行させることで自動化させました。
 
+このアプリについての[発表スライド](https://www.slideshare.net/ssuser4a1300/pptx-259338451)
 
-# 紹介動画
+
+### 紹介動画
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zRVeZhip5ow/0.jpg)](https://www.youtube.com/watch?v=zRVeZhip5ow)
 ※Youtubeへ遷移します
 
 
-# スクリーンショット
+### アプリデザイン
 
-|ホーム画面|ニュース画面|設定画面|教務事務システム|マナバ|
-|:--|:--|:--|:--|:--|
-|<img src="assets/Screenshots/5.5inch/5.5inch_home.png" width="207">|<img src="assets/Screenshots/5.5inch/5.5inch_news.png" width="207">|<img src="assets/Screenshots/5.5inch/5.5inch_settings.png" width="207">|<img src="assets/Screenshots/5.5inch/5.5inch_courseManagementMobile.png" width="207">|<img src="assets/Screenshots/5.5inch/5.5inch_manabaPC.png" width="207">|
-
-|Outlookメールサービス|パスワード画面|カスタマイズ画面|
-|:--|:--|:--|
-|<img src="assets/Screenshots/5.5inch/5.5inch_mail.png" width="207">|<img src="assets/Screenshots/5.5inch/5.5inch_password.png" width="207">|<img src="assets/Screenshots/5.5inch/5.5inch_customize.png" width="207">|
+[Figma](https://www.figma.com/file/ipPuYmdf2dsy6Y8OUY4ssV/TokumemoPlus?type=design&node-id=0%3A1&mode=design&t=yytdAd5PPkF9qCPC-1)で設計を行っています。
 
 
-# 機能紹介
+### 画面
+- ルート画面(RootViewController)
+  - スプラッシュ画面、規約同意画面、メイン画面を子ViewControllerとして持つ
 
-### 主要機能
-- 大学Webサービス（manaba、教務システムなど）への自動ログイン
-- 18種類の大学Webページへの簡単アクセス
-- 徳大Newsの閲覧
-- 徳大の学生団体情報の集約
-- 徳島大学生に向けて、先生や学生達が情報発信できる機能
+- スプラッシュ画面 (Splash)
+  - APIにより、最新の利用規約バージョンを取得。[APIリンク](https://tokudai0000.github.io/tokumemo_resource/api/v1/current_term_version.json)
+  - UserDefaultsにより端末内に保存されている同意した規約verと最新verを比較しする。
+    - 一致する場合は同意しているとみなし、ログイン処理を実行したのちMainViewへ遷移
+    - 異なる場合は同意していないとみなしAgreementViewへ最新の規約verを渡し遷移
+  - ログイン処理は、SSOのSAML認証を行うログイン画面にてIDとパスワード、次へ進むボタンの3つをモバイル側からWebページ側へJavaScriptを送り実行。完了後のURLを検知し、ログイン成功とみなしMainViewへ遷移
+  - 画面の表示時間は最大10秒(まれに、ログイン処理が完了しない場合があるため)
 
-### 機能詳細
+- 規約同意画面 (Agreement)
+  - スプラッシュ画面から最新の規約verを受け取る
+  - APIにより、最新の規約文章を取得。[APIリンク](https://tokudai0000.github.io/tokumemo_resource/api/v1/term_text.json)
+  - 利用規約とプライバシーポリシーを必要に応じでWKWebViewを用いて表示
+  - 同意ボタンを押すとUserDefaultsに最新の規約verを保存しMainViewへ遷移
 
-#### 大学Webサービス（manaba、教務システムなど）への自動ログイン
-- manabaや教務システムなど、大学Webサービスへ簡単にアクセスできます。お気に入りから探す手間が省け、ログイン済みの状態でページが開くことが出来ます。
+- メイン画面 (MainView)
+  - メイン画面は、タブバーを用いて4つの画面を切り替える(初期はホーム画面)
+    - ホーム画面、ニュース画面、部活・サークル一覧画面、設定画面
 
-#### 18種類の大学Webページへの簡単アクセス
-- 忙しい朝に教務、manaba、メールなどを素早く開いて大学からのお知らせをチェックできます。システム間の移動もボタン一つでスムーズに行えます。
+- ホーム画面 (Home)
+  - APIにより、現在の利用者数と広告情報を取得。[現在の利用者数APIリンク](https://tokudai0000.github.io/tokumemo_resource/api/v1/number_of_users.json) & [広告情報APIリンク](https://tokudai0000.github.io/tokumemo_resource/api/v1/ad_items.json)
+  - 画面上部には、現在の利用者数を表示
+  - 広告として2つの種類がある。
+    - PR画像
+      - 徳島大学生から徳島大学生に向けた告知画像
+    - Univ画像
+      - 徳島大学関係者(教職員)から徳島大学生に向けた告知画像
+  - PR画像をタップするとDetailViewに構造体AdItemを渡し遷移し、Univ画像をタップするとWebViewに遷移する
+  - MenuCollectionViewには6つの種類がある。
+    - 教務システム(courseManagement)
+      - 教務システムのWebViewへ遷移
+    - manaba(manaba)
+      - manabaのWebViewへ遷移
+    - メール(mail)
+      - メールのWebViewへ遷移
+    - 講義関連(academicRelated)
+      - 時間割(timeTable)
+      - 今学期の成績(currentTermPerformance)
+      - シラバス(syllabus)
+      - 出欠記録(presenceAbsenceRecord)
+      - すべての成績(termPerformance)
+    - 図書館関連(libraryRelated)
+      - 常三島図書館 カレンダー(libraryCalendarMain)
+      - 蔵本図書館 カレンダー(libraryCalendarKura)
+      - 貸出図書の期間延長(libraryBookLendingExtension)
+      - 本の購入リクエスト(libraryBookPurchaseRequest)
+      - マイページ(libraryMyPage)
+    - その他(etc)
+      - 生協営業時間(coopCalendar)
+      - 食堂メニュー(tokudaiCoopDinigMenu)
+      - キャリア支援室(tokudaiCareerCenter)
+      - SSS学習支援室の時間割(studySupportSpace)
+      - 命を守る防災知識(disasterPrevention)
+    上記のMenuCollectionViewの各セルをタップすると、例外の2つを除き各画面へWebViewへURLを渡し遷移する
+    - 例外：図書館関連の「常三島図書館 カレンダー」「蔵本図書館 カレンダー」
+      - これらのセルをタップすると、図書館WebサイトにWebスクレイピングを行い、カレンダーのPDFリンクを取得。その後WebViewへURLを渡し遷移する
+  - MiniTableViewには5つの種類がある
+    - PR画像(広告)の申請
+    - お問い合わせ
+    - ホームページ
+    - 利用規約
+    - プライバシーポリシー
+    それぞれ対応したWebViewへURLを渡し遷移する
+  - 画面下部には、X(Twitter)とGitHubのアイコンを表示。それぞれWebページへURLを渡し遷移する
 
-#### 徳大Newsの閲覧
-- 徳島大学のホームページに掲載されているNewsをアプリで確認できます。これで徳大の最新情報を逃さずチェックできます。
+- ニュース画面 (News)
+  - 徳島大学が提供しているRSSからニュース情報を取得[RSSリンク](https://www.tokushima-u.ac.jp/recent/rss.xml)
+  - 取得したデータをライブラリKannaを用いてパースし、ニュースのタイトルとリンク、日付を取得
+  - ニュースのタイトルをタップすると、WebViewへURLを渡し遷移する
 
-#### 徳大の学生団体情報の集約
-- 徳島大学で活動する部活動・サークル・学生団体についての情報を一箇所で確認できます。これにより、学生団体の活動やイベントに関する情報を簡単に入手できます。
+- 部活・サークル一覧画面(ClubLists)
+  - 画面にWKWebViewを表示し、自作した[部活・サークル一覧ページ](https://tokudai0000.github.io/club-list/)を表示する
+  - 部活動をタップした時、HTML側からSwift側にデータ(URL)を渡し、そのURLをWebViewへ渡し遷移する
+  JavaScript相互通信 等を参照
 
-#### 徳島大学生に向けて、先生や学生達が情報発信できる機能
-- 学生が主導で運営している[StudySupportSpace](https://www.lib.tokushima-u.ac.jp/support/sss/index.html)についての情報機能を追加
-- 社会基盤コースの先生から依頼を受け、徳島大学生に向けて[知っておきたい防災](https://www.tokushima-u.ac.jp/rcmode/business/46584.html)についての情報機能を追加
+- 設定画面(Settings)
+
+- 入力画面(Input)
+  - 大学のWebサービスにログインする際に必要な学生IDとパスワードをここでKeyChainに保存する
+  - 画面生成時、登録してある学生IDをTextFieldに表示する**パスワードは生体認証等無く再表示させてはいけない**
+  - 同意書ボタンを押すとHelpmessageAgree画面へ遷移する
+  - リセットボタンでは、KeyChainに保存してある学生IDとパスワードを空の文字列に置換する
+  - 保存ボタンでは、TextFieldに入力された学生IDとパスワードをKeyChainに保存し、完了するとアラートにより登録完了を知らせる
+
+- 同意書画面(HelpmessageAgree)
+  - APIにより、同意書の内容を取得する。[同意書APIリンク](https://tokudai0000.github.io/tokumemo_resource/api/v1/helpmessage_agree.json)
+  - この同意書は大学が提供しているものを使用している。大学Webサービスからと学生への同意書である。**トクメモ＋はこの内容に関与していない**
+
+- 詳細画面(Detail)
+  - Home画面のPR画像をタップすると、構造体AdItemを渡し遷移する
+  - AdItemのtitleとurlを表示し、urlをタップするとWebViewへ遷移する
+
+- ウェブ画面(Web)
+  - 渡されたURLをWKWebViewで表示する
+  - URL読み込み前
+    - タイムアウト表示になっていないか確認する
+  - URL読み込み完了
+    - ログイン処理を実行するJavaScriptInjectionを動かすべきか判定する
+    - メールサービスのログイン処理を実行するJavaScriptInjectionを動かすべきか判定する
+    - キャリアセンターのログイン処理を実行するJavaScriptInjectionを動かすべきか判定する
 
 
+## アーキテクチャ
+**MVVMをベースにClean Architectureを参考にしたものになっています**
+- [MVVM+CreanArchtecture](https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)
 
-# 活動履歴
-詳細は[こちら](https://github.com/tokudai0000)を参照してください。
+<img src="./assets/mvvmr.png" width="800px">
 
-|2021/11 メンバー募集ビラ|2021/12 アプリ広報ビラ_1|2021/12 アプリ広報ビラ_2|
-|:--|:--|:--|
-|<img src="assets/leaflet_members _wanted.png" width="207">|<img src="assets/leaflet_matsuyama.png" width="207">|<img src="assets/leaflet_kawasaki.png" width="207">|
+### Router
+- Moduleの初期化を行い､ViewModelに依存物を渡す
+- ViewModelから画面遷移の命令が来たら､別のModuleのRouterを初期化し遷移を行う
+### ViewModel
+- Viewからのイベントに応じてプレゼンテーションロジックを実行し､Viewの状態を変更する
+- 必要に応じてUseCaseやAPIを用いてデータの取得を行う
+- Routerを所持することで､プレゼンテーションロジックによる処理後に画面遷移を行うことが可能
+### View (Controller)
+- 画面のレイアウトを行う
+- 状態に応じて変化する要素はViewModelに従う
+### UseCase
+- プレゼンテーションロジック以外のビジネスロジックの実装を行う
+- データの変換処理や､データ取得処理等
+### Entity
+- アプリ内で共通のデータモデル
+- APIからのレスポンス等もここでDecodableに準拠したモデルにする
+### Repository
+- アプリ内で複数のモジュールで必要なデータや永続化が必要なデータを保持する
+- データの永続化にはUserDefaults、KeyChainを用いる
+### API
+- 外部のAPIサーバーと通信を行う｡
+- 本プロジェクトではAPIKitというライブラリを利用しており､DataLayer部分の処理をライブラリ内で行っている｡ そのためAPIの利用箇所がDomainLayerとなり、アプリのコード内ではViewModelから直接APIクラスを利用している
 
-|2022/11 アプリ広報ビラ|2023/4 新入生向けアプリ広報ビラ|
-|:--|:--|
-|<img src="assets/leaflet_etc.png" width="207">|<img src="assets/leaflet_freshman.png" width="207">|
-
-
-# 開発
-
-## 動作確認環境
-- Xcode 14.2
-- iOS 15.0
-- cocoapod 1.12.1
 
 
 ## 使用ライブラリ
-- [R.swift](https://github.com/mac-cain13/R.swift)
-- [Alamofire](https://github.com/Alamofire/Alamofire)
-- [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
-- [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess)
-- [Kanna](https://github.com/tid-kijyun/Kanna)
-- Firebase-Analytics
+
+- Kanna
+- APIKit
+- R.swift
+- RxCocoa
+- RxSwift
+- RxGesture
+- KeychainAccess
+- Firebase/Analytics
+- FirebaseCrashlytics
 
 
 

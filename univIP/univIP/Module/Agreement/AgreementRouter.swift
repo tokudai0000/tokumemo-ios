@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/08/04.
 //
 
-import UIKit
+import Foundation
 
 enum AgreementNavigationDestination {
     case goWeb(URLRequest)
@@ -25,8 +25,9 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
             state: .init(),
             dependency: .init(router: self,
                               currentTermVersion: currentTermVersion,
-                              initSettingsStoreUseCase: InitSettingsStoreUseCase(
-                                initSettingsRepository: InitSettingsOnMemoryRepository()
+                              termTextAPI: TermTextAPI(),
+                              acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
+                                acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
                               )
                              )
         )
@@ -37,7 +38,8 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .agreedUpon:
-            present(MainRouter())
+            let rootViewController = moduleViewController.parent as? RootViewController
+            rootViewController?.switchToMain()
         }
     }
 }

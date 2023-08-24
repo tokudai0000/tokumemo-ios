@@ -41,7 +41,7 @@
                                         <rect key="frame" x="315" y="0.0" width="99" height="44"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system" title=""/>
+                                        <buttonConfiguration key="configuration" style="plain" title=""/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96470588450000005" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -135,9 +135,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="cV4-O6-vDl" id="lVm-ep-9g6"/>
-                        <outlet property="doneButton" destination="eec-eU-8pd" id="QhT-fs-iuD"/>
-                        <outlet property="forwardButton" destination="Mig-mD-6Jb" id="hlh-60-2B3"/>
+                        <outlet property="closeButton" destination="eec-eU-8pd" id="QhT-fs-iuD"/>
+                        <outlet property="goBackButton" destination="cV4-O6-vDl" id="lVm-ep-9g6"/>
+                        <outlet property="goForwardButton" destination="Mig-mD-6Jb" id="hlh-60-2B3"/>
                         <outlet property="menuButton" destination="IiE-H2-KtA" id="HXp-RJ-GP3"/>
                         <outlet property="progressView" destination="wyf-84-Yq1" id="IuM-oX-hD4"/>
                         <outlet property="reloadButton" destination="BcE-tV-5mG" id="QJ9-Lb-G9T"/>
@@ -155,7 +155,6 @@
         <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="chevron.forward" catalog="system" width="97" height="128"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="safari" catalog="system" width="128" height="123"/>
     </resources>
 </document>
