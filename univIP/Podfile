@@ -25,6 +25,9 @@ abstract_target 'All' do
   target 'Repository' do
   end
 
+  target 'API' do
+  end
+
   target  'univIPTests' do
     inherit! :search_paths
     pod 'Firebase'

@@ -8,12 +8,14 @@
 import APIKit
 import RxSwift
 
-protocol TermTextAPIInterface {
+public protocol TermTextAPIInterface {
     func getTermText() -> Single<TermTextGetRequest.Response>
 }
 
-struct TermTextAPI: TermTextAPIInterface {
-    func getTermText() -> RxSwift.Single<TermTextGetRequest.Response> {
+public struct TermTextAPI: TermTextAPIInterface {
+    public init() {}
+    
+    public func getTermText() -> RxSwift.Single<TermTextGetRequest.Response> {
         let request = TermTextGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
@@ -31,11 +33,11 @@ struct TermTextAPI: TermTextAPIInterface {
     }
 }
 
-struct TermTextGetRequest: Request {
-    struct ResponseBody: Decodable {
-        let termText: String
+public struct TermTextGetRequest: Request {
+    public struct ResponseBody: Decodable {
+        public let termText: String
 
-        init(object: Any) throws {
+        public init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
                   let text = dictionary["termText"] as? String else {
                 throw ResponseError.unexpectedObject(object)
@@ -44,21 +46,21 @@ struct TermTextGetRequest: Request {
         }
     }
 
-    typealias Response = ResponseBody
+    public typealias Response = ResponseBody
 
-    var baseURL: URL {
+    public var baseURL: URL {
         return URL(string: "https://tokudai0000.github.io")!
     }
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         return .get
     }
 
-    var path: String {
+    public var path: String {
         return "/tokumemo_resource/api/v1/term_text.json"
     }
 
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+    public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try Response(object: object)
     }
 }

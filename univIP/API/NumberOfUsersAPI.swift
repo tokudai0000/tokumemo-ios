@@ -8,12 +8,14 @@
 import APIKit
 import RxSwift
 
-protocol NumberOfUsersAPIInterface {
+public protocol NumberOfUsersAPIInterface {
     func getNumberOfUsers() -> Single<NumberOfUsersGetRequest.Response>
 }
 
-struct NumberOfUsersAPI: NumberOfUsersAPIInterface {
-    func getNumberOfUsers() -> RxSwift.Single<NumberOfUsersGetRequest.Response> {
+public struct NumberOfUsersAPI: NumberOfUsersAPIInterface {
+    public init() {}
+    
+    public func getNumberOfUsers() -> RxSwift.Single<NumberOfUsersGetRequest.Response> {
         let request = NumberOfUsersGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
@@ -31,11 +33,11 @@ struct NumberOfUsersAPI: NumberOfUsersAPIInterface {
     }
 }
 
-struct NumberOfUsersGetRequest: Request {
-    struct ResponseBody: Decodable {
-        let numberOfUsers: String
+public struct NumberOfUsersGetRequest: Request {
+    public struct ResponseBody: Decodable {
+        public let numberOfUsers: String
 
-        init(object: Any) throws {
+        public init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
                   let users = dictionary["numberOfUsers"] as? String else {
                 throw ResponseError.unexpectedObject(object)
@@ -44,21 +46,21 @@ struct NumberOfUsersGetRequest: Request {
         }
     }
 
-    typealias Response = ResponseBody
+    public typealias Response = ResponseBody
 
-    var baseURL: URL {
+    public var baseURL: URL {
         return URL(string: "https://tokudai0000.github.io")!
     }
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         return .get
     }
 
-    var path: String {
+    public var path: String {
         return "/tokumemo_resource/api/v1/number_of_users.json"
     }
 
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+    public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try Response(object: object)
     }
 }

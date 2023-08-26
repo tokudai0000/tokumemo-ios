@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import API
 
 enum NewsNavigationDestination {
     case goWeb(URLRequest)

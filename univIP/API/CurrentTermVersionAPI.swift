@@ -8,12 +8,14 @@
 import APIKit
 import RxSwift
 
-protocol CurrentTermVersionAPIInterface {
+public protocol CurrentTermVersionAPIInterface {
     func getCurrentTermVersion() -> Single<CurrentTermVersionGetRequest.Response>
 }
 
-struct CurrentTermVersionAPI: CurrentTermVersionAPIInterface {
-    func getCurrentTermVersion() -> RxSwift.Single<CurrentTermVersionGetRequest.Response> {
+public struct CurrentTermVersionAPI: CurrentTermVersionAPIInterface {
+    public init() {}
+    
+    public func getCurrentTermVersion() -> RxSwift.Single<CurrentTermVersionGetRequest.Response> {
         let request = CurrentTermVersionGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
@@ -31,9 +33,9 @@ struct CurrentTermVersionAPI: CurrentTermVersionAPIInterface {
     }
 }
 
-struct CurrentTermVersionGetRequest: Request {
-    struct ResponseBody: Decodable {
-        let currentTermVersion: String
+public struct CurrentTermVersionGetRequest: Request {
+    public struct ResponseBody: Decodable {
+        public let currentTermVersion: String
 
         init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
@@ -44,21 +46,21 @@ struct CurrentTermVersionGetRequest: Request {
         }
     }
 
-    typealias Response = ResponseBody
+    public typealias Response = ResponseBody
 
-    var baseURL: URL {
+    public var baseURL: URL {
         return URL(string: "https://tokudai0000.github.io")!
     }
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         return .get
     }
 
-    var path: String {
+    public var path: String {
         return "/tokumemo_resource/api/v1/current_term_version.json"
     }
 
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+    public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try Response(object: object)
     }
 }
