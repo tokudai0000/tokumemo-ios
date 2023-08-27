@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Utility
 
 class PRViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
