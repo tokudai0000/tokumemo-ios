@@ -8,25 +8,25 @@
 import Foundation
 import Repository
 
-protocol AcceptedTermVersionStoreUseCaseInterface {
+public protocol AcceptedTermVersionStoreUseCaseInterface {
     func fetchAcceptedTermVersion() -> String
     func setAcceptedTermVersion(_ items: String)
 }
 
-struct AcceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface {
+public struct AcceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface {
     private let acceptedTermVersionRepository: AcceptedTermVersionRepositoryInterface
 
-    init(
+    public init(
         acceptedTermVersionRepository: AcceptedTermVersionRepositoryInterface
     ) {
         self.acceptedTermVersionRepository = acceptedTermVersionRepository
     }
 
-    func fetchAcceptedTermVersion() -> String {
+    public func fetchAcceptedTermVersion() -> String {
         return acceptedTermVersionRepository.fetchAcceptedTermVersion()
     }
 
-    func setAcceptedTermVersion(_ items: String) {
+    public func setAcceptedTermVersion(_ items: String) {
         acceptedTermVersionRepository.setAcceptedTermVersion(items)
     }
 }

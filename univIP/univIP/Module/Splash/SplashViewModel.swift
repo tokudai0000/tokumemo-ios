@@ -11,6 +11,7 @@ import RxRelay
 import RxSwift
 import API
 import Entity
+import UseCase
 
 protocol SplashViewModelInterface: AnyObject {
     var input: SplashViewModel.Input { get }

@@ -10,6 +10,7 @@ import Foundation
 import RxRelay
 import RxSwift
 import API
+import UseCase
 
 protocol AgreementViewModelInterface: AnyObject {
     var input: AgreementViewModel.Input { get }

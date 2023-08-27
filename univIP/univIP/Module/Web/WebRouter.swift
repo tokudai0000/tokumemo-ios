@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Repository
+import UseCase
 
 enum WebNavigationDestination {
     case goWeb

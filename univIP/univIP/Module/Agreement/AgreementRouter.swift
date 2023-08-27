@@ -8,6 +8,7 @@
 import Foundation
 import Repository
 import API
+import UseCase
 
 enum AgreementNavigationDestination {
     case goWeb(URLRequest)
