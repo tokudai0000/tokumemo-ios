@@ -11,6 +11,7 @@ import RxRelay
 import RxSwift
 import API
 import Entity
+import WebScraper
 
 protocol HomeViewModelInterface: AnyObject {
     var input: HomeViewModel.Input { get }
