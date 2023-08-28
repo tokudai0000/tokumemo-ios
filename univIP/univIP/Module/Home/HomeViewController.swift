@@ -145,6 +145,8 @@ private extension HomeViewController {
         homeTableViewHeightConstraint.constant = CGFloat(44 * Common.ItemsConstants().menuItems.count)
         prBannerViewController = BannerScrollViewController()
         univBannerViewController = BannerScrollViewController()
+        twitterButton.imageView?.image = Common.R.image.twitter_icon()
+        githubButton.imageView?.image = Common.R.image.github_icon()
     }
 
     private func configureBanner(for containerView: UIView, viewController: BannerScrollViewController, heightConstraint: NSLayoutConstraint) {
