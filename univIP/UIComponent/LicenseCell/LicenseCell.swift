@@ -8,12 +8,12 @@
 import UIKit
 import Entity
 
-class LicenseCell: UITableViewCell {
+public class LicenseCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var licenseLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
 
-    func configure(item: AcknowledgementsItemModel) {
+    public func configure(item: AcknowledgementsItemModel) {
         titleLabel.text = item.title
         licenseLabel.text = item.license
         textView.text = item.contentsText

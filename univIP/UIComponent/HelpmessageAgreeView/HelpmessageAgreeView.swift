@@ -7,15 +7,15 @@
 
 import UIKit
 
-class HelpmessageAgreeView: UIView {
+public class HelpmessageAgreeView: UIView {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var closedButton: UIButton!
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 }

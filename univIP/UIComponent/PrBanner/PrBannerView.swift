@@ -7,15 +7,15 @@
 
 import UIKit
 
-class PrBannerView: UIView {
+public class PrBannerView: UIView {
 
     @IBOutlet weak var imageView: UIImageView!
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 }
