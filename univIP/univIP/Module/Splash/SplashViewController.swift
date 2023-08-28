@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import RxSwift
+import Common
 import Entity
 
 final class SplashViewController: UIViewController {

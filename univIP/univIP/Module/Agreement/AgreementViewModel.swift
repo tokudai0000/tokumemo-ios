@@ -10,6 +10,7 @@ import Foundation
 import RxRelay
 import RxSwift
 import API
+import Common
 import UseCase
 
 protocol AgreementViewModelInterface: AnyObject {
@@ -51,7 +52,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
                         termText.accept(response.termText)
                     },
                     onFailure: { error in
-                        AKLog(level: .ERROR, message: error)
+//                        AKLog(level: .ERROR, message: error)
                     }
                 )
                 .disposed(by: disposeBag)
@@ -60,14 +61,14 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapTermsButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.router.navigate(.goWeb(Url.termsOfService.urlRequest()))
+                dependency.router.navigate(.goWeb(Common.Url.termsOfService.urlRequest()))
             }
             .disposed(by: disposeBag)
 
         input.didTapPrivacyButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.router.navigate(.goWeb(Url.privacyPolicy.urlRequest()))
+                dependency.router.navigate(.goWeb(Common.Url.privacyPolicy.urlRequest()))
             }
             .disposed(by: disposeBag)
 

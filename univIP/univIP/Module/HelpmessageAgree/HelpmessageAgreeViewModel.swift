@@ -47,7 +47,7 @@ final class HelpmessageAgreeViewModel: BaseViewModel<HelpmessageAgreeViewModel>,
                     },
                     onFailure: { error in
                         textView.accept("読み込みに失敗しました")
-                        AKLog(level: .ERROR, message: error)
+//                        AKLog(level: .ERROR, message: error)
                     }
                 )
                 .disposed(by: disposeBag)

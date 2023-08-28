@@ -24,6 +24,10 @@ abstract_target 'All' do
     pod 'Kanna' , '~> 5'
   end
 
+  target 'Common' do
+#    pod 'R.swift' , '~> 7'
+  end
+
   target 'Repository' do
     pod 'KeychainAccess' , '~> 4'
   end

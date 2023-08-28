@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import RxSwift
+import Common
 import Entity
 
 final class HomeViewController: UIViewController {
@@ -141,7 +142,7 @@ private extension HomeViewController {
     func configureDefaults() {
         homeTableView.delegate = self
         homeTableView.dataSource = self
-        homeTableViewHeightConstraint.constant = CGFloat(44 * ItemsConstants().menuItems.count)
+        homeTableViewHeightConstraint.constant = CGFloat(44 * Common.ItemsConstants().menuItems.count)
         prBannerViewController = BannerScrollViewController()
         univBannerViewController = BannerScrollViewController()
     }
@@ -187,7 +188,7 @@ private extension HomeViewController {
 
         } else if UIDevice.current.userInterfaceIdiom == .pad {
             // 使用デバイスがiPadの場合
-            // 画面横に6つ配置したい。余裕を持って横画面/6.5 に設定
+            // 画面横に6つ配置したい。余裕を持って横画面/7 に設定
             let cellSize = floor(view.bounds.width / 7)
             layout.itemSize = CGSize(width: cellSize, height: cellSize)
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -209,13 +210,13 @@ extension HomeViewController: BannerScrollViewControllerDelegate {
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ItemsConstants().menuItems.count
+        return Common.ItemsConstants().menuItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-        let title = ItemsConstants().menuItems[indexPath.row].title
-        let icon = ItemsConstants().menuItems[indexPath.row].icon
+        let title = Common.ItemsConstants().menuItems[indexPath.row].title
+        let icon = Common.ItemsConstants().menuItems[indexPath.row].icon! // fatalError
         cell.setupCell(title: title, image: icon)
         return cell
     }
@@ -242,17 +243,17 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ItemsConstants().homeMiniSettingsItems.count
+        return Common.ItemsConstants().homeMiniSettingsItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.homeTableView, for: indexPath)!
-        cell.textLabel?.text = ItemsConstants().homeMiniSettingsItems[indexPath.item].title
+        cell.textLabel?.text = Common.ItemsConstants().homeMiniSettingsItems[indexPath.item].title
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.didTapMiniSettings.accept(ItemsConstants().homeMiniSettingsItems[indexPath.row])
+        viewModel.input.didTapMiniSettings.accept(Common.ItemsConstants().homeMiniSettingsItems[indexPath.row])
         homeTableView.deselectRow(at: indexPath, animated: true)
     }
 }

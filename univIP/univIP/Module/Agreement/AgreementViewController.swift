@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Common
 
 final class AgreementViewController: UIViewController {
     @IBOutlet private weak var iconImageView: UIImageView!
@@ -73,13 +74,13 @@ private extension AgreementViewController {
     }
 
     func configureImageView() {
-        iconImageView.image = UIImage(resource: R.image.tokumemoPlusIcon)
+        iconImageView.image = UIImage(resource: Common.R.image.tokumemoPlusIcon)
         iconImageView.layer.cornerRadius = 50.0
     }
 
     func configureButton() {
         agreementButton.setTitle(R.string.localizable.agree(), for: .normal)
-        agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
+        agreementButton.backgroundColor = UIColor(resource: Common.R.color.subColor)
         agreementButton.tintColor = .black
         agreementButton.layer.cornerRadius = 5.0
         agreementButton.layer.borderWidth = 1

@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/07/20.
 //
 
-import Foundation
+import UIKit
 
 public struct MenuItem {
     public enum type {
@@ -19,10 +19,10 @@ public struct MenuItem {
 
     public let title: String
     public let id: type
-    public let icon: String
+    public let icon: UIImage?
     public let targetUrl: URLRequest?
 
-    public init(title: String, id: type, icon: String, targetUrl: URLRequest?) {
+    public init(title: String, id: type, icon: UIImage?, targetUrl: URLRequest?) {
         self.title = title
         self.id = id
         self.icon = icon

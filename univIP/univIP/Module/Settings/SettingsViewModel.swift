@@ -9,6 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import Common
 
 protocol SettingsViewModelInterface: AnyObject {
     var input: SettingsViewModel.Input { get }

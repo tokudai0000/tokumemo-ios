@@ -11,8 +11,8 @@ class HomeCollectionCell: UICollectionViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    func setupCell(title: String, image: String) {
+    func setupCell(title: String, image: UIImage) {
         titleLabel.text = title
-        iconImageView.image = UIImage(named: image)
+        iconImageView.image = image
     }
 }
