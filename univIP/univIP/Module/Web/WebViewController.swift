@@ -9,6 +9,8 @@ import UIKit
 import WebKit
 import RxSwift
 import StoreKit
+import Common
+import Entity
 
 final class WebViewController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton!

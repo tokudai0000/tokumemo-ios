@@ -9,6 +9,8 @@
 import Foundation
 import RxRelay
 import RxSwift
+import API
+import Core
 
 protocol HelpmessageAgreeViewModelInterface: AnyObject {
     var input: HelpmessageAgreeViewModel.Input { get }
@@ -46,7 +48,7 @@ final class HelpmessageAgreeViewModel: BaseViewModel<HelpmessageAgreeViewModel>,
                     },
                     onFailure: { error in
                         textView.accept("読み込みに失敗しました")
-                        AKLog(level: .ERROR, message: error)
+//                        AKLog(level: .ERROR, message: error)
                     }
                 )
                 .disposed(by: disposeBag)

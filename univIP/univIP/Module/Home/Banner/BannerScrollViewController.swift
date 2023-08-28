@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Entity
+import Utility
 
 protocol BannerScrollViewControllerDelegate: AnyObject {
     /// pageIndexが変わったときに呼ばれる

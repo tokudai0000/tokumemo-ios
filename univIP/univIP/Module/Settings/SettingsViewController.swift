@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Common
 
 final class SettingsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!

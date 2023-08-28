@@ -9,6 +9,9 @@
 import Foundation
 import RxRelay
 import RxSwift
+import Core
+import Entity
+import UseCase
 
 protocol InputViewModelInterface: AnyObject {
     var input: InputViewModel.Input { get }

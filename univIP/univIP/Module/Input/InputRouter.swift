@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Core
+import Repository
+import UseCase
 
 enum InputNavigationDestination {
     case helpmessageAgree

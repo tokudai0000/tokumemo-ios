@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import API
+import Core
 
 enum HelpmessageAgreeNavigationDestination {
     case back
