@@ -9,6 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import Core
 
 protocol ClubListsViewModelInterface: AnyObject {
     var input: ClubListsViewModel.Input { get }

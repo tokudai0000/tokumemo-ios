@@ -7,6 +7,7 @@
 
 import Foundation
 import API
+import Core
 import Entity
 import WebScraper
 

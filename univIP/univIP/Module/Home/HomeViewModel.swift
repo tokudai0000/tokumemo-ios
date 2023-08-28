@@ -11,6 +11,7 @@ import RxRelay
 import RxSwift
 import API
 import Common
+import Core
 import Entity
 import WebScraper
 

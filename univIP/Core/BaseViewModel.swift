@@ -8,12 +8,12 @@
 import Foundation
 import RxSwift
 
-protocol InputType {}
-protocol OutputType {}
-protocol StateType {}
-protocol DependencyType {}
+public protocol InputType {}
+public protocol OutputType {}
+public protocol StateType {}
+public protocol DependencyType {}
 
-protocol ViewModelType: AnyObject {
+public protocol ViewModelType: AnyObject {
     associatedtype Input: InputType
     associatedtype Output: OutputType
     associatedtype State: StateType
@@ -22,17 +22,17 @@ protocol ViewModelType: AnyObject {
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output
 }
 
-typealias BaseViewModel<ViewModel: ViewModelType> = PrimitiveBaseViewModel<ViewModel> & ViewModelType
+public typealias BaseViewModel<ViewModel: ViewModelType> = PrimitiveBaseViewModel<ViewModel> & ViewModelType
 
-class PrimitiveBaseViewModel<ViewModel: ViewModelType> {
-    let input: ViewModel.Input
-    let output: ViewModel.Output
+open class PrimitiveBaseViewModel<ViewModel: ViewModelType> {
+    public let input: ViewModel.Input
+    public let output: ViewModel.Output
 
     private let state: ViewModel.State
     private let dependency: ViewModel.Dependency
     private let disposeBag = DisposeBag()
 
-    init(input: ViewModel.Input, state: ViewModel.State, dependency: ViewModel.Dependency) {
+    public init(input: ViewModel.Input, state: ViewModel.State, dependency: ViewModel.Dependency) {
         self.input = input
         self.output = ViewModel.bind(input: input, state: state, dependency: dependency, disposeBag: disposeBag)
         self.state = state

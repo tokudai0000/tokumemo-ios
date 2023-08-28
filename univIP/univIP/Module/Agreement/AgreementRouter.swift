@@ -8,6 +8,7 @@
 import Foundation
 import Repository
 import API
+import Core
 import UseCase
 
 enum AgreementNavigationDestination {
