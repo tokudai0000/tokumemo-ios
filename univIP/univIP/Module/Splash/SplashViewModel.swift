@@ -71,8 +71,8 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             let current = response.currentTermVersion
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
             if isTermsVersionDifferent(current: current, accepted: accepted) {
-                // メインスレッドで1秒後に実行
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                // メインスレッドで実行
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
                     dependency.router.navigate(.agree(current))
                 }
             } else {
