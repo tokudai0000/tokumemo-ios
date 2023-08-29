@@ -32,6 +32,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let didTapMiniSettings = PublishRelay<HomeMiniSettingsItem>()
         let didTapTwitterButton = PublishRelay<Void>()
         let didTapGithubButton = PublishRelay<Void>()
+        let didTapEventButton = PublishRelay<Int>()
     }
 
     struct Output: OutputType {
@@ -45,6 +46,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
 
     struct State: StateType {
         let adItems: BehaviorRelay<AdItems?> = .init(value: nil)
+        let eventButtons: BehaviorRelay<[HomeEventInfos.ButtonItem]?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
@@ -101,6 +103,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                     onSuccess: { response in
                         eventPopups.accept(response.homeEventInfos.popupItems)
                         eventButtons.accept(response.homeEventInfos.buttonItems)
+                        state.eventButtons.accept(response.homeEventInfos.buttonItems)
                     },
                     onFailure: { error in
                         AKLog(level: .ERROR, message: error)
@@ -205,6 +208,21 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe { item in
                 let url = Url.github.urlRequest()
                 dependency.router.navigate(.goWeb(url))
+            }
+            .disposed(by: disposeBag)
+
+        input.didTapEventButton
+            .subscribe { index in
+                guard let index = index.element,
+                      let eventButtons = state.eventButtons.value else {
+                    return
+                }
+
+                let eventButton = eventButtons[index]
+                if let url = URL(string: eventButton.targetUrlStr) {
+                    let urlRequest = URLRequest(url: url)
+                    dependency.router.navigate(.goWeb(urlRequest))
+                }
             }
             .disposed(by: disposeBag)
 
