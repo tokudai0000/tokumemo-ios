@@ -162,6 +162,8 @@
 		1AD00BEB2A8BD457008C7EFC /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */; };
 		1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AD00BEC2A8BD463008C7EFC /* Splash.storyboard */; };
 		1AD6B7962A6BE5830046FA47 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7982A6BE5830046FA47 /* Localizable.strings */; };
+		1AD8E6C22A9DA038001EF99F /* HomeEventInfosAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD8E6C12A9DA038001EF99F /* HomeEventInfosAPI.swift */; };
+		1AD8E6C62A9DA153001EF99F /* HomeEventInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD8E6C52A9DA153001EF99F /* HomeEventInfos.swift */; };
 		1AE816B62A833DF800B8DA64 /* NewsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE816B52A833DF800B8DA64 /* NewsRouter.swift */; };
 		1AED5D0C2A91112F0090B8DE /* HelpmessageAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D0A2A91112F0090B8DE /* HelpmessageAgreeView.swift */; };
 		1AED5D0D2A91112F0090B8DE /* HelpmessageAgreeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AED5D0B2A91112F0090B8DE /* HelpmessageAgreeViewController.xib */; };
@@ -521,6 +523,8 @@
 		1AD00BF02A8BFDE0008C7EFC /* AcceptedTermVersionStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedTermVersionStoreUseCase.swift; sourceTree = "<group>"; };
 		1AD00BF22A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedTermVersionRepository.swift; sourceTree = "<group>"; };
 		1AD6B7972A6BE5830046FA47 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1AD8E6C12A9DA038001EF99F /* HomeEventInfosAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventInfosAPI.swift; sourceTree = "<group>"; };
+		1AD8E6C52A9DA153001EF99F /* HomeEventInfos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventInfos.swift; sourceTree = "<group>"; };
 		1ADE675D2A77A13E00B79D69 /* UIColor+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Exetnsion.swift"; sourceTree = "<group>"; };
 		1AE816B52A833DF800B8DA64 /* NewsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRouter.swift; sourceTree = "<group>"; };
 		1AE816B72A836D9F00B8DA64 /* NewsItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemModel.swift; sourceTree = "<group>"; };
@@ -763,6 +767,7 @@
 				1A085CED2A694B9300D31183 /* SettingsItem.swift */,
 				1A3B75B22A93BBAF00E96B60 /* ActivityIndicatorState.swift */,
 				1A11C3DB2A952B7400D95122 /* AcknowledgementsItemModel.swift */,
+				1AD8E6C52A9DA153001EF99F /* HomeEventInfos.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -854,6 +859,7 @@
 				1A3A75F92916792600069818 /* AdItemsAPI.swift */,
 				1A02301A2A8F98BF0084DD0B /* TermTextAPI.swift */,
 				1A0230162A8F94680084DD0B /* NumberOfUsersAPI.swift */,
+				1AD8E6C12A9DA038001EF99F /* HomeEventInfosAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1950,6 +1956,7 @@
 				1A11C3FC2A97176000D95122 /* HomeMiniSettingsItem.swift in Sources */,
 				1A11C4012A971C3500D95122 /* AdItems.swift in Sources */,
 				1A11C3F92A97176000D95122 /* MenuDetailItem.swift in Sources */,
+				1AD8E6C62A9DA153001EF99F /* HomeEventInfos.swift in Sources */,
 				1A11C3FB2A97176000D95122 /* MenuItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1960,6 +1967,7 @@
 			files = (
 				1A67B26F2A973BAD00AFB4E0 /* NewsItemsRSS.swift in Sources */,
 				1A67B26C2A973BAD00AFB4E0 /* NumberOfUsersAPI.swift in Sources */,
+				1AD8E6C22A9DA038001EF99F /* HomeEventInfosAPI.swift in Sources */,
 				1A67B2712A973BAD00AFB4E0 /* GenericAPI.swift in Sources */,
 				1A67B2702A973BAD00AFB4E0 /* TermTextAPI.swift in Sources */,
 				1A67B26E2A973BAD00AFB4E0 /* AdItemsAPI.swift in Sources */,
