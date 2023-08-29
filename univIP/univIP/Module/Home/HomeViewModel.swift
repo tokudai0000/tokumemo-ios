@@ -39,6 +39,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let prItems: Observable<[AdItem]>
         let univItems: Observable<[AdItem]>
         let menuDetailItem: Observable<[MenuDetailItem]>
+        let eventPopups: Observable<[HomeEventInfos.PopupItem]>
+        let eventButtons: Observable<[HomeEventInfos.ButtonItem]>
     }
 
     struct State: StateType {
@@ -49,6 +51,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let router: HomeRouterInterface
         let adItemsAPI: AdItemsAPIInterface
         let numberOfUsersAPI: NumberOfUsersAPIInterface
+        let homeEventInfos: HomeEventInfosAPIInterface
         let libraryCalendarWebScraper: LibraryCalendarWebScraperInterface
     }
 
@@ -57,6 +60,8 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         let prItems: PublishRelay<[AdItem]> = .init()
         let univItems: PublishRelay<[AdItem]> = .init()
         let menuDetailItem: PublishRelay<[MenuDetailItem]> = .init()
+        let eventPopups: PublishRelay<[HomeEventInfos.PopupItem]> = .init()
+        let eventButtons: PublishRelay<[HomeEventInfos.ButtonItem]> = .init()
 
         func getAdItems() {
             dependency.adItemsAPI.getAdItems()
@@ -89,6 +94,21 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
                 .disposed(by: disposeBag)
         }
 
+        func getHomeEventInfos() {
+            dependency.homeEventInfos.getHomeEventInfos()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        eventPopups.accept(response.homeEventInfos.popupItems)
+                        eventButtons.accept(response.homeEventInfos.buttonItems)
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+
         func scrapeLibraryCalendar(with url: URLRequest) {
             dependency.libraryCalendarWebScraper.getLibraryCalendarURL(libraryUrl: url.url!)
                 .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
@@ -109,6 +129,7 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             .subscribe(onNext: { _ in
                 getAdItems()
                 getNumberOfUsers()
+                getHomeEventInfos()
             })
             .disposed(by: disposeBag)
 
@@ -191,7 +212,9 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
             numberOfUsersLabel: numberOfUsersLabel.asObservable(),
             prItems: prItems.asObservable(),
             univItems: univItems.asObservable(),
-            menuDetailItem: menuDetailItem.asObservable()
+            menuDetailItem: menuDetailItem.asObservable(),
+            eventPopups: eventPopups.asObservable(),
+            eventButtons: eventButtons.asObservable()
         )
     }
 }
