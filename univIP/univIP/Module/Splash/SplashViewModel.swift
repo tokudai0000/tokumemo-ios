@@ -79,6 +79,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             } else {
                 // 同意済みなのでログイン処理へと進む
                 statusLabel.accept(R.string.localizable.processing_login())
+                loadUrl.accept(Url.universityTransitionLogin.urlRequest())
             }
         }
 

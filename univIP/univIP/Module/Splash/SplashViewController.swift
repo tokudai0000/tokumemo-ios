@@ -106,7 +106,6 @@ private extension SplashViewController {
     func configureWebView() {
         webView = WKWebView()
         webView.navigationDelegate = self
-        webView.load(Url.universityTransitionLogin.urlRequest())
 
         // 開発時は、Splash画面の上部に表示
         #if DEBUG || STUB
