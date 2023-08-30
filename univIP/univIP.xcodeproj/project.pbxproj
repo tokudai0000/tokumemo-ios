@@ -43,6 +43,7 @@
 		1A026B322A9B03A900ADD541 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A026B312A9B03A900ADD541 /* Assets.xcassets */; };
 		1A026B352A9B053700ADD541 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A026B342A9B053700ADD541 /* R.generated.swift */; };
 		1A026B362A9B063600ADD541 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AD6B7982A6BE5830046FA47 /* Localizable.strings */; };
+		1A03AAEE2A9F818B0069FC7A /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A03AAED2A9F818B0069FC7A /* AppIcon.xcassets */; };
 		1A11C3D12A95240500D95122 /* AcknowledgementsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D02A95240500D95122 /* AcknowledgementsRouter.swift */; };
 		1A11C3D32A9524DA00D95122 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D22A9524DA00D95122 /* AcknowledgementsViewController.swift */; };
 		1A11C3D52A95251D00D95122 /* AcknowledgementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D42A95251D00D95122 /* AcknowledgementsViewModel.swift */; };
@@ -417,6 +418,7 @@
 		1A026B1E2A9B028600ADD541 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		1A026B312A9B03A900ADD541 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1A026B342A9B053700ADD541 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
+		1A03AAED2A9F818B0069FC7A /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		1A085CEB2A694AD200D31183 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		1A085CED2A694B9300D31183 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		1A11C3D02A95240500D95122 /* AcknowledgementsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsRouter.swift; sourceTree = "<group>"; };
@@ -970,6 +972,7 @@
 				1A5B108B2A77E8AA00C0E61B /* Settings.bundle */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
 				1A5FD6832715305D0081F952 /* GoogleService-Info.plist */,
+				1A03AAED2A9F818B0069FC7A /* AppIcon.xcassets */,
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
 				1A26A2602A77FB3C00BC6988 /* R.generated.swift */,
 				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
@@ -1620,6 +1623,7 @@
 				1ABDE75726DE535500D4B04E /* Agreement.storyboard in Resources */,
 				1A30D0AA28F5BFB500C4012E /* HomeCollectionCell.xib in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Input.storyboard in Resources */,
+				1A03AAEE2A9F818B0069FC7A /* AppIcon.xcassets in Resources */,
 				1A11C3DA2A95286700D95122 /* LicenseCell.xib in Resources */,
 				1AD6B7962A6BE5830046FA47 /* Localizable.strings in Resources */,
 				1A5B108C2A77E8AA00C0E61B /* Settings.bundle in Resources */,
