@@ -219,25 +219,45 @@ private extension HomeViewController {
     func configureEventButtons(owner: HomeViewController?, buttonItems: [HomeEventInfos.ButtonItem]) {
         guard let owner = owner else { return }
         var eventButtons:[UIView] = []
+        var maxWidth: CGFloat = 0
+
         for (index, item) in buttonItems.enumerated() {
             let button = UIButton()
             button.setTitle(item.titleName, for: .normal)
-            button.backgroundColor = .blue
-            button.layer.cornerRadius = 10
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+            button.backgroundColor = Common.R.color.mainColor()
+            button.layer.cornerRadius = 20
             button.tag = index
             button.addTarget(owner, action: #selector(owner.buttonTapped(_:)), for: .touchUpInside)
+
+            button.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                button.heightAnchor.constraint(equalToConstant: 50), // 高さを50に設定
+            ])
+
+            // ボタンのサイズをテキストにフィットさせる
+            button.sizeToFit()
+            // 最大のボタン幅を記録
+            if button.frame.width > maxWidth {
+                maxWidth = button.frame.width
+            }
+
             eventButtons.append(button)
         }
-        let contairView = UIStackView(arrangedSubviews: eventButtons)
-        contairView.axis = .vertical
-        contairView.distribution = .fill
-        contairView.spacing = 12
-        contairView.alignment = .fill
-        owner.view.addSubview(contairView)
-        contairView.translatesAutoresizingMaskIntoConstraints = false
+
+        let containerView = UIStackView(arrangedSubviews: eventButtons)
+        containerView.axis = .vertical
+        containerView.distribution = .fill
+        containerView.spacing = 12
+        containerView.alignment = .fill
+
+        owner.view.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            contairView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
-            contairView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -100)
+            // ボタンの最大幅に+20を横幅とする
+            containerView.widthAnchor.constraint(equalToConstant: maxWidth + 20),
+            containerView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
+            containerView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -130)
         ])
     }
 
