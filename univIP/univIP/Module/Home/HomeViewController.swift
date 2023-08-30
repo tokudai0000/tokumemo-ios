@@ -161,8 +161,17 @@ private extension HomeViewController {
         homeTableViewHeightConstraint.constant = CGFloat(44 * Common.ItemsConstants().menuItems.count)
         prBannerViewController = BannerScrollViewController()
         univBannerViewController = BannerScrollViewController()
-        twitterButton.imageView?.image = Common.R.image.twitter_icon()
+        twitterButton.setImage(Common.R.image.twitter_icon(), for: .normal)
+        githubButton.setImage(Common.R.image.github_icon(), for: .normal)
+        twitterButton.imageView?.image = UIImage(systemName: "pencil")
         githubButton.imageView?.image = Common.R.image.github_icon()
+
+
+        twitterButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            twitterButton.widthAnchor.constraint(equalToConstant: 100),
+            twitterButton.heightAnchor.constraint(equalToConstant: 100),
+        ])
     }
 
     private func configureBanner(for containerView: UIView, viewController: BannerScrollViewController, heightConstraint: NSLayoutConstraint) {

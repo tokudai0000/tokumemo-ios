@@ -59,6 +59,7 @@ GitHub: @tokudai0000</string>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="LtJ-go-LwY" id="dTT-FY-Tci"/>
+                        <outlet property="iconImageView" destination="7kw-yy-JEQ" id="f6N-Bc-cql"/>
                         <outlet property="statusLabel" destination="wRL-R6-KiE" id="flA-CQ-U12"/>
                     </connections>
                 </viewController>
