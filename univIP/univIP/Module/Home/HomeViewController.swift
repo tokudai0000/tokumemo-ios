@@ -146,34 +146,10 @@ private extension HomeViewController {
             .eventButtons
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, buttonItems in
-                var eventButtons:[UIView] = []
-                for (index, item) in buttonItems.enumerated() {
-                    let button = UIButton()
-                    button.setTitle(item.titleName, for: .normal)
-                    button.backgroundColor = .blue
-                    button.layer.cornerRadius = 10
-                    button.tag = index
-                    button.addTarget(owner, action: #selector(owner.buttonTapped(_:)), for: .touchUpInside)
-                    eventButtons.append(button)
-                }
-                let contairView = UIStackView(arrangedSubviews: eventButtons)
-                contairView.axis = .vertical
-                contairView.distribution = .fill
-                contairView.spacing = 12
-                contairView.alignment = .fill
-                owner.view.addSubview(contairView)
-                contairView.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    contairView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
-                    contairView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -100)
-                ])
+                owner.configureEventButtons(owner: owner, buttonItems: buttonItems)
             }
             .disposed(by: disposeBag)
 
-    }
-    @objc func buttonTapped(_ sender: UIButton) {
-        let index = sender.tag
-        viewModel.input.didTapEventButton.accept(index)
     }
 }
 
@@ -238,6 +214,36 @@ private extension HomeViewController {
         }
 
         menuCollectionView.collectionViewLayout = layout
+    }
+
+    func configureEventButtons(owner: HomeViewController?, buttonItems: [HomeEventInfos.ButtonItem]) {
+        guard let owner = owner else { return }
+        var eventButtons:[UIView] = []
+        for (index, item) in buttonItems.enumerated() {
+            let button = UIButton()
+            button.setTitle(item.titleName, for: .normal)
+            button.backgroundColor = .blue
+            button.layer.cornerRadius = 10
+            button.tag = index
+            button.addTarget(owner, action: #selector(owner.buttonTapped(_:)), for: .touchUpInside)
+            eventButtons.append(button)
+        }
+        let contairView = UIStackView(arrangedSubviews: eventButtons)
+        contairView.axis = .vertical
+        contairView.distribution = .fill
+        contairView.spacing = 12
+        contairView.alignment = .fill
+        owner.view.addSubview(contairView)
+        contairView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contairView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
+            contairView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -100)
+        ])
+    }
+
+    @objc func buttonTapped(_ sender: UIButton) {
+        let index = sender.tag
+        viewModel.input.didTapEventButton.accept(index)
     }
 }
 
