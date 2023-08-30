@@ -13,7 +13,6 @@ public protocol AcceptedTermVersionRepositoryInterface {
 }
 
 public final class AcceptedTermVersionOnUserDefaultsRepository: AcceptedTermVersionRepositoryInterface {
-    public static var shared = AcceptedTermVersionOnUserDefaultsRepository()
 
     private var acceptedTermVersion: String
 

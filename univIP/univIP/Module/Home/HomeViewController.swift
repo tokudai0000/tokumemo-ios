@@ -266,7 +266,7 @@ private extension HomeViewController {
             // ボタンの最大幅に+20を横幅とする
             containerView.widthAnchor.constraint(equalToConstant: maxWidth + 20),
             containerView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
-            containerView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -130)
+            containerView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -100)
         ])
     }
 
