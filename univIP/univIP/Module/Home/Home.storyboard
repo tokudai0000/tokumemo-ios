@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="1769"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eoE-KR-8sY">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="909.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="929.66666666666663"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elV-Nh-f1d">
                                                 <rect key="frame" x="0.0" y="5" width="393" height="0.0"/>
@@ -113,7 +113,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="eij-dP-cJK" secondAttribute="bottom" id="gxc-bF-uPc"/>
                                                 </constraints>
                                             </view>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oJf-eX-9Ve">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="oJf-eX-9Ve">
                                                 <rect key="frame" x="0.0" y="726.66666666666663" width="393" height="128"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -132,7 +132,7 @@
                                                 </prototypes>
                                             </tableView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="8Ig-F0-yXF">
-                                                <rect key="frame" x="0.0" y="854.66666666666663" width="393" height="25"/>
+                                                <rect key="frame" x="0.0" y="874.66666666666663" width="393" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQf-cl-ufa">
                                                         <rect key="frame" x="0.0" y="0.0" width="120" height="25"/>
@@ -185,7 +185,7 @@
                                             <constraint firstItem="oJf-eX-9Ve" firstAttribute="top" secondItem="peI-HX-KlV" secondAttribute="bottom" constant="15" id="9VP-jg-qMy"/>
                                             <constraint firstAttribute="trailing" secondItem="8Ig-F0-yXF" secondAttribute="trailing" id="9ms-6S-aL0"/>
                                             <constraint firstItem="bKT-k2-QPH" firstAttribute="leading" secondItem="eoE-KR-8sY" secondAttribute="leading" id="E3W-3T-TrT"/>
-                                            <constraint firstItem="8Ig-F0-yXF" firstAttribute="top" secondItem="oJf-eX-9Ve" secondAttribute="bottom" id="ExH-1G-BRS"/>
+                                            <constraint firstItem="8Ig-F0-yXF" firstAttribute="top" secondItem="oJf-eX-9Ve" secondAttribute="bottom" constant="20" id="ExH-1G-BRS"/>
                                             <constraint firstItem="elV-Nh-f1d" firstAttribute="top" secondItem="eoE-KR-8sY" secondAttribute="top" constant="5" id="Fhq-uO-SdY"/>
                                             <constraint firstItem="CiA-Ie-eOO" firstAttribute="top" secondItem="bKT-k2-QPH" secondAttribute="bottom" constant="5" id="LCo-Ly-cNu"/>
                                             <constraint firstAttribute="trailing" secondItem="FiZ-bw-8cs" secondAttribute="trailing" id="QRz-V1-bPd"/>

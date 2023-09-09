@@ -12,6 +12,7 @@ import Common
 import Entity
 
 final class SplashViewController: UIViewController {
+    @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var statusLabel: UILabel!
 
@@ -97,6 +98,7 @@ private extension SplashViewController {
 // MARK: Layout
 private extension SplashViewController {
     func configureDefault() {
+        iconImageView.image = Common.R.image.memokichi()
         statusLabel.text = R.string.localizable.verifying_authentication()
     }
 
@@ -104,7 +106,6 @@ private extension SplashViewController {
     func configureWebView() {
         webView = WKWebView()
         webView.navigationDelegate = self
-        webView.load(Url.universityTransitionLogin.urlRequest())
 
         // 開発時は、Splash画面の上部に表示
         #if DEBUG || STUB

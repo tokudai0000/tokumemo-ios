@@ -134,6 +134,22 @@ private extension HomeViewController {
                 owner.present(alertController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
+
+        viewModel.output
+            .eventPopups
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, popupItems in
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .eventButtons
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, buttonItems in
+                owner.configureEventButtons(owner: owner, buttonItems: buttonItems)
+            }
+            .disposed(by: disposeBag)
+
     }
 }
 
@@ -145,8 +161,17 @@ private extension HomeViewController {
         homeTableViewHeightConstraint.constant = CGFloat(44 * Common.ItemsConstants().menuItems.count)
         prBannerViewController = BannerScrollViewController()
         univBannerViewController = BannerScrollViewController()
-        twitterButton.imageView?.image = Common.R.image.twitter_icon()
+        twitterButton.setImage(Common.R.image.twitter_icon(), for: .normal)
+        githubButton.setImage(Common.R.image.github_icon(), for: .normal)
+        twitterButton.imageView?.image = UIImage(systemName: "pencil")
         githubButton.imageView?.image = Common.R.image.github_icon()
+
+
+        twitterButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            twitterButton.widthAnchor.constraint(equalToConstant: 100),
+            twitterButton.heightAnchor.constraint(equalToConstant: 100),
+        ])
     }
 
     private func configureBanner(for containerView: UIView, viewController: BannerScrollViewController, heightConstraint: NSLayoutConstraint) {
@@ -198,6 +223,56 @@ private extension HomeViewController {
         }
 
         menuCollectionView.collectionViewLayout = layout
+    }
+
+    func configureEventButtons(owner: HomeViewController?, buttonItems: [HomeEventInfos.ButtonItem]) {
+        guard let owner = owner else { return }
+        var eventButtons:[UIView] = []
+        var maxWidth: CGFloat = 0
+
+        for (index, item) in buttonItems.enumerated() {
+            let button = UIButton()
+            button.setTitle(item.titleName, for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+            button.backgroundColor = Common.R.color.mainColor()
+            button.layer.cornerRadius = 20
+            button.tag = index
+            button.addTarget(owner, action: #selector(owner.buttonTapped(_:)), for: .touchUpInside)
+
+            button.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                button.heightAnchor.constraint(equalToConstant: 50), // 高さを50に設定
+            ])
+
+            // ボタンのサイズをテキストにフィットさせる
+            button.sizeToFit()
+            // 最大のボタン幅を記録
+            if button.frame.width > maxWidth {
+                maxWidth = button.frame.width
+            }
+
+            eventButtons.append(button)
+        }
+
+        let containerView = UIStackView(arrangedSubviews: eventButtons)
+        containerView.axis = .vertical
+        containerView.distribution = .fill
+        containerView.spacing = 12
+        containerView.alignment = .fill
+
+        owner.view.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            // ボタンの最大幅に+20を横幅とする
+            containerView.widthAnchor.constraint(equalToConstant: maxWidth + 20),
+            containerView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
+            containerView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -100)
+        ])
+    }
+
+    @objc func buttonTapped(_ sender: UIButton) {
+        let index = sender.tag
+        viewModel.input.didTapEventButton.accept(index)
     }
 }
 
