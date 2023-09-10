@@ -40,6 +40,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let loginOutlookJavaScriptInjection: Observable<UnivAuth>
         let loginCareerCenterJavaScriptInjection: Observable<UnivAuth>
         let showReviewAlert: Observable<Void>
+        let changeWebViewZoomLevel: Observable<String>
     }
 
     struct State: StateType {
@@ -64,6 +65,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         let loginOutlookJavaScriptInjection: PublishRelay<UnivAuth> = .init()
         let loginCareerCenterJavaScriptInjection: PublishRelay<UnivAuth> = .init()
         let showReviewAlert: PublishRelay<Void> = .init()
+        let changeWebViewZoomLevel: PublishRelay<String> = .init()
 
         func updateWebViewCloseCounterAndShowReviewIfNecessary() {
             let counter = dependency.webViewCloseCountStoreUseCase.fetchWebViewCloseCount() + 1
@@ -148,6 +150,11 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
                     state.canExecuteJavascript.accept(false)
                     loginCareerCenterJavaScriptInjection.accept(dependency.univAuthStoreUseCase.fetchUnivAuth())
                 }
+
+                // 成績一覧から、素点分布のサイトを表示する際、画面全体にグラフが表示されないため、リサイズする。
+                if url.absoluteString.contains("SubDetail/Results_Map.aspx") {
+                    changeWebViewZoomLevel.accept("0.4")
+                }
             }
             .disposed(by: disposeBag)
 
@@ -160,7 +167,8 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
             loginJavaScriptInjection: loginJavaScriptInjection.asObservable(),
             loginOutlookJavaScriptInjection: loginOutlookJavaScriptInjection.asObservable(),
             loginCareerCenterJavaScriptInjection: loginCareerCenterJavaScriptInjection.asObservable(),
-            showReviewAlert: showReviewAlert.asObservable()
+            showReviewAlert: showReviewAlert.asObservable(),
+            changeWebViewZoomLevel: changeWebViewZoomLevel.asObservable()
         )
     }
 }
