@@ -166,6 +166,14 @@ private extension WebViewController {
                 }
             }
             .disposed(by: disposeBag)
+
+        viewModel.output
+            .changeWebViewZoomLevel
+            .asDriver(onErrorJustReturn: "1")
+            .drive(with: self) { owner, level in
+                owner.webView.evaluateJavaScript("document.body.style.zoom = \(level);", completionHandler: nil)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
