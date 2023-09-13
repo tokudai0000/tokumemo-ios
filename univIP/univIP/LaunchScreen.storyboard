@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9B-W9-Cfq">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="memokichi" translatesAutoresizingMaskIntoConstraints="NO" id="k9B-W9-Cfq">
                                 <rect key="frame" x="119.5" y="360.5" width="175" height="175"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="175" id="UQc-Dl-9ds"/>
@@ -51,6 +51,7 @@ GitHub: @tokudai0000</string>
         </scene>
     </scenes>
     <resources>
+        <image name="memokichi" width="283" height="283"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
