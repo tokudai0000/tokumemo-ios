@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>852403813199-iu4qdcfe3grll8qv5l2t3nbdht5d655o.apps.googleusercontent.com</string>
+	<string></string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.852403813199-iu4qdcfe3grll8qv5l2t3nbdht5d655o</string>
+	<string></string>
 	<key>API_KEY</key>
-	<string>AIzaSyAyvVq7d-5pxXXJiBGNWkprzUheQt4sPT0</string>
+	<string></string>
 	<key>GCM_SENDER_ID</key>
-	<string>852403813199</string>
+	<string></string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
@@ -19,15 +19,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>tokumemo-cd55e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:852403813199:ios:12d23513ed38be9615633a</string>
 </dict>
