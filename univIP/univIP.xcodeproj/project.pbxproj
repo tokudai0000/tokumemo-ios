@@ -98,6 +98,8 @@
 		1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51B52904ED2400A3E85A /* Settings.storyboard */; };
 		1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B72905072500A3E85A /* NewsViewController.swift */; };
 		1A6C51BA2905077E00A3E85A /* ClubListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListsViewController.swift */; };
+		1A916E5C2AB336FF00CD6591 /* GoogleService-Info.template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A916E5B2AB336FF00CD6591 /* GoogleService-Info.template.plist */; };
+		1A916E5E2AB3371100CD6591 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A916E5D2AB3371100CD6591 /* GoogleService-Info.plist */; };
 		1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */; };
 		1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */; };
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
@@ -295,6 +297,8 @@
 		1A762FCA2A9381D900F60DFA /* GenericAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAPI.swift; sourceTree = "<group>"; };
 		1A762FCD2A93947200F60DFA /* WebScrapeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapeError.swift; sourceTree = "<group>"; };
 		1A81A94126C15EAC00CC56E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		1A916E5B2AB336FF00CD6591 /* GoogleService-Info.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.template.plist"; sourceTree = "<group>"; };
+		1A916E5D2AB3371100CD6591 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
 		1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrBannerView.swift; sourceTree = "<group>"; };
 		1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrBannerView.xib; sourceTree = "<group>"; };
@@ -691,6 +695,8 @@
 			children = (
 				1A5B108B2A77E8AA00C0E61B /* Settings.bundle */,
 				1AA056DA26BD2AE500343005 /* Info.plist */,
+				1A916E5D2AB3371100CD6591 /* GoogleService-Info.plist */,
+				1A916E5B2AB336FF00CD6591 /* GoogleService-Info.template.plist */,
 				1A026B312A9B03A900ADD541 /* Assets.xcassets */,
 				1AD6B7982A6BE5830046FA47 /* Localizable.strings */,
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
@@ -1089,6 +1095,7 @@
 				1A2B04CA2AAF5DD00085188A /* HomeCollectionCell.xib in Resources */,
 				1A2B04B92AAF5D580085188A /* Assets.xcassets in Resources */,
 				1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */,
+				1A916E5C2AB336FF00CD6591 /* GoogleService-Info.template.plist in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
@@ -1099,6 +1106,7 @@
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
 				1A11C3DE2A952E5C00D95122 /* Acknowledgements.storyboard in Resources */,
 				1A6C51B22904EC2F00A3E85A /* News.storyboard in Resources */,
+				1A916E5E2AB3371100CD6591 /* GoogleService-Info.plist in Resources */,
 				1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */,
 				1A6C51B42904ECCA00A3E85A /* ClubLists.storyboard in Resources */,
 				1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */,
