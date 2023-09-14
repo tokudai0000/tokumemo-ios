@@ -8,7 +8,6 @@
 import UIKit
 import WebKit
 import RxSwift
-import Common
 import Entity
 
 final class SplashViewController: UIViewController {
@@ -98,7 +97,7 @@ private extension SplashViewController {
 // MARK: Layout
 private extension SplashViewController {
     func configureDefault() {
-        iconImageView.image = Common.R.image.memokichi()
+        iconImageView.image = R.image.memokichi()
         statusLabel.text = R.string.localizable.verifying_authentication()
     }
 

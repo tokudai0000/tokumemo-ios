@@ -8,7 +8,6 @@
 import UIKit
 import WebKit
 import RxSwift
-import Common
 import Entity
 
 final class HomeViewController: UIViewController {
@@ -158,13 +157,13 @@ private extension HomeViewController {
     func configureDefaults() {
         homeTableView.delegate = self
         homeTableView.dataSource = self
-        homeTableViewHeightConstraint.constant = CGFloat(44 * Common.ItemsConstants().menuItems.count)
+        homeTableViewHeightConstraint.constant = CGFloat(44 * ItemsConstants().menuItems.count)
         prBannerViewController = BannerScrollViewController()
         univBannerViewController = BannerScrollViewController()
-        twitterButton.setImage(Common.R.image.twitter_icon(), for: .normal)
-        githubButton.setImage(Common.R.image.github_icon(), for: .normal)
+        twitterButton.setImage(R.image.twitter_icon(), for: .normal)
+        githubButton.setImage(R.image.github_icon(), for: .normal)
         twitterButton.imageView?.image = UIImage(systemName: "pencil")
-        githubButton.imageView?.image = Common.R.image.github_icon()
+        githubButton.imageView?.image = R.image.github_icon()
 
 
         twitterButton.translatesAutoresizingMaskIntoConstraints = false
@@ -234,7 +233,7 @@ private extension HomeViewController {
             let button = UIButton()
             button.setTitle(item.titleName, for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-            button.backgroundColor = Common.R.color.mainColor()
+            button.backgroundColor = R.color.mainColor()
             button.layer.cornerRadius = 20
             button.tag = index
             button.addTarget(owner, action: #selector(owner.buttonTapped(_:)), for: .touchUpInside)
@@ -287,13 +286,13 @@ extension HomeViewController: BannerScrollViewControllerDelegate {
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Common.ItemsConstants().menuItems.count
+        return ItemsConstants().menuItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-        let title = Common.ItemsConstants().menuItems[indexPath.row].title
-        let icon = Common.ItemsConstants().menuItems[indexPath.row].icon! // fatalError
+        let title = ItemsConstants().menuItems[indexPath.row].title
+        let icon = ItemsConstants().menuItems[indexPath.row].icon! // fatalError
         cell.setupCell(title: title, image: icon)
         return cell
     }
@@ -320,17 +319,17 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Common.ItemsConstants().homeMiniSettingsItems.count
+        return ItemsConstants().homeMiniSettingsItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.homeTableView, for: indexPath)!
-        cell.textLabel?.text = Common.ItemsConstants().homeMiniSettingsItems[indexPath.item].title
+        cell.textLabel?.text = ItemsConstants().homeMiniSettingsItems[indexPath.item].title
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.didTapMiniSettings.accept(Common.ItemsConstants().homeMiniSettingsItems[indexPath.row])
+        viewModel.input.didTapMiniSettings.accept(ItemsConstants().homeMiniSettingsItems[indexPath.row])
         homeTableView.deselectRow(at: indexPath, animated: true)
     }
 }

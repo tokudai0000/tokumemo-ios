@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import RxGesture
-import Common
 
 final class InputViewController: UIViewController {
     @IBOutlet private weak var titleLabel1: UILabel!

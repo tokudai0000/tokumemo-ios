@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Repository
 
 public protocol AcceptedTermVersionStoreUseCaseInterface {
     func fetchAcceptedTermVersion() -> String

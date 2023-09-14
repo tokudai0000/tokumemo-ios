@@ -7,9 +7,6 @@
 
 import Foundation
 import API
-import Core
-import Repository
-import UseCase
 
 enum SplashNavigationDestination {
     case agree(String)

@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import Core
 
 enum ClubListsNavigationDestination {
     case goWeb(URLRequest)

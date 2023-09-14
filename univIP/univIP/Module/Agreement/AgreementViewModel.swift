@@ -10,9 +10,6 @@ import Foundation
 import RxRelay
 import RxSwift
 import API
-import Common
-import Core
-import UseCase
 
 protocol AgreementViewModelInterface: AnyObject {
     var input: AgreementViewModel.Input { get }
@@ -62,14 +59,14 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapTermsButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.router.navigate(.goWeb(Common.Url.termsOfService.urlRequest()))
+                dependency.router.navigate(.goWeb(Url.termsOfService.urlRequest()))
             }
             .disposed(by: disposeBag)
 
         input.didTapPrivacyButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.router.navigate(.goWeb(Common.Url.privacyPolicy.urlRequest()))
+                dependency.router.navigate(.goWeb(Url.privacyPolicy.urlRequest()))
             }
             .disposed(by: disposeBag)
 
