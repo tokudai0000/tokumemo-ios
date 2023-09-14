@@ -7,7 +7,6 @@
 
 import UIKit
 import WebKit
-import Common
 
 class ClubListsViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView!
@@ -25,7 +24,7 @@ private extension ClubListsViewController {
     func configureDefault() {
         // Web側(JavaScript)からtokumemoPlus関数が送られてくるのを受け取る設定
         webView.configuration.userContentController.add(self, name: "tokumemoPlus")
-        webView.load(Common.Url.clubLists.urlRequest())
+        webView.load(Url.clubLists.urlRequest())
     }
 }
 

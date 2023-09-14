@@ -8,10 +8,7 @@
 import Foundation
 import RxRelay
 import RxSwift
-import Common
-import Core
 import Entity
-import UseCase
 
 protocol WebViewModelInterface: AnyObject {
     var input: WebViewModel.Input { get }

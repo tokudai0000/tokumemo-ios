@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Repository
 
 public protocol WebViewCloseCountStoreUseCaseInterface {
     func fetchWebViewCloseCount() -> Int
