@@ -37,12 +37,10 @@
 		1A2B04BD2AAF5D720085188A /* ItemsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6732A84D9320025737A /* ItemsConstants.swift */; };
 		1A2B04BE2AAF5D720085188A /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		1A2B04BF2AAF5D720085188A /* URLCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A154F282A8C809900E6D3CB /* URLCheckers.swift */; };
-		1A2B04C62AAF5DD00085188A /* PrBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */; };
 		1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378B32A6294D2009A5758 /* UnivBannerView.xib */; };
 		1A2B04CA2AAF5DD00085188A /* HomeCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */; };
 		1A2B04CC2AAF5DEF0085188A /* ThirdPartyCreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D72A95286700D95122 /* ThirdPartyCreditCell.swift */; };
 		1A2B04D02AAF5DEF0085188A /* UnivNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */; };
-		1A2B04D22AAF5DEF0085188A /* PrBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */; };
 		1A2B04D42AAF5DEF0085188A /* UnivBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378B12A6294C6009A5758 /* UnivBannerView.swift */; };
 		1A2B04D62AAF5DEF0085188A /* HomeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */; };
 		1A2B04DF2AAFE5E60085188A /* Entity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B04DE2AAFE5E60085188A /* Entity.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -295,8 +293,6 @@
 		1A916E5B2AB336FF00CD6591 /* GoogleService-Info.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.template.plist"; sourceTree = "<group>"; };
 		1A916E5D2AB3371100CD6591 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
-		1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrBannerView.swift; sourceTree = "<group>"; };
-		1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrBannerView.xib; sourceTree = "<group>"; };
 		1A9378B12A6294C6009A5758 /* UnivBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivBannerView.swift; sourceTree = "<group>"; };
 		1A9378B32A6294D2009A5758 /* UnivBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnivBannerView.xib; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -465,15 +461,6 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		1A085CEF2A69676900D31183 /* PrBanner */ = {
-			isa = PBXGroup;
-			children = (
-				1A9378AD2A60E7B3009A5758 /* PrBannerView.xib */,
-				1A9378AB2A60E7A7009A5758 /* PrBannerView.swift */,
-			);
-			path = PrBanner;
-			sourceTree = "<group>";
-		};
 		1A11C3CF2A9523BC00D95122 /* Acknowledgements */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,7 +598,6 @@
 			children = (
 				1A11C3D72A95286700D95122 /* ThirdPartyCreditCell.swift */,
 				1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */,
-				1A085CEF2A69676900D31183 /* PrBanner */,
 				1A9378B02A629487009A5758 /* UnivBanner */,
 				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 			);
@@ -1051,7 +1037,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A2B04C62AAF5DD00085188A /* PrBannerView.xib in Resources */,
 				1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */,
 				1A2B04CA2AAF5DD00085188A /* HomeCollectionCell.xib in Resources */,
 				1A2B04B92AAF5D580085188A /* Assets.xcassets in Resources */,
@@ -1305,7 +1290,6 @@
 			files = (
 				1A2B04CC2AAF5DEF0085188A /* ThirdPartyCreditCell.swift in Sources */,
 				1A2B04D02AAF5DEF0085188A /* UnivNewsTableCell.swift in Sources */,
-				1A2B04D22AAF5DEF0085188A /* PrBannerView.swift in Sources */,
 				1A2B04D42AAF5DEF0085188A /* UnivBannerView.swift in Sources */,
 				1A2B04D62AAF5DEF0085188A /* HomeCollectionCell.swift in Sources */,
 				1A2B04BC2AAF5D720085188A /* AKLibrary.swift in Sources */,
