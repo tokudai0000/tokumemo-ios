@@ -38,11 +38,10 @@
 		1A2B04BE2AAF5D720085188A /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		1A2B04BF2AAF5D720085188A /* URLCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A154F282A8C809900E6D3CB /* URLCheckers.swift */; };
 		1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378B32A6294D2009A5758 /* UnivBannerView.xib */; };
-		1A2B04CA2AAF5DD00085188A /* HomeCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */; };
 		1A2B04CC2AAF5DEF0085188A /* ThirdPartyCreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D72A95286700D95122 /* ThirdPartyCreditCell.swift */; };
 		1A2B04D02AAF5DEF0085188A /* UnivNewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */; };
 		1A2B04D42AAF5DEF0085188A /* UnivBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378B12A6294C6009A5758 /* UnivBannerView.swift */; };
-		1A2B04D62AAF5DEF0085188A /* HomeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */; };
+		1A2B04D62AAF5DEF0085188A /* HomeMenuCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0A728F5BFB500C4012E /* HomeMenuCollectionCell.swift */; };
 		1A2B04DF2AAFE5E60085188A /* Entity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A2B04DE2AAFE5E60085188A /* Entity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A2B04E22AAFE5E60085188A /* Entity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B04DC2AAFE5E60085188A /* Entity.framework */; };
 		1A2B04E32AAFE5E60085188A /* Entity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B04DC2AAFE5E60085188A /* Entity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -250,8 +249,7 @@
 		1A26A2602A77FB3C00BC6988 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1A2B04DC2AAFE5E60085188A /* Entity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Entity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2B04DE2AAFE5E60085188A /* Entity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
-		1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionCell.swift; sourceTree = "<group>"; };
-		1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionCell.xib; sourceTree = "<group>"; };
+		1A30D0A728F5BFB500C4012E /* HomeMenuCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuCollectionCell.swift; sourceTree = "<group>"; };
 		1A30D0AD28F6D79800C4012E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A30D0AF28F6D7BC00C4012E /* Web.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Web.storyboard; sourceTree = "<group>"; };
 		1A30D0B128F6ED2E00C4012E /* UIImageView+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Exetnsion.swift"; sourceTree = "<group>"; };
@@ -492,15 +490,6 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
-		1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */ = {
-			isa = PBXGroup;
-			children = (
-				1A30D0A828F5BFB500C4012E /* HomeCollectionCell.xib */,
-				1A30D0A728F5BFB500C4012E /* HomeCollectionCell.swift */,
-			);
-			path = HomeCollectionCell;
-			sourceTree = "<group>";
-		};
 		1A30D0AC28F6D75000C4012E /* Web */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,8 +587,8 @@
 			children = (
 				1A11C3D72A95286700D95122 /* ThirdPartyCreditCell.swift */,
 				1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */,
+				1A30D0A728F5BFB500C4012E /* HomeMenuCollectionCell.swift */,
 				1A9378B02A629487009A5758 /* UnivBanner */,
-				1A30D0AB28F5BFBD00C4012E /* HomeCollectionCell */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -1038,7 +1027,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */,
-				1A2B04CA2AAF5DD00085188A /* HomeCollectionCell.xib in Resources */,
 				1A2B04B92AAF5D580085188A /* Assets.xcassets in Resources */,
 				1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */,
 				1A916E5C2AB336FF00CD6591 /* GoogleService-Info.template.plist in Resources */,
@@ -1291,7 +1279,7 @@
 				1A2B04CC2AAF5DEF0085188A /* ThirdPartyCreditCell.swift in Sources */,
 				1A2B04D02AAF5DEF0085188A /* UnivNewsTableCell.swift in Sources */,
 				1A2B04D42AAF5DEF0085188A /* UnivBannerView.swift in Sources */,
-				1A2B04D62AAF5DEF0085188A /* HomeCollectionCell.swift in Sources */,
+				1A2B04D62AAF5DEF0085188A /* HomeMenuCollectionCell.swift in Sources */,
 				1A2B04BC2AAF5D720085188A /* AKLibrary.swift in Sources */,
 				1A2B04BD2AAF5D720085188A /* ItemsConstants.swift in Sources */,
 				1A2B04BE2AAF5D720085188A /* Url.swift in Sources */,
