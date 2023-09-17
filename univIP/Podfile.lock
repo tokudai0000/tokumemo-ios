@@ -56,6 +56,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.10)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
+  - FootlessParser (0.5.2)
   - GoogleAppMeasurement (10.14.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.14.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -106,6 +107,8 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - NorthLayout (5.2.0):
+    - FootlessParser (~> 0.4)
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
@@ -119,6 +122,7 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - "※ikemen (0.8.0)"
 
 DEPENDENCIES:
   - APIKit (~> 5)
@@ -127,10 +131,12 @@ DEPENDENCIES:
   - FirebaseCrashlytics (~> 10)
   - Kanna (~> 5)
   - KeychainAccess (~> 4)
+  - NorthLayout
   - R.swift (~> 7)
   - RxCocoa (~> 6)
   - RxGesture (~> 4)
   - RxSwift (~> 6)
+  - "※ikemen"
 
 SPEC REPOS:
   trunk:
@@ -143,12 +149,14 @@ SPEC REPOS:
     - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseSessions
+    - FootlessParser
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
     - Kanna
     - KeychainAccess
     - nanopb
+    - NorthLayout
     - PromisesObjC
     - PromisesSwift
     - R.swift
@@ -156,6 +164,7 @@ SPEC REPOS:
     - RxGesture
     - RxRelay
     - RxSwift
+    - "※ikemen"
 
 SPEC CHECKSUMS:
   APIKit: 0680e86d2e8abd5bc42e64963f5f89d209eb9271
@@ -167,12 +176,14 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: 0fbfa4efa57e8a09d8bf195393b50c237e3322b5
   FirebaseInstallations: f672b1eda64e6381c21d424a2f680a943fd83f3b
   FirebaseSessions: f145e7365d36bec0d724c4574a8750e6f82fa6c8
+  FootlessParser: 521916d592fa6cba06cfca6f4b5d4f5a2d49175a
   GoogleAppMeasurement: 7fee012a868315d418f365fbc8d394d8e020e749
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   Kanna: 01cfbddc127f5ff0963692f285fcbc8a9d62d234
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  NorthLayout: 308a58a8f7d96f316e6399ff6432f8769321bbdf
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
@@ -180,7 +191,8 @@ SPEC CHECKSUMS:
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  "※ikemen": dd846bad2317b0ea51e5c7dd8e565108fa40d528
 
-PODFILE CHECKSUM: 6a40bc6557b21feae7e4867499405d692ee926c9
+PODFILE CHECKSUM: 85a6a30b9fcad942fdd5f7b4f34eef3ce857169d
 
 COCOAPODS: 1.12.1

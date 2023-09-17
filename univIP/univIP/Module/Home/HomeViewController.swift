@@ -198,7 +198,7 @@ private extension HomeViewController {
     }
 
     func configureMenuCollectionView() {
-        menuCollectionView.register(R.nib.homeCollectionCell)
+        menuCollectionView.register(HomeMenuCollectionCell.self, forCellWithReuseIdentifier: HomeMenuCollectionCell.Reusable)
         menuCollectionView.delegate = self
         menuCollectionView.dataSource = self
         menuCollectionView.backgroundColor = .white
@@ -290,10 +290,11 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.homeCollectionCell, for: indexPath)!
-        let title = ItemsConstants().menuItems[indexPath.row].title
-        let icon = ItemsConstants().menuItems[indexPath.row].icon! // fatalError
-        cell.setupCell(title: title, image: icon)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMenuCollectionCell.Reusable, for: indexPath) as? HomeMenuCollectionCell else {
+            return UICollectionViewCell()
+        }
+
+        cell.setup(ItemsConstants().menuItems[indexPath.row])
         return cell
     }
 

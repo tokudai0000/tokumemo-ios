@@ -41,8 +41,8 @@ private extension NewsViewController {
 
         viewModel.output
             .newsItems
-            .bind(to: tableView.rx.items(cellIdentifier: R.nib.newsTableViewCell.identifier, cellType: NewsTableViewCell.self)) { index, model, cell in
-                cell.configure(model: model)
+            .bind(to: tableView.rx.items(cellIdentifier: UnivNewsTableCell.Reusable, cellType: UnivNewsTableCell.self)) { _, item, cell in
+                cell.setup(item)
             }
             .disposed(by: disposeBag)
     }
@@ -51,10 +51,10 @@ private extension NewsViewController {
 // MARK: Layout
 private extension NewsViewController {
     private func configureTableView() {
-        tableView.register(R.nib.newsTableViewCell)
+        tableView.register(UnivNewsTableCell.self, forCellReuseIdentifier: UnivNewsTableCell.Reusable)
         tableView.showsVerticalScrollIndicator = true
         tableView.indicatorStyle = .black
-        tableView.rowHeight = 120
+//        tableView.rowHeight = 120
         tableView.delegate = self
     }
 

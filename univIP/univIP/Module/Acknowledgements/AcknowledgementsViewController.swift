@@ -39,8 +39,8 @@ private extension AcknowledgementsViewController {
 
         viewModel.output
             .acknowledgementsItems
-            .bind(to: tableView.rx.items(cellIdentifier: R.nib.licenseCell.identifier, cellType: LicenseCell.self)) { index, item, cell in
-                cell.configure(item: item)
+            .bind(to: tableView.rx.items(cellIdentifier: ThirdPartyCreditCell.Reusable, cellType: ThirdPartyCreditCell.self)) { _, item, cell in
+                cell.setup(item)
             }
             .disposed(by: disposeBag)
     }
@@ -50,12 +50,9 @@ private extension AcknowledgementsViewController {
 private extension AcknowledgementsViewController {
     private func configureTableView() {
         // TableViewの基本的な設定
-        tableView.register(R.nib.licenseCell)
+        tableView.register(ThirdPartyCreditCell.self, forCellReuseIdentifier: ThirdPartyCreditCell.Reusable)
         tableView.showsVerticalScrollIndicator = true
-        tableView.indicatorStyle = .black
         tableView.delegate = self
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
     }
 
     func configureNavigation() {
