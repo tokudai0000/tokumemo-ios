@@ -63,9 +63,8 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             return current != accepted
         }
 
-        func processTermVersion(response: CurrentTermVersionGetRequest.Response) {
-            state.termVersion.accept(response.currentTermVersion)
-            let current = response.currentTermVersion
+        func processTermVersion() {
+            let current = AppConstants.termsOfServiceVersion
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
             if isTermsVersionDifferent(current: current, accepted: accepted) {
                 // メインスレッドで実行(即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
@@ -80,23 +79,9 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             }
         }
 
-        func fetchAndHandleCurrentTermVersion() {
-            dependency.currentTermVersionAPI.getCurrentTermVersion()
-                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(
-                    onSuccess: { response in
-                        processTermVersion(response: response)
-                    },
-                    onFailure: { error in
-                        AKLog(level: .ERROR, message: error)
-                    }
-                )
-                .disposed(by: disposeBag)
-        }
-
         input.viewDidLoad
             .subscribe { _ in
-                fetchAndHandleCurrentTermVersion()
+                processTermVersion()
             }
             .disposed(by: disposeBag)
 
