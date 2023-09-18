@@ -2,7 +2,7 @@
 //  Entity.h
 //  Entity
 //
-//  Created by Akihiro Matsuyama on 2023/08/24.
+//  Created by Akihiro Matsuyama on 2023/09/12.
 //
 
 #import <Foundation/Foundation.h>

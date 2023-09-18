@@ -7,30 +7,39 @@
 
 import UIKit
 import WebKit
-import Common
 
 class ClubListsViewController: UIViewController {
-    @IBOutlet weak var webView: WKWebView!
+    private var webView = WKWebView()
 
     var viewModel: ClubListsViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
         configureDefault()
     }
 }
 
 // MARK: Layout
 private extension ClubListsViewController {
+    private func configureView() {
+        view.backgroundColor = .white
+
+        let autolayout = view.northLayoutFormat([:], [
+            "webView": webView
+        ])
+        autolayout("H:|-[webView]-|")
+        autolayout("V:|-[webView]-|")
+    }
+
     func configureDefault() {
         // Web側(JavaScript)からtokumemoPlus関数が送られてくるのを受け取る設定
         webView.configuration.userContentController.add(self, name: "tokumemoPlus")
-        webView.load(Common.Url.clubLists.urlRequest())
+        webView.load(Url.clubLists.urlRequest())
     }
 }
 
 extension ClubListsViewController: WKNavigationDelegate, WKScriptMessageHandler {
-    
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

@@ -5,8 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/08/10.
 //
 
-import UIKit
-import Core
+import Foundation
 import Entity
 
 enum PRNavigationDestination {

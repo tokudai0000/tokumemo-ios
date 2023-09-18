@@ -10,10 +10,7 @@ import Foundation
 import RxRelay
 import RxSwift
 import API
-import Core
-import Common
 import Entity
-import UseCase
 
 protocol SplashViewModelInterface: AnyObject {
     var input: SplashViewModel.Input { get }
@@ -37,7 +34,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
     struct Output: OutputType {
         let loadUrl: Observable<URLRequest>
-        let statusLabel: Observable<String>
+        let loginStatusLabel: Observable<String>
         let activityIndicator: Observable<ActivityIndicatorState>
         let reloadLoginURLInWebView: Observable<Void>
         let loginJavaScriptInjection: Observable<UnivAuth>
@@ -57,30 +54,13 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let loadUrl: PublishRelay<URLRequest> = .init()
-        let statusLabel: PublishRelay<String> = .init()
+        let loginStatusLabel: PublishRelay<String> = .init()
         let activityIndicator: PublishRelay<ActivityIndicatorState> = .init()
         let reloadLoginURLInWebView: PublishRelay<Void> = .init()
         let loginJavaScriptInjection: PublishRelay<UnivAuth> = .init()
 
         func isTermsVersionDifferent(current: String, accepted: String) -> Bool {
             return current != accepted
-        }
-
-        func processTermVersion(response: CurrentTermVersionGetRequest.Response) {
-            state.termVersion.accept(response.currentTermVersion)
-            let current = response.currentTermVersion
-            let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
-            if isTermsVersionDifferent(current: current, accepted: accepted) {
-                // メインスレッドで実行(即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
-                // AgreementVerを判定してからMain画面に飛ばす判定を組み込む予定
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    dependency.router.navigate(.agree(current))
-                }
-            } else {
-                // 同意済みなのでログイン処理へと進む
-                statusLabel.accept(R.string.localizable.processing_login())
-                loadUrl.accept(Url.universityTransitionLogin.urlRequest())
-            }
         }
 
         func fetchAndHandleCurrentTermVersion() {
@@ -96,6 +76,24 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 )
                 .disposed(by: disposeBag)
         }
+        func processTermVersion(response: CurrentTermVersionGetRequest.Response) {
+            state.termVersion.accept(response.currentTermVersion)
+            let current = response.currentTermVersion
+            let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
+            AKLog(level: .DEBUG, message: "current-version:\(current), accepted-version:\(accepted)")
+            if isTermsVersionDifferent(current: current, accepted: accepted) {
+                // メインスレッドで実行
+                // (即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
+                // AgreementVerを判定してからMain画面に飛ばす判定を組み込む予定
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    dependency.router.navigate(.agree(current))
+                }
+            } else {
+                // 同意済みなのでログイン処理へと進む
+                loginStatusLabel.accept(R.string.localizable.processing_login())
+                loadUrl.accept(Url.universityTransitionLogin.urlRequest())
+            }
+        }
 
         input.viewDidLoad
             .subscribe { _ in
@@ -107,7 +105,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             .subscribe { _ in
                 state.canExecuteJavascript.accept(true)
                 activityIndicator.accept(.start)
-
                 // ログイン処理に失敗した場合、10秒後には必ずメイン画面に遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                     dependency.router.navigate(.main)
@@ -158,7 +155,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
         return .init(
             loadUrl: loadUrl.asObservable(),
-            statusLabel: statusLabel.asObservable(),
+            loginStatusLabel: loginStatusLabel.asObservable(),
             activityIndicator: activityIndicator.asObservable(),
             reloadLoginURLInWebView: reloadLoginURLInWebView.asObservable(),
             loginJavaScriptInjection: loginJavaScriptInjection.asObservable()

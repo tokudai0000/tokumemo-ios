@@ -10,9 +10,6 @@ import Foundation
 import RxRelay
 import RxSwift
 import API
-import Common
-import Core
-import UseCase
 
 protocol AgreementViewModelInterface: AnyObject {
     var input: AgreementViewModel.Input { get }
@@ -37,9 +34,9 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
 
     struct Dependency: DependencyType {
         let router: AgreementRouterInterface
-        let currentTermVersion: String
         let termTextAPI: TermTextAPIInterface
         let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
+        let currentVersion: String
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -53,7 +50,8 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
                         termText.accept(response.termText)
                     },
                     onFailure: { error in
-//                        AKLog(level: .ERROR, message: error)
+                        termText.accept("どうやらエラーが発生したようです。 \n 本来なら、ここにはトクメモ＋の歴史が表示されます。 \n 本アプリを利用する場合は、利用規約とプライバシーポリシーに同意する必要があります。")
+                        AKLog(level: .ERROR, message: error)
                     }
                 )
                 .disposed(by: disposeBag)
@@ -62,21 +60,21 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapTermsButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.router.navigate(.goWeb(Common.Url.termsOfService.urlRequest()))
+                dependency.router.navigate(.goWeb(Url.termsOfService.urlRequest()))
             }
             .disposed(by: disposeBag)
 
         input.didTapPrivacyButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.router.navigate(.goWeb(Common.Url.privacyPolicy.urlRequest()))
+                dependency.router.navigate(.goWeb(Url.privacyPolicy.urlRequest()))
             }
             .disposed(by: disposeBag)
 
         input.didTapAgreementButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentTermVersion)
+                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentVersion)
                 dependency.router.navigate(.agreedUpon)
             }
             .disposed(by: disposeBag)

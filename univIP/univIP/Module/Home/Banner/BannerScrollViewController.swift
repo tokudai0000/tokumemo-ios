@@ -7,7 +7,6 @@
 
 import UIKit
 import Entity
-import Utility
 
 protocol BannerScrollViewControllerDelegate: AnyObject {
     /// pageIndexが変わったときに呼ばれる
@@ -121,41 +120,45 @@ class BannerScrollViewController: UIViewController {
 
     /// パネル追加
     func addPrBannerPanels(items: [AdItem]) {
-        var prevBannerView: PrBannerView?
+        var prevBannerView: UIImageView? // 1. オプショナルにする
+
         items.enumerated().forEach { index, item in
+            let bannerView = UIImageView() // 3. letにする
 
-            let bannerView = R.nib.prBannerView(withOwner: self)!
-
-            if let url = URL(string: item.imageUrlStr) {
-                bannerView.imageView.loadImage(from: url)
-                bannerView.imageView.contentMode = .scaleAspectFill
+            if let url = URL(string: item.imageUrlStr) { // 4. オプショナルを確認
+                bannerView.loadImage(from: url)
+                bannerView.contentMode = .scaleAspectFill
             }
 
-            // レイアウト
             bannerView.backgroundColor = .clear
             bannerView.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(bannerView)
+
             bannerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
             bannerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+
             if index == 0 {
                 bannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-            } else {
-                if let prevBanner = prevBannerView {
-                    bannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
-                }
+            } else if let prevBanner = prevBannerView { // 1. オプショナルを安全にアンラップ
+                bannerView.leadingAnchor.constraint(equalTo: prevBanner.trailingAnchor, constant: panelGap).isActive = true
             }
+
             bannerView.widthAnchor.constraint(equalToConstant: panelWidth).isActive = true
-            bannerView.imageView.layer.cornerRadius = 20
+
+            bannerView.layer.cornerRadius = 20 // 6. コーナーの半径
+            bannerView.clipsToBounds = true  // 6. クリッピングを有効に
+
             prevBannerView = bannerView
 
-            // バナーをタップしたときのイベント設定
             let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapPrBanner(gesture:)))
             gesture.numberOfTouchesRequired = 1
+            bannerView.isUserInteractionEnabled = true  // 5. インタラクションを有効に
             bannerView.tag = index
             bannerView.addGestureRecognizer(gesture)
         }
 
-        contentView.layoutSubviews()
+        // 2. layoutSubviews()の代わりに
+        contentView.setNeedsLayout()
     }
 
     func addUnivBannerPanels(items: [AdItem]) {

@@ -7,9 +7,6 @@
 
 import Foundation
 import API
-import Core
-import Repository
-import UseCase
 
 enum SplashNavigationDestination {
     case agree(String)
@@ -22,7 +19,7 @@ protocol SplashRouterInterface {
 
 final class SplashRouter: BaseRouter, SplashRouterInterface {
     init() {
-        let viewController = R.storyboard.splash.splashViewController()!
+        let viewController = SplashViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = SplashViewModel(
             input: .init(),
@@ -42,8 +39,8 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
     func navigate(_ destination: SplashNavigationDestination) {
         let rootViewController = moduleViewController.parent as? RootViewController
         switch destination {
-        case .agree(let currentAgreementVersion):
-            rootViewController?.switchToAgreement(currentTermVersion: currentAgreementVersion)
+        case .agree(let currentVersion):
+            rootViewController?.switchToAgreement(currentVersion)
         case .main:
             rootViewController?.switchToMain()
         }

@@ -6,10 +6,7 @@
 //
 
 import Foundation
-import Repository
 import API
-import Core
-import UseCase
 
 enum AgreementNavigationDestination {
     case goWeb(URLRequest)
@@ -21,18 +18,18 @@ protocol AgreementRouterInterface {
 }
 
 final class AgreementRouter: BaseRouter, AgreementRouterInterface {
-    init(currentTermVersion: String) {
-        let viewController = R.storyboard.agreement.agreemantViewController()!
+    init(currentVersion: String) {
+        let viewController = AgreementViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = AgreementViewModel(
             input: .init(),
             state: .init(),
             dependency: .init(router: self,
-                              currentTermVersion: currentTermVersion,
                               termTextAPI: TermTextAPI(),
                               acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
                                 acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
-                              )
+                              ),
+                              currentVersion: currentVersion
                              )
         )
     }

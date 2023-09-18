@@ -1,13 +1,11 @@
 //
-//  ClubListRouter.swift
+//  ClubListsRouter.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2023/08/09.
 //
 
 import Foundation
-import UIKit
-import Core
 
 enum ClubListsNavigationDestination {
     case goWeb(URLRequest)
@@ -19,7 +17,7 @@ protocol ClubListsRouterInterface {
 
 final class ClubListsRouter: BaseRouter, ClubListsRouterInterface {
     init() {
-        let viewController = R.storyboard.clubLists.clubListsViewController()!
+        let viewController = ClubListsViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = ClubListsViewModel(
             input: .init(),

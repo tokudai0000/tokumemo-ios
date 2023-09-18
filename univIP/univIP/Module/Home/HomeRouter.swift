@@ -7,7 +7,6 @@
 
 import Foundation
 import API
-import Core
 import Entity
 import WebScraper
 
@@ -41,7 +40,7 @@ final class HomeRouter: BaseRouter, HomeRouterInterface {
         case .goWeb(let urlRequest):
             present(WebRouter(loadUrl: urlRequest))
         case .detail(let item):
-            modal(PRRouter(prItem: item))
+            present(PRRouter(prItem: item), presentationStyle: .automatic)
         }
     }
 }

@@ -6,14 +6,13 @@
 //
 
 import UIKit
-import Common
 
 final class SettingsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
 
     var viewModel: SettingsViewModelInterface!
 
-    private let itemsConstants = ItemsConstants()
+    private let itemsConstants = AppConstants()
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {

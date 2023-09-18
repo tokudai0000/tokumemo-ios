@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import UIKit
-import Core
 
 enum SettingsNavigationDestination {
     case goWeb(URLRequest)

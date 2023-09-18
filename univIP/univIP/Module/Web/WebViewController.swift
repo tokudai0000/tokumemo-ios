@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 import RxSwift
 import StoreKit
-import Common
 import Entity
 
 final class WebViewController: UIViewController {
@@ -164,6 +163,14 @@ private extension WebViewController {
                         SKStoreReviewController.requestReview(in: windowScene)
                     }
                 }
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output
+            .changeWebViewZoomLevel
+            .asDriver(onErrorJustReturn: "1")
+            .drive(with: self) { owner, level in
+                owner.webView.evaluateJavaScript("document.body.style.zoom = \(level);", completionHandler: nil)
             }
             .disposed(by: disposeBag)
     }

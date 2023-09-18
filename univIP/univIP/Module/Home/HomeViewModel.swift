@@ -10,8 +10,6 @@ import Foundation
 import RxRelay
 import RxSwift
 import API
-import Common
-import Core
 import Entity
 import WebScraper
 
@@ -158,18 +156,18 @@ final class HomeViewModel: BaseViewModel<HomeViewModel>, HomeViewModelInterface 
         input.didTapMenuCollectionItem
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe(onNext: { index in
-                let tappedCell = ItemsConstants().menuItems[index]
+                let tappedCell = AppConstants().menuItems[index]
                 switch tappedCell.id {
                 case .courseManagement, .manaba, .mail:
                     if let url = tappedCell.targetUrl {
                         dependency.router.navigate(.goWeb(url))
                     }
                 case .academicRelated:
-                    menuDetailItem.accept(ItemsConstants().academicRelatedItems)
+                    menuDetailItem.accept(AppConstants().academicRelatedItems)
                 case .libraryRelated:
-                    menuDetailItem.accept(ItemsConstants().libraryRelatedItems)
+                    menuDetailItem.accept(AppConstants().libraryRelatedItems)
                 case .etc:
-                    menuDetailItem.accept(ItemsConstants().etcItems)
+                    menuDetailItem.accept(AppConstants().etcItems)
                 }
             })
             .disposed(by: disposeBag)
