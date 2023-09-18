@@ -16,7 +16,7 @@ public final class WebViewCloseCountRepository: WebViewCloseCountRepositoryInter
     public init() {}
     
     private var userDefaults = UserDefaults.standard
-    private let KEY_webViewCloseCount = "KEY_agreementVersion"
+    private let KEY_webViewCloseCount = "KEY_webViewCloseCount"
     public func fetchWebViewCloseCount() -> Int {
         return userDefaults.integer(forKey: KEY_webViewCloseCount)
     }

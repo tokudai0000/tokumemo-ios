@@ -23,8 +23,8 @@ final class RootViewController: UIViewController {
         switchContainer(to: navigationController)
     }
 
-    func switchToAgreement() {
-        let navigationController = AgreementRouter().moduleViewController
+    func switchToAgreement(_ currentVersion: String) {
+        let navigationController = AgreementRouter(currentVersion: currentVersion).moduleViewController
         switchContainer(to: navigationController)
     }
 
