@@ -33,7 +33,7 @@ final class AgreementViewController: UIViewController {
     }
     private var privacyButton = UIButton() ※ {
         $0.backgroundColor = .white
-        $0.setTitle(R.string.localizable.privacy_policy(), for: .normal)
+        $0.setTitle(R.string.localizable.privacy_policy_button(), for: .normal)
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         $0.tintColor = .black

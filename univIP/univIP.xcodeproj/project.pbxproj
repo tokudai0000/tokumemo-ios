@@ -470,8 +470,8 @@
 			isa = PBXGroup;
 			children = (
 				1A22378E2AB7EDF900A65301 /* Localizable.strings */,
-				1A2237902AB7EDF900A65301 /* GoogleService-Info.template.plist */,
 				1A2237912AB7EDF900A65301 /* GoogleService-Info.plist */,
+				1A2237902AB7EDF900A65301 /* GoogleService-Info.template.plist */,
 				1A2237922AB7EDF900A65301 /* Acknowledgements.plist */,
 				1A2237932AB7EDF900A65301 /* Root.plist */,
 				1A2237942AB7EDF900A65301 /* Info.plist */,
