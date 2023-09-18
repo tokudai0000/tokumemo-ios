@@ -39,7 +39,6 @@
 		1A2B04B82AAF5D200085188A /* WebViewCloseCountStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3E12A96578300D95122 /* WebViewCloseCountStoreUseCase.swift */; };
 		1A2B04B92AAF5D580085188A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A026B312A9B03A900ADD541 /* Images.xcassets */; };
 		1A2B04BC2AAF5D720085188A /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
-		1A2B04BD2AAF5D720085188A /* ItemsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6732A84D9320025737A /* ItemsConstants.swift */; };
 		1A2B04BE2AAF5D720085188A /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
 		1A2B04BF2AAF5D720085188A /* URLCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A154F282A8C809900E6D3CB /* URLCheckers.swift */; };
 		1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9378B32A6294D2009A5758 /* UnivBannerView.xib */; };
@@ -274,7 +273,6 @@
 		1A50CDAE2A832D170079A090 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Exetnsion.swift"; sourceTree = "<group>"; };
-		1A58F6732A84D9320025737A /* ItemsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsConstants.swift; sourceTree = "<group>"; };
 		1A58F6762A8532520025737A /* MenuDetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailItem.swift; sourceTree = "<group>"; };
 		1A58F67A2A85551E0025737A /* HomeMiniSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMiniSettingsItem.swift; sourceTree = "<group>"; };
 		1A58F67C2A8612A80025737A /* ClubListsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListsViewModel.swift; sourceTree = "<group>"; };
@@ -459,7 +457,6 @@
 			children = (
 				1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */,
 				1A2237872AB6C58200A65301 /* AppConstants.swift */,
-				1A58F6732A84D9320025737A /* ItemsConstants.swift */,
 				1AFC67CC2732BFA80059A053 /* Url.swift */,
 				1A154F282A8C809900E6D3CB /* URLCheckers.swift */,
 			);
@@ -1300,7 +1297,6 @@
 				1A2B04D42AAF5DEF0085188A /* UnivBannerView.swift in Sources */,
 				1A2B04D62AAF5DEF0085188A /* HomeMenuCollectionCell.swift in Sources */,
 				1A2B04BC2AAF5D720085188A /* AKLibrary.swift in Sources */,
-				1A2B04BD2AAF5D720085188A /* ItemsConstants.swift in Sources */,
 				1A2B04BE2AAF5D720085188A /* Url.swift in Sources */,
 				1A2B04BF2AAF5D720085188A /* URLCheckers.swift in Sources */,
 				1A2B04B62AAF5D200085188A /* UnivAuthStoreUseCase.swift in Sources */,
