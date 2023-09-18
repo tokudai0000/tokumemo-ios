@@ -66,6 +66,8 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         func processTermVersion() {
             let current = AppConstants.termsOfServiceVersion
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
+            print("akidon-current \(current)")
+            print("akidon-accepted \(accepted)")
             if isTermsVersionDifferent(current: current, accepted: accepted) {
                 // メインスレッドで実行(即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
                 // AgreementVerを判定してからMain画面に飛ばす判定を組み込む予定
