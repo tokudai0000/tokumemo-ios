@@ -8,21 +8,27 @@
 import UIKit
 import RxSwift
 import Entity
+import Ikemen
 
 class NewsViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView!
-
-    //    private var viewActivityIndicator: UIActivityIndicatorView!
+    private var tableView = UITableView()
+    private var viewActivityIndicator = UIActivityIndicatorView() ※ {
+        $0.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        $0.style = UIActivityIndicatorView.Style.medium
+        $0.hidesWhenStopped = true
+    }
 
     private let disposeBag = DisposeBag()
-    
+
     var viewModel: NewsViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
         configureTableView()
         binding()
         viewModel.input.viewDidLoad.accept(())
+        viewActivityIndicator.startAnimating()
     }
 }
 
@@ -32,16 +38,16 @@ private extension NewsViewController {
         tableView.rx
             .itemSelected
             .subscribe(onNext: { [weak self] indexPath in
-                if let self = self {
-                    self.viewModel.input.didTapNewsItem.accept(indexPath.row)
-                    self.tableView.deselectRow(at: indexPath, animated: true)
-                }
+                self?.viewModel.input.didTapNewsItem.accept(indexPath.row)
+                self?.tableView.deselectRow(at: indexPath, animated: true)
             })
             .disposed(by: disposeBag)
 
         viewModel.output
             .newsItems
-            .bind(to: tableView.rx.items(cellIdentifier: UnivNewsTableCell.Reusable, cellType: UnivNewsTableCell.self)) { _, item, cell in
+            .bind(to: tableView.rx.items(cellIdentifier: UnivNewsTableCell.Reusable, cellType: UnivNewsTableCell.self)) { [weak self] _, item, cell in
+                // newsItemsに更新があった = APIの通信が完了した
+                self?.viewActivityIndicator.stopAnimating()
                 cell.setup(item)
             }
             .disposed(by: disposeBag)
@@ -50,23 +56,28 @@ private extension NewsViewController {
 
 // MARK: Layout
 private extension NewsViewController {
+    private func configureView() {
+        view.backgroundColor = .white
+
+        let autolayout = view.northLayoutFormat([:], [
+            "table": tableView,
+            "indicator": viewActivityIndicator
+        ])
+        autolayout("H:|-[table]-|")
+        autolayout("V:|-[table]-|")
+
+        NSLayoutConstraint.activate([
+            viewActivityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            viewActivityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+    }
+    
     private func configureTableView() {
         tableView.register(UnivNewsTableCell.self, forCellReuseIdentifier: UnivNewsTableCell.Reusable)
         tableView.showsVerticalScrollIndicator = true
         tableView.indicatorStyle = .black
-//        tableView.rowHeight = 120
         tableView.delegate = self
     }
-
-    // インジケーターは後日実装予定
-    //    private func setupIndicatorView() {
-    //        viewActivityIndicator = UIActivityIndicatorView()
-    //        viewActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-    //        viewActivityIndicator.center = self.view.center
-    //        viewActivityIndicator.hidesWhenStopped = true
-    //        viewActivityIndicator.style = UIActivityIndicatorView.Style.medium
-    //        self.view.addSubview(viewActivityIndicator)
-    //    }
 }
 
 extension NewsViewController: UITableViewDelegate {
