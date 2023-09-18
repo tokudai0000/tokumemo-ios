@@ -49,7 +49,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
                         termText.accept(response.termText)
                     },
                     onFailure: { error in
-//                        AKLog(level: .ERROR, message: error)
+                        AKLog(level: .ERROR, message: error)
                     }
                 )
                 .disposed(by: disposeBag)

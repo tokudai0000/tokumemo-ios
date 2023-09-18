@@ -19,7 +19,7 @@ protocol AgreementRouterInterface {
 
 final class AgreementRouter: BaseRouter, AgreementRouterInterface {
     init() {
-        let viewController = R.storyboard.agreement.agreemantViewController()!
+        let viewController = AgreementViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = AgreementViewModel(
             input: .init(),

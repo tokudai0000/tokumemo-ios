@@ -64,7 +64,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         }
 
         func processTermVersion() {
-            let current = AppConstants.termsOfServiceVersion
+            let current = AppConstants.termsOfServiceVersion + "aaq"
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
             AKLog(level: .DEBUG, message: "current-version:\(current), accepted-version:\(accepted)")
             if isTermsVersionDifferent(current: current, accepted: accepted) {

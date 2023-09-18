@@ -7,13 +7,50 @@
 
 import UIKit
 import RxSwift
+import Ikemen
+import NorthLayout
 
 final class AgreementViewController: UIViewController {
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var textView: UITextView!
-    @IBOutlet private weak var termsButton: UIButton!
-    @IBOutlet private weak var privacyButton: UIButton!
-    @IBOutlet private weak var agreementButton: UIButton!
+    private var iconImageView = UIImageView() ※ {
+        $0.image = UIImage(resource: R.image.icon_tokumemo_plus)
+        $0.layer.cornerRadius = 50.0
+        $0.clipsToBounds = true
+    }
+    private var textView = UITextView() ※ {
+        $0.backgroundColor = R.color.ultraGrayColor()
+        $0.layer.cornerRadius = 10.0
+        $0.textAlignment = .center
+    }
+    private var termsButton = UIButton() ※ {
+        $0.backgroundColor = .white
+        $0.setTitle(R.string.localizable.terms_of_service(), for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        $0.tintColor = .black
+        $0.layer.borderColor = UIColor.black.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10.0
+    }
+    private var privacyButton = UIButton() ※ {
+        $0.backgroundColor = .white
+        $0.setTitle(R.string.localizable.privacy_policy(), for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        $0.tintColor = .black
+        $0.layer.borderColor = UIColor.black.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10.0
+    }
+    private var agreementButton = UIButton() ※ {
+        $0.backgroundColor = R.color.subColor()
+        $0.setTitle(R.string.localizable.agree(), for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        $0.tintColor = .black
+        $0.layer.borderColor = UIColor.black.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 5.0
+    }
 
     private let disposeBag = DisposeBag()
     
@@ -21,9 +58,7 @@ final class AgreementViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDefaults()
-        configureImageView()
-        configureButton()
+        configureView()
         binding()
         viewModel.input.viewDidLoad.accept(())
     }
@@ -31,7 +66,6 @@ final class AgreementViewController: UIViewController {
 
 // MARK: Binding
 private extension AgreementViewController {
-
     func binding() {
         termsButton.rx
             .tap
@@ -66,36 +100,30 @@ private extension AgreementViewController {
 
 // MARK: Layout
 private extension AgreementViewController {
-
-    func configureDefaults() {
-        textView.layer.cornerRadius = 10.0
+    func configureView() {
         view.backgroundColor = .white
-    }
 
-    func configureImageView() {
-        iconImageView.image = UIImage(resource: R.image.icon_tokumemo_plus)
-        iconImageView.layer.cornerRadius = 50.0
-    }
+        let stackView = UIStackView(arrangedSubviews: [termsButton, privacyButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
 
-    func configureButton() {
-        agreementButton.setTitle(R.string.localizable.agree(), for: .normal)
-        agreementButton.backgroundColor = UIColor(resource: R.color.subColor)
-        agreementButton.tintColor = .black
-        agreementButton.layer.cornerRadius = 5.0
-        agreementButton.layer.borderWidth = 1
+        let autolayout = view.northLayoutFormat([:], [
+            "iconImage": iconImageView,
+            "text": textView,
+            "stackView": stackView,
+            "agreement": agreementButton
+        ])
+        autolayout("H:||-(>=0)-[iconImage(100)]-(>=0)-||")
+        autolayout("H:|-5-[text]-5-|")
+        autolayout("H:||-(>=0)-[stackView]-(>=0)-||")
+        autolayout("H:||-(>=0)-[agreement(150)]-(>=0)-||")
+        autolayout("V:||-[iconImage(100)]-5-[text]-5-[stackView]-10-[agreement]-10-||")
 
-        termsButton.setTitle(R.string.localizable.terms_of_service(), for: .normal)
-        termsButton.backgroundColor = .white
-        termsButton.layer.borderColor = UIColor.black.cgColor
-        termsButton.tintColor = .black
-        termsButton.layer.cornerRadius = 10.0
-        termsButton.layer.borderWidth = 1
-
-        privacyButton.setTitle(R.string.localizable.privacy_policy(), for: .normal)
-        privacyButton.backgroundColor = .white
-        privacyButton.layer.borderColor = UIColor.black.cgColor
-        privacyButton.tintColor = .black
-        privacyButton.layer.cornerRadius = 10.0
-        privacyButton.layer.borderWidth = 1
+        NSLayoutConstraint.activate([
+            iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            agreementButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
 }
