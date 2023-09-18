@@ -34,7 +34,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
     struct Output: OutputType {
         let loadUrl: Observable<URLRequest>
-        let statusLabel: Observable<String>
+        let loginStatusLabel: Observable<String>
         let activityIndicator: Observable<ActivityIndicatorState>
         let reloadLoginURLInWebView: Observable<Void>
         let loginJavaScriptInjection: Observable<UnivAuth>
@@ -54,7 +54,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let loadUrl: PublishRelay<URLRequest> = .init()
-        let statusLabel: PublishRelay<String> = .init()
+        let loginStatusLabel: PublishRelay<String> = .init()
         let activityIndicator: PublishRelay<ActivityIndicatorState> = .init()
         let reloadLoginURLInWebView: PublishRelay<Void> = .init()
         let loginJavaScriptInjection: PublishRelay<UnivAuth> = .init()
@@ -76,7 +76,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 }
             } else {
                 // 同意済みなのでログイン処理へと進む
-                statusLabel.accept(R.string.localizable.processing_login())
+                loginStatusLabel.accept(R.string.localizable.processing_login())
                 loadUrl.accept(Url.universityTransitionLogin.urlRequest())
             }
         }
@@ -142,7 +142,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
         return .init(
             loadUrl: loadUrl.asObservable(),
-            statusLabel: statusLabel.asObservable(),
+            loginStatusLabel: loginStatusLabel.asObservable(),
             activityIndicator: activityIndicator.asObservable(),
             reloadLoginURLInWebView: reloadLoginURLInWebView.asObservable(),
             loginJavaScriptInjection: loginJavaScriptInjection.asObservable()

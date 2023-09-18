@@ -19,7 +19,7 @@ protocol SplashRouterInterface {
 
 final class SplashRouter: BaseRouter, SplashRouterInterface {
     init() {
-        let viewController = R.storyboard.splash.splashViewController()!
+        let viewController = SplashViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = SplashViewModel(
             input: .init(),
