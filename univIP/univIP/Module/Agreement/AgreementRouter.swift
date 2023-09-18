@@ -18,7 +18,7 @@ protocol AgreementRouterInterface {
 }
 
 final class AgreementRouter: BaseRouter, AgreementRouterInterface {
-    init() {
+    init(currentVersion: String) {
         let viewController = AgreementViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = AgreementViewModel(
@@ -28,7 +28,8 @@ final class AgreementRouter: BaseRouter, AgreementRouterInterface {
                               termTextAPI: TermTextAPI(),
                               acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCase(
                                 acceptedTermVersionRepository: AcceptedTermVersionOnUserDefaultsRepository()
-                              )
+                              ),
+                              currentVersion: currentVersion
                              )
         )
     }

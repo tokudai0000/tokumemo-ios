@@ -20,6 +20,7 @@ final class AgreementViewController: UIViewController {
         $0.backgroundColor = R.color.ultraGrayColor()
         $0.layer.cornerRadius = 10.0
         $0.textAlignment = .center
+        $0.isEditable = false
     }
     private var termsButton = UIButton() ※ {
         $0.backgroundColor = .white

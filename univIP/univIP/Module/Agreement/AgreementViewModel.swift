@@ -36,6 +36,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         let router: AgreementRouterInterface
         let termTextAPI: TermTextAPIInterface
         let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
+        let currentVersion: String
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
@@ -49,6 +50,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
                         termText.accept(response.termText)
                     },
                     onFailure: { error in
+                        termText.accept("どうやらエラーが発生したようです。 \n 本来なら、ここにはトクメモ＋の歴史が表示されます。 \n 本アプリを利用する場合は、利用規約とプライバシーポリシーに同意する必要があります。")
                         AKLog(level: .ERROR, message: error)
                     }
                 )
@@ -72,7 +74,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapAgreementButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(AppConstants.termsOfServiceVersion)
+                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentVersion)
                 dependency.router.navigate(.agreedUpon)
             }
             .disposed(by: disposeBag)

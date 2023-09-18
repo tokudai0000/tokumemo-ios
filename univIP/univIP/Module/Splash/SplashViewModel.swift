@@ -63,8 +63,22 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             return current != accepted
         }
 
-        func processTermVersion() {
-            let current = AppConstants.termsOfServiceVersion
+        func fetchAndHandleCurrentTermVersion() {
+            dependency.currentTermVersionAPI.getCurrentTermVersion()
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(
+                    onSuccess: { response in
+                        processTermVersion(response: response)
+                    },
+                    onFailure: { error in
+                        AKLog(level: .ERROR, message: error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+        func processTermVersion(response: CurrentTermVersionGetRequest.Response) {
+            state.termVersion.accept(response.currentTermVersion)
+            let current = response.currentTermVersion
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
             AKLog(level: .DEBUG, message: "current-version:\(current), accepted-version:\(accepted)")
             if isTermsVersionDifferent(current: current, accepted: accepted) {
@@ -72,7 +86,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 // (即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
                 // AgreementVerを判定してからMain画面に飛ばす判定を組み込む予定
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    dependency.router.navigate(.agree)
+                    dependency.router.navigate(.agree(current))
                 }
             } else {
                 // 同意済みなのでログイン処理へと進む
@@ -83,7 +97,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
 
         input.viewDidLoad
             .subscribe { _ in
-                processTermVersion()
+                fetchAndHandleCurrentTermVersion()
             }
             .disposed(by: disposeBag)
 
