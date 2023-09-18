@@ -672,9 +672,9 @@
 			children = (
 				1A22378D2AB7EDF900A65301 /* Settings */,
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
+				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
 				1A26A2602A77FB3C00BC6988 /* R.generated.swift */,
 				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
-				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
 				1A026B1D2A9B028600ADD541 /* Common */,
 				1A7EBFC02A9C6EB60042AACA /* Core */,
 				1AA056E926BD2DCA00343005 /* Module */,

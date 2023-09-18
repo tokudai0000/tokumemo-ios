@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NorthLayout
 
 final class RootViewController: UIViewController {
     private let containerView: UIView = .init()
@@ -17,30 +18,27 @@ final class RootViewController: UIViewController {
         switchToSplash()
     }
 
-    private func configureContainerView() {
-        view.addSubview(containerView)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.topAnchor),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-    }
-
     func switchToSplash() {
         let navigationController = SplashRouter().moduleViewController
         switchContainer(to: navigationController)
     }
 
-    func switchToAgreement(currentTermVersion: String) {
-        let navigationController = AgreementRouter(currentTermVersion: currentTermVersion).moduleViewController
+    func switchToAgreement() {
+        let navigationController = AgreementRouter().moduleViewController
         switchContainer(to: navigationController)
     }
 
     func switchToMain() {
         let navigationController = MainRouter().moduleViewController
         switchContainer(to: navigationController)
+    }
+
+    private func configureContainerView() {
+        let autolayout = view.northLayoutFormat([:], [
+            "container": containerView
+        ])
+        autolayout("H:|[container]|")
+        autolayout("V:|[container]|")
     }
 
     private func switchContainer(to viewController: UIViewController) {
@@ -51,19 +49,15 @@ final class RootViewController: UIViewController {
             previousViewController.removeFromParent()
         }
         // 新しい子ViewControllerのViewをcontainerViewに追加
-        self.currentChildViewController = viewController
-        containerView.addSubview(viewController.view)
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-            viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        let autolayout = containerView.northLayoutFormat([:], [
+            "viewController": viewController.view
         ])
+        autolayout("H:|[viewController]|")
+        autolayout("V:|[viewController]|")
+        self.currentChildViewController = viewController
         // RootViewControllerに子ViewControllerを追加
         addChild(viewController)
         viewController.didMove(toParent: self)
-
         view.layoutSubviews()
     }
 }

@@ -72,7 +72,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
                 // メインスレッドで実行(即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
                 // AgreementVerを判定してからMain画面に飛ばす判定を組み込む予定
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    dependency.router.navigate(.agree(current))
+                    dependency.router.navigate(.agree)
                 }
             } else {
                 // 同意済みなのでログイン処理へと進む

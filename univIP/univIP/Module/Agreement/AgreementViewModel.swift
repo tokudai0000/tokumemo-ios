@@ -34,7 +34,6 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
 
     struct Dependency: DependencyType {
         let router: AgreementRouterInterface
-        let currentTermVersion: String
         let termTextAPI: TermTextAPIInterface
         let acceptedTermVersionStoreUseCase: AcceptedTermVersionStoreUseCaseInterface
     }
@@ -73,7 +72,7 @@ final class AgreementViewModel: BaseViewModel<AgreementViewModel>, AgreementView
         input.didTapAgreementButton
             .throttle(.milliseconds(800), scheduler: MainScheduler.instance)
             .subscribe { _ in
-                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(dependency.currentTermVersion)
+                dependency.acceptedTermVersionStoreUseCase.setAcceptedTermVersion(AppConstants.termsOfServiceVersion)
                 dependency.router.navigate(.agreedUpon)
             }
             .disposed(by: disposeBag)

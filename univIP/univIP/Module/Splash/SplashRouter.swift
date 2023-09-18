@@ -9,7 +9,7 @@ import Foundation
 import API
 
 enum SplashNavigationDestination {
-    case agree(String)
+    case agree
     case main
 }
 
@@ -39,8 +39,8 @@ final class SplashRouter: BaseRouter, SplashRouterInterface {
     func navigate(_ destination: SplashNavigationDestination) {
         let rootViewController = moduleViewController.parent as? RootViewController
         switch destination {
-        case .agree(let currentAgreementVersion):
-            rootViewController?.switchToAgreement(currentTermVersion: currentAgreementVersion)
+        case .agree:
+            rootViewController?.switchToAgreement()
         case .main:
             rootViewController?.switchToMain()
         }
