@@ -64,7 +64,7 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         }
 
         func processTermVersion() {
-            let current = AppConstants.termsOfServiceVersion
+            let current = AppConstants.version.termsOfServiceVersion
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
             print("akidon-current \(current)")
             print("akidon-accepted \(accepted)")

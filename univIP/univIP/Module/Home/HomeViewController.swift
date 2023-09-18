@@ -157,7 +157,7 @@ private extension HomeViewController {
     func configureDefaults() {
         homeTableView.delegate = self
         homeTableView.dataSource = self
-        homeTableViewHeightConstraint.constant = CGFloat(44 * ItemsConstants().menuItems.count)
+        homeTableViewHeightConstraint.constant = CGFloat(44 * AppConstants().menuItems.count)
         prBannerViewController = BannerScrollViewController()
         univBannerViewController = BannerScrollViewController()
         twitterButton.setImage(R.image.twitter_icon(), for: .normal)
@@ -286,7 +286,7 @@ extension HomeViewController: BannerScrollViewControllerDelegate {
 
 extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ItemsConstants().menuItems.count
+        return AppConstants().menuItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -294,7 +294,7 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
             return UICollectionViewCell()
         }
 
-        cell.setup(ItemsConstants().menuItems[indexPath.row])
+        cell.setup(AppConstants().menuItems[indexPath.row])
         return cell
     }
 
@@ -320,17 +320,17 @@ extension HomeViewController:  UICollectionViewDelegate, UICollectionViewDataSou
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ItemsConstants().homeMiniSettingsItems.count
+        return AppConstants().homeMiniSettingsItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.homeTableView, for: indexPath)!
-        cell.textLabel?.text = ItemsConstants().homeMiniSettingsItems[indexPath.item].title
+        cell.textLabel?.text = AppConstants().homeMiniSettingsItems[indexPath.item].title
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.didTapMiniSettings.accept(ItemsConstants().homeMiniSettingsItems[indexPath.row])
+        viewModel.input.didTapMiniSettings.accept(AppConstants().homeMiniSettingsItems[indexPath.row])
         homeTableView.deselectRow(at: indexPath, animated: true)
     }
 }
