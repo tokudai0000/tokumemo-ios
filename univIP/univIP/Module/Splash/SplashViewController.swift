@@ -20,6 +20,12 @@ final class SplashViewController: UIViewController {
     private var loginStatusLabel = UILabel() ※ {
         $0.text = R.string.localizable.verifying_authentication()
     }
+    private var copylightLabel = UILabel() ※ {
+        $0.text = "Developed by Tokushima Univ Students \n GitHub: @tokudai0000"
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.textColor = R.color.lightGrayColor()
+    }
     // バックグラウンドでログインの処理を行う
     private var webView = WKWebView()
 
@@ -106,18 +112,22 @@ private extension SplashViewController {
         let autolayout = view.northLayoutFormat([:], [
             "iconImage": iconImageView,
             "activity": activityIndicator,
-            "loginStatus": loginStatusLabel
+            "loginStatus": loginStatusLabel,
+            "copylight": copylightLabel
         ])
         autolayout("H:|-(>=0)-[iconImage(175)]-(>=0)-|")
         autolayout("H:|-(>=0)-[activity]-(>=0)-|")
         autolayout("H:|-(>=0)-[loginStatus]-(>=0)-|")
+        autolayout("H:|-(>=0)-[copylight]-(>=0)-|")
         autolayout("V:|-(>=0)-[iconImage(175)]-10-[activity]-10-[loginStatus]-(>=0)-|")
+        autolayout("V:|-(>=0)-[copylight]-15-||")
 
         NSLayoutConstraint.activate([
             iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginStatusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            loginStatusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            copylightLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 

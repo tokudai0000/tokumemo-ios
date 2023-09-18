@@ -8,10 +8,8 @@
 import Entity
 
 struct AppConstants {
-    enum version {
-        // 利用規約のバージョン
-        static let termsOfServiceVersion = "3.1.0"
-    }
+    // 利用規約のバージョン
+    static let termsOfServiceVersion = "3.1.0"
 
     public let menuItems: [MenuItem]
     public let academicRelatedItems: [MenuDetailItem]

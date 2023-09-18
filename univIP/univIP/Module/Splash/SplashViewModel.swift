@@ -64,12 +64,12 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
         }
 
         func processTermVersion() {
-            let current = AppConstants.version.termsOfServiceVersion
+            let current = AppConstants.termsOfServiceVersion
             let accepted = dependency.acceptedTermVersionStoreUseCase.fetchAcceptedTermVersion()
-            print("akidon-current \(current)")
-            print("akidon-accepted \(accepted)")
+            AKLog(level: .DEBUG, message: "current-version:\(current), accepted-version:\(accepted)")
             if isTermsVersionDifferent(current: current, accepted: accepted) {
-                // メインスレッドで実行(即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
+                // メインスレッドで実行
+                // (即AgreementViewの画面に行かないとWebログイン失敗もしくは成功の判定が先になり、表示されない可能性あり)
                 // AgreementVerを判定してからMain画面に飛ばす判定を組み込む予定
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     dependency.router.navigate(.agree)
@@ -91,7 +91,6 @@ final class SplashViewModel: BaseViewModel<SplashViewModel>, SplashViewModelInte
             .subscribe { _ in
                 state.canExecuteJavascript.accept(true)
                 activityIndicator.accept(.start)
-
                 // ログイン処理に失敗した場合、10秒後には必ずメイン画面に遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                     dependency.router.navigate(.main)
