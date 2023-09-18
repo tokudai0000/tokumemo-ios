@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Url: String {
+enum Url: String {
     /// 何もリクエストしない(エラー用)
     case emptyRequest = "about:blank"
     /// 大学ホームページ
@@ -127,12 +127,12 @@ public enum Url: String {
     case review = "https://apps.apple.com/app/id1582738889?action=write-review"
     
     /// URLを文字列として返す
-    public func string() -> String {
+    func string() -> String {
         return rawValue
     }
     
     /// URLをURLRequestとして返す
-    public func urlRequest() -> URLRequest {
+    func urlRequest() -> URLRequest {
         let urlString = rawValue
         let url = URL(string: urlString)! // fatalError
         return URLRequest(url: url)
