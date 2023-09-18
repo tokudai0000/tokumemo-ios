@@ -21,32 +21,32 @@ public struct ItemsConstants {
         menuItems = [
             MenuItem(title: R.string.localizable.course_management(),
                      id: .courseManagement,
-                     icon: R.image.menuIcon.courseManagementHome(),
+                     icon: R.image.courseManagementHome(),
                      targetUrl: Url.courseManagementMobile.urlRequest()),
 
             MenuItem(title: R.string.localizable.manaba(),
                      id: .manaba,
-                     icon: R.image.menuIcon.manaba(),
+                     icon: R.image.manaba(),
                      targetUrl: Url.manabaPC.urlRequest()),
 
             MenuItem(title: R.string.localizable.mail(),
                      id: .mail,
-                     icon: R.image.menuIcon.mailService(),
+                     icon: R.image.mailService(),
                      targetUrl: Url.outlookService.urlRequest()),
 
             MenuItem(title: R.string.localizable.academic_related(),
                      id: .academicRelated,
-                     icon: R.image.menuIcon.coopCalendar(),
+                     icon: R.image.coopCalendar(),
                      targetUrl: nil),
 
             MenuItem(title: R.string.localizable.library_related(),
                      id: .libraryRelated,
-                     icon: R.image.menuIcon.libraryBookLendingExtension(),
+                     icon: R.image.libraryBookLendingExtension(),
                      targetUrl: nil),
 
             MenuItem(title: R.string.localizable.etc(),
                      id: .etc,
-                     icon: R.image.menuIcon.careerCenter(),
+                     icon: R.image.careerCenter(),
                      targetUrl: nil)
         ]
         academicRelatedItems = [

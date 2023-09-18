@@ -97,7 +97,7 @@ private extension SplashViewController {
 // MARK: Layout
 private extension SplashViewController {
     func configureDefault() {
-        iconImageView.image = R.image.memokichi()
+        iconImageView.image = R.image.icon_memokichi()
         statusLabel.text = R.string.localizable.verifying_authentication()
     }
 

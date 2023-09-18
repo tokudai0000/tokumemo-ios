@@ -37,7 +37,7 @@
 		1A2B04B62AAF5D200085188A /* UnivAuthStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66352A8671D800244DC0 /* UnivAuthStoreUseCase.swift */; };
 		1A2B04B72AAF5D200085188A /* AcceptedTermVersionStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BF02A8BFDE0008C7EFC /* AcceptedTermVersionStoreUseCase.swift */; };
 		1A2B04B82AAF5D200085188A /* WebViewCloseCountStoreUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3E12A96578300D95122 /* WebViewCloseCountStoreUseCase.swift */; };
-		1A2B04B92AAF5D580085188A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A026B312A9B03A900ADD541 /* Assets.xcassets */; };
+		1A2B04B92AAF5D580085188A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A026B312A9B03A900ADD541 /* Images.xcassets */; };
 		1A2B04BC2AAF5D720085188A /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
 		1A2B04BD2AAF5D720085188A /* ItemsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6732A84D9320025737A /* ItemsConstants.swift */; };
 		1A2B04BE2AAF5D720085188A /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFC67CC2732BFA80059A053 /* Url.swift */; };
@@ -110,6 +110,7 @@
 		1AC4BE932A7DE91200598EED /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE922A7DE91200598EED /* RootViewController.swift */; };
 		1AC4BE952A7E336600598EED /* WebRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC4BE942A7E336600598EED /* WebRouter.swift */; };
 		1ACC54B92AB7F0A5005A5CAA /* Root.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2237932AB7EDF900A65301 /* Root.plist */; };
+		1ACC54BC2AB7F4C6005A5CAA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC54BB2AB7F4C6005A5CAA /* Colors.xcassets */; };
 		1AD00BE72A8BD426008C7EFC /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BE62A8BD426008C7EFC /* SplashRouter.swift */; };
 		1AD00BE92A8BD44A008C7EFC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BE82A8BD44A008C7EFC /* SplashViewController.swift */; };
 		1AD00BEB2A8BD457008C7EFC /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BEA2A8BD457008C7EFC /* SplashViewModel.swift */; };
@@ -230,7 +231,7 @@
 		1A02301A2A8F98BF0084DD0B /* TermTextAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermTextAPI.swift; sourceTree = "<group>"; };
 		1A026AD32A9AF25900ADD541 /* WebScraper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WebScraper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A026AD52A9AF25900ADD541 /* WebScraper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebScraper.h; sourceTree = "<group>"; };
-		1A026B312A9B03A900ADD541 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1A026B312A9B03A900ADD541 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1A085CEB2A694AD200D31183 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		1A085CED2A694B9300D31183 /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
 		1A11C3D02A95240500D95122 /* AcknowledgementsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsRouter.swift; sourceTree = "<group>"; };
@@ -319,6 +320,7 @@
 		1AC4BE922A7DE91200598EED /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		1AC4BE942A7E336600598EED /* WebRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRouter.swift; sourceTree = "<group>"; };
 		1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivNewsTableCell.swift; sourceTree = "<group>"; };
+		1ACC54BB2AB7F4C6005A5CAA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		1ACD66352A8671D800244DC0 /* UnivAuthStoreUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivAuthStoreUseCase.swift; sourceTree = "<group>"; };
 		1ACD66372A867C0300244DC0 /* UnivAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivAuthRepository.swift; sourceTree = "<group>"; };
 		1AD00BE62A8BD426008C7EFC /* SplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRouter.swift; sourceTree = "<group>"; };
@@ -669,7 +671,6 @@
 			isa = PBXGroup;
 			children = (
 				1A22378D2AB7EDF900A65301 /* Settings */,
-				1A026B312A9B03A900ADD541 /* Assets.xcassets */,
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
 				1A26A2602A77FB3C00BC6988 /* R.generated.swift */,
 				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
@@ -681,6 +682,8 @@
 				1A7EBFD32A9C79C00042AACA /* UIComponent */,
 				1A026B002A9AFC8C00ADD541 /* UseCase */,
 				1A026AEB2A9AF73F00ADD541 /* Utility */,
+				1A026B312A9B03A900ADD541 /* Images.xcassets */,
+				1ACC54BB2AB7F4C6005A5CAA /* Colors.xcassets */,
 			);
 			path = univIP;
 			sourceTree = "<group>";
@@ -1042,9 +1045,10 @@
 			files = (
 				1ACC54B92AB7F0A5005A5CAA /* Root.plist in Resources */,
 				1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */,
-				1A2B04B92AAF5D580085188A /* Assets.xcassets in Resources */,
+				1A2B04B92AAF5D580085188A /* Images.xcassets in Resources */,
 				1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */,
 				1A2237962AB7EDF900A65301 /* GoogleService-Info.template.plist in Resources */,
+				1ACC54BC2AB7F4C6005A5CAA /* Colors.xcassets in Resources */,
 				1A2237982AB7EDF900A65301 /* Acknowledgements.plist in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1AD00BED2A8BD463008C7EFC /* Splash.storyboard in Resources */,

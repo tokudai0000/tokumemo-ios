@@ -73,7 +73,7 @@ private extension AgreementViewController {
     }
 
     func configureImageView() {
-        iconImageView.image = UIImage(resource: R.image.tokumemoPlusIcon)
+        iconImageView.image = UIImage(resource: R.image.icon_tokumemo_plus)
         iconImageView.layer.cornerRadius = 50.0
     }
 
