@@ -5,13 +5,14 @@
 //  Created by Akihiro Matsuyama on 2023/08/16.
 //
 
-public struct URLCheckers {
+struct URLCheckers {
 
-    public enum UrlType {
+    enum UrlType {
         case universityLogin       // 大学のログインページ
         case outlookLoginForm      // Outlookのログインフォーム
-        case tokudaiCareerCenter   // 特大キャリアセンター
+        case tokudaiCareerCenter   // 徳大キャリアセンター
     }
+
     /// 指定されたURLにJavaScriptを挿入できるかどうかを判断します。
     /// - Parameters:
     ///   - urlString: 確認するURLの文字列

@@ -12,7 +12,7 @@ final class SettingsViewController: UIViewController {
 
     var viewModel: SettingsViewModelInterface!
 
-    private let itemsConstants = ItemsConstants()
+    private let itemsConstants = AppConstants()
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {

@@ -38,7 +38,7 @@ final class SettingsViewModel: BaseViewModel<SettingsViewModel>, SettingsViewMod
                 guard let index = index.element else {
                     return
                 }
-                let tappedCell = ItemsConstants().settingsItems[index.section][index[1]]
+                let tappedCell = AppConstants().settingsItems[index.section][index[1]]
                 if tappedCell.id == .password {
                     dependency.router.navigate(.modal(InputRouter()))
                     return

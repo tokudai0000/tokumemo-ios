@@ -9,14 +9,25 @@ import UIKit
 import WebKit
 import RxSwift
 import Entity
+import Ikemen
+import NorthLayout
 
 final class SplashViewController: UIViewController {
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet private weak var statusLabel: UILabel!
-
+    private var iconImageView = UIImageView() ※ {
+        $0.image = R.image.icon_memokichi()
+    }
+    private var activityIndicator = UIActivityIndicatorView()
+    private var loginStatusLabel = UILabel() ※ {
+        $0.text = R.string.localizable.verifying_authentication()
+    }
+    private var copylightLabel = UILabel() ※ {
+        $0.text = "Developed by Tokushima Univ Students \n GitHub: @tokudai0000"
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.textColor = R.color.lightGrayColor()
+    }
     // バックグラウンドでログインの処理を行う
-    private var webView: WKWebView = .init(frame: .zero)
+    private var webView = WKWebView()
 
     private let disposeBag = DisposeBag()
     
@@ -24,7 +35,7 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDefault()
+        configureView()
         configureWebView()
         binding()
         viewModel.input.viewDidLoad.accept(())
@@ -44,20 +55,19 @@ final class SplashViewController: UIViewController {
 // MARK: Binding
 private extension SplashViewController {
     func binding() {
+        viewModel.output
+            .loginStatusLabel
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, text in
+                owner.loginStatusLabel.text = text
+            }
+            .disposed(by: disposeBag)
 
         viewModel.output
             .loadUrl
             .asDriver(onErrorJustReturn: Url.emptyRequest.urlRequest())
             .drive(with: self) { owner, urlRequest in
                 owner.webView.load(urlRequest)
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.output
-            .statusLabel
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner, text in
-                owner.statusLabel.text = text
             }
             .disposed(by: disposeBag)
 
@@ -67,9 +77,9 @@ private extension SplashViewController {
             .drive(with: self) { owner, state in
                 switch state {
                 case .start:
-                    owner.activityIndicator?.startAnimating()
+                    owner.activityIndicator.startAnimating()
                 case .stop:
-                    owner.activityIndicator?.stopAnimating()
+                    owner.activityIndicator.stopAnimating()
                 }
             }
             .disposed(by: disposeBag)
@@ -96,9 +106,29 @@ private extension SplashViewController {
 
 // MARK: Layout
 private extension SplashViewController {
-    func configureDefault() {
-        iconImageView.image = R.image.memokichi()
-        statusLabel.text = R.string.localizable.verifying_authentication()
+    func configureView() {
+        view.backgroundColor = .white
+
+        let autolayout = view.northLayoutFormat([:], [
+            "iconImage": iconImageView,
+            "activity": activityIndicator,
+            "loginStatus": loginStatusLabel,
+            "copylight": copylightLabel
+        ])
+        autolayout("H:|-(>=0)-[iconImage(175)]-(>=0)-|")
+        autolayout("H:|-(>=0)-[activity]-(>=0)-|")
+        autolayout("H:|-(>=0)-[loginStatus]-(>=0)-|")
+        autolayout("H:|-(>=0)-[copylight]-(>=0)-|")
+        autolayout("V:|-(>=0)-[iconImage(175)]-10-[activity]-10-[loginStatus]-(>=0)-|")
+        autolayout("V:|-(>=0)-[copylight]-15-||")
+
+        NSLayoutConstraint.activate([
+            iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginStatusLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            copylightLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
 
     // WebViewは画面には表示させず、裏でログインの処理を実行
@@ -107,7 +137,7 @@ private extension SplashViewController {
         webView.navigationDelegate = self
 
         // 開発時は、Splash画面の上部に表示
-        #if DEBUG || STUB
+        #if DEBUG
         self.view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

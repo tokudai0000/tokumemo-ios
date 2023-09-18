@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 import API
 
 enum NewsNavigationDestination {
@@ -19,7 +18,7 @@ protocol NewsRouterInterface {
 
 final class NewsRouter: BaseRouter, NewsRouterInterface {
     init() {
-        let viewController = R.storyboard.news.newsViewController()!
+        let viewController = NewsViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = NewsViewModel(
             input: .init(),
