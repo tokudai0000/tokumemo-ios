@@ -89,7 +89,6 @@
 		1A67B2712A973BAD00AFB4E0 /* GenericAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A762FCA2A9381D900F60DFA /* GenericAPI.swift */; };
 		1A67B2722A973BAD00AFB4E0 /* HelpmessegeAgreeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D0E2A9119180090B8DE /* HelpmessegeAgreeAPI.swift */; };
 		1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51AF2904E82900A3E85A /* Home.storyboard */; };
-		1A6C51B42904ECCA00A3E85A /* ClubLists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51B32904ECCA00A3E85A /* ClubLists.storyboard */; };
 		1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6C51B52904ED2400A3E85A /* Settings.storyboard */; };
 		1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B72905072500A3E85A /* NewsViewController.swift */; };
 		1A6C51BA2905077E00A3E85A /* ClubListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListsViewController.swift */; };
@@ -282,7 +281,6 @@
 		1A67B2622A973B9D00AFB4E0 /* API.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
 		1A6A0C602A8B1DD500342186 /* LibraryCalendarWebScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCalendarWebScraper.swift; sourceTree = "<group>"; };
 		1A6C51AF2904E82900A3E85A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
-		1A6C51B32904ECCA00A3E85A /* ClubLists.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClubLists.storyboard; sourceTree = "<group>"; };
 		1A6C51B52904ED2400A3E85A /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A6C51B72905072500A3E85A /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		1A6C51B92905077E00A3E85A /* ClubListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListsViewController.swift; sourceTree = "<group>"; };
@@ -548,7 +546,6 @@
 		1A384F9228FD5D5C00A1F52E /* ClubLists */ = {
 			isa = PBXGroup;
 			children = (
-				1A6C51B32904ECCA00A3E85A /* ClubLists.storyboard */,
 				1A50CDAA2A82B57D0079A090 /* ClubListsRouter.swift */,
 				1A6C51B92905077E00A3E85A /* ClubListsViewController.swift */,
 				1A58F67C2A8612A80025737A /* ClubListsViewModel.swift */,
@@ -1046,7 +1043,6 @@
 				1A11C3DE2A952E5C00D95122 /* Acknowledgements.storyboard in Resources */,
 				1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */,
 				1A2237952AB7EDF900A65301 /* Localizable.strings in Resources */,
-				1A6C51B42904ECCA00A3E85A /* ClubLists.storyboard in Resources */,
 				1A6C51B62904ED2400A3E85A /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

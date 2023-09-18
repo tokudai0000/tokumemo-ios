@@ -17,7 +17,7 @@ protocol ClubListsRouterInterface {
 
 final class ClubListsRouter: BaseRouter, ClubListsRouterInterface {
     init() {
-        let viewController = R.storyboard.clubLists.clubListsViewController()!
+        let viewController = ClubListsViewController()
         super.init(moduleViewController: viewController)
         viewController.viewModel = ClubListsViewModel(
             input: .init(),
