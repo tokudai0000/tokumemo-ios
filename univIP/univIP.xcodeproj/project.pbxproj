@@ -62,7 +62,6 @@
 		1A2B04F12AAFE6120085188A /* AdItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C4002A971C3500D95122 /* AdItems.swift */; };
 		1A2B04F22AAFE6120085188A /* ActivityIndicatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3B75B22A93BBAF00E96B60 /* ActivityIndicatorState.swift */; };
 		1A2B04F32AAFE6700085188A /* Entity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B04DC2AAFE5E60085188A /* Entity.framework */; };
-		1A2B04F42AAFE6700085188A /* Entity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B04DC2AAFE5E60085188A /* Entity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1A30D0AE28F6D79800C4012E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0AD28F6D79800C4012E /* WebViewController.swift */; };
 		1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A30D0AF28F6D7BC00C4012E /* Web.storyboard */; };
 		1A30D0BB28F9C14200C4012E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A30D0BA28F9C14200C4012E /* SettingsViewController.swift */; };
@@ -117,7 +116,6 @@
 		1AED5D1A2A91A4840090B8DE /* HelpmessageAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D192A91A4840090B8DE /* HelpmessageAgreeViewController.swift */; };
 		1AED5D1C2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AED5D1B2A91A4910090B8DE /* HelpmessageAgreeViewModel.swift */; };
 		1AF1451E2AAFEB1000163D55 /* Entity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B04DC2AAFE5E60085188A /* Entity.framework */; };
-		1AF1451F2AAFEB1000163D55 /* Entity.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B04DC2AAFE5E60085188A /* Entity.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		289B97577FB6928B87B3976A /* Pods_All_univIP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DA10F7D8847E4801323919B /* Pods_All_univIP.framework */; };
 		95DFE47696FE68C23DE7F47F /* Pods_All_WebScraper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23B619B00B4DDDC464925F /* Pods_All_WebScraper.framework */; };
 		CD5231EEC91EE18F561DE502 /* Pods_All_API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC19AB78863CF50E65E2BC68 /* Pods_All_API.framework */; };
@@ -177,17 +175,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1A026AE42A9AF3CE00ADD541 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				1AF1451F2AAFEB1000163D55 /* Entity.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		1A11C3F22A97174200D95122 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,17 +184,6 @@
 				1A67B2672A973B9D00AFB4E0 /* API.framework in Embed Frameworks */,
 				1A026ADA2A9AF25900ADD541 /* WebScraper.framework in Embed Frameworks */,
 				1A2B04E32AAFE5E60085188A /* Entity.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1A67B2772A973BC100AFB4E0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				1A2B04F42AAFE6700085188A /* Entity.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -833,7 +809,6 @@
 				1A026ACF2A9AF25900ADD541 /* Sources */,
 				1A026AD02A9AF25900ADD541 /* Frameworks */,
 				1A026AD12A9AF25900ADD541 /* Resources */,
-				1A026AE42A9AF3CE00ADD541 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -872,7 +847,6 @@
 				1A67B25C2A973B9C00AFB4E0 /* Sources */,
 				1A67B25D2A973B9C00AFB4E0 /* Frameworks */,
 				1A67B25E2A973B9C00AFB4E0 /* Resources */,
-				1A67B2772A973BC100AFB4E0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
