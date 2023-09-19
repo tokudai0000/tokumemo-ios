@@ -7,7 +7,7 @@
 */
 
 "privacy_policy_button" = "　プライバシーポリシー　"; // ボタン横幅がテキストに合わせられるので空白を開けて対応(後日対応)
-"privacy_policy" = "　プライバシーポリシー　";
+"privacy_policy" = "プライバシーポリシー";
 "agree" = "同意する";
 "course_management" = "教務システム";
 "manaba" = "manaba";
