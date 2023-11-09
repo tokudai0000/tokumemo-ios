@@ -267,7 +267,9 @@ extension WebViewController: WKNavigationDelegate, WKUIDelegate {
                  for navigationAction: WKNavigationAction,
                  windowFeatures: WKWindowFeatures) -> WKWebView? {
         // 新しいタブで開くURLを取得し、読み込む
-        webView.load(navigationAction.request)
+        if navigationAction.targetFrame == nil {
+            webView.load(navigationAction.request)
+        }
         return nil
     }
 }
