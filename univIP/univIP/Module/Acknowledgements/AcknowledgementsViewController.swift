@@ -52,7 +52,6 @@ private extension AcknowledgementsViewController {
         // TableViewの基本的な設定
         tableView.register(ThirdPartyCreditCell.self, forCellReuseIdentifier: ThirdPartyCreditCell.Reusable)
         tableView.showsVerticalScrollIndicator = true
-        tableView.delegate = self
     }
 
     func configureNavigation() {
@@ -60,12 +59,5 @@ private extension AcknowledgementsViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationItem.setLeftBarButton(leftBarButton, animated: true)
         navigationItem.leftBarButtonItem?.tintColor = .black
-    }
-}
-
-extension AcknowledgementsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.didTapAcknowledgementsItem.accept(indexPath.row)
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

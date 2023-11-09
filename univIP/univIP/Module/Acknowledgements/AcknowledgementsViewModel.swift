@@ -21,7 +21,6 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
         let didTapBackButton = PublishRelay<Void>()
-        let didTapAcknowledgementsItem = PublishRelay<Int>()
     }
 
     struct Output: OutputType {
@@ -29,7 +28,6 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
     }
 
     struct State: StateType {
-        let acknowledgementsItems: BehaviorRelay<[AcknowledgementsItemModel]?> = .init(value: nil)
     }
 
     struct Dependency: DependencyType {
@@ -39,35 +37,44 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
         let acknowledgementsItems: PublishRelay<[AcknowledgementsItemModel]> = .init()
 
-        func getAcknowledgement() {
-            guard let filePath = Bundle.main.path(forResource: "Acknowledgements", ofType:"plist") else { return }
-            var items: [Any] = []
-            let dic = NSDictionary(contentsOfFile: filePath)!
-            items = dic["PreferenceSpecifiers"] as! [Any]
+        func convertAnyToAcknowItems(items: [Any]) -> [AcknowledgementsItemModel] {
+            var acknowLists: [AcknowledgementsItemModel] = []
 
-            // 最初と最後以外が必要な情報
-            items.removeFirst()
-            items.removeLast()
+            items.forEach { item in
+                guard let item = item as? NSDictionary else { return }
+                // titleとlicenseに値はあるが、contentsTextは空欄などに対応するべく、それぞれでアンラップする。
+                let title = item["Title"] as? String ?? ""
+                let license = item["License"] as? String ?? ""
+                let contentsText = item["FooterText"] as? String ?? ""
+                // contentsTextが非常に長文となるので、空欄のたびに改行することで利用者の可読性を高める
+                let formatContentsText = contentsText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-            var items2: [AcknowledgementsItemModel] = []
-            for i in 0..<items.count {
-                guard let item = items[i] as? NSDictionary,
-                      let title = item["Title"] as? String,
-                      let license = item["License"] as? String,
-                      let contentsText = item["FooterText"] as? String else {
-                    return
-                }
-                items2.append(AcknowledgementsItemModel(title: title, license: license, contentsText: contentsText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)))
+                acknowLists.append(AcknowledgementsItemModel(title: title,
+                                                             license: license,
+                                                             contentsText: formatContentsText))
             }
+            return acknowLists
+        }
 
-            state.acknowledgementsItems.accept(items2)
-            acknowledgementsItems.accept(items2)
+        func loadAcknowItems() {
+            guard let filePath = R.file.acknowledgementsPlist.url(),
+                  let dic = NSDictionary(contentsOf: filePath),
+                  var plistItems:[Any] = dic["PreferenceSpecifiers"] as? [Any] else {
+                AKLog(level: .FATAL, message: "謝辞Plist読み込みエラー")
+                return
+            }
+            // 必要な情報は "最初と最後以外"
+            plistItems.removeFirst()
+            plistItems.removeLast()
+
+            let acknowItems = convertAnyToAcknowItems(items: plistItems)
+            acknowledgementsItems.accept(acknowItems)
         }
 
         input.viewDidLoad
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { _ in
-                getAcknowledgement()
+                loadAcknowItems()
             })
             .disposed(by: disposeBag)
 
@@ -76,15 +83,6 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
             .subscribe(onNext: { _ in
                 dependency.router.navigate(.back)
             })
-            .disposed(by: disposeBag)
-
-        input.didTapAcknowledgementsItem
-            .subscribe { index in
-//                if let newsItems = state.newsItems.value,
-//                      let url = URL(string: newsItems[index].targetUrlStr) {
-//                    dependency.router.navigate(.goWeb(URLRequest(url: url)))
-//                }
-            }
             .disposed(by: disposeBag)
 
         return .init(
