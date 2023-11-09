@@ -868,8 +868,8 @@
 				1AA056C626BD2AE100343005 /* Frameworks */,
 				1AA056C726BD2AE100343005 /* Resources */,
 				0CDD3BFE913BFE4F6BCDA491 /* [CP] Embed Pods Frameworks */,
-				1A53DB1B2A4850E00098DC94 /* Run Script(FirebaseCrashlytics) */,
 				1A11C3F22A97174200D95122 /* Embed Frameworks */,
+				1A53DB1B2A4850E00098DC94 /* Run Script(FirebaseCrashlytics) */,
 			);
 			buildRules = (
 			);
