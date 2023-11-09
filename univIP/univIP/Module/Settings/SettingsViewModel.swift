@@ -45,7 +45,7 @@ final class SettingsViewModel: BaseViewModel<SettingsViewModel>, SettingsViewMod
                 }
 
                 if tappedCell.id == .acknowledgements {
-                    dependency.router.navigate(.modal(AcknowledgementsRouter()))
+                    dependency.router.navigate(.modal(CreditsRouter()))
                     return
                 }
 

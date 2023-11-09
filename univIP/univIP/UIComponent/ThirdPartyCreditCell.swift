@@ -36,7 +36,7 @@ final class ThirdPartyCreditCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setup(_ item: AcknowledgementsItemModel) {
+    func setup(_ item: CreditItemModel) {
         titleLabel.text = item.title
         contentLabel.text = item.contentsText
     }
