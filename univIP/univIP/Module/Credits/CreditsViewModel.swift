@@ -1,5 +1,5 @@
 //
-//  AcknowledgementsViewModel.swift
+//  CreditsViewModel.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2023/08/23.
@@ -11,12 +11,12 @@ import RxRelay
 import RxSwift
 import Entity
 
-protocol AcknowledgementsViewModelInterface: AnyObject {
-    var input: AcknowledgementsViewModel.Input { get }
-    var output: AcknowledgementsViewModel.Output { get }
+protocol CreditsViewModelInterface: AnyObject {
+    var input: CreditsViewModel.Input { get }
+    var output: CreditsViewModel.Output { get }
 }
 
-final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>, AcknowledgementsViewModelInterface {
+final class CreditsViewModel: BaseViewModel<CreditsViewModel>, CreditsViewModelInterface {
 
     struct Input: InputType {
         let viewDidLoad = PublishRelay<Void>()
@@ -24,21 +24,21 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
     }
 
     struct Output: OutputType {
-        let acknowledgementsItems: Observable<[AcknowledgementsItemModel]>
+        let creditItems: Observable<[CreditItemModel]>
     }
 
     struct State: StateType {
     }
 
     struct Dependency: DependencyType {
-        let router: AcknowledgementsRouterInterface
+        let router: CreditsRouterInterface
     }
 
     static func bind(input: Input, state: State, dependency: Dependency, disposeBag: DisposeBag) -> Output {
-        let acknowledgementsItems: PublishRelay<[AcknowledgementsItemModel]> = .init()
+        let creditsItems: PublishRelay<[CreditItemModel]> = .init()
 
-        func convertAnyToAcknowItems(items: [Any]) -> [AcknowledgementsItemModel] {
-            var acknowLists: [AcknowledgementsItemModel] = []
+        func convertAnyToAcknowItems(items: [Any]) -> [CreditItemModel] {
+            var creditItems: [CreditItemModel] = []
 
             items.forEach { item in
                 guard let item = item as? NSDictionary else { return }
@@ -49,26 +49,26 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
                 // contentsTextが非常に長文となるので、空欄のたびに改行することで利用者の可読性を高める
                 let formatContentsText = contentsText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-                acknowLists.append(AcknowledgementsItemModel(title: title,
-                                                             license: license,
-                                                             contentsText: formatContentsText))
+                creditItems.append(CreditItemModel(title: title,
+                                                   license: license,
+                                                   contentsText: formatContentsText))
             }
-            return acknowLists
+            return creditItems
         }
 
         func loadAcknowItems() {
             guard let filePath = R.file.acknowledgementsPlist.url(),
                   let dic = NSDictionary(contentsOf: filePath),
                   var plistItems:[Any] = dic["PreferenceSpecifiers"] as? [Any] else {
-                AKLog(level: .FATAL, message: "謝辞Plist読み込みエラー")
+                AKLog(level: .FATAL, message: "CreditPlist読み込みエラー")
                 return
             }
             // 必要な情報は "最初と最後以外"
             plistItems.removeFirst()
             plistItems.removeLast()
 
-            let acknowItems = convertAnyToAcknowItems(items: plistItems)
-            acknowledgementsItems.accept(acknowItems)
+            let creditItems = convertAnyToAcknowItems(items: plistItems)
+            creditsItems.accept(creditItems)
         }
 
         input.viewDidLoad
@@ -86,7 +86,7 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
             .disposed(by: disposeBag)
 
         return .init(
-            acknowledgementsItems: acknowledgementsItems.asObservable()
+            creditItems: creditsItems.asObservable()
         )
     }
 }

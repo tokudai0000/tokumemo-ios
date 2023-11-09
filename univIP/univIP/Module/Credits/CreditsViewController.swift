@@ -1,5 +1,5 @@
 //
-//  AcknowledgementsViewController.swift
+//  CreditsViewController.swift
 //  univIP
 //
 //  Created by Akihiro Matsuyama on 2023/08/23.
@@ -9,14 +9,15 @@ import UIKit
 import RxSwift
 import Entity
 
-final class AcknowledgementsViewController: UIViewController {
+final class CreditsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
-
-    private let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: nil, action: nil)
-
+    private let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), 
+                                                style: .plain,
+                                                target: nil,
+                                                action: nil)
     private let disposeBag = DisposeBag()
 
-    var viewModel: AcknowledgementsViewModelInterface!
+    var viewModel: CreditsViewModelInterface!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ final class AcknowledgementsViewController: UIViewController {
 }
 
 // MARK: Binding
-private extension AcknowledgementsViewController {
+private extension CreditsViewController {
     func binding() {
         leftBarButton.rx
             .tap
@@ -38,7 +39,7 @@ private extension AcknowledgementsViewController {
             .disposed(by: disposeBag)
 
         viewModel.output
-            .acknowledgementsItems
+            .creditItems
             .bind(to: tableView.rx.items(cellIdentifier: ThirdPartyCreditCell.Reusable, cellType: ThirdPartyCreditCell.self)) { _, item, cell in
                 cell.setup(item)
             }
@@ -47,7 +48,7 @@ private extension AcknowledgementsViewController {
 }
 
 // MARK: Layout
-private extension AcknowledgementsViewController {
+private extension CreditsViewController {
     private func configureTableView() {
         // TableViewの基本的な設定
         tableView.register(ThirdPartyCreditCell.self, forCellReuseIdentifier: ThirdPartyCreditCell.Reusable)
