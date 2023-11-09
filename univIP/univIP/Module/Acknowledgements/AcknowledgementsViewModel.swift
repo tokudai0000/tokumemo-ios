@@ -40,32 +40,28 @@ final class AcknowledgementsViewModel: BaseViewModel<AcknowledgementsViewModel>,
         let acknowledgementsItems: PublishRelay<[AcknowledgementsItemModel]> = .init()
 
         func getAcknowledgement() {
-            if let path = Bundle.url(forResource: "Acknowledgements",
-                                     withExtension: "plist",
-                                     subdirectory: nil,
-                                     in: Bundle.main.url(forResource: "Settings", withExtension: "bundle")!) {
-                var items: [Any] = []
-                let dic = NSDictionary(contentsOf: path)!
-                items = dic["PreferenceSpecifiers"] as! [Any]
+            guard let filePath = Bundle.main.path(forResource: "Acknowledgements", ofType:"plist") else { return }
+            var items: [Any] = []
+            let dic = NSDictionary(contentsOfFile: filePath)!
+            items = dic["PreferenceSpecifiers"] as! [Any]
 
-                // 最初と最後以外が必要な情報
-                items.removeFirst()
-                items.removeLast()
+            // 最初と最後以外が必要な情報
+            items.removeFirst()
+            items.removeLast()
 
-                var items2: [AcknowledgementsItemModel] = []
-                for i in 0..<items.count {
-                    guard let item = items[i] as? NSDictionary,
-                          let title = item["Title"] as? String,
-                          let license = item["License"] as? String,
-                          let contentsText = item["FooterText"] as? String else {
-                        return
-                    }
-                    items2.append(AcknowledgementsItemModel(title: title, license: license, contentsText: contentsText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)))
+            var items2: [AcknowledgementsItemModel] = []
+            for i in 0..<items.count {
+                guard let item = items[i] as? NSDictionary,
+                      let title = item["Title"] as? String,
+                      let license = item["License"] as? String,
+                      let contentsText = item["FooterText"] as? String else {
+                    return
                 }
-
-                state.acknowledgementsItems.accept(items2)
-                acknowledgementsItems.accept(items2)
+                items2.append(AcknowledgementsItemModel(title: title, license: license, contentsText: contentsText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)))
             }
+
+            state.acknowledgementsItems.accept(items2)
+            acknowledgementsItems.accept(items2)
         }
 
         input.viewDidLoad
