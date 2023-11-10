@@ -76,6 +76,7 @@
 		1A58F6812A8645120025737A /* InputRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6802A8645120025737A /* InputRouter.swift */; };
 		1A58F6832A8645780025737A /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58F6822A8645780025737A /* InputViewModel.swift */; };
 		1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */; };
+		1A625CFE2AFE1020007CA0FE /* CreditsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A625CFD2AFE1020007CA0FE /* CreditsViewModelTests.swift */; };
 		1A63062C2944B48600205C7C /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A63062B2944B48600205C7C /* SettingsViewModel.swift */; };
 		1A67B2632A973B9D00AFB4E0 /* API.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A67B2622A973B9D00AFB4E0 /* API.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A67B2662A973B9D00AFB4E0 /* API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A67B2602A973B9C00AFB4E0 /* API.framework */; };
@@ -252,6 +253,7 @@
 		1A58F6802A8645120025737A /* InputRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRouter.swift; sourceTree = "<group>"; };
 		1A58F6822A8645780025737A /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlTests.swift; sourceTree = "<group>"; };
+		1A625CFD2AFE1020007CA0FE /* CreditsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsViewModelTests.swift; sourceTree = "<group>"; };
 		1A63062B2944B48600205C7C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		1A67B2602A973B9C00AFB4E0 /* API.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = API.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A67B2622A973B9D00AFB4E0 /* API.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 				1AB37B6E26FDFCEA008A2D2F /* MainViewModelTests.swift */,
 				1A5FAF8C2779B8FB0008A077 /* UrlTests.swift */,
 				1AB37B7026FDFCEA008A2D2F /* Info.plist */,
+				1A625CFD2AFE1020007CA0FE /* CreditsViewModelTests.swift */,
 			);
 			path = univIPTests;
 			sourceTree = "<group>";
@@ -1318,6 +1321,7 @@
 			files = (
 				1AB37B6F26FDFCEA008A2D2F /* MainViewModelTests.swift in Sources */,
 				1A5FAF8D2779B8FB0008A077 /* UrlTests.swift in Sources */,
+				1A625CFE2AFE1020007CA0FE /* CreditsViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1849,7 +1853,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XSC9AJPSP3;
-				INFOPLIST_FILE = univIPUITests/Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1868,7 +1873,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XSC9AJPSP3;
-				INFOPLIST_FILE = univIPUITests/Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
