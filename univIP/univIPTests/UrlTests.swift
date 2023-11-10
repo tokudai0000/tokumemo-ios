@@ -10,17 +10,17 @@ import XCTest
 
 class UrlTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-
-    // 網羅するために、手作業で1つづつ行う(他にいい方法見つけたい)
-    // Gitの変更を逐一見ていれば、url.stringsが書き換えられるミスは起こらないと思うが、自動化できるのでチェックを行う
-    func testUrl() {
+//    override func setUp() {
+//        super.setUp()
+//    }
+//    
+//    override func tearDown() {
+//        super.tearDown()
+//    }
+//
+//    // 網羅するために、手作業で1つづつ行う(他にいい方法見つけたい)
+//    // Gitの変更を逐一見ていれば、url.stringsが書き換えられるミスは起こらないと思うが、自動化できるのでチェックを行う
+//    func testUrl() {
 //        // 以下のURLは
 //        // URL(string: ) でアンラップできることは確認済み
 //        // 正常なURLであることは確認済み(接続先の仕様が変わらない限り)
@@ -86,5 +86,5 @@ class UrlTests: XCTestCase {
 //        XCTAssertEqual(universityServiceTimeOut, Url.universityServiceTimeOut.string())
 //        XCTAssertEqual(enqueteReminder, Url.skipReminder.string())
 //        XCTAssertEqual(popupToYoutube, Url.popupToYoutube.string())
-    }
+//    }
 }

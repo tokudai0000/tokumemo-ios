@@ -10,17 +10,17 @@ import XCTest
 
 class MainViewModelTests: XCTestCase {
     
-    var viewModel = HomeViewModel()
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    func testIsAllowedDomainCheck() {
+//    var viewModel = HomeViewModel()
+//    
+//    override func setUp() {
+//        super.setUp()
+//    }
+//    
+//    override func tearDown() {
+//        super.tearDown()
+//    }
+//    
+//    func testIsAllowedDomainCheck() {
 //
 //        // 基本的なテスト
 //        let url1 = URL(string: "https://tokushima-u.ac.jp/")! // fatalError
@@ -94,7 +94,7 @@ class MainViewModelTests: XCTestCase {
 //        let url208 = URL(string: "https://manaba.lms.tokushima-u.ac.jp/ct/home")!
 //        let test208 = viewModel.isAllowedDomainCheck(url208)
 //        XCTAssertEqual(test208, true)
-    }
+//    }
     
     
 

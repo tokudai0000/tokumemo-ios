@@ -5,7 +5,7 @@
 //  Created by Akihiro Matsuyama on 2023/08/23.
 //
 
-public struct CreditItemModel {
+public struct CreditItemModel: Equatable {
     public let title: String
     public let license: String
     public let contentsText: String
