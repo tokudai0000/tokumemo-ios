@@ -11,6 +11,7 @@ import RxRelay
 import RxSwift
 import Entity
 import Features
+import AkidonComponents
 
 protocol NewsViewModelInterface: AnyObject {
     var input: NewsViewModel.Input { get }

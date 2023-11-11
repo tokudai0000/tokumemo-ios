@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AKLogLevel {
+public enum AKLogLevel {
     case DEBUG     // システムの動作状況に関する詳細な情報。
     case WARN      // 異常とは言い切れないが正常とも異なる何らかの問題。
     case ERROR     // 予期しないその他の実行時エラー。
@@ -22,7 +22,7 @@ enum AKLogLevel {
 ///   - function: メソッド
 ///   - level: ログ・レベル
 ///   - message: メッセージ
-func AKLog(file: String = #file,
+public func AKLog(file: String = #file,
            line: Int = #line,
            function: String = #function,
            level: AKLogLevel,
