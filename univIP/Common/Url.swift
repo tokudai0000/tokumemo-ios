@@ -113,7 +113,7 @@ enum Url: String, CaseIterable, UrlProtocol {
     case review = "https://apps.apple.com/app/id1582738889?action=write-review"
 
 
-    /// 何もリクエストしない(エラー用)
+    /// 何もリクエストしない(エラー用) UnitTest時には除外してTestする
     case emptyRequest = "about:blank"
 
 
