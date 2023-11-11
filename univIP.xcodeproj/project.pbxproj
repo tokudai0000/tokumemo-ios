@@ -375,13 +375,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A026AEB2A9AF73F00ADD541 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
 		1A026B002A9AFC8C00ADD541 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +402,7 @@
 				1A11C3D02A95240500D95122 /* CreditsRouter.swift */,
 				1A11C3D22A9524DA00D95122 /* CreditsViewController.swift */,
 				1A11C3D42A95251D00D95122 /* CreditsViewModel.swift */,
+				1A11C3D72A95286700D95122 /* ThirdPartyCreditCell.swift */,
 			);
 			path = Credits;
 			sourceTree = "<group>";
@@ -475,6 +469,7 @@
 				1A20C4602A809A970063B5D6 /* HomeRouter.swift */,
 				1A5306CD2A6E2C5B00A1AD0C /* HomeViewController.swift */,
 				1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */,
+				1A30D0A728F5BFB500C4012E /* HomeMenuCollectionCell.swift */,
 				1A9378AF2A61645B009A5758 /* Banner */,
 			);
 			path = Home;
@@ -549,17 +544,6 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		1A7EBFD32A9C79C00042AACA /* UIComponent */ = {
-			isa = PBXGroup;
-			children = (
-				1A11C3D72A95286700D95122 /* ThirdPartyCreditCell.swift */,
-				1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */,
-				1A30D0A728F5BFB500C4012E /* HomeMenuCollectionCell.swift */,
-				1A9378B02A629487009A5758 /* UnivBanner */,
-			);
-			path = UIComponent;
-			sourceTree = "<group>";
-		};
 		1A8E3B332A972AB50060254E /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,7 +557,9 @@
 		1A9378AF2A61645B009A5758 /* Banner */ = {
 			isa = PBXGroup;
 			children = (
+				1A9378B02A629487009A5758 /* UnivBanner */,
 				1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */,
+				1ACB59AC291D11CD005A90BE /* UnivNewsTableCell.swift */,
 			);
 			path = Banner;
 			sourceTree = "<group>";
@@ -626,9 +612,7 @@
 				1A7EBFC02A9C6EB60042AACA /* Core */,
 				1AA056E926BD2DCA00343005 /* Module */,
 				1A8E3B332A972AB50060254E /* Repository */,
-				1A7EBFD32A9C79C00042AACA /* UIComponent */,
 				1A026B002A9AFC8C00ADD541 /* UseCase */,
-				1A026AEB2A9AF73F00ADD541 /* Utility */,
 				1A026B312A9B03A900ADD541 /* Images.xcassets */,
 				1ACC54BB2AB7F4C6005A5CAA /* Colors.xcassets */,
 			);
