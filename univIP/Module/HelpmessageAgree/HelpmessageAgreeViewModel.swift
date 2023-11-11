@@ -9,7 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
-import API
+import Features
 
 protocol HelpmessageAgreeViewModelInterface: AnyObject {
     var input: HelpmessageAgreeViewModel.Input { get }

@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import API
 import Entity
-import WebScraper
+import Features
 
 enum HomeNavigationDestination {
     case goWeb(URLRequest)

@@ -9,8 +9,8 @@
 import Foundation
 import RxRelay
 import RxSwift
-import API
 import Entity
+import Features
 
 protocol NewsViewModelInterface: AnyObject {
     var input: NewsViewModel.Input { get }

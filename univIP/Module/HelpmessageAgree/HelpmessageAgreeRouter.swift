@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import API
+import Features
 
 enum HelpmessageAgreeNavigationDestination {
     case back

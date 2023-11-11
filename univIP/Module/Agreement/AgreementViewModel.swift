@@ -9,7 +9,7 @@
 import Foundation
 import RxRelay
 import RxSwift
-import API
+import Features
 
 protocol AgreementViewModelInterface: AnyObject {
     var input: AgreementViewModel.Input { get }

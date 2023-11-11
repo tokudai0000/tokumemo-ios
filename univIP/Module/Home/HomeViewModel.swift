@@ -9,9 +9,8 @@
 import Foundation
 import RxRelay
 import RxSwift
-import API
 import Entity
-import WebScraper
+import Features
 
 protocol HomeViewModelInterface: AnyObject {
     var input: HomeViewModel.Input { get }

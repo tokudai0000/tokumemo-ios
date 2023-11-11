@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import API
+import Features
 
 enum NewsNavigationDestination {
     case goWeb(URLRequest)

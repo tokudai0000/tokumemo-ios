@@ -22,12 +22,9 @@ abstract_target 'All' do
   target 'univIP' do
   end
 
-  target 'API' do
+  target 'Features' do
     pod 'APIKit' , '~> 5'
     pod 'Kanna' , '~> 5'
-  end
-
-  target 'WebScraper' do
     pod 'Kanna' , '~> 5'
   end
 
