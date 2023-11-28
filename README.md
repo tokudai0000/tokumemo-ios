@@ -1,11 +1,11 @@
 <p align="center" >
-  <img src="./assets/TokumemoPlusIcon.png" width=150px>
+  <img src="./Docs/TokumemoPlusIcon.png" width=150px>
 </p>
 
 # トクメモ＋ (TokumemoPlus) for iOS
 
 
-[![Download_on_the_App_Store_Badge](./assets/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
+[![Download_on_the_App_Store_Badge](./Docs/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/jp/app/id1582738889)
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey)](https://github.com/tokudai0000/univIP)
 [![License: MIT](https://img.shields.io/github/license/tokudai0000/univIP)](https://github.com/tokudai0000/univIP/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/tokumemo0000?style=social)](https://twitter.com/tokumemo0000)
@@ -170,7 +170,7 @@
 **MVVMをベースにClean Architectureを参考にしたものになっています**
 - [MVVM+CreanArchtecture](https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)
 
-<img src="./assets/mvvmr.png" width="800px">
+<img src="./Docs/mvvmr.png" width="800px">
 
 ### Router
 - Moduleの初期化を行い､ViewModelに依存物を渡す
@@ -228,5 +228,5 @@ Copyright(c) 2023 tokudai0000
 
 ## ホームページ
 
-[![IMAGE ALT TEXT HERE](./assets/homepage.png)](https://lit.link/developers)
+[![IMAGE ALT TEXT HERE](./Docs/homepage.png)](https://lit.link/developers)
 ※画像をタップすると遷移します
