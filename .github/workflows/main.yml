@@ -1,59 +1,23 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - main
-      - develop
+on: [push]
 
 # 動作バージョンの指定
 env:
- DEVELOPER_DIR: /Applications/Xcode_13.2.1.app
-
-
+ DEVELOPER_DIR: /Applications/Xcode_15.0.app
 
 jobs:
-#  UnitTestResult:
-#    runs-on: macos-11 # 仮想環境指定（Windows Server, Ubuntu, Mac OSをサポートする）
-#
-#    steps:
-#    # ソースコードを取得する
-#    - uses: actions/checkout@v1
-#
-#    # キャッシュ
-#    - name: Cache CocoaPods files
-#      uses: actions/cache@v1
-#      with:
-#        path: Pods
-#        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-#        restore-keys: |
-#          ${{ runner.os }}-pods-
-#
-#    # CocoaPodsをインストールする
-#    - name: CocoaPods
-#      run: pod install
-#
-#    # シミュレーター向けにビルド
-#    # set -o pipefail (エラー発生時終了)
-#    # bundle exec xcpretty --report html (エラー文を整形)
-#    - name: Xcode UnitTest
-#      run: set -o pipefail &&
-#          xcodebuild
-#          -sdk iphonesimulator
-#          -configuration Debug
-#          -workspace univIP.xcworkspace
-#          -scheme univIP
-#          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
-#          -skip-testing:univIPUITests
-#          clean test
-
-
-  info:
-    runs-on: macos-11
+  build:
+    name: build for ${{ matrix.environment }}
+    runs-on: macos-13
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: ["main"]
 
     steps:
     # チェックアウト
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
 
     # Xcodeの一覧出力
     - name: Show Xcode list
@@ -63,6 +27,28 @@ jobs:
     - name: Show Xcode version
       run: xcodebuild -version
 
-    # 端末の一覧出力
-    - name: Show devices
-      run: xcrun xctrace list devices
+    # CocoaPodsをインストールする
+    - name: CocoaPods
+      run: pod install
+
+    # ビルド
+    - name: Xcode build
+      run: set -o pipefail &&
+        xcodebuild
+        -sdk iphonesimulator
+        -configuration Debug
+        -workspace univIP.xcworkspace
+        -scheme univIP
+        build
+
+    # 単体テストの実行
+    - name: Xcode test
+      run: set -o pipefail &&
+        xcodebuild
+        -sdk iphonesimulator
+        -configuration Debug
+        -workspace univIP.xcworkspace
+        -scheme univIP
+        -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max'
+        -skip-testing:univIPUITests
+        clean test
