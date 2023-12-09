@@ -9,7 +9,7 @@ abstract_target 'All' do
   use_frameworks!
   inhibit_all_warnings!
 
-  pod "※ikemen"
+  pod '※ikemen' , '~> 0.7.0’
   pod 'Firebase/Analytics' , '~> 10'
   pod 'FirebaseCrashlytics' , '~> 10'
   pod 'R.swift' , '~> 7'

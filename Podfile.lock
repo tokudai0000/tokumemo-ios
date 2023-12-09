@@ -122,7 +122,7 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
-  - "※ikemen (0.8.0)"
+  - "※ikemen (0.7.0)"
 
 DEPENDENCIES:
   - APIKit (~> 5)
@@ -136,7 +136,7 @@ DEPENDENCIES:
   - RxCocoa (~> 6)
   - RxGesture (~> 4)
   - RxSwift (~> 6)
-  - "※ikemen"
+  - "※ikemen (~> 0.7.0)"
 
 SPEC REPOS:
   trunk:
@@ -191,8 +191,8 @@ SPEC CHECKSUMS:
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
-  "※ikemen": dd846bad2317b0ea51e5c7dd8e565108fa40d528
+  "※ikemen": db03a47c165f9889af8260758087b49f6cdeee2f
 
-PODFILE CHECKSUM: 310558f561793f179059aed0fc9ec538b65a0d98
+PODFILE CHECKSUM: 08797309c4ceee57b58a96f79c2beff443984060
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3
