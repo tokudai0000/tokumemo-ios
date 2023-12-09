@@ -16,7 +16,7 @@ jobs:
 
     # CocoaPodsをインストールする
     - name: CocoaPods
-      run: gem pod install
+      run: pod deintegrate && pod install
 
     # ビルド
     - name: Xcode build
