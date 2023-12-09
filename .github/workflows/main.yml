@@ -8,24 +8,11 @@ env:
 
 jobs:
   build:
-    name: build for ${{ matrix.environment }}
     runs-on: macos-13
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: ["main"]
 
     steps:
     # チェックアウト
     - uses: actions/checkout@v3
-
-    # Xcodeの一覧出力
-    - name: Show Xcode list
-      run: ls /Applications | grep 'Xcode'
-
-    # Xcodeのバージョン出力
-    - name: Show Xcode version
-      run: xcodebuild -version
 
     # CocoaPodsをインストールする
     - name: CocoaPods
@@ -38,7 +25,7 @@ jobs:
         -sdk iphonesimulator
         -configuration Debug
         -workspace univIP.xcworkspace
-        -scheme univIP
+        -scheme univIP-test
         build
 
     # 単体テストの実行
@@ -52,3 +39,15 @@ jobs:
         -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max'
         -skip-testing:univIPUITests
         clean test
+
+  info:
+    runs-on: macos-13
+
+    steps:
+    # Xcodeの一覧出力
+    - name: Show Xcode list
+      run: ls /Applications | grep 'Xcode'
+
+    # Xcodeのバージョン出力
+    - name: Show Xcode version
+      run: xcodebuild -version
