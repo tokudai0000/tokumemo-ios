@@ -17,7 +17,7 @@ abstract_target 'All' do
   pod 'RxSwift' , '~> 6'
   pod 'KeychainAccess' , '~> 4'
   pod 'NorthLayout'
-  pod '※ikemen'
+  pod "※ikemen"
 
   target 'univIP' do
   end
