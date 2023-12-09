@@ -12,11 +12,11 @@ jobs:
 
     steps:
     # チェックアウト
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
     # CocoaPodsをインストールする
     - name: CocoaPods
-      run: pod deintegrate && pod install
+      run: pod install
 
     # ビルド
     - name: Xcode build
