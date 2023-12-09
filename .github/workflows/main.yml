@@ -4,7 +4,7 @@ on: [push]
 
 # 動作バージョンの指定
 env:
- DEVELOPER_DIR: /Applications/Xcode_15.0.app
+ DEVELOPER_DIR: /Applications/Xcode_14.0.app
 
 jobs:
   build:
@@ -36,7 +36,7 @@ jobs:
         -configuration Debug
         -workspace univIP.xcworkspace
         -scheme univIP
-        -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max'
+        -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max'
         -skip-testing:univIPUITests
         clean test
 
