@@ -9,6 +9,7 @@ abstract_target 'All' do
   use_frameworks!
   inhibit_all_warnings!
 
+  pod "※ikemen"
   pod 'Firebase/Analytics' , '~> 10'
   pod 'FirebaseCrashlytics' , '~> 10'
   pod 'R.swift' , '~> 7'
@@ -17,7 +18,6 @@ abstract_target 'All' do
   pod 'RxSwift' , '~> 6'
   pod 'KeychainAccess' , '~> 4'
   pod 'NorthLayout'
-  pod "※ikemen"
 
   target 'univIP' do
   end
