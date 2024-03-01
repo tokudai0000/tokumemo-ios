@@ -35,12 +35,17 @@ export MINT_LINK_PATH := $(MINT_ROOT)/bin
 
 .PHONY: setup
 setup:
+	$(MAKE) pod-install
 	$(MAKE) install-mint-dependencies
 	$(MAKE) open
 
 .PHONY: install-mint-dependencies
 install-mint-dependencies:
 	$(MINT) bootstrap --overwrite y
+
+.PHONY: pod-install
+pod-install:
+	pod install
 
 .PHONY: open
 open:
