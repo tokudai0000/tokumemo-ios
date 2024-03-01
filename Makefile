@@ -35,9 +35,14 @@ export MINT_LINK_PATH := $(MINT_ROOT)/bin
 
 .PHONY: setup
 setup:
+	$(MAKE) cocoapods-version-setup
 	$(MAKE) pod-install
 	$(MAKE) install-mint-dependencies
 	$(MAKE) open
+
+.PHONY: cocoapods-version-setup
+cocoapods-version-setup:
+	bundle install --path vendor/bundle
 
 .PHONY: install-mint-dependencies
 install-mint-dependencies:

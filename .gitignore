@@ -6,6 +6,15 @@
 R.generated.swift
 GoogleService-Info.plist
 
+
+# Mintfile
+.mint
+
+# Gemfile
+vendor/
+.bundle
+
+
 # Xcode Patch
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
@@ -98,7 +107,3 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
-
-# Mint
-
-.mint
