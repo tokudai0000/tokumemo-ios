@@ -35,10 +35,16 @@ export MINT_LINK_PATH := $(MINT_ROOT)/bin
 
 .PHONY: setup
 setup:
+	$(MAKE) setup-githooks
 	$(MAKE) cocoapods-version-setup
 	$(MAKE) pod-install
 	$(MAKE) install-mint-dependencies
 	$(MAKE) open
+
+.PHONY: setup-githooks
+setup-githooks:
+	cp -r .githooks/* .git/hooks
+	chmod -R +x .git/hooks
 
 .PHONY: cocoapods-version-setup
 cocoapods-version-setup:

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# コミットメッセージは .git/COMMIT_EDITMSG に保存されてる
+COMMIT_MSG_FILE_PATH="$1"
+
+# コミットメッセージ読み込み
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE_PATH")
+
+# [Int値] の正規表現
+PATTERN="^\[\d+\]"
+
+# コミットメッセージの検証
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+	# \033[31m は赤文字にするANSIエスケープシーケンス
+    echo "\033[31mERROR: コミットメッセージは '[Issue番号]' で始めてください。"
+    exit 1
+fi
+
+exit 0
