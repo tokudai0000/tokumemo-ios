@@ -9,23 +9,37 @@ import UIKit
 import WebKit
 import RxSwift
 import Entity
-import Ikemen
 import NorthLayout
 
 final class SplashViewController: UIViewController {
-    private var iconImageView = UIImageView() ※ {
-        $0.image = R.image.icon_memokichi()
-    }
-    private var activityIndicator = UIActivityIndicatorView()
-    private var loginStatusLabel = UILabel() ※ {
-        $0.text = R.string.localizable.verifying_authentication()
-    }
-    private var copylightLabel = UILabel() ※ {
-        $0.text = "Developed by Tokushima Univ Students \n GitHub: @tokudai0000"
-        $0.textAlignment = .center
-        $0.numberOfLines = 0
-        $0.textColor = R.color.lightGrayColor()
-    }
+    private var iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = R.image.icon_memokichi()
+        return imageView
+    }()
+
+    private var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .medium // `.medium`は適宜、アプリケーションのデザインに合わせて変更してください
+        indicator.startAnimating() // 必要に応じてアニメーションを開始
+        return indicator
+    }()
+
+    private var loginStatusLabel: UILabel = {
+        let label = UILabel()
+        label.text = R.string.localizable.verifying_authentication()
+        return label
+    }()
+
+    private var copylightLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Developed by Tokushima Univ Students \n GitHub: @tokudai0000"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = R.color.lightGrayColor()
+        return label
+    }()
+
     // バックグラウンドでログインの処理を行う
     private var webView = WKWebView()
 
