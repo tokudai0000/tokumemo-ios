@@ -7,21 +7,25 @@
 
 import UIKit
 import Entity
-import Ikemen
 import NorthLayout
 
 final class ThirdPartyCreditCell: UITableViewCell {
     static let Reusable = "ThirdPartyCreditCell"
-    
-    private let titleLabel = UILabel() ※ {
-        $0.font = .systemFont(ofSize: 18, weight: .semibold)
-        $0.textAlignment = .center
-    }
-    private let contentLabel = UILabel() ※ {
-        $0.font = .systemFont(ofSize: 8, weight: .thin)
-        $0.textAlignment = .center
-        $0.numberOfLines = 0
-    }
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .center
+        return label
+    }()
+
+    private let contentLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 8, weight: .thin)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
 
     var tapHandler: (() -> Void)?
 

@@ -8,15 +8,16 @@
 import UIKit
 import RxSwift
 import Entity
-import Ikemen
 
 class NewsViewController: UIViewController {
     private var tableView = UITableView()
-    private var viewActivityIndicator = UIActivityIndicatorView() ※ {
-        $0.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        $0.style = UIActivityIndicatorView.Style.medium
-        $0.hidesWhenStopped = true
-    }
+    private var viewActivityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        indicator.style = UIActivityIndicatorView.Style.medium
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
 
     private let disposeBag = DisposeBag()
 

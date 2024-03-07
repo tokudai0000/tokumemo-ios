@@ -7,17 +7,19 @@
 
 import UIKit
 import Entity
-import Ikemen
 import NorthLayout
 
 final class HomeMenuCollectionCell: UICollectionViewCell {
     static let Reusable = "HomeMenuCollectionCell"
 
     private let imageView = UIImageView()
-    private let titleLabel = UILabel() ※ {
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
-        $0.textAlignment = .center
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textAlignment = .center
+        return label
+    }()
+
 
     var tapHandler: (() -> Void)?
 
