@@ -16,12 +16,4 @@ jobs:
           run: pod install
 
         - name: Xcode UnitTest
-          run: |
-            set -o pipefail &&
-            xcodebuild test \
-            -workspace univIP.xcworkspace \
-            -scheme univIP \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max,OS=17.2' \
-            -skip-testing:univIPUITests \
-            clean test
+          run: xcodebuild test -workspace univIP.xcworkspace -scheme univIP -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 14"
