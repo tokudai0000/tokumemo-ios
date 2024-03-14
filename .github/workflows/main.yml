@@ -8,20 +8,19 @@ jobs:
     runs-on: macos-13
     steps:
         - uses: actions/checkout@v4
+
         - name: Select Xcode
           run: sudo xcode-select -s "/Applications/Xcode_15.0.1.app"
+
         - name: CocoaPods
           run: pod install
-        # シミュレーター向けにビルド
-        # set -o pipefail (エラー発生時終了)
-        # bundle exec xcpretty --report html (エラー文を整形)
+
         - name: Xcode UnitTest
           run: set -o pipefail &&
-              xcodebuild
-              -sdk iphonesimulator
-              -configuration Debug
+              xcodebuild test
               -workspace univIP.xcworkspace
               -scheme univIP
-              -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
+              -sdk iphonesimulator
+              -destination platform='iOS Simulator,name=iPhone 13 Pro Max'
               -skip-testing:univIPUITests
               clean test
