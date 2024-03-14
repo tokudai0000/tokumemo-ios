@@ -1720,6 +1720,33 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MARKETING_VERSION = 5.0.1;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"xml2\"",
+					"-framework",
+					"\"APIKit\"",
+					"-framework",
+					"\"FootlessParser\"",
+					"-framework",
+					"\"Kanna\"",
+					"-framework",
+					"\"KeychainAccess\"",
+					"-framework",
+					"\"NorthLayout\"",
+					"-framework",
+					"\"RswiftResources\"",
+					"-framework",
+					"\"RxCocoa\"",
+					"-framework",
+					"\"RxGesture\"",
+					"-framework",
+					"\"RxRelay\"",
+					"-framework",
+					"\"RxSwift\"",
+					"-framework",
+					"\"UIKit\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1761,6 +1788,33 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MARKETING_VERSION = 5.0.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"xml2\"",
+					"-framework",
+					"\"APIKit\"",
+					"-framework",
+					"\"FootlessParser\"",
+					"-framework",
+					"\"Kanna\"",
+					"-framework",
+					"\"KeychainAccess\"",
+					"-framework",
+					"\"NorthLayout\"",
+					"-framework",
+					"\"RswiftResources\"",
+					"-framework",
+					"\"RxCocoa\"",
+					"-framework",
+					"\"RxGesture\"",
+					"-framework",
+					"\"RxRelay\"",
+					"-framework",
+					"\"RxSwift\"",
+					"-framework",
+					"\"UIKit\"",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.akidon0000.univip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
