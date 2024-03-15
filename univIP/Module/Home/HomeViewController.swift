@@ -9,6 +9,7 @@ import UIKit
 import WebKit
 import RxSwift
 import Entity
+import AkidonComponents
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var numberOfUsersLabel: UILabel!
@@ -230,48 +231,27 @@ private extension HomeViewController {
         var maxWidth: CGFloat = 0
 
         for (index, item) in buttonItems.enumerated() {
-            let button = UIButton()
-            button.setTitle(item.titleName, for: .normal)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-            button.backgroundColor = R.color.mainColor()
-            button.layer.cornerRadius = 20
-            button.tag = index
-            button.addTarget(owner, action: #selector(owner.buttonTapped(_:)), for: .touchUpInside)
-
-            button.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                button.heightAnchor.constraint(equalToConstant: 50), // 高さを50に設定
-            ])
-
-            // ボタンのサイズをテキストにフィットさせる
-            button.sizeToFit()
-            // 最大のボタン幅を記録
-            if button.frame.width > maxWidth {
-                maxWidth = button.frame.width
+            let button = CustomDuoButton(title: item.titleName,
+                                         tag: index)
+            button.onTap = { tag in
+                self.viewModel.input.didTapEventButton.accept(tag)
             }
+            maxWidth = max(maxWidth, button.frame.width)
 
             eventButtons.append(button)
         }
 
         let containerView = UIStackView(arrangedSubviews: eventButtons)
         containerView.axis = .vertical
-        containerView.distribution = .fill
         containerView.spacing = 12
-        containerView.alignment = .fill
 
         owner.view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            // ボタンの最大幅に+20を横幅とする
-            containerView.widthAnchor.constraint(equalToConstant: maxWidth + 20),
+            containerView.widthAnchor.constraint(equalToConstant: maxWidth),
             containerView.trailingAnchor.constraint(equalTo: owner.view.trailingAnchor, constant: -15),
             containerView.bottomAnchor.constraint(equalTo: owner.view.bottomAnchor, constant: -100)
         ])
-    }
-
-    @objc func buttonTapped(_ sender: UIButton) {
-        let index = sender.tag
-        viewModel.input.didTapEventButton.accept(index)
     }
 }
 

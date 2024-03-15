@@ -97,6 +97,7 @@
 		1A6C51B82905072500A3E85A /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B72905072500A3E85A /* NewsViewController.swift */; };
 		1A6C51BA2905077E00A3E85A /* ClubListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C51B92905077E00A3E85A /* ClubListsViewController.swift */; };
 		1A9378A42A60E6BC009A5758 /* BannerScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */; };
+		1A9A15732BA41DE7008BB77E /* CustomDuoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9A15722BA41DE7008BB77E /* CustomDuoButton.swift */; };
 		1AB8EF4C2B99EC350048ADEB /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1AB8EF4B2B99EC350048ADEB /* FirebaseCrashlytics */; };
 		1ABDE75526DE534300D4B04E /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABDE75426DE534300D4B04E /* AgreementViewController.swift */; };
 		1ABE8BC127B10402001EEA79 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABE8BBD27B10402001EEA79 /* HomeViewModel.swift */; };
@@ -256,6 +257,7 @@
 		1A9378A32A60E6BC009A5758 /* BannerScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerScrollViewController.swift; sourceTree = "<group>"; };
 		1A9378B12A6294C6009A5758 /* UnivBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnivBannerView.swift; sourceTree = "<group>"; };
 		1A9378B32A6294D2009A5758 /* UnivBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnivBannerView.xib; sourceTree = "<group>"; };
+		1A9A15722BA41DE7008BB77E /* CustomDuoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDuoButton.swift; sourceTree = "<group>"; };
 		1AA056C926BD2AE100343005 /* univIP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = univIP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB37B6C26FDFCEA008A2D2F /* univIPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = univIPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB37B7026FDFCEA008A2D2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				1A556D912963BD4B00A650B2 /* String+Exetnsion.swift */,
 				1ADE675D2A77A13E00B79D69 /* UIColor+Exetnsion.swift */,
 				1A30D0B128F6ED2E00C4012E /* UIImageView+Exetnsion.swift */,
+				1A9A15722BA41DE7008BB77E /* CustomDuoButton.swift */,
 			);
 			path = AkidonComponents;
 			sourceTree = "<group>";
@@ -1194,6 +1197,7 @@
 				1A6B56872AFF91F500C1771F /* DateFormatter+Exetnsion.swift in Sources */,
 				1A6B56892AFF91F500C1771F /* String+Exetnsion.swift in Sources */,
 				1A6B56852AFF91D100C1771F /* AKLibrary.swift in Sources */,
+				1A9A15732BA41DE7008BB77E /* CustomDuoButton.swift in Sources */,
 				1A6B56882AFF91F500C1771F /* UIImageView+Exetnsion.swift in Sources */,
 				1A6B56862AFF91F500C1771F /* UIColor+Exetnsion.swift in Sources */,
 			);
