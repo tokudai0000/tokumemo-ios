@@ -9,6 +9,7 @@ import Foundation
 import RxRelay
 import RxSwift
 import Entity
+import AkidonComponents
 
 protocol WebViewModelInterface: AnyObject {
     var input: WebViewModel.Input { get }
@@ -114,6 +115,7 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
                       let host = url.host else {
                     return
                 }
+                AKLog(level: .DEBUG, message: "URL: \(url)")
                 urlLabel.accept(host.description)
 
                 if URLCheckers.isUniversityServiceTimeoutURL(at: url.absoluteString) {
