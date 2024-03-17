@@ -98,7 +98,7 @@ enum Url: String, CaseIterable, UrlProtocol {
     /// TwitterのURL
     case officialSNS = "https://twitter.com/tokumemo0000"
     /// ホームページのURL
-    case homePage = "https://lit.link/developers"
+    case homePage = "https://tokumemo.notion.site/6e750dcdc6d544a9a23460503d88ca5d"
     /// トクメモ＋のプライバシーポリシーURL[GitHub]
     case privacyPolicy = "https://tokudai0000.github.io/tokumemo_resource/document/privacy_policy.txt"
     /// トクメモ＋の利用規約URL[GitHub]
