@@ -9,15 +9,12 @@ abstract_target 'All' do
   use_frameworks!
   inhibit_all_warnings!
 
-  pod 'Firebase/Analytics' , '~> 10'
-  pod 'FirebaseCrashlytics' , '~> 10'
   pod 'R.swift' , '~> 7'
   pod 'RxCocoa' , '~> 6'
   pod 'RxGesture' , '~> 4'
   pod 'RxSwift' , '~> 6'
   pod 'KeychainAccess' , '~> 4'
   pod 'NorthLayout'
-  pod '※ikemen'
 
   target 'univIP' do
   end
@@ -25,12 +22,10 @@ abstract_target 'All' do
   target 'Features' do
     pod 'APIKit' , '~> 5'
     pod 'Kanna' , '~> 5'
-    pod 'Kanna' , '~> 5'
   end
 
   target  'univIPTests' do
     inherit! :search_paths
-    pod 'Firebase'
   end
 end
 

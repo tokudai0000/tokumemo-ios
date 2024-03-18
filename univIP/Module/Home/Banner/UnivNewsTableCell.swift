@@ -7,21 +7,26 @@
 
 import UIKit
 import Entity
-import Ikemen
 import NorthLayout
 
 final class UnivNewsTableCell: UITableViewCell {
     static let Reusable = "UnivNewsTableCell"
 
-    private let titleLabel = UILabel() ※ {
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
-        $0.textAlignment = .left
-        $0.numberOfLines = 0
-    }
-    private let createdAtLabel = UILabel() ※ {
-        $0.font = .systemFont(ofSize: 8, weight: .semibold)
-        $0.textAlignment = .left
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private let createdAtLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 8, weight: .semibold)
+        label.textAlignment = .left
+        return label
+    }()
+
 
     var tapHandler: (() -> Void)?
 

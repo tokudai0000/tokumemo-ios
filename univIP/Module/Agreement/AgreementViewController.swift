@@ -7,51 +7,65 @@
 
 import UIKit
 import RxSwift
-import Ikemen
 import NorthLayout
 
 final class AgreementViewController: UIViewController {
-    private var iconImageView = UIImageView() ※ {
-        $0.image = UIImage(resource: R.image.icon_tokumemo_plus)
-        $0.layer.cornerRadius = 50.0
-        $0.clipsToBounds = true
-    }
-    private var textView = UITextView() ※ {
-        $0.backgroundColor = R.color.ultraGrayColor()
-        $0.layer.cornerRadius = 10.0
-        $0.textAlignment = .center
-        $0.isEditable = false
-    }
-    private var termsButton = UIButton() ※ {
-        $0.backgroundColor = .white
-        $0.setTitle(R.string.localizable.terms_of_service(), for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        $0.tintColor = .black
-        $0.layer.borderColor = UIColor.black.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 10.0
-    }
-    private var privacyButton = UIButton() ※ {
-        $0.backgroundColor = .white
-        $0.setTitle(R.string.localizable.privacy_policy_button(), for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        $0.tintColor = .black
-        $0.layer.borderColor = UIColor.black.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 10.0
-    }
-    private var agreementButton = UIButton() ※ {
-        $0.backgroundColor = R.color.subColor()
-        $0.setTitle(R.string.localizable.agree(), for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        $0.tintColor = .black
-        $0.layer.borderColor = UIColor.black.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 5.0
-    }
+    private var iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(resource: R.image.icon_tokumemo_plus)
+        imageView.layer.cornerRadius = 50.0
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private var textView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = R.color.ultraGrayColor()
+        textView.layer.cornerRadius = 10.0
+        textView.textAlignment = .center
+        textView.isEditable = false
+        return textView
+    }()
+
+    private var termsButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle(R.string.localizable.terms_of_service(), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.tintColor = .black
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10.0
+        return button
+    }()
+
+    private var privacyButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle(R.string.localizable.privacy_policy_button(), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.tintColor = .black
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10.0
+        return button
+    }()
+
+    private var agreementButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = R.color.subColor()
+        button.setTitle(R.string.localizable.agree(), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.tintColor = .black
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5.0
+        return button
+    }()
+
 
     private let disposeBag = DisposeBag()
     

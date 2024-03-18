@@ -9,6 +9,7 @@ import Foundation
 import RxRelay
 import RxSwift
 import Entity
+import AkidonComponents
 
 protocol WebViewModelInterface: AnyObject {
     var input: WebViewModel.Input { get }
@@ -110,11 +111,9 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
 
         input.urlPendingLoad
             .subscribe { url in
-                guard let url = url.element,
-                      let host = url.host else {
+                guard let url = url.element else {
                     return
                 }
-                urlLabel.accept(host.description)
 
                 if URLCheckers.isUniversityServiceTimeoutURL(at: url.absoluteString) {
                     reloadLoginURLInWebView.accept(Void())
@@ -125,9 +124,12 @@ final class WebViewModel: BaseViewModel<WebViewModel>, WebViewModelInterface {
         input.urlDidLoad
             .subscribe { url in
                 guard let url = url.element,
+                      let host = url.host,
                       let canExecuteJavascript = state.canExecuteJavascript.value else {
                     return
                 }
+                urlLabel.accept(host.description)
+                AKLog(level: .DEBUG, message: "urlDidLoad: \(url)")
 
                 if URLCheckers.isSkipReminderURL(at: url.absoluteString) {
                     skipReminderJavaScriptInjection.accept(Void())
