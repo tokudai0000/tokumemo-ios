@@ -34,8 +34,8 @@ public struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
                 do {
                     let doc = try HTML(html: data, encoding: String.Encoding.utf8)
                     for node in doc.xpath("//a") {
-                        if let str = node["href"], str.contains("pub/pdf/calender/") {
-                            urlStr = urlStr + str
+                        if let str = node["href"], str.contains("drupal/ja/library_calendar/annual/") {
+                            urlStr = str
                         }
                     }
                 } catch let parseError {
