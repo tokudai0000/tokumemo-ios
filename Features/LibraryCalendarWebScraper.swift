@@ -16,8 +16,6 @@ public protocol LibraryCalendarWebScraperInterface {
 public struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
     public init() {}
 
-    private let baseURLString = "https://www.lib.tokushima-u.ac.jp/"
-
     public func getLibraryCalendarURL(libraryUrl: URL) -> RxSwift.Single<URLRequest> {
         return .create { observer in
             let task = URLSession.shared.dataTask(with: libraryUrl) { (data, response , error) in
@@ -30,7 +28,7 @@ public struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
                     return observer(.failure(WebScrapeError.noDataAvailable(statusCode: statusCode)))
                 }
 
-                var urlStr = self.baseURLString
+                var urlStr = ""
                 do {
                     let doc = try HTML(html: data, encoding: String.Encoding.utf8)
                     for node in doc.xpath("//a") {
