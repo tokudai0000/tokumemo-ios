@@ -39,6 +39,7 @@ setup:
 	$(MAKE) cocoapods-version-setup
 	$(MAKE) pod-install
 	$(MAKE) install-mint-dependencies
+	$(MAKE) copy-google-service-plist-if-needed
 	$(MAKE) open
 
 .PHONY: setup-githooks
@@ -52,11 +53,15 @@ cocoapods-version-setup:
 
 .PHONY: install-mint-dependencies
 install-mint-dependencies:
-	$(MINT) bootstrap --overwrite y
+#	$(MINT) bootstrap --overwrite y
 
 .PHONY: pod-install
 pod-install:
 	pod install
+
+.PHONY: copy-google-service-plist-if-needed
+copy-google-service-plist-if-needed:
+	sh ./Scripts/CopyGoogleServicePlistIfNeeded.sh
 
 .PHONY: open
 open:
