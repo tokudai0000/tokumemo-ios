@@ -9,9 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import Entity
-import Features
-import AkidonComponents
 
 protocol SplashViewModelInterface: AnyObject {
     var input: SplashViewModel.Input { get }

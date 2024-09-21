@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum AKLogLevel {
+enum AKLogLevel {
     case DEBUG     // システムの動作状況に関する詳細な情報。
     case WARN      // 異常とは言い切れないが正常とも異なる何らかの問題。
     case ERROR     // 予期しないその他の実行時エラー。
@@ -22,13 +22,13 @@ public enum AKLogLevel {
 ///   - function: メソッド
 ///   - level: ログ・レベル
 ///   - message: メッセージ
-public func AKLog(file: String = #file,
+func AKLog(file: String = #file,
            line: Int = #line,
            function: String = #function,
            level: AKLogLevel,
            message: Any ){
     
-    #if DEBUG
+#if DEBUG
     let levelString: String
     switch level {
     case .DEBUG:    levelString = "DEBUG"
@@ -36,13 +36,13 @@ public func AKLog(file: String = #file,
     case .ERROR:    levelString = "ERROR"
     case .FATAL:    levelString = "FATAL"
     }
-
+    
     let fileName = NSString(string: file).lastPathComponent
     let datetime = DateFormatter()
     datetime.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
     let now = datetime.string(from: Date())
-
+    
     // コンソール出力
     print("AKLog: " + now + " \(levelString) \(fileName)(\(line)) \(function) \(message)")
-    #endif
+#endif
 }

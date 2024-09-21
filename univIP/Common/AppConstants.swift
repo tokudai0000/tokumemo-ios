@@ -5,8 +5,6 @@
 //  Created by Akihiro Matsuyama on 2023/09/17.
 //
 
-import Entity
-
 struct AppConstants {
 
     public let menuItems: [MenuItem]
