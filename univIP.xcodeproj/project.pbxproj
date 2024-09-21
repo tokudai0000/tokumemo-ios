@@ -841,7 +841,6 @@
 			buildConfigurationList = 1AA056DD26BD2AE500343005 /* Build configuration list for PBXNativeTarget "univIP" */;
 			buildPhases = (
 				6BC3F9ADAE1ED57107C2EC77 /* [CP] Check Pods Manifest.lock */,
-				15768A962C9DE528006F81C1 /* CopyGoogleServicePlistIfNeeded.sh */,
 				1AA056E026BD2CC300343005 /* Run Script(R.Swift) */,
 				1AA056C526BD2AE100343005 /* Sources */,
 				1AA056C626BD2AE100343005 /* Frameworks */,
@@ -1042,24 +1041,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-All-univIP/Pods-All-univIP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		15768A962C9DE528006F81C1 /* CopyGoogleServicePlistIfNeeded.sh */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = CopyGoogleServicePlistIfNeeded.sh;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define paths\nPLIST_PATH=\"univIP/Settings/GoogleService-Info.plist\"\nTEMPLATE_PLIST_PATH=\"univIP/Settings/GoogleService-Info.template.plist\"\n\n# Check if the plist file exists\nif [ ! -f \"$PLIST_PATH\" ]; then\n    # If the plist file doesn't exist, copy the template file\n    echo \"GoogleService-Info.plist not found. Copying from template...\"\n    cp \"$TEMPLATE_PLIST_PATH\" \"$PLIST_PATH\"\n    echo \"GoogleService-Info.plist created from template.\"\nelse\n    echo \"GoogleService-Info.plist already exists.\"\nfi\n";
 		};
 		1A53DB1B2A4850E00098DC94 /* Run Script(FirebaseCrashlytics) */ = {
 			isa = PBXShellScriptBuildPhase;
