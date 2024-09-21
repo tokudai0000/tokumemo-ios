@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0308162845A03F8D8FE6E237 /* Pods_All_Features.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32D88EA7D16C88FCE4923FF9 /* Pods_All_Features.framework */; };
+		15768A932C9DDE70006F81C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15768A922C9DDE70006F81C1 /* GoogleService-Info.plist */; };
+		15768A952C9DE129006F81C1 /* GoogleService-Info.template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15768A942C9DE129006F81C1 /* GoogleService-Info.template.plist */; };
 		1A11C3D12A95240500D95122 /* CreditsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D02A95240500D95122 /* CreditsRouter.swift */; };
 		1A11C3D32A9524DA00D95122 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D22A9524DA00D95122 /* CreditsViewController.swift */; };
 		1A11C3D52A95251D00D95122 /* CreditsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3D42A95251D00D95122 /* CreditsViewModel.swift */; };
@@ -16,8 +18,6 @@
 		1A20C4612A809A970063B5D6 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A20C4602A809A970063B5D6 /* HomeRouter.swift */; };
 		1A2237882AB6C58200A65301 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2237872AB6C58200A65301 /* AppConstants.swift */; };
 		1A2237952AB7EDF900A65301 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A22378E2AB7EDF900A65301 /* Localizable.strings */; };
-		1A2237962AB7EDF900A65301 /* GoogleService-Info.template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2237902AB7EDF900A65301 /* GoogleService-Info.template.plist */; };
-		1A2237972AB7EDF900A65301 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2237912AB7EDF900A65301 /* GoogleService-Info.plist */; };
 		1A2237982AB7EDF900A65301 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2237922AB7EDF900A65301 /* Acknowledgements.plist */; };
 		1A239B5A2A84A90D0085BA46 /* PRRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A239B592A84A90D0085BA46 /* PRRouter.swift */; };
 		1A239B5C2A84A9C30085BA46 /* PRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A239B5B2A84A9C30085BA46 /* PRViewModel.swift */; };
@@ -185,6 +185,8 @@
 		0BB7E36B74A1A0E77D5455CE /* Pods-All-Repository.stub.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-Repository.stub.xcconfig"; path = "Target Support Files/Pods-All-Repository/Pods-All-Repository.stub.xcconfig"; sourceTree = "<group>"; };
 		0C52338841603C078A18CD71 /* Pods_All_Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_All_Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1419D184B669A4B8094BEA0C /* Pods-All-Core.stub.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-Core.stub.xcconfig"; path = "Target Support Files/Pods-All-Core/Pods-All-Core.stub.xcconfig"; sourceTree = "<group>"; };
+		15768A922C9DDE70006F81C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		15768A942C9DE129006F81C1 /* GoogleService-Info.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.template.plist"; sourceTree = "<group>"; };
 		1A0230162A8F94680084DD0B /* NumberOfUsersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfUsersAPI.swift; sourceTree = "<group>"; };
 		1A0230182A8F96490084DD0B /* CurrentTermVersionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTermVersionAPI.swift; sourceTree = "<group>"; };
 		1A02301A2A8F98BF0084DD0B /* TermTextAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermTextAPI.swift; sourceTree = "<group>"; };
@@ -206,8 +208,6 @@
 		1A20C4602A809A970063B5D6 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		1A2237872AB6C58200A65301 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		1A22378F2AB7EDF900A65301 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		1A2237902AB7EDF900A65301 /* GoogleService-Info.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.template.plist"; sourceTree = "<group>"; };
-		1A2237912AB7EDF900A65301 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A2237922AB7EDF900A65301 /* Acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Acknowledgements.plist; sourceTree = "<group>"; };
 		1A2237932AB7EDF900A65301 /* Root.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Root.plist; sourceTree = "<group>"; };
 		1A2237942AB7EDF900A65301 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -419,8 +419,8 @@
 			isa = PBXGroup;
 			children = (
 				1A2237922AB7EDF900A65301 /* Acknowledgements.plist */,
-				1A2237912AB7EDF900A65301 /* GoogleService-Info.plist */,
-				1A2237902AB7EDF900A65301 /* GoogleService-Info.template.plist */,
+				15768A922C9DDE70006F81C1 /* GoogleService-Info.plist */,
+				15768A942C9DE129006F81C1 /* GoogleService-Info.template.plist */,
 				1A2237942AB7EDF900A65301 /* Info.plist */,
 				1A22378E2AB7EDF900A65301 /* Localizable.strings */,
 				1A2237932AB7EDF900A65301 /* Root.plist */,
@@ -993,14 +993,14 @@
 				1A2B04C82AAF5DD00085188A /* UnivBannerView.xib in Resources */,
 				1A2B04B92AAF5D580085188A /* Images.xcassets in Resources */,
 				1AED5D162A91A4690090B8DE /* HelpmessageAgree.storyboard in Resources */,
-				1A2237962AB7EDF900A65301 /* GoogleService-Info.template.plist in Resources */,
+				15768A952C9DE129006F81C1 /* GoogleService-Info.template.plist in Resources */,
 				1ACC54BC2AB7F4C6005A5CAA /* Colors.xcassets in Resources */,
 				1A2237982AB7EDF900A65301 /* Acknowledgements.plist in Resources */,
 				1AC1332F294C2D5D00E3DC16 /* PR.storyboard in Resources */,
 				1A6C51B02904E82900A3E85A /* Home.storyboard in Resources */,
+				15768A932C9DDE70006F81C1 /* GoogleService-Info.plist in Resources */,
 				1ABE8BDC27B10489001EEA79 /* Input.storyboard in Resources */,
 				1A30D0B028F6D7BC00C4012E /* Web.storyboard in Resources */,
-				1A2237972AB7EDF900A65301 /* GoogleService-Info.plist in Resources */,
 				1A11C3DE2A952E5C00D95122 /* Credits.storyboard in Resources */,
 				1ABE8BE727B10590001EEA79 /* LaunchScreen.storyboard in Resources */,
 				1A2237952AB7EDF900A65301 /* Localizable.strings in Resources */,
