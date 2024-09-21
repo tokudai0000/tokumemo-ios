@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Entity
 
 enum PRNavigationDestination {
     case goWeb(URLRequest)

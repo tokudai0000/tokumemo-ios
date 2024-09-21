@@ -8,7 +8,9 @@ abstract_target 'All' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   inhibit_all_warnings!
-
+  
+  pod 'APIKit' , '~> 5'
+  pod 'Kanna' , '~> 5'
   pod 'R.swift' , '~> 7'
   pod 'RxCocoa' , '~> 6'
   pod 'RxGesture' , '~> 4'
@@ -17,11 +19,6 @@ abstract_target 'All' do
   pod 'NorthLayout'
 
   target 'univIP' do
-  end
-
-  target 'Features' do
-    pod 'APIKit' , '~> 5'
-    pod 'Kanna' , '~> 5'
   end
 
   target  'univIPTests' do

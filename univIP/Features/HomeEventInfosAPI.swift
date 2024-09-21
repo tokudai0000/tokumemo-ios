@@ -7,7 +7,6 @@
 
 import APIKit
 import RxSwift
-import Entity
 
 protocol HomeEventInfosAPIInterface {
     func getHomeEventInfos() -> Single<HomeEventInfosGetRequest.Response>
