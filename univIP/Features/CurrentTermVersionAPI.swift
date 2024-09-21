@@ -8,14 +8,14 @@
 import APIKit
 import RxSwift
 
-public protocol CurrentTermVersionAPIInterface {
+protocol CurrentTermVersionAPIInterface {
     func getCurrentTermVersion() -> Single<CurrentTermVersionGetRequest.Response>
 }
 
-public struct CurrentTermVersionAPI: CurrentTermVersionAPIInterface {
-    public init() {}
+struct CurrentTermVersionAPI: CurrentTermVersionAPIInterface {
+    init() {}
     
-    public func getCurrentTermVersion() -> RxSwift.Single<CurrentTermVersionGetRequest.Response> {
+    func getCurrentTermVersion() -> RxSwift.Single<CurrentTermVersionGetRequest.Response> {
         let request = CurrentTermVersionGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
@@ -33,10 +33,10 @@ public struct CurrentTermVersionAPI: CurrentTermVersionAPIInterface {
     }
 }
 
-public struct CurrentTermVersionGetRequest: Request {
-    public struct ResponseBody: Decodable {
-        public let currentTermVersion: String
-
+struct CurrentTermVersionGetRequest: Request {
+    struct ResponseBody: Decodable {
+        let currentTermVersion: String
+        
         init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
                   let termVersion = dictionary["currentTermVersion"] as? String else {
@@ -45,22 +45,22 @@ public struct CurrentTermVersionGetRequest: Request {
             currentTermVersion = termVersion
         }
     }
-
-    public typealias Response = ResponseBody
-
-    public var baseURL: URL {
+    
+    typealias Response = ResponseBody
+    
+    var baseURL: URL {
         return URL(string: "https://tokudai0000.github.io")!
     }
-
-    public var method: HTTPMethod {
+    
+    var method: HTTPMethod {
         return .get
     }
-
-    public var path: String {
+    
+    var path: String {
         return "/tokumemo_resource/api/v1/current_term_version.json"
     }
-
-    public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+    
+    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try Response(object: object)
     }
 }

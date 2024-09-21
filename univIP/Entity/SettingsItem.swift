@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct SettingsItem {
-    public enum type {
+struct SettingsItem {
+    enum type {
         case password
         case aboutThisApp
         case contactUs
@@ -20,12 +20,12 @@ public struct SettingsItem {
         case review
         case acknowledgements
     }
-
-    public let title: String
-    public let id: type
-    public let targetUrl: URLRequest?
-
-    public init(title: String, id: type, targetUrl: URLRequest?) {
+    
+    let title: String
+    let id: type
+    let targetUrl: URLRequest?
+    
+    init(title: String, id: type, targetUrl: URLRequest?) {
         self.title = title
         self.id = id
         self.targetUrl = targetUrl

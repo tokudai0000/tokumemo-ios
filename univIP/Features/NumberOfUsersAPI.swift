@@ -8,14 +8,14 @@
 import APIKit
 import RxSwift
 
-public protocol NumberOfUsersAPIInterface {
+protocol NumberOfUsersAPIInterface {
     func getNumberOfUsers() -> Single<NumberOfUsersGetRequest.Response>
 }
 
-public struct NumberOfUsersAPI: NumberOfUsersAPIInterface {
-    public init() {}
+struct NumberOfUsersAPI: NumberOfUsersAPIInterface {
+    init() {}
     
-    public func getNumberOfUsers() -> RxSwift.Single<NumberOfUsersGetRequest.Response> {
+    func getNumberOfUsers() -> RxSwift.Single<NumberOfUsersGetRequest.Response> {
         let request = NumberOfUsersGetRequest()
         return .create { observer in
             let session = Session.send(request) { result in
@@ -33,11 +33,11 @@ public struct NumberOfUsersAPI: NumberOfUsersAPIInterface {
     }
 }
 
-public struct NumberOfUsersGetRequest: Request {
-    public struct ResponseBody: Decodable {
-        public let numberOfUsers: String
-
-        public init(object: Any) throws {
+struct NumberOfUsersGetRequest: Request {
+    struct ResponseBody: Decodable {
+        let numberOfUsers: String
+        
+        init(object: Any) throws {
             guard let dictionary = object as? [String: Any],
                   let users = dictionary["numberOfUsers"] as? String else {
                 throw ResponseError.unexpectedObject(object)
@@ -45,22 +45,22 @@ public struct NumberOfUsersGetRequest: Request {
             numberOfUsers = users
         }
     }
-
-    public typealias Response = ResponseBody
-
-    public var baseURL: URL {
+    
+    typealias Response = ResponseBody
+    
+    var baseURL: URL {
         return URL(string: "https://tokudai0000.github.io")!
     }
-
-    public var method: HTTPMethod {
+    
+    var method: HTTPMethod {
         return .get
     }
-
-    public var path: String {
+    
+    var path: String {
         return "/tokumemo_resource/api/v1/number_of_users.json"
     }
-
-    public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+    
+    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try Response(object: object)
     }
 }
