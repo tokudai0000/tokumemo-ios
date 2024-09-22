@@ -318,6 +318,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15DD41A22C9FCB8000E2516C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				15DD41A42C9FCBC500E2516C /* Others */,
+				15DD41A32C9FCBAC00E2516C /* Storyboards */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		15DD41A32C9FCBAC00E2516C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		15DD41A42C9FCBC500E2516C /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				1ACC54BB2AB7F4C6005A5CAA /* Colors.xcassets */,
+				1A026B312A9B03A900ADD541 /* Images.xcassets */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		1A026B002A9AFC8C00ADD541 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,16 +564,14 @@
 		1AA056CB26BD2AE100343005 /* univIP */ = {
 			isa = PBXGroup;
 			children = (
+				15DD41A22C9FCB8000E2516C /* Resources */,
 				1A6B567B2AFF91B800C1771F /* AkidonComponents */,
 				1A2B04DD2AAFE5E60085188A /* Entity */,
 				1A6B56612AFF8CBD00C1771F /* Features */,
 				1A22378D2AB7EDF900A65301 /* Settings */,
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
-				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
 				1A26A2602A77FB3C00BC6988 /* R.generated.swift */,
 				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
-				1A026B312A9B03A900ADD541 /* Images.xcassets */,
-				1ACC54BB2AB7F4C6005A5CAA /* Colors.xcassets */,
 				1A026B1D2A9B028600ADD541 /* Common */,
 				1A7EBFC02A9C6EB60042AACA /* Core */,
 				1AA056E926BD2DCA00343005 /* Module */,
