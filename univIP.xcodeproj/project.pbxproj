@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1515B1902C9FDE5800D73B78 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1515B18F2C9FDE5800D73B78 /* R.generated.swift */; };
 		15768A932C9DDE70006F81C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15768A922C9DDE70006F81C1 /* GoogleService-Info.plist */; };
 		15768A952C9DE129006F81C1 /* GoogleService-Info.template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15768A942C9DE129006F81C1 /* GoogleService-Info.template.plist */; };
 		15C670032C9E6AD2004AC48A /* AKLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A41EAE2272914CC0064CDB7 /* AKLibrary.swift */; };
@@ -47,7 +48,6 @@
 		1A2237982AB7EDF900A65301 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2237922AB7EDF900A65301 /* Acknowledgements.plist */; };
 		1A239B5A2A84A90D0085BA46 /* PRRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A239B592A84A90D0085BA46 /* PRRouter.swift */; };
 		1A239B5C2A84A9C30085BA46 /* PRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A239B5B2A84A9C30085BA46 /* PRViewModel.swift */; };
-		1A26A2612A77FB3C00BC6988 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A26A2602A77FB3C00BC6988 /* R.generated.swift */; };
 		1A2B04B12AAF5C9B0085188A /* UnivAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACD66372A867C0300244DC0 /* UnivAuthRepository.swift */; };
 		1A2B04B22AAF5C9B0085188A /* AcceptedTermVersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD00BF22A8BFE55008C7EFC /* AcceptedTermVersionRepository.swift */; };
 		1A2B04B32AAF5C9B0085188A /* WebViewCloseCountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A11C3DF2A96577100D95122 /* WebViewCloseCountRepository.swift */; };
@@ -151,6 +151,7 @@
 		0BB7E36B74A1A0E77D5455CE /* Pods-All-Repository.stub.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-Repository.stub.xcconfig"; path = "Target Support Files/Pods-All-Repository/Pods-All-Repository.stub.xcconfig"; sourceTree = "<group>"; };
 		0C52338841603C078A18CD71 /* Pods_All_Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_All_Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1419D184B669A4B8094BEA0C /* Pods-All-Core.stub.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-Core.stub.xcconfig"; path = "Target Support Files/Pods-All-Core/Pods-All-Core.stub.xcconfig"; sourceTree = "<group>"; };
+		1515B18F2C9FDE5800D73B78 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		15768A922C9DDE70006F81C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		15768A942C9DE129006F81C1 /* GoogleService-Info.template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.template.plist"; sourceTree = "<group>"; };
 		1A0230162A8F94680084DD0B /* NumberOfUsersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfUsersAPI.swift; sourceTree = "<group>"; };
@@ -179,7 +180,6 @@
 		1A2237942AB7EDF900A65301 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A239B592A84A90D0085BA46 /* PRRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRRouter.swift; sourceTree = "<group>"; };
 		1A239B5B2A84A9C30085BA46 /* PRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRViewModel.swift; sourceTree = "<group>"; };
-		1A26A2602A77FB3C00BC6988 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = univIP/Resources/R.generated.swift; sourceTree = SOURCE_ROOT; };
 		1A30D0A728F5BFB500C4012E /* HomeMenuCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuCollectionCell.swift; sourceTree = "<group>"; };
 		1A30D0AD28F6D79800C4012E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A30D0AF28F6D7BC00C4012E /* Web.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Web.storyboard; sourceTree = "<group>"; };
@@ -338,7 +338,7 @@
 				1A026B312A9B03A900ADD541 /* Images.xcassets */,
 				1A22378E2AB7EDF900A65301 /* Localizable.strings */,
 				1ABE8BE627B10590001EEA79 /* LaunchScreen.storyboard */,
-				1A26A2602A77FB3C00BC6988 /* R.generated.swift */,
+				1515B18F2C9FDE5800D73B78 /* R.generated.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -542,7 +542,7 @@
 		1AA056C026BD2AE100343005 = {
 			isa = PBXGroup;
 			children = (
-				1AA056CB26BD2AE100343005 /* univIP */,
+				1AA056CB26BD2AE100343005 /* App */,
 				1AB37B6D26FDFCEA008A2D2F /* univIPTests */,
 				1C91199C2DFA8E4D8B3EBE6D /* Frameworks */,
 				1AA056CA26BD2AE100343005 /* Products */,
@@ -560,7 +560,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1AA056CB26BD2AE100343005 /* univIP */ = {
+		1AA056CB26BD2AE100343005 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				1527EDA32C9FD4ED000606C4 /* Models */,
@@ -569,7 +569,7 @@
 				1A22378D2AB7EDF900A65301 /* SupportingFiles */,
 				1A026B1D2A9B028600ADD541 /* Utils */,
 			);
-			path = univIP;
+			path = App;
 			sourceTree = "<group>";
 		};
 		1AA056E926BD2DCA00343005 /* Module */ = {
@@ -907,11 +907,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/Resources/R.generated.swift,
+				$SRCROOT/App/Resources/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/Resources/R.generated.swift\"\n";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/App/Resources/R.generated.swift\"\n";
 		};
 		6BC3F9ADAE1ED57107C2EC77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -984,6 +984,7 @@
 				15C670112C9E6ADE004AC48A /* NewsItemModel.swift in Sources */,
 				15C670122C9E6ADE004AC48A /* SettingsItem.swift in Sources */,
 				15C670132C9E6ADE004AC48A /* UnivAuth.swift in Sources */,
+				1515B1902C9FDE5800D73B78 /* R.generated.swift in Sources */,
 				15C670142C9E6ADE004AC48A /* WebScrapeError.swift in Sources */,
 				15C670032C9E6AD2004AC48A /* AKLibrary.swift in Sources */,
 				15C670042C9E6AD2004AC48A /* DateFormatter+Exetnsion.swift in Sources */,
@@ -1031,7 +1032,6 @@
 				1AD00BEB2A8BD457008C7EFC /* SplashViewModel.swift in Sources */,
 				1A58F6812A8645120025737A /* InputRouter.swift in Sources */,
 				1A6C51BA2905077E00A3E85A /* ClubListsViewController.swift in Sources */,
-				1A26A2612A77FB3C00BC6988 /* R.generated.swift in Sources */,
 				1AD00BE92A8BD44A008C7EFC /* SplashViewController.swift in Sources */,
 				1A20C4612A809A970063B5D6 /* HomeRouter.swift in Sources */,
 				1A239B5A2A84A90D0085BA46 /* PRRouter.swift in Sources */,
@@ -1232,7 +1232,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
-				INFOPLIST_FILE = univIP/SupportingFiles/Info.plist;
+				INFOPLIST_FILE = App/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "トクメモ＋";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1301,7 +1301,7 @@
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios\"",
 					"\"${PODS_ROOT}/Headers/Public/mailcore2-ios/MailCore\"",
 				);
-				INFOPLIST_FILE = univIP/SupportingFiles/Info.plist;
+				INFOPLIST_FILE = App/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "トクメモ＋";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
