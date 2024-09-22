@@ -355,14 +355,14 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
-		1A026B1D2A9B028600ADD541 /* Common */ = {
+		1A026B1D2A9B028600ADD541 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				1A2237872AB6C58200A65301 /* AppConstants.swift */,
 				1AFC67CC2732BFA80059A053 /* Url.swift */,
 				1A154F282A8C809900E6D3CB /* URLCheckers.swift */,
 			);
-			path = Common;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		1A11C3CF2A9523BC00D95122 /* Credits */ = {
@@ -572,7 +572,7 @@
 				1A22378D2AB7EDF900A65301 /* Settings */,
 				1A19730D27C4BCB200F36FE7 /* AppDelegate.swift */,
 				1AC4BE922A7DE91200598EED /* RootViewController.swift */,
-				1A026B1D2A9B028600ADD541 /* Common */,
+				1A026B1D2A9B028600ADD541 /* Utils */,
 				1A7EBFC02A9C6EB60042AACA /* Core */,
 				1AA056E926BD2DCA00343005 /* Module */,
 				1A8E3B332A972AB50060254E /* Repository */,
