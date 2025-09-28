@@ -7,18 +7,17 @@
 
 import Kanna
 import RxSwift
-import Entity
 
-public protocol LibraryCalendarWebScraperInterface {
+protocol LibraryCalendarWebScraperInterface {
     func getLibraryCalendarURL(libraryUrl: URL) -> Single<URLRequest>
 }
 
-public struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
-    public init() {}
+struct LibraryCalendarWebScraper: LibraryCalendarWebScraperInterface {
+    init() {}
 
     private let baseURLString = "https://www.lib.tokushima-u.ac.jp/"
 
-    public func getLibraryCalendarURL(libraryUrl: URL) -> RxSwift.Single<URLRequest> {
+    func getLibraryCalendarURL(libraryUrl: URL) -> RxSwift.Single<URLRequest> {
         return .create { observer in
             let task = URLSession.shared.dataTask(with: libraryUrl) { (data, response , error) in
                 if let error = error {

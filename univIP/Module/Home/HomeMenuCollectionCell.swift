@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Entity
 import NorthLayout
 
 final class HomeMenuCollectionCell: UICollectionViewCell {

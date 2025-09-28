@@ -7,10 +7,10 @@
 
 import UIKit
 
-public class CustomDuoButton: UIButton {
-    public var onTap: ((Int) -> Void)?
+class CustomDuoButton: UIButton {
+    var onTap: ((Int) -> Void)?
 
-    public init(title: String,
+    init(title: String,
                 textColor: UIColor = .black,
                 backgroundColor: UIColor = .white,
                 borderColor: UIColor = .systemBlue,

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct HomeMiniSettingsItem {
-    public enum type {
+struct HomeMiniSettingsItem {
+    enum type {
         case review
         case prApplication
         case contactUs
@@ -17,11 +17,11 @@ public struct HomeMiniSettingsItem {
         case privacyPolicy
     }
 
-    public let title: String
-    public let id: type
-    public let targetUrl: URLRequest?
+    let title: String
+    let id: type
+    let targetUrl: URLRequest?
 
-    public init(title: String, id: type, targetUrl: URLRequest?) {
+    init(title: String, id: type, targetUrl: URLRequest?) {
         self.title = title
         self.id = id
         self.targetUrl = targetUrl

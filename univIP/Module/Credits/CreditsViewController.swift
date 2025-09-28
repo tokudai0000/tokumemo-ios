@@ -6,8 +6,8 @@
 //
 
 import UIKit
+import RxCocoa
 import RxSwift
-import Entity
 
 final class CreditsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!

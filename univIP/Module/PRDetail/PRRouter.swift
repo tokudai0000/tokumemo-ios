@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Entity
+import UIKit
 
 enum PRNavigationDestination {
     case goWeb(URLRequest)

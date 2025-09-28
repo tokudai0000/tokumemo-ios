@@ -7,7 +7,6 @@
 
 import UIKit
 import RxSwift
-import Entity
 
 class NewsViewController: UIViewController {
     private var tableView = UITableView()

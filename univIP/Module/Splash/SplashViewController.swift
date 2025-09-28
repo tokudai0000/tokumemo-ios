@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 import RxSwift
-import Entity
+import RxCocoa
 import NorthLayout
 
 final class SplashViewController: UIViewController {

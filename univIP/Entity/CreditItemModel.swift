@@ -5,12 +5,12 @@
 //  Created by Akihiro Matsuyama on 2023/08/23.
 //
 
-public struct CreditItemModel: Equatable {
-    public let title: String
-    public let license: String
-    public let contentsText: String
+struct CreditItemModel: Equatable {
+    let title: String
+    let license: String
+    let contentsText: String
 
-    public init(title: String, license: String, contentsText: String) {
+    init(title: String, license: String, contentsText: String) {
         self.title = title
         self.license = license
         self.contentsText = contentsText
