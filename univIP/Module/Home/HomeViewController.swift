@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 import RxSwift
 import RxCocoa
-import AkidonComponents
 
 final class HomeViewController: UIViewController {
     @IBOutlet private weak var numberOfUsersLabel: UILabel!

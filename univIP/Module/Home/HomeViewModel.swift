@@ -9,7 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import AkidonComponents
 
 protocol HomeViewModelInterface: AnyObject {
     var input: HomeViewModel.Input { get }

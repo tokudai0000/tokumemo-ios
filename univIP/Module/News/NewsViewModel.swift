@@ -9,7 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import AkidonComponents
 
 protocol NewsViewModelInterface: AnyObject {
     var input: NewsViewModel.Input { get }

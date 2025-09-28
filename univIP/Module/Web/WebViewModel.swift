@@ -8,7 +8,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import AkidonComponents
 
 protocol WebViewModelInterface: AnyObject {
     var input: WebViewModel.Input { get }

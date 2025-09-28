@@ -9,7 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import AkidonComponents
 
 protocol CreditsViewModelInterface: AnyObject {
     var input: CreditsViewModel.Input { get }
