@@ -1,0 +1,6 @@
+framework module Pods_univIPTests {
+  umbrella header "Pods-univIPTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

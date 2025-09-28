@@ -1,15 +1,29 @@
-## Issues
-Closes # 
+### 🔗 Issue
 
+closed #X.
+related #X.
 
-## 概要
+### 📚 Description
 
+- [ ] 
 
-## 説明
+### 🚧 Not included in this PR
 
+- [ ] 
 
-## キャプチャ
+### 📷 Screen Preview
 
+#### before
 
-## その他（懸念点や注意点）
+<img width="300" src="" alt="">
+
+#### after
+
+<img width="300" src="" alt="">
+
+### 📝 Reviewer checklist
+
+- [ ] (as needed) 画面キャプチャを添付している
+- [ ] 実装内容が適しているか
+- [ ] 
 
