@@ -1,0 +1,56 @@
+PODS:
+  - APIKit (5.4.0)
+  - FootlessParser (0.5.2)
+  - Kanna (5.3.0)
+  - KeychainAccess (4.2.2)
+  - NorthLayout (5.2.0):
+    - FootlessParser (~> 0.4)
+  - R.swift (7.3.2)
+  - RxCocoa (6.6.0):
+    - RxRelay (= 6.6.0)
+    - RxSwift (= 6.6.0)
+  - RxGesture (4.0.4):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
+
+DEPENDENCIES:
+  - APIKit (~> 5)
+  - Kanna (~> 5)
+  - KeychainAccess (~> 4)
+  - NorthLayout
+  - R.swift (~> 7)
+  - RxCocoa (~> 6)
+  - RxGesture (~> 4)
+  - RxSwift (~> 6)
+
+SPEC REPOS:
+  trunk:
+    - APIKit
+    - FootlessParser
+    - Kanna
+    - KeychainAccess
+    - NorthLayout
+    - R.swift
+    - RxCocoa
+    - RxGesture
+    - RxRelay
+    - RxSwift
+
+SPEC CHECKSUMS:
+  APIKit: 0680e86d2e8abd5bc42e64963f5f89d209eb9271
+  FootlessParser: 521916d592fa6cba06cfca6f4b5d4f5a2d49175a
+  Kanna: 6ecbd674bcbef2766a2acf80e99d1174440c5b9c
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  NorthLayout: 308a58a8f7d96f316e6399ff6432f8769321bbdf
+  R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
+  RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
+  RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+
+PODFILE CHECKSUM: 887c7c6b279b9fdab6afb1b01f895f53c8c33205
+
+COCOAPODS: 1.16.2
