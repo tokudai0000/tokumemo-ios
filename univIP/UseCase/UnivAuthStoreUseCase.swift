@@ -7,25 +7,25 @@
 
 import Foundation
 
-public protocol UnivAuthStoreUseCaseInterface {
+protocol UnivAuthStoreUseCaseInterface {
     func fetchUnivAuth() -> UnivAuth
     func setUnivAuth(_ items: UnivAuth)
 }
 
-public struct UnivAuthStoreUseCase: UnivAuthStoreUseCaseInterface {
+struct UnivAuthStoreUseCase: UnivAuthStoreUseCaseInterface {
     private let univAuthRepository: UnivAuthRepositoryInterface
 
-    public init(
+    init(
         univAuthRepository: UnivAuthRepositoryInterface
     ) {
         self.univAuthRepository = univAuthRepository
     }
 
-    public func fetchUnivAuth() -> UnivAuth {
+    func fetchUnivAuth() -> UnivAuth {
         return univAuthRepository.fetchUnivAuth()
     }
 
-    public func setUnivAuth(_ items: UnivAuth) {
+    func setUnivAuth(_ items: UnivAuth) {
         univAuthRepository.setUnivAuth(items)
     }
 }

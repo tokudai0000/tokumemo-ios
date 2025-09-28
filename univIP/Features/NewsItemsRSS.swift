@@ -8,16 +8,16 @@
 import Kanna
 import RxSwift
 
-public protocol NewsItemsRSSInterface {
+protocol NewsItemsRSSInterface {
     func getNewsItems() -> Single<[NewsItemModel]>
 }
 
-public struct NewsItemsRSS: NewsItemsRSSInterface {
-    public init() {}
+struct NewsItemsRSS: NewsItemsRSSInterface {
+    init() {}
 
     private let baseURLString = "https://www.tokushima-u.ac.jp/recent/rss.xml"
 
-    public func getNewsItems() -> RxSwift.Single<[NewsItemModel]> {
+    func getNewsItems() -> RxSwift.Single<[NewsItemModel]> {
         return .create { observer in
             guard let url = URL(string: baseURLString) else {
                 observer(.failure(WebScrapeError.invalidURL(baseURLString)))

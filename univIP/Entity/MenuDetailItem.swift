@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct MenuDetailItem {
-    public enum type {
+struct MenuDetailItem {
+    enum type {
         case timeTable                      // 時間割
         case currentTermPerformance         // 今年の成績表
         case syllabus                       // シラバス
@@ -38,11 +38,11 @@ public struct MenuDetailItem {
         case superEnglish                   // スーパー英語
     }
 
-    public let title: String
-    public let id: type
-    public let targetUrl: URLRequest?
+    let title: String
+    let id: type
+    let targetUrl: URLRequest?
 
-    public init(title: String, id: type, targetUrl: URLRequest?) {
+    init(title: String, id: type, targetUrl: URLRequest?) {
         self.title = title
         self.id = id
         self.targetUrl = targetUrl

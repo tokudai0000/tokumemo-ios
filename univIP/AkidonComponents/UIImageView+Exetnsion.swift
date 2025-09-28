@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIImageView {
-    public func loadImage(from url: URL) {
+    func loadImage(from url: URL) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)

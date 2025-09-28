@@ -7,8 +7,8 @@
 
 import UIKit
 
-public struct MenuItem {
-    public enum type {
+struct MenuItem {
+    enum type {
         case courseManagement
         case manaba
         case mail
@@ -17,12 +17,12 @@ public struct MenuItem {
         case etc
     }
 
-    public let title: String
-    public let id: type
-    public let icon: UIImage?
-    public let targetUrl: URLRequest?
+    let title: String
+    let id: type
+    let icon: UIImage?
+    let targetUrl: URLRequest?
 
-    public init(title: String, id: type, icon: UIImage?, targetUrl: URLRequest?) {
+    init(title: String, id: type, icon: UIImage?, targetUrl: URLRequest?) {
         self.title = title
         self.id = id
         self.icon = icon

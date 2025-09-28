@@ -7,25 +7,25 @@
 
 import Foundation
 
-public protocol WebViewCloseCountStoreUseCaseInterface {
+protocol WebViewCloseCountStoreUseCaseInterface {
     func fetchWebViewCloseCount() -> Int
     func setWebViewCloseCount(_ items: Int)
 }
 
-public struct WebViewCloseCountStoreUseCase: WebViewCloseCountStoreUseCaseInterface {
+struct WebViewCloseCountStoreUseCase: WebViewCloseCountStoreUseCaseInterface {
     private let webViewCloseCountRepository: WebViewCloseCountRepositoryInterface
 
-    public init(
+    init(
         webViewCloseCountRepository: WebViewCloseCountRepositoryInterface
     ) {
         self.webViewCloseCountRepository = webViewCloseCountRepository
     }
 
-    public func fetchWebViewCloseCount() -> Int {
+    func fetchWebViewCloseCount() -> Int {
         return webViewCloseCountRepository.fetchWebViewCloseCount()
     }
 
-    public func setWebViewCloseCount(_ items: Int) {
+    func setWebViewCloseCount(_ items: Int) {
         webViewCloseCountRepository.setWebViewCloseCount(items)
     }
 }
