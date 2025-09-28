@@ -9,8 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import Features
-import AkidonComponents
 
 protocol AgreementViewModelInterface: AnyObject {
     var input: AgreementViewModel.Input { get }

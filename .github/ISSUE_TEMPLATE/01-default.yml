@@ -1,0 +1,41 @@
+name: '🌱 Default Issue Template'
+description: 'Issueテンプレート (default)'
+title: 'feat: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Issueテンプレート (default)
+  
+        対応内容によって、以下のようなタイトルを付けることを推奨します。
+        | 対応内容 | タイトル |
+        | --- | --- |
+        | 新規機能の開発 | feat(product): xyz |
+        | バグの修正 | fix: xyz |
+        | リファクタリング | refactor: xyz |
+        | ドキュメントの追加・修正 | docs: xyz |
+        | テストの追加・修正 | test: xyz |
+        | その他・雑務 | chore: xyz |
+  - type: textarea
+    id: context
+    attributes:
+      label: '📚 Context'
+      placeholder: 何か
+    validations:
+      required: true
+  - type: textarea
+    id: todo
+    attributes:
+      label: TODO
+      placeholder: |
+       - [ ]
+       - [ ]
+    validations:
+      required: false
+  - type: textarea
+    id: issue
+    attributes:
+      label: '🔗 Related'
+      placeholder: 何か
+    validations:
+      required: false

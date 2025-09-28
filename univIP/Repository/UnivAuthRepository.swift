@@ -7,17 +7,16 @@
 
 import Foundation
 import KeychainAccess
-import Entity
 
-public protocol UnivAuthRepositoryInterface {
+protocol UnivAuthRepositoryInterface {
     func fetchUnivAuth() -> UnivAuth
     func setUnivAuth(_ items: UnivAuth)
 }
 
-public final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
-    public static let shared = UnivAuthOnKeyChainRepository()
+final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
+    static let shared = UnivAuthOnKeyChainRepository()
 
-    public init() {}
+    init() {}
     
     private let KEY_cAccount = "KEY_cAccount"
     private var accountCID: String {
@@ -31,13 +30,13 @@ public final class UnivAuthOnKeyChainRepository: UnivAuthRepositoryInterface {
         set(v) { setKeyChain(key: KEY_password, value: v) }
     }
 
-    public func fetchUnivAuth() -> UnivAuth {
+    func fetchUnivAuth() -> UnivAuth {
         let accountCID = Self.shared.accountCID
         let password = Self.shared.password
         return UnivAuth(accountCID: accountCID, password: password)
     }
 
-    public func setUnivAuth(_ items: UnivAuth) {
+    func setUnivAuth(_ items: UnivAuth) {
         Self.shared.accountCID = items.accountCID
         Self.shared.password = items.password
     }
