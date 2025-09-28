@@ -17,9 +17,6 @@ abstract_target 'All' do
   pod 'NorthLayout'
 
   target 'univIP' do
-  end
-
-  target 'Features' do
     pod 'APIKit' , '~> 5'
     pod 'Kanna' , '~> 5'
   end

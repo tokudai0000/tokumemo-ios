@@ -7,7 +7,6 @@
 
 import Foundation
 import Entity
-import Features
 
 enum HomeNavigationDestination {
     case goWeb(URLRequest)

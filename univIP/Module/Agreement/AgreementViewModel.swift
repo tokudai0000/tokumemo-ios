@@ -9,7 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import Features
 import AkidonComponents
 
 protocol AgreementViewModelInterface: AnyObject {

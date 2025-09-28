@@ -10,7 +10,6 @@ import Foundation
 import RxRelay
 import RxSwift
 import Entity
-import Features
 import AkidonComponents
 
 protocol HomeViewModelInterface: AnyObject {

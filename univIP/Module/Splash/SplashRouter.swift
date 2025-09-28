@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Features
 
 enum SplashNavigationDestination {
     case agree(String)
