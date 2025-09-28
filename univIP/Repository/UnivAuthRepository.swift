@@ -7,7 +7,6 @@
 
 import Foundation
 import KeychainAccess
-import Entity
 
 public protocol UnivAuthRepositoryInterface {
     func fetchUnivAuth() -> UnivAuth

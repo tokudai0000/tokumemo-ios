@@ -9,7 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import Entity
 import AkidonComponents
 
 protocol CreditsViewModelInterface: AnyObject {

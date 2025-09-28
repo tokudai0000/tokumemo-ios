@@ -7,7 +7,6 @@
 
 import Kanna
 import RxSwift
-import Entity
 
 public protocol NewsItemsRSSInterface {
     func getNewsItems() -> Single<[NewsItemModel]>

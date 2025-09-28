@@ -9,7 +9,6 @@
 import Foundation
 import RxRelay
 import RxSwift
-import Entity
 
 protocol PRViewModelInterface: AnyObject {
     var input: PRViewModel.Input { get }

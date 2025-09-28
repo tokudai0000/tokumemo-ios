@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Entity
 
 public protocol UnivAuthStoreUseCaseInterface {
     func fetchUnivAuth() -> UnivAuth

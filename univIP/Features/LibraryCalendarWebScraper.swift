@@ -7,7 +7,6 @@
 
 import Kanna
 import RxSwift
-import Entity
 
 public protocol LibraryCalendarWebScraperInterface {
     func getLibraryCalendarURL(libraryUrl: URL) -> Single<URLRequest>
